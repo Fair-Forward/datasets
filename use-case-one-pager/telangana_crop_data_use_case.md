@@ -1,10 +1,10 @@
 # Enhancing Food Security and Livelihood through Crop Analyses: AI-Based Crop Mapping in Telangana, India
 
 ## Overview
-| **Sector / SDGs:**              | Climate Adaptation & Agriculture                     |
-|----------------------------------|----------------------------------------------------|
-| **Country:**                     | India, Telangana (2023–2024)                       |
-| **Point of Contact / Communities:** | WRMS, Vertify, GIZ                                |
+| **Sector / SDGs:**                  | Climate Adaptation & Agriculture |
+| ----------------------------------- | -------------------------------- |
+| **Country:**                        | India, Telangana (2023–2024)     |
+| **Point of Contact / Communities:** | WRMS, Vertify, GIZ               |
 
 ---
 
