@@ -1,7 +1,10 @@
 # Enhancing Food Security and Livelihood through Crop Analyses: Crop Data and Geospatial Machine Learning for Agriculture in Telangana, India
 
 ## Overview
-| **Country:** India, Telangana | **Sector / SDGs:** Climate Adaptation & Agriculture | **Point of Contact & Communities:** WRMS, Vertify, GIZ |
+
+| **Sector / SDGs:**                  | Climate Adaptation & Agriculture |
+| **Country:**                        | India, Telangana (2023–2024)     |
+| **Point of Contact / Communities:** | WRMS, Vertify, GIZ               |
 
 ---
 
