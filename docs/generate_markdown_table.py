@@ -14,8 +14,11 @@ link_columns = {
 # Open the Markdown file for writing
 output_file = "docs/index.md"
 with open(output_file, "w") as f:
+    # if styling options shall be added - add html snippets here:
+    #f.write('<link rel="stylesheet" href="assets/css/style.css">')
+
     # Write the header for the Markdown file
-    f.write("# Data Catalog\n\n")
+    f.write("\n# Data Catalog\n\n")
     f.write("Welcome to our organization's data catalog. Below is a list of datasets that have been collected throughout our programme Fair Forward.\n\n")
 
     # Write the Markdown table header dynamically based on column names
