@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Load the Excel file
-excel_file = "docs/data_catalog copy.xlsx"
+excel_file = "docs/data_catalog.xlsx"
 df = pd.read_excel(excel_file)
 
 # Define columns that need special hyperlink formatting
