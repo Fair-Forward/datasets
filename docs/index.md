@@ -1,4 +1,4 @@
-#Data Catalog
+# Data Catalog
 
 Welcome to our organization's data catalog. Below is a list of datasets that have been collected throughout our programme Fair Forward.
 

@@ -8,7 +8,7 @@ df = pd.read_excel(excel_file)
 output_file = "index.md"
 with open(output_file, "w") as f:
     # Write the header for the Markdown file
-    f.write("#Data Catalog\n\n")
+    f.write("# Data Catalog\n\n")
     f.write("Welcome to our organization's data catalog. Below is a list of datasets that have been collected throughout our programme Fair Forward.\n\n")
 
     # Write the Markdown table header
