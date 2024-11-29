@@ -37,5 +37,5 @@ with open(index_file, "w") as f:
     for _, row in df.iterrows():
         f.write(f"| {row['Dataset Name']} | {row['Year']} | {row['Description']} | ")
         f.write(f"[Dataset Link]({row['Link']}) | ")
-        f.write(f"[Documentation]({row['Documentation']}) | ")
-        f.write(f"[Use-Case One Pager]({row['Use-Case']}) |\n")
+        f.write(f"[Documentation]({row['Documentation']}) | ") #need to add folder structure here
+        f.write(f"[Use-Case One Pager]({row['Use-Case']}) |\n") #need to add folder structure here

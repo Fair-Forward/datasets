@@ -1,0 +1,34 @@
+name: Update Markdown from Excel
+
+on:
+  push:
+    paths:
+      - docs/data_catalog.xlsx  # Trigger only when the Excel file changes
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.x"
+
+    - name: Install dependencies
+      run: |
+        pip install pandas openpyxl
+
+    - name: Generate Markdown
+      run: python docs/generate_markdown_table.py
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        git add docs/index.md
+        git commit -m "Update index.md from data_catalog.xlsx"
+        git push
