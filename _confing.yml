@@ -1,5 +1,13 @@
 source: docs 
 title: "Data Catalog"
 description: "Centralized catalog of datasets collected throughout Fair Forward"
-theme: jekyll-theme-cayman
+#theme: jekyll-theme-cayman
+remote_theme: pages-themes/midnight@v0.2.0
 url: "https://fair-forward.github.io/datasets/"
+plugins:
+  - jekyll-remote-theme
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - simple-jekyll-search
+  

@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <title>Data Catalog</title>
+</head>
+<body>
+    <h1>Data Catalog</h1>
+    <p>Welcome to our organization's data catalog. Below is a list of datasets collected as part of our Fair Forward programme.</p>
+    <table id="dataCatalog" class="display">
+        <thead>
+            <tr>
+    <th>Dataset Name</th><th>Link</th><th>Year</th><th>Description</th><th>Author</th><th>Documentation</th><th>Use-Case</th></tr></thead><tbody>
+<tr><td>Crop Analyses: AI for Telangana Agriculture</td><td><a href="https://dataexplorer.ts.adex.org.in/dataset/1da21f2b-87f6-4641-81bd-ed6bcd461303" target="_blank">Link</a></td><td>2022-2024 </td><td>AI-based crop type map and replication kit</td><td>WRMS</td><td><a href="datasets-documentation/telangana_crop_data_documentation.md" target="_blank">Details</a></td><td><a href="use-case-one-pager/telangana_crop_data_use_case.md" target="_blank">Use-Case</a></td></tr>
+
+        </tbody>
+    </table>
+    <script>
+        $(document).ready(function () {
+            $('#dataCatalog').DataTable({
+                paging: true,
+                searching: true,
+                ordering: true,
+                pageLength: 10
+            });
+        });
+    </script>
+</body>
+</html>
+    
