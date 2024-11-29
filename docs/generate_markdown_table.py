@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Load the Excel file
-excel_file = "data_catalog.xlsx"
+excel_file = "docs/data_catalog.xlsx"
 df = pd.read_excel(excel_file)
 
 # Open the Markdown file for writing
