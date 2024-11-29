@@ -1,19 +1,42 @@
-table {
-    border-collapse: collapse;
-    width: 100%;
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+  }
+  
+  .dataset-list {
     margin: 20px 0;
-    font-size: 16px;
-    text-align: left;
-}
-table th {
-    background-color: #009879;
-    color: white;
-    padding: 12px 15px;
-}
-table td {
+  }
+  
+  .dataset-item {
     border: 1px solid #ddd;
-    padding: 8px;
-}
-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
+    border-radius: 5px;
+    margin-bottom: 15px;
+    padding: 10px;
+  }
+  
+  .dataset-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .dataset-header h3 {
+    margin: 0;
+    color: #4CAF50;
+  }
+  
+  .toggle-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  .dataset-content {
+    margin-top: 10px;
+    padding-left: 10px;
+    border-left: 3px solid #4CAF50;
+    color: #555;
+  }
+  
