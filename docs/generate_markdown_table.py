@@ -5,7 +5,7 @@ excel_file = "docs/data_catalog.xlsx"
 df = pd.read_excel(excel_file)
 
 # Open the Markdown file for writing
-index_file = "index.md"
+index_file = "docs/index.md"
 with open(index_file, "w") as f:
     # Write the header for the Markdown file
     f.write("# Data Catalog\n\n")
@@ -23,7 +23,7 @@ with open(index_file, "w") as f:
         f.write(f"[Use-Case One Pager]({row['Use-Case']}) |\n")
 
 # Open the Markdown file for updating Readme
-index_file = "../README.md"
+index_file = "README.md"
 with open(index_file, "w") as f:
     # Write the header for the Markdown file
     f.write("# Data Catalog\n\n")
