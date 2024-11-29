@@ -18,6 +18,6 @@ with open(output_file, "w") as f:
     # Write each row from the Excel file into the Markdown table
     for _, row in df.iterrows():
         f.write(f"| {row['Dataset Name']} | {row['Year']} | {row['Description']} | ")
-        f.write(f"[Link]({row['Link']}) | ")
-        f.write(f"[Details]({row['Documentation']}) | ")
-        f.write(f"[Use-Case]({row['Use-Case']}) |\n")
+        f.write(f"[Dataset Link]({row['Link']}) | ")
+        f.write(f"[Documentatino]({row['Documentation']}) | ")
+        f.write(f"[Use-Case One Pager]({row['Use-Case']}) |\n")
