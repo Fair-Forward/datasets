@@ -1,4 +1,5 @@
 import pandas as pd
+import html
 
 # Load the Excel file
 excel_file = "data_catalog.xlsx"
@@ -43,9 +44,9 @@ with open(output_file, "w") as f:
                 #     bullet_points += "</ul>"
                 #     row_data.append(bullet_points)
 
-                # Option 2: Tooltip (choose one of the two options)
+                # Option 2: Tooltip (comment out bullet points if using tooltips)
                 if pd.notna(row[col]):
-                    tooltip_text = str(row[col]).replace('"', "'")  # Replace double quotes with single quotes to avoid conflicts
+                    tooltip_text = html.escape(str(row[col]).replace("\n", " "))  # Replace line breaks with space
                     tooltip = f'<span title="{tooltip_text}">Hover for details</span>'
                     row_data.append(tooltip)
 
