@@ -7,7 +7,7 @@ df = pd.read_excel(excel_file)
 
 # Define columns that need special hyperlink formatting
 link_columns = {
-    "Link": lambda x: f"[Link]({x})" if pd.notna(x) else "N/A",
+    "Link to Dataset": lambda x: f"[Link]({x})" if pd.notna(x) else "N/A",
     "Documentation": lambda x: f"[Details]({x})" if pd.notna(x) else "N/A",
     "Use-Case": lambda x: f"[Use-Case]({x})" if pd.notna(x) else "N/A"
 }
@@ -16,7 +16,7 @@ link_columns = {
 output_file = "index.md"
 with open(output_file, "w") as f:
     # Optional: add HTML styling or CSS links if needed
-    # f.write('<link rel="stylesheet" href="assets/css/style.css">\n')
+    f.write('<link rel="stylesheet" href="assets/css/style.css">\n')
 
     # Write the header for the Markdown file
     f.write("\n# Data Catalog\n\n")
@@ -34,26 +34,25 @@ with open(output_file, "w") as f:
             if col in link_columns:
                 row_data.append(link_columns[col](row[col]))
             elif col == "Description":
-
-                # Option 1: Bullet Points
-                # if pd.notna(row[col]):
-                #     bullet_points = "<ul>"
-                #     for sentence in str(row[col]).split('. '):
-                #         if sentence.strip():
-                #             bullet_points += f"<li>{sentence.strip()}</li>"
-                #     bullet_points += "</ul>"
-                #     row_data.append(bullet_points)
-
-                # Option 2: Tooltip (comment out bullet points if using tooltips)
+                # Tooltip with bullet points for Description
                 if pd.notna(row[col]):
-                    tooltip_text = html.escape(str(row[col]).replace("\n", " "))  # Replace line breaks with space
-                    tooltip = f'<span title="{tooltip_text}">Hover for details</span>'
+                    description_text = html.escape(str(row[col]))
+                    bullet_points = "<ul>"
+                    for sentence in description_text.split('. '):
+                        if sentence.strip():
+                            bullet_points += f"<li>{sentence.strip()}</li>"
+                    bullet_points += "</ul>"
+                    tooltip = f'''
+                    <div class="tooltip">
+                        Hover for details
+                        <span class="tooltiptext">{bullet_points}</span>
+                    </div>
+                    '''
                     row_data.append(tooltip)
-
                 else:
                     row_data.append("N/A")
             else:
-                row_data.append(str(row[col]) if pd.notna(row[col]) else "N/A")
+                row_data.append(html.escape(str(row[col])) if pd.notna(row[col]) else "N/A")
 
         # Write the row to the Markdown file
         f.write("| " + " | ".join(row_data) + " |\n")

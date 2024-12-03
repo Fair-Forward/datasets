@@ -1,0 +1,32 @@
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    color: #4CAF50; /* Optional: Makes the text visually distinct */
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 300px; /* Adjust width as needed */
+    background-color: #f9f9f9;
+    color: #333;
+    text-align: left;
+    border-radius: 5px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position above the element */
+    left: 50%;
+    margin-left: -150px;
+    border: 1px solid #ddd;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.tooltip .tooltiptext ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
