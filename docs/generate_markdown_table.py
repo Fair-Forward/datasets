@@ -2,7 +2,7 @@ import pandas as pd
 import html 
 
 # Load the Excel file
-excel_file = "data_catalog.xlsx"
+excel_file = "docs/data_catalog.xlsx"
 df = pd.read_excel(excel_file)
 
 # Define columns that need special hyperlink formatting
@@ -16,7 +16,7 @@ link_columns = {
 column_mapping = {col: col + ("&nbsp;" * 30 if col == "Description" else "") for col in df.columns}
 
 # Open the Markdown file for writing
-output_file = "index.md"
+output_file = "docs/index.md"
 with open(output_file, "w") as f:
     # if styling options shall be added - add html snippets here:
     #f.write('<link rel="stylesheet" href="assets/css/style.css">')
