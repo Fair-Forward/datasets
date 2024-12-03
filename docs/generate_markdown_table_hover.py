@@ -35,18 +35,19 @@ with open(output_file, "w") as f:
             elif col == "Description":
 
                 # Option 1: Bullet Points
-                if pd.notna(row[col]):
-                    bullet_points = "<ul>"
-                    for sentence in str(row[col]).split('. '):
-                        if sentence.strip():
-                            bullet_points += f"<li>{sentence.strip()}</li>"
-                    bullet_points += "</ul>"
-                    row_data.append(bullet_points)
+                # if pd.notna(row[col]):
+                #     bullet_points = "<ul>"
+                #     for sentence in str(row[col]).split('. '):
+                #         if sentence.strip():
+                #             bullet_points += f"<li>{sentence.strip()}</li>"
+                #     bullet_points += "</ul>"
+                #     row_data.append(bullet_points)
 
                 # Option 2: Tooltip (choose one of the two options)
-                # elif pd.notna(row[col]):
-                #     tooltip = f'<span title="{str(row[col]).replace("\"", "\'")}">Hover for details</span>'
-                #     row_data.append(tooltip)
+                if pd.notna(row[col]):
+                    tooltip_text = str(row[col]).replace('"', "'")  # Replace double quotes with single quotes to avoid conflicts
+                    tooltip = f'<span title="{tooltip_text}">Hover for details</span>'
+                    row_data.append(tooltip)
 
                 else:
                     row_data.append("N/A")
