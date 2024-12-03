@@ -13,7 +13,7 @@ link_columns = {
 }
 
 # Create a mapping to add padding to certain column headers
-column_mapping = {col: col + ("&nbsp;" * 10 if col == "Description" else "") for col in df.columns}
+column_mapping = {col: col + ("&nbsp;" * 40 if col == "Description" else "") for col in df.columns}
 
 # Open the Markdown file for writing
 output_file = "index.md"
