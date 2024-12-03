@@ -34,18 +34,19 @@ with open(output_file, "w") as f:
             if col in link_columns:
                 row_data.append(link_columns[col](row[col]))
             elif col == "Description":
-                # Option 2: Text-based bullet points for Description
+                # Option 3: Bullet points with line breaks using <br> tags
                 if pd.notna(row[col]):
                     description_text = str(row[col])
                     # Replace line breaks and ensure description is inline
                     description_text = description_text.replace("\n", " ").replace("\r", " ").replace("  ", " ")
-                    # Create a bullet-point-like representation
+                    # Create a bullet-point-like representation with line breaks
                     bullet_points = ""
                     for sentence in description_text.split('. '):
                         if sentence.strip():
-                            bullet_points += f"• {sentence.strip()} "
-                    # Ensure the entire description is wrapped in a single line
-                    row_data.append(bullet_points.strip())
+                            bullet_points += f"• {sentence.strip()}<br>"
+                    # Remove the trailing <br> at the end if it exists
+                    bullet_points = bullet_points.rstrip("<br>")
+                    row_data.append(bullet_points)
                 else:
                     row_data.append("N/A")
             else:
