@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Load the Excel file
-excel_file = "docs/data_catalog.xlsx"
+excel_file = "data_catalog.xlsx"
 df = pd.read_excel(excel_file)
 
 # Define columns that need special hyperlink formatting
@@ -11,8 +11,11 @@ link_columns = {
     "Use-Case": lambda x: f"[Use-Case]({x})" if pd.notna(x) else "N/A"
 }
 
+# Create a mapping to add padding to certain column headers
+column_mapping = {col: col + ("&nbsp;" * 30 if col == "Description" else "") for col in df.columns}
+
 # Open the Markdown file for writing
-output_file = "docs/index.md"
+output_file = "index.md"
 with open(output_file, "w") as f:
     # if styling options shall be added - add html snippets here:
     #f.write('<link rel="stylesheet" href="assets/css/style.css">')
