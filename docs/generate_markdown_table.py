@@ -6,7 +6,7 @@ df = pd.read_excel(excel_file)
 
 # Define columns that need special hyperlink formatting
 link_columns = {
-    "Link": lambda x: f"[Link]({x})" if pd.notna(x) else "N/A",
+    "Link to Dataset": lambda x: f"[Link]({x})" if pd.notna(x) else "N/A",
     "Documentation": lambda x: f"[Details]({x})" if pd.notna(x) else "N/A",
     "Use-Case": lambda x: f"[Use-Case]({x})" if pd.notna(x) else "N/A"
 }
