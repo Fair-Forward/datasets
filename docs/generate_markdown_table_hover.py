@@ -12,19 +12,19 @@ link_columns = {
     "Use-Case": lambda x: f"[Use-Case]({x})" if pd.notna(x) else "N/A"
 }
 
+# Create a mapping to add padding to certain column headers
+column_mapping = {col: col + ("&nbsp;" * 10 if col == "Description" else "") for col in df.columns}
+
 # Open the Markdown file for writing
 output_file = "index.md"
 with open(output_file, "w") as f:
-    # Optional: add HTML styling or CSS links if needed
-    # f.write('<link rel="stylesheet" href="assets/css/style.css">\n')
-
     # Write the header for the Markdown file
     f.write("\n# Data Catalog\n\n")
     f.write("Welcome to our organization's data catalog. Below is a list of datasets that have been collected throughout our programme Fair Forward.\n\n")
 
-    # Write the Markdown table header dynamically based on column names
-    f.write("| " + " | ".join(df.columns) + " |\n")
-    f.write("|" + " | ".join(["-" * len(col) for col in df.columns]) + "|\n")
+    # Write the Markdown table header dynamically based on modified column names
+    f.write("| " + " | ".join(column_mapping[col] for col in df.columns) + " |\n")
+    f.write("|" + " | ".join(["-" * len(html.unescape(col)) for col in column_mapping.values()]) + "|\n")
 
     # Write each row
     for _, row in df.iterrows():
