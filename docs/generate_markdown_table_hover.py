@@ -16,7 +16,7 @@ link_columns = {
 output_file = "index.md"
 with open(output_file, "w") as f:
     # Optional: add HTML styling or CSS links if needed
-    f.write('<link rel="stylesheet" href="assets/css/style.css">\n')
+    # f.write('<link rel="stylesheet" href="assets/css/style.css">\n')
 
     # Write the header for the Markdown file
     f.write("\n# Data Catalog\n\n")
@@ -34,21 +34,23 @@ with open(output_file, "w") as f:
             if col in link_columns:
                 row_data.append(link_columns[col](row[col]))
             elif col == "Description":
-                # Tooltip with bullet points for Description
+                # Option 1: Bullet Points for Description
                 if pd.notna(row[col]):
+                    # Escape HTML to make it safe for inclusion in Markdown
                     description_text = html.escape(str(row[col]))
                     bullet_points = "<ul>"
                     for sentence in description_text.split('. '):
                         if sentence.strip():
                             bullet_points += f"<li>{sentence.strip()}</li>"
                     bullet_points += "</ul>"
-                    tooltip = f'''
-                    <div class="tooltip">
-                        Hover for details
-                        <span class="tooltiptext">{bullet_points}</span>
-                    </div>
-                    '''
-                    row_data.append(tooltip)
+                    row_data.append(bullet_points)
+
+                # Option 2: Tooltip (comment out bullet points if using tooltips)
+                # elif pd.notna(row[col]):
+                #     tooltip_text = html.escape(str(row[col]).replace("\n", " "))  # Replace line breaks with space
+                #     tooltip = f'<span title="{tooltip_text}">Hover for details</span>'
+                #     row_data.append(tooltip)
+
                 else:
                     row_data.append("N/A")
             else:
