@@ -1,15 +1,15 @@
 body {
     font-family: 'Fira Code', monospace;
-    background-color: #1e1e1e;
-    color: #d4d4d4;
+    background-color: #f2f2f2;
+    color: #4e3276; /* Rich purple text color */
     line-height: 1.6;
     margin: 0;
     padding: 0;
 }
 
 header {
-    background-color: #252526;
-    color: #61dafb;
+    background-color: #4e3276; /* Rich purple */
+    color: #ffffff;
     padding: 30px 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -43,7 +43,7 @@ table {
 
 th {
     background-color: #333333;
-    color: #61dafb;
+    color: #36e0b8; /* Teal for table headers */
     text-align: center;
     padding: 15px;
     font-size: 1.1em;
@@ -55,7 +55,7 @@ td {
     padding: 15px;
     text-align: center;
     font-size: 1em;
-    color: #d4d4d4;
+    color: #ffffff;
 }
 
 tr:nth-child(even) {
@@ -68,7 +68,7 @@ tr:hover {
 }
 
 a {
-    color: #61dafb;
+    color: #36e0b8; /* Teal color for links */
     text-decoration: none;
 }
 
@@ -84,24 +84,14 @@ a:hover {
     border: none;
 }
 
-.btn-primary {
-    background-color: #007acc;
-    color: white;
-}
-
-.btn-info {
-    background-color: #61dafb;
-    color: #1e1e1e;
-}
-
-.btn-success {
-    background-color: #28a745;
-    color: white;
+.btn-primary, .btn-info, .btn-success {
+    background-color: #36e0b8; /* Teal */
+    color: #ffffff;
 }
 
 footer {
-    background-color: #252526;
-    color: #61dafb;
+    background-color: #4e3276; /* Rich purple */
+    color: #ffffff;
     padding: 20px 0;
     margin-top: 40px;
     box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
