@@ -11,9 +11,9 @@ df = pd.read_excel(DATA_CATALOG)
 
 # Define columns that need special hyperlink formatting
 link_columns = {
-    "Link to Dataset": lambda x: f"<a href=\"{x}\" target=\"_blank\">Link</a>" if pd.notna(x) else "N/A",
-    "Documentation": lambda x: f"<a href=\"{x}\" target=\"_blank\">Details</a>" if pd.notna(x) else "N/A",
-    "Use-Case": lambda x: f"<a href=\"{x}\" target=\"_blank\">Use-Case</a>" if pd.notna(x) else "N/A"
+    "Link to Dataset": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn btn-primary\">Link</a>" if pd.notna(x) else "N/A",
+    "Documentation": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn btn-info\">Details</a>" if pd.notna(x) else "N/A",
+    "Use-Case": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn btn-success\">Use-Case</a>" if pd.notna(x) else "N/A"
 }
 
 # Create a mapping to add padding to certain column headers
@@ -32,46 +32,20 @@ HTML_TEMPLATE = """
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Optional: Link to Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <style>
-        table {{
-            width: 100%;
-            margin-top: 20px;
-        }}
-        th {{
-            background-color: #007bff;
-            color: white;
-            text-align: center;
-            padding: 10px;
-        }}
-        td {{
-            padding: 10px;
-            text-align: center;
-        }}
-        tr:nth-child(even) {{
-            background-color: #f2f2f2;
-        }}
-        a {{
-            color: #007bff;
-            text-decoration: none;
-        }}
-        a:hover {{
-            text-decoration: underline;
-        }}
-    </style>
 </head>
 <body>
-    <header class="bg-primary text-white p-4 mb-4">
+    <header>
         <div class="container">
             <h1>Data Catalog</h1>
             <p>An overview of datasets and resources funded by Fair Forward</p>
         </div>
     </header>
 
-    <div class="container">
+    <div class="container my-5">
         {table}
     </div>
 
-    <footer class="bg-secondary text-white p-4 mt-4">
+    <footer>
         <div class="container text-center">
             <p>&copy; 2024 Fair Forward</p>
         </div>
