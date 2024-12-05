@@ -1,14 +1,14 @@
 body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #1e1e1e;
-    color: #d4d4d4;
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa; /* Light gray */
+    color: #333; /* Dark gray for text */
     line-height: 1.6;
     margin: 0;
     padding: 0;
 }
 
 header {
-    background-color: #4e3276; /* Rich purple for branding */
+    background-color: #343a40; /* Dark gray */
     color: #ffffff;
     padding: 30px 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -19,7 +19,6 @@ header h1 {
     text-transform: uppercase;
     font-size: 2em;
     margin: 0;
-    color: #36e0b8; /* Teal for highlights */
 }
 
 header p {
@@ -39,37 +38,39 @@ table {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     overflow: hidden;
-    background-color: #252526;
+    word-wrap: break-word;
 }
 
 th {
-    background-color: #333333;
-    color: #36e0b8; /* Teal for table headers */
-    text-align: center;
+    background-color: #343a40; /* Dark gray */
+    color: #ffffff;
+    text-align: left;
     padding: 15px;
     font-size: 1.1em;
     text-transform: uppercase;
-    border-bottom: 2px solid #444;
+    border-bottom: 2px solid #ddd;
+    word-wrap: break-word;
 }
 
 td {
     padding: 15px;
-    text-align: center;
+    text-align: left;
     font-size: 1em;
-    color: #d4d4d4;
+    color: #333;
+    word-wrap: break-word;
 }
 
 tr:nth-child(even) {
-    background-color: #2d2d2d;
+    background-color: #f2f2f2; /* Light gray for alternating rows */
 }
 
 tr:hover {
-    background-color: #3c3c3c;
+    background-color: #e0e0e0;
     cursor: pointer;
 }
 
 a {
-    color: #36e0b8; /* Teal color for links */
+    color: #007bff; /* Bootstrap primary blue */
     text-decoration: none;
 }
 
@@ -78,20 +79,20 @@ a:hover {
 }
 
 .btn {
-    padding: 8px 16px;
+    padding: 6px 12px;
     font-weight: bold;
     text-transform: uppercase;
     border-radius: 25px;
-    border: none;
+    border: 1px solid;
 }
 
-.btn-primary, .btn-info, .btn-success {
-    background-color: #36e0b8; /* Teal */
-    color: #ffffff;
+.btn-outline-primary, .btn-outline-info, .btn-outline-success {
+    border-color: #007bff;
+    color: #007bff;
 }
 
 footer {
-    background-color: #4e3276; /* Rich purple */
+    background-color: #343a40; /* Dark gray */
     color: #ffffff;
     padding: 20px 0;
     margin-top: 40px;
