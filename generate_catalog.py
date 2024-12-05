@@ -73,7 +73,7 @@ for _, row in df.iterrows():
 header_html = "<tr>" + "".join([f"<th>{column_mapping[col]}</th>" for col in df.columns]) + "</tr>"
 
 # Construct complete table HTML
-table_html = f"<table class='table table-striped table-bordered table-hover'><thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
+table_html = f"<table class='table table-dark table-striped table-bordered table-hover'><thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
 
 # Insert the HTML table into the template
 output_html = HTML_TEMPLATE.format(table=table_html)
