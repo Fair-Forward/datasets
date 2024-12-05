@@ -38,7 +38,6 @@ table {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     overflow: hidden;
-    word-wrap: break-word;
     table-layout: auto; /* Allows for dynamic column sizing */
 }
 
@@ -60,6 +59,10 @@ td {
     color: #333;
     word-wrap: break-word; /* Allows long text to wrap nicely */
     word-break: break-word; /* Ensures words break only if necessary */
+}
+
+th, td {
+    word-break: normal; /* Do not break words at arbitrary places */
 }
 
 tr:nth-child(even) {
