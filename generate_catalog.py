@@ -33,8 +33,8 @@ HTML_TEMPLATE = """
     <!-- Optional: Link to Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
-<body>
-    <header>
+<body class="dark-theme">
+    <header class="dark-header">
         <div class="container">
             <h1>Data Catalog</h1>
             <p>An overview of datasets and resources funded by Fair Forward</p>
@@ -45,7 +45,7 @@ HTML_TEMPLATE = """
         {table}
     </div>
 
-    <footer>
+    <footer class="dark-footer">
         <div class="container text-center">
             <p>&copy; 2024 Fair Forward</p>
         </div>
