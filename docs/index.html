@@ -10,9 +10,19 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Optional: Link to Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+        }
+        header, footer {
+            background-color: #252526;
+            color: #61dafb;
+        }
+    </style>
 </head>
 <body>
-    <header>
+    <header class="p-4 mb-4">
         <div class="container">
             <h1>Data Catalog</h1>
             <p>An overview of datasets and resources funded by Fair Forward</p>
@@ -23,8 +33,8 @@
         <table class='table table-dark table-striped table-bordered table-hover'><thead><tr><th>Project Title  </th><th>Data Type</th><th>SDG/Domain</th><th>Country/Region</th><th>Author/Community</th><th>Link to Dataset</th><th>Documentation</th><th>Use-Case</th><th>Year</th></tr></thead><tbody><tr><td>Crop Analyses: AI for Telangana Agriculture. Support farmers in Telangana through AI-powered  Crop Identification</td><td>csv, dbf </td><td>Climate Adaptation & Agriculture</td><td>Telangana, India</td><td>[WRMS](https://wrmsglobal.com/)</td><td><a href="https://dataexplorer.ts.adex.org.in/dataset/1da21f2b-87f6-4641-81bd-ed6bcd461303" target="_blank" class="btn btn-primary">Link</a></td><td><a href="datasets-documentation/telangana_crop_data_documentation.md" target="_blank" class="btn btn-info">Details</a></td><td><a href="use-case-one-pager/telangana_crop_data_use_case.md" target="_blank" class="btn btn-success">Use-Case</a></td><td>2022-2024 </td></tr><tr><td>Lacuna Fund Datasets </td><td>N/A</td><td>N/A</td><td>Global/Regional</td><td>[Lacuna Fund](https://lacunafund.org/)</td><td><a href="https://lacunafund.org/datasets/" target="_blank" class="btn btn-primary">Link</a></td><td>N/A</td><td>N/A</td><td>N/A</td></tr><tr><td>South Africa Crop Type Competition</td><td>N/A</td><td>N/A</td><td>South Africa</td><td>Radiant Earth</td><td><a href="https://beta.source.coop/repositories/radiantearth/south-africa-crops-competition/description/" target="_blank" class="btn btn-primary">Link</a></td><td>N/A</td><td>N/A</td><td>N/A</td></tr><tr><td>Digital Green - Local dataset collection for climate-smart agriculture</td><td>N/A</td><td>N/A</td><td>India</td><td>N/A</td><td><a href="https://github.com/digitalgreenorg/frame-templates" target="_blank" class="btn btn-primary">Link</a></td><td>N/A</td><td>N/A</td><td>N/A</td></tr><tr><td>EcoVision Lab: High Carbon Stock Mapping in Southeast Asia</td><td>N/A</td><td>N/A</td><td>India</td><td>N/A</td><td><a href="https://huggingface.co/datasets/HCSA/HCSA_Indonesia_Forest_Plot_Data_2023" target="_blank" class="btn btn-primary">Link</a></td><td>N/A</td><td>N/A</td><td>N/A</td></tr><tr><td>KNUST Responsible AI Lab (RAIL)</td><td>N/A</td><td>N/A</td><td>Indonesia</td><td>N/A</td><td><a href="https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana/data" target="_blank" class="btn btn-primary">Link</a></td><td>N/A</td><td>N/A</td><td>N/A</td></tr><tr><td>Pest Management for smallholder cotton farmers in India through AI / Open CottonAce App</td><td>N/A</td><td>N/A</td><td>Ghana</td><td>Wadhwani</td><td><a href="https://github.com/WadhwaniAI/pest-monitoring/tree/main/sample-data" target="_blank" class="btn btn-primary">Link</a></td><td>N/A</td><td>N/A</td><td>N/A</td></tr><tr><td>100 hours of Text to Speech Dataset for Mundari Language</td><td>N/A</td><td>N/A</td><td>India</td><td>N/A</td><td><a href="https://github.com/karya-inc/dataset-mundari-tts + https://github.com/karya-inc/dataset-hindi-mundari-translation" target="_blank" class="btn btn-primary">Link</a></td><td>N/A</td><td>N/A</td><td>N/A</td></tr><tr><td>Speech Data Collection South Africa (10 Languages)</td><td>N/A</td><td>N/A</td><td>India</td><td>N/A</td><td><a href="https://commonvoice.mozilla.org/de/languages" target="_blank" class="btn btn-primary">Link</a></td><td>N/A</td><td>N/A</td><td>N/A</td></tr><tr><td>Open AI in Agriculture (Ghana)</td><td>N/A</td><td>N/A</td><td>South Africa</td><td>N/A</td><td><a href="https://huggingface.co/datasets/KaraAgroAI/CADI-AI/tree/main" target="_blank" class="btn btn-primary">Link</a></td><td>N/A</td><td>N/A</td><td>N/A</td></tr><tr><td>IISc - Open Voice Data in Indian Languages</td><td>N/A</td><td>N/A</td><td>Ghana</td><td>N/A</td><td><a href="https://syspin.iisc.ac.in/datasets" target="_blank" class="btn btn-primary">Link</a></td><td>N/A</td><td>N/A</td><td>N/A</td></tr><tr><td>Text Data Collection for 3 regional languages in Indonesia</td><td>N/A</td><td>N/A</td><td>India</td><td>N/A</td><td><a href="https://huggingface.co/datasets/prosa-text/nusa-dialogue" target="_blank" class="btn btn-primary">Link</a></td><td>N/A</td><td>N/A</td><td>N/A</td></tr><tr><td>KAB Platform - Gramvaani Automatic Speech Recognition (ASR)</td><td>N/A</td><td>N/A</td><td>Indonesia</td><td>N/A</td><td><a href="https://gitlab.com/gramvaani/giz_kab_bert_sourcecode" target="_blank" class="btn btn-primary">Link</a></td><td>N/A</td><td>N/A</td><td>N/A</td></tr><tr><td>Africa Biomass Challenge</td><td>N/A</td><td>N/A</td><td>India</td><td>N/A</td><td><a href="https://huggingface.co/datasets/data354/Africa_Biomass_dataset" target="_blank" class="btn btn-primary">Link</a></td><td>N/A</td><td>N/A</td><td>N/A</td></tr><tr><td>Expansion of voice data collection and development of use cases [Mozilla]</td><td>N/A</td><td>N/A</td><td>Ghana</td><td>N/A</td><td><a href="https://commonvoice.mozilla.org/" target="_blank" class="btn btn-primary">Link</a></td><td>N/A</td><td>N/A</td><td>N/A</td></tr></tbody></table>
     </div>
 
-    <footer>
-        <div class="container text-center">
+    <footer class="p-4 mt-4 text-center">
+        <div class="container">
             <p>&copy; 2024 Fair Forward</p>
         </div>
     </footer>

@@ -32,9 +32,19 @@ HTML_TEMPLATE = """
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Optional: Link to Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {{
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+        }}
+        header, footer {{
+            background-color: #252526;
+            color: #61dafb;
+        }}
+    </style>
 </head>
-<body class="dark-theme">
-    <header class="dark-header">
+<body>
+    <header class="p-4 mb-4">
         <div class="container">
             <h1>Data Catalog</h1>
             <p>An overview of datasets and resources funded by Fair Forward</p>
@@ -45,8 +55,8 @@ HTML_TEMPLATE = """
         {table}
     </div>
 
-    <footer class="dark-footer">
-        <div class="container text-center">
+    <footer class="p-4 mt-4 text-center">
+        <div class="container">
             <p>&copy; 2024 Fair Forward</p>
         </div>
     </footer>

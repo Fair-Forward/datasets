@@ -1,4 +1,4 @@
-body.dark-theme {
+body {
     font-family: 'Fira Code', monospace;
     background-color: #1e1e1e;
     color: #d4d4d4;
@@ -7,7 +7,7 @@ body.dark-theme {
     padding: 0;
 }
 
-.dark-header {
+header {
     background-color: #252526;
     color: #61dafb;
     padding: 30px 0;
@@ -19,13 +19,11 @@ header h1 {
     text-transform: uppercase;
     font-size: 2em;
     margin: 0;
-    color: #61dafb;
 }
 
 header p {
     font-size: 1.2em;
     margin-top: 5px;
-    color: #d4d4d4;
 }
 
 .container {
@@ -101,7 +99,7 @@ a:hover {
     color: white;
 }
 
-.dark-footer {
+footer {
     background-color: #252526;
     color: #61dafb;
     padding: 20px 0;
