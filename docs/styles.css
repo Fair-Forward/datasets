@@ -1,14 +1,14 @@
 body {
-    font-family: 'Fira Code', monospace;
-    background-color: #f2f2f2;
-    color: #4e3276; /* Rich purple text color */
+    font-family: 'Roboto', sans-serif;
+    background-color: #1e1e1e;
+    color: #d4d4d4;
     line-height: 1.6;
     margin: 0;
     padding: 0;
 }
 
 header {
-    background-color: #4e3276; /* Rich purple */
+    background-color: #4e3276; /* Rich purple for branding */
     color: #ffffff;
     padding: 30px 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -19,6 +19,7 @@ header h1 {
     text-transform: uppercase;
     font-size: 2em;
     margin: 0;
+    color: #36e0b8; /* Teal for highlights */
 }
 
 header p {
@@ -55,7 +56,7 @@ td {
     padding: 15px;
     text-align: center;
     font-size: 1em;
-    color: #ffffff;
+    color: #d4d4d4;
 }
 
 tr:nth-child(even) {
