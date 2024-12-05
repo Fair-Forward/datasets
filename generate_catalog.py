@@ -4,7 +4,7 @@ import os
 
 # Load the dataset
 DATA_CATALOG = "docs/data_catalog.xlsx"
-HTML_OUTPUT = "docs/index.md"
+HTML_OUTPUT = "docs/index.html"
 
 # Read Excel File
 df = pd.read_excel(DATA_CATALOG)
@@ -32,6 +32,32 @@ HTML_TEMPLATE = """
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Optional: Link to Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        table {{
+            width: 100%;
+            margin-top: 20px;
+        }}
+        th {{
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }}
+        td {{
+            padding: 10px;
+            text-align: center;
+        }}
+        tr:nth-child(even) {{
+            background-color: #f2f2f2;
+        }}
+        a {{
+            color: #007bff;
+            text-decoration: none;
+        }}
+        a:hover {{
+            text-decoration: underline;
+        }}
+    </style>
 </head>
 <body>
     <header class="bg-primary text-white p-4 mb-4">
@@ -67,10 +93,10 @@ for _, row in df.iterrows():
             row_data.append(link_columns[col](row[col]))
         else:
             row_data.append(str(row[col]) if pd.notna(row[col]) else "N/A")
-    rows.append(f"<tr>{''.join([f'<td>{html.escape(cell)}</td>' for cell in row_data])}</tr>")
+    rows.append(f"<tr>{''.join([f'<td>{cell}</td>' for cell in row_data])}</tr>")
 
 # Generate table header
-header_html = "<tr>" + "".join([f"<th>{html.escape(column_mapping[col])}</th>" for col in df.columns]) + "</tr>"
+header_html = "<tr>" + "".join([f"<th>{column_mapping[col]}</th>" for col in df.columns]) + "</tr>"
 
 # Construct complete table HTML
 table_html = f"<table class='table table-striped table-bordered table-hover'><thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
@@ -78,7 +104,7 @@ table_html = f"<table class='table table-striped table-bordered table-hover'><th
 # Insert the HTML table into the template
 output_html = HTML_TEMPLATE.format(table=table_html)
 
-# Write to the markdown file
+# Write to the HTML file
 with open(HTML_OUTPUT, "w") as file:
     file.write(output_html)
 
