@@ -11,15 +11,12 @@ df = pd.read_excel(DATA_CATALOG)
 
 # Define columns that need special hyperlink formatting
 link_columns = {
-    "Link to Dataset": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn btn-outline-primary\">Link</a>" if pd.notna(x) else "N/A",
-    "Documentation": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn btn-outline-info\">Details</a>" if pd.notna(x) else "N/A",
-    "Use-Case": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn btn-outline-success\">Use-Case</a>" if pd.notna(x) else "N/A"
+    "Link to Dataset": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn btn-outline-primary\"><i class='fas fa-link'></i> Link</a>" if pd.notna(x) else "N/A",
+    "Documentation": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn btn-outline-info\"><i class='fas fa-info-circle'></i> Details</a>" if pd.notna(x) else "N/A",
+    "Use-Case": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn btn-outline-success\"><i class='fas fa-tasks'></i> Use-Case</a>" if pd.notna(x) else "N/A"
 }
 
-# Create a mapping to add padding to certain column headers
-column_mapping = {col: col + ("&nbsp;" * 30 if col == "Description" else "") for col in df.columns}
-
-# HTML Template
+# HTML Template referencing the external CSS file
 HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html lang="en">
@@ -30,39 +27,21 @@ HTML_TEMPLATE = """
     <title>Data Catalog</title>
     <!-- Link to Bootstrap for styling -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Optional: Link to Font Awesome for icons -->
+    <!-- Link to Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <style>
-        body {{
-            background-color: #f4f4f4;
-            color: #333;
-            font-family: 'Arial', sans-serif;
-        }}
-        header, footer {{
-            background-color: #5a5a5a; /* Lighter dark gray */
-            color: #ffffff;
-        }}
-        h1, th {{
-            color: #ffffff;
-        }}
-    </style>
 </head>
 <body>
-    <header class="p-4 mb-4">
-        <div class="container">
-            <h1>Data Catalog</h1>
-            <p>An overview of datasets and resources funded by Fair Forward</p>
-        </div>
+    <header>
+        <h1>Data Catalog</h1>
+        <p>An overview of datasets and resources funded by Fair Forward</p>
     </header>
 
     <div class="container my-5">
         {table}
     </div>
 
-    <footer class="p-4 mt-4 text-center">
-        <div class="container">
-            <p>&copy; 2024 Fair Forward</p>
-        </div>
+    <footer class="text-center p-4">
+        <p>&copy; 2024 Fair Forward</p>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -71,23 +50,32 @@ HTML_TEMPLATE = """
 </html>
 """
 
-# Convert DataFrame to HTML table with formatted links
+# Convert DataFrame to HTML table with formatted links and interactive elements
 rows = []
-for _, row in df.iterrows():
+for index, row in df.iterrows():
     row_data = []
+    # Placeholder for profile picture (if applicable)
+    row_data.append(f"<img src='https://via.placeholder.com/40' alt='profile' class='profile'/>")
     for col in df.columns:
         # Check if the column needs special hyperlink formatting
         if col in link_columns:
             row_data.append(link_columns[col](row[col]))
         else:
             row_data.append(str(row[col]) if pd.notna(row[col]) else "N/A")
+    # Add action icons
+    row_data.append(
+        "<div class='action-icons'>"
+        "<i class='fas fa-edit'></i>"
+        "<i class='fas fa-trash-alt'></i>"
+        "</div>"
+    )
     rows.append(f"<tr>{''.join([f'<td>{cell}</td>' for cell in row_data])}</tr>")
 
-# Generate table header
-header_html = "<tr>" + "".join([f"<th>{column_mapping[col]}</th>" for col in df.columns]) + "</tr>"
+# Generate table header with a new "Profile" and "Action" column
+header_html = "<tr>" + "<th>Profile</th>" + "".join([f"<th>{html.escape(col)}</th>" for col in df.columns]) + "<th>Action</th></tr>"
 
 # Construct complete table HTML
-table_html = f"<table class='table table-striped table-bordered table-hover table-responsive'><thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
+table_html = f"<table class='table table-hover'><thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
 
 # Insert the HTML table into the template
 output_html = HTML_TEMPLATE.format(table=table_html)
