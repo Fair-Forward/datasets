@@ -1,0 +1,13 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #007bff; /* Replace with branding colors */
+}
+
+footer {
+    background-color: #6c757d; /* Replace with branding colors */
+    color: #fff;
+}
