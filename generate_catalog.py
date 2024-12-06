@@ -50,12 +50,12 @@ HTML_TEMPLATE = """
 </html>
 """
 
-# Generate table header without "Action" column
+# Generate table header
 header_html = "<tr>" + "".join(
-    [f"<th class='project-title'>{html.escape(col)}</th>" if col == "Project Title" else f"<th>{html.escape(col)}</th>" for col in df.columns]
+    [f"<th class='project-title'>{html.escape(col)}</th>" if col == "Project Title" else f"<th class='standard-column'>{html.escape(col)}</th>" for col in df.columns]
 ) + "</tr>"
 
-# Convert DataFrame to HTML table with formatted links and no action column
+# Convert DataFrame to HTML table with formatted links
 rows = []
 for index, row in df.iterrows():
     row_data = []
@@ -69,7 +69,7 @@ for index, row in df.iterrows():
         if col == "Project Title":
             row_data.append(f"<td class='project-title'>{cell_content}</td>")
         else:
-            row_data.append(f"<td>{cell_content}</td>")
+            row_data.append(f"<td class='standard-column'>{cell_content}</td>")
     rows.append(f"<tr>{''.join(row_data)}</tr>")
 
 # Construct complete table HTML

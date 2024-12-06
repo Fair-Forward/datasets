@@ -42,7 +42,6 @@ th {
     padding: 15px;
     font-weight: 600;
     border-bottom: 2px solid #ddd;
-    white-space: nowrap;
 }
 
 td {
@@ -54,7 +53,12 @@ td {
 
 /* Make Project Title column wider */
 th.project-title, td.project-title {
-    width: 40%; /* Make the Project Title column occupy more space */
+    width: 40%; /* Ensure Project Title takes up more space */
+}
+
+/* Set a smaller width for other standard columns */
+th.standard-column, td.standard-column {
+    width: auto; /* Allow other columns to adjust automatically */
 }
 
 tr:hover {
