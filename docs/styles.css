@@ -1,6 +1,6 @@
 body {
     font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f4f6f9; /* Softer background */
+    background-color: #f4f6f9; 
     color: #2c3e50;
     line-height: 1.6;
 }
@@ -26,7 +26,7 @@ header p {
 }
 
 .container {
-    max-width: 1400px; /* Slightly wider container */
+    max-width: 1400px; 
     margin: auto;
     padding: 20px;
 }
@@ -37,16 +37,11 @@ table {
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     background-color: #ffffff;
-}
-
-/* Advanced Table Styling */
-table {
-    border-collapse: separate;
-    border-spacing: 0;
+    table-layout: fixed; /* Fixed table layout */
 }
 
 thead {
-    background-color: #f8f9fa;
+    background-color: #f1f3f5;
 }
 
 th {
@@ -58,6 +53,9 @@ th {
     text-transform: uppercase;
     letter-spacing: 0.5px;
     border-bottom: 2px solid #e9ecef;
+    white-space: nowrap; /* Prevent header line breaks */
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 td {
@@ -65,15 +63,6 @@ td {
     border-bottom: 1px solid #e9ecef;
     vertical-align: middle;
     transition: background-color 0.3s ease;
-}
-
-/* Dynamic Column Width Strategy */
-table {
-    table-layout: auto; /* Allow dynamic sizing */
-    width: 100%;
-}
-
-th, td {
     word-wrap: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -82,14 +71,14 @@ th, td {
 /* Project Title Column Enhancement */
 th.project-title, td.project-title {
     width: 40%; 
-    min-width: 250px; /* Minimum width for readability */
-    white-space: normal; /* Allow wrapping */
+    min-width: 250px; 
+    white-space: normal; 
 }
 
 /* Standard Columns */
 th.standard-column, td.standard-column {
     width: auto;
-    max-width: 200px; /* Prevent extremely wide columns */
+    max-width: 200px; 
 }
 
 /* Hover and Interaction */
@@ -99,7 +88,7 @@ tr:hover {
 }
 
 .minimal-link {
-    color: #3498db; /* Brighter, more modern blue */
+    color: #3498db; 
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease;
@@ -122,7 +111,7 @@ footer {
 /* Responsive Adjustments */
 @media (max-width: 768px) {
     table {
-        font-size: 14px; /* Smaller font for mobile */
+        font-size: 14px; 
     }
     
     th, td {

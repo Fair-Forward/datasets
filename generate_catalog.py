@@ -7,7 +7,14 @@ DATA_CATALOG = "docs/data_catalog.xlsx"
 HTML_OUTPUT = "docs/index.html"
 
 # Read Excel File
-df = pd.read_excel(DATA_CATALOG)
+try:
+    df = pd.read_excel(DATA_CATALOG)
+except FileNotFoundError:
+    print(f"Error: {DATA_CATALOG} not found.")
+    exit(1)
+except Exception as e:
+    print(f"Error reading Excel file: {e}")
+    exit(1)
 
 # Define columns that need special hyperlink formatting
 link_columns = {
@@ -52,7 +59,7 @@ HTML_TEMPLATE = """
 
 # Generate table header
 header_html = "<tr>" + "".join(
-    [f"<th class='project-title'>{html.escape(col)}</th>" if col == "Project Title" else f"<th class='standard-column'>{html.escape(col)}</th>" for col in df.columns]
+    [f"<th class='project-title' title='{html.escape(col)}'>{html.escape(col)}</th>" if col == "Project Title" else f"<th class='standard-column' title='{html.escape(col)}'>{html.escape(col)}</th>" for col in df.columns]
 ) + "</tr>"
 
 # Convert DataFrame to HTML table with formatted links
@@ -65,11 +72,11 @@ for index, row in df.iterrows():
             cell_content = link_columns[col](row[col])
         else:
             cell_content = str(row[col]) if pd.notna(row[col]) else "N/A"
-        # Add class to "Project Title" column cells
+        # Add class and content handling to cells
         if col == "Project Title":
-            row_data.append(f"<td class='project-title'>{cell_content}</td>")
+            row_data.append(f"<td class='project-title' title='{html.escape(cell_content)}'>{html.escape(cell_content)}</td>")
         else:
-            row_data.append(f"<td class='standard-column'>{cell_content}</td>")
+            row_data.append(f"<td class='standard-column' title='{html.escape(cell_content)}'>{html.escape(cell_content)}</td>")
     rows.append(f"<tr>{''.join(row_data)}</tr>")
 
 # Construct complete table HTML
@@ -79,7 +86,9 @@ table_html = f"<table class='table table-hover table-bordered'><thead>{header_ht
 output_html = HTML_TEMPLATE.format(table=table_html)
 
 # Write to the HTML file
-with open(HTML_OUTPUT, "w") as file:
-    file.write(output_html)
-
-print("HTML file generated successfully.")
+try:
+    with open(HTML_OUTPUT, "w") as file:
+        file.write(output_html)
+    print("HTML file generated successfully.")
+except Exception as e:
+    print(f"Error writing HTML file: {e}")
