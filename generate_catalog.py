@@ -73,7 +73,7 @@ for index, row in df.iterrows():
 header_html = "<tr>" + "".join([f"<th>{html.escape(col)}</th>" for col in df.columns]) + "<th>Action</th></tr>"
 
 # Construct complete table HTML
-table_html = f"<table class='table table-hover'><thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
+table_html = f"<table class='table table-hover table-bordered'><thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
 
 # Insert the HTML table into the template
 output_html = HTML_TEMPLATE.format(table=table_html)
