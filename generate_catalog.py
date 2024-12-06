@@ -50,8 +50,8 @@ HTML_TEMPLATE = """
             <div class="header-text">
                 <h1 class="mb-3">Data Catalog</h1>
                 <p class="text-muted">An overview of datasets and resources funded by Fair Forward</p>
-            <img src="img/fair_forward.png" alt="Fair Forward Logo" class="header-logo me-3">
             </div>
+            <img src="img/fair_forward.png" alt="Fair Forward Logo" class="header-logo ms-auto">
         </div>
     </header>
 
