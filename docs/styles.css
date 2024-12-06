@@ -97,7 +97,7 @@ td.project-title {
 
 .project-title-wrapper {
     display: inline-block;
-    min-width: 600px; /* Adjust this to your desired width */
+    min-width: 1000px; /* Adjust this to your desired width */
     white-space: nowrap; /* Prevent text from wrapping to encourage wide column */
 }
 
