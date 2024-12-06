@@ -54,26 +54,11 @@ td {
 
 /* Make Project Title column wider */
 th.project-title, td.project-title {
-    width: 30%; /* Make the Project Title column occupy more space */
+    width: 40%; /* Make the Project Title column occupy more space */
 }
 
 tr:hover {
     background-color: #f9f9f9; /* Light gray highlight on hover */
-}
-
-.action-icons {
-    display: flex;
-    gap: 10px;
-}
-
-.action-icons i {
-    cursor: pointer;
-    color: #6c757d; /* Bootstrap muted color */
-    font-size: 1.2em;
-}
-
-.action-icons i:hover {
-    color: #007bff; /* Bootstrap primary blue on hover */
 }
 
 footer {
