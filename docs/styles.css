@@ -67,7 +67,7 @@ table.custom-table tr:hover td {
 
 th.project-title,
 td.project-title {
-    min-width: 500px;
+    min-width: 700px;
     font-weight: 600;
 }
 
