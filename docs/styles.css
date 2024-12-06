@@ -91,7 +91,7 @@ td.standard-column {
 th.project-title,
 td.project-title {
     min-width: 220px;
-    font-weight: 500;
+    font-weight: 700;
     background-color: #f8f9fa; /* Light gray background to highlight */
 }
 
