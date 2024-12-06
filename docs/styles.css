@@ -72,10 +72,10 @@ td.project-title {
 }
 
 /* Standard columns can be flexible */
-/* th.standard-column,
+th.standard-column,
 td.standard-column {
-    min-width: 150px;
-} */
+    min-width: 200px;
+}
 
 /* Minimal link styling for hyperlinks */
 .minimal-link {
