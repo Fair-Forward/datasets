@@ -18,19 +18,15 @@ header {
     max-width: 80%;
 }
 
-.header-logo-container {
-    display: flex;
-    align-items: center;
-}
-
 .header-logo {
-    height: 50px; /* Adjust the height to make it subtle */
-    opacity: 0.9; /* Slight transparency for subtlety */
+    height: 30px; /* Adjust this size as needed for subtlety */
+    width: auto;  /* Keeps aspect ratio intact */
+    opacity: 0.9;
     transition: opacity 0.3s ease;
 }
 
 .header-logo:hover {
-    opacity: 1.0; /* Remove transparency on hover */
+    opacity: 1.0;
 }
 
 h1 {
