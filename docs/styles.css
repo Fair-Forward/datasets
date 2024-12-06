@@ -19,7 +19,7 @@ header {
 }
 
 .header-logo {
-    height: 40px; /* Adjust as needed */
+    height: 50px; /* Adjust as needed */
     width: auto;
     opacity: 0.9;
     transition: opacity 0.3s ease;
