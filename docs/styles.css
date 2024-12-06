@@ -74,7 +74,7 @@ td.project-title {
 /* Standard columns can be flexible */
 th.standard-column,
 td.standard-column {
-    min-width: 200px;
+    min-width: 100px;
 }
 
 /* Minimal link styling for hyperlinks */
