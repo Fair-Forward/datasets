@@ -84,7 +84,7 @@ table.custom-table tr:hover td {
 /* Standard columns can be flexible */
 th.standard-column,
 td.standard-column {
-    min-width: 110px;
+    min-width: 120px;
 }
 
 th.project-title,

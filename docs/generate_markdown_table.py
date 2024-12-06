@@ -16,7 +16,7 @@ link_columns = {
 column_mapping = {col: col + ("&nbsp;" * 30 if col == "Description" else "") for col in df.columns}
 
 # Open the Markdown file for writing
-output_file = "docs/index.md"
+output_file = "../README.md"
 with open(output_file, "w") as f:
     # if styling options shall be added - add html snippets here:
     #f.write('<link rel="stylesheet" href="assets/css/style.css">')
