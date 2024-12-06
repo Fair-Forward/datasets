@@ -17,11 +17,18 @@ except Exception as e:
     print(f"Error reading Excel file: {e}")
     exit(1)
 
-# Define columns that need special hyperlink formatting (already existing logic)
+# Define columns that need special hyperlink formatting
 link_columns = {
     "Link to Dataset": lambda x: f'<a href="{x}" target="_blank" class="minimal-link">Link</a>' if pd.notna(x) else "N/A",
     "Documentation": lambda x: f'<a href="{x}" target="_blank" class="minimal-link">Details</a>' if pd.notna(x) else "N/A",
     "Use-Case": lambda x: f'<a href="{x}" target="_blank" class="minimal-link">Use-Case</a>' if pd.notna(x) else "N/A"
+}
+
+# Map categories to CSS classes for labels
+category_class_map = {
+    "Climate Adaption": "label-climate",
+    "Agriculture": "label-agriculture",
+    "Language Technology": "label-language"
 }
 
 # Function to convert markdown links to HTML links
@@ -31,6 +38,18 @@ def convert_markdown_links_to_html(text):
     link_pattern = r"\[([^\]]+)\]\(([^)]+)\)"
     # Replace markdown links with HTML anchor tags
     return re.sub(link_pattern, r'<a href="\2" target="_blank" class="minimal-link">\1</a>', text)
+
+# Function to format SDG/Domain cell content as labels
+def format_sdg_domain_cell(value):
+    if pd.isna(value):
+        return "N/A"
+    # If multiple categories appear, assume they are comma-separated
+    categories = [cat.strip() for cat in str(value).split(",")]
+    labels_html = []
+    for cat in categories:
+        css_class = category_class_map.get(cat, "label-default")
+        labels_html.append(f'<span class="label {css_class}">{html.escape(cat)}</span>')
+    return " ".join(labels_html)
 
 # HTML Template referencing the external CSS file
 HTML_TEMPLATE = """
@@ -45,7 +64,6 @@ HTML_TEMPLATE = """
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
 </head>
 <body>
-
     <header>
         <div class="container d-flex align-items-center justify-content-between">
             <div class="header-text">
@@ -80,30 +98,29 @@ header_html = "<tr>" + "".join(
     ]
 ) + "</tr>"
 
-# Convert DataFrame to HTML table with formatted links
+# Convert DataFrame to HTML table with formatted links and SDG/Domain labels
 rows = []
 for index, row in df.iterrows():
     row_data = []
     for col in df.columns:
         cell_value = row[col]
+        cell_content = str(cell_value) if pd.notna(cell_value) else "N/A"
+        cell_content = convert_markdown_links_to_html(cell_content)
+
         if col in link_columns:
-            # For known link columns
+            # Known link columns
             link_html = link_columns[col](cell_value)
             row_data.append(f"<td class='standard-column' title='{html.escape(str(cell_value))}'>{link_html}</td>")
+        elif col == "SDG/Domain":
+            # Format as labels
+            formatted = format_sdg_domain_cell(cell_value)
+            row_data.append(f"<td class='standard-column' title='{html.escape(cell_content, quote=True)}'>{formatted}</td>")
+        elif col == "Project Title":
+            # Special class for project title
+            row_data.append(f"<td class='project-title' title='{html.escape(cell_content, quote=True)}'>{cell_content}</td>")
         else:
-            # For other columns, convert markdown links if present
-            cell_content = str(cell_value) if pd.notna(cell_value) else "N/A"
-            cell_content = convert_markdown_links_to_html(cell_content)
-            # Escape only non-HTML parts if needed. Since we've added <a> tags,
-            # we should not re-escape the entire cell_content or we lose anchor tags.
-            # Just ensure that no malicious HTML is inserted. If you're confident that the Excel 
-            # does not contain malicious HTML, you can trust after conversion.
-            
-            # Project Title gets a special class
-            if col == "Project Title":
-                row_data.append(f"<td class='project-title' title='{html.escape(cell_content, quote=True)}'>{cell_content}</td>")
-            else:
-                row_data.append(f"<td class='standard-column' title='{html.escape(cell_content, quote=True)}'>{cell_content}</td>")
+            # Normal cell
+            row_data.append(f"<td class='standard-column' title='{html.escape(cell_content, quote=True)}'>{cell_content}</td>")
     rows.append(f"<tr>{''.join(row_data)}</tr>")
 
 # Construct complete table HTML

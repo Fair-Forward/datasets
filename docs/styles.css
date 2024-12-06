@@ -112,3 +112,31 @@ footer {
 footer p {
     margin: 0;
 }
+
+/* Label Styles (Similar to GitHub Labels) */
+.label {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 3px;
+    color: #ffffff;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+    white-space: nowrap;
+    background-color: #6c757d; /* fallback default */
+}
+
+/* Specific category label colors */
+.label-climate {
+    background-color: #17a2b8; /* teal tone for Climate Adaption */
+}
+
+.label-agriculture {
+    background-color: #28a745; /* green tone for Agriculture */
+}
+
+.label-language {
+    background-color: #6f42c1; /* purple tone for Language Technology */
+}
