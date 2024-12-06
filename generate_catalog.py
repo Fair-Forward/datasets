@@ -17,7 +17,7 @@ except Exception as e:
     print(f"Error reading Excel file: {e}")
     exit(1)
 
-# Define columns that need special hyperlink formatting
+# Define columns that need special hyperlink formatting (already existing logic)
 link_columns = {
     "Link to Dataset": lambda x: f'<a href="{x}" target="_blank" class="minimal-link">Link</a>' if pd.notna(x) else "N/A",
     "Documentation": lambda x: f'<a href="{x}" target="_blank" class="minimal-link">Details</a>' if pd.notna(x) else "N/A",
@@ -32,7 +32,7 @@ def convert_markdown_links_to_html(text):
     # Replace markdown links with HTML anchor tags
     return re.sub(link_pattern, r'<a href="\2" target="_blank" class="minimal-link">\1</a>', text)
 
-# HTML template
+# HTML Template referencing the external CSS file
 HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html lang="en">
@@ -45,6 +45,7 @@ HTML_TEMPLATE = """
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
 </head>
 <body>
+
     <header>
         <div class="container d-flex align-items-center justify-content-between">
             <div class="header-text">
@@ -73,50 +74,40 @@ HTML_TEMPLATE = """
 # Generate table header
 header_html = "<tr>" + "".join(
     [
-        f"<th class='project-title' title='{html.escape(col)}'>{html.escape(col)}</th>" if col == "Project Title" 
-        else f"<th class='standard-column' title='{html.escape(col)}'>{html.escape(col)}</th>"
+        f"<th class='project-title' title='{html.escape(col)}'>{html.escape(col)}</th>"
+        if col == "Project Title" else f"<th class='standard-column' title='{html.escape(col)}'>{html.escape(col)}</th>"
         for col in df.columns
     ]
 ) + "</tr>"
 
-# Build table rows
+# Convert DataFrame to HTML table with formatted links
 rows = []
-for _, row in df.iterrows():
+for index, row in df.iterrows():
     row_data = []
     for col in df.columns:
         cell_value = row[col]
-
-        # Handle known link columns
         if col in link_columns:
+            # For known link columns
             link_html = link_columns[col](cell_value)
             row_data.append(f"<td class='standard-column' title='{html.escape(str(cell_value))}'>{link_html}</td>")
         else:
-            # Convert markdown links for other columns
+            # For other columns, convert markdown links if present
             cell_content = str(cell_value) if pd.notna(cell_value) else "N/A"
             cell_content = convert_markdown_links_to_html(cell_content)
-
+            # Escape only non-HTML parts if needed. Since we've added <a> tags,
+            # we should not re-escape the entire cell_content or we lose anchor tags.
+            # Just ensure that no malicious HTML is inserted. If you're confident that the Excel 
+            # does not contain malicious HTML, you can trust after conversion.
+            
+            # Project Title gets a special class
             if col == "Project Title":
-                # Wrap in a project-title-wrapper with non-breaking spaces to enforce width
-                row_data.append(
-                    f"<td class='project-title' title='{html.escape(cell_content, quote=True)}'>"
-                    f"<div class='project-title-wrapper'>{cell_content}&nbsp;&nbsp;&nbsp;&nbsp;</div>"
-                    f"</td>"
-                )
+                row_data.append(f"<td class='project-title' title='{html.escape(cell_content, quote=True)}'>{cell_content}</td>")
             else:
                 row_data.append(f"<td class='standard-column' title='{html.escape(cell_content, quote=True)}'>{cell_content}</td>")
     rows.append(f"<tr>{''.join(row_data)}</tr>")
 
-# Create a colgroup to give a hint for the project title column width
-colgroup_html = "<colgroup>"
-for col in df.columns:
-    if col == "Project Title":
-        colgroup_html += "<col class='project-title-col'>"
-    else:
-        colgroup_html += "<col>"
-colgroup_html += "</colgroup>"
-
 # Construct complete table HTML
-table_html = f"<table class='table table-hover custom-table'>{colgroup_html}<thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
+table_html = f"<table class='table table-hover custom-table'><thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
 
 # Insert the HTML table into the template
 output_html = HTML_TEMPLATE.format(table=table_html)

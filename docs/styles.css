@@ -11,6 +11,7 @@ header {
     background-color: #ffffff;
     padding: 60px 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    /* The header layout is handled by Bootstrap classes in HTML, so no extra display: flex here */
 }
 
 .header-text {
@@ -38,16 +39,11 @@ h1 {
     max-width: 1200px;
 }
 
-.table-container {
-    /* Allow horizontal scrolling if the table gets wider than the container */
-    overflow-x: auto;
-}
-
 table.custom-table {
     width: 100%;
     border-collapse: collapse;
     background-color: #ffffff;
-    table-layout: auto; /* Let the browser decide widths */
+    table-layout: auto; 
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     border-radius: 8px;
     overflow: hidden;
@@ -85,25 +81,19 @@ table.custom-table tr:hover td {
     background-color: #f1f3f5;
 }
 
-/* Standard columns flexible */
+/* Standard columns can be flexible */
 th.standard-column,
 td.standard-column {
     min-width: 140px;
 }
 
-/* Project Title Column */
 th.project-title,
 td.project-title {
+    min-width: 2000px;
     font-weight: 400;
 }
 
-/* Force Project Title column to need more space */
-.project-title-wrapper {
-    display: inline-block;
-    white-space: nowrap; /* Prevent wrapping */
-}
-
-/* Minimal link styling */
+/* Minimal link styling for hyperlinks */
 .minimal-link {
     color: #007bff;
     text-decoration: none;
