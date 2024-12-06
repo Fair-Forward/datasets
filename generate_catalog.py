@@ -26,7 +26,7 @@ link_columns = {
 
 # Map categories to CSS classes for labels
 category_class_map = {
-    "Climate Adaption": "label-climate",
+    "Climate Adaptation": "label-climate",
     "Agriculture": "label-agriculture",
     "Language Technology": "label-language"
 }
