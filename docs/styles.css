@@ -43,10 +43,11 @@ table.custom-table {
     width: 100%;
     border-collapse: collapse;
     background-color: #ffffff;
-    table-layout: auto; 
+    table-layout: auto;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     border-radius: 8px;
     overflow: hidden;
+    font-family: Consolas, Menlo, Monaco, "Courier New", monospace; /* Add this line */
 }
 
 table.custom-table thead {
