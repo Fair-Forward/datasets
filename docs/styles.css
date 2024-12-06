@@ -11,7 +11,6 @@ header {
     background-color: #ffffff;
     padding: 60px 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    /* The header layout is handled by Bootstrap classes in HTML, so no extra display: flex here */
 }
 
 .header-text {
@@ -43,7 +42,8 @@ table.custom-table {
     width: 100%;
     border-collapse: collapse;
     background-color: #ffffff;
-    table-layout: fixed; 
+    /* Use table-layout: auto for flexible column widths */
+    table-layout: auto;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     border-radius: 8px;
     overflow: hidden;
@@ -87,10 +87,18 @@ td.standard-column {
     min-width: 140px;
 }
 
+/* Project Title Column */
+/* The main trick: A wrapper inside this cell that enforces a minimum width */
 th.project-title,
 td.project-title {
-    min-width: 200px;
+    /* no fixed width here - rely on wrapper */
     font-weight: 400;
+}
+
+.project-title-wrapper {
+    display: inline-block;
+    min-width: 400px; /* Adjust this to your desired width */
+    white-space: nowrap; /* Prevent text from wrapping to encourage wide column */
 }
 
 /* Minimal link styling for hyperlinks */

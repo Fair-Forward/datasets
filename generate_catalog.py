@@ -17,7 +17,7 @@ except Exception as e:
     print(f"Error reading Excel file: {e}")
     exit(1)
 
-# Define columns that need special hyperlink formatting (already existing logic)
+# Define columns that need special hyperlink formatting
 link_columns = {
     "Link to Dataset": lambda x: f'<a href="{x}" target="_blank" class="minimal-link">Link</a>' if pd.notna(x) else "N/A",
     "Documentation": lambda x: f'<a href="{x}" target="_blank" class="minimal-link">Details</a>' if pd.notna(x) else "N/A",
@@ -32,7 +32,7 @@ def convert_markdown_links_to_html(text):
     # Replace markdown links with HTML anchor tags
     return re.sub(link_pattern, r'<a href="\2" target="_blank" class="minimal-link">\1</a>', text)
 
-# HTML Template referencing the external CSS file
+# HTML Template
 HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +45,6 @@ HTML_TEMPLATE = """
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
 </head>
 <body>
-
     <header>
         <div class="container d-flex align-items-center justify-content-between">
             <div class="header-text">
@@ -94,19 +93,16 @@ for index, row in df.iterrows():
             # For other columns, convert markdown links if present
             cell_content = str(cell_value) if pd.notna(cell_value) else "N/A"
             cell_content = convert_markdown_links_to_html(cell_content)
-            # Escape only non-HTML parts if needed. Since we've added <a> tags,
-            # we should not re-escape the entire cell_content or we lose anchor tags.
-            # Just ensure that no malicious HTML is inserted. If you're confident that the Excel 
-            # does not contain malicious HTML, you can trust after conversion.
-            
-            # Project Title gets a special class
             if col == "Project Title":
-                row_data.append(f"<td class='project-title' title='{html.escape(cell_content, quote=True)}'>{cell_content}</td>")
+                # Wrap content in a project-title-wrapper div to enforce width
+                row_data.append(
+                    f"<td class='project-title' title='{html.escape(cell_content, quote=True)}'><div class='project-title-wrapper'>{cell_content}</div></td>"
+                )
             else:
                 row_data.append(f"<td class='standard-column' title='{html.escape(cell_content, quote=True)}'>{cell_content}</td>")
     rows.append(f"<tr>{''.join(row_data)}</tr>")
 
-# Construct complete table HTML
+# Construct complete table HTML with table-layout: auto
 table_html = f"<table class='table table-hover custom-table'><thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
 
 # Insert the HTML table into the template
