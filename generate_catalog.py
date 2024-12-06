@@ -50,6 +50,11 @@ HTML_TEMPLATE = """
 </html>
 """
 
+# Generate table header with an "Action" column
+header_html = "<tr>" + "".join(
+    [f"<th class='project-title'>{html.escape(col)}</th>" if col == "Project Title" else f"<th>{html.escape(col)}</th>" for col in df.columns]
+) + "<th>Action</th></tr>"
+
 # Convert DataFrame to HTML table with formatted links and interactive elements
 rows = []
 for index, row in df.iterrows():
@@ -57,20 +62,22 @@ for index, row in df.iterrows():
     for col in df.columns:
         # Check if the column needs special hyperlink formatting
         if col in link_columns:
-            row_data.append(link_columns[col](row[col]))
+            cell_content = link_columns[col](row[col])
         else:
-            row_data.append(str(row[col]) if pd.notna(row[col]) else "N/A")
+            cell_content = str(row[col]) if pd.notna(row[col]) else "N/A"
+        # Add class to "Project Title" column cells
+        if col == "Project Title":
+            row_data.append(f"<td class='project-title'>{cell_content}</td>")
+        else:
+            row_data.append(f"<td>{cell_content}</td>")
     # Add action icons
     row_data.append(
-        "<div class='action-icons'>"
+        "<td><div class='action-icons'>"
         "<i class='fas fa-edit'></i>"
         "<i class='fas fa-trash-alt'></i>"
-        "</div>"
+        "</div></td>"
     )
-    rows.append(f"<tr>{''.join([f'<td>{cell}</td>' for cell in row_data])}</tr>")
-
-# Generate table header with an "Action" column
-header_html = "<tr>" + "".join([f"<th>{html.escape(col)}</th>" for col in df.columns]) + "<th>Action</th></tr>"
+    rows.append(f"<tr>{''.join(row_data)}</tr>")
 
 # Construct complete table HTML
 table_html = f"<table class='table table-hover table-bordered'><thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"

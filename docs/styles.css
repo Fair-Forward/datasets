@@ -52,6 +52,11 @@ td {
     color: #333;
 }
 
+/* Make Project Title column wider */
+th.project-title, td.project-title {
+    width: 30%; /* Make the Project Title column occupy more space */
+}
+
 tr:hover {
     background-color: #f9f9f9; /* Light gray highlight on hover */
 }
