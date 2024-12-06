@@ -92,7 +92,8 @@ th.project-title,
 td.project-title {
     min-width: 220px;
     font-weight: 500; /* Slightly bolder to stand out */
-    background-color: #f8f9fa; /* Light gray background to highlight */
+    background-color: #e4e6e9; /* Light gray background to highlight */
+    border-left: 2px solid #e9ecef;
 }
 
 /* Minimal link styling for hyperlinks */
