@@ -32,7 +32,7 @@ def convert_markdown_links_to_html(text):
     # Replace markdown links with HTML anchor tags
     return re.sub(link_pattern, r'<a href="\2" target="_blank" class="minimal-link">\1</a>', text)
 
-# HTML Template
+# HTML template
 HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html lang="en">
@@ -73,37 +73,50 @@ HTML_TEMPLATE = """
 # Generate table header
 header_html = "<tr>" + "".join(
     [
-        f"<th class='project-title' title='{html.escape(col)}'>{html.escape(col)}</th>"
-        if col == "Project Title" else f"<th class='standard-column' title='{html.escape(col)}'>{html.escape(col)}</th>"
+        f"<th class='project-title' title='{html.escape(col)}'>{html.escape(col)}</th>" if col == "Project Title" 
+        else f"<th class='standard-column' title='{html.escape(col)}'>{html.escape(col)}</th>"
         for col in df.columns
     ]
 ) + "</tr>"
 
-# Convert DataFrame to HTML table with formatted links
+# Build table rows
 rows = []
-for index, row in df.iterrows():
+for _, row in df.iterrows():
     row_data = []
     for col in df.columns:
         cell_value = row[col]
+
+        # Handle known link columns
         if col in link_columns:
-            # For known link columns
             link_html = link_columns[col](cell_value)
             row_data.append(f"<td class='standard-column' title='{html.escape(str(cell_value))}'>{link_html}</td>")
         else:
-            # For other columns, convert markdown links if present
+            # Convert markdown links for other columns
             cell_content = str(cell_value) if pd.notna(cell_value) else "N/A"
             cell_content = convert_markdown_links_to_html(cell_content)
+
             if col == "Project Title":
-                # Wrap content in a project-title-wrapper div to enforce width
+                # Wrap in a project-title-wrapper with non-breaking spaces to enforce width
                 row_data.append(
-                    f"<td class='project-title' title='{html.escape(cell_content, quote=True)}'><div class='project-title-wrapper'>{cell_content}</div></td>"
+                    f"<td class='project-title' title='{html.escape(cell_content, quote=True)}'>"
+                    f"<div class='project-title-wrapper'>{cell_content}&nbsp;&nbsp;&nbsp;&nbsp;</div>"
+                    f"</td>"
                 )
             else:
                 row_data.append(f"<td class='standard-column' title='{html.escape(cell_content, quote=True)}'>{cell_content}</td>")
     rows.append(f"<tr>{''.join(row_data)}</tr>")
 
-# Construct complete table HTML with table-layout: auto
-table_html = f"<table class='table table-hover custom-table'><thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
+# Create a colgroup to give a hint for the project title column width
+colgroup_html = "<colgroup>"
+for col in df.columns:
+    if col == "Project Title":
+        colgroup_html += "<col class='project-title-col'>"
+    else:
+        colgroup_html += "<col>"
+colgroup_html += "</colgroup>"
+
+# Construct complete table HTML
+table_html = f"<table class='table table-hover custom-table'>{colgroup_html}<thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
 
 # Insert the HTML table into the template
 output_html = HTML_TEMPLATE.format(table=table_html)
