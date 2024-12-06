@@ -65,7 +65,7 @@ table.custom-table td {
 }
 
 table.custom-table th {
-    font-weight: 600;
+    font-weight: 400;
     text-transform: capitalize;
     letter-spacing: 0.5px;
     color: #343a40;
@@ -91,8 +91,8 @@ td.standard-column {
 th.project-title,
 td.project-title {
     min-width: 220px !important;
-    font-weight: 700 !important;
-    background-color: #8daccb !important;
+    font-weight: 400 !important;
+    background-color: #d2d8dd !important;
 }
 
 
