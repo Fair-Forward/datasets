@@ -90,10 +90,11 @@ td.standard-column {
 /* Highlight the project-title column */
 th.project-title,
 td.project-title {
-    min-width: 220px;
-    font-weight: 700;
-    background-color: #f8f9fa; /* Light gray background to highlight */
+    min-width: 220px !important;
+    font-weight: 700 !important;
+    background-color: #cbced1 !important;
 }
+
 
 /* Minimal link styling for hyperlinks */
 .minimal-link {
