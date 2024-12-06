@@ -11,9 +11,9 @@ df = pd.read_excel(DATA_CATALOG)
 
 # Define columns that need special hyperlink formatting
 link_columns = {
-    "Link to Dataset": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn btn-outline-primary\"><i class='fas fa-link'></i> Link</a>" if pd.notna(x) else "N/A",
-    "Documentation": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn btn-outline-info\"><i class='fas fa-info-circle'></i> Details</a>" if pd.notna(x) else "N/A",
-    "Use-Case": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn btn-outline-success\"><i class='fas fa-tasks'></i> Use-Case</a>" if pd.notna(x) else "N/A"
+    "Link to Dataset": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn-link\">Link</a>" if pd.notna(x) else "N/A",
+    "Documentation": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn-link\">Details</a>" if pd.notna(x) else "N/A",
+    "Use-Case": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn-link\">Use-Case</a>" if pd.notna(x) else "N/A"
 }
 
 # HTML Template referencing the external CSS file
@@ -54,8 +54,6 @@ HTML_TEMPLATE = """
 rows = []
 for index, row in df.iterrows():
     row_data = []
-    # Placeholder for profile picture (if applicable)
-    row_data.append(f"<img src='https://via.placeholder.com/40' alt='profile' class='profile'/>")
     for col in df.columns:
         # Check if the column needs special hyperlink formatting
         if col in link_columns:
@@ -71,8 +69,8 @@ for index, row in df.iterrows():
     )
     rows.append(f"<tr>{''.join([f'<td>{cell}</td>' for cell in row_data])}</tr>")
 
-# Generate table header with a new "Profile" and "Action" column
-header_html = "<tr>" + "<th>Profile</th>" + "".join([f"<th>{html.escape(col)}</th>" for col in df.columns]) + "<th>Action</th></tr>"
+# Generate table header with a new "Action" column
+header_html = "<tr>" + "".join([f"<th>{html.escape(col)}</th>" for col in df.columns]) + "<th>Action</th></tr>"
 
 # Construct complete table HTML
 table_html = f"<table class='table table-hover'><thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
