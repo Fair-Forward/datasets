@@ -1,64 +1,66 @@
 body {
-    background-color: #f9fafb;  /* Soft light gray background */
-    color: #4a4a4a;  /* Soft dark text color */
     font-family: 'Arial', sans-serif;
+    background-color: #333333; /* Consistent dark gray background */
+    color: #d4d4d4;
+    margin: 0;
+    padding: 0;
 }
 
 header {
-    background-color: #ffffff; /* White background for header */
-    color: #333;
-    padding: 20px 0;
-    border-bottom: 1px solid #ddd;
+    background-color: #4e4e4e; /* Slightly lighter dark gray for differentiation */
+    color: #36e0b8; /* Teal for headers */
+    padding: 30px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
-h1 {
+header h1 {
     font-weight: bold;
+    text-transform: uppercase;
     font-size: 2em;
     margin: 0;
 }
 
+header p {
+    font-size: 1.2em;
+    margin-top: 5px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    background-color: #4e4e4e; /* Darker background to match header and footer */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 table {
     width: 100%;
-    margin: 20px 0;
+    margin-top: 20px;
     border-collapse: collapse;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    table-layout: auto; /* Allows dynamic adjustment of column widths */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    table-layout: fixed; /* Ensures even distribution of column widths */
+    background-color: #333333; /* Consistent table background */
 }
 
 th {
-    background-color: #f1f1f1; /* Light gray for header */
-    color: #333;
+    background-color: #444444; /* Lighter than table body for distinction */
+    color: #d4d4d4;
     text-align: left;
     padding: 15px;
     font-weight: 600;
-    border-bottom: 1px solid #ddd;
-    white-space: normal; /* Allow wrapping in header text */
+    border-bottom: 2px solid #ddd;
+    word-wrap: normal; /* Allow text wrapping without breaking words */
 }
 
 td {
     padding: 15px;
     text-align: left;
     border-bottom: 1px solid #ddd;
-    word-wrap: break-word; /* Allows long text to wrap nicely */
-}
-
-tr:hover {
-    background-color: #f0f8ff;
-}
-
-.action-icons {
-    display: flex;
-    gap: 10px;
-}
-
-.action-icons i {
-    cursor: pointer;
-    color: #6c757d; /* Bootstrap muted color */
-}
-
-.action-icons i:hover {
-    color: #007bff; /* Bootstrap primary color */
+    color: #d4d4d4;
+    word-wrap: break-word;
+    white-space: normal; /* Allow content to wrap, avoiding awkward breaks */
 }
 
 .profile {
@@ -68,15 +70,30 @@ tr:hover {
     object-fit: cover;
 }
 
-.toggle {
-    display: inline-block;
+tr:hover {
+    background-color: #4e4e4e; /* Light highlight on hover */
+}
+
+.action-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.action-icons i {
+    cursor: pointer;
+    color: #6c757d; /* Bootstrap muted color */
+    font-size: 1.2em;
+}
+
+.action-icons i:hover {
+    color: #36e0b8; /* Match the teal color used elsewhere */
 }
 
 footer {
-    background-color: #ffffff; /* White background for footer */
-    color: #333;
+    background-color: #4e4e4e; /* Consistent with header */
+    color: #ffffff;
     padding: 20px 0;
     margin-top: 40px;
-    border-top: 1px solid #ddd;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
