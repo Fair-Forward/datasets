@@ -1,6 +1,7 @@
 import pandas as pd
 import html
 import os
+import re
 
 # Load the dataset
 DATA_CATALOG = "docs/data_catalog.xlsx"
@@ -16,13 +17,20 @@ except Exception as e:
     print(f"Error reading Excel file: {e}")
     exit(1)
 
-# Define columns that need special hyperlink formatting
-# When rendering these, we won't HTML-escape the link tags themselves.
+# Define columns that need special hyperlink formatting (already existing logic)
 link_columns = {
     "Link to Dataset": lambda x: f'<a href="{x}" target="_blank" class="minimal-link">Link</a>' if pd.notna(x) else "N/A",
     "Documentation": lambda x: f'<a href="{x}" target="_blank" class="minimal-link">Details</a>' if pd.notna(x) else "N/A",
     "Use-Case": lambda x: f'<a href="{x}" target="_blank" class="minimal-link">Use-Case</a>' if pd.notna(x) else "N/A"
 }
+
+# Function to convert markdown links to HTML links
+def convert_markdown_links_to_html(text):
+    if not text or not isinstance(text, str):
+        return text
+    link_pattern = r"\[([^\]]+)\]\(([^)]+)\)"
+    # Replace markdown links with HTML anchor tags
+    return re.sub(link_pattern, r'<a href="\2" target="_blank" class="minimal-link">\1</a>', text)
 
 # HTML Template referencing the external CSS file
 HTML_TEMPLATE = """
@@ -73,21 +81,26 @@ for index, row in df.iterrows():
     for col in df.columns:
         cell_value = row[col]
         if col in link_columns:
-            # For link columns, insert the anchor HTML directly and don't escape
+            # For known link columns
             link_html = link_columns[col](cell_value)
-            # Use the original cell_value for the title attribute (escaped)
             row_data.append(f"<td class='standard-column' title='{html.escape(str(cell_value))}'>{link_html}</td>")
         else:
-            # For normal columns, escape the cell content
+            # For other columns, convert markdown links if present
             cell_content = str(cell_value) if pd.notna(cell_value) else "N/A"
+            cell_content = convert_markdown_links_to_html(cell_content)
+            # Escape only non-HTML parts if needed. Since we've added <a> tags,
+            # we should not re-escape the entire cell_content or we lose anchor tags.
+            # Just ensure that no malicious HTML is inserted. If you're confident that the Excel 
+            # does not contain malicious HTML, you can trust after conversion.
+            
+            # Project Title gets a special class
             if col == "Project Title":
-                row_data.append(f"<td class='project-title' title='{html.escape(cell_content)}'>{html.escape(cell_content)}</td>")
+                row_data.append(f"<td class='project-title' title='{html.escape(cell_content, quote=True)}'>{cell_content}</td>")
             else:
-                row_data.append(f"<td class='standard-column' title='{html.escape(cell_content)}'>{html.escape(cell_content)}</td>")
+                row_data.append(f"<td class='standard-column' title='{html.escape(cell_content, quote=True)}'>{cell_content}</td>")
     rows.append(f"<tr>{''.join(row_data)}</tr>")
 
 # Construct complete table HTML
-# Removed 'table-bordered' class to rely on custom CSS for horizontal lines only
 table_html = f"<table class='table table-hover custom-table'><thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
 
 # Insert the HTML table into the template
