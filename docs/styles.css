@@ -3,6 +3,8 @@ body {
     background-color: #f8f9fa;
     color: #343a40;
     line-height: 1.6;
+    margin: 0;
+    padding: 0;
 }
 
 header {
@@ -21,65 +23,77 @@ h1 {
     max-width: 1200px;
 }
 
-table {
+table.custom-table {
     width: 100%;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border-collapse: collapse;
     background-color: #ffffff;
     table-layout: auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-thead {
+table.custom-table thead {
     background-color: #f1f3f5;
 }
 
-th {
-    background-color: #f1f3f5;
-    color: #343a40;
+table.custom-table th,
+table.custom-table td {
     text-align: left;
     padding: 1rem;
+    vertical-align: middle;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border: none;
+}
+
+table.custom-table th {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    color: #343a40;
     border-bottom: 2px solid #e9ecef;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
-td {
-    padding: 1rem;
+table.custom-table td {
     border-bottom: 1px solid #e9ecef;
-    vertical-align: middle;
     transition: background-color 0.3s ease;
-    word-wrap: break-word;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
-th.project-title,
-td.project-title {
-    width: auto;
-    min-width: 250px;
-    white-space: normal;
-}
-
-th.standard-column,
-td.standard-column {
-    width: auto;
-    min-width: 150px;
-}
-
-tr:hover {
+table.custom-table tr:hover td {
     background-color: #f1f3f5;
 }
 
-.btn {
-    font-size: 0.875rem;
+/* Project Title Column */
+th.project-title,
+td.project-title {
+    min-width: 250px;
+    font-weight: 600;
+}
+
+/* Standard columns can be flexible */
+th.standard-column,
+td.standard-column {
+    min-width: 150px;
+}
+
+/* Minimal link styling for hyperlinks */
+.minimal-link {
+    color: #007bff;
+    text-decoration: none;
     font-weight: 500;
+}
+
+.minimal-link:hover {
+    text-decoration: underline;
 }
 
 footer {
     color: #6c757d;
+    text-align: left;
+}
+
+footer p {
+    margin: 0;
 }
