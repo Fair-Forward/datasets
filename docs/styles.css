@@ -38,12 +38,16 @@ h1 {
     max-width: 1200px;
 }
 
+.table-container {
+    /* Allow horizontal scrolling if the table gets wider than the container */
+    overflow-x: auto;
+}
+
 table.custom-table {
     width: 100%;
     border-collapse: collapse;
     background-color: #ffffff;
-    /* Using table-layout: auto to let browser decide widths based on content */
-    table-layout: auto;
+    table-layout: auto; /* Let the browser decide widths */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     border-radius: 8px;
     overflow: hidden;
@@ -81,11 +85,6 @@ table.custom-table tr:hover td {
     background-color: #f1f3f5;
 }
 
-/* Hints for column widths */
-.project-title-col {
-    width: 400px; /* Hint for project title column width */
-}
-
 /* Standard columns flexible */
 th.standard-column,
 td.standard-column {
@@ -98,10 +97,9 @@ td.project-title {
     font-weight: 400;
 }
 
-/* Wrapper to encourage wider column for Project Title */
+/* Force Project Title column to need more space */
 .project-title-wrapper {
     display: inline-block;
-    min-width: 400px; /* Encourage a minimum width */
     white-space: nowrap; /* Prevent wrapping */
 }
 
