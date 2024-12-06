@@ -7,71 +7,55 @@ body {
 }
 
 header {
-    background-color: #4e4e4e; /* Slightly lighter dark gray for differentiation */
-    color: #36e0b8; /* Teal for headers */
+    background-color: #333333; /* Same dark background as body */
+    color: #36e0b8; /* Teal for header text */
     padding: 30px 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
+    border-bottom: 1px solid #444; /* Slightly lighter border for separation */
 }
 
-header h1 {
+h1 {
     font-weight: bold;
-    text-transform: uppercase;
     font-size: 2em;
     margin: 0;
-}
-
-header p {
-    font-size: 1.2em;
-    margin-top: 5px;
 }
 
 .container {
     max-width: 1200px;
     margin: auto;
     padding: 20px;
-    background-color: #4e4e4e; /* Darker background to match header and footer */
+    background-color: #333333; /* Match the background to keep consistency */
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 table {
     width: 100%;
     margin-top: 20px;
     border-collapse: collapse;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    table-layout: fixed; /* Ensures even distribution of column widths */
-    background-color: #333333; /* Consistent table background */
+    table-layout: auto; /* Allow columns to resize automatically */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #444444; /* Consistent background for the table */
 }
 
 th {
-    background-color: #444444; /* Lighter than table body for distinction */
+    background-color: #555555; /* Slightly lighter than table background for distinction */
     color: #d4d4d4;
-    text-align: left;
     padding: 15px;
     font-weight: 600;
-    border-bottom: 2px solid #ddd;
-    word-wrap: normal; /* Allow text wrapping without breaking words */
+    border-bottom: 2px solid #666; /* Subtle separation line */
+    text-align: left;
 }
 
 td {
     padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-    color: #d4d4d4;
+    border-bottom: 1px solid #666;
     word-wrap: break-word;
-    white-space: normal; /* Allow content to wrap, avoiding awkward breaks */
-}
-
-.profile {
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
+    white-space: normal; /* Allow content to wrap naturally */
+    color: #d4d4d4;
 }
 
 tr:hover {
-    background-color: #4e4e4e; /* Light highlight on hover */
+    background-color: #4e4e4e; /* Highlight row on hover */
 }
 
 .action-icons {
@@ -86,14 +70,23 @@ tr:hover {
 }
 
 .action-icons i:hover {
-    color: #36e0b8; /* Match the teal color used elsewhere */
+    color: #36e0b8; /* Teal for hover state */
 }
 
 footer {
-    background-color: #4e4e4e; /* Consistent with header */
+    background-color: #333333; /* Match the header and body */
     color: #ffffff;
     padding: 20px 0;
     margin-top: 40px;
-    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
+}
+
+.minimal-link {
+    color: #36e0b8; /* Teal color for links */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.minimal-link:hover {
+    text-decoration: underline;
 }

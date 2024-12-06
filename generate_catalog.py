@@ -11,9 +11,9 @@ df = pd.read_excel(DATA_CATALOG)
 
 # Define columns that need special hyperlink formatting
 link_columns = {
-    "Link to Dataset": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn-link\">Link</a>" if pd.notna(x) else "N/A",
-    "Documentation": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn-link\">Details</a>" if pd.notna(x) else "N/A",
-    "Use-Case": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn-link\">Use-Case</a>" if pd.notna(x) else "N/A"
+    "Link to Dataset": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"minimal-link\">Link</a>" if pd.notna(x) else "N/A",
+    "Documentation": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"minimal-link\">Details</a>" if pd.notna(x) else "N/A",
+    "Use-Case": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"minimal-link\">Use-Case</a>" if pd.notna(x) else "N/A"
 }
 
 # HTML Template referencing the external CSS file
@@ -69,7 +69,7 @@ for index, row in df.iterrows():
     )
     rows.append(f"<tr>{''.join([f'<td>{cell}</td>' for cell in row_data])}</tr>")
 
-# Generate table header with a new "Action" column
+# Generate table header with an "Action" column
 header_html = "<tr>" + "".join([f"<th>{html.escape(col)}</th>" for col in df.columns]) + "<th>Action</th></tr>"
 
 # Construct complete table HTML
