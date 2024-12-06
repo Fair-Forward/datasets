@@ -14,7 +14,7 @@ header {
 }
 
 h1 {
-    font-weight: 500;
+    font-weight: 700;
     font-size: 2.5rem;
     color: #212529;
 }
@@ -65,16 +65,16 @@ table.custom-table tr:hover td {
     background-color: #f1f3f5;
 }
 
+/* Standard columns can be flexible */
+th.standard-column,
+td.standard-column {
+    min-width: 120px;
+}
+
 th.project-title,
 td.project-title {
     min-width: 2000px;
     font-weight: 400;
-}
-
-/* Standard columns can be flexible */
-th.standard-column,
-td.standard-column {
-    min-width: 100px;
 }
 
 /* Minimal link styling for hyperlinks */
