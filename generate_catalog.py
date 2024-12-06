@@ -11,9 +11,9 @@ df = pd.read_excel(DATA_CATALOG)
 
 # Define columns that need special hyperlink formatting
 link_columns = {
-    "Link to Dataset": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn btn-primary\">Link</a>" if pd.notna(x) else "N/A",
-    "Documentation": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn btn-info\">Details</a>" if pd.notna(x) else "N/A",
-    "Use-Case": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn btn-success\">Use-Case</a>" if pd.notna(x) else "N/A"
+    "Link to Dataset": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn btn-outline-primary\">Link</a>" if pd.notna(x) else "N/A",
+    "Documentation": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn btn-outline-info\">Details</a>" if pd.notna(x) else "N/A",
+    "Use-Case": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn btn-outline-success\">Use-Case</a>" if pd.notna(x) else "N/A"
 }
 
 # Create a mapping to add padding to certain column headers
@@ -34,12 +34,16 @@ HTML_TEMPLATE = """
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {{
-            background-color: #1e1e1e;
-            color: #d4d4d4;
+            background-color: #f4f4f4;
+            color: #333;
+            font-family: 'Arial', sans-serif;
         }}
         header, footer {{
-            background-color: #252526;
-            color: #61dafb;
+            background-color: #5a5a5a; /* Lighter dark gray */
+            color: #ffffff;
+        }}
+        h1, th {{
+            color: #ffffff;
         }}
     </style>
 </head>
@@ -83,7 +87,7 @@ for _, row in df.iterrows():
 header_html = "<tr>" + "".join([f"<th>{column_mapping[col]}</th>" for col in df.columns]) + "</tr>"
 
 # Construct complete table HTML
-table_html = f"<table class='table table-dark table-striped table-bordered table-hover'><thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
+table_html = f"<table class='table table-striped table-bordered table-hover table-responsive'><thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
 
 # Insert the HTML table into the template
 output_html = HTML_TEMPLATE.format(table=table_html)
