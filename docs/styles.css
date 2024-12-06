@@ -43,7 +43,7 @@ table.custom-table {
     width: 100%;
     border-collapse: collapse;
     background-color: #ffffff;
-    table-layout: auto; 
+    table-layout: fixed; 
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     border-radius: 8px;
     overflow: hidden;
@@ -89,7 +89,7 @@ td.standard-column {
 
 th.project-title,
 td.project-title {
-    min-width: 2200px;
+    min-width: 150px;
     font-weight: 400;
 }
 
