@@ -18,9 +18,9 @@ except Exception as e:
 
 # Define columns that need special hyperlink formatting
 link_columns = {
-    "Link to Dataset": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"minimal-link\">Link</a>" if pd.notna(x) else "N/A",
-    "Documentation": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"minimal-link\">Details</a>" if pd.notna(x) else "N/A",
-    "Use-Case": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"minimal-link\">Use-Case</a>" if pd.notna(x) else "N/A"
+    "Link to Dataset": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn btn-primary btn-sm\">Link</a>" if pd.notna(x) else "N/A",
+    "Documentation": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn btn-secondary btn-sm\">Details</a>" if pd.notna(x) else "N/A",
+    "Use-Case": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn btn-info btn-sm\">Use-Case</a>" if pd.notna(x) else "N/A"
 }
 
 # HTML Template referencing the external CSS file
@@ -33,26 +33,25 @@ HTML_TEMPLATE = """
     <link rel="stylesheet" href="styles.css">
     <title>Data Catalog</title>
     <!-- Link to Bootstrap for styling -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Link to Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
 </head>
 <body>
     <header>
-        <h1>Data Catalog</h1>
-        <p>An overview of datasets and resources funded by Fair Forward</p>
+        <div class="container">
+            <h1 class="mb-3">Data Catalog</h1>
+            <p class="text-muted">An overview of datasets and resources funded by Fair Forward</p>
+        </div>
     </header>
 
     <div class="container my-5">
         {table}
     </div>
 
-    <footer class="text-center p-4">
-        <p>&copy; 2024 Fair Forward</p>
+    <footer class="bg-light py-4 mt-5">
+        <div class="container">
+            <p class="mb-0 text-muted">&copy; 2024 Fair Forward</p>
+        </div>
     </footer>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 """
