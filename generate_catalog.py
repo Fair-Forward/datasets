@@ -47,10 +47,10 @@ HTML_TEMPLATE = """
 <body>
     <header>
         <div class="container d-flex align-items-center">
-            <img src="img/fair_forward.png" alt="Fair Forward Logo" class="header-logo me-3">
             <div class="header-text">
                 <h1 class="mb-3">Data Catalog</h1>
                 <p class="text-muted">An overview of datasets and resources funded by Fair Forward</p>
+            <img src="img/fair_forward.png" alt="Fair Forward Logo" class="header-logo me-3">
             </div>
         </div>
     </header>
