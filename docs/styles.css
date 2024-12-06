@@ -1,15 +1,15 @@
 body {
-    font-family: 'Libre Franklin', monospace;
-    background-color: #1e1e1e;
-    color: #d4d4d4;
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4; /* Lighter gray */
+    color: #333; /* Dark gray for text */
     line-height: 1.6;
     margin: 0;
     padding: 0;
 }
 
 header {
-    background-color: #252526;
-    color: #61dafb;
+    background-color: #5a5a5a; /* Lighter dark gray */
+    color: #ffffff;
     padding: 30px 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -38,37 +38,44 @@ table {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     overflow: hidden;
-    background-color: #252526;
+    table-layout: auto; /* Allows for dynamic column sizing */
 }
 
 th {
-    background-color: #333333;
-    color: #61dafb;
-    text-align: center;
+    background-color: #5a5a5a; /* Lighter dark gray for header */
+    color: #ffffff;
+    text-align: left;
     padding: 15px;
     font-size: 1.1em;
     text-transform: uppercase;
-    border-bottom: 2px solid #444;
+    border-bottom: 2px solid #ddd;
+    white-space: nowrap; /* Prevents breaking within words */
 }
 
 td {
     padding: 15px;
-    text-align: center;
+    text-align: left;
     font-size: 1em;
-    color: #d4d4d4;
+    color: #333;
+    word-wrap: break-word; /* Allows long text to wrap nicely */
+    word-break: break-word; /* Ensures words break only if necessary */
+}
+
+th, td {
+    word-break: normal; /* Do not break words at arbitrary places */
 }
 
 tr:nth-child(even) {
-    background-color: #2d2d2d;
+    background-color: #f2f2f2; /* Light gray for alternating rows */
 }
 
 tr:hover {
-    background-color: #3c3c3c;
+    background-color: #e0e0e0;
     cursor: pointer;
 }
 
 a {
-    color: #61dafb;
+    color: #007bff; /* Bootstrap primary blue */
     text-decoration: none;
 }
 
@@ -77,31 +84,21 @@ a:hover {
 }
 
 .btn {
-    padding: 8px 16px;
+    padding: 6px 12px;
     font-weight: bold;
     text-transform: uppercase;
     border-radius: 25px;
-    border: none;
+    border: 1px solid;
 }
 
-.btn-primary {
-    background-color: #007acc;
-    color: white;
-}
-
-.btn-info {
-    background-color: #61dafb;
-    color: #1e1e1e;
-}
-
-.btn-success {
-    background-color: #28a745;
-    color: white;
+.btn-outline-primary, .btn-outline-info, .btn-outline-success {
+    border-color: #007bff;
+    color: #007bff;
 }
 
 footer {
-    background-color: #252526;
-    color: #61dafb;
+    background-color: #5a5a5a; /* Lighter dark gray */
+    color: #ffffff;
     padding: 20px 0;
     margin-top: 40px;
     box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
