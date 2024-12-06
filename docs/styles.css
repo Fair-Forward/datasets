@@ -87,10 +87,12 @@ td.standard-column {
     min-width: 110px;
 }
 
+/* Highlight the project-title column */
 th.project-title,
 td.project-title {
     min-width: 220px;
-    font-weight: 400;
+    font-weight: 500; /* Slightly bolder to stand out */
+    background-color: #f8f9fa; /* Light gray background to highlight */
 }
 
 /* Minimal link styling for hyperlinks */
@@ -113,7 +115,7 @@ footer p {
     margin: 0;
 }
 
-/* Label Styles (Similar to GitHub Labels) */
+/* Label Styles (more subdued, pastel-like colors) */
 .label {
     display: inline-block;
     padding: 0.2rem 0.5rem;
@@ -125,18 +127,18 @@ footer p {
     margin-bottom: 0.5rem;
     line-height: 1.2;
     white-space: nowrap;
-    background-color: #6c757d; /* fallback default */
+    background-color: #888888; /* Slightly lighter neutral for default */
 }
 
-/* Specific category label colors */
+/* More subtle, pale colors for categories */
 .label-climate {
-    background-color: #17a2b8; /* teal tone for Climate Adaption */
+    background-color: #4f9ca5; /* Softer teal for Climate Adaption */
 }
 
 .label-agriculture {
-    background-color: #28a745; /* green tone for Agriculture */
+    background-color: #5cad5c; /* Muted green for Agriculture */
 }
 
 .label-language {
-    background-color: #6f42c1; /* purple tone for Language Technology */
+    background-color: #7b68ab; /* Softer purple for Language Technology */
 }
