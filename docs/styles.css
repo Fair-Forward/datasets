@@ -67,15 +67,15 @@ table.custom-table tr:hover td {
 
 th.project-title,
 td.project-title {
-    min-width: 4000px;
+    min-width: 300px;
     font-weight: 600;
 }
 
-/* Standard columns can be flexible */
+/* Standard columns can be flexible
 th.standard-column,
 td.standard-column {
     min-width: 150px;
-}
+} */
 
 /* Minimal link styling for hyperlinks */
 .minimal-link {
