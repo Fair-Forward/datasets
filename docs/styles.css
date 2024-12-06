@@ -84,12 +84,12 @@ table.custom-table tr:hover td {
 /* Standard columns can be flexible */
 th.standard-column,
 td.standard-column {
-    min-width: 120px;
+    min-width: 110px;
 }
 
 th.project-title,
 td.project-title {
-    min-width: 2000px;
+    min-width: 2200px;
     font-weight: 400;
 }
 

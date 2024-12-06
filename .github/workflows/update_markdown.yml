@@ -23,7 +23,7 @@ jobs:
         pip install pandas openpyxl
 
     - name: Generate Markdown
-      run: python docs/generate_markdown_table.py
+      run: python generate_catalog.py
 
     - name: Commit and push changes
       run: |
