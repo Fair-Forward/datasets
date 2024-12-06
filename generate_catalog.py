@@ -18,9 +18,9 @@ except Exception as e:
 
 # Define columns that need special hyperlink formatting
 link_columns = {
-    "Link to Dataset": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn btn-primary btn-sm\">Link</a>" if pd.notna(x) else "N/A",
-    "Documentation": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn btn-secondary btn-sm\">Details</a>" if pd.notna(x) else "N/A",
-    "Use-Case": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"btn btn-info btn-sm\">Use-Case</a>" if pd.notna(x) else "N/A"
+    "Link to Dataset": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"minimal-link\">Link</a>" if pd.notna(x) else "N/A",
+    "Documentation": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"minimal-link\">Details</a>" if pd.notna(x) else "N/A",
+    "Use-Case": lambda x: f"<a href=\"{x}\" target=\"_blank\" class=\"minimal-link\">Use-Case</a>" if pd.notna(x) else "N/A"
 }
 
 # HTML Template referencing the external CSS file
