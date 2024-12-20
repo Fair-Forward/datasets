@@ -9,4 +9,4 @@ ipython_config.py
 .env
 
 # folders/files
-data_sources/service_account_JN.json
+data_sources/google_sheets_api/service_account_JN.json
