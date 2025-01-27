@@ -186,7 +186,6 @@ td.description-column:hover::after {
     font-size: 0.8125rem;
     font-weight: 500;
     border-radius: 6px;
-    color: #ffffff;
     margin-right: 0.5rem;
     margin-bottom: 0.5rem;
     line-height: 1;
@@ -279,21 +278,22 @@ footer p {
 }
 
 /* Table row transitions */
-.table tr {
+.custom-table tr {
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.table tr.filtered-out {
-    display: none;
+/* Filtered row handling */
+tr.filtered-out {
+    display: none !important;
 }
 
 /* Empty state */
 .empty-state {
+    display: none;
     text-align: center;
     padding: 3rem 1rem;
     color: #718096;
     font-size: 0.9375rem;
-    display: none;
 }
 
 .empty-state.visible {
