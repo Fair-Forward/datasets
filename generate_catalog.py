@@ -17,18 +17,16 @@ except Exception as e:
     print(f"Error reading Excel file: {e}")
     exit(1)
 
-# Update the columns to display
-df = pd.read_excel(DATA_CATALOG)
-# Reorder columns with Description second
-display_columns = [
-    'Project Title',
-    'Description and How to Use it',
-    'Data Type',
-    'SDG/Domain',
-    'Country/Region',
-    'Author/Community',
-    'Link to Dataset'
+# Specify columns to exclude
+excluded_columns = [
+    'Documentation', 
+    'Use-Case',
 ]
+
+# Keep all columns except excluded ones
+display_columns = [col for col in df.columns if col not in excluded_columns]
+
+# Apply the column selection
 df = df[display_columns]
 
 def normalize_label(text):
