@@ -64,16 +64,17 @@ table.custom-table {
     table-layout: auto;
 }
 
-table.custom-table thead {
-    background-color: #f8fafc;
-}
-
 table.custom-table th,
 table.custom-table td {
     text-align: left;
     padding: 1rem;
     vertical-align: top;
     line-height: 1.5;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+table.custom-table thead {
+    background-color: #f8fafc;
 }
 
 table.custom-table th {
@@ -90,7 +91,6 @@ table.custom-table th {
 }
 
 table.custom-table td {
-    border-bottom: 1px solid #e2e8f0;
     transition: all 0.2s ease;
     color: #4a5568;
     font-size: 0.9375rem;
@@ -346,25 +346,17 @@ td.description-column a:hover {
 }
 
 /* Description column styling */
-.description-column {
+.description-cell {
     position: relative;
-    max-width: 300px;
-    min-width: 200px;
+    cursor: pointer;
 }
 
-.description-teaser {
-    position: relative;
-    display: block;
+.description-text {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    cursor: pointer;
-    color: #4a5568;
-    padding: 0.5rem 0;
-}
-
-.description-teaser:hover {
-    color: #2d3748;
+    max-width: 300px;
+    display: block;
 }
 
 .description-popup {
@@ -373,10 +365,12 @@ td.description-column a:hover {
     left: 0;
     top: 100%;
     width: 400px;
+    max-height: 300px;
+    overflow-y: auto;
     background: white;
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    padding: 1.25rem;
+    padding: 1rem;
     z-index: 1000;
     font-size: 0.9375rem;
     line-height: 1.6;
@@ -384,24 +378,14 @@ td.description-column a:hover {
     border: 1px solid #e2e8f0;
 }
 
-.description-teaser:hover + .description-popup,
-.description-popup:hover {
+.description-cell:hover .description-popup {
     display: block;
 }
 
-/* Ensure popup stays within viewport */
-td.description-column:last-child .description-popup {
+/* Ensure popup stays within viewport on the right edge */
+td:last-child .description-popup {
     right: 0;
     left: auto;
-}
-
-/* Style the popup content */
-.description-popup p {
-    margin: 0 0 1rem;
-}
-
-.description-popup p:last-child {
-    margin: 0;
 }
 
 /* Add a subtle arrow to the popup */
@@ -418,7 +402,7 @@ td.description-column:last-child .description-popup {
     border-top: 1px solid #e2e8f0;
 }
 
-td.description-column:last-child .description-popup::before {
+td:last-child .description-popup::before {
     left: auto;
     right: 20px;
 }
