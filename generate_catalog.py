@@ -62,18 +62,18 @@ def convert_markdown_links_to_html(text):
     return re.sub(link_pattern, r'<a href="\2" target="_blank" class="minimal-link">\1</a>', text)
 
 def create_description_html(text):
-    """Create HTML for description with hover popup."""
+    """Create HTML for description with expandable text."""
     if pd.isna(text):
         return "N/A"
     
     # Convert markdown links in the full text
     full_text = convert_markdown_links_to_html(str(text))
     
-    # Create the HTML structure with a simple text and popup
+    # Create the HTML structure with expandable text
     return f"""
-        <div class="description-wrapper">
-            <div class="description-text">{html.escape(str(text))}</div>
-            <div class="description-popup">{full_text}</div>
+        <div class="description-cell">
+            <div class="description-text collapsed">{full_text}</div>
+            <span class="read-more-btn">Read more</span>
         </div>
     """
 
@@ -162,6 +162,20 @@ HTML_TEMPLATE = """
 
             emptyState.classList.toggle('visible', visibleRows === 0);
         }}
+
+        // Add expand/collapse functionality
+        document.querySelectorAll('.read-more-btn').forEach(button => {{
+            button.addEventListener('click', function() {{
+                const descText = this.previousElementSibling;
+                const isCollapsed = descText.classList.contains('collapsed');
+                
+                // Toggle collapsed state
+                descText.classList.toggle('collapsed');
+                
+                // Update button text
+                this.textContent = isCollapsed ? 'Show less' : 'Read more';
+            }});
+        }});
     }});
     </script>
 </body>

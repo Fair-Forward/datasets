@@ -346,52 +346,62 @@ td.description-column a:hover {
 }
 
 /* Description column styling */
-.description-wrapper {
+.description-cell {
     position: relative;
-    display: inline-block;
-    width: 100%;
+    max-width: 400px;
 }
 
 .description-text {
-    display: block;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    color: #4a5568;
-    cursor: pointer;
-}
-
-.description-text:hover {
-    color: #2d3748;
-}
-
-.description-popup {
-    visibility: hidden;
-    opacity: 0;
-    position: fixed;
-    background: white;
-    width: 400px;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    border: 1px solid #e2e8f0;
-    z-index: 1000;
-    font-size: 0.9375rem;
-    line-height: 1.6;
-    transition: opacity 0.2s ease;
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-.description-wrapper:hover .description-popup {
-    visibility: visible;
-    opacity: 1;
-}
-
-/* Ensure the popup is positioned correctly */
-.table td {
     position: relative;
+    overflow: hidden;
+    line-height: 1.5;
+}
+
+.description-text.collapsed {
+    max-height: 3em;  /* Show 2 lines of text */
+    overflow: hidden;
+}
+
+.read-more-btn {
+    display: inline-block;
+    color: #4299e1;
+    cursor: pointer;
+    padding: 0.25rem 0;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-top: 0.25rem;
+}
+
+.read-more-btn:hover {
+    color: #2b6cb0;
+    text-decoration: underline;
+}
+
+.description-text.expanded {
+    max-height: none;
+}
+
+/* Override Bootstrap table styles */
+.table td.description-column {
+    max-width: 400px;
+    white-space: normal;
+    padding: 1rem;
+}
+
+/* Fade effect for collapsed text */
+.description-text.collapsed::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1.5em;
+    background: linear-gradient(transparent, white);
+}
+
+/* Animation for expand/collapse */
+.description-text {
+    transition: max-height 0.3s ease-out;
 }
 
 /* Override Bootstrap table styles for our specific needs */
