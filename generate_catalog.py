@@ -69,11 +69,10 @@ def create_description_html(text):
     # Convert markdown links in the full text
     full_text = convert_markdown_links_to_html(str(text))
     
-    # Create the HTML structure with expandable text
     return f"""
-        <div class="description-cell">
-            <div class="description-text collapsed">{full_text}</div>
-            <span class="read-more-btn">Read more</span>
+        <div class="description-wrapper">
+            <div class="description-content">{full_text}</div>
+            <span class="toggle-description">Read more</span>
         </div>
     """
 
@@ -163,17 +162,14 @@ HTML_TEMPLATE = """
             emptyState.classList.toggle('visible', visibleRows === 0);
         }}
 
-        // Add expand/collapse functionality
-        document.querySelectorAll('.read-more-btn').forEach(button => {{
-            button.addEventListener('click', function() {{
-                const descText = this.previousElementSibling;
-                const isCollapsed = descText.classList.contains('collapsed');
+        // Add description toggle functionality
+        document.querySelectorAll('.toggle-description').forEach(toggle => {{
+            toggle.addEventListener('click', function() {{
+                const content = this.previousElementSibling;
+                const isExpanded = content.classList.contains('expanded');
                 
-                // Toggle collapsed state
-                descText.classList.toggle('collapsed');
-                
-                // Update button text
-                this.textContent = isCollapsed ? 'Show less' : 'Read more';
+                content.classList.toggle('expanded');
+                this.textContent = isExpanded ? 'Read more' : 'Show less';
             }});
         }});
     }});
@@ -182,49 +178,42 @@ HTML_TEMPLATE = """
 </html>
 """
 
-# Update the table generation
+# Generate the table header
 header_html = "<tr>"
 for col in df.columns:
-    if col == "Project Title":
-        header_html += f"<th class='project-title' title='{col}'>{col}</th>"
-    elif col == "Description and how to use it":
-        header_html += f"<th class='description-column' title='{col}'>{col}</th>"
-    else:
-        header_html += f"<th class='standard-column' title='{col}'>{col}</th>"
+    header_class = 'project-title' if col == 'Project Title' else 'description-column' if col == 'Description and How to Use it' else 'standard-column'
+    header_html += f"<th class='{header_class}'>{col}</th>"
 header_html += "</tr>"
 
+# Update the table generation code
 rows = []
 for _, row in df.iterrows():
     row_data = []
     for col in df.columns:
         cell_value = row[col]
-        if col in link_columns:
+        if col == "Description and How to Use it":
+            description_html = create_description_html(cell_value)
+            row_data.append(f"<td class='description-column'>{description_html}</td>")
+        elif col in link_columns:
             link_html = link_columns[col](cell_value)
-            row_data.append(f"<td class='standard-column' title='{html.escape(str(cell_value))}'>{link_html}</td>")
+            row_data.append(f"<td class='standard-column'>{link_html}</td>")
         elif col == "SDG/Domain":
             labels = str(cell_value).split(", ") if pd.notna(cell_value) else []
             label_html = " ".join([create_label_html(label, "domain") for label in labels])
-            row_data.append(f"<td class='standard-column' title='{html.escape(str(cell_value))}'>{label_html}</td>")
+            row_data.append(f"<td class='standard-column'>{label_html}</td>")
         elif col == "Data Type":
             types = str(cell_value).split(", ") if pd.notna(cell_value) else []
             type_html = " ".join([create_label_html(dtype, "datatype") for dtype in types])
-            row_data.append(f"<td class='standard-column' title='{html.escape(str(cell_value))}'>{type_html}</td>")
-        elif col == "Description and how to use it":
-            description_html = create_description_html(cell_value)
-            row_data.append(f"<td class='description-column'>{description_html}</td>")
+            row_data.append(f"<td class='standard-column'>{type_html}</td>")
         else:
             cell_content = str(cell_value) if pd.notna(cell_value) else "N/A"
             cell_content = convert_markdown_links_to_html(cell_content)
-            if col == "Project Title":
-                row_data.append(
-                    f"<td class='project-title' title='{html.escape(cell_content, quote=True)}'>{cell_content}</td>"
-                )
-            else:
-                row_data.append(f"<td class='standard-column' title='{html.escape(cell_content, quote=True)}'>{cell_content}</td>")
+            cell_class = 'project-title' if col == 'Project Title' else 'standard-column'
+            row_data.append(f"<td class='{cell_class}'>{cell_content}</td>")
     rows.append(f"<tr>{''.join(row_data)}</tr>")
 
-# Construct the table
-table_html = f"<table class='table table-hover custom-table'><thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
+# Construct the table without Bootstrap classes
+table_html = f"<table class='custom-table'><thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
 
 # Create the complete HTML
 output_html = HTML_TEMPLATE.format(table=table_html)
