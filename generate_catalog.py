@@ -180,28 +180,6 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
 </html>
 '''
 
-# Read Excel File
-try:
-    df = pd.read_excel(DATA_CATALOG)
-except FileNotFoundError:
-    print(f"Error: {DATA_CATALOG} not found.")
-    exit(1)
-except Exception as e:
-    print(f"Error reading Excel file: {e}")
-    exit(1)
-
-# Specify columns to exclude
-excluded_columns = [
-    'Documentation', 
-    'Use-Case',
-]
-
-# Keep all columns except excluded ones
-display_columns = [col for col in df.columns if col not in excluded_columns]
-
-# Apply the column selection
-df = df[display_columns]
-
 def normalize_label(text):
     """Convert text to lowercase and remove special characters."""
     if pd.isna(text):
@@ -219,14 +197,8 @@ def create_label_html(text, category):
     normalized = normalize_label(text)
     return f'<span class="label label-{normalized}" data-filter="{text}">{text}</span>'
 
-# Define columns that need special hyperlink formatting
-link_columns = {
-    "Link to Dataset": lambda x: f'<a href="{x}" target="_blank" class="minimal-link">Link</a>' if pd.notna(x) else "N/A",
-    "Documentation": lambda x: f'<a href="{x}" target="_blank" class="minimal-link">Details</a>' if pd.notna(x) else "N/A",
-    "Use-Case": lambda x: f'<a href="{x}" target="_blank" class="minimal-link">Use-Case</a>' if pd.notna(x) else "N/A"
-}
-
 def convert_markdown_links_to_html(text):
+    """Convert markdown links to HTML links."""
     if not text or not isinstance(text, str):
         return text
     link_pattern = r"\[([^\]]+)\]\(([^)]+)\)"
@@ -247,46 +219,71 @@ def create_description_html(text):
         </div>
     """
 
-# Generate the table header
-header_html = "<tr>"
-for col in df.columns:
-    header_class = 'project-title' if col == 'Project Title' else 'description-column' if col == 'Description and How to Use it' else 'standard-column'
-    header_html += f"<th class='{header_class}'>{col}</th>"
-header_html += "</tr>"
+def generate_table():
+    """Generate the HTML table from the Excel data."""
+    try:
+        df = pd.read_excel(DATA_CATALOG)
+    except FileNotFoundError:
+        print(f"Error: {DATA_CATALOG} not found.")
+        exit(1)
+    except Exception as e:
+        print(f"Error reading Excel file: {e}")
+        exit(1)
 
-# Update the table generation code
-rows = []
-for _, row in df.iterrows():
-    row_data = []
+    # Specify columns to exclude
+    excluded_columns = ['Documentation', 'Use-Case']
+    
+    # Keep all columns except excluded ones
+    display_columns = [col for col in df.columns if col not in excluded_columns]
+    df = df[display_columns]
+
+    # Define columns that need special hyperlink formatting
+    link_columns = {
+        "Link to Dataset": lambda x: f'<a href="{x}" target="_blank" class="minimal-link">Link</a>' if pd.notna(x) else "N/A",
+        "Documentation": lambda x: f'<a href="{x}" target="_blank" class="minimal-link">Details</a>' if pd.notna(x) else "N/A",
+        "Use-Case": lambda x: f'<a href="{x}" target="_blank" class="minimal-link">Use-Case</a>' if pd.notna(x) else "N/A"
+    }
+
+    # Generate the table header
+    header_html = "<tr>"
     for col in df.columns:
-        cell_value = row[col]
-        if col == "Description and How to Use it":
-            description_html = create_description_html(cell_value)
-            row_data.append(f"<td class='description-column'>{description_html}</td>")
-        elif col in link_columns:
-            link_html = link_columns[col](cell_value)
-            row_data.append(f"<td class='standard-column'>{link_html}</td>")
-        elif col == "SDG/Domain":
-            labels = str(cell_value).split(", ") if pd.notna(cell_value) else []
-            label_html = " ".join([create_label_html(label, "domain") for label in labels])
-            row_data.append(f"<td class='standard-column'>{label_html}</td>")
-        elif col == "Data Type":
-            types = str(cell_value).split(", ") if pd.notna(cell_value) else []
-            type_html = " ".join([create_label_html(dtype, "datatype") for dtype in types])
-            row_data.append(f"<td class='standard-column'>{type_html}</td>")
-        else:
-            cell_content = str(cell_value) if pd.notna(cell_value) else "N/A"
-            cell_content = convert_markdown_links_to_html(cell_content)
-            cell_class = 'project-title' if col == 'Project Title' else 'standard-column'
-            row_data.append(f"<td class='{cell_class}'>{cell_content}</td>")
-    rows.append(f"<tr>{''.join(row_data)}</tr>")
+        header_class = 'project-title' if col == 'Project Title' else 'description-column' if col == 'Description and How to Use it' else 'standard-column'
+        header_html += f"<th class='{header_class}'>{col}</th>"
+    header_html += "</tr>"
 
-# Construct the table without Bootstrap classes
-table_html = f"<table class='custom-table'><thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
+    # Generate table rows
+    rows = []
+    for _, row in df.iterrows():
+        row_data = []
+        for col in df.columns:
+            cell_value = row[col]
+            if col == "Description and How to Use it":
+                description_html = create_description_html(cell_value)
+                row_data.append(f"<td class='description-column'>{description_html}</td>")
+            elif col in link_columns:
+                link_html = link_columns[col](cell_value)
+                row_data.append(f"<td class='standard-column'>{link_html}</td>")
+            elif col == "SDG/Domain":
+                labels = str(cell_value).split(", ") if pd.notna(cell_value) else []
+                label_html = " ".join([create_label_html(label, "domain") for label in labels])
+                row_data.append(f"<td class='standard-column'>{label_html}</td>")
+            elif col == "Data Type":
+                types = str(cell_value).split(", ") if pd.notna(cell_value) else []
+                type_html = " ".join([create_label_html(dtype, "datatype") for dtype in types])
+                row_data.append(f"<td class='standard-column'>{type_html}</td>")
+            else:
+                cell_content = str(cell_value) if pd.notna(cell_value) else "N/A"
+                cell_content = convert_markdown_links_to_html(cell_content)
+                cell_class = 'project-title' if col == 'Project Title' else 'standard-column'
+                row_data.append(f"<td class='{cell_class}'>{cell_content}</td>")
+        rows.append(f"<tr>{''.join(row_data)}</tr>")
+
+    return f"<table class='custom-table'><thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
 
 def generate_html():
-    """Generate the HTML file with the table."""
-    table_html = generate_table_html()
+    """Generate the complete HTML file."""
+    # Get the table HTML
+    table_html = generate_table()
     
     # Replace the table placeholder in the template
     final_html = HTML_TEMPLATE.format(table_html=table_html)
