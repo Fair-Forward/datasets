@@ -19,15 +19,15 @@ except Exception as e:
 
 # Update the columns to display
 df = pd.read_excel(DATA_CATALOG)
-# Remove Documentation and Use-Case columns and ensure Description is included
+# Reorder columns with Description second
 display_columns = [
-    'Project Title', 
-    'Data Type', 
-    'SDG/Domain', 
-    'Country/Region', 
+    'Project Title',
+    'Description and How to Use it',
+    'Data Type',
+    'SDG/Domain',
+    'Country/Region',
     'Author/Community',
-    'Link to Dataset',
-    'Description and How to Use it'
+    'Link to Dataset'
 ]
 df = df[display_columns]
 

@@ -61,7 +61,7 @@ table.custom-table {
     border-radius: 12px;
     overflow: hidden;
     margin: 2rem 0;
-    table-layout: fixed;
+    table-layout: auto;
 }
 
 table.custom-table thead {
@@ -71,11 +71,9 @@ table.custom-table thead {
 table.custom-table th,
 table.custom-table td {
     text-align: left;
-    padding: 1.25rem 1rem;
+    padding: 1rem;
     vertical-align: top;
     line-height: 1.5;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 table.custom-table th {
@@ -85,6 +83,10 @@ table.custom-table th {
     color: #2d3748;
     border-bottom: 2px solid #e2e8f0;
     font-size: 0.9375rem;
+    background-color: #f8fafc;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 table.custom-table td {
@@ -102,38 +104,43 @@ table.custom-table tr:hover td {
     background-color: #f8fafc;
 }
 
+table.custom-table tr:hover td.description-column {
+    background-color: #f5f7fa;
+}
+
 th.project-title,
 td.project-title {
-    width: 20%;
-    min-width: 200px;
+    width: 15%;
+    min-width: 180px;
     font-weight: 500;
-    background-color: #f8fafc;
     color: #2d3748;
 }
 
 th.standard-column,
 td.standard-column {
-    width: 12%;
-    min-width: 120px;
+    width: 10%;
+    min-width: 100px;
 }
 
 th.description-column,
 td.description-column {
-    width: 25%;
-    min-width: 250px;
+    width: 35%;
+    min-width: 300px;
     font-size: 0.9375rem;
     line-height: 1.6;
     color: #4a5568;
-    white-space: pre-line;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    hyphens: auto;
+    padding: 1.5rem 1.25rem;
+    background-color: #fafbfc;
+    border-left: 1px solid #e2e8f0;
+    border-right: 1px solid #e2e8f0;
 }
 
 td.description-column {
     position: relative;
-    max-height: 200px;
-    overflow: hidden;
+    white-space: pre-line;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
 }
 
 td.description-column::after {
@@ -291,4 +298,49 @@ footer p {
 
 .empty-state.visible {
     display: block;
+}
+
+/* Responsive table container */
+.table-container {
+    max-width: 100%;
+    overflow-x: auto;
+    margin: 2rem 0;
+    border-radius: 12px;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Add fade effect for long descriptions */
+td.description-column {
+    max-height: none;
+    position: relative;
+    padding-bottom: 1.5rem;
+}
+
+/* Improved typography for description */
+td.description-column {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: #4a5568;
+}
+
+/* Add paragraph spacing in description */
+td.description-column p {
+    margin-bottom: 1rem;
+}
+
+td.description-column p:last-child {
+    margin-bottom: 0;
+}
+
+/* Make links in description more visible */
+td.description-column a {
+    color: #4299e1;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+td.description-column a:hover {
+    color: #2b6cb0;
+    border-bottom-color: currentColor;
 }
