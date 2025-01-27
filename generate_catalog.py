@@ -99,24 +99,28 @@ data_types = get_unique_labels(df, "Data Type")
 domains = get_unique_labels(df, "SDG/Domain")
 
 # Create filter controls HTML
-filter_controls = f"""
+def create_filter_controls():
+    datatype_labels = "".join([create_label_html(dtype, "datatype") for dtype in data_types])
+    domain_labels = "".join([create_label_html(domain, "domain") for domain in domains])
+    
+    return """
 <div class="filter-controls">
     <div class="filter-section">
         <div class="filter-title">Filter by Data Type</div>
         <div class="filter-group" data-filter-group="datatype">
-            {"".join([create_label_html(dtype, "datatype") for dtype in data_types])}
+            {datatype_labels}
         </div>
     </div>
     <div class="filter-section">
         <div class="filter-title">Filter by Domain</div>
         <div class="filter-group" data-filter-group="domain">
-            {"".join([create_label_html(domain, "domain") for domain in domains])}
+            {domain_labels}
         </div>
     </div>
     <button class="reset-filters" onclick="resetFilters()">Reset Filters</button>
 </div>
 <div class="empty-state">No matching datasets found. Try adjusting your filters.</div>
-"""
+""".format(datatype_labels=datatype_labels, domain_labels=domain_labels)
 
 HTML_TEMPLATE = """
 <!DOCTYPE html>
@@ -165,6 +169,7 @@ HTML_TEMPLATE = """
         useCase.forEach(link => {
             const previewId = link.getAttribute('data-preview-id');
             const preview = document.getElementById(previewId);
+            if (!preview) return;  // Skip if preview element doesn't exist
             let timeout;
 
             link.addEventListener('mouseenter', () => {
@@ -301,7 +306,9 @@ for _, row in df.iterrows():
 # Construct the table
 table_html = f"<table class='table table-hover custom-table'><thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
 
-output_html = HTML_TEMPLATE.format(filters=filter_controls, table=table_html)
+# Create the complete HTML
+filter_controls_html = create_filter_controls()
+output_html = HTML_TEMPLATE.format(filters=filter_controls_html, table=table_html)
 
 try:
     with open(HTML_OUTPUT, "w") as file:
