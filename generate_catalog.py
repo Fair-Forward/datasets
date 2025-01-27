@@ -2,24 +2,10 @@ import pandas as pd
 import html
 import os
 import re
-import markdown
-from pathlib import Path
 
 # Load the dataset
 DATA_CATALOG = "docs/data_catalog.xlsx"
 HTML_OUTPUT = "docs/index.html"
-
-def read_markdown_file(filepath):
-    """Read and convert markdown file to HTML."""
-    try:
-        with open(filepath, 'r', encoding='utf-8') as f:
-            content = f.read()
-            # Convert markdown to HTML
-            html_content = markdown.markdown(content)
-            return html_content
-    except Exception as e:
-        print(f"Warning: Could not read markdown file {filepath}: {e}")
-        return None
 
 # Read Excel File
 try:
@@ -46,81 +32,20 @@ def create_label_html(text, category):
     if pd.isna(text):
         return ""
     normalized = normalize_label(text)
-    return f'<span class="label label-{normalized}">{text}</span>'
+    return f'<span class="label label-{normalized}" data-filter="{text}">{text}</span>'
 
 # Define columns that need special hyperlink formatting
 link_columns = {
     "Link to Dataset": lambda x: f'<a href="{x}" target="_blank" class="minimal-link">Link</a>' if pd.notna(x) else "N/A",
     "Documentation": lambda x: f'<a href="{x}" target="_blank" class="minimal-link">Details</a>' if pd.notna(x) else "N/A",
-    "Use-Case": lambda x: create_use_case_link(x) if pd.notna(x) else "N/A"
+    "Use-Case": lambda x: f'<a href="{x}" target="_blank" class="minimal-link">Use-Case</a>' if pd.notna(x) else "N/A"
 }
-
-def create_use_case_link(filepath):
-    """Create a link with preview for use-case markdown files."""
-    if not isinstance(filepath, str):
-        return "N/A"
-    
-    # Read the markdown content
-    content = read_markdown_file(filepath)
-    if content:
-        preview_id = f"preview-{hash(filepath)}"
-        return f'''
-            <div class="use-case-container">
-                <a href="{filepath}" target="_blank" class="minimal-link use-case-link" 
-                   data-preview-id="{preview_id}">Use-Case</a>
-                <div class="preview-popup" id="{preview_id}">
-                    <div class="preview-content markdown-body">
-                        {content}
-                    </div>
-                </div>
-            </div>
-        '''
-    return f'<a href="{filepath}" target="_blank" class="minimal-link">Use-Case</a>'
 
 def convert_markdown_links_to_html(text):
     if not text or not isinstance(text, str):
         return text
     link_pattern = r"\[([^\]]+)\]\(([^)]+)\)"
     return re.sub(link_pattern, r'<a href="\2" target="_blank" class="minimal-link">\1</a>', text)
-
-def get_unique_labels(df, column):
-    """Get unique labels from a column that may contain multiple comma-separated values."""
-    if column not in df.columns:
-        return []
-    labels = set()
-    for value in df[column].dropna():
-        if isinstance(value, str):
-            for label in value.split(", "):
-                labels.add(label.strip())
-    return sorted(list(labels))
-
-# Get unique values for filters
-data_types = get_unique_labels(df, "Data Type")
-domains = get_unique_labels(df, "SDG/Domain")
-
-# Create filter controls HTML
-def create_filter_controls():
-    datatype_labels = "".join([create_label_html(dtype, "datatype") for dtype in data_types])
-    domain_labels = "".join([create_label_html(domain, "domain") for domain in domains])
-    
-    return """
-<div class="filter-controls">
-    <div class="filter-section">
-        <div class="filter-title">Filter by Data Type</div>
-        <div class="filter-group" data-filter-group="datatype">
-            {datatype_labels}
-        </div>
-    </div>
-    <div class="filter-section">
-        <div class="filter-title">Filter by Domain</div>
-        <div class="filter-group" data-filter-group="domain">
-            {domain_labels}
-        </div>
-    </div>
-    <button class="reset-filters" onclick="resetFilters()">Reset Filters</button>
-</div>
-<div class="empty-state">No matching datasets found. Try adjusting your filters.</div>
-""".format(datatype_labels=datatype_labels, domain_labels=domain_labels)
 
 HTML_TEMPLATE = """
 <!DOCTYPE html>
@@ -135,8 +60,6 @@ HTML_TEMPLATE = """
     <link rel="stylesheet" href="styles.css">
     <!-- Bootstrap for styling -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
-    <!-- GitHub Markdown CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
 </head>
 <body>
     <header>
@@ -152,8 +75,8 @@ HTML_TEMPLATE = """
     </header>
 
     <div class="container my-5">
-        {filters}
         {table}
+        <div class="empty-state">No matching datasets found. Click any label again to remove the filter.</div>
     </div>
 
     <footer class="bg-light py-4 mt-5">
@@ -164,83 +87,42 @@ HTML_TEMPLATE = """
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {{
-        // Preview functionality
-        const useCase = document.querySelectorAll('.use-case-link');
-        useCase.forEach(link => {{
-            const previewId = link.getAttribute('data-preview-id');
-            const preview = document.getElementById(previewId);
-            if (!preview) return;  // Skip if preview element doesn't exist
-            let timeout;
-
-            link.addEventListener('mouseenter', () => {{
-                timeout = setTimeout(() => {{
-                    preview.style.display = 'block';
-                    const linkRect = link.getBoundingClientRect();
-                    const previewRect = preview.getBoundingClientRect();
-                    
-                    if (linkRect.right + previewRect.width > window.innerWidth) {{
-                        preview.style.left = 'auto';
-                        preview.style.right = '0';
-                    }} else {{
-                        preview.style.left = '0';
-                        preview.style.right = 'auto';
-                    }}
-                }}, 200);
-            }});
-
-            link.addEventListener('mouseleave', () => {{
-                clearTimeout(timeout);
-                setTimeout(() => {{
-                    if (!preview.matches(':hover')) {{
-                        preview.style.display = 'none';
-                    }}
-                }}, 100);
-            }});
-
-            preview.addEventListener('mouseleave', () => {{
-                preview.style.display = 'none';
-            }});
-        }});
-
-        // Filtering functionality
-        const filterLabels = document.querySelectorAll('.filter-label');
+        const labels = document.querySelectorAll('.label');
         const tableRows = document.querySelectorAll('table tbody tr');
         const emptyState = document.querySelector('.empty-state');
-        let activeFilters = {{
-            datatype: new Set(),
-            domain: new Set()
-        }};
+        let activeFilter = null;
 
-        filterLabels.forEach(label => {{
+        labels.forEach(label => {{
             label.addEventListener('click', () => {{
-                const filterGroup = label.closest('[data-filter-group]').dataset.filterGroup;
-                const filterValue = label.textContent.trim();
-
+                const filterValue = label.dataset.filter;
+                
+                // If clicking the same filter again, remove it
                 if (label.classList.contains('active')) {{
                     label.classList.remove('active');
-                    activeFilters[filterGroup].delete(filterValue);
+                    activeFilter = null;
                 }} else {{
+                    // Remove active class from all labels
+                    labels.forEach(l => l.classList.remove('active'));
                     label.classList.add('active');
-                    activeFilters[filterGroup].add(filterValue);
+                    activeFilter = filterValue;
                 }}
 
-                applyFilters();
+                applyFilter();
             }});
         }});
 
-        function applyFilters() {{
+        function applyFilter() {{
             let visibleRows = 0;
 
             tableRows.forEach(row => {{
-                const datatypes = row.querySelector('[data-types]')?.dataset.types.split(',') || [];
-                const domains = row.querySelector('[data-domains]')?.dataset.domains.split(',') || [];
+                if (!activeFilter) {{
+                    row.classList.remove('filtered-out');
+                    visibleRows++;
+                    return;
+                }}
 
-                const matchesDataType = activeFilters.datatype.size === 0 || 
-                    [...activeFilters.datatype].some(filter => datatypes.includes(filter));
-                const matchesDomain = activeFilters.domain.size === 0 || 
-                    [...activeFilters.domain].some(filter => domains.includes(filter));
-
-                if (matchesDataType && matchesDomain) {{
+                const hasMatch = row.textContent.includes(activeFilter);
+                if (hasMatch) {{
                     row.classList.remove('filtered-out');
                     visibleRows++;
                 }} else {{
@@ -250,13 +132,6 @@ HTML_TEMPLATE = """
 
             emptyState.classList.toggle('visible', visibleRows === 0);
         }}
-
-        window.resetFilters = function() {{
-            filterLabels.forEach(label => label.classList.remove('active'));
-            activeFilters.datatype.clear();
-            activeFilters.domain.clear();
-            applyFilters();
-        }};
     }});
     </script>
 </body>
@@ -283,15 +158,11 @@ for _, row in df.iterrows():
         elif col == "SDG/Domain":
             labels = str(cell_value).split(", ") if pd.notna(cell_value) else []
             label_html = " ".join([create_label_html(label, "domain") for label in labels])
-            row_data.append(
-                f"<td class='standard-column' title='{html.escape(str(cell_value))}' data-domains='{",".join(labels)}'>{label_html}</td>"
-            )
+            row_data.append(f"<td class='standard-column' title='{html.escape(str(cell_value))}'>{label_html}</td>")
         elif col == "Data Type":
             types = str(cell_value).split(", ") if pd.notna(cell_value) else []
             type_html = " ".join([create_label_html(dtype, "datatype") for dtype in types])
-            row_data.append(
-                f"<td class='standard-column' title='{html.escape(str(cell_value))}' data-types='{",".join(types)}'>{type_html}</td>"
-            )
+            row_data.append(f"<td class='standard-column' title='{html.escape(str(cell_value))}'>{type_html}</td>")
         else:
             cell_content = str(cell_value) if pd.notna(cell_value) else "N/A"
             cell_content = convert_markdown_links_to_html(cell_content)
@@ -307,8 +178,7 @@ for _, row in df.iterrows():
 table_html = f"<table class='table table-hover custom-table'><thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
 
 # Create the complete HTML
-filter_controls_html = create_filter_controls()
-output_html = HTML_TEMPLATE.format(filters=filter_controls_html, table=table_html)
+output_html = HTML_TEMPLATE.format(table=table_html)
 
 try:
     with open(HTML_OUTPUT, "w") as file:
