@@ -37,6 +37,9 @@ HTML_TEMPLATE = """
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Catalog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <!-- Bootstrap for styling -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
@@ -54,7 +57,7 @@ HTML_TEMPLATE = """
         </div>
     </header>
 
-    <div class="container my-5 table-container">
+    <div class="container my-5">
         {table}
     </div>
 
@@ -84,21 +87,23 @@ for _, row in df.iterrows():
         if col in link_columns:
             link_html = link_columns[col](cell_value)
             row_data.append(f"<td class='standard-column' title='{html.escape(str(cell_value))}'>{link_html}</td>")
+        elif col == "SDG/Domain":
+            # Special handling for labels
+            labels = str(cell_value).split(", ") if pd.notna(cell_value) else []
+            label_html = " ".join([f'<span class="label label-{label.lower().replace(" ", "")}">{label}</span>' for label in labels])
+            row_data.append(f"<td class='standard-column' title='{html.escape(str(cell_value))}'>{label_html}</td>")
         else:
             cell_content = str(cell_value) if pd.notna(cell_value) else "N/A"
             cell_content = convert_markdown_links_to_html(cell_content)
             if col == "Project Title":
-                # Insert a large invisible element to force width
                 row_data.append(
-                    f"<td class='project-title' title='{html.escape(cell_content, quote=True)}'>"
-                    f"<div class='project-title-wrapper'><span style='display:inline-block;width:600px;'></span>{cell_content}</div>"
-                    f"</td>"
+                    f"<td class='project-title' title='{html.escape(cell_content, quote=True)}'>{cell_content}</td>"
                 )
             else:
                 row_data.append(f"<td class='standard-column' title='{html.escape(cell_content, quote=True)}'>{cell_content}</td>")
     rows.append(f"<tr>{''.join(row_data)}</tr>")
 
-# Construct the table without a fixed colgroup this time
+# Construct the table
 table_html = f"<table class='table table-hover custom-table'><thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
 
 output_html = HTML_TEMPLATE.format(table=table_html)

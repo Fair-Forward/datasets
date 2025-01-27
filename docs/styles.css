@@ -1,144 +1,174 @@
 body {
-    font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     background-color: #f8f9fa;
-    color: #343a40;
-    line-height: 1.6;
+    color: #2d3748;
+    line-height: 1.7;
     margin: 0;
     padding: 0;
 }
 
 header {
-    background-color: #ffffff;
-    padding: 60px 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    /* The header layout is handled by Bootstrap classes in HTML, so no extra display: flex here */
+    background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
+    padding: 80px 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .header-text {
     max-width: 80%;
 }
 
+.header-text h1 {
+    margin-bottom: 1rem;
+    font-size: 2.75rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #1a365d 0%, #2d5a88 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+}
+
+.header-text p {
+    font-size: 1.125rem;
+    color: #4a5568;
+    max-width: 600px;
+}
+
 .header-logo {
-    height: 60px; /* Adjust as needed */
+    height: 70px;
     width: auto;
-    opacity: 0.9;
-    transition: opacity 0.3s ease;
+    opacity: 0.95;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
 }
 
 .header-logo:hover {
-    opacity: 1.0;
-}
-
-h1 {
-    font-weight: 700;
-    font-size: 2.5rem;
-    color: #212529;
+    opacity: 1;
+    transform: translateY(-2px);
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1280px;
+    padding: 0 24px;
 }
 
 table.custom-table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     background-color: #ffffff;
-    table-layout: auto;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    border-radius: 8px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    border-radius: 12px;
     overflow: hidden;
+    margin: 2rem 0;
 }
 
 table.custom-table thead {
-    background-color: #f1f3f5;
+    background-color: #f8fafc;
 }
 
 table.custom-table th,
 table.custom-table td {
     text-align: left;
-    padding: 1rem;
+    padding: 1.25rem 1rem;
     vertical-align: middle;
-    white-space: normal;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    border: none;
+    line-height: 1.5;
 }
 
 table.custom-table th {
-    font-weight: 400;
+    font-weight: 600;
     text-transform: capitalize;
     letter-spacing: 0.5px;
-    color: #343a40;
-    border-bottom: 2px solid #e9ecef;
+    color: #2d3748;
+    border-bottom: 2px solid #e2e8f0;
+    font-size: 0.9375rem;
 }
 
 table.custom-table td {
-    border-bottom: 1px solid #e9ecef;
-    transition: background-color 0.3s ease;
+    border-bottom: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+    color: #4a5568;
+    font-size: 0.9375rem;
+}
+
+table.custom-table tr:last-child td {
+    border-bottom: none;
 }
 
 table.custom-table tr:hover td {
-    background-color: #f1f3f5;
+    background-color: #f8fafc;
 }
 
-/* Standard columns can be flexible */
 th.standard-column,
 td.standard-column {
-    min-width: 110px;
+    min-width: 120px;
 }
 
-/* Highlight the project-title column */
 td.project-title {
-    min-width: 220px !important;
-    font-weight: 400 !important;
-    background-color: #f8f9fa !important;
+    min-width: 240px;
+    font-weight: 500;
+    background-color: #f8fafc;
+    color: #2d3748;
 }
 
-
-/* Minimal link styling for hyperlinks */
 .minimal-link {
-    color: #007bff;
+    color: #3182ce;
     text-decoration: none;
-    font-weight: 400;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    padding: 0.25rem 0;
+    border-bottom: 1px solid transparent;
 }
 
 .minimal-link:hover {
-    text-decoration: underline;
+    color: #2c5282;
+    border-bottom-color: currentColor;
+    text-decoration: none;
+}
+
+.label {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    border-radius: 6px;
+    color: #ffffff;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    line-height: 1;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+    transition: all 0.2s ease;
+}
+
+.label:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.label-climate {
+    background: linear-gradient(135deg, #0694a2 0%, #059669 100%);
+}
+
+.label-agriculture {
+    background: linear-gradient(135deg, #059669 0%, #16a34a 100%);
+}
+
+.label-language {
+    background: linear-gradient(135deg, #d97706 0%, #ea580c 100%);
 }
 
 footer {
-    color: #6c757d;
+    background-color: #ffffff;
+    color: #64748b;
     text-align: left;
+    padding: 2rem 0;
+    border-top: 1px solid #e2e8f0;
 }
 
 footer p {
     margin: 0;
-}
-
-/* Label Styles (more lively colors) */
-.label {
-    display: inline-block;
-    padding: 0.2rem 0.5rem;
-    font-size: 0.875rem;
-    font-weight: 400;
-    border-radius: 3px;
-    color: #ffffff;
-    margin-right: 0.5rem;
-    margin-bottom: 0.5rem;
-    line-height: 1.2;
-    white-space: nowrap;
-    background-color: #888888; /* fallback default if none of the custom classes match */
-}
-
-/* Lively category colors */
-.label-climate {
-    background-color: #35b5af; /* Vibrant teal */
-}
-
-.label-agriculture {
-    background-color: #61c377; /* Fresh green */
-}
-
-.label-language {
-    background-color: #f5a623; /* Warm, bright orange */
+    font-size: 0.9375rem;
 }
