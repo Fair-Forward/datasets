@@ -118,7 +118,8 @@ td.project-title {
 
 th.standard-column,
 td.standard-column {
-    width: 150px;
+    width: 10%;
+    min-width: 100px;
 }
 
 th.description-column,
@@ -491,58 +492,5 @@ td.description-column a:hover {
 }
 
 .custom-table .standard-column {
-    width: 150px;
-}
-
-/* Map Styles */
-#dataset-map {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    transition: box-shadow 0.3s ease;
-}
-
-#dataset-map:hover {
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
-}
-
-.map-marker-popup {
-    font-family: 'Inter', sans-serif;
-}
-
-.map-marker-popup h3 {
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 0 0 8px 0;
-    color: #2d3748;
-}
-
-.map-marker-popup p {
-    font-size: 0.9rem;
-    margin: 0;
-    color: #4a5568;
-}
-
-.map-marker-popup .dataset-count {
-    font-weight: 500;
-    color: #2563eb;
-}
-
-/* Map Legend */
-.map-legend {
-    padding: 8px 10px;
-    background: white;
-    border-radius: 4px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.map-legend h4 {
-    font-size: 0.9rem;
-    margin: 0 0 5px 0;
-    color: #2d3748;
-}
-
-.map-legend span {
-    display: block;
-    font-size: 0.8rem;
-    color: #4a5568;
-    margin-bottom: 3px;
+    width: 15%;
 }
