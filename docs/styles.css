@@ -61,6 +61,7 @@ table.custom-table {
     border-radius: 12px;
     overflow: hidden;
     margin: 2rem 0;
+    table-layout: fixed;
 }
 
 table.custom-table thead {
@@ -71,8 +72,10 @@ table.custom-table th,
 table.custom-table td {
     text-align: left;
     padding: 1.25rem 1rem;
-    vertical-align: middle;
+    vertical-align: top;
     line-height: 1.5;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 table.custom-table th {
@@ -99,16 +102,59 @@ table.custom-table tr:hover td {
     background-color: #f8fafc;
 }
 
-th.standard-column,
-td.standard-column {
-    min-width: 120px;
-}
-
+th.project-title,
 td.project-title {
-    min-width: 240px;
+    width: 20%;
+    min-width: 200px;
     font-weight: 500;
     background-color: #f8fafc;
     color: #2d3748;
+}
+
+th.standard-column,
+td.standard-column {
+    width: 12%;
+    min-width: 120px;
+}
+
+th.description-column,
+td.description-column {
+    width: 25%;
+    min-width: 250px;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #4a5568;
+    white-space: pre-line;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+}
+
+td.description-column {
+    position: relative;
+    max-height: 200px;
+    overflow: hidden;
+}
+
+td.description-column::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: linear-gradient(transparent, #ffffff);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+td.description-column:hover {
+    max-height: none;
+}
+
+td.description-column:hover::after {
+    opacity: 0;
 }
 
 .minimal-link {

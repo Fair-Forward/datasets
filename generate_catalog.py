@@ -17,6 +17,20 @@ except Exception as e:
     print(f"Error reading Excel file: {e}")
     exit(1)
 
+# Update the columns to display
+df = pd.read_excel(DATA_CATALOG)
+# Remove Documentation and Use-Case columns and ensure Description is included
+display_columns = [
+    'Project Title', 
+    'Data Type', 
+    'SDG/Domain', 
+    'Country/Region', 
+    'Author/Community',
+    'Link to Dataset',
+    'Description and How to Use it'
+]
+df = df[display_columns]
+
 def normalize_label(text):
     """Convert text to lowercase and remove special characters."""
     if pd.isna(text):
@@ -138,14 +152,16 @@ HTML_TEMPLATE = """
 </html>
 """
 
-# Generate the table header
-header_html = "<tr>" + "".join(
-    [
-        f"<th class='project-title' title='{html.escape(col)}'>{html.escape(col)}</th>" if col == "Project Title" 
-        else f"<th class='standard-column' title='{html.escape(col)}'>{html.escape(col)}</th>"
-        for col in df.columns
-    ]
-) + "</tr>"
+# Update the table generation
+header_html = "<tr>"
+for col in df.columns:
+    if col == "Project Title":
+        header_html += f"<th class='project-title' title='{col}'>{col}</th>"
+    elif col == "Description and how to use it":
+        header_html += f"<th class='description-column' title='{col}'>{col}</th>"
+    else:
+        header_html += f"<th class='standard-column' title='{col}'>{col}</th>"
+header_html += "</tr>"
 
 rows = []
 for _, row in df.iterrows():
@@ -163,6 +179,10 @@ for _, row in df.iterrows():
             types = str(cell_value).split(", ") if pd.notna(cell_value) else []
             type_html = " ".join([create_label_html(dtype, "datatype") for dtype in types])
             row_data.append(f"<td class='standard-column' title='{html.escape(str(cell_value))}'>{type_html}</td>")
+        elif col == "Description and how to use it":
+            cell_content = str(cell_value) if pd.notna(cell_value) else "N/A"
+            cell_content = convert_markdown_links_to_html(cell_content)
+            row_data.append(f"<td class='description-column' title='{html.escape(cell_content, quote=True)}'>{cell_content}</td>")
         else:
             cell_content = str(cell_value) if pd.notna(cell_value) else "N/A"
             cell_content = convert_markdown_links_to_html(cell_content)
