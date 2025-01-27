@@ -49,8 +49,9 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Filter functionality
         const labels = document.querySelectorAll('.label');
-        const tableRows = document.querySelectorAll('table tbody tr');
+        const tableRows = document.querySelectorAll('.custom-table tbody tr');
         const emptyState = document.querySelector('.empty-state');
         let activeFilter = null;
 
@@ -69,33 +70,29 @@
                     activeFilter = filterValue;
                 }
 
-                applyFilter();
+                // Apply the filter
+                let visibleRows = 0;
+                tableRows.forEach(row => {
+                    if (!activeFilter) {
+                        row.classList.remove('filtered-out');
+                        visibleRows++;
+                    } else {
+                        const hasMatch = row.textContent.includes(activeFilter);
+                        if (hasMatch) {
+                            row.classList.remove('filtered-out');
+                            visibleRows++;
+                        } else {
+                            row.classList.add('filtered-out');
+                        }
+                    }
+                });
+
+                // Toggle empty state message
+                emptyState.classList.toggle('visible', visibleRows === 0);
             });
         });
 
-        function applyFilter() {
-            let visibleRows = 0;
-
-            tableRows.forEach(row => {
-                if (!activeFilter) {
-                    row.classList.remove('filtered-out');
-                    visibleRows++;
-                    return;
-                }
-
-                const hasMatch = row.textContent.includes(activeFilter);
-                if (hasMatch) {
-                    row.classList.remove('filtered-out');
-                    visibleRows++;
-                } else {
-                    row.classList.add('filtered-out');
-                }
-            });
-
-            emptyState.classList.toggle('visible', visibleRows === 0);
-        }
-
-        // Add description toggle functionality
+        // Description toggle functionality
         document.querySelectorAll('.toggle-description').forEach(toggle => {
             toggle.addEventListener('click', function() {
                 const content = this.previousElementSibling;
