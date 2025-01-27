@@ -163,75 +163,75 @@ HTML_TEMPLATE = """
     </footer>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {{
         // Preview functionality
         const useCase = document.querySelectorAll('.use-case-link');
-        useCase.forEach(link => {
+        useCase.forEach(link => {{
             const previewId = link.getAttribute('data-preview-id');
             const preview = document.getElementById(previewId);
             if (!preview) return;  // Skip if preview element doesn't exist
             let timeout;
 
-            link.addEventListener('mouseenter', () => {
-                timeout = setTimeout(() => {
+            link.addEventListener('mouseenter', () => {{
+                timeout = setTimeout(() => {{
                     preview.style.display = 'block';
                     const linkRect = link.getBoundingClientRect();
                     const previewRect = preview.getBoundingClientRect();
                     
-                    if (linkRect.right + previewRect.width > window.innerWidth) {
+                    if (linkRect.right + previewRect.width > window.innerWidth) {{
                         preview.style.left = 'auto';
                         preview.style.right = '0';
-                    } else {
+                    }} else {{
                         preview.style.left = '0';
                         preview.style.right = 'auto';
-                    }
-                }, 200);
-            });
+                    }}
+                }}, 200);
+            }});
 
-            link.addEventListener('mouseleave', () => {
+            link.addEventListener('mouseleave', () => {{
                 clearTimeout(timeout);
-                setTimeout(() => {
-                    if (!preview.matches(':hover')) {
+                setTimeout(() => {{
+                    if (!preview.matches(':hover')) {{
                         preview.style.display = 'none';
-                    }
-                }, 100);
-            });
+                    }}
+                }}, 100);
+            }});
 
-            preview.addEventListener('mouseleave', () => {
+            preview.addEventListener('mouseleave', () => {{
                 preview.style.display = 'none';
-            });
-        });
+            }});
+        }});
 
         // Filtering functionality
         const filterLabels = document.querySelectorAll('.filter-label');
         const tableRows = document.querySelectorAll('table tbody tr');
         const emptyState = document.querySelector('.empty-state');
-        let activeFilters = {
+        let activeFilters = {{
             datatype: new Set(),
             domain: new Set()
-        };
+        }};
 
-        filterLabels.forEach(label => {
-            label.addEventListener('click', () => {
+        filterLabels.forEach(label => {{
+            label.addEventListener('click', () => {{
                 const filterGroup = label.closest('[data-filter-group]').dataset.filterGroup;
                 const filterValue = label.textContent.trim();
 
-                if (label.classList.contains('active')) {
+                if (label.classList.contains('active')) {{
                     label.classList.remove('active');
                     activeFilters[filterGroup].delete(filterValue);
-                } else {
+                }} else {{
                     label.classList.add('active');
                     activeFilters[filterGroup].add(filterValue);
-                }
+                }}
 
                 applyFilters();
-            });
-        });
+            }});
+        }});
 
-        function applyFilters() {
+        function applyFilters() {{
             let visibleRows = 0;
 
-            tableRows.forEach(row => {
+            tableRows.forEach(row => {{
                 const datatypes = row.querySelector('[data-types]')?.dataset.types.split(',') || [];
                 const domains = row.querySelector('[data-domains]')?.dataset.domains.split(',') || [];
 
@@ -240,24 +240,24 @@ HTML_TEMPLATE = """
                 const matchesDomain = activeFilters.domain.size === 0 || 
                     [...activeFilters.domain].some(filter => domains.includes(filter));
 
-                if (matchesDataType && matchesDomain) {
+                if (matchesDataType && matchesDomain) {{
                     row.classList.remove('filtered-out');
                     visibleRows++;
-                } else {
+                }} else {{
                     row.classList.add('filtered-out');
-                }
-            });
+                }}
+            }});
 
             emptyState.classList.toggle('visible', visibleRows === 0);
-        }
+        }}
 
-        window.resetFilters = function() {
+        window.resetFilters = function() {{
             filterLabels.forEach(label => label.classList.remove('active'));
             activeFilters.datatype.clear();
             activeFilters.domain.clear();
             applyFilters();
-        };
-    });
+        }};
+    }});
     </script>
 </body>
 </html>
