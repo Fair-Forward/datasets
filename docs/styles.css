@@ -160,6 +160,27 @@ td.project-title {
     background: linear-gradient(135deg, #d97706 0%, #ea580c 100%);
 }
 
+/* Data Type Labels */
+.label-tabular {
+    background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
+}
+
+.label-text {
+    background: linear-gradient(135deg, #805ad5 0%, #553c9a 100%);
+}
+
+.label-voice {
+    background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+}
+
+.label-images {
+    background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+}
+
+.label-various {
+    background: linear-gradient(135deg, #718096 0%, #4a5568 100%);
+}
+
 footer {
     background-color: #ffffff;
     color: #64748b;
@@ -271,4 +292,93 @@ footer p {
 .preview-popup[style*="display: block"] {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* Filter Controls */
+.filter-controls {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+}
+
+.filter-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 1rem;
+}
+
+.filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.filter-group:last-child {
+    margin-bottom: 0;
+}
+
+.filter-label {
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all 0.2s ease;
+}
+
+.filter-label:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+}
+
+.filter-label.active {
+    opacity: 1;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.reset-filters {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #4a5568;
+    background: #f7fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 1rem;
+}
+
+.reset-filters:hover {
+    background: #edf2f7;
+    color: #2d3748;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Table row transitions */
+.table tr {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.table tr.filtered-out {
+    display: none;
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #718096;
+    font-size: 0.9375rem;
+    display: none;
+}
+
+.empty-state.visible {
+    display: block;
 }
