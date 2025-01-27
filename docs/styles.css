@@ -184,7 +184,7 @@ td.project-title {
 }
 
 .label-various {
-    background-color: #718096;
+    background-color: #e53e3e;
 }
 
 .label-json {
@@ -193,6 +193,10 @@ td.project-title {
 
 .label-pbtxt {
     background-color: #667eea;
+}
+
+.label-dbf {
+    background-color: #805ad5;
 }
 
 footer {
