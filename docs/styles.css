@@ -146,57 +146,70 @@ td.project-title {
 .label:hover {
     transform: translateY(-1px);
     opacity: 0.9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .label.active {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
     transform: translateY(-1px);
+    opacity: 1;
 }
 
-/* Original colors restored */
-.label-climate {
-    background-color: #35b5af;
+/* Domain Labels */
+.label-climateadaptation, .label-climate {
+    background-color: #a8d5ba;
+    color: #2d3748;
 }
 
 .label-agriculture {
-    background-color: #61c377;
+    background-color: #c6ddd1;
+    color: #2d3748;
 }
 
-.label-language {
-    background-color: #f5a623;
+.label-languagetechnology, .label-language {
+    background-color: #e2cfc4;
+    color: #2d3748;
 }
 
-/* Data Type Labels with distinct colors */
+/* Data Type Labels */
 .label-tabular {
-    background-color: #4299e1;
+    background-color: #b7d7e8;
+    color: #2d3748;
 }
 
 .label-text {
-    background-color: #9f7aea;
+    background-color: #d4c5e2;
+    color: #2d3748;
 }
 
 .label-voice {
-    background-color: #f56565;
+    background-color: #e8c6c6;
+    color: #2d3748;
 }
 
 .label-images {
-    background-color: #48bb78;
+    background-color: #bdd2c6;
+    color: #2d3748;
 }
 
 .label-various {
-    background-color: #e53e3e;
+    background-color: #e2d4c5;
+    color: #2d3748;
 }
 
 .label-json {
-    background-color: #ed8936;
+    background-color: #d5c5b8;
+    color: #2d3748;
 }
 
 .label-pbtxt {
-    background-color: #667eea;
+    background-color: #c5d4e2;
+    color: #2d3748;
 }
 
 .label-dbf {
-    background-color: #805ad5;
+    background-color: #d4e2c5;
+    color: #2d3748;
 }
 
 footer {
