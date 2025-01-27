@@ -7,6 +7,179 @@ import re
 DATA_CATALOG = "docs/data_catalog.xlsx"
 HTML_OUTPUT = "docs/index.html"
 
+# HTML template with Leaflet dependencies
+HTML_TEMPLATE = '''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Catalog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Bootstrap for styling -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
+    <!-- Leaflet.js for mapping -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+</head>
+<body>
+    <header>
+        <div class="container d-flex align-items-center justify-content-between">
+            <div class="header-text">
+                <h1 class="mb-3">Data Catalog</h1>
+                <p class="text-muted">An overview of datasets and resources funded by Fair Forward</p>
+            </div>
+            <a href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/" target="_blank">
+                <img src="img/fair_forward.png" alt="Fair Forward Logo" class="header-logo mx-3">
+            </a>
+        </div>
+    </header>
+
+    <div class="container my-5">
+        {table_html}
+        <div class="empty-state">No matching datasets found. Click any label again to remove the filter.</div>
+    </div>
+
+    <!-- Map Section -->
+    <div class="container my-5">
+        <h2 class="mb-4">Geographic Distribution of Datasets</h2>
+        <div id="dataset-map" style="height: 500px; width: 100%; border-radius: 8px;"></div>
+    </div>
+
+    <footer class="bg-light py-4 mt-5">
+        <div class="container">
+            <p class="mb-0 text-muted">&copy; 2024 Fair Forward</p>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Filter functionality
+        const labels = document.querySelectorAll('.label');
+        const tableRows = document.querySelectorAll('.custom-table tbody tr');
+        const emptyState = document.querySelector('.empty-state');
+        let activeFilter = null;
+
+        labels.forEach(label => {
+            label.addEventListener('click', () => {
+                const filterValue = label.dataset.filter;
+                
+                if (label.classList.contains('active')) {
+                    label.classList.remove('active');
+                    activeFilter = null;
+                } else {
+                    labels.forEach(l => l.classList.remove('active'));
+                    label.classList.add('active');
+                    activeFilter = filterValue;
+                }
+
+                let visibleRows = 0;
+                tableRows.forEach(row => {
+                    if (!activeFilter) {
+                        row.classList.remove('filtered-out');
+                        visibleRows++;
+                    } else {
+                        const hasMatch = row.textContent.includes(activeFilter);
+                        if (hasMatch) {
+                            row.classList.remove('filtered-out');
+                            visibleRows++;
+                        } else {
+                            row.classList.add('filtered-out');
+                        }
+                    }
+                });
+
+                emptyState.classList.toggle('visible', visibleRows === 0);
+            });
+        });
+
+        // Description toggle functionality
+        document.querySelectorAll('.toggle-description').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const content = this.previousElementSibling;
+                const isExpanded = content.classList.contains('expanded');
+                content.classList.toggle('expanded');
+                this.textContent = isExpanded ? 'Read more' : 'Show less';
+            });
+        });
+
+        // Initialize map
+        try {
+            const mapContainer = document.getElementById('dataset-map');
+            if (!mapContainer) {
+                console.error('Map container not found');
+                return;
+            }
+
+            const map = L.map('dataset-map').setView([20, 0], 2);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                maxZoom: 19
+            }).addTo(map);
+
+            const coordinates = {
+                'India': [20.5937, 78.9629],
+                'Ghana': [7.9465, -1.0232],
+                'Indonesia': [-0.7893, 113.9213],
+                'South Africa': [-30.5595, 22.9375],
+                'Telangana, India': [17.8495, 79.1151],
+                'Global/Regional': [0, 0]
+            };
+
+            const datasetCounts = {};
+            const locationCells = document.querySelectorAll('td.standard-column');
+            locationCells.forEach(cell => {
+                if (cell.cellIndex === 4) {
+                    const location = cell.textContent.trim();
+                    if (location && coordinates[location]) {
+                        datasetCounts[location] = (datasetCounts[location] || 0) + 1;
+                    }
+                }
+            });
+
+            Object.entries(datasetCounts).forEach(([location, count]) => {
+                if (location !== 'Global/Regional') {
+                    const marker = L.marker(coordinates[location])
+                        .bindPopup(`
+                            <div class="map-marker-popup">
+                                <h3>${location}</h3>
+                                <p><span class="dataset-count">${count}</span> dataset${count > 1 ? 's' : ''}</p>
+                            </div>
+                        `)
+                        .addTo(map);
+                }
+            });
+
+            const legend = L.control({ position: 'bottomright' });
+            legend.onAdd = function(map) {
+                const div = L.DomUtil.create('div', 'map-legend');
+                div.innerHTML = `
+                    <h4>Dataset Distribution</h4>
+                    ${Object.entries(datasetCounts)
+                        .map(([location, count]) => 
+                            `<span>• ${location}: ${count} dataset${count > 1 ? 's' : ''}</span>`
+                        ).join('')}
+                `;
+                return div;
+            };
+            legend.addTo(map);
+
+            setTimeout(() => {
+                map.invalidateSize();
+            }, 100);
+
+        } catch (error) {
+            console.error('Error initializing map:', error);
+        }
+    });
+    </script>
+</body>
+</html>
+'''
+
 # Read Excel File
 try:
     df = pd.read_excel(DATA_CATALOG)
@@ -74,105 +247,6 @@ def create_description_html(text):
         </div>
     """
 
-HTML_TEMPLATE = """
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Catalog</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <!-- Bootstrap for styling -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
-</head>
-<body>
-    <header>
-        <div class="container d-flex align-items-center justify-content-between">
-            <div class="header-text">
-                <h1 class="mb-3">Data Catalog</h1>
-                <p class="text-muted">An overview of datasets and resources funded by Fair Forward</p>
-            </div>
-            <a href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/" target="_blank">
-                <img src="img/fair_forward.png" alt="Fair Forward Logo" class="header-logo mx-3">
-            </a>
-        </div>
-    </header>
-
-    <div class="container my-5">
-        {table}
-        <div class="empty-state">No matching datasets found. Click any label again to remove the filter.</div>
-    </div>
-
-    <footer class="bg-light py-4 mt-5">
-        <div class="container">
-            <p class="mb-0 text-muted">&copy; 2024 Fair Forward</p>
-        </div>
-    </footer>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {{
-        // Filter functionality
-        const labels = document.querySelectorAll('.label');
-        const tableRows = document.querySelectorAll('.custom-table tbody tr');
-        const emptyState = document.querySelector('.empty-state');
-        let activeFilter = null;
-
-        labels.forEach(label => {{
-            label.addEventListener('click', () => {{
-                const filterValue = label.dataset.filter;
-                
-                // If clicking the same filter again, remove it
-                if (label.classList.contains('active')) {{
-                    label.classList.remove('active');
-                    activeFilter = null;
-                }} else {{
-                    // Remove active class from all labels
-                    labels.forEach(l => l.classList.remove('active'));
-                    label.classList.add('active');
-                    activeFilter = filterValue;
-                }}
-
-                // Apply the filter
-                let visibleRows = 0;
-                tableRows.forEach(row => {{
-                    if (!activeFilter) {{
-                        row.classList.remove('filtered-out');
-                        visibleRows++;
-                    }} else {{
-                        const hasMatch = row.textContent.includes(activeFilter);
-                        if (hasMatch) {{
-                            row.classList.remove('filtered-out');
-                            visibleRows++;
-                        }} else {{
-                            row.classList.add('filtered-out');
-                        }}
-                    }}
-                }});
-
-                // Toggle empty state message
-                emptyState.classList.toggle('visible', visibleRows === 0);
-            }});
-        }});
-
-        // Description toggle functionality
-        document.querySelectorAll('.toggle-description').forEach(toggle => {{
-            toggle.addEventListener('click', function() {{
-                const content = this.previousElementSibling;
-                const isExpanded = content.classList.contains('expanded');
-                
-                content.classList.toggle('expanded');
-                this.textContent = isExpanded ? 'Read more' : 'Show less';
-            }});
-        }});
-    }});
-    </script>
-</body>
-</html>
-"""
-
 # Generate the table header
 header_html = "<tr>"
 for col in df.columns:
@@ -210,12 +284,20 @@ for _, row in df.iterrows():
 # Construct the table without Bootstrap classes
 table_html = f"<table class='custom-table'><thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
 
-# Create the complete HTML
-output_html = HTML_TEMPLATE.format(table=table_html)
+def generate_html():
+    """Generate the HTML file with the table."""
+    table_html = generate_table_html()
+    
+    # Replace the table placeholder in the template
+    final_html = HTML_TEMPLATE.format(table_html=table_html)
+    
+    try:
+        with open(HTML_OUTPUT, 'w', encoding='utf-8') as f:
+            f.write(final_html)
+        print(f"Successfully generated {HTML_OUTPUT}")
+    except Exception as e:
+        print(f"Error writing HTML file: {e}")
+        exit(1)
 
-try:
-    with open(HTML_OUTPUT, "w") as file:
-        file.write(output_html)
-    print("HTML file generated successfully.")
-except Exception as e:
-    print(f"Error writing HTML file: {e}")
+if __name__ == "__main__":
+    generate_html()

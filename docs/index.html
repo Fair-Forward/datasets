@@ -110,64 +110,84 @@
                 this.textContent = isExpanded ? 'Read more' : 'Show less';
             });
         });
-    });
 
-    // Initialize the map
-    const map = L.map('dataset-map').setView([20, 0], 2);
-    
-    // Add the tile layer (OpenStreetMap)
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+        // Initialize map
+        try {
+            const mapContainer = document.getElementById('dataset-map');
+            if (!mapContainer) {
+                console.error('Map container not found');
+                return;
+            }
 
-    // Country/Region coordinates mapping
-    const coordinates = {
-        'India': [20.5937, 78.9629],
-        'Ghana': [7.9465, -1.0232],
-        'Indonesia': [-0.7893, 113.9213],
-        'South Africa': [-30.5595, 22.9375],
-        'Telangana, India': [17.8495, 79.1151],
-        'Global/Regional': [0, 0]
-    };
+            // Initialize the map
+            const map = L.map('dataset-map').setView([20, 0], 2);
+            
+            // Add the tile layer (OpenStreetMap)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                maxZoom: 19
+            }).addTo(map);
 
-    // Dataset counts per location
-    const datasetCounts = {};
-    const locationElements = document.querySelectorAll('td.standard-column');
-    locationElements.forEach(element => {
-        const location = element.textContent.trim();
-        if (location && coordinates[location]) {
-            datasetCounts[location] = (datasetCounts[location] || 0) + 1;
+            // Country/Region coordinates mapping
+            const coordinates = {
+                'India': [20.5937, 78.9629],
+                'Ghana': [7.9465, -1.0232],
+                'Indonesia': [-0.7893, 113.9213],
+                'South Africa': [-30.5595, 22.9375],
+                'Telangana, India': [17.8495, 79.1151],
+                'Global/Regional': [0, 0]
+            };
+
+            // Dataset counts per location
+            const datasetCounts = {};
+            const locationCells = document.querySelectorAll('td.standard-column');
+            locationCells.forEach(cell => {
+                if (cell.cellIndex === 4) { // Index of the Country/Region column
+                    const location = cell.textContent.trim();
+                    if (location && coordinates[location]) {
+                        datasetCounts[location] = (datasetCounts[location] || 0) + 1;
+                    }
+                }
+            });
+
+            // Add markers to the map
+            Object.entries(datasetCounts).forEach(([location, count]) => {
+                if (location !== 'Global/Regional') {
+                    const marker = L.marker(coordinates[location])
+                        .bindPopup(`
+                            <div class="map-marker-popup">
+                                <h3>${location}</h3>
+                                <p><span class="dataset-count">${count}</span> dataset${count > 1 ? 's' : ''}</p>
+                            </div>
+                        `)
+                        .addTo(map);
+                }
+            });
+
+            // Add legend
+            const legend = L.control({ position: 'bottomright' });
+            legend.onAdd = function(map) {
+                const div = L.DomUtil.create('div', 'map-legend');
+                div.innerHTML = `
+                    <h4>Dataset Distribution</h4>
+                    ${Object.entries(datasetCounts)
+                        .map(([location, count]) => 
+                            `<span>• ${location}: ${count} dataset${count > 1 ? 's' : ''}</span>`
+                        ).join('')}
+                `;
+                return div;
+            };
+            legend.addTo(map);
+
+            // Force a map resize after initialization
+            setTimeout(() => {
+                map.invalidateSize();
+            }, 100);
+
+        } catch (error) {
+            console.error('Error initializing map:', error);
         }
     });
-
-    // Add markers to the map
-    Object.entries(datasetCounts).forEach(([location, count]) => {
-        if (location !== 'Global/Regional') {
-            const marker = L.marker(coordinates[location])
-                .bindPopup(`
-                    <div class="map-marker-popup">
-                        <h3>${location}</h3>
-                        <p><span class="dataset-count">${count}</span> dataset${count > 1 ? 's' : ''}</p>
-                    </div>
-                `)
-                .addTo(map);
-        }
-    });
-
-    // Add legend
-    const legend = L.control({ position: 'bottomright' });
-    legend.onAdd = function(map) {
-        const div = L.DomUtil.create('div', 'map-legend');
-        div.innerHTML = `
-            <h4>Dataset Distribution</h4>
-            ${Object.entries(datasetCounts)
-                .map(([location, count]) => 
-                    `<span>• ${location}: ${count} dataset${count > 1 ? 's' : ''}</span>`
-                ).join('')}
-        `;
-        return div;
-    };
-    legend.addTo(map);
     </script>
 </body>
 </html>
