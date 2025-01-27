@@ -2,10 +2,24 @@ import pandas as pd
 import html
 import os
 import re
+import markdown
+from pathlib import Path
 
 # Load the dataset
 DATA_CATALOG = "docs/data_catalog.xlsx"
 HTML_OUTPUT = "docs/index.html"
+
+def read_markdown_file(filepath):
+    """Read and convert markdown file to HTML."""
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            content = f.read()
+            # Convert markdown to HTML
+            html_content = markdown.markdown(content)
+            return html_content
+    except Exception as e:
+        print(f"Warning: Could not read markdown file {filepath}: {e}")
+        return None
 
 # Read Excel File
 try:
@@ -21,8 +35,30 @@ except Exception as e:
 link_columns = {
     "Link to Dataset": lambda x: f'<a href="{x}" target="_blank" class="minimal-link">Link</a>' if pd.notna(x) else "N/A",
     "Documentation": lambda x: f'<a href="{x}" target="_blank" class="minimal-link">Details</a>' if pd.notna(x) else "N/A",
-    "Use-Case": lambda x: f'<a href="{x}" target="_blank" class="minimal-link">Use-Case</a>' if pd.notna(x) else "N/A"
+    "Use-Case": lambda x: create_use_case_link(x) if pd.notna(x) else "N/A"
 }
+
+def create_use_case_link(filepath):
+    """Create a link with preview for use-case markdown files."""
+    if not isinstance(filepath, str):
+        return "N/A"
+    
+    # Read the markdown content
+    content = read_markdown_file(filepath)
+    if content:
+        preview_id = f"preview-{hash(filepath)}"
+        return f'''
+            <div class="use-case-container">
+                <a href="{filepath}" target="_blank" class="minimal-link use-case-link" 
+                   data-preview-id="{preview_id}">Use-Case</a>
+                <div class="preview-popup" id="{preview_id}">
+                    <div class="preview-content markdown-body">
+                        {content}
+                    </div>
+                </div>
+            </div>
+        '''
+    return f'<a href="{filepath}" target="_blank" class="minimal-link">Use-Case</a>'
 
 def convert_markdown_links_to_html(text):
     if not text or not isinstance(text, str):
@@ -43,6 +79,8 @@ HTML_TEMPLATE = """
     <link rel="stylesheet" href="styles.css">
     <!-- Bootstrap for styling -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
+    <!-- GitHub Markdown CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
 </head>
 <body>
     <header>
@@ -66,6 +104,50 @@ HTML_TEMPLATE = """
             <p class="mb-0 text-muted">&copy; 2024 Fair Forward</p>
         </div>
     </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const useCase = document.querySelectorAll('.use-case-link');
+        
+        useCase.forEach(link => {
+            const previewId = link.getAttribute('data-preview-id');
+            const preview = document.getElementById(previewId);
+            let timeout;
+
+            link.addEventListener('mouseenter', () => {
+                timeout = setTimeout(() => {
+                    preview.style.display = 'block';
+                    
+                    // Position the preview
+                    const linkRect = link.getBoundingClientRect();
+                    const previewRect = preview.getBoundingClientRect();
+                    
+                    // Check if preview would go off-screen to the right
+                    if (linkRect.right + previewRect.width > window.innerWidth) {
+                        preview.style.left = 'auto';
+                        preview.style.right = '0';
+                    } else {
+                        preview.style.left = '0';
+                        preview.style.right = 'auto';
+                    }
+                }, 200);
+            });
+
+            link.addEventListener('mouseleave', () => {
+                clearTimeout(timeout);
+                setTimeout(() => {
+                    if (!preview.matches(':hover')) {
+                        preview.style.display = 'none';
+                    }
+                }, 100);
+            });
+
+            preview.addEventListener('mouseleave', () => {
+                preview.style.display = 'none';
+            });
+        });
+    });
+    </script>
 </body>
 </html>
 """
