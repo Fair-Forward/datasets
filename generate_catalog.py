@@ -71,8 +71,8 @@ def create_description_html(text):
     
     # Create the HTML structure with a simple text and popup
     return f"""
-        <div class="description-cell">
-            <span class="description-text">{html.escape(str(text))}</span>
+        <div class="description-wrapper">
+            <div class="description-text">{html.escape(str(text))}</div>
             <div class="description-popup">{full_text}</div>
         </div>
     """
@@ -197,7 +197,7 @@ for _, row in df.iterrows():
             row_data.append(f"<td class='standard-column' title='{html.escape(str(cell_value))}'>{type_html}</td>")
         elif col == "Description and how to use it":
             description_html = create_description_html(cell_value)
-            row_data.append(f"<td class='standard-column'>{description_html}</td>")
+            row_data.append(f"<td class='description-column'>{description_html}</td>")
         else:
             cell_content = str(cell_value) if pd.notna(cell_value) else "N/A"
             cell_content = convert_markdown_links_to_html(cell_content)
