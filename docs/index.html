@@ -92,6 +92,20 @@
 
             emptyState.classList.toggle('visible', visibleRows === 0);
         }
+
+        // Add expand/collapse functionality
+        document.querySelectorAll('.read-more-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const descText = this.previousElementSibling;
+                const isCollapsed = descText.classList.contains('collapsed');
+                
+                // Toggle collapsed state
+                descText.classList.toggle('collapsed');
+                
+                // Update button text
+                this.textContent = isCollapsed ? 'Show less' : 'Read more';
+            });
+        });
     });
     </script>
 </body>
