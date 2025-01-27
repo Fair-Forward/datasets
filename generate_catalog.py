@@ -61,6 +61,23 @@ def convert_markdown_links_to_html(text):
     link_pattern = r"\[([^\]]+)\]\(([^)]+)\)"
     return re.sub(link_pattern, r'<a href="\2" target="_blank" class="minimal-link">\1</a>', text)
 
+def create_description_html(text):
+    """Create HTML for description with teaser and popup."""
+    if pd.isna(text):
+        return "N/A"
+    
+    # Create a teaser (first 100 characters)
+    teaser = str(text)[:100] + "..." if len(str(text)) > 100 else str(text)
+    
+    # Convert markdown links in the full text
+    full_text = convert_markdown_links_to_html(str(text))
+    
+    # Create the HTML structure
+    return f"""
+        <div class="description-teaser">{html.escape(teaser)}</div>
+        <div class="description-popup">{full_text}</div>
+    """
+
 HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html lang="en">
@@ -180,9 +197,8 @@ for _, row in df.iterrows():
             type_html = " ".join([create_label_html(dtype, "datatype") for dtype in types])
             row_data.append(f"<td class='standard-column' title='{html.escape(str(cell_value))}'>{type_html}</td>")
         elif col == "Description and how to use it":
-            cell_content = str(cell_value) if pd.notna(cell_value) else "N/A"
-            cell_content = convert_markdown_links_to_html(cell_content)
-            row_data.append(f"<td class='description-column' title='{html.escape(cell_content, quote=True)}'>{cell_content}</td>")
+            description_html = create_description_html(cell_value)
+            row_data.append(f"<td class='description-column'>{description_html}</td>")
         else:
             cell_content = str(cell_value) if pd.notna(cell_value) else "N/A"
             cell_content = convert_markdown_links_to_html(cell_content)
