@@ -207,63 +207,6 @@ td.description-column:hover::after {
     opacity: 1;
 }
 
-/* Domain Labels */
-.label-climateadaptation, .label-climate {
-    background-color: #a8d5ba;
-    color: #2d3748;
-}
-
-.label-agriculture {
-    background-color: #c6ddd1;
-    color: #2d3748;
-}
-
-.label-languagetechnology, .label-language {
-    background-color: #e2cfc4;
-    color: #2d3748;
-}
-
-/* Data Type Labels */
-.label-tabular {
-    background-color: #b7d7e8;
-    color: #2d3748;
-}
-
-.label-text {
-    background-color: #d4c5e2;
-    color: #2d3748;
-}
-
-.label-voice {
-    background-color: #e8c6c6;
-    color: #2d3748;
-}
-
-.label-images {
-    background-color: #bdd2c6;
-    color: #2d3748;
-}
-
-.label-various {
-    background-color: #e2d4c5;
-    color: #2d3748;
-}
-
-.label-json {
-    background-color: #d5c5b8;
-    color: #2d3748;
-}
-
-.label-pbtxt {
-    background-color: #c5d4e2;
-    color: #2d3748;
-}
-
-.label-dbf {
-    background-color: #d4e2c5;
-    color: #2d3748;
-}
-
 footer {
     background-color: #ffffff;
     color: #64748b;

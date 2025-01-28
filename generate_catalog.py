@@ -2,6 +2,7 @@ import pandas as pd
 import html
 import os
 import re
+import colorsys
 
 # Load the dataset
 DATA_CATALOG = "docs/data_catalog.xlsx"
@@ -74,6 +75,81 @@ def create_description_html(text):
         </div>
     """
 
+def get_pastel_color(hue):
+    """Generate a pastel color given a hue value."""
+    # Convert to HSL color space and create a pastel color
+    rgb = colorsys.hls_to_rgb(hue, 0.8, 0.9)
+    # Convert RGB values to hex
+    return '#{:02x}{:02x}{:02x}'.format(int(rgb[0]*255), int(rgb[1]*255), int(rgb[2]*255))
+
+def generate_color_palette(n):
+    """Generate n evenly spaced pastel colors."""
+    return [get_pastel_color(i/n) for i in range(n)]
+
+def get_unique_categories(df):
+    """Extract all unique categories from SDG/Domain and Data Type columns."""
+    domains = set()
+    data_types = set()
+    
+    # Extract domains
+    domain_col = df["SDG/Domain"].dropna()
+    for items in domain_col:
+        domains.update([item.strip() for item in str(items).split(",")])
+    
+    # Extract data types
+    type_col = df["Data Type"].dropna()
+    for items in type_col:
+        data_types.update([item.strip() for item in str(items).split(",")])
+    
+    return list(domains), list(data_types)
+
+def generate_label_css(domains, data_types):
+    """Generate CSS for all labels."""
+    all_categories = domains + data_types
+    colors = generate_color_palette(len(all_categories))
+    
+    css = []
+    # Base label styles (moved from static CSS)
+    css.append("""
+.label {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    border-radius: 6px;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    line-height: 1;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.label:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.label.active {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+    opacity: 1;
+}""")
+    
+    # Generate specific label styles
+    for category, color in zip(all_categories, colors):
+        normalized = normalize_label(category)
+        css.append(f"""
+.label-{normalized} {{
+    background-color: {color};
+    color: #2d3748;
+}}""")
+    
+    return "\n".join(css)
+
 HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html lang="en">
@@ -87,6 +163,10 @@ HTML_TEMPLATE = """
     <link rel="stylesheet" href="styles.css">
     <!-- Bootstrap for styling -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
+    <style>
+    /* Dynamic label styles */
+    {dynamic_css}
+    </style>
 </head>
 <body>
     <header>
@@ -210,8 +290,12 @@ for _, row in df.iterrows():
 # Construct the table without Bootstrap classes
 table_html = f"<table class='custom-table'><thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
 
-# Create the complete HTML
-output_html = HTML_TEMPLATE.format(table=table_html)
+# Get unique categories and generate CSS
+domains, data_types = get_unique_categories(df)
+dynamic_css = generate_label_css(domains, data_types)
+
+# Create the complete HTML with dynamic CSS
+output_html = HTML_TEMPLATE.format(table=table_html, dynamic_css=dynamic_css)
 
 try:
     with open(HTML_OUTPUT, "w") as file:
