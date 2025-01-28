@@ -38,7 +38,8 @@ def normalize_label(text):
     # Extract the main type from parentheses if present
     if "(" in base:
         base = base.split("(")[0].strip()
-    return base.replace(" ", "").replace(",", "").replace(".", "")
+    # Replace both slash and space with empty string to ensure consistent normalization
+    return re.sub(r'[^a-z0-9]', '', base)
 
 def create_label_html(text, category):
     """Create HTML for a label."""
@@ -76,9 +77,10 @@ def create_description_html(text):
     """
 
 def get_pastel_color(hue):
-    """Generate a pastel color given a hue value."""
-    # Convert to HSL color space and create a pastel color
-    rgb = colorsys.hls_to_rgb(hue, 0.8, 0.9)
+    """Generate a very pale, understated pastel color given a hue value."""
+    # Convert to HSL color space and create a very pale color
+    # Increased lightness (0.95) and reduced saturation (0.25) for more understated colors
+    rgb = colorsys.hls_to_rgb(hue, 0.95, 0.25)
     # Convert RGB values to hex
     return '#{:02x}{:02x}{:02x}'.format(int(rgb[0]*255), int(rgb[1]*255), int(rgb[2]*255))
 
@@ -101,7 +103,8 @@ def get_unique_categories(df):
     for items in type_col:
         data_types.update([item.strip() for item in str(items).split(",")])
     
-    return list(domains), list(data_types)
+    # Sort the lists to ensure consistent color assignment
+    return sorted(list(domains)), sorted(list(data_types))
 
 def generate_label_css(domains, data_types):
     """Generate CSS for all labels."""
