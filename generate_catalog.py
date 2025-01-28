@@ -81,7 +81,7 @@ def get_pastel_color(hue):
     # Convert to HSL color space and create a pale color
     # Lightness 0.9 (instead of 0.95) for slightly less whiteness
     # Saturation 0.35 (instead of 0.25) for slightly more color while keeping it understated
-    rgb = colorsys.hls_to_rgb(hue, 0.9, 0.35)
+    rgb = colorsys.hls_to_rgb(hue, 0.9, 0.45)
     # Convert RGB values to hex
     return '#{:02x}{:02x}{:02x}'.format(int(rgb[0]*255), int(rgb[1]*255), int(rgb[2]*255))
 
