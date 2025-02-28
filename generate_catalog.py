@@ -3,10 +3,17 @@ import html
 import os
 import re
 import colorsys
+import argparse
+
+# Parse command line arguments
+parser = argparse.ArgumentParser(description='Generate HTML catalog from Excel file.')
+parser.add_argument('--input', type=str, default="docs/data_catalog.xlsx", help='Path to the input Excel file')
+parser.add_argument('--output', type=str, default="docs/index.html", help='Path to the output HTML file')
+args = parser.parse_args()
 
 # Load the dataset
-DATA_CATALOG = "docs/data_catalog.xlsx"
-HTML_OUTPUT = "docs/index.html"
+DATA_CATALOG = args.input
+HTML_OUTPUT = args.output
 
 # Read Excel File
 try:
