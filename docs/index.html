@@ -89,16 +89,23 @@
         
         .filters {
             background-color: white;
-            padding: 1.5rem;
+            padding: 1.5rem 0;
             box-shadow: 0 2px 4px rgba(0,0,0,0.04);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            justify-content: center;
             position: sticky;
             top: 0;
             z-index: 10;
             border-bottom: 1px solid var(--border);
+            width: 100%;
+        }
+        
+        .filters-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
         }
         
         .filter-group {
@@ -221,13 +228,68 @@
         .card p {
             color: var(--gray);
             font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        .card-description {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        
+        .description-text {
+            color: var(--gray);
+            font-size: 0.95rem;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .description-text.collapsed {
+            max-height: 6em;
             display: -webkit-box;
             -webkit-line-clamp: 4;
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
+        }
+        
+        .description-text.expanded {
+            max-height: 500px;
+        }
+        
+        .read-more-btn {
+            display: inline-block;
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: all 0.2s;
+        }
+        
+        .read-more-btn:hover {
+            color: var(--primary-light);
+        }
+        
+        .domain-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1;
+        }
+        
+        .domain-badge {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
         }
         
         .tags {
@@ -293,21 +355,6 @@
             transform: translateY(-2px);
         }
         
-        .domain-badge {
-            display: inline-block;
-            background-color: var(--primary);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            z-index: 1;
-        }
-        
         footer {
             background-color: var(--dark);
             color: white;
@@ -368,17 +415,17 @@
     color: #2d3748;
 }
 
-.label-images {
+.label-tabular {
     background-color: #e5eddd;
     color: #2d3748;
 }
 
-.label-text {
+.label-images {
     background-color: #ddeddd;
     color: #2d3748;
 }
 
-.label-audio {
+.label-text {
     background-color: #ddede5;
     color: #2d3748;
 }
@@ -388,7 +435,7 @@
     color: #2d3748;
 }
 
-.label-tabular {
+.label-audio {
     background-color: #dde5ed;
     color: #2d3748;
 }
@@ -398,17 +445,17 @@
     color: #2d3748;
 }
 
-.label-use-case-with-business-model {
+.label-pilot {
     background-color: #e5dded;
     color: #2d3748;
 }
 
-.label-pilot {
+.label-use-case {
     background-color: #eddded;
     color: #2d3748;
 }
 
-.label-use-case {
+.label-use-case-with-business-model {
     background-color: #eddde5;
     color: #2d3748;
 }
@@ -429,45 +476,46 @@
     </header>
     
     <div class="filters">
-        <div class="filter-group">
-            <div class="search-box">
-                <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Search datasets and use-cases...">
+        <div class="filters-content">
+            <div class="filter-group">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search datasets and use-cases...">
+                </div>
             </div>
-        </div>
-        <div class="filter-group">
-            <span class="filter-label">View:</span>
-            <select id="viewFilter">
-                <option value="all">All Items</option>
-                <option value="datasets">Datasets Only</option>
-                <option value="usecases">Use Cases Only</option>
-            </select>
-        </div>
-        <div class="filter-group">
-            <span class="filter-label">Domain:</span>
-            <select id="domainFilter">
-                <option value="all">All Domains</option>
-                <option value="Agriculture">Agriculture</option>
+            <div class="filter-group">
+                <span class="filter-label">View:</span>
+                <select id="viewFilter">
+                    <option value="all">All Items</option>
+                    <option value="datasets">Datasets Only</option>
+                    <option value="usecases">Use Cases Only</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Domain:</span>
+                <select id="domainFilter">
+                    <option value="all">All Domains</option>
+                    <option value="Agriculture">Agriculture</option>
 <option value="Climate Action">Climate Action</option>
 <option value="Natural Language Processing">Natural Language Processing</option>
-            </select>
-        </div>
-        <div class="filter-group">
-            <span class="filter-label">Data Type:</span>
-            <select id="dataTypeFilter">
-                <option value="all">All Data Types</option>
-                <option value="Audio">Audio</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Data Type:</span>
+                <select id="dataTypeFilter">
+                    <option value="all">All Data Types</option>
+                    <option value="Audio">Audio</option>
 <option value="Geospatial">Geospatial</option>
 <option value="Images">Images</option>
 <option value="Tabular">Tabular</option>
 <option value="Text">Text</option>
-            </select>
-        </div>
-        <div class="filter-group">
-            <span class="filter-label">Region:</span>
-            <select id="regionFilter">
-                <option value="all">All Regions</option>
-                <option value="Ghana">Ghana</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Region:</span>
+                <select id="regionFilter">
+                    <option value="all">All Regions</option>
+                    <option value="Ghana">Ghana</option>
 <option value="Global / Regional">Global / Regional</option>
 <option value="India">India</option>
 <option value="Indonesien">Indonesien</option>
@@ -475,7 +523,8 @@
 <option value="Rwanda">Rwanda</option>
 <option value="South Africa">South Africa</option>
 <option value="Uganda">Uganda</option>
-            </select>
+                </select>
+            </div>
         </div>
     </div>
     
@@ -486,7 +535,7 @@
     <div class="card has-dataset has-usecase" data-title="CADI AI Project (ML4Cashew)" data-region="Ghana">
         <div class="card-image has-image" style="background-image: url('img/cashew_karaagro.png');"></div>
         <div class="card-header">
-            <div class="domain-badge">Climate Action</div>
+            <div class="domain-badges"><div class="domain-badge">Climate Action</div><div class="domain-badge">Agriculture</div></div>
             <h3>CADI AI Project (ML4Cashew)</h3>
             <div class="meta">
                 <div class="meta-item"><i class="fas fa-map-marker-alt"></i> Ghana</div>
@@ -494,7 +543,10 @@
             </div>
         </div>
         <div class="card-body">
-            <p>The Cashew Disease Identification (CADI AI) project was implemented to help early detection of diseases in cashew plantations in Ghana. Early intervention increases yields by up to 30%, securing livelihoods, boosting food security, and fueling further economic growth. The main outputs of the project are an openly accessible data set (4,736 UAV images), a machine learning model, and a desktop app.</p>
+            <div class="card-description">
+                <div class="description-text collapsed">The Cashew Disease Identification (CADI AI) project was implemented to help early detection of diseases in cashew plantations in Ghana. Early intervention increases yields by up to 30%, securing livelihoods, boosting food security, and fueling further economic growth. The main outputs of the project are an openly accessible data set (4,736 UAV images), a machine learning model, and a desktop app.</div>
+                <div class="read-more-btn">Read more</div>
+            </div>
             <div class="tags">
                 <span class="tag label-images" data-filter="Images">Images</span>
                 <span class="tag label-climate-action" data-filter="Climate Action">Climate Action</span><span class="tag label-agriculture" data-filter="Agriculture">Agriculture</span>
@@ -506,7 +558,7 @@
     <div class="card has-dataset" data-title="African Biomass Challenge with Open Cocoa Data" data-region="Ghana">
         <div class="card-image"></div>
         <div class="card-header">
-            <div class="domain-badge">Climate Action</div>
+            <div class="domain-badges"><div class="domain-badge">Climate Action</div></div>
             <h3>African Biomass Challenge with Open Cocoa Data</h3>
             <div class="meta">
                 <div class="meta-item"><i class="fas fa-map-marker-alt"></i> Ghana</div>
@@ -514,7 +566,10 @@
             </div>
         </div>
         <div class="card-body">
-            <p>the challenge was organized to predict biomass in shaded regions (cocoa plantations) in Cote d’Ivoire based on GEDI, Sentinel-2 and ground truth biomass data. Remote monitoring of the increase of biomass will help measure the impact of reforestation efforts in Cote d’Ivoire as well as detect degradation of forests due to cocoa, without requiring expensive and labor-intensive biomass estimates on the ground.</p>
+            <div class="card-description">
+                <div class="description-text collapsed">the challenge was organized to predict biomass in shaded regions (cocoa plantations) in Cote d’Ivoire based on GEDI, Sentinel-2 and ground truth biomass data. Remote monitoring of the increase of biomass will help measure the impact of reforestation efforts in Cote d’Ivoire as well as detect degradation of forests due to cocoa, without requiring expensive and labor-intensive biomass estimates on the ground.</div>
+                <div class="read-more-btn">Read more</div>
+            </div>
             <div class="tags">
                 <span class="tag label-images" data-filter="Images">Images</span>
                 <span class="tag label-climate-action" data-filter="Climate Action">Climate Action</span>
@@ -526,7 +581,7 @@
     <div class="card has-dataset" data-title="Ghana Biomass Challenge: Ghana Crop Disease Detection Challenge" data-region="Ghana">
         <div class="card-image"></div>
         <div class="card-header">
-            <div class="domain-badge">Agriculture</div>
+            <div class="domain-badges"><div class="domain-badge">Agriculture</div></div>
             <h3>Ghana Biomass Challenge: Ghana Crop Disease Detection Challenge</h3>
             <div class="meta">
                 <div class="meta-item"><i class="fas fa-map-marker-alt"></i> Ghana</div>
@@ -534,7 +589,10 @@
             </div>
         </div>
         <div class="card-body">
-            <p>The Ghana Crop Disease Detection Challenge is an online data science challenge that seeks to leverage the power of Machine Learning and Artificial Intelligence to detect diseases that attack crops and offer immediate remedies.</p>
+            <div class="card-description">
+                <div class="description-text collapsed">The Ghana Crop Disease Detection Challenge is an online data science challenge that seeks to leverage the power of Machine Learning and Artificial Intelligence to detect diseases that attack crops and offer immediate remedies.</div>
+                <div class="read-more-btn">Read more</div>
+            </div>
             <div class="tags">
                 <span class="tag label-images" data-filter="Images">Images</span>
                 <span class="tag label-agriculture" data-filter="Agriculture">Agriculture</span>
@@ -546,7 +604,7 @@
     <div class="card has-dataset has-usecase" data-title="Wadhwani AI - Open AI for Cotton Pest Control with smallholder farmers - National Entrepreneurship Network (NEN)" data-region="India">
         <div class="card-image"></div>
         <div class="card-header">
-            <div class="domain-badge">Agriculture</div>
+            <div class="domain-badges"><div class="domain-badge">Agriculture</div></div>
             <h3>Wadhwani AI - Open AI for Cotton Pest Control with smallholder farmers - National Entrepreneurship Network (NEN)</h3>
             <div class="meta">
                 <div class="meta-item"><i class="fas fa-map-marker-alt"></i> India</div>
@@ -554,9 +612,12 @@
             </div>
         </div>
         <div class="card-body">
-            <p>Wadhwani AI has developed a mobile app to support cotton farmers combat pest infestations, a major threat to cotton productivity. For this, they have collaborated with FAIR Forward – AI for All, a project of German Development Cooperation. The app allows farmers to take photos of pheromone traps, which capture male bollworms, and uses an AI model to count the pests in the images. Based on the AI-generated counts, the app provides recommendations to farmers on how to respond. This technology empowers small-scale farmers to make informed decisions, reduce uncertainty in yield, and improve their livelihoods.
+            <div class="card-description">
+                <div class="description-text collapsed">Wadhwani AI has developed a mobile app to support cotton farmers combat pest infestations, a major threat to cotton productivity. For this, they have collaborated with FAIR Forward – AI for All, a project of German Development Cooperation. The app allows farmers to take photos of pheromone traps, which capture male bollworms, and uses an AI model to count the pests in the images. Based on the AI-generated counts, the app provides recommendations to farmers on how to respond. This technology empowers small-scale farmers to make informed decisions, reduce uncertainty in yield, and improve their livelihoods.
  
- As the codebase, dataset and research are openly available it can be used to build on, test and research similar applications in other contexts. This would esp. apply to problems of identification and counting of agricultural pests.</p>
+ As the codebase, dataset and research are openly available it can be used to build on, test and research similar applications in other contexts. This would esp. apply to problems of identification and counting of agricultural pests.</div>
+                <div class="read-more-btn">Read more</div>
+            </div>
             <div class="tags">
                 <span class="tag label-images" data-filter="Images">Images</span>
                 <span class="tag label-agriculture" data-filter="Agriculture">Agriculture</span>
@@ -568,7 +629,7 @@
     <div class="card has-dataset" data-title="Digital Green - Local dataset collection for climate-smart agriculture" data-region="India">
         <div class="card-image"></div>
         <div class="card-header">
-            <div class="domain-badge">Agriculture</div>
+            <div class="domain-badges"><div class="domain-badge">Agriculture</div><div class="domain-badge">Climate Action</div></div>
             <h3>Digital Green - Local dataset collection for climate-smart agriculture</h3>
             <div class="meta">
                 <div class="meta-item"><i class="fas fa-map-marker-alt"></i> India</div>
@@ -576,7 +637,10 @@
             </div>
         </div>
         <div class="card-body">
-            <p>GHG estimation for smallholder farmers in Bihar</p>
+            <div class="card-description">
+                <div class="description-text collapsed">GHG estimation for smallholder farmers in Bihar</div>
+                <div class="read-more-btn">Read more</div>
+            </div>
             <div class="tags">
                 <span class="tag label-tabular" data-filter="Tabular">Tabular</span>
                 <span class="tag label-agriculture" data-filter="Agriculture">Agriculture</span><span class="tag label-climate-action" data-filter="Climate Action">Climate Action</span>
@@ -588,7 +652,7 @@
     <div class="card has-dataset" data-title="ML4EO Telangana: Crop Identification" data-region="India">
         <div class="card-image"></div>
         <div class="card-header">
-            <div class="domain-badge">Agriculture</div>
+            <div class="domain-badges"><div class="domain-badge">Agriculture</div><div class="domain-badge">Climate Action</div></div>
             <h3>ML4EO Telangana: Crop Identification</h3>
             <div class="meta">
                 <div class="meta-item"><i class="fas fa-map-marker-alt"></i> India</div>
@@ -596,7 +660,10 @@
             </div>
         </div>
         <div class="card-body">
-            <p>This AI application and replication-kit is about an AI-based crop type map for Telangana. This should be of use to anyone wishing to support sustainable farming practices and evidence-based decision-making for agricultural. Also, this can be used to empower you, as a local business, and NGOs, or a government agency to develop digital agricultural applications. The application focuses on creating localized ground-truth data on several different crop related variables to train AI models tailored to Telangana&#x27;s diverse agricultural landscape. This includes an open-access ground-truth dataset, a data challenge with openly available models for yield prediction, a crop classification model using satellite imagery applied to map the whole state of Telangana, and a roadmap for AI implementation in agriculture. Datasets, AI models, and crop maps are all openly available as an open-source replication kit and digital public good.</p>
+            <div class="card-description">
+                <div class="description-text collapsed">This AI application and replication-kit is about an AI-based crop type map for Telangana. This should be of use to anyone wishing to support sustainable farming practices and evidence-based decision-making for agricultural. Also, this can be used to empower you, as a local business, and NGOs, or a government agency to develop digital agricultural applications. The application focuses on creating localized ground-truth data on several different crop related variables to train AI models tailored to Telangana&#x27;s diverse agricultural landscape. This includes an open-access ground-truth dataset, a data challenge with openly available models for yield prediction, a crop classification model using satellite imagery applied to map the whole state of Telangana, and a roadmap for AI implementation in agriculture. Datasets, AI models, and crop maps are all openly available as an open-source replication kit and digital public good.</div>
+                <div class="read-more-btn">Read more</div>
+            </div>
             <div class="tags">
                 <span class="tag label-geospatial" data-filter="Geospatial">Geospatial</span>
                 <span class="tag label-agriculture" data-filter="Agriculture">Agriculture</span><span class="tag label-climate-action" data-filter="Climate Action">Climate Action</span>
@@ -608,7 +675,7 @@
     <div class="card has-dataset" data-title="IISc - Open Voice Data in Indian Languages" data-region="India">
         <div class="card-image"></div>
         <div class="card-header">
-            <div class="domain-badge">Natural Language Processing</div>
+            <div class="domain-badges"><div class="domain-badge">Natural Language Processing</div></div>
             <h3>IISc - Open Voice Data in Indian Languages</h3>
             <div class="meta">
                 <div class="meta-item"><i class="fas fa-map-marker-alt"></i> India</div>
@@ -617,9 +684,12 @@
             </div>
         </div>
         <div class="card-body">
-            <p>This dataset is part of the initiative SYSPIN (SYnthesizing SPeech in INdian languages), that develops large open-source Text-to-Speech (TTS) corpora, i.e., speech training datasets and AI models in 9 Indian languages, namely – Bengali, Bhojpuri, Chhattisgarhi, Hindi, Kannada, Magahi, Maithili, Marathi, and Telugu. This data is useful for those wishing to build voice-enabled, user-friendly applications in Indian languages. Through voice-based solutions, these AI models can be used to empower communities that do not have access to digital services in their own native language. They can be used by private companies, researchers, NGOs or government departments to develop digital applications. 
+            <div class="card-description">
+                <div class="description-text collapsed">This dataset is part of the initiative SYSPIN (SYnthesizing SPeech in INdian languages), that develops large open-source Text-to-Speech (TTS) corpora, i.e., speech training datasets and AI models in 9 Indian languages, namely – Bengali, Bhojpuri, Chhattisgarhi, Hindi, Kannada, Magahi, Maithili, Marathi, and Telugu. This data is useful for those wishing to build voice-enabled, user-friendly applications in Indian languages. Through voice-based solutions, these AI models can be used to empower communities that do not have access to digital services in their own native language. They can be used by private companies, researchers, NGOs or government departments to develop digital applications. 
  
- The datasets and TTS models are available to the AI community and anyone wishing to build voice-enabled applications in Indian languages.</p>
+ The datasets and TTS models are available to the AI community and anyone wishing to build voice-enabled applications in Indian languages.</div>
+                <div class="read-more-btn">Read more</div>
+            </div>
             <div class="tags">
                 <span class="tag label-audio" data-filter="Audio">Audio</span>
                 <span class="tag label-natural-language-processing" data-filter="Natural Language Processing">Natural Language Processing</span>
@@ -631,7 +701,7 @@
     <div class="card has-dataset" data-title="100 hours of Text to Speech Dataset for Mundari Language" data-region="India">
         <div class="card-image"></div>
         <div class="card-header">
-            <div class="domain-badge">Natural Language Processing</div>
+            <div class="domain-badges"><div class="domain-badge">Natural Language Processing</div></div>
             <h3>100 hours of Text to Speech Dataset for Mundari Language</h3>
             <div class="meta">
                 <div class="meta-item"><i class="fas fa-map-marker-alt"></i> India</div>
@@ -639,7 +709,10 @@
             </div>
         </div>
         <div class="card-body">
-            <p>100 hours of Text to Speech Dataset for Mundari Language</p>
+            <div class="card-description">
+                <div class="description-text collapsed">100 hours of Text to Speech Dataset for Mundari Language</div>
+                <div class="read-more-btn">Read more</div>
+            </div>
             <div class="tags">
                 <span class="tag label-text" data-filter="Text">Text</span>
                 <span class="tag label-natural-language-processing" data-filter="Natural Language Processing">Natural Language Processing</span>
@@ -659,7 +732,10 @@
             </div>
         </div>
         <div class="card-body">
-            <p>Improve Kahi Ankahi Baatein (KAB) platform, m – Fine-tuned Hindi LLM for better user experience</p>
+            <div class="card-description">
+                <div class="description-text collapsed">Improve Kahi Ankahi Baatein (KAB) platform, m – Fine-tuned Hindi LLM for better user experience</div>
+                <div class="read-more-btn">Read more</div>
+            </div>
             <div class="tags">
                 
                 
@@ -671,7 +747,7 @@
     <div class="card has-dataset" data-title="Developing a concept with MFIN on voice-based chatbot" data-region="India">
         <div class="card-image"></div>
         <div class="card-header">
-            <div class="domain-badge">Natural Language Processing</div>
+            <div class="domain-badges"><div class="domain-badge">Natural Language Processing</div></div>
             <h3>Developing a concept with MFIN on voice-based chatbot</h3>
             <div class="meta">
                 <div class="meta-item"><i class="fas fa-map-marker-alt"></i> India</div>
@@ -679,8 +755,11 @@
             </div>
         </div>
         <div class="card-body">
-            <p>Contract name: Automation of components of the MFIN-CGRM CRM solution 
- Follow-up project from former MFIN engagement to move from prototype to production and implement the remaining use-cases.</p>
+            <div class="card-description">
+                <div class="description-text collapsed">Contract name: Automation of components of the MFIN-CGRM CRM solution 
+ Follow-up project from former MFIN engagement to move from prototype to production and implement the remaining use-cases.</div>
+                <div class="read-more-btn">Read more</div>
+            </div>
             <div class="tags">
                 <span class="tag label-text" data-filter="Text">Text</span>
                 <span class="tag label-natural-language-processing" data-filter="Natural Language Processing">Natural Language Processing</span>
@@ -692,7 +771,7 @@
     <div class="card has-dataset" data-title="HCSA: High Carbon Stock Mapping in Southeast Asia" data-region="Indonesien">
         <div class="card-image"></div>
         <div class="card-header">
-            <div class="domain-badge">Climate Action</div>
+            <div class="domain-badges"><div class="domain-badge">Climate Action</div></div>
             <h3>HCSA: High Carbon Stock Mapping in Southeast Asia</h3>
             <div class="meta">
                 <div class="meta-item"><i class="fas fa-map-marker-alt"></i> Indonesien</div>
@@ -700,11 +779,14 @@
             </div>
         </div>
         <div class="card-body">
-            <p>This project focuses on creating validated, open-source High Carbon Stock (HCS) forest maps for Indonesia using an AI-driven approach. It adopts the HCS classification system to identify forests suitable for conservation versus sustainable development:
+            <div class="card-description">
+                <div class="description-text collapsed">This project focuses on creating validated, open-source High Carbon Stock (HCS) forest maps for Indonesia using an AI-driven approach. It adopts the HCS classification system to identify forests suitable for conservation versus sustainable development:
  • High, Medium, and Low-Density Forests (Conservation Priority): Forests with closed or patchy canopies, rich biodiversity, and carbon storage.
  • Young Regenerating Forests: Regrowing forests that are transitioning into higher carbon stock potential.
  • Scrub and Open Land: Areas with minimal carbon stock suitable for sustainable development.
- The maps integrate field data, satellite imagery, and AI to assist policymakers, NGOs, and businesses in making data-driven decisions for sustainable land-use planning and conservation. Stakeholders can use the outputs for spatial planning, reducing greenhouse gas emissions, and implementing &quot;no deforestation&quot; commitments. The High Carbon Stock Approach (HCSA) project was nominated for the prestigious UN SDG Game Changer award – Category 2: Planet – Innovation for our climate and environment “Artificial Intelligence Meets Jungle/ Forest Forward.</p>
+ The maps integrate field data, satellite imagery, and AI to assist policymakers, NGOs, and businesses in making data-driven decisions for sustainable land-use planning and conservation. Stakeholders can use the outputs for spatial planning, reducing greenhouse gas emissions, and implementing &quot;no deforestation&quot; commitments. The High Carbon Stock Approach (HCSA) project was nominated for the prestigious UN SDG Game Changer award – Category 2: Planet – Innovation for our climate and environment “Artificial Intelligence Meets Jungle/ Forest Forward.</div>
+                <div class="read-more-btn">Read more</div>
+            </div>
             <div class="tags">
                 <span class="tag label-geospatial" data-filter="Geospatial">Geospatial</span>
                 <span class="tag label-climate-action" data-filter="Climate Action">Climate Action</span>
@@ -716,7 +798,7 @@
     <div class="card has-dataset" data-title="Use case development Indonesia" data-region="Indonesien">
         <div class="card-image"></div>
         <div class="card-header">
-            <div class="domain-badge">Climate Action</div>
+            <div class="domain-badges"><div class="domain-badge">Climate Action</div><div class="domain-badge">Natural Language Processing</div></div>
             <h3>Use case development Indonesia</h3>
             <div class="meta">
                 <div class="meta-item"><i class="fas fa-map-marker-alt"></i> Indonesien</div>
@@ -724,7 +806,10 @@
             </div>
         </div>
         <div class="card-body">
-            <p>This AI application is about developing an AI-based system to tackle climate misinformation in Indonesia, focusing on creating accurate and accessible information tools. The initiative aims to build a multilingual disinformation detection system, covering Bahasa Indonesia and over 10,6 million words and 21 million words translation from Minangkabau, Balinese, and Buginese to classify and verify climate-related content. The application supports stakeholders, including government agencies, NGOs, and communities, in countering false narratives, promoting awareness, and enabling evidence-based decision-making. The AI outcomes include open-access datasets, disinformation, and topic classification models, a user-friendly website, and a chatbot. These tools empower users to identify climate misinformation, enhance public literacy, and foster collaboration for sustainable climate actions. The project emphasizes inclusivity, accessibility, and long-term impact, providing resources for researchers, local businesses, and policy-makers to advance AI applications in combating misinformation. Prosa has developed an AI-powered chatbot to address climate misinformation. The platform&#x27;s website is available at faktaiklim.prosa.ai, and the chatbot can be accessed via Telegram (Fakta Iklim Bot), with open-source code available on GitHub. User guides are provided in four languages: Indonesian, Minangkabau, Balinese, and Bugis.</p>
+            <div class="card-description">
+                <div class="description-text collapsed">This AI application is about developing an AI-based system to tackle climate misinformation in Indonesia, focusing on creating accurate and accessible information tools. The initiative aims to build a multilingual disinformation detection system, covering Bahasa Indonesia and over 10,6 million words and 21 million words translation from Minangkabau, Balinese, and Buginese to classify and verify climate-related content. The application supports stakeholders, including government agencies, NGOs, and communities, in countering false narratives, promoting awareness, and enabling evidence-based decision-making. The AI outcomes include open-access datasets, disinformation, and topic classification models, a user-friendly website, and a chatbot. These tools empower users to identify climate misinformation, enhance public literacy, and foster collaboration for sustainable climate actions. The project emphasizes inclusivity, accessibility, and long-term impact, providing resources for researchers, local businesses, and policy-makers to advance AI applications in combating misinformation. Prosa has developed an AI-powered chatbot to address climate misinformation. The platform&#x27;s website is available at faktaiklim.prosa.ai, and the chatbot can be accessed via Telegram (Fakta Iklim Bot), with open-source code available on GitHub. User guides are provided in four languages: Indonesian, Minangkabau, Balinese, and Bugis.</div>
+                <div class="read-more-btn">Read more</div>
+            </div>
             <div class="tags">
                 <span class="tag label-text" data-filter="Text">Text</span>
                 <span class="tag label-climate-action" data-filter="Climate Action">Climate Action</span><span class="tag label-natural-language-processing" data-filter="Natural Language Processing">Natural Language Processing</span>
@@ -736,7 +821,7 @@
     <div class="card has-dataset" data-title="South Africa Crop Type Competition" data-region="South Africa">
         <div class="card-image"></div>
         <div class="card-header">
-            <div class="domain-badge">Climate Action</div>
+            <div class="domain-badges"><div class="domain-badge">Climate Action</div><div class="domain-badge">Agriculture</div></div>
             <h3>South Africa Crop Type Competition</h3>
             <div class="meta">
                 <div class="meta-item"><i class="fas fa-map-marker-alt"></i> South Africa</div>
@@ -744,7 +829,10 @@
             </div>
         </div>
         <div class="card-body">
-            <p></p>
+            <div class="card-description">
+                <div class="description-text collapsed"></div>
+                <div class="read-more-btn">Read more</div>
+            </div>
             <div class="tags">
                 <span class="tag label-tabular" data-filter="Tabular">Tabular</span>
                 <span class="tag label-climate-action" data-filter="Climate Action">Climate Action</span><span class="tag label-agriculture" data-filter="Agriculture">Agriculture</span>
@@ -756,7 +844,7 @@
     <div class="card has-dataset" data-title="NLP grant Localising Common Voice for South African Languages" data-region="South Africa">
         <div class="card-image"></div>
         <div class="card-header">
-            <div class="domain-badge">Natural Language Processing</div>
+            <div class="domain-badges"><div class="domain-badge">Natural Language Processing</div></div>
             <h3>NLP grant Localising Common Voice for South African Languages</h3>
             <div class="meta">
                 <div class="meta-item"><i class="fas fa-map-marker-alt"></i> South Africa</div>
@@ -764,7 +852,10 @@
             </div>
         </div>
         <div class="card-body">
-            <p>Univ of Stellenbosch Grant (Febe de Wet) - Voices of Mzansi project / localise SA local languages on Mozilla CV platform</p>
+            <div class="card-description">
+                <div class="description-text collapsed">Univ of Stellenbosch Grant (Febe de Wet) - Voices of Mzansi project / localise SA local languages on Mozilla CV platform</div>
+                <div class="read-more-btn">Read more</div>
+            </div>
             <div class="tags">
                 <span class="tag label-audio" data-filter="Audio">Audio</span>
                 <span class="tag label-natural-language-processing" data-filter="Natural Language Processing">Natural Language Processing</span>
@@ -776,7 +867,7 @@
     <div class="card has-usecase" data-title="ML-based site identification for MiniGrids in Uganda" data-region="Uganda">
         <div class="card-image"></div>
         <div class="card-header">
-            <div class="domain-badge">Climate Action</div>
+            <div class="domain-badges"><div class="domain-badge">Climate Action</div></div>
             <h3>ML-based site identification for MiniGrids in Uganda</h3>
             <div class="meta">
                 <div class="meta-item"><i class="fas fa-map-marker-alt"></i> Uganda</div>
@@ -784,7 +875,10 @@
             </div>
         </div>
         <div class="card-body">
-            <p>This web application is a decision support tool. It is built as a prototype for a large-scale decision support tool for determining electrification strategies for different geographical areas. Currently implemented in Lamwo district electrification.</p>
+            <div class="card-description">
+                <div class="description-text collapsed">This web application is a decision support tool. It is built as a prototype for a large-scale decision support tool for determining electrification strategies for different geographical areas. Currently implemented in Lamwo district electrification.</div>
+                <div class="read-more-btn">Read more</div>
+            </div>
             <div class="tags">
                 
                 <span class="tag label-climate-action" data-filter="Climate Action">Climate Action</span>
@@ -796,7 +890,7 @@
     <div class="card has-dataset has-usecase" data-title="Croppie Coffee Yield Prediction" data-region="Uganda">
         <div class="card-image"></div>
         <div class="card-header">
-            <div class="domain-badge">Agriculture</div>
+            <div class="domain-badges"><div class="domain-badge">Agriculture</div><div class="domain-badge">Climate Action</div></div>
             <h3>Croppie Coffee Yield Prediction</h3>
             <div class="meta">
                 <div class="meta-item"><i class="fas fa-map-marker-alt"></i> Uganda</div>
@@ -804,7 +898,10 @@
             </div>
         </div>
         <div class="card-body">
-            <p>Croppie is a digital platform that integrates yield estimation functionality with agronomic advice and farm data management. The basic user interface is provided through a mobile application. Croppie’s core functionality is to allow for AI-supported coffee yield estimation. This is done by guiding a selective sampling for a statistical yield estimation service based on branch count and coffee branch picture taking, alongside the integration of additional data provided by the user.</p>
+            <div class="card-description">
+                <div class="description-text collapsed">Croppie is a digital platform that integrates yield estimation functionality with agronomic advice and farm data management. The basic user interface is provided through a mobile application. Croppie’s core functionality is to allow for AI-supported coffee yield estimation. This is done by guiding a selective sampling for a statistical yield estimation service based on branch count and coffee branch picture taking, alongside the integration of additional data provided by the user.</div>
+                <div class="read-more-btn">Read more</div>
+            </div>
             <div class="tags">
                 
                 <span class="tag label-agriculture" data-filter="Agriculture">Agriculture</span><span class="tag label-climate-action" data-filter="Climate Action">Climate Action</span>
@@ -870,6 +967,30 @@
             regionFilter.addEventListener('change', function() {
                 selectedRegion = this.value;
                 applyFilters();
+            });
+            
+            // Set up read more buttons
+            const descriptionTexts = document.querySelectorAll('.description-text');
+            descriptionTexts.forEach(text => {
+                // Check if the text is long enough to need a read more button
+                const needsReadMore = text.scrollHeight > text.clientHeight || text.textContent.length > 300;
+                
+                if (needsReadMore) {
+                    const readMoreBtn = text.nextElementSibling;
+                    if (readMoreBtn && readMoreBtn.classList.contains('read-more-btn')) {
+                        readMoreBtn.addEventListener('click', function() {
+                            text.classList.toggle('collapsed');
+                            text.classList.toggle('expanded');
+                            this.textContent = text.classList.contains('expanded') ? 'Read less' : 'Read more';
+                        });
+                    }
+                } else {
+                    // Hide the read more button if not needed
+                    const readMoreBtn = text.nextElementSibling;
+                    if (readMoreBtn && readMoreBtn.classList.contains('read-more-btn')) {
+                        readMoreBtn.style.display = 'none';
+                    }
+                }
             });
             
             // Function to apply all filters

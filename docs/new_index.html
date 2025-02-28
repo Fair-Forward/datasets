@@ -89,16 +89,23 @@
         
         .filters {
             background-color: white;
-            padding: 1.5rem;
+            padding: 1.5rem 0;
             box-shadow: 0 2px 4px rgba(0,0,0,0.04);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            justify-content: center;
             position: sticky;
             top: 0;
             z-index: 10;
             border-bottom: 1px solid var(--border);
+            width: 100%;
+        }
+        
+        .filters-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
         }
         
         .filter-group {
@@ -221,13 +228,68 @@
         .card p {
             color: var(--gray);
             font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        .card-description {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        
+        .description-text {
+            color: var(--gray);
+            font-size: 0.95rem;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .description-text.collapsed {
+            max-height: 6em;
             display: -webkit-box;
             -webkit-line-clamp: 4;
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
+        }
+        
+        .description-text.expanded {
+            max-height: 500px;
+        }
+        
+        .read-more-btn {
+            display: inline-block;
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: all 0.2s;
+        }
+        
+        .read-more-btn:hover {
+            color: var(--primary-light);
+        }
+        
+        .domain-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1;
+        }
+        
+        .domain-badge {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
         }
         
         .tags {
@@ -293,21 +355,6 @@
             transform: translateY(-2px);
         }
         
-        .domain-badge {
-            display: inline-block;
-            background-color: var(--primary);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            z-index: 1;
-        }
-        
         footer {
             background-color: var(--dark);
             color: white;
@@ -369,40 +416,42 @@
     </header>
     
     <div class="filters">
-        <div class="filter-group">
-            <div class="search-box">
-                <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Search datasets and use-cases...">
+        <div class="filters-content">
+            <div class="filter-group">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search datasets and use-cases...">
+                </div>
             </div>
-        </div>
-        <div class="filter-group">
-            <span class="filter-label">View:</span>
-            <select id="viewFilter">
-                <option value="all">All Items</option>
-                <option value="datasets">Datasets Only</option>
-                <option value="usecases">Use Cases Only</option>
-            </select>
-        </div>
-        <div class="filter-group">
-            <span class="filter-label">Domain:</span>
-            <select id="domainFilter">
-                <option value="all">All Domains</option>
-                <!-- Domain options will be populated dynamically -->
-            </select>
-        </div>
-        <div class="filter-group">
-            <span class="filter-label">Data Type:</span>
-            <select id="dataTypeFilter">
-                <option value="all">All Data Types</option>
-                <!-- Data Type options will be populated dynamically -->
-            </select>
-        </div>
-        <div class="filter-group">
-            <span class="filter-label">Region:</span>
-            <select id="regionFilter">
-                <option value="all">All Regions</option>
-                <!-- Region options will be populated dynamically -->
-            </select>
+            <div class="filter-group">
+                <span class="filter-label">View:</span>
+                <select id="viewFilter">
+                    <option value="all">All Items</option>
+                    <option value="datasets">Datasets Only</option>
+                    <option value="usecases">Use Cases Only</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Domain:</span>
+                <select id="domainFilter">
+                    <option value="all">All Domains</option>
+                    <!-- Domain options will be populated dynamically -->
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Data Type:</span>
+                <select id="dataTypeFilter">
+                    <option value="all">All Data Types</option>
+                    <!-- Data Type options will be populated dynamically -->
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Region:</span>
+                <select id="regionFilter">
+                    <option value="all">All Regions</option>
+                    <!-- Region options will be populated dynamically -->
+                </select>
+            </div>
         </div>
     </div>
     
@@ -463,6 +512,30 @@
             regionFilter.addEventListener('change', function() {
                 selectedRegion = this.value;
                 applyFilters();
+            });
+            
+            // Set up read more buttons
+            const descriptionTexts = document.querySelectorAll('.description-text');
+            descriptionTexts.forEach(text => {
+                // Check if the text is long enough to need a read more button
+                const needsReadMore = text.scrollHeight > text.clientHeight || text.textContent.length > 300;
+                
+                if (needsReadMore) {
+                    const readMoreBtn = text.nextElementSibling;
+                    if (readMoreBtn && readMoreBtn.classList.contains('read-more-btn')) {
+                        readMoreBtn.addEventListener('click', function() {
+                            text.classList.toggle('collapsed');
+                            text.classList.toggle('expanded');
+                            this.textContent = text.classList.contains('expanded') ? 'Read less' : 'Read more';
+                        });
+                    }
+                } else {
+                    // Hide the read more button if not needed
+                    const readMoreBtn = text.nextElementSibling;
+                    if (readMoreBtn && readMoreBtn.classList.contains('read-more-btn')) {
+                        readMoreBtn.style.display = 'none';
+                    }
+                }
             });
             
             // Function to apply all filters

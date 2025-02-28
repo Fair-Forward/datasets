@@ -250,8 +250,13 @@ for idx, row in df.iterrows():
     domain_badge = ""
     if 'Domain/SDG' in row and not pd.isna(row['Domain/SDG']):
         domains_list = [d.strip() for d in str(row['Domain/SDG']).split(',')]
-        if domains_list and domains_list[0]:
-            domain_badge = f'<div class="domain-badge">{domains_list[0]}</div>'
+        if domains_list:
+            domain_badges = []
+            for domain in domains_list:
+                if domain:
+                    domain_badges.append(f'<div class="domain-badge">{domain}</div>')
+            if domain_badges:
+                domain_badge = f'<div class="domain-badges">{"".join(domain_badges)}</div>'
     
     # Create buttons for dataset and use case links
     buttons = []
@@ -269,7 +274,7 @@ for idx, row in df.iterrows():
         card_image_class += " has-image"
         card_image_style = ' style="background-image: url(\'img/cashew_karaagro.png\');"'
     
-    # Create the card HTML
+    # Create the card HTML with read more functionality
     card_html = f"""
     <div class="{card_class}" data-title="{project_title}" data-region="{region}">
         <div class="{card_image_class}"{card_image_style}></div>
@@ -282,7 +287,10 @@ for idx, row in df.iterrows():
             </div>
         </div>
         <div class="card-body">
-            <p>{description}</p>
+            <div class="card-description">
+                <div class="description-text collapsed">{description}</div>
+                <div class="read-more-btn">Read more</div>
+            </div>
             <div class="tags">
                 {data_type_tags}
                 {domain_tags}
