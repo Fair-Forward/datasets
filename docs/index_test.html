@@ -1,0 +1,704 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Catalog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Bootstrap for styling -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
+    <style>
+    /* Dynamic label styles */
+    
+.label {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    border-radius: 6px;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    line-height: 1;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.label:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.label.active {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+    opacity: 1;
+}
+
+.label-agriculture {
+    background-color: #f0dada;
+    color: #2d3748;
+}
+
+.label-climateaction {
+    background-color: #f0e5da;
+    color: #2d3748;
+}
+
+.label-naturallanguageprocessing {
+    background-color: #f0f0da;
+    color: #2d3748;
+}
+
+.label- {
+    background-color: #e5f0da;
+    color: #2d3748;
+}
+
+.label-audio {
+    background-color: #daf0da;
+    color: #2d3748;
+}
+
+.label-computervision {
+    background-color: #daf0e5;
+    color: #2d3748;
+}
+
+.label-geospatial {
+    background-color: #daf0f0;
+    color: #2d3748;
+}
+
+.label-images {
+    background-color: #dae5f0;
+    color: #2d3748;
+}
+
+.label-ml4eo {
+    background-color: #dadaf0;
+    color: #2d3748;
+}
+
+.label-nlp {
+    background-color: #e5daf0;
+    color: #2d3748;
+}
+
+.label-tabular {
+    background-color: #f0daf0;
+    color: #2d3748;
+}
+
+.label-text {
+    background-color: #f0dae5;
+    color: #2d3748;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container d-flex align-items-center justify-content-between">
+            <div class="header-text">
+                <h1 class="mb-3">Data Catalog</h1>
+                <p class="text-muted">An overview of datasets and resources funded by Fair Forward</p>
+            </div>
+            <a href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/" target="_blank">
+                <img src="img/fair_forward.png" alt="Fair Forward Logo" class="header-logo mx-3">
+            </a>
+        </div>
+    </header>
+
+    <div class="container my-5">
+        <table class='custom-table'><thead><tr><th class='standard-column'>Dataset</th><th class='standard-column'>Country/Region</th><th class='standard-column'>SDG/Domain</th><th class='description-column'>Description and How to Use it</th><th class='standard-column'>Author/Community</th><th class='standard-column'>Link to Dataset</th><th class='standard-column'>Data Type</th></tr></thead><tbody><tr><td class='standard-column'>N/A</td><td class='standard-column'>Ghana</td><td class='standard-column'><span class="label label-climateaction" data-filter="Climate Action">Climate Action</span> <span class="label label-agriculture" data-filter="Agriculture">Agriculture</span></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Leveraging ML for the Cashew sector
+
+Leveraging ML for the Cashew sector in Ghana by identifying crop diseases.
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>KaraAgro https://karaagro.com/</td><td class='standard-column'><a href="https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana/data" target="_blank" class="minimal-link">Link</a></td><td class='standard-column'><span class="label label-images" data-filter="Images">Images</span> <span class="label label-computervision" data-filter="Computer Vision">Computer Vision</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Ghana</td><td class='standard-column'><span class="label label-climateaction" data-filter="Climate Action">Climate Action</span></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Leveraging ML to predict above-ground biomass in cocoa plantations in Cote d'Ivoire
+
+the challenge was organized to predict biomass in shaded regions (cocoa plantations) in Cote d’Ivoire based on GEDI, Sentinel-2 and ground truth biomass data. Remote monitoring of the increase of biomass will help measure the impact of reforestation efforts in Cote d’Ivoire as well as detect degradation of forests due to cocoa, without requiring expensive and labor-intensive biomass estimates on the ground.
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>Data354https://data354.com/en/</td><td class='standard-column'><a href="https://huggingface.co/datasets/data354/Africa_Biomass_dataset" target="_blank" class="minimal-link">Link</a></td><td class='standard-column'><span class="label label-images" data-filter="Images">Images</span> <span class="label label-computervision" data-filter="Computer Vision">Computer Vision</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Ghana</td><td class='standard-column'><span class="label label-agriculture" data-filter="Agriculture">Agriculture</span></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Leveraging ML for crop disease detection
+
+The Ghana Crop Disease Detection Challenge is an online data science challenge that seeks to leverage the power of Machine Learning and Artificial Intelligence to detect diseases that attack crops and offer immediate remedies.
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>RAIL - KNUST https://rail.knust.edu.gh/</td><td class='standard-column'><a href="https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana" target="_blank" class="minimal-link">Link</a></td><td class='standard-column'><span class="label label-images" data-filter="Images">Images</span> <span class="label label-computervision" data-filter="Computer Vision">Computer Vision</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Ghana</td><td class='standard-column'><span class="label label-agriculture" data-filter="Agriculture">Agriculture</span></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Leveraging ML for the Cashew sector
+
+This project is to pilot and evaluate the CADI AI solution in 3 towns in 3 different regions in Ghana. This phase aims to assess the tool's effectiveness and usability in identifying and supporting to manage cashew plant diseases, pests, and abiotic stress. The pilot will be based on a user-centered approach, strongly involving farmers and other affected stakeholders.
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>KaraAgro https://karaagro.com/</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-images" data-filter="Images">Images</span> <span class="label label-computervision" data-filter="Computer Vision">Computer Vision</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Global / Regional</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Saving forests, wetlands and promoting green energy through AI - 25 initiatives on AI for Climate action in the field of Forestry and Energy (through Lacuna Fund)
+
+
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-computervision" data-filter="Computer Vision">Computer Vision</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Global / Regional</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Climate Smart Agriculture in Africa: eight AI applications supported through the "Innovate Africa Challenge", e.g. real-time weather forecasts, solar-powered AI robots for crop pest detections, AI forcasting natural disasters, AI-powered farming advise, high-yield farming in fish and vegetables
+
+Smart Africa, With the following start-ups and organizations: CropScan Africa, Faminga, Farmer Lifeline Technologies, ignitia, KivuGreen Corporation, NjordFrey, Strathmore Research and Consultancy Centre, VaxusImplemented through Smart Africa, see: https://smartafrica.org/innovate-africa-challenge/
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-computervision" data-filter="Computer Vision">Computer Vision</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Global / Regional</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** x initiatives developing language AI for Agriculture(through Lacuna Fund)
+
+
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Global / Regional</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Providing a toolbox to build chatbots in African languages
+
+A generic open source set of tools and practices that should enable all other innovators to build (and perhaps scale) more easily chatbots in African languages
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Global / Regional</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Supporting Pan-African research Networks on natural language processing (Masakhane)
+
+Supporting the Masakhane network to develop an NLP data catalogue, handbook, datasheets, and governance models for management of catalogue, see https://www.masakhane.io/
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Global / Regional</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Our language, our data: Co-creating equitable governance models with African language communities
+
+Our language, our data: Co-creating equitable governance models with African language communities
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Global / Regional</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** 
+
+DUMMY (to be refined with partners)
+ 
+ Supporting the set-up of a federated NLP ecosystem of NLP companies across Africa
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Global / Regional</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** x initiatives developing AI for access to information through mother tongues and more (through Lacuna Fund)
+
+
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>Soil Health Data</td><td class='standard-column'>India</td><td class='standard-column'><span class="label label-agriculture" data-filter="Agriculture">Agriculture</span> <span class="label label-climateaction" data-filter="Climate Action">Climate Action</span></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** 
+
+
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-geospatial" data-filter="Geospatial">Geospatial</span> <span class="label label-computervision" data-filter="Computer Vision">Computer Vision</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>India</td><td class='standard-column'><span class="label label-agriculture" data-filter="Agriculture">Agriculture</span></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Cotton Ace: AI-driven Pest Management for Cotton Farmers in India
+
+Wadhwani AI has developed a mobile app to support cotton farmers combat pest infestations, a major threat to cotton productivity. For this, they have collaborated with FAIR Forward – AI for All, a project of German Development Cooperation. The app allows farmers to take photos of pheromone traps, which capture male bollworms, and uses an AI model to count the pests in the images. Based on the AI-generated counts, the app provides recommendations to farmers on how to respond. This technology empowers small-scale farmers to make informed decisions, reduce uncertainty in yield, and improve their livelihoods.
+ 
+ As the codebase, dataset and research are openly available it can be used to build on, test and research similar applications in other contexts. This would esp. apply to problems of identification and counting of agricultural pests.
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>Wadhwani AI agri-ai@wadhwaniai.org, https://github.com/WadhwaniAI/pest-monitoring</td><td class='standard-column'><a href="https://source.coop/repositories/wadhwani-ai/wiai-pm-open-data/description; https://github.com/WadhwaniAI/pest-management-opendata?tab=readme-ov-file; https://huggingface.co/datasets/wadhwani-ai/pest-management-opendata" target="_blank" class="minimal-link">Link</a></td><td class='standard-column'><span class="label label-images" data-filter="Images">Images</span> <span class="label label-computervision" data-filter="Computer Vision">Computer Vision</span></td></tr><tr><td class='standard-column'>Digital Green - Local dataset collection for climate-smart agriculture</td><td class='standard-column'>India</td><td class='standard-column'><span class="label label-agriculture" data-filter="Agriculture">Agriculture</span> <span class="label label-climateaction" data-filter="Climate Action">Climate Action</span></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Enabling farmers in India to reduce greenhouse gas emissions on their soil
+
+GHG estimation for smallholder farmers in Bihar
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>Digital Greenhttps://digitalgreen.org/ourwork/india/</td><td class='standard-column'><a href="https://github.com/digitalgreenorg/frame-templates" target="_blank" class="minimal-link">Link</a></td><td class='standard-column'><span class="label label-tabular" data-filter="Tabular">Tabular</span> <span class="label label-computervision" data-filter="Computer Vision">Computer Vision</span></td></tr><tr><td class='standard-column'>Farm Boundaries and Crop Cultivation in Telangana State</td><td class='standard-column'>India</td><td class='standard-column'><span class="label label-agriculture" data-filter="Agriculture">Agriculture</span> <span class="label label-climateaction" data-filter="Climate Action">Climate Action</span></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Support farmers in Telangana through AI-powered Crop Identification
+
+This AI application and replication-kit is about an AI-based crop type map for Telangana. This should be of use to anyone wishing to support sustainable farming practices and evidence-based decision-making for agricultural. Also, this can be used to empower you, as a local business, and NGOs, or a government agency to develop digital agricultural applications. The application focuses on creating localized ground-truth data on several different crop related variables to train AI models tailored to Telangana's diverse agricultural landscape. This includes an open-access ground-truth dataset, a data challenge with openly available models for yield prediction, a crop classification model using satellite imagery applied to map the whole state of Telangana, and a roadmap for AI implementation in agriculture. Datasets, AI models, and crop maps are all openly available as an open-source replication kit and digital public good.
+
+You can make use of the existing models on yield prediction and crop type mapping to infer other similar datapoints – for example neighbouring states of Telangana. Additionally, you can try to combine the dataset with other existing open-source datasets from the ADEX platform and conduct research/commercial scoping on these. 
+ The present dataset is quite unique in the fact that it includes observations such as irrigation methods, crop health and expected yield. You may combine these with other data sources, i.e. satellite/remote sensing data (open-source or commercial) to build high-quality crop monitoring/recommendation systems to support various agricultural entities, farmers and decision makers in India. This could also inform commercial products. 
+ As crop mapping is a prominent use-case, the data can be used for benchmarking different available crop datasets and models or inform foundational geospatial models as well as constitute to a region-wide crop mapping. Potential partners on the ground for collaboration, commercial involvement or funding are the Telangana Government, specifically the IT and Agricultural department and Nabard Dicra.</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>WRMShttps://wrmsglobal.com/</td><td class='standard-column'><a href="https://dataexplorer.ts.adex.org.in/dataset/583e8f01-160e-4f51-bde5-31dc7f2a5887" target="_blank" class="minimal-link">Link</a></td><td class='standard-column'><span class="label label-geospatial" data-filter="Geospatial">Geospatial</span> <span class="label label-computervision" data-filter="Computer Vision">Computer Vision</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>India</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Combatting Air Pollution and GHG Emissions in India through hyperlocal AI-powered mapping
+
+
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-computervision" data-filter="Computer Vision">Computer Vision</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>India</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Forest Forward II: Using AI to map carbon-rich Forests to Combat Climate Change and Protect Livelihoods in India (High Carbon Stock Approach)
+
+
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-computervision" data-filter="Computer Vision">Computer Vision</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>India</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Conserving soils in Telangana through GeoAI
+
+Merged from 2 service contract: (1) implement CC recommendations nationla (110k) and (2) implement CC recommendations state (20k)
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-computervision" data-filter="Computer Vision">Computer Vision</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>India</td><td class='standard-column'><span class="label label-naturallanguageprocessing" data-filter="Natural Language Processing">Natural Language Processing</span></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Building voice-enabled applications in local languages in India 
+ Text to Speech models for 9 Indian languages
+
+This dataset is part of the initiative SYSPIN (SYnthesizing SPeech in INdian languages), that develops large open-source Text-to-Speech (TTS) corpora, i.e., speech training datasets and AI models in 9 Indian languages, namely – Bengali, Bhojpuri, Chhattisgarhi, Hindi, Kannada, Magahi, Maithili, Marathi, and Telugu. This data is useful for those wishing to build voice-enabled, user-friendly applications in Indian languages. Through voice-based solutions, these AI models can be used to empower communities that do not have access to digital services in their own native language. They can be used by private companies, researchers, NGOs or government departments to develop digital applications. 
+ 
+ The datasets and TTS models are available to the AI community and anyone wishing to build voice-enabled applications in Indian languages.
+
+The TTS models can be used to develop innovative solutions and voice-based services for Indians in their native language. This would be especially beneficial for those who cannot read/write or have speech and visual disabilities but can access digital services through audio/voice-based mediums. The data and models are a crucial stepping stone for developing such assistive technologies. Including low-resource languages, some of which do not even have enough print/digital literature, would benefit vulnerable communities for whom language barriers make access to technological solutions even more difficult. The 720 hours of open-source TTS data also present immense opportunities for academic and industrial research.</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>Dr Prasanta Ghosh, prasantag@iisc.ac.in 
+ Dr Philipp Olbrich, philipp.olbrich@giz.de</td><td class='standard-column'><a href="https://syspin.iisc.ac.in/datasets" target="_blank" class="minimal-link">Link</a></td><td class='standard-column'><span class="label label-audio" data-filter="Audio">Audio</span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>India</td><td class='standard-column'><span class="label label-naturallanguageprocessing" data-filter="Natural Language Processing">Natural Language Processing</span></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** 
+
+100 hours of Text to Speech Dataset for Mundari Language
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>Karyahttps://karya.in/</td><td class='standard-column'><a href="https://github.com/karya-inc/dataset-hindi-mundari-translation" target="_blank" class="minimal-link">Link</a></td><td class='standard-column'><span class="label label-text" data-filter="Text">Text</span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>India</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Voice-based advisory for farmers (female kitchen gardeners) with NiceSSM / Use Case Gramvaani
+
+Creation of voice based chatbots
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>India</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Providing better information on sexual and reproductive health and rights (SRHR) of young people through the Kahi Ankahi Baatein infloline (Hindi LLM finetuning)
+
+Improve Kahi Ankahi Baatein (KAB) platform, m – Fine-tuned Hindi LLM for better user experience
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'><a href="[GramVaani](https://gramvaani.org/)" target="_blank" class="minimal-link">Link</a></td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>India</td><td class='standard-column'><span class="label label-naturallanguageprocessing" data-filter="Natural Language Processing">Natural Language Processing</span></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** MicroFinance Industry Network India use of voice technology (Gramvaani)
+
+Contract name: Automation of components of the MFIN-CGRM CRM solution 
+ Follow-up project from former MFIN engagement to move from prototype to production and implement the remaining use-cases.
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>GramVaanihttps://gramvaani.org/</td><td class='standard-column'><a href="https://gitlab.com/gramvaani/giz_kab_bert_sourcecode" target="_blank" class="minimal-link">Link</a></td><td class='standard-column'><span class="label label-text" data-filter="Text">Text</span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>India</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Digital Audio Content Creation for Women's Empowerment Using Language Technologies
+
+Using TTS models to create health-related audio messages that can be shared with civil society organizations for awareness raising and capacity building
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>India</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Leveraging voice datasets in 9 Indian languages for climate action & sustainable agriculture (IISc & Bashini)
+
+Combined from two formerly planned service contracts (1) Making the IISc datasets more sustainable, usable, support AIEP, make use-cases possible + (2) Hackathon for IISc voice datasets with Bhashini on climate & sustainable agriculture
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>India</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** 
+
+
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-ml4eo" data-filter="ML4EO">ML4EO</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>India</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Zindi Crop Classification Data Challenge
+
+Follow-up Activity of Telangana Crop Data Collection
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-ml4eo" data-filter="ML4EO">ML4EO</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Indonesien</td><td class='standard-column'><span class="label label-climateaction" data-filter="Climate Action">Climate Action</span></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Forest Forward I: Using AI to map carbon-rich Forests to Combat Climate Change and Protect Livelihoods in Indonesia (High Carbon Stock Approach)
+
+This project focuses on creating validated, open-source High Carbon Stock (HCS) forest maps for Indonesia using an AI-driven approach. It adopts the HCS classification system to identify forests suitable for conservation versus sustainable development:
+ • High, Medium, and Low-Density Forests (Conservation Priority): Forests with closed or patchy canopies, rich biodiversity, and carbon storage.
+ • Young Regenerating Forests: Regrowing forests that are transitioning into higher carbon stock potential.
+ • Scrub and Open Land: Areas with minimal carbon stock suitable for sustainable development.
+ The maps integrate field data, satellite imagery, and AI to assist policymakers, NGOs, and businesses in making data-driven decisions for sustainable land-use planning and conservation. Stakeholders can use the outputs for spatial planning, reducing greenhouse gas emissions, and implementing "no deforestation" commitments. The High Carbon Stock Approach (HCSA) project was nominated for the prestigious UN SDG Game Changer award – Category 2: Planet – Innovation for our climate and environment “Artificial Intelligence Meets Jungle/ Forest Forward.
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>Indonesia’s Ministry of National Development Planning Bappenas, JKPP https://jkpp.org/, HCSAhttps://highcarbonstock.org/public-consultation/, EcoVision Labhttps://www.spacehub.uzh.ch/en/research-areas/earth-observation/EcoVision-Lab.html</td><td class='standard-column'><a href="https://huggingface.co/datasets/HCSA/HCSA_Indonesia_Forest_Plot_Data_2023" target="_blank" class="minimal-link">Link</a></td><td class='standard-column'><span class="label label-geospatial" data-filter="Geospatial">Geospatial</span> <span class="label label-computervision" data-filter="Computer Vision">Computer Vision</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Indonesien</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** 
+
+Text data collection for 3 regional languages
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Indonesien</td><td class='standard-column'><span class="label label-climateaction" data-filter="Climate Action">Climate Action</span> <span class="label label-naturallanguageprocessing" data-filter="Natural Language Processing">Natural Language Processing</span></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Climate Disinformation in Local Indonesian Languages
+
+This AI application is about developing an AI-based system to tackle climate misinformation in Indonesia, focusing on creating accurate and accessible information tools. The initiative aims to build a multilingual disinformation detection system, covering Bahasa Indonesia and over 10,6 million words and 21 million words translation from Minangkabau, Balinese, and Buginese to classify and verify climate-related content. The application supports stakeholders, including government agencies, NGOs, and communities, in countering false narratives, promoting awareness, and enabling evidence-based decision-making. The AI outcomes include open-access datasets, disinformation, and topic classification models, a user-friendly website, and a chatbot. These tools empower users to identify climate misinformation, enhance public literacy, and foster collaboration for sustainable climate actions. The project emphasizes inclusivity, accessibility, and long-term impact, providing resources for researchers, local businesses, and policy-makers to advance AI applications in combating misinformation. Prosa has developed an AI-powered chatbot to address climate misinformation. The platform's website is available at faktaiklim.prosa.ai, and the chatbot can be accessed via Telegram (Fakta Iklim Bot), with open-source code available on GitHub. User guides are provided in four languages: Indonesian, Minangkabau, Balinese, and Bugis.
+
+You can leverage AI models and datasets to develop or enhance applications to address climate misinformation and advance public education. These resources can be adapted to new languages, regions, or even other misinformation topics, such as health or political issues. Combining the datasets with additional sources, like satellite imagery or weather data, could lead to innovative AI applications, including real-time fact-checking tools or misinformation monitoring dashboards. Researchers and developers can also use the models to benchmark against other datasets or refine methodologies, unlocking opportunities for both academic and commercial advancements.
+ 
+ These tools can be integrated into platforms like government portals or social media moderation systems to maximize impact. Interactive educational applications, such as gamified platforms or public learning modules, could further engage communities. Collaboration with stakeholders—including government agencies, NGOs, and private companies—can help scale the tools, secure funding, and drive wider adoption. Through partnerships and expanded deployment, this project can contribute to fostering critical awareness and combating misinformation effectively.</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>Karlina Octaviany GIZ, Ruth Schmidt GIZ, Indonesia’s Ministry of National Development Planning Bappenas, Prosa AI</td><td class='standard-column'><a href="https://huggingface.co/prosa-text" target="_blank" class="minimal-link">Link</a></td><td class='standard-column'><span class="label label-text" data-filter="Text">Text</span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Indonesien</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Blue economy for climate mitigation and climate - leveraging AI, community-based approaches and local IoT-measurements
+
+Follow up of HCSA with focus on blue carbon and training of marginalized communities, as well as policy dialogue on climate
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-ml4eo" data-filter="ML4EO">ML4EO</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Kenya</td><td class='standard-column'><span class="label label-agriculture" data-filter="Agriculture">Agriculture</span> <span class="label label-climateaction" data-filter="Climate Action">Climate Action</span></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Early warning system for maize and beans for climate-smart agriculture in Kenya
+
+The Early Warning System (EWS) is an AI-powered platform that monitors farming activities and supports climate-smart precision agriculture for smallholder farms. It uses geo-referenced data collected from farms through mobile phones and high-resolution satellite imagery. The system provides crop monitoring, yield prediction, pest/disease detection, and localized agricultural advisory services in multiple languages. The platform is currently accessed through both WhatsApp by farmers and a self-serve platform/API for institutional users.
+
+The EWS provides a comprehensive platform that combines AI-powered crop monitoring with localized advisory services. Organizations can access the data and models through :A self-serve platform and API for accessing predictions and analytics; Mobile applications for farmers to receive personalized crop management recommendations in local language; Integration possibilities with existing agricultural extension services and Analytics dashboards for value chain stakeholders and policy institutions. The system can be scaled to new regions and crops through transfer learning and the modular architecture allowing for continuous improvement of individual components. The platform supports both individual farmer-level insights and aggregated regional analytics to optimize crop yields and manage stressors effectively, making it valuable for various stakeholders across the agricultural sector.</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>University of Western Cape, CSIR, SAICA, GIZ</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-geospatial" data-filter="Geospatial">Geospatial</span> <span class="label label-images" data-filter="Images">Images</span> <span class="label label-computervision" data-filter="Computer Vision">Computer Vision</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Kenya</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Providing citizens with information on data protection through the Chatbot of the office of the data protection commissioner in Kenya
+
+Placeholder
+ Total: 69,820
+ Budget: total 40k EUR from FF (29,820k EUR come from DTC Kenya)
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Kenya</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Providing farmers in Kenya and Bihar, India with high-quality, personalized information through AI and developing blueprints for AI-powered Agriculture Information Exchange Platforms
+
+Developing products that can be replicated through four initiatives: 1. DynAG: 
+ Focused on rice, wheat, and maize, DynAG's platform uses a RAG pipeline powered by LLMs like the GPT suite to provide farmers with advisory services. Accessible via chatbots, Android and Jio-based mobile apps, IVR, and SMS, it ensures wide reach. With machine translation and speech recognition, the platform supports communication in English and Hindi while utilizing CGIAR's data backbone for accurate, data-driven insights. 
+  
+ 2. Digital Green: 
+ Digital Green's platform supports agricultural value chains like dairy, coffee, and wheat in Bihar and Kenya. It integrates a RAG pipeline, using LLMs under evaluation, and offers services through an app, Telegram, and IVR. Features like machine translation, speech technology, image recognition, and weather data enable localized insights. The platform supports multiple languages, including Hindi, Swahili, Gikuyu, and Marathi, ensuring flexibility across regions. 
+  
+ 3. Viamo and Partners: 
+ This platform targets farmers in Kenya and Bihar, focusing on beans and wheat, respectively. Using IVR, SMS, and WhatsApp, the platform is built on a RAG pipeline powered by LLMs, with potential for intent and entity recognition. Machine translation and speech-enabled IVR support English, Hindi, and Swahili, making it accessible across regions. The initiative is part of a broader plan to enhance voice technology for agricultural advisory. 
+ 
+ 4. Tech for Her: 
+ Tech for Her empowers women farmers in Bihar and Kenya, focusing on tomatoes and cattle. Accessible via IVR, WhatsApp, and a mobile app, the platform uses LLM-powered intent and entity recognition for personalized chatbot interactions and speech-enabled IVR for voice support. AI-based video generation further enhances engagement. Available in English, Hindi, and Swahili, it caters to the specific needs of women in agriculture.
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Kenya</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Paza Sauti - chatbot and interactive voice response service in Swahili to raise awareness about the use of collateral (security) to access credit for women in Kenya - see above
+
+Will see further enhancement of Mozilla grantee work - to actionable data sets and community based engagement feeding back into MCV
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Kenya</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** 
+
+
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Kenya</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Hello, government - better citizen services through "AI Chatbots" as a digital public good
+
+
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Kenya</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** SEE ABOVE
+
+Extension of AI based Food and Nutrition EWS (Phase 3)
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-ml4eo" data-filter="ML4EO">ML4EO</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Rwanda</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Landslide monitoring and early warning system with AI in Rwanda
+
+
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-computervision" data-filter="Computer Vision">Computer Vision</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Rwanda</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Services to citizens in Swahili: Paza Sauti - chatbot and interactive voice response service in Swahili for better access to credit for women in Kenya and 5 other AI-powered services in Swahili based on Mozillas Common-Voice dataset
+
+Activity including local subactivities (Kinyarwanda, Luganda, Kiswahili)
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Rwanda</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Mbaza Chatbot Rwanda for health related inquiries by citizens
+
+PLACEHOLDER - Budget from #SDH
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Rwanda</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Better Advise to farmers in Rwanda through Agricultural chatbot (Mbaza Chatbot scaling)
+
+
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Rwanda</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Hello, government - better citizen services through "AI Chatbots" as a digital public good
+
+Semantic Chatbot(s) & IVR for G2C services in Public Service Delivery and Good Governance 
+ in Collaboration with Konza Technopolis, ICTA
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Rwanda</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** 
+
+
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Rwanda</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** 
+
+
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-ml4eo" data-filter="ML4EO">ML4EO</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Rwanda</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** SEE ABOVE
+
+
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-ml4eo" data-filter="ML4EO">ML4EO</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>South Africa</td><td class='standard-column'><span class="label label-climateaction" data-filter="Climate Action">Climate Action</span> <span class="label label-agriculture" data-filter="Agriculture">Agriculture</span></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** South Africa Crop Type Competition
+
+
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>Radiant Earthhttps://radiant.earth/</td><td class='standard-column'><a href="https://beta.source.coop/repositories/radiantearth/south-africa-crops-competition/description/" target="_blank" class="minimal-link">Link</a></td><td class='standard-column'><span class="label label-tabular" data-filter="Tabular">Tabular</span> <span class="label label-" data-filter=""></span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>South Africa</td><td class='standard-column'><span class="label label-naturallanguageprocessing" data-filter="Natural Language Processing">Natural Language Processing</span></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Making voice data available in all official languages of South Africa as a digital public good - Voices of Mzansi
+
+Univ of Stellenbosch Grant (Febe de Wet) - Voices of Mzansi project / localise SA local languages on Mozilla CV platform
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'><a href="https://commonvoice.mozilla.org/de/languages" target="_blank" class="minimal-link">Link</a></td><td class='standard-column'><span class="label label-audio" data-filter="Audio">Audio</span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Uganda</td><td class='standard-column'><span class="label label-climateaction" data-filter="Climate Action">Climate Action</span></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Electrification Dashboard for Ugandan government - help to find the best energy sources for villages in Uganda
+
+This web application is a decision support tool. It is built as a prototype for a large-scale decision support tool for determining electrification strategies for different geographical areas. Currently implemented in Lamwo district electrification.
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-computervision" data-filter="Computer Vision">Computer Vision</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Uganda</td><td class='standard-column'><span class="label label-agriculture" data-filter="Agriculture">Agriculture</span> <span class="label label-climateaction" data-filter="Climate Action">Climate Action</span></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Croppie- helping smallholder coffee producers to plan sales, get loans, and trace coffee - AI powered coffee yield prediction
+
+Croppie is a digital platform that integrates yield estimation functionality with agronomic advice and farm data management. The basic user interface is provided through a mobile application. Croppie’s core functionality is to allow for AI-supported coffee yield estimation. This is done by guiding a selective sampling for a statistical yield estimation service based on branch count and coffee branch picture taking, alongside the integration of additional data provided by the user.
+
+Instead of manual cherry counts (the traditional approach to harvest estimation), pictures of the coffee branches are used to automate this task. The coffee harvest on a plot level is estimated by processing pictures through AI-supported image recognition software along with a manual branch count (= tree level estimation) and a tree-per-ha estimation (or recall data) (scaling to plot level). Thus, Croppie serves as a central system for managing yield data at the farmer level. It also provides the option to share this data with external users; with for example cooperatives having the possibility to feed information from the application in an integrated database of their member’s performance and farm characteristics, provided they obtained prior consent to do so. This would then scale the Croppie system to have an aggregated data view of multiple users in a region, e.g. as a cooperative level dashboard.</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>CIAT, Producers Direct, M-Omolumisa</td><td class='standard-column'><a href="https://huggingface.co/datasets/rgautroncgiar/croppie_coffee_ug" target="_blank" class="minimal-link">Link</a></td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-computervision" data-filter="Computer Vision">Computer Vision</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Uganda</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Finding good spots for decentralized green energy grids in Uganda I - AI based site identification for MiniGrids
+
+Moving towards scaling of the MiniGrid prototype
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-computervision" data-filter="Computer Vision">Computer Vision</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Uganda</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** Finding good spots for decentralized green energy grids in Uganda II - Measuring Solar Irradiance wih unbiased AI Models
+
+
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-computervision" data-filter="Computer Vision">Computer Vision</span></td></tr><tr><td class='standard-column'>N/A</td><td class='standard-column'>Uganda</td><td class='standard-column'></td><td class='description-column'>
+        <div class="description-wrapper">
+            <div class="description-content">**Use Case:** 
+
+This activity is requested by Uganda country office and paid for by them. It is run by the DSC and FF is supporting with technical input. No own funds needed for this.
+
+</div>
+            <span class="toggle-description">Read more</span>
+        </div>
+    </td><td class='standard-column'>N/A</td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-" data-filter=""></span> <span class="label label-nlp" data-filter="NLP">NLP</span></td></tr></tbody></table>
+        <div class="empty-state">No matching datasets found. Click any label again to remove the filter.</div>
+    </div>
+
+    <footer class="bg-light py-4 mt-5">
+        <div class="container">
+            <p class="mb-0 text-muted">&copy; 2024 Fair Forward</p>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Filter functionality
+        const labels = document.querySelectorAll('.label');
+        const tableRows = document.querySelectorAll('.custom-table tbody tr');
+        const emptyState = document.querySelector('.empty-state');
+        let activeFilter = null;
+
+        labels.forEach(label => {
+            label.addEventListener('click', () => {
+                const filterValue = label.dataset.filter;
+                
+                // If clicking the same filter again, remove it
+                if (label.classList.contains('active')) {
+                    label.classList.remove('active');
+                    activeFilter = null;
+                } else {
+                    // Remove active class from all labels
+                    labels.forEach(l => l.classList.remove('active'));
+                    label.classList.add('active');
+                    activeFilter = filterValue;
+                }
+
+                // Apply the filter
+                let visibleRows = 0;
+                tableRows.forEach(row => {
+                    if (!activeFilter) {
+                        row.classList.remove('filtered-out');
+                        visibleRows++;
+                    } else {
+                        const hasMatch = row.textContent.includes(activeFilter);
+                        if (hasMatch) {
+                            row.classList.remove('filtered-out');
+                            visibleRows++;
+                        } else {
+                            row.classList.add('filtered-out');
+                        }
+                    }
+                });
+
+                // Toggle empty state message
+                emptyState.classList.toggle('visible', visibleRows === 0);
+            });
+        });
+
+        // Description toggle functionality
+        document.querySelectorAll('.toggle-description').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const content = this.previousElementSibling;
+                const isExpanded = content.classList.contains('expanded');
+                
+                content.classList.toggle('expanded');
+                this.textContent = isExpanded ? 'Read more' : 'Show less';
+            });
+        });
+    });
+    </script>
+</body>
+</html>

@@ -8,6 +8,7 @@ import argparse
 import os
 import subprocess
 import sys
+from fetch_google_sheet import fetch_google_sheet
 
 def run_command(command):
     """Run a shell command and print the output."""
@@ -19,47 +20,57 @@ def run_command(command):
         print(result.stderr, file=sys.stderr)
     return result.returncode
 
+def build_from_google_sheets(output_excel=None, credentials=None, skip_fetch=False, no_backup=False):
+    """
+    Fetch data from Google Sheets and build the website.
+    
+    Args:
+        output_excel (str): Path to save the Excel file
+        credentials (str): Path to the Google Sheets API credentials file
+        skip_fetch (bool): Skip fetching data from Google Sheets
+        no_backup (bool): Do not create a backup of the existing Excel file
+    """
+    # Set default values
+    if output_excel is None:
+        output_excel = "docs/data_catalog.xlsx"
+    
+    if credentials is None:
+        credentials = "data_sources/google_sheets_api/service_account_JN.json"
+    
+    # Step 1: Fetch data from Google Sheets
+    if not skip_fetch:
+        print("Fetching data from Google Sheets...")
+        success = fetch_google_sheet(credentials, output_excel, not no_backup)
+        if not success:
+            print("Failed to fetch data from Google Sheets. Aborting.")
+            return False
+    else:
+        print("Skipping fetch from Google Sheets.")
+    
+    # Step 2: Generate the HTML
+    print("Generating HTML...")
+    try:
+        subprocess.run(["python", "generate_catalog.py", "--input", output_excel], check=True)
+        print("HTML generated successfully.")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Error generating HTML: {e}")
+        return False
+
 def main():
-    parser = argparse.ArgumentParser(description='Build the website from Google Sheets data.')
-    parser.add_argument('--skip-fetch', action='store_true', help='Skip fetching data from Google Sheets')
+    parser = argparse.ArgumentParser(description='Fetch data from Google Sheets and build the website.')
     parser.add_argument('--output', type=str, default="docs/data_catalog.xlsx", help='Path to save the Excel file')
     parser.add_argument('--credentials', type=str, default="data_sources/google_sheets_api/service_account_JN.json", help='Path to the Google Sheets API credentials file')
-    parser.add_argument('--no-backup', action='store_true', help='Do not create a backup of the existing file')
-    parser.add_argument('--html-output', type=str, default="docs/index.html", help='Path to save the HTML file')
-    
+    parser.add_argument('--skip-fetch', action='store_true', help='Skip fetching data from Google Sheets')
+    parser.add_argument('--no-backup', action='store_true', help='Do not create a backup of the existing Excel file')
     args = parser.parse_args()
     
-    # Check if the required packages are installed
-    try:
-        import pandas
-        import gspread
-        from oauth2client.service_account import ServiceAccountCredentials
-    except ImportError:
-        print("Required packages are not installed. Installing now...")
-        run_command("pip install pandas openpyxl gspread oauth2client")
-    
-    # Fetch data from Google Sheets
-    if not args.skip_fetch:
-        print("Fetching data from Google Sheets...")
-        from fetch_google_sheet import fetch_google_sheet
-        df = fetch_google_sheet(
-            output_path=args.output,
-            credentials_path=args.credentials,
-            save_backup=not args.no_backup
-        )
-        if df is None:
-            print("Error fetching data from Google Sheets. Exiting.")
-            return 1
-    
-    # Generate the website
-    print("Generating the website...")
-    result = run_command(f"python generate_catalog.py --input {args.output} --output {args.html_output}")
-    if result != 0:
-        print("Error generating the website. Exiting.")
-        return 1
-    
-    print("Website built successfully!")
-    return 0
+    build_from_google_sheets(
+        output_excel=args.output,
+        credentials=args.credentials,
+        skip_fetch=args.skip_fetch,
+        no_backup=args.no_backup
+    )
 
 if __name__ == "__main__":
     sys.exit(main()) 
