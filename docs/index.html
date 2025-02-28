@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -82,8 +83,6 @@
     background-color: #f0daeb;
     color: #2d3748;
 }
-
-/* Filter controls */
 .filter-controls {
     margin-bottom: 1.5rem;
     display: flex;
@@ -101,7 +100,7 @@
     border-color: #4a5568;
 }
 
-/* Filter section styling */
+/* New filter section styling */
 .filter-section {
     border-radius: 8px;
     border: 1px solid rgba(0, 0, 0, 0.05);
@@ -145,7 +144,6 @@
     color: #2d3748;
 }
 
-/* Row styling */
 tr.has-dataset.has-usecase {
     /* Rows with both dataset and use case */
     background-color: rgba(245, 243, 255, 0.3); /* Light purple background for rows with both */
@@ -238,14 +236,6 @@ tr.has-dataset.has-usecase td.usecase-column::before {
             </div>
             
             <div class="row g-3">
-                <!-- Data Type Filter -->
-                <div class="col-md-3">
-                    <select class="form-select" id="dataTypeFilter">
-                        <option value="all">All Data Types</option>
-                        <!-- Will be populated dynamically -->
-                    </select>
-                </div>
-                
                 <!-- Sort By -->
                 <div class="col-md-3">
                     <select class="form-select" id="sortBy">
@@ -257,13 +247,17 @@ tr.has-dataset.has-usecase td.usecase-column::before {
                 </div>
                 
                 <!-- View Type Buttons -->
-                <div class="col-md-6">
+                <div class="col-md-9">
                     <div class="filter-controls">
                         <div class="btn-group" role="group" aria-label="View filters">
                             <button type="button" class="btn btn-outline-primary active" data-view="all">All</button>
                             <button type="button" class="btn btn-outline-primary" data-view="datasets">Datasets</button>
                             <button type="button" class="btn btn-outline-primary" data-view="usecases">Use Cases</button>
                         </div>
+                        
+                        <button id="advancedFilters" class="btn btn-outline-secondary ms-2">
+                            <i class="fas fa-sliders"></i> Advanced Filters
+                        </button>
                     </div>
                 </div>
             </div>
@@ -277,7 +271,7 @@ tr.has-dataset.has-usecase td.usecase-column::before {
         </div>
     </td><td class='standard-column'><a href="https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana/data" target="_blank" class="minimal-link">Dataset</a></td><td class='standard-column'><a href="https://huggingface.co/datasets/KaraAgroAI/CADI-AI/tree/main" target="_blank" class="minimal-link">Use Case</a></td><td class='standard-column'><span class="label label-climateaction" data-filter="Climate Action">Climate Action</span> <span class="label label-agriculture" data-filter="Agriculture">Agriculture</span></td><td class='standard-column'><span class="label label-images" data-filter="Images">Images</span></td><td class='standard-column'>KaraAgro (https://karaagro.com/)</td></tr><tr class='has-dataset'><td class='dataset-column'>N/A</td><td class='usecase-column'>Leveraging ML to predict above-ground biomass in cocoa plantations in Cote d'Ivoire</td><td class='standard-column'>Ghana</td><td class='description-column'>
         <div class="description-wrapper">
-            <div class="description-content">the challenge was organized to predict biomass in shaded regions (cocoa plantations) in Cote d'Ivoire based on GEDI, Sentinel-2 and ground truth biomass data. Remote monitoring of the increase of biomass will help measure the impact of reforestation efforts in Cote d'Ivoire as well as detect degradation of forests due to cocoa, without requiring expensive and labor-intensive biomass estimates on the ground.</div>
+            <div class="description-content">the challenge was organized to predict biomass in shaded regions (cocoa plantations) in Cote d’Ivoire based on GEDI, Sentinel-2 and ground truth biomass data. Remote monitoring of the increase of biomass will help measure the impact of reforestation efforts in Cote d’Ivoire as well as detect degradation of forests due to cocoa, without requiring expensive and labor-intensive biomass estimates on the ground.</div>
             <span class="toggle-description">Read more</span>
         </div>
     </td><td class='standard-column'><a href="https://huggingface.co/datasets/data354/Africa_Biomass_dataset" target="_blank" class="minimal-link">Dataset</a></td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-climateaction" data-filter="Climate Action">Climate Action</span></td><td class='standard-column'><span class="label label-images" data-filter="Images">Images</span></td><td class='standard-column'><a href="https://data354.com/en/" target="_blank" class="minimal-link">Data354</a></td></tr><tr class='has-dataset'><td class='dataset-column'>N/A</td><td class='usecase-column'>Leveraging ML for crop disease detection</td><td class='standard-column'>Ghana</td><td class='description-column'>
@@ -390,10 +384,10 @@ tr.has-dataset.has-usecase td.usecase-column::before {
  • High, Medium, and Low-Density Forests (Conservation Priority): Forests with closed or patchy canopies, rich biodiversity, and carbon storage.
  • Young Regenerating Forests: Regrowing forests that are transitioning into higher carbon stock potential.
  • Scrub and Open Land: Areas with minimal carbon stock suitable for sustainable development.
- The maps integrate field data, satellite imagery, and AI to assist policymakers, NGOs, and businesses in making data-driven decisions for sustainable land-use planning and conservation. Stakeholders can use the outputs for spatial planning, reducing greenhouse gas emissions, and implementing "no deforestation" commitments. The High Carbon Stock Approach (HCSA) project was nominated for the prestigious UN SDG Game Changer award – Category 2: Planet – Innovation for our climate and environment "Artificial Intelligence Meets Jungle/ Forest Forward.</div>
+ The maps integrate field data, satellite imagery, and AI to assist policymakers, NGOs, and businesses in making data-driven decisions for sustainable land-use planning and conservation. Stakeholders can use the outputs for spatial planning, reducing greenhouse gas emissions, and implementing "no deforestation" commitments. The High Carbon Stock Approach (HCSA) project was nominated for the prestigious UN SDG Game Changer award – Category 2: Planet – Innovation for our climate and environment “Artificial Intelligence Meets Jungle/ Forest Forward.</div>
             <span class="toggle-description">Read more</span>
         </div>
-    </td><td class='standard-column'><a href="https://huggingface.co/datasets/HCSA/HCSA_Indonesia_Forest_Plot_Data_2023" target="_blank" class="minimal-link">Dataset</a></td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-climateaction" data-filter="Climate Action">Climate Action</span></td><td class='standard-column'><span class="label label-geospatial" data-filter="Geospatial">Geospatial</span></td><td class='standard-column'>Indonesia's Ministry of National Development Planning (Bappenas), JKPP https://jkpp.org/, <a href="https://highcarbonstock.org/public-consultation/" target="_blank" class="minimal-link">HCSA</a>, <a href="https://www.spacehub.uzh.ch/en/research-areas/earth-observation/EcoVision-Lab.html" target="_blank" class="minimal-link">EcoVision Lab</a></td></tr><tr><td class='dataset-column'>N/A</td><td class='usecase-column'>N/A</td><td class='standard-column'>Indonesien</td><td class='description-column'>
+    </td><td class='standard-column'><a href="https://huggingface.co/datasets/HCSA/HCSA_Indonesia_Forest_Plot_Data_2023" target="_blank" class="minimal-link">Dataset</a></td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-climateaction" data-filter="Climate Action">Climate Action</span></td><td class='standard-column'><span class="label label-geospatial" data-filter="Geospatial">Geospatial</span></td><td class='standard-column'>Indonesia’s Ministry of National Development Planning (Bappenas), JKPP https://jkpp.org/, <a href="https://highcarbonstock.org/public-consultation/" target="_blank" class="minimal-link">HCSA</a>, <a href="https://www.spacehub.uzh.ch/en/research-areas/earth-observation/EcoVision-Lab.html" target="_blank" class="minimal-link">EcoVision Lab</a></td></tr><tr><td class='dataset-column'>N/A</td><td class='usecase-column'>N/A</td><td class='standard-column'>Indonesien</td><td class='description-column'>
         <div class="description-wrapper">
             <div class="description-content">Text data collection for 3 regional languages</div>
             <span class="toggle-description">Read more</span>
@@ -403,7 +397,7 @@ tr.has-dataset.has-usecase td.usecase-column::before {
             <div class="description-content">This AI application is about developing an AI-based system to tackle climate misinformation in Indonesia, focusing on creating accurate and accessible information tools. The initiative aims to build a multilingual disinformation detection system, covering Bahasa Indonesia and over 10,6 million words and 21 million words translation from Minangkabau, Balinese, and Buginese to classify and verify climate-related content. The application supports stakeholders, including government agencies, NGOs, and communities, in countering false narratives, promoting awareness, and enabling evidence-based decision-making. The AI outcomes include open-access datasets, disinformation, and topic classification models, a user-friendly website, and a chatbot. These tools empower users to identify climate misinformation, enhance public literacy, and foster collaboration for sustainable climate actions. The project emphasizes inclusivity, accessibility, and long-term impact, providing resources for researchers, local businesses, and policy-makers to advance AI applications in combating misinformation. Prosa has developed an AI-powered chatbot to address climate misinformation. The platform's website is available at faktaiklim.prosa.ai, and the chatbot can be accessed via Telegram (Fakta Iklim Bot), with open-source code available on GitHub. User guides are provided in four languages: Indonesian, Minangkabau, Balinese, and Bugis.</div>
             <span class="toggle-description">Read more</span>
         </div>
-    </td><td class='standard-column'><a href="https://huggingface.co/prosa-text" target="_blank" class="minimal-link">Dataset</a></td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-climateaction" data-filter="Climate Action">Climate Action</span> <span class="label label-naturallanguageprocessing" data-filter="Natural Language Processing">Natural Language Processing</span></td><td class='standard-column'><span class="label label-text" data-filter="Text">Text</span></td><td class='standard-column'>Karlina Octaviany (GIZ), Ruth Schmidt (GIZ), Indonesia's Ministry of National Development Planning (Bappenas), Prosa AI</td></tr><tr><td class='dataset-column'>N/A</td><td class='usecase-column'>Blue economy for climate mitigation and climate - leveraging AI, community-based approaches and local IoT-measurements</td><td class='standard-column'>Indonesien</td><td class='description-column'>
+    </td><td class='standard-column'><a href="https://huggingface.co/prosa-text" target="_blank" class="minimal-link">Dataset</a></td><td class='standard-column'>N/A</td><td class='standard-column'><span class="label label-climateaction" data-filter="Climate Action">Climate Action</span> <span class="label label-naturallanguageprocessing" data-filter="Natural Language Processing">Natural Language Processing</span></td><td class='standard-column'><span class="label label-text" data-filter="Text">Text</span></td><td class='standard-column'>Karlina Octaviany (GIZ), Ruth Schmidt (GIZ), Indonesia’s Ministry of National Development Planning (Bappenas), Prosa AI</td></tr><tr><td class='dataset-column'>N/A</td><td class='usecase-column'>Blue economy for climate mitigation and climate - leveraging AI, community-based approaches and local IoT-measurements</td><td class='standard-column'>Indonesien</td><td class='description-column'>
         <div class="description-wrapper">
             <div class="description-content">Follow up of HCSA with focus on blue carbon and training of marginalized communities, as well as policy dialogue on climate</div>
             <span class="toggle-description">Read more</span>
@@ -473,7 +467,7 @@ tr.has-dataset.has-usecase td.usecase-column::before {
         </div>
     </td><td class='standard-column'>N/A</td><td class='standard-column'><a href="https://lamwo-electrification-demo.vercel.app/" target="_blank" class="minimal-link">Use Case</a></td><td class='standard-column'><span class="label label-climateaction" data-filter="Climate Action">Climate Action</span></td><td class='standard-column'></td><td class='standard-column'>N/A</td></tr><tr class='has-dataset has-usecase'><td class='dataset-column'>N/A</td><td class='usecase-column'>Croppie- helping smallholder coffee producers to plan sales, get loans, and trace coffee - AI powered coffee yield prediction</td><td class='standard-column'>Uganda</td><td class='description-column'>
         <div class="description-wrapper">
-            <div class="description-content">Croppie is a digital platform that integrates yield estimation functionality with agronomic advice and farm data management. The basic user interface is provided through a mobile application. Croppie's core functionality is to allow for AI-supported coffee yield estimation. This is done by guiding a selective sampling for a statistical yield estimation service based on branch count and coffee branch picture taking, alongside the integration of additional data provided by the user.</div>
+            <div class="description-content">Croppie is a digital platform that integrates yield estimation functionality with agronomic advice and farm data management. The basic user interface is provided through a mobile application. Croppie’s core functionality is to allow for AI-supported coffee yield estimation. This is done by guiding a selective sampling for a statistical yield estimation service based on branch count and coffee branch picture taking, alongside the integration of additional data provided by the user.</div>
             <span class="toggle-description">Read more</span>
         </div>
     </td><td class='standard-column'><a href="https://huggingface.co/datasets/rgautroncgiar/croppie_coffee_ug" target="_blank" class="minimal-link">Dataset</a></td><td class='standard-column'><a href="https://huggingface.co/rgautroncgiar/croppie_coffee_ug" target="_blank" class="minimal-link">Use Case</a></td><td class='standard-column'><span class="label label-agriculture" data-filter="Agriculture">Agriculture</span> <span class="label label-climateaction" data-filter="Climate Action">Climate Action</span></td><td class='standard-column'></td><td class='standard-column'>CIAT, Producers Direct, M-Omolumisa</td></tr><tr><td class='dataset-column'>N/A</td><td class='usecase-column'>Finding good spots for decentralized green energy grids in Uganda I - AI based site identification for MiniGrids</td><td class='standard-column'>Uganda</td><td class='description-column'>
@@ -523,19 +517,17 @@ tr.has-dataset.has-usecase td.usecase-column::before {
         const searchButton = document.getElementById('searchButton');
         const domainFilter = document.getElementById('domainFilter');
         const regionFilter = document.getElementById('regionFilter');
-        const dataTypeFilter = document.getElementById('dataTypeFilter');
         const sortBySelect = document.getElementById('sortBy');
         
         // Populate domain filter
         const domains = new Set();
-        document.querySelectorAll('.label[data-filter]').forEach(label => {
-            // Only add to domains if it's in the Domain/SDG column (7th column)
-            if (label.closest('td:nth-child(7)') && label.dataset.filter) {
+        document.querySelectorAll('.label').forEach(label => {
+            if (label.dataset.filter) {
                 domains.add(label.dataset.filter);
             }
         });
         
-        Array.from(domains).sort().forEach(domain => {
+        domains.forEach(domain => {
             const option = document.createElement('option');
             option.value = domain;
             option.textContent = domain;
@@ -556,22 +548,6 @@ tr.has-dataset.has-usecase td.usecase-column::before {
             option.value = region;
             option.textContent = region;
             regionFilter.appendChild(option);
-        });
-        
-        // Populate data type filter
-        const dataTypes = new Set();
-        document.querySelectorAll('.label[data-filter]').forEach(label => {
-            // Only add to data types if it's in the Data Type column (8th column)
-            if (label.closest('td:nth-child(8)') && label.dataset.filter) {
-                dataTypes.add(label.dataset.filter);
-            }
-        });
-        
-        Array.from(dataTypes).sort().forEach(dataType => {
-            const option = document.createElement('option');
-            option.value = dataType;
-            option.textContent = dataType;
-            dataTypeFilter.appendChild(option);
         });
         
         // Function to update column visibility based on view
@@ -626,7 +602,6 @@ tr.has-dataset.has-usecase td.usecase-column::before {
             const searchTerm = searchInput.value.toLowerCase();
             const selectedDomain = domainFilter.value;
             const selectedRegion = regionFilter.value;
-            const selectedDataType = dataTypeFilter.value;
             
             tableRows.forEach(row => {
                 // First check if row should be visible based on view filter
@@ -645,32 +620,16 @@ tr.has-dataset.has-usecase td.usecase-column::before {
                 let searchMatch = !searchTerm || row.textContent.toLowerCase().includes(searchTerm);
                 
                 // Check if row matches the domain filter
-                let domainMatch = selectedDomain === 'all';
-                if (!domainMatch) {
-                    // Look for domain labels in the Domain/SDG column (7th column)
-                    const domainCell = row.querySelector('td:nth-child(7)');
-                    if (domainCell) {
-                        domainMatch = domainCell.querySelector('[data-filter="' + selectedDomain + '"]') !== null;
-                    }
-                }
+                let domainMatch = selectedDomain === 'all' || 
+                                 (row.querySelector('[data-filter="' + selectedDomain + '"]') !== null);
                 
                 // Check if row matches the region filter
                 const regionCell = row.querySelector('td:nth-child(3)');
                 let regionMatch = selectedRegion === 'all' || 
                                  (regionCell && regionCell.textContent.trim() === selectedRegion);
                 
-                // Check if row matches the data type filter
-                let dataTypeMatch = selectedDataType === 'all';
-                if (!dataTypeMatch) {
-                    // Look for data type labels in the Data Type column (8th column)
-                    const dataTypeCell = row.querySelector('td:nth-child(8)');
-                    if (dataTypeCell) {
-                        dataTypeMatch = dataTypeCell.querySelector('[data-filter="' + selectedDataType + '"]') !== null;
-                    }
-                }
-                
                 // Row is visible only if it matches all filters
-                if (viewMatch && labelMatch && searchMatch && domainMatch && regionMatch && dataTypeMatch) {
+                if (viewMatch && labelMatch && searchMatch && domainMatch && regionMatch) {
                     row.classList.remove('filtered-out');
                     visibleRows++;
                 } else {
@@ -764,14 +723,16 @@ tr.has-dataset.has-usecase td.usecase-column::before {
         // Set up region filter
         regionFilter.addEventListener('change', applyFilters);
         
-        // Set up data type filter
-        dataTypeFilter.addEventListener('change', applyFilters);
-        
         // Set up sorting
         sortBySelect.addEventListener('change', function() {
             sortTable(this.value);
         });
         
+        // Advanced filters button (placeholder)
+        document.getElementById('advancedFilters').addEventListener('click', function() {
+            alert('Advanced filters functionality would be implemented here.');
+        });
+
         // Description toggle functionality
         document.querySelectorAll('.toggle-description').forEach(toggle => {
             toggle.addEventListener('click', function() {
