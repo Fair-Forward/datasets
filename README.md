@@ -54,6 +54,24 @@ python fetch_google_sheet.py
 python generate_catalog.py
 ```
 
+### New Website Design
+
+We have created a new website design based on a modern UI template. To use the new design:
+
+```bash
+# Build the website with the new design
+python generate_catalog_new.py --template docs/new_index.html
+
+# Or fetch data from Google Sheets and build with the new design
+python build_from_google_sheets_new.py --template docs/new_index.html
+```
+
+The new design features:
+- Modern UI with a clean, responsive layout
+- Improved filtering and search capabilities
+- Better visualization of dataset and use case information
+- Enhanced mobile experience
+
 ### Configuration
 
 #### Google Sheets API Credentials
@@ -76,14 +94,20 @@ Both `fetch_google_sheet.py` and `build_from_google_sheets.py` accept the follow
 
 - `--skip-fetch`: Skip fetching data from Google Sheets and just build the website
 
+The new scripts `generate_catalog_new.py` and `build_from_google_sheets_new.py` accept an additional argument:
+
+- `--template`: Path to the HTML template file (default: `docs/new_index.html`)
+
 ### GitHub Actions
 
 This repository uses GitHub Actions to automatically build and deploy the website:
 
 - `.github/workflows/update_markdown.yml`: Builds the website from the local Excel file when changes are pushed
 - `.github/workflows/update_from_google_sheets.yml`: Fetches data from Google Sheets and builds the website on a schedule
+- `.github/workflows/update_markdown_new.yml`: Builds the website with the new design from the local Excel file
+- `.github/workflows/update_from_google_sheets_new.yml`: Fetches data from Google Sheets and builds the website with the new design
 
 ### Branch Strategy
 
 - `main`: The main branch that contains the production website
-- `feature/new-dataset`: A branch for testing the new Google Sheets integration
+- `feature/new-website`: A branch for testing the new website design
