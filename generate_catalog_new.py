@@ -258,12 +258,15 @@ for idx, row in df.iterrows():
             if domain_badges:
                 domain_badge = f'<div class="domain-badges">{"".join(domain_badges)}</div>'
     
-    # Create buttons for dataset and use case links
+    # Add buttons for dataset and use case links
     buttons = []
     if dataset_link:
         buttons.append(f'<a href="{dataset_link}" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a>')
     if usecase_link:
-        buttons.append(f'<a href="{usecase_link}" target="_blank" class="btn btn-secondary"><i class="fas fa-project-diagram"></i> Use Case</a>')
+        buttons.append(f'<a href="{usecase_link}" target="_blank" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Use Case</a>')
+    
+    # Add a "View Details" button
+    buttons.append(f'<button class="btn btn-view-details"><i class="fas fa-info-circle"></i> View Details</button>')
     
     # Set card image based on project
     card_image_class = "card-image"
@@ -276,7 +279,7 @@ for idx, row in df.iterrows():
     
     # Create the card HTML with read more functionality
     card_html = f"""
-    <div class="{card_class}" data-title="{project_title}" data-region="{region}">
+    <div class="{card_class}" data-title="{project_title}" data-region="{region}" data-id="{idx}">
         <div class="{card_image_class}"{card_image_style}></div>
         <div class="card-header">
             {domain_badge}

@@ -351,7 +351,20 @@
         }
         
         .btn-secondary:hover {
-            background-color: #e6f0f9;
+            background-color: #e2e8f0;
+            transform: translateY(-2px);
+        }
+        
+        .btn-view-details {
+            background-color: #f8f9fa;
+            color: var(--gray);
+            border: 1px solid var(--border);
+            margin-left: auto;
+        }
+        
+        .btn-view-details:hover {
+            background-color: #f0f4f8;
+            color: var(--primary);
             transform: translateY(-2px);
         }
         
@@ -400,6 +413,193 @@
         }
         
         /* Dynamic CSS for labels will be inserted here */
+        
+        /* Slide-in Panel Styles */
+        .detail-panel {
+            position: fixed;
+            top: 0;
+            right: -600px; /* Start off-screen */
+            width: 600px;
+            max-width: 90vw;
+            height: 100vh;
+            background-color: var(--card-bg);
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .detail-panel.open {
+            right: 0;
+        }
+        
+        .detail-panel-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+        
+        .detail-panel-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin: 0;
+        }
+        
+        .close-panel-btn {
+            background: none;
+            border: none;
+            color: var(--gray);
+            font-size: 1.25rem;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .close-panel-btn:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            color: var(--dark);
+        }
+        
+        .detail-panel-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+        
+        .panel-loader {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--gray);
+        }
+        
+        .loader-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 1rem;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .panel-data {
+            display: none;
+        }
+        
+        .panel-data.active {
+            display: block;
+        }
+        
+        .panel-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+        
+        .panel-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Detail panel content styles */
+        .detail-section {
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .detail-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .detail-section h3::before {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 1.1rem;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .detail-info {
+            background-color: rgba(0,0,0,0.02);
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+        
+        .detail-row {
+            display: flex;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .detail-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            width: 120px;
+            color: var(--gray);
+        }
+        
+        .detail-value {
+            flex: 1;
+        }
+        
+        .code-sample {
+            background-color: #f8f9fa;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #333;
+            border: 1px solid #e2e8f0;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .detail-panel {
+                width: 100vw;
+                max-width: 100vw;
+            }
+        }
     </style>
 </head>
 <body>
@@ -469,6 +669,28 @@
             <p>&copy; 2024 Fair Forward</p>
         </div>
     </footer>
+
+    <!-- Slide-in Panel for Detailed Information -->
+    <div id="detailPanel" class="detail-panel">
+        <div class="detail-panel-header">
+            <button id="closeDetailPanel" class="close-panel-btn">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 id="detailPanelTitle">Dataset Details</h2>
+        </div>
+        <div class="detail-panel-content">
+            <div id="detailPanelLoader" class="panel-loader">
+                <div class="loader-spinner"></div>
+                <p>Loading details...</p>
+            </div>
+            <div id="detailPanelData" class="panel-data">
+                <!-- Content will be dynamically populated -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Overlay for when panel is open -->
+    <div id="panelOverlay" class="panel-overlay"></div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -581,6 +803,279 @@
             
             // Initial filter application
             applyFilters();
+            
+            // Initialize column visibility
+            updateColumnVisibility();
+            
+            // Detail Panel Functionality
+            const detailPanel = document.getElementById('detailPanel');
+            const panelOverlay = document.getElementById('panelOverlay');
+            const closeDetailPanel = document.getElementById('closeDetailPanel');
+            const detailPanelTitle = document.getElementById('detailPanelTitle');
+            const detailPanelLoader = document.getElementById('detailPanelLoader');
+            const detailPanelData = document.getElementById('detailPanelData');
+            
+            // Function to open the detail panel
+            function openDetailPanel(title, itemId, itemType) {
+                // Set the panel title
+                detailPanelTitle.textContent = title;
+                
+                // Show loader, hide content
+                detailPanelLoader.style.display = 'flex';
+                detailPanelData.classList.remove('active');
+                
+                // Open the panel
+                detailPanel.classList.add('open');
+                panelOverlay.classList.add('active');
+                
+                // Prevent body scrolling when panel is open
+                document.body.style.overflow = 'hidden';
+                
+                // Simulate loading data (replace with actual data loading)
+                setTimeout(() => {
+                    loadItemDetails(itemId, itemType);
+                }, 500);
+            }
+            
+            // Function to close the detail panel
+            function closeDetailPanel() {
+                detailPanel.classList.remove('open');
+                panelOverlay.classList.remove('active');
+                
+                // Re-enable body scrolling
+                document.body.style.overflow = '';
+                
+                // Clear panel data after transition
+                setTimeout(() => {
+                    detailPanelData.innerHTML = '';
+                    detailPanelData.classList.remove('active');
+                }, 300);
+            }
+            
+            // Function to load item details (replace with actual data loading logic)
+            function loadItemDetails(itemId, itemType) {
+                // This is a placeholder - replace with actual data loading logic
+                // For now, we'll just create some dummy content based on the item type
+                
+                let content = '';
+                
+                if (itemType === 'dataset') {
+                    content = `
+                        <div class="detail-section">
+                            <h3>Dataset Information</h3>
+                            <div class="detail-info">
+                                <div class="detail-row">
+                                    <span class="detail-label">ID:</span>
+                                    <span class="detail-value">${itemId}</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Type:</span>
+                                    <span class="detail-value">Dataset</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Format:</span>
+                                    <span class="detail-value">CSV, JSON</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Size:</span>
+                                    <span class="detail-value">2.3 GB</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Last Updated:</span>
+                                    <span class="detail-value">March 15, 2024</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <h3>Description</h3>
+                            <p>This is a comprehensive dataset containing information about agricultural practices, crop yields, and climate data across multiple regions. The dataset was collected through field surveys and satellite imagery analysis.</p>
+                            <p>It includes variables such as crop type, planting date, harvest date, yield, rainfall, temperature, soil type, and farming practices.</p>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <h3>Sample Data</h3>
+                            <pre class="code-sample">
+{
+  "id": "sample-123",
+  "crop_type": "maize",
+  "planting_date": "2023-04-15",
+  "harvest_date": "2023-08-20",
+  "yield_kg_per_hectare": 5200,
+  "rainfall_mm": 850,
+  "avg_temperature_c": 24.5,
+  "soil_type": "loamy",
+  "farming_practice": "conservation agriculture"
+}
+                            </pre>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <h3>Access Information</h3>
+                            <p>This dataset is available under the Creative Commons Attribution 4.0 International License.</p>
+                            <a href="#" class="btn btn-primary">
+                                <i class="fas fa-download"></i> Download Dataset
+                            </a>
+                            <a href="#" class="btn btn-secondary">
+                                <i class="fas fa-file-alt"></i> View Documentation
+                            </a>
+                        </div>
+                    `;
+                } else if (itemType === 'usecase') {
+                    content = `
+                        <div class="detail-section">
+                            <h3>Use Case Information</h3>
+                            <div class="detail-info">
+                                <div class="detail-row">
+                                    <span class="detail-label">ID:</span>
+                                    <span class="detail-value">${itemId}</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Type:</span>
+                                    <span class="detail-value">Use Case</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Status:</span>
+                                    <span class="detail-value">Implemented</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Technology:</span>
+                                    <span class="detail-value">Machine Learning, Computer Vision</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <h3>Description</h3>
+                            <p>This use case demonstrates how machine learning and computer vision can be applied to agricultural data to predict crop yields and identify potential issues before they affect production.</p>
+                            <p>The system analyzes satellite imagery, weather data, and historical yield information to provide farmers with actionable insights.</p>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <h3>Implementation Details</h3>
+                            <p>The solution uses a combination of convolutional neural networks for image analysis and random forest models for yield prediction. It was developed using Python, TensorFlow, and scikit-learn.</p>
+                            <p>The model achieved an accuracy of 87% in predicting crop yields and 92% in identifying crop diseases from images.</p>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <h3>Resources</h3>
+                            <a href="#" class="btn btn-primary">
+                                <i class="fas fa-code"></i> View Code Repository
+                            </a>
+                            <a href="#" class="btn btn-secondary">
+                                <i class="fas fa-file-alt"></i> Read Case Study
+                            </a>
+                        </div>
+                    `;
+                }
+                
+                // Update the panel content
+                detailPanelData.innerHTML = content;
+                
+                // Add CSS for the detail panel content
+                const style = document.createElement('style');
+                style.textContent = `
+                    .detail-section {
+                        margin-bottom: 2rem;
+                    }
+                    
+                    .detail-section h3 {
+                        font-size: 1.1rem;
+                        font-weight: 600;
+                        margin-bottom: 1rem;
+                        color: var(--dark);
+                    }
+                    
+                    .detail-info {
+                        background-color: rgba(0,0,0,0.02);
+                        border-radius: 0.5rem;
+                        padding: 1rem;
+                    }
+                    
+                    .detail-row {
+                        display: flex;
+                        margin-bottom: 0.5rem;
+                        font-size: 0.9rem;
+                    }
+                    
+                    .detail-row:last-child {
+                        margin-bottom: 0;
+                    }
+                    
+                    .detail-label {
+                        font-weight: 600;
+                        width: 120px;
+                        color: var(--gray);
+                    }
+                    
+                    .detail-value {
+                        flex: 1;
+                    }
+                    
+                    .code-sample {
+                        background-color: #f8f9fa;
+                        border-radius: 0.5rem;
+                        padding: 1rem;
+                        overflow-x: auto;
+                        font-family: monospace;
+                        font-size: 0.85rem;
+                        color: #333;
+                        border: 1px solid #e2e8f0;
+                    }
+                    
+                    .detail-section .btn {
+                        margin-right: 0.5rem;
+                        margin-top: 1rem;
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                // Hide loader, show content
+                detailPanelLoader.style.display = 'none';
+                detailPanelData.classList.add('active');
+            }
+            
+            // Add click event listener to close button
+            closeDetailPanel.addEventListener('click', () => {
+                closeDetailPanel();
+            });
+            
+            // Add click event listener to overlay
+            panelOverlay.addEventListener('click', () => {
+                closeDetailPanel();
+            });
+            
+            // Add escape key listener to close panel
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && detailPanel.classList.contains('open')) {
+                    closeDetailPanel();
+                }
+            });
+            
+            // Add click event listeners to all cards to open the detail panel
+            document.addEventListener('click', (e) => {
+                // Find the closest card or button that should trigger the panel
+                const card = e.target.closest('.card');
+                const detailButton = e.target.closest('.btn-view-details');
+                
+                if (detailButton) {
+                    // If a detail button was clicked
+                    e.preventDefault();
+                    const card = detailButton.closest('.card');
+                    if (card) {
+                        const title = card.querySelector('h3').textContent;
+                        const itemId = card.dataset.id || 'unknown';
+                        const itemType = card.classList.contains('has-dataset') ? 'dataset' : 'usecase';
+                        openDetailPanel(title, itemId, itemType);
+                    }
+                } else if (card && !e.target.closest('a')) {
+                    // If the card was clicked (but not a link inside it)
+                    const title = card.querySelector('h3').textContent;
+                    const itemId = card.dataset.id || 'unknown';
+                    const itemType = card.classList.contains('has-dataset') ? 'dataset' : 'usecase';
+                    openDetailPanel(title, itemId, itemType);
+                }
+            });
         });
     </script>
 </body>
