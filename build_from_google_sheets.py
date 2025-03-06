@@ -13,7 +13,6 @@ parser.add_argument('--output', type=str, default="docs/data_catalog.xlsx", help
 parser.add_argument('--credentials', type=str, default="data_sources/google_sheets_api/service_account_JN.json", help='Path to the Google Sheets API credentials file')
 parser.add_argument('--backup', action='store_true', help='Create a backup of the existing Excel file')
 parser.add_argument('--skip-fetch', action='store_true', help='Skip fetching data from Google Sheets and just build the website')
-parser.add_argument('--template', type=str, default="docs/index.html", help='Path to the HTML template file')
 args = parser.parse_args()
 
 # Create a backup of the existing Excel file only if explicitly requested
@@ -63,8 +62,7 @@ if not args.skip_fetch:
 print("Building the website...")
 build_cmd = [
     "python", "generate_catalog.py",
-    "--input", args.output,
-    "--template", args.template
+    "--input", args.output
 ]
 
 try:

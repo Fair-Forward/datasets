@@ -62,7 +62,13 @@ The `generate_catalog.py` script accepts the following arguments:
 
 - `--input`: Path to the input Excel file (default: `docs/data_catalog.xlsx`)
 - `--output`: Path to the output HTML file (default: `docs/index.html`)
-- `--template`: Path to the HTML template file (default: `docs/index.html`)
+
+The `build_from_google_sheets.py` script accepts the following arguments:
+
+- `--output`: Path to save the Excel file (default: `docs/data_catalog.xlsx`)
+- `--credentials`: Path to the Google Sheets API credentials file (default: `data_sources/google_sheets_api/service_account_JN.json`)
+- `--backup`: Create a backup of the existing Excel file
+- `--skip-fetch`: Skip fetching data from Google Sheets and just build the website
 
 ### Project Structure
 
@@ -72,7 +78,6 @@ The `generate_catalog.py` script accepts the following arguments:
   - `data_catalog.xlsx`: Excel file containing the dataset information
   - `index.html`: Generated HTML file for the website
   - `img/`: Directory containing images for the datasets
-- `templates/`: Directory containing templates for dataset and use case documentation
 - `data_sources/`: Directory containing scripts and credentials for data sources
 
 ### GitHub Actions
