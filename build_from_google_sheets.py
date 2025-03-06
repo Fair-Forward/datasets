@@ -1,76 +1,77 @@
-#!/usr/bin/env python3
-"""
-Build the website from Google Sheets data.
-This script fetches data from Google Sheets and then builds the website.
-"""
-
 import argparse
 import os
 import subprocess
-import sys
-from fetch_google_sheet import fetch_google_sheet
+import datetime
+import shutil
+import pandas as pd
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 
-def run_command(command):
-    """Run a shell command and print the output."""
-    print(f"Running: {command}")
-    result = subprocess.run(command, shell=True, capture_output=True, text=True)
-    if result.stdout:
-        print(result.stdout)
-    if result.stderr:
-        print(result.stderr, file=sys.stderr)
-    return result.returncode
+# Parse command line arguments
+parser = argparse.ArgumentParser(description='Fetch data from Google Sheets and build the website.')
+parser.add_argument('--output', type=str, default="docs/data_catalog.xlsx", help='Path to save the Excel file')
+parser.add_argument('--credentials', type=str, default="data_sources/google_sheets_api/service_account_JN.json", help='Path to the Google Sheets API credentials file')
+parser.add_argument('--backup', action='store_true', help='Create a backup of the existing Excel file')
+parser.add_argument('--skip-fetch', action='store_true', help='Skip fetching data from Google Sheets and just build the website')
+parser.add_argument('--template', type=str, default="docs/index.html", help='Path to the HTML template file')
+args = parser.parse_args()
 
-def build_from_google_sheets(output_excel=None, credentials=None, skip_fetch=False, no_backup=False):
-    """
-    Fetch data from Google Sheets and build the website.
-    
-    Args:
-        output_excel (str): Path to save the Excel file
-        credentials (str): Path to the Google Sheets API credentials file
-        skip_fetch (bool): Skip fetching data from Google Sheets
-        no_backup (bool): Do not create a backup of the existing Excel file
-    """
-    # Set default values
-    if output_excel is None:
-        output_excel = "docs/data_catalog.xlsx"
-    
-    if credentials is None:
-        credentials = "data_sources/google_sheets_api/service_account_JN.json"
-    
-    # Step 1: Fetch data from Google Sheets
-    if not skip_fetch:
-        print("Fetching data from Google Sheets...")
-        success = fetch_google_sheet(credentials, output_excel, not no_backup)
-        if not success:
-            print("Failed to fetch data from Google Sheets. Aborting.")
-            return False
-    else:
-        print("Skipping fetch from Google Sheets.")
-    
-    # Step 2: Generate the HTML
-    print("Generating HTML...")
+# Create a backup of the existing Excel file only if explicitly requested
+if args.backup and os.path.exists(args.output) and not args.skip_fetch:
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    backup_path = f"{os.path.splitext(args.output)[0]}_backup_{timestamp}{os.path.splitext(args.output)[1]}"
     try:
-        subprocess.run(["python", "generate_catalog.py", "--input", output_excel], check=True)
-        print("HTML generated successfully.")
-        return True
-    except subprocess.CalledProcessError as e:
-        print(f"Error generating HTML: {e}")
-        return False
+        shutil.copy2(args.output, backup_path)
+        print(f"Created backup of existing Excel file at {backup_path}")
+    except Exception as e:
+        print(f"Error creating backup: {e}")
 
-def main():
-    parser = argparse.ArgumentParser(description='Fetch data from Google Sheets and build the website.')
-    parser.add_argument('--output', type=str, default="docs/data_catalog.xlsx", help='Path to save the Excel file')
-    parser.add_argument('--credentials', type=str, default="data_sources/google_sheets_api/service_account_JN.json", help='Path to the Google Sheets API credentials file')
-    parser.add_argument('--skip-fetch', action='store_true', help='Skip fetching data from Google Sheets')
-    parser.add_argument('--no-backup', action='store_true', help='Do not create a backup of the existing Excel file')
-    args = parser.parse_args()
-    
-    build_from_google_sheets(
-        output_excel=args.output,
-        credentials=args.credentials,
-        skip_fetch=args.skip_fetch,
-        no_backup=args.no_backup
-    )
+# Fetch data from Google Sheets
+if not args.skip_fetch:
+    print("Fetching data from Google Sheets...")
+    try:
+        # Setup credentials
+        scope = ['https://spreadsheets.google.com/feeds',
+                'https://www.googleapis.com/auth/drive']
+        credentials = ServiceAccountCredentials.from_json_keyfile_name(args.credentials, scope)
+        client = gspread.authorize(credentials)
+        
+        # Extract correct spreadsheet ID and gid from full URL
+        full_url = "https://docs.google.com/spreadsheets/d/18sgZgPGZuZjeBTHrmbr1Ra7mx8vSToUqnx8vCjhIp0c/edit?gid=561894456#gid=561894456"
+        spreadsheet_id = full_url.split('/d/')[1].split('/')[0]
+        gid = 756053104
+        
+        # Connect to sheet
+        spreadsheet = client.open_by_key(spreadsheet_id)
+        sheet = spreadsheet.get_worksheet_by_id(int(gid))
+        print(f"Successfully connected to sheet: {sheet.title}")
+        
+        # Get all values
+        all_values = sheet.get_all_values()
+        headers = all_values[0]
+        data = all_values[1:]
+        df = pd.DataFrame(data, columns=headers)
+        
+        # Save to Excel
+        df.to_excel(args.output, index=False)
+        print(f"Successfully saved data to {args.output}")
+    except Exception as e:
+        print(f"Error fetching data from Google Sheets: {e}")
+        exit(1)
 
-if __name__ == "__main__":
-    sys.exit(main()) 
+# Build the website
+print("Building the website...")
+build_cmd = [
+    "python", "generate_catalog.py",
+    "--input", args.output,
+    "--template", args.template
+]
+
+try:
+    subprocess.run(build_cmd, check=True)
+    print("Successfully built the website")
+except subprocess.CalledProcessError as e:
+    print(f"Error building the website: {e}")
+    exit(1)
+
+print("Done!") 

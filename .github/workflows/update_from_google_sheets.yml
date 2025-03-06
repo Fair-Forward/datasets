@@ -1,17 +1,19 @@
-name: Update from Google Sheets
+name: Update Website from Google Sheets with New Design
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Run daily at midnight UTC
+    - cron: '0 0 * * *'  # Run daily at midnight
   workflow_dispatch:  # Allow manual triggering
 
 jobs:
-  build:
+  update:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
+      with:
+        ref: feature/new-website
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -22,18 +24,27 @@ jobs:
       run: |
         pip install pandas openpyxl gspread oauth2client
 
-    - name: Set up Google Sheets credentials
+    - name: Create service account credentials
       run: |
-        echo '${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}' > data_sources/google_sheets_api/service_account_JN.json
+        echo '${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}' > service_account_JN.json
+        mkdir -p data_sources/google_sheets_api
+        mv service_account_JN.json data_sources/google_sheets_api/
 
-    - name: Fetch data and build website
+    - name: Update from Google Sheets
       run: |
-        python build_from_google_sheets.py
+        python build_from_google_sheets.py --template docs/index.html
 
     - name: Commit and push changes
       run: |
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
-        git add docs/data_catalog.xlsx docs/index.html
-        git commit -m "Update data from Google Sheets" || echo "No changes to commit"
+        git add --all
+        git commit -m "Update website from Google Sheets" || echo "No changes to commit"
         git push 
+
+    - name: Check GitHub Pages status
+      run: |
+        echo "Checking GitHub Pages build status..."
+        curl -s "https://api.github.com/repos/${{ github.repository }}/pages/builds/latest" \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" 

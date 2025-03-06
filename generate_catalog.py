@@ -4,789 +4,1207 @@ import os
 import re
 import colorsys
 import argparse
+import datetime
 
 # Parse command line arguments
 parser = argparse.ArgumentParser(description='Generate HTML catalog from Excel file.')
 parser.add_argument('--input', type=str, default="docs/data_catalog.xlsx", help='Path to the input Excel file')
 parser.add_argument('--output', type=str, default="docs/index.html", help='Path to the output HTML file')
-parser.add_argument('--google-sheet', action='store_true', help='Use Google Sheet as data source')
+parser.add_argument('--template', type=str, default="docs/index.html", help='Path to the HTML template file')
 args = parser.parse_args()
 
 # Load the dataset
 DATA_CATALOG = args.input
 HTML_OUTPUT = args.output
+HTML_TEMPLATE = args.template
 
-# Read Excel File or Google Sheet
-if args.google_sheet:
-    try:
-        import gspread
-        from oauth2client.service_account import ServiceAccountCredentials
-        
-        # Setup credentials
-        scope = ['https://spreadsheets.google.com/feeds',
-                'https://www.googleapis.com/auth/drive']
-        credentials = ServiceAccountCredentials.from_json_keyfile_name(
-            'data_sources/google_sheets_api/service_account_JN.json', scope)
-        client = gspread.authorize(credentials)
-        
-        # Extract correct spreadsheet ID and gid from full URL
-        full_url = "https://docs.google.com/spreadsheets/d/18sgZgPGZuZjeBTHrmbr1Ra7mx8vSToUqnx8vCjhIp0c/edit?gid=561894456#gid=561894456"
-        spreadsheet_id = full_url.split('/d/')[1].split('/')[0]
-        gid = 756053104
-        
-        # Connect to sheet
-        spreadsheet = client.open_by_key(spreadsheet_id)
-        sheet = spreadsheet.get_worksheet_by_id(int(gid))
-        print(f"Successfully connected to sheet: {sheet.title}")
-        
-        # Get all values
-        all_values = sheet.get_all_values()
-        headers = all_values[0]
-        
-        # Create unique headers if necessary
-        unique_headers = []
-        header_count = {}
-        for header in headers:
-            if header in header_count:
-                header_count[header] += 1
-                unique_headers.append(f"{header}_{header_count[header]}")
-            else:
-                header_count[header] = 0
-                unique_headers.append(header)
-        
-        # Get all data with unique headers
-        data = sheet.get_all_records(expected_headers=unique_headers)
-        df = pd.DataFrame(data)
-        print(f"Data shape: {df.shape}")
-        
-    except Exception as e:
-        print(f"Error reading Google Sheet: {str(e)}")
-        exit(1)
-else:
-    try:
-        df = pd.read_excel(DATA_CATALOG)
-    except FileNotFoundError:
-        print(f"Error: {DATA_CATALOG} not found.")
-        exit(1)
-    except Exception as e:
-        print(f"Error reading Excel file: {e}")
-        exit(1)
-
-# Define the columns we want to display
-# These are the columns from the new database structure
-display_columns = [
-    'Dataset Speaking Titles',
-    'Use Case Speaking Title',
-    'Country Team',
-    'Description - What can be done with this? What is this about?',
-    'Dataset Link',
-    'Model/Use-Case Links',
-    'Domain/SDG',
-    'Data Type',
-    'Point of Contact/Communities'
-]
-
-# Filter to only include columns that exist in the dataframe
-display_columns = [col for col in display_columns if col in df.columns]
-
-# Apply the column selection
-df = df[display_columns]
-
-# Rename columns for display
-column_display_names = {
-    'Dataset Speaking Titles': 'Dataset',
-    'Use Case Speaking Title': 'Use Case',
-    'Country Team': 'Country/Region',
-    'Description - What can be done with this? What is this about?': 'Description',
-    'Dataset Link': 'Dataset Link',
-    'Model/Use-Case Links': 'Use Case Link',
-    'Domain/SDG': 'Domain/SDG',
-    'Data Type': 'Data Type',
-    'Point of Contact/Communities': 'Contact'
-}
-
-def normalize_label(text):
-    """Convert text to lowercase and remove special characters."""
-    if pd.isna(text):
-        return ""
-    base = text.lower().strip()
-    # Extract the main type from parentheses if present
-    if "(" in base:
-        base = base.split("(")[0].strip()
-    # Replace both slash and space with empty string to ensure consistent normalization
-    return re.sub(r'[^a-z0-9]', '', base)
-
-def create_label_html(text, category):
-    """Create HTML for a label."""
-    if pd.isna(text):
-        return ""
-    normalized = normalize_label(text)
-    return f'<span class="label label-{normalized}" data-filter="{text}">{text}</span>'
-
-# Define columns that need special hyperlink formatting
-link_columns = {
-    "Dataset Link": lambda x: f'<a href="{x}" target="_blank" class="minimal-link">Dataset</a>' if pd.notna(x) else "N/A",
-    "Model/Use-Case Links": lambda x: f'<a href="{x}" target="_blank" class="minimal-link">Use Case</a>' if pd.notna(x) else "N/A"
-}
-
+# Function to convert markdown links to HTML
 def convert_markdown_links_to_html(text):
-    if not text or not isinstance(text, str):
-        return text
-    link_pattern = r"\[([^\]]+)\]\(([^)]+)\)"
-    return re.sub(link_pattern, r'<a href="\2" target="_blank" class="minimal-link">\1</a>', text)
-
-def create_description_html(text):
-    """Create HTML for description with expandable text."""
-    if pd.isna(text):
-        return "N/A"
+    if pd.isna(text) or not isinstance(text, str):
+        return ""
     
-    # Convert markdown links in the full text
-    full_text = convert_markdown_links_to_html(str(text))
+    # Convert markdown links [text](url) to HTML <a href="url">text</a>
+    pattern = r'\[(.*?)\]\((.*?)\)'
+    html_text = re.sub(pattern, r'<a href="\2" target="_blank">\1</a>', text)
     
-    return f"""
-        <div class="description-wrapper">
-            <div class="description-content">{full_text}</div>
-            <span class="toggle-description">Read more</span>
-        </div>
-    """
+    # If no markdown links but contains a URL, make it clickable
+    if html_text == text and ('http://' in text or 'https://' in text):
+        # This pattern matches URLs that aren't already in HTML tags
+        url_pattern = r'(https?://[^\s<>]+)(?![^<]*>|[^<>]*</)'
+        html_text = re.sub(url_pattern, r'<a href="\1" target="_blank">\1</a>', text)
+    
+    return html_text
 
-def get_pastel_color(hue):
-    """Generate a pale, understated pastel color given a hue value."""
-    # Convert to HSL color space and create a pale color
-    # Lightness 0.9 (instead of 0.95) for slightly less whiteness
-    # Saturation 0.35 (instead of 0.25) for slightly more color while keeping it understated
-    rgb = colorsys.hls_to_rgb(hue, 0.9, 0.45)
-    # Convert RGB values to hex
-    return '#{:02x}{:02x}{:02x}'.format(int(rgb[0]*255), int(rgb[1]*255), int(rgb[2]*255))
+# Function to normalize label text for CSS class names
+def normalize_label(text):
+    if pd.isna(text) or not isinstance(text, str):
+        return ""
+    
+    # Convert to lowercase, replace spaces with hyphens, remove special characters
+    normalized = re.sub(r'[^a-z0-9\-]', '', text.lower().replace(' ', '-'))
+    return normalized
 
-def generate_color_palette(n):
-    """Generate n evenly spaced pastel colors."""
-    return [get_pastel_color(i/n) for i in range(n)]
+# Function to create HTML for labels
+def create_label_html(text, label_type):
+    if pd.isna(text) or not isinstance(text, str) or text.strip() == "":
+        return ""
+    
+    # Split by commas or semicolons
+    labels = re.split(r'[,;]', text)
+    html_labels = []
+    
+    for label in labels:
+        label = label.strip()
+        if label:
+            normalized = normalize_label(label)
+            if normalized:
+                html_labels.append(f'<span class="tag label-{normalized}" data-filter="{label}">{label}</span>')
+    
+    return "".join(html_labels)
 
+# Function to get unique categories for generating CSS
 def get_unique_categories(df):
-    """Extract all unique categories from Domain/SDG, Data Type, and Status columns."""
     domains = set()
     data_types = set()
     statuses = set()
+    regions = set()
     
     # Extract domains
-    if 'Domain/SDG' in df.columns:
-        domain_col = df["Domain/SDG"].dropna()
-        for items in domain_col:
-            domains.update([item.strip() for item in str(items).split(",")])
+    domain_col = 'Domain/SDG'
+    if domain_col in df.columns:
+        for domain_text in df[domain_col].dropna():
+            if isinstance(domain_text, str):
+                for domain in re.split(r'[,;]', domain_text):
+                    domain = domain.strip()
+                    if domain:
+                        domains.add(domain)
     
     # Extract data types
-    if 'Data Type' in df.columns:
-        type_col = df["Data Type"].dropna()
-        for items in type_col:
-            data_types.update([item.strip() for item in str(items).split(",")])
+    data_type_col = 'Data Type'
+    if data_type_col in df.columns:
+        for type_text in df[data_type_col].dropna():
+            if isinstance(type_text, str):
+                for data_type in re.split(r'[,;]', type_text):
+                    data_type = data_type.strip()
+                    if data_type:
+                        data_types.add(data_type)
     
     # Extract statuses
-    if 'Use Case Pipeline Status' in df.columns:
-        status_col = df["Use Case Pipeline Status"].dropna()
-        for items in status_col:
-            statuses.update([item.strip() for item in str(items).split(",")])
+    status_col = 'Use Case Pipeline Status'
+    if status_col in df.columns:
+        for status_text in df[status_col].dropna():
+            if isinstance(status_text, str):
+                for status in re.split(r'[,;]', status_text):
+                    status = status.strip()
+                    if status:
+                        statuses.add(status)
     
-    # Sort the lists to ensure consistent color assignment
-    return sorted(list(domains)), sorted(list(data_types)), sorted(list(statuses))
+    # Extract regions
+    region_col = 'Country Team'
+    if region_col in df.columns:
+        for region_text in df[region_col].dropna():
+            if isinstance(region_text, str):
+                for region in re.split(r'[,;]', region_text):
+                    region = region.strip()
+                    if region:
+                        regions.add(region)
+    
+    return list(domains), list(data_types), list(statuses), list(regions)
 
+# Function to generate CSS for labels
 def generate_label_css(domains, data_types, statuses):
-    """Generate CSS for all labels."""
-    all_categories = domains + data_types + statuses
-    colors = generate_color_palette(len(all_categories))
+    css = ""
     
-    css = []
-    # Base label styles (moved from static CSS)
-    css.append("""
-.label {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.35rem 0.75rem;
-    font-size: 0.8125rem;
-    font-weight: 500;
-    border-radius: 6px;
-    margin-right: 0.5rem;
-    margin-bottom: 0.5rem;
-    line-height: 1;
-    white-space: nowrap;
-    letter-spacing: 0.01em;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.label:hover {
-    transform: translateY(-1px);
-    opacity: 0.9;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.label.active {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-    transform: translateY(-1px);
-    opacity: 1;
-}""")
+    # Generate a color palette with enough colors for all categories
+    total_categories = len(domains) + len(data_types) + len(statuses)
+    colors = generate_color_palette(total_categories)
+    color_index = 0
     
-    # Generate specific label styles
-    for category, color in zip(all_categories, colors):
-        normalized = normalize_label(category)
-        css.append(f"""
+    # Generate CSS for domains
+    for domain in domains:
+        normalized = normalize_label(domain)
+        if normalized:
+            hue = colors[color_index]
+            css += f"""
 .label-{normalized} {{
-    background-color: {color};
+    background-color: {get_pastel_color(hue)};
     color: #2d3748;
-}}""")
+}}
+"""
+            color_index += 1
     
-    return "\n".join(css)
+    # Generate CSS for data types
+    for data_type in data_types:
+        normalized = normalize_label(data_type)
+        if normalized:
+            hue = colors[color_index]
+            css += f"""
+.label-{normalized} {{
+    background-color: {get_pastel_color(hue)};
+    color: #2d3748;
+}}
+"""
+            color_index += 1
+    
+    # Generate CSS for statuses
+    for status in statuses:
+        normalized = normalize_label(status)
+        if normalized:
+            hue = colors[color_index]
+            css += f"""
+.label-{normalized} {{
+    background-color: {get_pastel_color(hue)};
+    color: #2d3748;
+}}
+"""
+            color_index += 1
+    
+    return css
 
-HTML_TEMPLATE = """
-<!DOCTYPE html>
+# Function to generate a pastel color from a hue value
+def get_pastel_color(hue):
+    # Convert HSL to RGB with high lightness for pastel
+    r, g, b = colorsys.hls_to_rgb(hue, 0.9, 0.3)
+    # Convert to hex
+    return f"#{int(r*255):02x}{int(g*255):02x}{int(b*255):02x}"
+
+# Function to generate evenly spaced colors
+def generate_color_palette(n):
+    return [i/n for i in range(n)]
+
+def generate_card_html(row, idx):
+    # Extract card data
+    title = row.get('OnSite Name', '')
+    description = row.get('Description - What can be done with this? What is this about?', '')
+    dataset_link = row.get('Dataset Link', '')
+    model_links = row.get('Model/Use-Case Links', '')
+    domain = row.get('Domain/SDG', '')
+    status = row.get('Use Case Pipeline Status', '')
+    data_type = row.get('Data Type', '')
+    contact = row.get('Point of Contact/Communities', '')
+    region = row.get('Country Team', '')
+    
+    # Determine if row has dataset and/or use case
+    has_dataset = isinstance(dataset_link, str) and not pd.isna(dataset_link)
+    has_usecase = isinstance(model_links, str) and not pd.isna(model_links)
+    
+    # Card classes based on what it contains
+    card_classes = ["card"]
+    if has_dataset:
+        card_classes.append("has-dataset")
+    if has_usecase:
+        card_classes.append("has-usecase")
+    
+    card_class = " ".join(card_classes)
+    
+    # Special handling for specific images
+    card_image = ''
+    if title and ('CadiAI' in str(title) or 'CADI AI' in str(title)):
+        card_image = '<div class="card-image has-image" style="background-image: url(\'img/cadiAI.png\');"></div>'
+    elif title and 'cashew' in str(title).lower():
+        card_image = '<div class="card-image has-image" style="background-image: url(\'img/cashew_karaagro.png\');"></div>'
+    else:
+        card_image = '<div class="card-image"></div>'
+    
+    # Create domain badges
+    domain_badges = ""
+    domain_list = []
+    if domain and not pd.isna(domain):
+        domain_badges_html = []
+        for d in re.split(r'[,;]', str(domain)):
+            d = d.strip()
+            if d:
+                domain_list.append(d)
+                domain_badges_html.append(f'<div class="domain-badge">{d}</div>')
+        
+        if domain_badges_html:
+            domain_badges = f'<div class="domain-badges">{"".join(domain_badges_html)}</div>'
+    
+    # Create meta items
+    meta_items = []
+    if region and not pd.isna(region):
+        # Clean up region text by removing extra spaces and normalizing
+        clean_region = re.sub(r'\s+', ' ', str(region).strip())
+        meta_items.append(f'<div class="meta-item"><i class="fas fa-map-marker-alt"></i> {html.escape(clean_region)}</div>')
+    
+    if contact and not pd.isna(contact):
+        # Process contact information with markdown links
+        contact_html = convert_markdown_links_to_html(contact)
+        meta_items.append(f'<div class="meta-item"><i class="fas fa-user"></i> {contact_html}</div>')
+    
+    meta_html = ""
+    if meta_items:
+        meta_html = f'<div class="meta">{"".join(meta_items)}</div>'
+    
+    # Create tags
+    tags = []
+    # Add data type tags
+    if data_type and not pd.isna(data_type):
+        for dt in re.split(r'[,;]', str(data_type)):
+            dt = dt.strip()
+            if dt:
+                normalized = normalize_label(dt)
+                tags.append(f'<span class="tag label-{normalized}" data-filter="{dt}">{dt}</span>')
+    
+    # Add domain tags for filtering (hidden)
+    for d in domain_list:
+        normalized = normalize_label(d)
+        tags.append(f'<span class="tag label-{normalized}" data-filter="{d}" style="display:none;">{d}</span>')
+    
+    # Add status tags
+    if status and not pd.isna(status):
+        for s in re.split(r'[,;]', str(status)):
+            s = s.strip()
+            if s:
+                normalized = normalize_label(s)
+                tags.append(f'<span class="tag label-{normalized}" data-filter="{s}">{s}</span>')
+    
+    tags_html = ""
+    if tags:
+        tags_html = f'<div class="tags">{"".join(tags)}</div>'
+    
+    # Create description
+    description_html = ""
+    if description and not pd.isna(description):
+        description_html = f'''
+            <div class="card-description">
+                <div class="description-text collapsed">{html.escape(str(description))}</div>
+                <div class="read-more-btn">Read more</div>
+            </div>
+        '''
+    
+    # Create footer with links
+    footer_links = []
+    if has_dataset:
+        footer_links.append(f'<a href="{dataset_link}" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a>')
+    
+    if has_usecase:
+        footer_links.append(f'<a href="{model_links}" target="_blank" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Use Case</a>')
+    
+    footer_links.append('<button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button>')
+    
+    footer_html = f'<div class="card-footer">{"".join(footer_links)}</div>'
+    
+    # Construct the complete card
+    card_html = f'''
+    <div class="{card_class}" data-title="{html.escape(str(title))}" data-region="{html.escape(str(region))}" data-id="{idx}">
+        {card_image}
+        <div class="card-header">
+            {domain_badges}
+            <h3>{html.escape(str(title))}</h3>
+            {meta_html}
+        </div>
+        <div class="card-body">
+            {description_html}
+            {tags_html}
+        </div>
+        {footer_html}
+    </div>
+    '''
+    
+    return card_html
+
+def generate_filter_html(domains, data_types, regions):
+    domain_options = '\n'.join([f'<option value="{domain}">{domain}</option>' for domain in sorted(domains)])
+    data_type_options = '\n'.join([f'<option value="{data_type}">{data_type}</option>' for data_type in sorted(data_types)])
+    region_options = '\n'.join([f'<option value="{region}">{region}</option>' for region in sorted(regions)])
+    
+    filter_html = f'''
+    <div class="filters">
+        <div class="filters-content">
+            <div class="filter-group">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search datasets and use-cases...">
+                </div>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">View:</span>
+                <select id="viewFilter">
+                    <option value="all">All Items</option>
+                    <option value="datasets">Datasets Only</option>
+                    <option value="usecases">Use Cases Only</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Domain:</span>
+                <select id="domainFilter">
+                    <option value="all">All Domains</option>
+                    {domain_options}
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Data Type:</span>
+                <select id="dataTypeFilter">
+                    <option value="all">All Data Types</option>
+                    {data_type_options}
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Region:</span>
+                <select id="regionFilter">
+                    <option value="all">All Regions</option>
+                    {region_options}
+                </select>
+            </div>
+        </div>
+    </div>
+    '''
+    
+    return filter_html
+
+def generate_js_code():
+    return '''
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get filter elements
+            const searchInput = document.getElementById('searchInput');
+            const viewFilter = document.getElementById('viewFilter');
+            const domainFilter = document.getElementById('domainFilter');
+            const dataTypeFilter = document.getElementById('dataTypeFilter');
+            const regionFilter = document.getElementById('regionFilter');
+            const emptyState = document.getElementById('emptyState');
+            const cards = document.querySelectorAll('.card');
+            
+            // Initialize variables for current filter state
+            let searchTerm = '';
+            let currentView = 'all';
+            let selectedDomain = 'all';
+            let selectedDataType = 'all';
+            let selectedRegion = 'all';
+            
+            // Add event listeners for filters
+            searchInput.addEventListener('input', function() {
+                searchTerm = this.value.toLowerCase();
+                applyFilters();
+            });
+            
+            viewFilter.addEventListener('change', function() {
+                currentView = this.value;
+                applyFilters();
+            });
+            
+            domainFilter.addEventListener('change', function() {
+                selectedDomain = this.value;
+                applyFilters();
+            });
+            
+            dataTypeFilter.addEventListener('change', function() {
+                selectedDataType = this.value;
+                applyFilters();
+            });
+            
+            regionFilter.addEventListener('change', function() {
+                selectedRegion = this.value;
+                applyFilters();
+            });
+            
+            // Set up read more buttons
+            const descriptionTexts = document.querySelectorAll('.description-text');
+            descriptionTexts.forEach(text => {
+                // Check if the text is long enough to need a read more button
+                const needsReadMore = text.scrollHeight > text.clientHeight || text.textContent.length > 300;
+                
+                if (needsReadMore) {
+                    const readMoreBtn = text.nextElementSibling;
+                    if (readMoreBtn && readMoreBtn.classList.contains('read-more-btn')) {
+                        readMoreBtn.addEventListener('click', function() {
+                            text.classList.toggle('collapsed');
+                            text.classList.toggle('expanded');
+                            this.textContent = text.classList.contains('expanded') ? 'Read less' : 'Read more';
+                        });
+                    }
+                } else {
+                    // Hide the read more button if not needed
+                    const readMoreBtn = text.nextElementSibling;
+                    if (readMoreBtn && readMoreBtn.classList.contains('read-more-btn')) {
+                        readMoreBtn.style.display = 'none';
+                    }
+                }
+            });
+            
+            // Function to apply all filters
+            function applyFilters() {
+                let visibleCards = 0;
+                
+                cards.forEach(card => {
+                    // Check if card matches the view filter
+                    let viewMatch = true;
+                    if (currentView === 'datasets') {
+                        viewMatch = card.classList.contains('has-dataset');
+                    } else if (currentView === 'usecases') {
+                        viewMatch = card.classList.contains('has-usecase');
+                    }
+                    
+                    // Check if card matches the search term
+                    let searchMatch = !searchTerm || card.textContent.toLowerCase().includes(searchTerm);
+                    
+                    // Check if card matches the domain filter
+                    let domainMatch = selectedDomain === 'all';
+                    if (!domainMatch) {
+                        // Look for tags with the selected domain
+                        const domainTags = card.querySelectorAll(`.tag[data-filter="${selectedDomain}"]`);
+                        domainMatch = domainTags.length > 0;
+                        
+                        // Also check domain badges
+                        if (!domainMatch) {
+                            const domainBadges = card.querySelectorAll('.domain-badge');
+                            domainBadges.forEach(badge => {
+                                if (badge.textContent === selectedDomain) {
+                                    domainMatch = true;
+                                }
+                            });
+                        }
+                    }
+                    
+                    // Check if card matches the data type filter
+                    let dataTypeMatch = selectedDataType === 'all' || 
+                                    card.querySelector(`.tag[data-filter="${selectedDataType}"]`) !== null;
+                    
+                    // Check if card matches the region filter
+                    let regionMatch = selectedRegion === 'all';
+                    if (!regionMatch) {
+                        const cardRegion = card.getAttribute('data-region');
+                        regionMatch = cardRegion && cardRegion.includes(selectedRegion);
+                    }
+                    
+                    // Card is visible only if it matches all filters
+                    if (viewMatch && searchMatch && domainMatch && dataTypeMatch && regionMatch) {
+                        card.classList.remove('filtered-out');
+                        visibleCards++;
+                    } else {
+                        card.classList.add('filtered-out');
+                    }
+                });
+                
+                // Toggle empty state message
+                emptyState.classList.toggle('visible', visibleCards === 0);
+            }
+            
+            // Initial filter application
+            applyFilters();
+            
+            // Detail Panel Functionality
+            const detailPanel = document.getElementById('detailPanel');
+            const panelOverlay = document.getElementById('panelOverlay');
+            const closeDetailPanel = document.getElementById('closeDetailPanel');
+            const detailPanelTitle = document.getElementById('detailPanelTitle');
+            const detailPanelLoader = document.getElementById('detailPanelLoader');
+            const detailPanelData = document.getElementById('detailPanelData');
+            
+            // Add event listeners for detail panel
+            document.querySelectorAll('.btn-view-details').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const card = this.closest('.card');
+                    const title = card.getAttribute('data-title');
+                    const id = card.getAttribute('data-id');
+                    openDetailPanel(title, id);
+                });
+            });
+            
+            if (closeDetailPanel) {
+                closeDetailPanel.addEventListener('click', function() {
+                    detailPanel.classList.remove('open');
+                    panelOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            }
+            
+            if (panelOverlay) {
+                panelOverlay.addEventListener('click', function() {
+                    detailPanel.classList.remove('open');
+                    panelOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            }
+            
+            // Function to open the detail panel
+            function openDetailPanel(title, itemId) {
+                if (!detailPanel) return;
+                
+                detailPanelTitle.textContent = title;
+                detailPanelLoader.style.display = 'flex';
+                detailPanelData.classList.remove('active');
+                detailPanel.classList.add('open');
+                panelOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                // Load the details (simulated with setTimeout)
+                setTimeout(() => {
+                    detailPanelLoader.style.display = 'none';
+                    detailPanelData.classList.add('active');
+                    loadItemDetails(itemId);
+                }, 500);
+            }
+            
+            // Function to load item details
+            function loadItemDetails(itemId) {
+                const card = document.querySelector(`.card[data-id="${itemId}"]`);
+                if (!card) return;
+                
+                const description = card.querySelector('.description-text')?.textContent || '';
+                const tags = Array.from(card.querySelectorAll('.tag')).map(tag => tag.textContent);
+                const region = card.getAttribute('data-region');
+                
+                const content = `
+                    <div class="detail-section">
+                        <h3>Description</h3>
+                        <p>${description}</p>
+                    </div>
+                    <div class="detail-section">
+                        <h3>Tags</h3>
+                        <div class="tags">
+                            ${tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                    ${region ? `
+                    <div class="detail-section">
+                        <h3>Region</h3>
+                        <p>${region}</p>
+                    </div>
+                    ` : ''}
+                `;
+                
+                detailPanelData.innerHTML = content;
+            }
+        });
+    </script>
+    '''
+
+def generate_detail_panel_html():
+    return '''
+    <!-- Slide-in Panel for Detailed Information -->
+    <div id="detailPanel" class="detail-panel">
+        <div class="detail-panel-header">
+            <button id="closeDetailPanel" class="close-panel-btn">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 id="detailPanelTitle">Dataset Details</h2>
+        </div>
+        <div class="detail-panel-content">
+            <div id="detailPanelLoader" class="panel-loader">
+                <div class="loader-spinner"></div>
+                <p>Loading details...</p>
+            </div>
+            <div id="detailPanelData" class="panel-data">
+                <!-- Content will be dynamically populated -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Overlay for when panel is open -->
+    <div id="panelOverlay" class="panel-overlay"></div>
+    '''
+
+# Main execution
+try:
+    # Read Excel File
+    df = pd.read_excel(DATA_CATALOG)
+    print(f"Successfully loaded data from {DATA_CATALOG}")
+    
+    # Get unique categories for filter and CSS generation
+    domains, data_types, statuses, regions = get_unique_categories(df)
+    
+    # Generate CSS for labels
+    label_css = generate_label_css(domains, data_types, statuses)
+    
+    # Create a completely new HTML file from scratch
+    html_template = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Catalog</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <!-- Bootstrap for styling -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
-    /* Dynamic label styles */
-    {dynamic_css}
+        :root {{
+            --primary: #1a365d;
+            --primary-light: #2d5a88;
+            --secondary: #4a5568;
+            --light: #f8f9fa;
+            --dark: #2d3748;
+            --gray: #4a5568;
+            --border: #e2e8f0;
+            --background: #f8f9fa;
+            --card-bg: #ffffff;
+            --text: #2d3748;
+            --text-light: #4a5568;
+        }}
+        
+        * {{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }}
+        
+        body {{
+            background-color: var(--background);
+            color: var(--dark);
+            line-height: 1.7;
+        }}
+        
+        header {{
+            background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
+            padding: 60px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            text-align: center;
+            position: relative;
+        }}
+        
+        .header-content {{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }}
+        
+        .header-text {{
+            text-align: left;
+            flex: 1;
+        }}
+        
+        .header-logo {{
+            height: 70px;
+            width: auto;
+            opacity: 0.95;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+            margin-left: 2rem;
+        }}
+        
+        .header-logo:hover {{
+            opacity: 1;
+            transform: translateY(-2px);
+        }}
+        
+        h1 {{
+            font-size: 2.25rem;
+            margin-bottom: 0.75rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+        }}
+        
+        .subtitle {{
+            font-size: 1rem;
+            color: var(--gray);
+            max-width: 800px;
+            line-height: 1.5;
+        }}
+        
+        .filters {{
+            background-color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-bottom: 1px solid var(--border);
+            width: 100%;
+        }}
+        
+        .filters-content {{
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }}
+        
+        .filter-group {{
+            display: flex;
+            align-items: center;
+            margin-right: 1.5rem;
+        }}
+        
+        .filter-label {{
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--gray);
+            margin-right: 0.5rem;
+        }}
+        
+        select {{
+            padding: 0.5rem 2rem 0.5rem 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.375rem;
+            background-color: white;
+            font-size: 0.875rem;
+            color: var(--dark);
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%234a5568' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.5rem center;
+            cursor: pointer;
+        }}
+        
+        .search-box {{
+            position: relative;
+            flex-grow: 1;
+        }}
+        
+        .search-box input {{
+            width: 100%;
+            padding: 0.5rem 0.75rem 0.5rem 2.25rem;
+            border: 1px solid var(--border);
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            color: var(--dark);
+        }}
+        
+        .search-box i {{
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }}
+        
+        .container {{
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }}
+        
+        .grid {{
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }}
+        
+        .card {{
+            background-color: var(--card-bg);
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border);
+        }}
+        
+        .card:hover {{
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+        }}
+        
+        .card-image {{
+            height: 140px;
+            background-color: #f0f4f8;
+            position: relative;
+            overflow: hidden;
+        }}
+        
+        .card-image.has-image {{
+            background-size: cover;
+            background-position: center;
+        }}
+        
+        .card-header {{
+            padding: 1.25rem 1.25rem 0.75rem;
+            position: relative;
+        }}
+        
+        .domain-badges {{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }}
+        
+        .domain-badge {{
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            background-color: #f0f4f8;
+            color: var(--primary);
+        }}
+        
+        .card h3 {{
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+            color: var(--dark);
+        }}
+        
+        .meta {{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }}
+        
+        .meta-item {{
+            font-size: 0.75rem;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+        }}
+        
+        .meta-item i {{
+            margin-right: 0.25rem;
+        }}
+        
+        .card-body {{
+            padding: 0 1.25rem 1.25rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }}
+        
+        .card-description {{
+            margin-bottom: 1rem;
+        }}
+        
+        .description-text {{
+            font-size: 0.875rem;
+            color: var(--text-light);
+            overflow: hidden;
+            position: relative;
+        }}
+        
+        .description-text.collapsed {{
+            max-height: 4.5rem;
+            text-overflow: ellipsis;
+        }}
+        
+        .read-more-btn {{
+            font-size: 0.75rem;
+            color: var(--primary);
+            cursor: pointer;
+            margin-top: 0.25rem;
+            font-weight: 500;
+            display: inline-block;
+        }}
+        
+        .read-more-btn:hover {{
+            text-decoration: underline;
+        }}
+        
+        .tags {{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: auto;
+        }}
+        
+        .tag {{
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            background-color: #f0f4f8;
+            color: var(--gray);
+        }}
+        
+        .card-footer {{
+            padding: 1.25rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 0.75rem;
+        }}
+        
+        .btn {{
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            border: none;
+        }}
+        
+        .btn i {{
+            margin-right: 0.375rem;
+        }}
+        
+        .btn-primary {{
+            background-color: var(--primary);
+            color: white;
+        }}
+        
+        .btn-primary:hover {{
+            background-color: var(--primary-light);
+        }}
+        
+        .btn-secondary {{
+            background-color: #e2e8f0;
+            color: var(--dark);
+        }}
+        
+        .btn-secondary:hover {{
+            background-color: #cbd5e0;
+        }}
+        
+        .btn-view-details {{
+            background-color: white;
+            color: var(--gray);
+            border: 1px solid var(--border);
+        }}
+        
+        .btn-view-details:hover {{
+            background-color: #f8f9fa;
+        }}
+        
+        .empty-state {{
+            text-align: center;
+            padding: 3rem 1rem;
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            border: 1px solid var(--border);
+            display: none;
+        }}
+        
+        .empty-state.visible {{
+            display: block;
+        }}
+        
+        .empty-state h3 {{
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }}
+        
+        .empty-state p {{
+            color: var(--gray);
+        }}
+        
+        .card.filtered-out {{
+            display: none;
+        }}
+        
+        .detail-panel {{
+            position: fixed;
+            top: 0;
+            right: -500px;
+            width: 500px;
+            max-width: 90vw;
+            height: 100vh;
+            background-color: white;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            z-index: 100;
+            transition: right 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+        }}
+        
+        .detail-panel.open {{
+            right: 0;
+        }}
+        
+        .detail-panel-header {{
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }}
+        
+        .detail-panel-header h2 {{
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0;
+        }}
+        
+        .close-panel-btn {{
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--gray);
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }}
+        
+        .close-panel-btn:hover {{
+            background-color: #f0f4f8;
+            color: var(--dark);
+        }}
+        
+        .detail-panel-content {{
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex-grow: 1;
+        }}
+        
+        .panel-loader {{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--gray);
+        }}
+        
+        .loader-spinner {{
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }}
+        
+        @keyframes spin {{
+            0% {{ transform: rotate(0deg); }}
+            100% {{ transform: rotate(360deg); }}
+        }}
+        
+        .panel-data {{
+            display: none;
+        }}
+        
+        .panel-data.active {{
+            display: block;
+        }}
+        
+        .detail-section {{
+            margin-bottom: 2rem;
+        }}
+        
+        .detail-section h3 {{
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--dark);
+        }}
+        
+        .panel-overlay {{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 99;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-in-out;
+        }}
+        
+        .panel-overlay.active {{
+            opacity: 1;
+            pointer-events: all;
+        }}
+        
+        footer {{
+            background-color: #f8f9fa;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            margin-top: 2rem;
+        }}
+        
+        footer p {{
+            color: var(--gray);
+            font-size: 0.875rem;
+        }}
+        
+        .code-sample {{
+            background-color: #f8f9fa;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #333;
+            border: 1px solid #e2e8f0;
+        }}
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {{
+            .detail-panel {{
+                width: 100vw;
+                max-width: 100vw;
+            }}
+        }}
+        
+        {label_css}
     </style>
 </head>
 <body>
     <header>
-        <div class="container d-flex align-items-center justify-content-between">
+        <div class="header-content">
             <div class="header-text">
-                <h1 class="mb-3">Technical Portfolio</h1>
-                <p class="text-muted">An overview of datasets and use cases funded by Fair Forward</p>
+                <h1>Data Catalog</h1>
+                <p class="subtitle">Exploring data-driven solutions for global challenges across agriculture, climate action, healthcare, and more. Browse our collection of datasets and use cases for AI applications in development cooperation.</p>
             </div>
             <a href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/" target="_blank">
-                <img src="img/fair_forward.png" alt="Fair Forward Logo" class="header-logo mx-3">
+                <img src="img/fair_forward.png" alt="Fair Forward Logo" class="header-logo">
             </a>
         </div>
     </header>
-
-    <div class="container my-4">
-        <!-- Enhanced Filter Section -->
-        <div class="filter-section mb-4 p-3 bg-white rounded shadow-sm">
-            <h5 class="mb-3 fw-bold">Explore Our Global Data Repository</h5>
-            
-            <div class="row g-3 mb-3">
-                <!-- Search Box -->
-                <div class="col-md-6">
-                    <div class="input-group">
-                        <input type="text" id="searchInput" class="form-control" placeholder="Search for datasets, countries, or domains...">
-                        <button class="btn btn-primary" type="button" id="searchButton">
-                            <i class="fas fa-search"></i> Search
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Domain Filter -->
-                <div class="col-md-3">
-                    <select class="form-select" id="domainFilter">
-                        <option value="all">All Domains</option>
-                        <!-- Will be populated dynamically -->
-                    </select>
-                </div>
-                
-                <!-- Region Filter -->
-                <div class="col-md-3">
-                    <select class="form-select" id="regionFilter">
-                        <option value="all">All Regions</option>
-                        <!-- Will be populated dynamically -->
-                    </select>
-                </div>
-            </div>
-            
-            <div class="row g-3">
-                <!-- Sort By -->
-                <div class="col-md-3">
-                    <select class="form-select" id="sortBy">
-                        <option value="default">Recently Updated</option>
-                        <option value="name-asc">Name (A-Z)</option>
-                        <option value="name-desc">Name (Z-A)</option>
-                        <option value="country-asc">Country (A-Z)</option>
-                    </select>
-                </div>
-                
-                <!-- View Type Buttons -->
-                <div class="col-md-9">
-                    <div class="filter-controls">
-                        <div class="btn-group" role="group" aria-label="View filters">
-                            <button type="button" class="btn btn-outline-primary active" data-view="all">All</button>
-                            <button type="button" class="btn btn-outline-primary" data-view="datasets">Datasets</button>
-                            <button type="button" class="btn btn-outline-primary" data-view="usecases">Use Cases</button>
-                        </div>
-                        
-                        <button id="advancedFilters" class="btn btn-outline-secondary ms-2">
-                            <i class="fas fa-sliders"></i> Advanced Filters
-                        </button>
-                    </div>
-                </div>
-            </div>
+    
+    {generate_filter_html(domains, data_types, regions)}
+    
+    <div class="container">
+        <div class="grid" id="dataGrid">
+'''
+    
+    # Generate cards for each row in the dataframe
+    for idx, row in df.iterrows():
+        # Skip rows without dataset or use case links
+        dataset_link = row.get('Dataset Link', '')
+        model_links = row.get('Model/Use-Case Links', '')
+        has_dataset = isinstance(dataset_link, str) and not pd.isna(dataset_link)
+        has_usecase = isinstance(model_links, str) and not pd.isna(model_links)
+        
+        if not has_dataset and not has_usecase:
+            continue
+        
+        html_template += generate_card_html(row, idx)
+    
+    # Add the empty state and detail panel
+    html_template += f'''
         </div>
         
-        <div class="table-responsive">
-            {table}
+        <div id="emptyState" class="empty-state">
+            <h3>No matching items found</h3>
+            <p>Try adjusting your filters or search term to find what you're looking for.</p>
         </div>
-        <div class="empty-state">No matching items found. Try changing your filters.</div>
+        
+        {generate_detail_panel_html()}
     </div>
-
-    <footer class="bg-light py-3 mt-4">
-        <div class="container">
-            <p class="mb-0 text-muted">&copy; 2024 Fair Forward</p>
-        </div>
+    
+    <footer>
+        <p>&copy; {datetime.datetime.now().year} Fair Forward - Artificial Intelligence for All</p>
     </footer>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {{
-        // Filter functionality for labels
-        const labels = document.querySelectorAll('.label');
-        const tableRows = document.querySelectorAll('.custom-table tbody tr');
-        const emptyState = document.querySelector('.empty-state');
-        let activeFilter = null;
-
-        // View filter buttons
-        const viewButtons = document.querySelectorAll('.filter-controls button[data-view]');
-        let currentView = 'all';
-        
-        // Column visibility based on view
-        const datasetCells = document.querySelectorAll('.dataset-column');
-        const usecaseCells = document.querySelectorAll('.usecase-column');
-        
-        // New filter elements
-        const searchInput = document.getElementById('searchInput');
-        const searchButton = document.getElementById('searchButton');
-        const domainFilter = document.getElementById('domainFilter');
-        const regionFilter = document.getElementById('regionFilter');
-        const sortBySelect = document.getElementById('sortBy');
-        
-        // Populate domain filter
-        const domains = new Set();
-        document.querySelectorAll('.label').forEach(label => {{
-            if (label.dataset.filter) {{
-                domains.add(label.dataset.filter);
-            }}
-        }});
-        
-        domains.forEach(domain => {{
-            const option = document.createElement('option');
-            option.value = domain;
-            option.textContent = domain;
-            domainFilter.appendChild(option);
-        }});
-        
-        // Populate region filter
-        const regions = new Set();
-        document.querySelectorAll('.custom-table tbody tr').forEach(row => {{
-            const regionCell = row.querySelector('td:nth-child(3)');
-            if (regionCell && regionCell.textContent.trim() !== 'N/A') {{
-                regions.add(regionCell.textContent.trim());
-            }}
-        }});
-        
-        Array.from(regions).sort().forEach(region => {{
-            const option = document.createElement('option');
-            option.value = region;
-            option.textContent = region;
-            regionFilter.appendChild(option);
-        }});
-        
-        // Function to update column visibility based on view
-        function updateColumnVisibility() {{
-            if (currentView === 'datasets') {{
-                // Show only dataset column
-                datasetCells.forEach(cell => {{
-                    cell.classList.remove('hidden');
-                    // If it's a header cell, make it the first column
-                    if (cell.tagName === 'TH') {{
-                        cell.style.width = '20%';
-                        cell.textContent = 'Dataset';
-                    }}
-                }});
-                
-                // Hide usecase column
-                usecaseCells.forEach(cell => cell.classList.add('hidden'));
-            }} else if (currentView === 'usecases') {{
-                // Hide dataset column
-                datasetCells.forEach(cell => cell.classList.add('hidden'));
-                
-                // Show only usecase column
-                usecaseCells.forEach(cell => {{
-                    cell.classList.remove('hidden');
-                    // If it's a header cell, make it the first column
-                    if (cell.tagName === 'TH') {{
-                        cell.style.width = '20%';
-                        cell.textContent = 'Use Case';
-                    }}
-                }});
-            }} else {{
-                // Show both columns
-                datasetCells.forEach(cell => {{
-                    cell.classList.remove('hidden');
-                    if (cell.tagName === 'TH') {{
-                        cell.textContent = 'Dataset';
-                    }}
-                }});
-                
-                usecaseCells.forEach(cell => {{
-                    cell.classList.remove('hidden');
-                    if (cell.tagName === 'TH') {{
-                        cell.textContent = 'Use Case';
-                    }}
-                }});
-            }}
-        }}
-
-        // Function to apply all filters
-        function applyFilters() {{
-            let visibleRows = 0;
-            const searchTerm = searchInput.value.toLowerCase();
-            const selectedDomain = domainFilter.value;
-            const selectedRegion = regionFilter.value;
-            
-            tableRows.forEach(row => {{
-                // First check if row should be visible based on view filter
-                let viewMatch = true;
-                
-                if (currentView === 'datasets') {{
-                    viewMatch = row.classList.contains('has-dataset');
-                }} else if (currentView === 'usecases') {{
-                    viewMatch = row.classList.contains('has-usecase');
-                }}
-                
-                // Check if row matches the label filter
-                let labelMatch = !activeFilter || row.textContent.includes(activeFilter);
-                
-                // Check if row matches the search term
-                let searchMatch = !searchTerm || row.textContent.toLowerCase().includes(searchTerm);
-                
-                // Check if row matches the domain filter
-                let domainMatch = selectedDomain === 'all' || 
-                                 (row.querySelector('[data-filter="' + selectedDomain + '"]') !== null);
-                
-                // Check if row matches the region filter
-                const regionCell = row.querySelector('td:nth-child(3)');
-                let regionMatch = selectedRegion === 'all' || 
-                                 (regionCell && regionCell.textContent.trim() === selectedRegion);
-                
-                // Row is visible only if it matches all filters
-                if (viewMatch && labelMatch && searchMatch && domainMatch && regionMatch) {{
-                    row.classList.remove('filtered-out');
-                    visibleRows++;
-                }} else {{
-                    row.classList.add('filtered-out');
-                }}
-            }});
-            
-            // Update column visibility based on current view
-            updateColumnVisibility();
-            
-            // Toggle empty state message
-            emptyState.classList.toggle('visible', visibleRows === 0);
-        }}
-        
-        // Function to sort table rows
-        function sortTable(sortBy) {{
-            const tbody = document.querySelector('.custom-table tbody');
-            const rows = Array.from(tbody.querySelectorAll('tr'));
-            
-            rows.sort((a, b) => {{
-                if (sortBy === 'name-asc') {{
-                    const aName = a.querySelector('td:nth-child(1), td:nth-child(2)').textContent.trim();
-                    const bName = b.querySelector('td:nth-child(1), td:nth-child(2)').textContent.trim();
-                    return aName.localeCompare(bName);
-                }} else if (sortBy === 'name-desc') {{
-                    const aName = a.querySelector('td:nth-child(1), td:nth-child(2)').textContent.trim();
-                    const bName = b.querySelector('td:nth-child(1), td:nth-child(2)').textContent.trim();
-                    return bName.localeCompare(aName);
-                }} else if (sortBy === 'country-asc') {{
-                    const aCountry = a.querySelector('td:nth-child(3)').textContent.trim();
-                    const bCountry = b.querySelector('td:nth-child(3)').textContent.trim();
-                    return aCountry.localeCompare(bCountry);
-                }}
-                
-                // Default sorting (keep original order)
-                return 0;
-            }});
-            
-            // Remove all rows
-            rows.forEach(row => row.remove());
-            
-            // Add sorted rows back
-            rows.forEach(row => tbody.appendChild(row));
-        }}
-
-        // Set up label filter click handlers
-        labels.forEach(label => {{
-            label.addEventListener('click', () => {{
-                const filterValue = label.dataset.filter;
-                
-                // If clicking the same filter again, remove it
-                if (label.classList.contains('active')) {{
-                    label.classList.remove('active');
-                    activeFilter = null;
-                }} else {{
-                    // Remove active class from all labels
-                    labels.forEach(l => l.classList.remove('active'));
-                    label.classList.add('active');
-                    activeFilter = filterValue;
-                }}
-                
-                applyFilters();
-            }});
-        }});
-        
-        // Set up view filter button click handlers
-        viewButtons.forEach(button => {{
-            button.addEventListener('click', () => {{
-                // Update active button
-                viewButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                
-                // Update current view
-                currentView = button.dataset.view;
-                
-                applyFilters();
-            }});
-        }});
-        
-        // Set up search functionality
-        searchButton.addEventListener('click', applyFilters);
-        searchInput.addEventListener('keyup', function(event) {{
-            if (event.key === 'Enter') {{
-                applyFilters();
-            }}
-        }});
-        
-        // Set up domain filter
-        domainFilter.addEventListener('change', applyFilters);
-        
-        // Set up region filter
-        regionFilter.addEventListener('change', applyFilters);
-        
-        // Set up sorting
-        sortBySelect.addEventListener('change', function() {{
-            sortTable(this.value);
-        }});
-        
-        // Advanced filters button (placeholder)
-        document.getElementById('advancedFilters').addEventListener('click', function() {{
-            alert('Advanced filters functionality would be implemented here.');
-        }});
-
-        // Description toggle functionality
-        document.querySelectorAll('.toggle-description').forEach(toggle => {{
-            toggle.addEventListener('click', function() {{
-                const content = this.previousElementSibling;
-                const isExpanded = content.classList.contains('expanded');
-                
-                content.classList.toggle('expanded');
-                this.textContent = isExpanded ? 'Read more' : 'Show less';
-            }});
-        }});
-        
-        // Initialize column visibility
-        updateColumnVisibility();
-    }});
-    </script>
+    
+    {generate_js_code()}
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-"""
-
-# Generate the table header
-header_html = "<tr>"
-for col in display_columns:
-    display_name = column_display_names.get(col, col)
+'''
     
-    # Set appropriate classes for the columns
-    if col == 'Dataset Speaking Titles':
-        header_class = 'dataset-column'
-    elif col == 'Use Case Speaking Title':
-        header_class = 'usecase-column'
-    elif col == 'Description - What can be done with this? What is this about?':
-        header_class = 'description-column'
-    else:
-        header_class = 'standard-column'
+    # Write the HTML to the output file
+    with open(HTML_OUTPUT, 'w', encoding='utf-8') as f:
+        f.write(html_template)
     
-    header_html += f"<th class='{header_class}'>{display_name}</th>"
-header_html += "</tr>"
-
-# Update the table generation code
-rows = []
-for _, row in df.iterrows():
-    # Determine if this row has a dataset or use case or both
-    has_dataset = pd.notna(row.get('Dataset Link', '')) and row.get('Dataset Link', '') != ''
-    has_usecase = pd.notna(row.get('Model/Use-Case Links', '')) and row.get('Model/Use-Case Links', '') != ''
-    
-    row_classes = []
-    if has_dataset:
-        row_classes.append('has-dataset')
-    if has_usecase:
-        row_classes.append('has-usecase')
-    
-    row_class_attr = f" class='{' '.join(row_classes)}'" if row_classes else ""
-    
-    row_data = []
-    for col in display_columns:
-        cell_value = row[col]
-        
-        # Set appropriate classes for the cells
-        if col == 'Dataset Speaking Titles':
-            cell_class = 'dataset-column'
-            cell_content = str(cell_value) if pd.notna(cell_value) else "N/A"
-            cell_content = convert_markdown_links_to_html(cell_content)
-            row_data.append(f"<td class='{cell_class}'>{cell_content}</td>")
-        elif col == 'Use Case Speaking Title':
-            cell_class = 'usecase-column'
-            cell_content = str(cell_value) if pd.notna(cell_value) else "N/A"
-            cell_content = convert_markdown_links_to_html(cell_content)
-            row_data.append(f"<td class='{cell_class}'>{cell_content}</td>")
-        elif col == "Description - What can be done with this? What is this about?":
-            description_html = create_description_html(cell_value)
-            row_data.append(f"<td class='description-column'>{description_html}</td>")
-        elif col in link_columns:
-            link_html = link_columns[col](cell_value)
-            row_data.append(f"<td class='standard-column'>{link_html}</td>")
-        elif col == "Domain/SDG":
-            labels = str(cell_value).split(", ") if pd.notna(cell_value) else []
-            label_html = " ".join([create_label_html(label, "domain") for label in labels])
-            row_data.append(f"<td class='standard-column'>{label_html}</td>")
-        elif col == "Data Type":
-            types = str(cell_value).split(", ") if pd.notna(cell_value) else []
-            type_html = " ".join([create_label_html(dtype, "datatype") for dtype in types])
-            row_data.append(f"<td class='standard-column'>{type_html}</td>")
-        else:
-            cell_content = str(cell_value) if pd.notna(cell_value) else "N/A"
-            cell_content = convert_markdown_links_to_html(cell_content)
-            row_data.append(f"<td class='standard-column'>{cell_content}</td>")
-    rows.append(f"<tr{row_class_attr}>{''.join(row_data)}</tr>")
-
-# Construct the table without Bootstrap classes
-table_html = f"<table class='custom-table'><thead>{header_html}</thead><tbody>{''.join(rows)}</tbody></table>"
-
-# Get unique categories and generate CSS
-domains, data_types, statuses = get_unique_categories(df)
-dynamic_css = generate_label_css(domains, data_types, statuses)
-
-# Add additional CSS for the new view filters and column visibility
-dynamic_css += """
-.filter-controls {
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-}
-
-.btn-group .btn {
-    border-radius: 0.375rem;
-    margin-right: 0.5rem;
-}
-
-.btn-group .btn.active {
-    background-color: #4a5568;
-    color: white;
-    border-color: #4a5568;
-}
-
-/* New filter section styling */
-.filter-section {
-    border-radius: 8px;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-.filter-section h5 {
-    color: #2d3748;
-    font-size: 1.1rem;
-}
-
-.filter-section .form-control,
-.filter-section .form-select,
-.filter-section .btn {
-    font-size: 0.9rem;
-    border-radius: 6px;
-}
-
-.filter-section .form-control:focus,
-.filter-section .form-select:focus {
-    box-shadow: 0 0 0 0.2rem rgba(66, 153, 225, 0.25);
-    border-color: #4299e1;
-}
-
-.filter-section .btn-primary {
-    background-color: #4299e1;
-    border-color: #4299e1;
-}
-
-.filter-section .btn-primary:hover {
-    background-color: #3182ce;
-    border-color: #3182ce;
-}
-
-.filter-section .btn-outline-secondary {
-    color: #4a5568;
-    border-color: #e2e8f0;
-}
-
-.filter-section .btn-outline-secondary:hover {
-    background-color: #f7fafc;
-    color: #2d3748;
-}
-
-tr.has-dataset.has-usecase {
-    /* Rows with both dataset and use case */
-    background-color: rgba(245, 243, 255, 0.3); /* Light purple background for rows with both */
-}
-
-tr.has-dataset:not(.has-usecase) {
-    /* Rows with only dataset */
-    background-color: rgba(236, 246, 255, 0.3); /* Light blue background for dataset rows */
-}
-
-tr.has-usecase:not(.has-dataset) {
-    /* Rows with only use case */
-    background-color: rgba(240, 247, 235, 0.3); /* Light green background for use case rows */
-}
-
-/* Column visibility classes */
-.hidden {
-    display: none !important;
-}
-
-/* Make dataset and usecase columns the same width */
-.dataset-column, .usecase-column {
-    width: 20%;
-    font-weight: 500;
-}
-
-/* Add visual indicators for row types */
-tr.has-dataset:not(.has-usecase) td.dataset-column::before {
-    content: "📊 ";
-    opacity: 0.7;
-}
-
-tr.has-usecase:not(.has-dataset) td.usecase-column::before {
-    content: "🔍 ";
-    opacity: 0.7;
-}
-
-tr.has-dataset.has-usecase td.dataset-column::before,
-tr.has-dataset.has-usecase td.usecase-column::before {
-    content: "🔗 ";
-    opacity: 0.7;
-}
-"""
-
-# Create the complete HTML with dynamic CSS
-output_html = HTML_TEMPLATE.format(table=table_html, dynamic_css=dynamic_css)
-
-try:
-    with open(HTML_OUTPUT, "w") as file:
-        file.write(output_html)
-    print("HTML file generated successfully.")
+    print(f"Successfully generated {HTML_OUTPUT}")
 except Exception as e:
-    print(f"Error writing HTML file: {e}")
+    print(f"Error generating catalog: {str(e)}")
+    import traceback
+    traceback.print_exc()
+    exit(1) 
