@@ -9,8 +9,8 @@ body {
 
 header {
     background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
-    padding: 80px 0;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    padding: 60px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
@@ -19,8 +19,8 @@ header {
 }
 
 .header-text h1 {
-    margin-bottom: 1rem;
-    font-size: 2.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 2.25rem;
     font-weight: 800;
     background: linear-gradient(135deg, #1a365d 0%, #2d5a88 100%);
     -webkit-background-clip: text;
@@ -29,7 +29,7 @@ header {
 }
 
 .header-text p {
-    font-size: 1.125rem;
+    font-size: 1rem;
     color: #4a5568;
     max-width: 600px;
 }
@@ -48,8 +48,8 @@ header {
 }
 
 .container {
-    max-width: 1280px;
-    padding: 0 24px;
+    max-width: 1200px;
+    padding: 0 20px;
 }
 
 table.custom-table {
@@ -57,20 +57,20 @@ table.custom-table {
     border-collapse: separate;
     border-spacing: 0;
     background-color: #ffffff;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    border-radius: 8px;
     overflow: hidden;
-    margin: 2rem 0;
+    margin: 1.5rem 0;
     table-layout: auto;
 }
 
 table.custom-table th,
 table.custom-table td {
     text-align: left;
-    padding: 1rem;
+    padding: 0.75rem 1rem;
     vertical-align: top;
-    line-height: 1.5;
-    border-bottom: 1px solid #e2e8f0;
+    line-height: 1.4;
+    border-bottom: 1px solid #edf2f7;
 }
 
 table.custom-table thead {
@@ -80,10 +80,10 @@ table.custom-table thead {
 table.custom-table th {
     font-weight: 600;
     text-transform: capitalize;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
     color: #2d3748;
     border-bottom: 2px solid #e2e8f0;
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
     background-color: #f8fafc;
     position: sticky;
     top: 0;
@@ -93,7 +93,7 @@ table.custom-table th {
 table.custom-table td {
     transition: all 0.2s ease;
     color: #4a5568;
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
 }
 
 table.custom-table tr:last-child td {
@@ -124,15 +124,15 @@ td.standard-column {
 
 th.description-column,
 td.description-column {
-    width: 35%;
-    min-width: 300px;
-    font-size: 0.9375rem;
-    line-height: 1.6;
+    width: 30%;
+    min-width: 250px;
+    font-size: 0.875rem;
+    line-height: 1.5;
     color: #4a5568;
-    padding: 1.5rem 1.25rem;
+    padding: 0.75rem 1rem;
     background-color: #fafbfc;
-    border-left: 1px solid #e2e8f0;
-    border-right: 1px solid #e2e8f0;
+    border-left: 1px solid #edf2f7;
+    border-right: 1px solid #edf2f7;
 }
 
 td.description-column {
@@ -182,12 +182,12 @@ td.description-column:hover::after {
 .label {
     display: inline-flex;
     align-items: center;
-    padding: 0.35rem 0.75rem;
-    font-size: 0.8125rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
     font-weight: 500;
-    border-radius: 6px;
-    margin-right: 0.5rem;
-    margin-bottom: 0.5rem;
+    border-radius: 4px;
+    margin-right: 0.35rem;
+    margin-bottom: 0.35rem;
     line-height: 1;
     white-space: nowrap;
     letter-spacing: 0.01em;
@@ -198,11 +198,11 @@ td.description-column:hover::after {
 .label:hover {
     transform: translateY(-1px);
     opacity: 0.9;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .label.active {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
     transform: translateY(-1px);
     opacity: 1;
 }
@@ -233,10 +233,13 @@ tr.filtered-out {
 /* Empty state */
 .empty-state {
     display: none;
+    padding: 2rem;
     text-align: center;
-    padding: 3rem 1rem;
+    background-color: #f7fafc;
+    border-radius: 0.375rem;
     color: #718096;
-    font-size: 0.9375rem;
+    font-size: 1rem;
+    margin-top: 1.5rem;
 }
 
 .empty-state.visible {
@@ -370,9 +373,9 @@ td.description-column a:hover {
 
 .description-content {
     position: relative;
-    max-height: 4.8em; /* Exactly 3 lines with 1.6em line height */
+    max-height: 3.6em; /* Exactly 2.5 lines with 1.5em line height */
     overflow: hidden;
-    margin-bottom: 0.5em;
+    margin-bottom: 0.25em;
 }
 
 .description-content.expanded {
@@ -382,7 +385,7 @@ td.description-column a:hover {
 .toggle-description {
     color: #4299e1;
     cursor: pointer;
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     font-weight: 500;
     user-select: none;
 }
@@ -398,8 +401,8 @@ td.description-column a:hover {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 1.6em;
-    background: linear-gradient(transparent, white);
+    height: 1.5em;
+    background: linear-gradient(transparent, #fafbfc);
     pointer-events: none;
 }
 
@@ -436,4 +439,129 @@ td.description-column a:hover {
 
 .custom-table .standard-column {
     width: 15%;
+}
+
+/* Filter controls */
+.filter-controls {
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.filter-controls .btn-group {
+    display: inline-flex;
+    border-radius: 0.375rem;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.filter-controls .btn {
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid #e2e8f0;
+    background-color: white;
+    color: #4a5568;
+    transition: all 0.2s ease;
+}
+
+.filter-controls .btn:hover {
+    background-color: #f7fafc;
+}
+
+.filter-controls .btn.active {
+    background-color: #4a5568;
+    color: white;
+    border-color: #4a5568;
+}
+
+/* Dataset and Use Case column styling */
+.dataset-column, .usecase-column {
+    width: 15%;
+    font-weight: 500;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Remove left borders and use more subtle indicators */
+tr.has-dataset:not(.has-usecase) td.dataset-column,
+tr.has-usecase:not(.has-dataset) td.usecase-column,
+tr.has-dataset.has-usecase td.dataset-column,
+tr.has-dataset.has-usecase td.usecase-column {
+    color: #2d3748;
+    padding-left: 0.5rem;
+}
+
+/* Remove all emoji icons */
+tr.has-dataset:not(.has-usecase) td.dataset-column::before,
+tr.has-usecase:not(.has-dataset) td.usecase-column::before,
+tr.has-dataset.has-usecase td.dataset-column::before,
+tr.has-dataset.has-usecase td.usecase-column::before {
+    content: "";
+}
+
+/* Make sure the column headers match the data */
+th.dataset-column, th.usecase-column {
+    color: #2d3748;
+    font-weight: 600;
+    width: 15%;
+}
+
+/* Row styling based on content type - more subtle backgrounds */
+tr.has-dataset:not(.has-usecase) {
+    background-color: rgba(236, 246, 255, 0.15); /* Lighter blue background for dataset rows */
+}
+
+tr.has-usecase:not(.has-dataset) {
+    background-color: rgba(240, 247, 235, 0.15); /* Lighter green background for use case rows */
+}
+
+tr.has-dataset.has-usecase {
+    background-color: rgba(245, 243, 255, 0.15); /* Lighter purple background for rows with both */
+}
+
+/* Ensure the table doesn't get cut off */
+.table-responsive {
+    overflow-x: auto;
+    width: 100%;
+    max-width: 100%;
+}
+
+.custom-table {
+    width: 100%;
+    table-layout: auto;
+    margin: 0;
+}
+
+/* Adjust column widths to prevent horizontal scrolling */
+.standard-column {
+    width: 10%;
+    min-width: 80px;
+}
+
+/* Adjust description column width */
+th.description-column,
+td.description-column {
+    width: 25%;
+    min-width: 200px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .dataset-column, .usecase-column {
+        width: auto;
+    }
+    
+    .custom-table .description-column {
+        width: 40%;
+    }
+    
+    table.custom-table th,
+    table.custom-table td {
+        padding: 0.6rem 0.75rem;
+    }
 }
