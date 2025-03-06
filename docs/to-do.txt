@@ -1,0 +1,9 @@
+To Dos:
+
+06.03.25
+
+1. Check how the excel and html are build through --template command in the build_from_google_sheets.patch
+2. Update script that project folder structure is updated for img and one-pager-info
+3 Update script to draw img from projects/img
+4. MAJOR: Update script to display one-pager info in side panel
+5. Update visuals---- take orientation from claude website in coloring, font, style?

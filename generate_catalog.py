@@ -125,8 +125,14 @@ def generate_label_css(domains, data_types, statuses):
         normalized = normalize_label(domain)
         if normalized:
             hue = colors[color_index]
+            # Create styles for both label- and domain- prefixes
             css += f"""
 .label-{normalized} {{
+    background-color: {get_pastel_color(hue)};
+    color: #2d3748;
+}}
+
+.domain-{normalized} {{
     background-color: {get_pastel_color(hue)};
     color: #2d3748;
 }}
@@ -163,8 +169,8 @@ def generate_label_css(domains, data_types, statuses):
 
 # Function to generate a pastel color from a hue value
 def get_pastel_color(hue):
-    # Convert HSL to RGB with high lightness for pastel
-    r, g, b = colorsys.hls_to_rgb(hue, 0.9, 0.3)
+    # Convert HSL to RGB with moderate lightness and saturation for more visible but still minimalistic colors
+    r, g, b = colorsys.hls_to_rgb(hue, 0.85, 0.25)
     # Convert to hex
     return f"#{int(r*255):02x}{int(g*255):02x}{int(b*255):02x}"
 
@@ -215,7 +221,8 @@ def generate_card_html(row, idx):
             d = d.strip()
             if d:
                 domain_list.append(d)
-                domain_badges_html.append(f'<div class="domain-badge">{d}</div>')
+                normalized = normalize_label(d)
+                domain_badges_html.append(f'<div class="domain-badge domain-{normalized}">{d}</div>')
         
         if domain_badges_html:
             domain_badges = f'<div class="domain-badges">{"".join(domain_badges_html)}</div>'
@@ -236,28 +243,50 @@ def generate_card_html(row, idx):
     if meta_items:
         meta_html = f'<div class="meta">{"".join(meta_items)}</div>'
     
-    # Create tags
-    tags = []
-    # Add data type tags
+    # Create data type chips with different icons based on type
+    data_type_chips = []
     if data_type and not pd.isna(data_type):
         for dt in re.split(r'[,;]', str(data_type)):
             dt = dt.strip()
             if dt:
                 normalized = normalize_label(dt)
-                tags.append(f'<span class="tag label-{normalized}" data-filter="{dt}">{dt}</span>')
+                # Choose icon based on data type
+                icon = "fa-database"  # default icon
+                if normalized == "images":
+                    icon = "fa-image"
+                elif normalized == "audio":
+                    icon = "fa-volume-up"
+                elif normalized == "text":
+                    icon = "fa-file-alt"
+                elif normalized == "geospatial":
+                    icon = "fa-map"
+                elif normalized == "tabular":
+                    icon = "fa-table"
+                elif normalized == "video":
+                    icon = "fa-video"
+                
+                data_type_chips.append(f'<span class="data-type-chip label-{normalized}" data-filter="{dt}"><i class="fas {icon}"></i> {dt}</span>')
     
+    data_type_html = ""
+    if data_type_chips:
+        data_type_html = f'<div class="data-type-chips">{"".join(data_type_chips)}</div>'
+    
+    # Create tags for filtering (hidden)
+    tags = []
     # Add domain tags for filtering (hidden)
     for d in domain_list:
         normalized = normalize_label(d)
         tags.append(f'<span class="tag label-{normalized}" data-filter="{d}" style="display:none;">{d}</span>')
     
-    # Add status tags
-    if status and not pd.isna(status):
-        for s in re.split(r'[,;]', str(status)):
-            s = s.strip()
-            if s:
-                normalized = normalize_label(s)
-                tags.append(f'<span class="tag label-{normalized}" data-filter="{s}">{s}</span>')
+    # Add data type tags for filtering (hidden)
+    if data_type and not pd.isna(data_type):
+        for dt in re.split(r'[,;]', str(data_type)):
+            dt = dt.strip()
+            if dt:
+                normalized = normalize_label(dt)
+                tags.append(f'<span class="tag label-{normalized}" data-filter="{dt}" style="display:none;">{dt}</span>')
+    
+    # We're removing the Dataset and Use-Case tags, so we'll skip adding status tags
     
     tags_html = ""
     if tags:
@@ -296,6 +325,7 @@ def generate_card_html(row, idx):
         </div>
         <div class="card-body">
             {description_html}
+            {data_type_html}
             {tags_html}
         </div>
         {footer_html}
@@ -826,8 +856,32 @@ try:
             font-weight: 500;
             padding: 0.25rem 0.5rem;
             border-radius: 0.25rem;
-            background-color: #f0f4f8;
-            color: var(--primary);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }}
+        
+        .data-type-chips {{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }}
+        
+        .data-type-chip {{
+            font-size: 0.7rem;
+            font-weight: 400;
+            padding: 0.2rem 0.5rem;
+            border-radius: 1rem;
+            background-color: rgba(0, 0, 0, 0.05);
+            color: var(--gray);
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }}
+        
+        .data-type-chip i {{
+            margin-right: 0.25rem;
+            font-size: 0.65rem;
+            opacity: 0.7;
         }}
         
         .card h3 {{
@@ -908,16 +962,18 @@ try:
         }}
         
         .card-footer {{
-            padding: 1.25rem;
+            padding: 1rem;
             border-top: 1px solid var(--border);
             display: flex;
-            gap: 0.75rem;
+            gap: 0.5rem;
+            flex-wrap: nowrap;
+            justify-content: space-between;
         }}
         
         .btn {{
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 0.6rem;
             border-radius: 0.375rem;
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             font-weight: 500;
             cursor: pointer;
             display: inline-flex;
@@ -925,10 +981,14 @@ try:
             justify-content: center;
             transition: all 0.2s;
             border: none;
+            white-space: nowrap;
+            flex: 1;
+            min-width: 0;
         }}
         
         .btn i {{
-            margin-right: 0.375rem;
+            margin-right: 0.25rem;
+            font-size: 0.75rem;
         }}
         
         .btn-primary {{
