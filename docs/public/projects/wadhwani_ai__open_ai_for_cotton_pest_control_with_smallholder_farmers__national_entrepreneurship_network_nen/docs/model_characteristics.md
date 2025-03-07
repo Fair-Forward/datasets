@@ -1,5 +1,3 @@
-# Model/Use-Case
-
 Wadhwani AI with support from German Development cooperation provided the codebase of the pest identification model:
  
  (a) At its core, this repository packages an object detection implementation. 

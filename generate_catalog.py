@@ -210,8 +210,28 @@ def generate_card_html(row, idx):
     else:
         title = onsite_name
     
-    # Normalize title for directory name - use onsite_name for directory structure
-    dir_name = normalize_for_directory(onsite_name)
+    # Generate all possible directory names from different titles
+    possible_titles = []
+    if onsite_name and not pd.isna(onsite_name):
+        possible_titles.append(onsite_name)
+    if dataset_speaking_title and not pd.isna(dataset_speaking_title):
+        possible_titles.append(dataset_speaking_title)
+    if usecase_speaking_title and not pd.isna(usecase_speaking_title):
+        possible_titles.append(usecase_speaking_title)
+    
+    # Generate normalized directory names for each title
+    dir_names = [normalize_for_directory(t) for t in possible_titles]
+    # Remove duplicates and empty strings
+    dir_names = list(set(filter(None, dir_names)))
+    
+    # Use the first directory name that exists, or the first one if none exist
+    dir_name = None
+    for d in dir_names:
+        if os.path.exists(os.path.join("docs/public/projects", d)):
+            dir_name = d
+            break
+    if not dir_name and dir_names:
+        dir_name = dir_names[0]
     
     # Card classes based on what it contains
     card_classes = ["card"]
@@ -315,8 +335,6 @@ def generate_card_html(row, idx):
                 normalized = normalize_label(dt)
                 tags.append(f'<span class="tag label-{normalized}" data-filter="{dt}" style="display:none;">{dt}</span>')
     
-    # We're removing the Dataset and Use-Case tags, so we'll skip adding status tags
-    
     tags_html = ""
     if tags:
         tags_html = f'<div class="tags">{"".join(tags)}</div>'
@@ -343,9 +361,12 @@ def generate_card_html(row, idx):
     
     footer_html = f'<div class="card-footer">{"".join(footer_links)}</div>'
     
+    # Store all possible directory names as a data attribute for JavaScript to use
+    dir_names_json = html.escape(str(dir_names))
+    
     # Construct the complete card
     card_html = f'''
-    <div class="{card_class}" data-title="{html.escape(str(title))}" data-region="{html.escape(str(region))}" data-id="{idx}">
+    <div class="{card_class}" data-title="{html.escape(str(title))}" data-region="{html.escape(str(region))}" data-id="{idx}" data-dir-names="{dir_names_json}">
         {card_image}
         <div class="card-header">
             {domain_badges}
@@ -609,6 +630,9 @@ def generate_js_code():
             function parseMarkdown(markdown) {
                 if (!markdown) return '';
                 
+                // Remove the first h1 header if it exists
+                markdown = markdown.replace(/^# .*$/m, '').trim();
+                
                 // Replace headers
                 let html = markdown
                     .replace(/^### (.*$)/gim, '<h3>$1</h3>')
@@ -655,10 +679,19 @@ def generate_js_code():
                 const title = card.getAttribute('data-title');
                 const tags = Array.from(card.querySelectorAll('.tag')).map(tag => tag.textContent);
                 const region = card.getAttribute('data-region');
+                const dirNamesStr = card.getAttribute('data-dir-names');
                 
-                // Normalize title for directory name - match the Python normalization
-                const dirName = title.toLowerCase().replace(/ /g, '_').replace(/[^a-z0-9_]/g, '');
-                console.log('Loading details for:', dirName);
+                // Parse the directory names from the data attribute
+                let dirNames = [];
+                try {
+                    dirNames = JSON.parse(dirNamesStr.replace(/'/g, '"'));
+                } catch (e) {
+                    console.error('Error parsing directory names:', e);
+                    // Fallback to old behavior
+                    dirNames = [title.toLowerCase().replace(/ /g, '_').replace(/[^a-z0-9_]/g, '')];
+                }
+                
+                console.log('Possible directory names:', dirNames);
                 
                 // Show loading state
                 const detailPanelLoader = document.getElementById('detailPanelLoader');
@@ -668,14 +701,6 @@ def generate_js_code():
                     detailPanelLoader.style.display = 'flex';
                     detailPanelData.style.display = 'none';
                 }
-                
-                // Prepare to fetch all markdown files
-                const filesToFetch = [
-                    { path: `./public/projects/${dirName}/docs/description.md`, section: 'Description' },
-                    { path: `./public/projects/${dirName}/docs/data_characteristics.md`, section: 'Data Characteristics' },
-                    { path: `./public/projects/${dirName}/docs/model_characteristics.md`, section: 'Model Characteristics' },
-                    { path: `./public/projects/${dirName}/docs/how_to_use.md`, section: 'How to Use It' }
-                ];
                 
                 // Initialize content sections
                 let contentSections = {
@@ -687,6 +712,7 @@ def generate_js_code():
                 
                 // Create a counter to track when all fetches are complete
                 let fetchesCompleted = 0;
+                let totalFetches = 0;
                 
                 // Function to update the UI when all fetches are complete
                 function updateDetailPanel() {
@@ -739,36 +765,46 @@ def generate_js_code():
                     }
                 }
                 
-                // Fetch each file
-                filesToFetch.forEach(file => {
-                    console.log('Fetching:', file.path);
-                    fetch(file.path)
-                        .then(response => {
-                            console.log('Response for', file.path, ':', response.status);
+                // Function to try loading a file from multiple possible directories
+                async function tryLoadFile(fileName, section) {
+                    for (const dirName of dirNames) {
+                        const path = `./public/projects/${dirName}/docs/${fileName}`;
+                        console.log('Trying to load from:', path);
+                        try {
+                            const response = await fetch(path);
                             if (response.ok) {
-                                return response.text();
-                            } else {
-                                console.log('File not found:', file.path);
-                                return null;
+                                const content = await response.text();
+                                console.log('Successfully loaded content from:', path);
+                                return parseMarkdown(content);
                             }
-                        })
-                        .then(content => {
-                            if (content) {
-                                console.log('Content loaded for', file.section);
-                                // Parse markdown content
-                                contentSections[file.section] = parseMarkdown(content);
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error fetching', file.path, ':', error);
-                        })
-                        .finally(() => {
-                            fetchesCompleted++;
-                            console.log('Fetches completed:', fetchesCompleted, 'of', filesToFetch.length);
-                            if (fetchesCompleted === filesToFetch.length) {
-                                updateDetailPanel();
-                            }
-                        });
+                        } catch (error) {
+                            console.log('Error loading from', path, ':', error);
+                        }
+                    }
+                    return null;
+                }
+                
+                // Files to try loading
+                const filesToLoad = [
+                    { fileName: 'description.md', section: 'Description' },
+                    { fileName: 'data_characteristics.md', section: 'Data Characteristics' },
+                    { fileName: 'model_characteristics.md', section: 'Model Characteristics' },
+                    { fileName: 'how_to_use.md', section: 'How to Use It' }
+                ];
+                
+                // Load all files
+                totalFetches = filesToLoad.length;
+                
+                filesToLoad.forEach(async file => {
+                    const content = await tryLoadFile(file.fileName, file.section);
+                    if (content) {
+                        contentSections[file.section] = content;
+                    }
+                    fetchesCompleted++;
+                    
+                    if (fetchesCompleted === totalFetches) {
+                        updateDetailPanel();
+                    }
                 });
             }
         });

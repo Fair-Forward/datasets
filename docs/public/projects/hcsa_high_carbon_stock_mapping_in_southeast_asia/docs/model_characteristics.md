@@ -1,5 +1,3 @@
-# Model/Use-Case
-
 Processed Data:
  Field measurements (e.g., biomass and tree species) were combined with Sentinel-2 imagery and NASA GEDI lidar to enhance map accuracy. The resulting geospatial data includes classifications of High Carbon Stock forests and other land-use categories.
  Model Development:

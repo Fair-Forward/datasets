@@ -1,5 +1,3 @@
-# Data
-
 The finalized HCS dataset and maps are available on Hugging Face HCSA/Forest_Plot_Data_2023, and Global Forest Watch.
  
  • License: Open-source (CC BY 4.0) 

@@ -1,5 +1,3 @@
-# Data
-
 The Data is fully open-sourced and can be accessed on Hugging Face
  • License: CC BY SA 4.0
  • Data Type: Tabular

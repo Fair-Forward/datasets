@@ -1,3 +1,1 @@
-# Description
-
 The Ghana Crop Disease Detection Challenge is an online data science challenge that seeks to leverage the power of Machine Learning and Artificial Intelligence to detect diseases that attack crops and offer immediate remedies.

@@ -1,5 +1,3 @@
-# Model/Use-Case
-
 Processed Data:
  The dataset is made of a mix of Arabica and Robusta coffee tree parts (with and without a background isolation element) with individual bounding boxes around all coffee cherries. These RGB pictures were on-farm collected with smartphones with the collaboration of smallholder farmers. 
  Code for Crop Classification Model:

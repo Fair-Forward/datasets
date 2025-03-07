@@ -678,27 +678,27 @@
     color: #2d3748;
 }
 
-.label-audio {
+.label-images {
     background-color: #cfe2cf;
     color: #2d3748;
 }
 
-.label-tabular {
+.label-geospatial {
     background-color: #cfe2d8;
     color: #2d3748;
 }
 
-.label-geospatial {
+.label-tabular {
     background-color: #cfe2e2;
     color: #2d3748;
 }
 
-.label-images {
+.label-audio {
     background-color: #cfd8e2;
     color: #2d3748;
 }
 
-.label-pilot {
+.label-use-case {
     background-color: #cfcfe2;
     color: #2d3748;
 }
@@ -708,7 +708,7 @@
     color: #2d3748;
 }
 
-.label-use-case {
+.label-pilot {
     background-color: #e2cfe2;
     color: #2d3748;
 }
@@ -811,7 +811,7 @@
         <div class="card-footer"><a href="https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana/data" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><a href="https://huggingface.co/datasets/KaraAgroAI/CADI-AI/tree/main" target="_blank" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Use Case</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset" data-title="African Biomass Challenge with Open Cocoa Data" data-region="Ghana" data-id="1" data-dir-names="[&#x27;leveraging_ml_to_predict_aboveground_biomass_in_cocoa_plantations_in_cote_divoire&#x27;, &#x27;african_biomass_challenge_with_open_cocoa_data&#x27;]">
+    <div class="card has-dataset" data-title="African Biomass Challenge with Open Cocoa Data" data-region="Ghana" data-id="1" data-dir-names="[&#x27;african_biomass_challenge_with_open_cocoa_data&#x27;, &#x27;leveraging_ml_to_predict_aboveground_biomass_in_cocoa_plantations_in_cote_divoire&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/african_biomass_challenge_with_open_cocoa_data/images/download.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -851,7 +851,7 @@
         <div class="card-footer"><a href="https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Cotton Ace: AI-driven Pest Management for Cotton Farmers in India" data-region="India" data-id="11" data-dir-names="[&#x27;cotton_ace_aidriven_pest_management_for_cotton_farmers_in_india&#x27;, &#x27;wadhwani_ai__open_ai_for_cotton_pest_control_with_smallholder_farmers__national_entrepreneurship_network_nen&#x27;, &#x27;ai_pest_management_open_data_for_pink_bollworms_and_american_bollworms&#x27;]">
+    <div class="card has-dataset has-usecase" data-title="Cotton Ace: AI-driven Pest Management for Cotton Farmers in India" data-region="India" data-id="11" data-dir-names="[&#x27;ai_pest_management_open_data_for_pink_bollworms_and_american_bollworms&#x27;, &#x27;cotton_ace_aidriven_pest_management_for_cotton_farmers_in_india&#x27;, &#x27;wadhwani_ai__open_ai_for_cotton_pest_control_with_smallholder_farmers__national_entrepreneurship_network_nen&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/wadhwani_ai__open_ai_for_cotton_pest_control_with_smallholder_farmers__national_entrepreneurship_network_nen/images/cotton_ace.jpg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div></div>
@@ -873,7 +873,7 @@
         <div class="card-footer"><a href="https://source.coop/repositories/wadhwani-ai/wiai-pm-open-data/description; https://github.com/WadhwaniAI/pest-management-opendata?tab=readme-ov-file; https://huggingface.co/datasets/wadhwani-ai/pest-management-opendata" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><a href="https://github.com/WadhwaniAI/pest-monitoring, https://dl.acm.org/doi/10.1145/3394486.3403363" target="_blank" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Use Case</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Data-driven decision-making for farmers to increase climate resilience" data-region="India" data-id="12" data-dir-names="[&#x27;digital_green__local_dataset_collection_for_climatesmart_agriculture&#x27;, &#x27;datadriven_decisionmaking_for_farmers_to_increase_climate_resilience&#x27;, &#x27;geospatial_dataset_of_wheat_and_rice_farmers_in_bihar_india&#x27;]">
+    <div class="card has-dataset has-usecase" data-title="Data-driven decision-making for farmers to increase climate resilience" data-region="India" data-id="12" data-dir-names="[&#x27;geospatial_dataset_of_wheat_and_rice_farmers_in_bihar_india&#x27;, &#x27;datadriven_decisionmaking_for_farmers_to_increase_climate_resilience&#x27;, &#x27;digital_green__local_dataset_collection_for_climatesmart_agriculture&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/digital_green__local_dataset_collection_for_climatesmart_agriculture/images/image.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -893,7 +893,7 @@
         <div class="card-footer"><a href="https://github.com/digitalgreenorg/frame-templates" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><a href="https://github.com/digitalgreenorg/frame-templates" target="_blank" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Use Case</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset" data-title="Open Dataset of Farm Boundaries and Crop Cultivation in Telangana State" data-region="India" data-id="13" data-dir-names="[&#x27;ml4eo_telangana_crop_identification&#x27;, &#x27;open_dataset_of_farm_boundaries_and_crop_cultivation_in_telangana_state&#x27;, &#x27;support_sustainable_agriculture_in_telangana_through_aipowered_crop_identification&#x27;]">
+    <div class="card has-dataset" data-title="Open Dataset of Farm Boundaries and Crop Cultivation in Telangana State" data-region="India" data-id="13" data-dir-names="[&#x27;open_dataset_of_farm_boundaries_and_crop_cultivation_in_telangana_state&#x27;, &#x27;support_sustainable_agriculture_in_telangana_through_aipowered_crop_identification&#x27;, &#x27;ml4eo_telangana_crop_identification&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/ml4eo_telangana_crop_identification/images/image.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -913,7 +913,7 @@
         <div class="card-footer"><a href="https://dataexplorer.ts.adex.org.in/dataset/583e8f01-160e-4f51-bde5-31dc7f2a5887" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Combatting Air Pollution and GHG Emissions in India through hyperlocal AI-powered mapping" data-region="India" data-id="14" data-dir-names="[&#x27;open_air_pollution_data_for_patna_and_gurugram&#x27;, &#x27;combatting_air_pollution_and_ghg_emissions_in_india_through_hyperlocal_aipowered_mapping&#x27;, &#x27;hyperlocal_mapping_of_air_pollution_and_ghg_emissions_in_india_with_undp&#x27;]">
+    <div class="card has-dataset has-usecase" data-title="Combatting Air Pollution and GHG Emissions in India through hyperlocal AI-powered mapping" data-region="India" data-id="14" data-dir-names="[&#x27;open_air_pollution_data_for_patna_and_gurugram&#x27;, &#x27;hyperlocal_mapping_of_air_pollution_and_ghg_emissions_in_india_with_undp&#x27;, &#x27;combatting_air_pollution_and_ghg_emissions_in_india_through_hyperlocal_aipowered_mapping&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             
@@ -951,7 +951,7 @@
         <div class="card-footer"><a href="https://syspin.iisc.ac.in/datasets" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset" data-title="Open-source text-to-speech and machine translation datasets in Mundari" data-region="India" data-id="18" data-dir-names="[&#x27;opensource_texttospeech_and_machine_translation_datasets_in_mundari&#x27;, &#x27;100_hours_of_text_to_speech_dataset_for_mundari_language&#x27;]">
+    <div class="card has-dataset" data-title="Open-source text-to-speech and machine translation datasets in Mundari" data-region="India" data-id="18" data-dir-names="[&#x27;100_hours_of_text_to_speech_dataset_for_mundari_language&#x27;, &#x27;opensource_texttospeech_and_machine_translation_datasets_in_mundari&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
@@ -971,7 +971,7 @@
         <div class="card-footer"><a href="https://github.com/karya-inc/dataset-hindi-mundari-translation; https://github.com/karya-inc/dataset-mundari-tts" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset" data-title="Gramvaani Automatic Speech Recognition (ASR)" data-region="India" data-id="20" data-dir-names="[&#x27;gramvaani_automatic_speech_recognition_asr&#x27;, &#x27;providing_better_information_on_sexual_and_reproductive_health_and_rights_srhr_of_young_people_through_the_kahi_ankahi_baatein_infloline_hindi_llm_finetuning&#x27;]">
+    <div class="card has-dataset" data-title="Gramvaani Automatic Speech Recognition (ASR)" data-region="India" data-id="20" data-dir-names="[&#x27;providing_better_information_on_sexual_and_reproductive_health_and_rights_srhr_of_young_people_through_the_kahi_ankahi_baatein_infloline_hindi_llm_finetuning&#x27;, &#x27;gramvaani_automatic_speech_recognition_asr&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             
@@ -991,7 +991,7 @@
         <div class="card-footer"><a href="[GramVaani](https://gramvaani.org/)" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset" data-title="Developing a concept with MFIN on voice-based chatbot" data-region="India" data-id="21" data-dir-names="[&#x27;microfinance_industry_network_india_use_of_voice_technology_gramvaani&#x27;, &#x27;developing_a_concept_with_mfin_on_voicebased_chatbot&#x27;]">
+    <div class="card has-dataset" data-title="Developing a concept with MFIN on voice-based chatbot" data-region="India" data-id="21" data-dir-names="[&#x27;developing_a_concept_with_mfin_on_voicebased_chatbot&#x27;, &#x27;microfinance_industry_network_india_use_of_voice_technology_gramvaani&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
@@ -1012,7 +1012,7 @@
         <div class="card-footer"><a href="https://gitlab.com/gramvaani/giz_kab_bert_sourcecode" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset" data-title="Question-Answer Pairs on Health Related Content in Telugu and Chhatisgarhi" data-region="India" data-id="22" data-dir-names="[&#x27;digital_audio_content_creation_for_womens_empowerment_using_language_technologies&#x27;, &#x27;questionanswer_pairs_on_health_related_content_in_telugu_and_chhatisgarhi&#x27;, &#x27;empowering_women_across_india_with_knowledge_in_their_native_languages&#x27;]">
+    <div class="card has-dataset" data-title="Question-Answer Pairs on Health Related Content in Telugu and Chhatisgarhi" data-region="India" data-id="22" data-dir-names="[&#x27;questionanswer_pairs_on_health_related_content_in_telugu_and_chhatisgarhi&#x27;, &#x27;digital_audio_content_creation_for_womens_empowerment_using_language_technologies&#x27;, &#x27;empowering_women_across_india_with_knowledge_in_their_native_languages&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             
@@ -1091,7 +1091,7 @@
         <div class="card-footer"><a href="https://beta.source.coop/repositories/radiantearth/south-africa-crops-competition/description/" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset" data-title="ML4EO for Precision Agriculture" data-region="South Africa" data-id="44" data-dir-names="[&#x27;enabling_geoscientists_to_use_machine_learning_for_precision_agriculture_of_geospatial_data&#x27;, &#x27;ml4eo_for_precision_agriculture&#x27;]">
+    <div class="card has-dataset" data-title="ML4EO for Precision Agriculture" data-region="South Africa" data-id="44" data-dir-names="[&#x27;ml4eo_for_precision_agriculture&#x27;, &#x27;enabling_geoscientists_to_use_machine_learning_for_precision_agriculture_of_geospatial_data&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             
@@ -1151,7 +1151,7 @@
         <div class="card-footer"><a href="https://lamwo-electrification-demo.vercel.app/" target="_blank" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Use Case</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Croppie- helping smallholder coffee producers to plan sales, get loans, and trace coffee - AI powered coffee yield prediction" data-region="Uganda" data-id="47" data-dir-names="[&#x27;croppie_coffee_yield_prediction&#x27;, &#x27;croppie_helping_smallholder_coffee_producers_to_plan_sales_get_loans_and_trace_coffee__ai_powered_coffee_yield_prediction&#x27;]">
+    <div class="card has-dataset has-usecase" data-title="Croppie- helping smallholder coffee producers to plan sales, get loans, and trace coffee - AI powered coffee yield prediction" data-region="Uganda" data-id="47" data-dir-names="[&#x27;croppie_helping_smallholder_coffee_producers_to_plan_sales_get_loans_and_trace_coffee__ai_powered_coffee_yield_prediction&#x27;, &#x27;croppie_coffee_yield_prediction&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -1171,7 +1171,7 @@
         <div class="card-footer"><a href="https://huggingface.co/datasets/rgautroncgiar/croppie_coffee_ug" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><a href="https://huggingface.co/rgautroncgiar/croppie_coffee_ug" target="_blank" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Use Case</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Finding good spots for decentralized green energy grids in Uganda I - AI based site identification for MiniGrids" data-region="Uganda" data-id="48" data-dir-names="[&#x27;finding_good_spots_for_decentralized_green_energy_grids_in_uganda_i__ai_based_site_identification_for_minigrids&#x27;, &#x27;scaling_mlbased_site_identification_for_minigrids_uganda&#x27;]">
+    <div class="card has-dataset has-usecase" data-title="Finding good spots for decentralized green energy grids in Uganda I - AI based site identification for MiniGrids" data-region="Uganda" data-id="48" data-dir-names="[&#x27;scaling_mlbased_site_identification_for_minigrids_uganda&#x27;, &#x27;finding_good_spots_for_decentralized_green_energy_grids_in_uganda_i__ai_based_site_identification_for_minigrids&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -1422,9 +1422,6 @@
             // Simple markdown parser
             function parseMarkdown(markdown) {
                 if (!markdown) return '';
-                
-                // Remove the first h1 header if it exists
-                markdown = markdown.replace(/^# .*$/m, '').trim();
                 
                 // Replace headers
                 let html = markdown
