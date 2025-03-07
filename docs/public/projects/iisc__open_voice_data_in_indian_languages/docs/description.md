@@ -1,0 +1,5 @@
+# Description
+
+This dataset is part of the initiative SYSPIN (SYnthesizing SPeech in INdian languages), that develops large open-source Text-to-Speech (TTS) corpora, i.e., speech training datasets and AI models in 9 Indian languages, namely – Bengali, Bhojpuri, Chhattisgarhi, Hindi, Kannada, Magahi, Maithili, Marathi, and Telugu. This data is useful for those wishing to build voice-enabled, user-friendly applications in Indian languages. Through voice-based solutions, these AI models can be used to empower communities that do not have access to digital services in their own native language. They can be used by private companies, researchers, NGOs or government departments to develop digital applications. 
+ 
+ The datasets and TTS models are available to the AI community and anyone wishing to build voice-enabled applications in Indian languages.

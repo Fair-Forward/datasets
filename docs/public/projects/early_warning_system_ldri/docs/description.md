@@ -1,0 +1,3 @@
+# Description
+
+The Early Warning System (EWS) is an AI-powered platform that monitors farming activities and supports climate-smart precision agriculture for smallholder farms. It uses geo-referenced data collected from farms through mobile phones and high-resolution satellite imagery. The system provides crop monitoring, yield prediction, pest/disease detection, and localized agricultural advisory services in multiple languages. The platform is currently accessed through both WhatsApp by farmers and a self-serve platform/API for institutional users.
