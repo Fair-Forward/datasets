@@ -42,6 +42,14 @@ def normalize_label(text):
     normalized = re.sub(r'[^a-z0-9\-]', '', text.lower().replace(' ', '-'))
     return normalized
 
+# Function to normalize a string for use as a directory name
+def normalize_for_directory(text):
+    if not text or pd.isna(text) or not isinstance(text, str):
+        return ""
+    # Convert to lowercase, replace spaces with underscores, remove special characters
+    normalized = re.sub(r'[^a-z0-9_]', '', text.lower().replace(' ', '_'))
+    return normalized
+
 # Function to create HTML for labels
 def create_label_html(text, label_type):
     if pd.isna(text) or not isinstance(text, str) or text.strip() == "":
@@ -188,6 +196,9 @@ def generate_card_html(row, idx):
     contact = row.get('Point of Contact/Communities', '')
     region = row.get('Country Team', '')
     
+    # Normalize title for directory name
+    dir_name = normalize_for_directory(title)
+    
     # Determine if row has dataset and/or use case
     has_dataset = isinstance(dataset_link, str) and not pd.isna(dataset_link)
     has_usecase = isinstance(model_links, str) and not pd.isna(model_links)
@@ -201,14 +212,24 @@ def generate_card_html(row, idx):
     
     card_class = " ".join(card_classes)
     
-    # Special handling for specific images
-    card_image = ''
-    if title and ('CadiAI' in str(title) or 'CADI AI' in str(title)):
-        card_image = '<div class="card-image has-image" style="background-image: url(\'img/cadiAI.png\');"></div>'
-    elif title and 'cashew' in str(title).lower():
-        card_image = '<div class="card-image has-image" style="background-image: url(\'img/cashew_karaagro.png\');"></div>'
-    else:
-        card_image = '<div class="card-image"></div>'
+    # Check for project-specific image
+    card_image = '<div class="card-image"></div>'
+    
+    # First check in the project directory
+    project_image_path = None
+    if dir_name:
+        images_dir = f"docs/public/projects/{dir_name}/images"
+        
+        # Check if the images directory exists and contains any images
+        if os.path.exists(images_dir):
+            # Look for any image file in the directory
+            image_files = [f for f in os.listdir(images_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
+            if image_files:
+                project_image_path = f"public/projects/{dir_name}/images/{image_files[0]}"
+    
+    # Set the image if found
+    if project_image_path:
+        card_image = f'<div class="card-image has-image" style="background-image: url(\'{project_image_path}\');"></div>'
     
     # Create domain badges
     domain_badges = ""
@@ -548,21 +569,72 @@ def generate_js_code():
             
             // Function to open the detail panel
             function openDetailPanel(title, itemId) {
-                if (!detailPanel) return;
+                const detailPanel = document.getElementById('detailPanel');
+                const detailPanelTitle = document.getElementById('detailPanelTitle');
+                const detailPanelLoader = document.getElementById('detailPanelLoader');
+                const detailPanelData = document.getElementById('detailPanelData');
+                const panelOverlay = document.getElementById('panelOverlay');
                 
+                if (!detailPanel || !detailPanelTitle || !detailPanelLoader || !detailPanelData || !panelOverlay) {
+                    console.error('Could not find required panel elements');
+                    return;
+                }
+                
+                // Set title and show panel
                 detailPanelTitle.textContent = title;
-                detailPanelLoader.style.display = 'flex';
-                detailPanelData.classList.remove('active');
                 detailPanel.classList.add('open');
                 panelOverlay.classList.add('active');
                 document.body.style.overflow = 'hidden';
                 
-                // Load the details (simulated with setTimeout)
-                setTimeout(() => {
-                    detailPanelLoader.style.display = 'none';
-                    detailPanelData.classList.add('active');
-                    loadItemDetails(itemId);
-                }, 500);
+                // Show loader and hide content
+                detailPanelLoader.style.display = 'flex';
+                detailPanelData.classList.remove('active');
+                detailPanelData.style.display = 'none';
+                
+                // Load the details
+                loadItemDetails(itemId);
+            }
+            
+            // Simple markdown parser
+            function parseMarkdown(markdown) {
+                if (!markdown) return '';
+                
+                // Replace headers
+                let html = markdown
+                    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+                    .replace(/^# (.*$)/gim, '<h1>$1</h1>');
+                
+                // Replace links
+                html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2" target="_blank">$1</a>');
+                
+                // Replace images
+                html = html.replace(/!\[([^\]]+)\]\(([^)]+)\)/gim, '<img src="$2" alt="$1" style="max-width:100%;">');
+                
+                // Replace bold text
+                html = html.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>');
+                
+                // Replace italic text
+                html = html.replace(/\*(.*?)\*/gim, '<em>$1</em>');
+                
+                // Replace code blocks
+                html = html.replace(/```([^`]+)```/gim, '<pre><code>$1</code></pre>');
+                
+                // Replace inline code
+                html = html.replace(/`([^`]+)`/gim, '<code>$1</code>');
+                
+                // Replace lists
+                html = html.replace(/^\s*\*\s(.*$)/gim, '<li>$1</li>');
+                html = html.replace(/(<li>.*<\/li>)/gim, '<ul>$1</ul>');
+                
+                // Replace paragraphs (must be done last)
+                html = html.replace(/^(?!<[a-z])(.*$)/gim, '<p>$1</p>');
+                
+                // Fix nested lists and paragraphs
+                html = html.replace(/<\/ul>\s*<ul>/gim, '');
+                html = html.replace(/<\/p>\s*<p>/gim, '</p><p>');
+                
+                return html;
             }
             
             // Function to load item details
@@ -570,30 +642,124 @@ def generate_js_code():
                 const card = document.querySelector(`.card[data-id="${itemId}"]`);
                 if (!card) return;
                 
-                const description = card.querySelector('.description-text')?.textContent || '';
+                const title = card.getAttribute('data-title');
                 const tags = Array.from(card.querySelectorAll('.tag')).map(tag => tag.textContent);
                 const region = card.getAttribute('data-region');
                 
-                const content = `
-                    <div class="detail-section">
-                        <h3>Description</h3>
-                        <p>${description}</p>
-                    </div>
-                    <div class="detail-section">
-                        <h3>Tags</h3>
-                        <div class="tags">
-                            ${tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                        </div>
-                    </div>
-                    ${region ? `
-                    <div class="detail-section">
-                        <h3>Region</h3>
-                        <p>${region}</p>
-                    </div>
-                    ` : ''}
-                `;
+                // Normalize title for directory name - match the Python normalization
+                const dirName = title.toLowerCase().replace(/ /g, '_').replace(/[^a-z0-9_]/g, '');
+                console.log('Loading details for:', dirName);
                 
-                detailPanelData.innerHTML = content;
+                // Show loading state
+                const detailPanelLoader = document.getElementById('detailPanelLoader');
+                const detailPanelData = document.getElementById('detailPanelData');
+                
+                if (detailPanelLoader && detailPanelData) {
+                    detailPanelLoader.style.display = 'flex';
+                    detailPanelData.style.display = 'none';
+                }
+                
+                // Prepare to fetch all markdown files
+                const filesToFetch = [
+                    { path: `./public/projects/${dirName}/docs/description.md`, section: 'Description' },
+                    { path: `./public/projects/${dirName}/docs/data_characteristics.md`, section: 'Data Characteristics' },
+                    { path: `./public/projects/${dirName}/docs/model_characteristics.md`, section: 'Model Characteristics' },
+                    { path: `./public/projects/${dirName}/docs/how_to_use.md`, section: 'How to Use It' }
+                ];
+                
+                // Initialize content sections
+                let contentSections = {
+                    'Description': '',
+                    'Data Characteristics': '',
+                    'Model Characteristics': '',
+                    'How to Use It': ''
+                };
+                
+                // Create a counter to track when all fetches are complete
+                let fetchesCompleted = 0;
+                
+                // Function to update the UI when all fetches are complete
+                function updateDetailPanel() {
+                    console.log('Updating panel with sections:', contentSections);
+                    let detailContent = '';
+                    
+                    // Add each section that has content
+                    for (const [section, content] of Object.entries(contentSections)) {
+                        if (content) {
+                            detailContent += `
+                                <div class="detail-section">
+                                    <h3>${section}</h3>
+                                    <div class="documentation-content">${content}</div>
+                                </div>
+                            `;
+                        }
+                    }
+                    
+                    // Add tags section
+                    detailContent += `
+                        <div class="detail-section">
+                            <h3>Tags</h3>
+                            <div class="tags">
+                                ${tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Add region section if available
+                    if (region) {
+                        detailContent += `
+                            <div class="detail-section">
+                                <h3>Region</h3>
+                                <p>${region}</p>
+                            </div>
+                        `;
+                    }
+                    
+                    // Update the detail panel content
+                    const detailPanelData = document.getElementById('detailPanelData');
+                    const detailPanelLoader = document.getElementById('detailPanelLoader');
+                    
+                    if (detailPanelData && detailPanelLoader) {
+                        detailPanelData.innerHTML = detailContent;
+                        detailPanelLoader.style.display = 'none';
+                        detailPanelData.classList.add('active');
+                        detailPanelData.style.display = 'block';
+                    } else {
+                        console.error('Could not find detail panel elements');
+                    }
+                }
+                
+                // Fetch each file
+                filesToFetch.forEach(file => {
+                    console.log('Fetching:', file.path);
+                    fetch(file.path)
+                        .then(response => {
+                            console.log('Response for', file.path, ':', response.status);
+                            if (response.ok) {
+                                return response.text();
+                            } else {
+                                console.log('File not found:', file.path);
+                                return null;
+                            }
+                        })
+                        .then(content => {
+                            if (content) {
+                                console.log('Content loaded for', file.section);
+                                // Parse markdown content
+                                contentSections[file.section] = parseMarkdown(content);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error fetching', file.path, ':', error);
+                        })
+                        .finally(() => {
+                            fetchesCompleted++;
+                            console.log('Fetches completed:', fetchesCompleted, 'of', filesToFetch.length);
+                            if (fetchesCompleted === filesToFetch.length) {
+                                updateDetailPanel();
+                            }
+                        });
+                });
             }
         });
     </script>
@@ -642,7 +808,7 @@ try:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Catalog</title>
+    <title>Data & Use Cases Catalog</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         :root {{
@@ -1048,16 +1214,17 @@ try:
         .detail-panel {{
             position: fixed;
             top: 0;
-            right: -500px;
-            width: 500px;
+            right: -800px;
+            width: 800px;
             max-width: 90vw;
             height: 100vh;
-            background-color: white;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-            z-index: 100;
-            transition: right 0.3s ease-in-out;
+            background-color: var(--card-bg);
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }}
         
         .detail-panel.open {{
@@ -1099,9 +1266,10 @@ try:
         }}
         
         .detail-panel-content {{
-            padding: 1.5rem;
+            padding: 2rem;
             overflow-y: auto;
             flex-grow: 1;
+            line-height: 1.6;
         }}
         
         .panel-loader {{
@@ -1117,8 +1285,8 @@ try:
             border: 3px solid #f3f3f3;
             border-top: 3px solid var(--primary);
             border-radius: 50%;
-            width: 30px;
-            height: 30px;
+            width: 40px;
+            height: 40px;
             animation: spin 1s linear infinite;
             margin-bottom: 1rem;
         }}
@@ -1137,14 +1305,16 @@ try:
         }}
         
         .detail-section {{
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
         }}
         
         .detail-section h3 {{
-            font-size: 1rem;
+            font-size: 1.25rem;
             font-weight: 600;
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
             color: var(--dark);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
         }}
         
         .panel-overlay {{
@@ -1189,6 +1359,86 @@ try:
             border: 1px solid #e2e8f0;
         }}
         
+        .documentation-content {{
+            line-height: 1.7;
+            font-size: 1rem;
+            color: var(--text);
+        }}
+        
+        .documentation-content h1,
+        .documentation-content h2,
+        .documentation-content h3,
+        .documentation-content h4 {{
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: var(--dark);
+        }}
+        
+        .documentation-content h1 {{
+            font-size: 1.75rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }}
+        
+        .documentation-content h2 {{
+            font-size: 1.5rem;
+        }}
+        
+        .documentation-content h3 {{
+            font-size: 1.25rem;
+        }}
+        
+        .documentation-content h4 {{
+            font-size: 1.1rem;
+        }}
+        
+        .documentation-content p {{
+            margin-bottom: 1.25rem;
+        }}
+        
+        .documentation-content ul,
+        .documentation-content ol {{
+            margin-bottom: 1.25rem;
+            padding-left: 1.75rem;
+        }}
+        
+        .documentation-content li {{
+            margin-bottom: 0.5rem;
+        }}
+        
+        .documentation-content pre {{
+            background-color: #f8f9fa;
+            border-radius: 0.5rem;
+            padding: 1.25rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            border: 1px solid #e2e8f0;
+        }}
+        
+        .documentation-content code {{
+            background-color: #f1f1f1;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 0.9rem;
+            color: #476582;
+        }}
+        
+        .documentation-content a {{
+            color: #3182ce;
+            text-decoration: none;
+            transition: color 0.2s;
+        }}
+        
+        .documentation-content a:hover {{
+            color: #2c5282;
+            text-decoration: underline;
+        }}
+        
         /* Responsive adjustments */
         @media (max-width: 768px) {{
             .detail-panel {{
@@ -1204,8 +1454,8 @@ try:
     <header>
         <div class="header-content">
             <div class="header-text">
-                <h1>Data Catalog</h1>
-                <p class="subtitle">Exploring data-driven solutions for global challenges across agriculture, climate action, healthcare, and more. Browse our collection of datasets and use cases for AI applications in development cooperation.</p>
+                <h1>Data & Use Cases Catalog</h1>
+                <p class="subtitle">Exploring data-driven solutions for global challenges across agriculture, langauge technology, climate action, energy, and more. Browse our collection of datasets and use cases for AI applications for sustainable development.</p>
             </div>
             <a href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/" target="_blank">
                 <img src="img/fair_forward.png" alt="Fair Forward Logo" class="header-logo">

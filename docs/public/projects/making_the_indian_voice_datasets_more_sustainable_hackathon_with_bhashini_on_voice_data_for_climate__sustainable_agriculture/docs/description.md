@@ -1,0 +1,3 @@
+# Description
+
+Combined from two formerly planned service contracts (1) Making the IISc datasets more sustainable, usable, support AIEP, make use-cases possible + (2) Hackathon for IISc voice datasets with Bhashini on climate & sustainable agriculture
