@@ -10,13 +10,11 @@ import datetime
 parser = argparse.ArgumentParser(description='Generate HTML catalog from Excel file.')
 parser.add_argument('--input', type=str, default="docs/data_catalog.xlsx", help='Path to the input Excel file')
 parser.add_argument('--output', type=str, default="docs/index.html", help='Path to the output HTML file')
-parser.add_argument('--template', type=str, default="docs/index.html", help='Path to the HTML template file')
 args = parser.parse_args()
 
 # Load the dataset
 DATA_CATALOG = args.input
 HTML_OUTPUT = args.output
-HTML_TEMPLATE = args.template
 
 # Function to convert markdown links to HTML
 def convert_markdown_links_to_html(text):
@@ -1263,6 +1261,17 @@ try:
         f.write(html_template)
     
     print(f"Successfully generated {HTML_OUTPUT}")
+
+    # After you've processed your data and before writing the HTML output
+    # Create frontend directory if it doesn't exist
+    frontend_dir = os.path.join(os.path.dirname(os.path.dirname(HTML_OUTPUT)), 'frontend')
+    os.makedirs(frontend_dir, exist_ok=True)
+
+    # Export data as JSON for React frontend
+    json_output = os.path.join(frontend_dir, 'data.json')
+    df.to_json(json_output, orient='records')
+    print(f"Successfully generated {json_output}")
+
 except Exception as e:
     print(f"Error generating catalog: {str(e)}")
     import traceback
