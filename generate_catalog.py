@@ -186,7 +186,9 @@ def generate_color_palette(n):
 
 def generate_card_html(row, idx):
     # Extract card data
-    title = row.get('OnSite Name', '')
+    onsite_name = row.get('OnSite Name', '')
+    dataset_speaking_title = row.get('Dataset Speaking Titles', '')
+    usecase_speaking_title = row.get('Use Case Speaking Title', '')
     description = row.get('Description - What can be done with this? What is this about?', '')
     dataset_link = row.get('Dataset Link', '')
     model_links = row.get('Model/Use-Case Links', '')
@@ -196,12 +198,20 @@ def generate_card_html(row, idx):
     contact = row.get('Point of Contact/Communities', '')
     region = row.get('Country Team', '')
     
-    # Normalize title for directory name
-    dir_name = normalize_for_directory(title)
-    
     # Determine if row has dataset and/or use case
     has_dataset = isinstance(dataset_link, str) and not pd.isna(dataset_link)
     has_usecase = isinstance(model_links, str) and not pd.isna(model_links)
+    
+    # Select the appropriate title based on content type and speaking titles
+    if has_usecase and usecase_speaking_title and not pd.isna(usecase_speaking_title):
+        title = usecase_speaking_title
+    elif has_dataset and dataset_speaking_title and not pd.isna(dataset_speaking_title):
+        title = dataset_speaking_title
+    else:
+        title = onsite_name
+    
+    # Normalize title for directory name - use onsite_name for directory structure
+    dir_name = normalize_for_directory(onsite_name)
     
     # Card classes based on what it contains
     card_classes = ["card"]
