@@ -1261,6 +1261,17 @@ try:
         f.write(html_template)
     
     print(f"Successfully generated {HTML_OUTPUT}")
+
+    # After you've processed your data and before writing the HTML output
+    # Create frontend directory if it doesn't exist
+    frontend_dir = os.path.join(os.path.dirname(os.path.dirname(HTML_OUTPUT)), 'frontend')
+    os.makedirs(frontend_dir, exist_ok=True)
+
+    # Export data as JSON for React frontend
+    json_output = os.path.join(frontend_dir, 'data.json')
+    df.to_json(json_output, orient='records')
+    print(f"Successfully generated {json_output}")
+
 except Exception as e:
     print(f"Error generating catalog: {str(e)}")
     import traceback
