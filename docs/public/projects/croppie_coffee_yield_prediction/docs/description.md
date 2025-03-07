@@ -1,3 +1,1 @@
-# Description
-
 Croppie is a digital platform that integrates yield estimation functionality with agronomic advice and farm data management. The basic user interface is provided through a mobile application. Croppie’s core functionality is to allow for AI-supported coffee yield estimation. This is done by guiding a selective sampling for a statistical yield estimation service based on branch count and coffee branch picture taking, alongside the integration of additional data provided by the user.

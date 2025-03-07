@@ -1,5 +1,3 @@
-# Data
-
 Ground truth geo-tagged data from 1,521 farms across 5 regions in Kenya
  Types of data: Crop images, farm boundaries, crop conditions, weekly activity logs
  Coverage: Multiple crop types including maize, beans, sweet potatoes, cassava, kales, Irish potatoes, cowpeas, soya beans, and indigenous vegetables

@@ -1,5 +1,3 @@
-# Data
-
 The Data is fully open-sourced and can be accessed at the Telangana Data Exchange Platform: ADEX
  • License: CC BY 4.0
  • Data Type: Tabular

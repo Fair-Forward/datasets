@@ -1,5 +1,3 @@
-# Data
-
 The Data is fully open-sourced and can be accessed at:
  • Hugging face: <Link To be added>
  • <Source Cooperative> TBD

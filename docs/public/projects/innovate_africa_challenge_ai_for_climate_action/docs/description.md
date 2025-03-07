@@ -1,3 +1,1 @@
-# Description
-
 Smart Africa, With the following start-ups and organizations: CropScan Africa, Faminga, Farmer Lifeline Technologies, ignitia, KivuGreen Corporation, NjordFrey, Strathmore Research and Consultancy Centre, VaxusImplemented through Smart Africa, see: https://smartafrica.org/innovate-africa-challenge/

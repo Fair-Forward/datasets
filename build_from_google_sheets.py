@@ -85,13 +85,10 @@ def create_project_directories(df):
                 # Create markdown file with the content
                 file_path = os.path.join(docs_dir, filename)
                 
-                # Add a title based on the column name
-                title = column.split(' - ')[0] if ' - ' in column else column
-                markdown_content = f"# {title}\n\n{content}"
-                
-                # Write the file
+                # Write the content directly without adding a title
+                # The title will be added by the HTML template
                 with open(file_path, 'w', encoding='utf-8') as f:
-                    f.write(markdown_content)
+                    f.write(content)
                 print(f"Created file: {file_path}")
         
         # Check for existing project images in the old location and copy them if they exist

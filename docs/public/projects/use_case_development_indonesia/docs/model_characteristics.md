@@ -1,5 +1,3 @@
-# Model/Use-Case
-
 Processed Data and Pretrained Models:
  Use the multilingual datasets and pre-trained models (IndoBERT, IndoBERTNusa) to detect climate misinformation. The processed dataset can be accessed here: Processed Data
  

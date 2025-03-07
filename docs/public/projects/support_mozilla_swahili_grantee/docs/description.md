@@ -1,3 +1,1 @@
-# Description
-
 Will see further enhancement of Mozilla grantee work - to actionable data sets and community based engagement feeding back into MCV

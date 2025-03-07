@@ -1,5 +1,3 @@
-# Model/Use-Case
-
 Processed Data:
  The ground truth data was combined with open-source Sentinel-2 data to create a geospatial dataset with crop type as labels.
  The processed dataset can be accessed here: Processed Data

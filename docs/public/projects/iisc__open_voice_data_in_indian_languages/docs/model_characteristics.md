@@ -1,5 +1,3 @@
-# Model/Use-Case
-
 Processed Data:
  The validated sentences were recording in a recording room (size 10'3" x 5'9") by voice artists using a Neumann TLM-103 studio microphone and Audio Interface UAD Apollo Twin X. 
  Application:

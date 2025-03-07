@@ -1,5 +1,3 @@
-# Description
-
 Developing products that can be replicated through four initiatives: 1. DynAG: 
  Focused on rice, wheat, and maize, DynAG's platform uses a RAG pipeline powered by LLMs like the GPT suite to provide farmers with advisory services. Accessible via chatbots, Android and Jio-based mobile apps, IVR, and SMS, it ensures wide reach. With machine translation and speech recognition, the platform supports communication in English and Hindi while utilizing CGIAR's data backbone for accurate, data-driven insights. 
   

@@ -1,3 +1,1 @@
-# Description
-
 The Cashew Disease Identification (CADI AI) project was implemented to help early detection of diseases in cashew plantations in Ghana. Early intervention increases yields by up to 30%, securing livelihoods, boosting food security, and fueling further economic growth. The main outputs of the project are an openly accessible data set (4,736 UAV images), a machine learning model, and a desktop app.

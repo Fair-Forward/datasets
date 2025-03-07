@@ -1,5 +1,3 @@
-# Model/Use-Case
-
 Processed Data and Models:
  1. Uses geo-tagged images collected from farms and annotated for crop types, health status, and specific afflictions (pests/diseases/nutrition deficiency) 
  2. Derived vegetation indices, moisture indices, and time-series data from satellite imagery.

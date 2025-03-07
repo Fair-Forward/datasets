@@ -1,5 +1,3 @@
-# Description
-
 This project focuses on creating validated, open-source High Carbon Stock (HCS) forest maps for Indonesia using an AI-driven approach. It adopts the HCS classification system to identify forests suitable for conservation versus sustainable development:
  • High, Medium, and Low-Density Forests (Conservation Priority): Forests with closed or patchy canopies, rich biodiversity, and carbon storage.
  • Young Regenerating Forests: Regrowing forests that are transitioning into higher carbon stock potential.
