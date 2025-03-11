@@ -858,37 +858,44 @@ try:
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         :root {{
-            --primary: #1a365d;
-            --primary-light: #2d5a88;
-            --secondary: #4a5568;
-            --light: #f8f9fa;
-            --dark: #2d3748;
-            --gray: #4a5568;
+            /* Claude.ai inspired color palette with Fair Forward influence */
+            --primary: #3b5998;
+            --primary-light: #4c70ba;
+            --secondary: #5b7fb9;
+            --light: #f9fafb;
+            --dark: #1a202c;
+            --gray: #64748b;
             --border: #e2e8f0;
-            --background: #f8f9fa;
+            --background: #f8fafc;
             --card-bg: #ffffff;
-            --text: #2d3748;
-            --text-light: #4a5568;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --shadow: rgba(0, 0, 0, 0.04);
+            --shadow-hover: rgba(0, 0, 0, 0.08);
+            --title-color: #1e3a6e;
+            --btn-text: #ffffff;
         }}
         
         * {{
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }}
         
         body {{
             background-color: var(--background);
-            color: var(--dark);
+            color: var(--text);
             line-height: 1.7;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }}
         
         header {{
-            background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
-            padding: 60px 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+            padding: 80px 0 60px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.03);
             text-align: center;
             position: relative;
         }}
@@ -912,7 +919,7 @@ try:
             width: auto;
             opacity: 0.95;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.05));
             margin-left: 2rem;
         }}
         
@@ -922,136 +929,161 @@ try:
         }}
         
         h1 {{
-            font-size: 2.25rem;
-            margin-bottom: 0.75rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: -0.02em;
+            line-height: 1.2;
         }}
         
         .subtitle {{
-            font-size: 1rem;
+            font-size: 1.125rem;
             color: var(--gray);
             max-width: 800px;
-            line-height: 1.5;
+            line-height: 1.6;
+            font-weight: 400;
         }}
         
         .filters {{
-            background-color: white;
+            background-color: var(--card-bg);
             padding: 1.5rem 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 10;
-            border-bottom: 1px solid var(--border);
-            width: 100%;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }}
         
         .filters-content {{
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 1rem;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
         }}
         
         .filter-group {{
             display: flex;
             align-items: center;
-            margin-right: 1.5rem;
+            gap: 0.75rem;
         }}
         
         .filter-label {{
-            font-size: 0.875rem;
             font-weight: 500;
-            color: var(--gray);
-            margin-right: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-light);
         }}
         
-        select {{
-            padding: 0.5rem 2rem 0.5rem 0.75rem;
+        select, input {{
+            padding: 0.625rem 1rem;
+            border-radius: 0.5rem;
             border: 1px solid var(--border);
-            border-radius: 0.375rem;
+            min-width: 180px;
             background-color: white;
             font-size: 0.875rem;
-            color: var(--dark);
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%234a5568' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 0.5rem center;
-            cursor: pointer;
+            color: var(--text);
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 2px var(--shadow);
+        }}
+        
+        select:focus, input:focus {{
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.1);
         }}
         
         .search-box {{
-            position: relative;
-            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 0.625rem 1rem;
+            min-width: 300px;
+            background-color: white;
+            box-shadow: 0 1px 2px var(--shadow);
+            transition: all 0.2s ease;
+        }}
+        
+        .search-box:focus-within {{
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.1);
         }}
         
         .search-box input {{
-            width: 100%;
-            padding: 0.5rem 0.75rem 0.5rem 2.25rem;
-            border: 1px solid var(--border);
-            border-radius: 0.375rem;
-            font-size: 0.875rem;
-            color: var(--dark);
+            border: none;
+            flex-grow: 1;
+            min-width: 0;
+            padding: 0;
+            box-shadow: none;
+        }}
+        
+        .search-box input:focus {{
+            box-shadow: none;
         }}
         
         .search-box i {{
-            position: absolute;
-            left: 0.75rem;
-            top: 50%;
-            transform: translateY(-50%);
             color: var(--gray);
+            margin-right: 0.75rem;
         }}
         
         .container {{
             max-width: 1200px;
-            margin: 2rem auto;
+            margin: 3rem auto;
             padding: 0 2rem;
         }}
         
         .grid {{
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 1.5rem;
-            margin-bottom: 2rem;
         }}
         
         .card {{
             background-color: var(--card-bg);
-            border-radius: 0.5rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            border-radius: 0.75rem;
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 3px 5px var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
             display: flex;
             flex-direction: column;
-            border: 1px solid var(--border);
+            height: 100%;
+            position: relative;
+            border: 1px solid rgba(0, 0, 0, 0.02);
         }}
         
         .card:hover {{
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 15px var(--shadow-hover);
         }}
         
         .card-image {{
             height: 140px;
-            background-color: #f0f4f8;
+            background-color: #f8fafc;
+            background-image: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+            background-size: cover;
+            background-position: center;
             position: relative;
-            overflow: hidden;
         }}
         
         .card-image.has-image {{
-            background-size: cover;
-            background-position: center;
+            background-image: none;
         }}
         
         .card-header {{
-            padding: 1.25rem 1.25rem 0.75rem;
-            position: relative;
+            padding: 1.25rem 1.25rem 0.5rem;
+        }}
+        
+        .card-body {{
+            padding: 0 1.25rem 0.75rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }}
         
         .domain-badges {{
@@ -1059,21 +1091,29 @@ try:
             flex-wrap: wrap;
             gap: 0.5rem;
             margin-bottom: 0.75rem;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1;
         }}
         
         .domain-badge {{
-            font-size: 0.75rem;
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2rem;
+            font-size: 0.7rem;
             font-weight: 500;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 4px rgba(59, 89, 152, 0.15);
         }}
         
         .data-type-chips {{
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
+            margin-top: 0.25rem;
         }}
         
         .data-type-chip {{
@@ -1096,10 +1136,10 @@ try:
         
         .card h3 {{
             font-size: 1.125rem;
-            font-weight: 600;
             margin-bottom: 0.5rem;
-            line-height: 1.4;
-            color: var(--dark);
+            color: var(--title-color);
+            line-height: 1.3;
+            font-weight: 600;
         }}
         
         .meta {{
@@ -1120,123 +1160,219 @@ try:
             margin-right: 0.25rem;
         }}
         
-        .card-body {{
-            padding: 0 1.25rem 1.25rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }}
-        
         .card-description {{
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
+            flex-grow: 1;
         }}
         
         .description-text {{
-            font-size: 0.875rem;
             color: var(--text-light);
+            font-size: 0.9375rem;
+            line-height: 1.6;
             overflow: hidden;
             position: relative;
         }}
         
         .description-text.collapsed {{
-            max-height: 4.5rem;
-            text-overflow: ellipsis;
+            max-height: 4.8em; /* Show 3 lines of text */
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
         }}
         
         .read-more-btn {{
-            font-size: 0.75rem;
             color: var(--primary);
+            font-size: 0.8125rem;
+            font-weight: 500;
             cursor: pointer;
             margin-top: 0.25rem;
-            font-weight: 500;
             display: inline-block;
+            transition: color 0.2s;
         }}
         
         .read-more-btn:hover {{
+            color: var(--secondary);
+            text-decoration: underline;
+        }}
+        
+        .meta {{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.8125rem;
+            color: var(--text-light);
+        }}
+        
+        .meta-item {{
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }}
+        
+        .meta-item a {{
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }}
+        
+        .meta-item a:hover {{
+            color: var(--secondary);
             text-decoration: underline;
         }}
         
         .tags {{
             display: flex;
-            flex-wrap: wrap;
             gap: 0.5rem;
-            margin-top: auto;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
         }}
         
         .tag {{
+            background-color: rgba(142, 68, 173, 0.08);
+            padding: 0.25rem 0.75rem;
+            border-radius: 2rem;
             font-size: 0.75rem;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-            background-color: #f0f4f8;
-            color: var(--gray);
+            color: var(--primary);
+            transition: all 0.2s;
+            font-weight: 500;
+        }}
+        
+        .tag:hover {{
+            background-color: rgba(142, 68, 173, 0.12);
+            transform: translateY(-2px);
         }}
         
         .card-footer {{
-            padding: 1rem;
             border-top: 1px solid var(--border);
+            padding: 0.75rem 1.25rem;
             display: flex;
+            justify-content: flex-end;
+            align-items: center;
             gap: 0.5rem;
-            flex-wrap: nowrap;
-            justify-content: space-between;
+            background-color: rgba(0,0,0,0.01);
         }}
         
         .btn {{
-            padding: 0.4rem 0.6rem;
-            border-radius: 0.375rem;
-            font-size: 0.75rem;
-            font-weight: 500;
-            cursor: pointer;
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            gap: 0.25rem;
+            padding: 0.375rem 0.625rem;
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-decoration: none;
             transition: all 0.2s;
+            cursor: pointer;
             border: none;
             white-space: nowrap;
-            flex: 1;
             min-width: 0;
+            flex-shrink: 0;
         }}
         
         .btn i {{
-            margin-right: 0.25rem;
             font-size: 0.75rem;
+        }}
+        
+        .btn-view-details {{
+            background-color: #fff0f0;  /* Light red background */
+            color: var(--text-light);
+            border: 1px solid #ffdddd;  /* Light red border */
+            margin-left: auto;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+        }}
+        
+        @media (max-width: 768px) {{
+            .filters-content {{
+                flex-direction: column;
+                align-items: stretch;
+            }}
+            
+            .search-box {{
+                min-width: 100%;
+            }}
+            
+            .grid {{
+                grid-template-columns: 1fr;
+            }}
+            
+            .card-footer {{
+                flex-wrap: nowrap;
+                justify-content: space-between;
+            }}
+            
+            .btn {{
+                font-size: 0.7rem;
+                padding: 0.375rem 0.5rem;
+            }}
+            
+            .btn-view-details {{
+                margin-left: 0.25rem;
+                order: 0;
+            }}
+        }}
+        
+        {label_css}
+        
+        footer {{
+            background-color: var(--light);
+            color: var(--text-light);
+            padding: 4rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }}
+        
+        .footer-content {{
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }}
+        
+        footer p {{
+            font-size: 0.9375rem;
+            max-width: 600px;
+            margin: 0 auto;
         }}
         
         .btn-primary {{
             background-color: var(--primary);
-            color: white;
+            color: var(--btn-text);
+            box-shadow: 0 2px 4px rgba(59, 89, 152, 0.15);
         }}
         
         .btn-primary:hover {{
             background-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(59, 89, 152, 0.2);
         }}
         
         .btn-secondary {{
-            background-color: #e2e8f0;
-            color: var(--dark);
+            background-color: rgba(59, 89, 152, 0.08);
+            color: var(--primary);
         }}
         
         .btn-secondary:hover {{
-            background-color: #cbd5e0;
-        }}
-        
-        .btn-view-details {{
-            background-color: white;
-            color: var(--gray);
-            border: 1px solid var(--border);
+            background-color: rgba(59, 89, 152, 0.12);
+            transform: translateY(-2px);
         }}
         
         .btn-view-details:hover {{
-            background-color: #f8f9fa;
+            background-color: #ffe0e0;  /* Slightly darker red on hover */
+            color: #d63031;  /* Darker red text on hover */
+            transform: translateY(-2px);
         }}
         
         .empty-state {{
             text-align: center;
-            padding: 3rem 1rem;
-            background-color: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            padding: 4rem 2rem;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 1rem;
             border: 1px solid var(--border);
             display: none;
+            margin: 2rem auto;
+            max-width: 600px;
         }}
         
         .empty-state.visible {{
@@ -1244,13 +1380,16 @@ try:
         }}
         
         .empty-state h3 {{
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
-            color: var(--dark);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+            font-weight: 600;
         }}
         
         .empty-state p {{
-            color: var(--gray);
+            color: var(--text-light);
+            font-size: 1.0625rem;
+            line-height: 1.6;
         }}
         
         .card.filtered-out {{
@@ -1283,32 +1422,34 @@ try:
             display: flex;
             align-items: center;
             justify-content: space-between;
+            background-color: rgba(0, 0, 0, 0.01);
         }}
         
         .detail-panel-header h2 {{
             font-size: 1.25rem;
             font-weight: 600;
             margin: 0;
+            color: var(--text);
         }}
         
         .close-panel-btn {{
             background: none;
             border: none;
             cursor: pointer;
-            color: var(--gray);
+            color: var(--text-light);
             font-size: 1.25rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 2rem;
-            height: 2rem;
+            width: 2.5rem;
+            height: 2.5rem;
             border-radius: 50%;
             transition: all 0.2s;
         }}
         
         .close-panel-btn:hover {{
-            background-color: #f0f4f8;
-            color: var(--dark);
+            background-color: rgba(0, 0, 0, 0.05);
+            color: var(--text);
         }}
         
         .detail-panel-content {{
@@ -1324,17 +1465,18 @@ try:
             align-items: center;
             justify-content: center;
             height: 100%;
-            color: var(--gray);
+            color: var(--text-light);
+            padding: 2rem;
         }}
         
         .loader-spinner {{
-            border: 3px solid #f3f3f3;
+            border: 3px solid rgba(59, 89, 152, 0.1);
             border-top: 3px solid var(--primary);
             border-radius: 50%;
             width: 40px;
             height: 40px;
             animation: spin 1s linear infinite;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }}
         
         @keyframes spin {{
@@ -1348,19 +1490,12 @@ try:
         
         .panel-data.active {{
             display: block;
+            animation: fadeIn 0.3s ease-in-out;
         }}
         
-        .detail-section {{
-            margin-bottom: 2.5rem;
-        }}
-        
-        .detail-section h3 {{
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--dark);
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 0.5rem;
+        @keyframes fadeIn {{
+            from {{ opacity: 0; transform: translateY(10px); }}
+            to {{ opacity: 1; transform: translateY(0); }}
         }}
         
         .panel-overlay {{
@@ -1369,131 +1504,79 @@ try:
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: rgba(0,0,0,0.5);
-            z-index: 99;
+            background-color: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(2px);
+            z-index: 999;
             opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease-in-out;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
         }}
         
         .panel-overlay.active {{
             opacity: 1;
-            pointer-events: all;
+            visibility: visible;
         }}
         
-        footer {{
-            background-color: #f8f9fa;
-            padding: 2rem 0;
-            border-top: 1px solid var(--border);
-            text-align: center;
-            margin-top: 2rem;
+        .detail-section {{
+            margin-bottom: 2.5rem;
         }}
         
-        footer p {{
-            color: var(--gray);
-            font-size: 0.875rem;
+        .detail-section h3 {{
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }}
         
-        .code-sample {{
-            background-color: #f8f9fa;
-            border-radius: 0.5rem;
-            padding: 1rem;
-            overflow-x: auto;
-            font-family: monospace;
-            font-size: 0.85rem;
-            color: #333;
-            border: 1px solid #e2e8f0;
+        .detail-section h3::before {{
+            content: '';
+            display: block;
+            width: 4px;
+            height: 1.125rem;
+            background: var(--primary);
+            border-radius: 2px;
         }}
         
-        .documentation-content {{
-            line-height: 1.7;
-            font-size: 1rem;
+        .detail-info {{
+            background-color: var(--light);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+        }}
+        
+        .detail-row {{
+            display: flex;
+            margin-bottom: 0.75rem;
+            font-size: 0.9375rem;
+        }}
+        
+        .detail-row:last-child {{
+            margin-bottom: 0;
+        }}
+        
+        .detail-label {{
+            font-weight: 500;
+            width: 120px;
+            color: var(--text-light);
+        }}
+        
+        .detail-value {{
+            flex: 1;
             color: var(--text);
         }}
         
-        .documentation-content h1,
-        .documentation-content h2,
-        .documentation-content h3,
-        .documentation-content h4 {{
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-            color: var(--dark);
-        }}
-        
-        .documentation-content h1 {{
-            font-size: 1.75rem;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 0.5rem;
-        }}
-        
-        .documentation-content h2 {{
-            font-size: 1.5rem;
-        }}
-        
-        .documentation-content h3 {{
-            font-size: 1.25rem;
-        }}
-        
-        .documentation-content h4 {{
-            font-size: 1.1rem;
-        }}
-        
-        .documentation-content p {{
-            margin-bottom: 1.25rem;
-        }}
-        
-        .documentation-content ul,
-        .documentation-content ol {{
-            margin-bottom: 1.25rem;
-            padding-left: 1.75rem;
-        }}
-        
-        .documentation-content li {{
-            margin-bottom: 0.5rem;
-        }}
-        
-        .documentation-content pre {{
-            background-color: #f8f9fa;
-            border-radius: 0.5rem;
+        .code-sample {{
+            background-color: var(--light);
+            border-radius: 0.75rem;
             padding: 1.25rem;
             overflow-x: auto;
-            margin: 1.5rem 0;
-            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            border: 1px solid #e2e8f0;
+            font-family: 'Fira Code', 'Roboto Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--text);
+            border: 1px solid var(--border);
         }}
-        
-        .documentation-content code {{
-            background-color: #f1f1f1;
-            padding: 0.2rem 0.4rem;
-            border-radius: 0.25rem;
-            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-            font-size: 0.9rem;
-            color: #476582;
-        }}
-        
-        .documentation-content a {{
-            color: #3182ce;
-            text-decoration: none;
-            transition: color 0.2s;
-        }}
-        
-        .documentation-content a:hover {{
-            color: #2c5282;
-            text-decoration: underline;
-        }}
-        
-        /* Responsive adjustments */
-        @media (max-width: 768px) {{
-            .detail-panel {{
-                width: 100vw;
-                max-width: 100vw;
-            }}
-        }}
-        
-        {label_css}
     </style>
 </head>
 <body>
@@ -1501,7 +1584,7 @@ try:
         <div class="header-content">
             <div class="header-text">
                 <h1>Data & Use Cases Catalog</h1>
-                <p class="subtitle">Exploring data-driven solutions for global challenges across agriculture, langauge technology, climate action, energy, and more. Browse our collection of datasets and use cases for AI applications for sustainable development.</p>
+                <p class="subtitle">Exploring datasets and solutions for global challenges across agriculture, language technology, climate action, energy, and more. Browse our collection of datasets and use cases for AI applications for sustainable development.</p>
             </div>
             <a href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/" target="_blank">
                 <img src="img/fair_forward.png" alt="Fair Forward Logo" class="header-logo">
@@ -1541,7 +1624,9 @@ try:
     </div>
     
     <footer>
-        <p>&copy; {datetime.datetime.now().year} Fair Forward - Artificial Intelligence for All</p>
+        <div class="footer-content">
+            <p>&copy; {datetime.datetime.now().year} Fair Forward - Artificial Intelligence for All | A project by GIZ</p>
+        </div>
     </footer>
     
     {generate_js_code()}
