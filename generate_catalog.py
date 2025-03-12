@@ -914,13 +914,19 @@ try:
             flex: 1;
         }}
         
+        .header-logos {{
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-left: 2rem;
+        }}
+        
         .header-logo {{
             height: 70px;
             width: auto;
             opacity: 0.95;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.05));
-            margin-left: 2rem;
         }}
         
         .header-logo:hover {{
@@ -932,9 +938,7 @@ try:
             font-size: 2.5rem;
             margin-bottom: 1rem;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--title-color);
             letter-spacing: -0.02em;
             line-height: 1.2;
         }}
@@ -1586,9 +1590,14 @@ try:
                 <h1>Data & Use Cases Catalog</h1>
                 <p class="subtitle">Exploring datasets and solutions for global challenges across agriculture, language technology, climate action, energy, and more. Browse our collection of datasets and use cases for AI applications for sustainable development.</p>
             </div>
-            <a href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/" target="_blank">
-                <img src="img/fair_forward.png" alt="Fair Forward Logo" class="header-logo">
-            </a>
+            <div class="header-logos">
+                <a href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/" target="_blank">
+                    <img src="img/fair_forward.png" alt="Fair Forward Logo" class="header-logo">
+                </a>
+                <a href="https://www.bmz-digital.global/en/" target="_blank">
+                    <img src="img/digital_global.png" alt="Digital Global Logo" class="header-logo">
+                </a>
+            </div>
         </div>
     </header>
     
