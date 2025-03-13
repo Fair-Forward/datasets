@@ -5,6 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data & Use Cases Catalog</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Add enhanced side panel CSS -->
+    <link rel="stylesheet" href="enhanced_side_panel.css">
+    <!-- Add syntax highlighting for code blocks -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        // Initialize syntax highlighting when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            hljs.highlightAll();
+            
+            // Re-run highlighting when content is dynamically added
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.addedNodes.length) {
+                        hljs.highlightAll();
+                    }
+                });
+            });
+            
+            // Start observing the document body for changes
+            observer.observe(document.body, { childList: true, subtree: true });
+        });
+    </script>
     <style>
         :root {
             /* Claude.ai inspired color palette with Fair Forward influence */
@@ -468,12 +491,12 @@
         }
         
         
-.label-natural-language-processing {
+.label-climate-action {
     background-color: #e2cfcf;
     color: #2d3748;
 }
 
-.domain-natural-language-processing {
+.domain-climate-action {
     background-color: #e2cfcf;
     color: #2d3748;
 }
@@ -488,12 +511,12 @@
     color: #2d3748;
 }
 
-.label-climate-action {
+.label-natural-language-processing {
     background-color: #e2e2cf;
     color: #2d3748;
 }
 
-.domain-climate-action {
+.domain-natural-language-processing {
     background-color: #e2e2cf;
     color: #2d3748;
 }
@@ -503,42 +526,42 @@
     color: #2d3748;
 }
 
-.label-images {
+.label-tabular {
     background-color: #cfe2cf;
     color: #2d3748;
 }
 
-.label-audio {
+.label-geospatial {
     background-color: #cfe2d8;
     color: #2d3748;
 }
 
-.label-geospatial {
+.label-images {
     background-color: #cfe2e2;
     color: #2d3748;
 }
 
-.label-tabular {
+.label-audio {
     background-color: #cfd8e2;
     color: #2d3748;
 }
 
-.label-pilot {
+.label-use-case {
     background-color: #cfcfe2;
     color: #2d3748;
 }
 
-.label-use-case {
+.label-pilot {
     background-color: #d8cfe2;
     color: #2d3748;
 }
 
-.label-dataset {
+.label-use-case-with-business-model {
     background-color: #e2cfe2;
     color: #2d3748;
 }
 
-.label-use-case-with-business-model {
+.label-dataset {
     background-color: #e2cfd8;
     color: #2d3748;
 }
@@ -624,187 +647,8 @@
             display: none;
         }
         
-        .detail-panel {
-            position: fixed;
-            top: 0;
-            right: -800px;
-            width: 800px;
-            max-width: 90vw;
-            height: 100vh;
-            background-color: var(--card-bg);
-            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
+        /* Side panel styles are now in enhanced_side_panel.css */
         
-        .detail-panel.open {
-            right: 0;
-        }
-        
-        .detail-panel-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: rgba(0, 0, 0, 0.01);
-        }
-        
-        .detail-panel-header h2 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin: 0;
-            color: var(--text);
-        }
-        
-        .close-panel-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: var(--text-light);
-            font-size: 1.25rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 50%;
-            transition: all 0.2s;
-        }
-        
-        .close-panel-btn:hover {
-            background-color: rgba(0, 0, 0, 0.05);
-            color: var(--text);
-        }
-        
-        .detail-panel-content {
-            padding: 2rem;
-            overflow-y: auto;
-            flex-grow: 1;
-            line-height: 1.6;
-        }
-        
-        .panel-loader {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            color: var(--text-light);
-            padding: 2rem;
-        }
-        
-        .loader-spinner {
-            border: 3px solid rgba(59, 89, 152, 0.1);
-            border-top: 3px solid var(--primary);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin-bottom: 1.5rem;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .panel-data {
-            display: none;
-        }
-        
-        .panel-data.active {
-            display: block;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .panel-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(2px);
-            z-index: 999;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease;
-        }
-        
-        .panel-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .detail-section {
-            margin-bottom: 2.5rem;
-        }
-        
-        .detail-section h3 {
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .detail-section h3::before {
-            content: '';
-            display: block;
-            width: 4px;
-            height: 1.125rem;
-            background: var(--primary);
-            border-radius: 2px;
-        }
-        
-        .detail-info {
-            background-color: var(--light);
-            border-radius: 0.75rem;
-            padding: 1.25rem;
-        }
-        
-        .detail-row {
-            display: flex;
-            margin-bottom: 0.75rem;
-            font-size: 0.9375rem;
-        }
-        
-        .detail-row:last-child {
-            margin-bottom: 0;
-        }
-        
-        .detail-label {
-            font-weight: 500;
-            width: 120px;
-            color: var(--text-light);
-        }
-        
-        .detail-value {
-            flex: 1;
-            color: var(--text);
-        }
-        
-        .code-sample {
-            background-color: var(--light);
-            border-radius: 0.75rem;
-            padding: 1.25rem;
-            overflow-x: auto;
-            font-family: 'Fira Code', 'Roboto Mono', monospace;
-            font-size: 0.875rem;
-            color: var(--text);
-            border: 1px solid var(--border);
-        }
     </style>
 </head>
 <body>
@@ -883,7 +727,7 @@
     <div class="container">
         <div class="grid" id="dataGrid">
 
-    <div class="card has-dataset has-usecase" data-title="Leveraging ML for the Cashew sector" data-region="Ghana" data-id="0" data-dir-names="[&#x27;cadi_ai_project_ml4cashew&#x27;, &#x27;leveraging_ml_for_the_cashew_sector&#x27;]">
+    <div class="card has-dataset has-usecase" data-title="Leveraging ML for the Cashew sector" data-region="Ghana" data-id="0" data-dir-names="[&#x27;leveraging_ml_for_the_cashew_sector&#x27;, &#x27;cadi_ai_project_ml4cashew&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/cadi_ai_project_ml4cashew/images/cadiAI.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div><div class="domain-badge domain-agriculture">Agriculture</div></div>
@@ -965,7 +809,7 @@
         <div class="card-footer"><a href="https://source.coop/repositories/wadhwani-ai/wiai-pm-open-data/description; https://github.com/WadhwaniAI/pest-management-opendata?tab=readme-ov-file; https://huggingface.co/datasets/wadhwani-ai/pest-management-opendata" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><a href="https://github.com/WadhwaniAI/pest-monitoring, https://dl.acm.org/doi/10.1145/3394486.3403363" target="_blank" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Use Case</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Data-driven decision-making for farmers to increase climate resilience" data-region="India" data-id="12" data-dir-names="[&#x27;datadriven_decisionmaking_for_farmers_to_increase_climate_resilience&#x27;, &#x27;digital_green__local_dataset_collection_for_climatesmart_agriculture&#x27;, &#x27;geospatial_dataset_of_wheat_and_rice_farmers_in_bihar_india&#x27;]">
+    <div class="card has-dataset has-usecase" data-title="Data-driven decision-making for farmers to increase climate resilience" data-region="India" data-id="12" data-dir-names="[&#x27;datadriven_decisionmaking_for_farmers_to_increase_climate_resilience&#x27;, &#x27;geospatial_dataset_of_wheat_and_rice_farmers_in_bihar_india&#x27;, &#x27;digital_green__local_dataset_collection_for_climatesmart_agriculture&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/digital_green__local_dataset_collection_for_climatesmart_agriculture/images/image.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -985,7 +829,7 @@
         <div class="card-footer"><a href="https://github.com/digitalgreenorg/frame-templates" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><a href="https://github.com/digitalgreenorg/frame-templates" target="_blank" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Use Case</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset" data-title="Open Dataset of Farm Boundaries and Crop Cultivation in Telangana State" data-region="India" data-id="13" data-dir-names="[&#x27;ml4eo_telangana_crop_identification&#x27;, &#x27;support_sustainable_agriculture_in_telangana_through_aipowered_crop_identification&#x27;, &#x27;open_dataset_of_farm_boundaries_and_crop_cultivation_in_telangana_state&#x27;]">
+    <div class="card has-dataset" data-title="Open Dataset of Farm Boundaries and Crop Cultivation in Telangana State" data-region="India" data-id="13" data-dir-names="[&#x27;ml4eo_telangana_crop_identification&#x27;, &#x27;open_dataset_of_farm_boundaries_and_crop_cultivation_in_telangana_state&#x27;, &#x27;support_sustainable_agriculture_in_telangana_through_aipowered_crop_identification&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/ml4eo_telangana_crop_identification/images/image.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -1005,7 +849,7 @@
         <div class="card-footer"><a href="https://dataexplorer.ts.adex.org.in/dataset/583e8f01-160e-4f51-bde5-31dc7f2a5887" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Combatting Air Pollution and GHG Emissions in India through hyperlocal AI-powered mapping" data-region="India" data-id="14" data-dir-names="[&#x27;hyperlocal_mapping_of_air_pollution_and_ghg_emissions_in_india_with_undp&#x27;, &#x27;combatting_air_pollution_and_ghg_emissions_in_india_through_hyperlocal_aipowered_mapping&#x27;, &#x27;open_air_pollution_data_for_patna_and_gurugram&#x27;]">
+    <div class="card has-dataset has-usecase" data-title="Combatting Air Pollution and GHG Emissions in India through hyperlocal AI-powered mapping" data-region="India" data-id="14" data-dir-names="[&#x27;hyperlocal_mapping_of_air_pollution_and_ghg_emissions_in_india_with_undp&#x27;, &#x27;open_air_pollution_data_for_patna_and_gurugram&#x27;, &#x27;combatting_air_pollution_and_ghg_emissions_in_india_through_hyperlocal_aipowered_mapping&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             
@@ -1020,7 +864,7 @@
         <div class="card-footer"><a href="https://vayu.undp.org.in/" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><a href="https://vayu.undp.org.in/" target="_blank" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Use Case</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset" data-title="Open-source text-to-speech datasets in 9 Indian languages (Hindi | Bengali | Marathi | Telugu | Bhojpuri | Kannada | Magadhi | Chhattisgarhi | Maithili)" data-region="India" data-id="17" data-dir-names="[&#x27;iisc__open_voice_data_in_indian_languages&#x27;, &#x27;opensource_texttospeech_datasets_in_9_indian_languages_hindi__bengali__marathi__telugu__bhojpuri__kannada__magadhi__chhattisgarhi__maithili&#x27;, &#x27;build_inclusive_voice_technologies_in_9_indian_languages_through_open_language_datasets&#x27;]">
+    <div class="card has-dataset" data-title="Open-source text-to-speech datasets in 9 Indian languages (Hindi | Bengali | Marathi | Telugu | Bhojpuri | Kannada | Magadhi | Chhattisgarhi | Maithili)" data-region="India" data-id="17" data-dir-names="[&#x27;build_inclusive_voice_technologies_in_9_indian_languages_through_open_language_datasets&#x27;, &#x27;opensource_texttospeech_datasets_in_9_indian_languages_hindi__bengali__marathi__telugu__bhojpuri__kannada__magadhi__chhattisgarhi__maithili&#x27;, &#x27;iisc__open_voice_data_in_indian_languages&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
@@ -1104,7 +948,7 @@
         <div class="card-footer"><a href="https://gitlab.com/gramvaani/giz_kab_bert_sourcecode" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset" data-title="Question-Answer Pairs on Health Related Content in Telugu and Chhatisgarhi" data-region="India" data-id="22" data-dir-names="[&#x27;questionanswer_pairs_on_health_related_content_in_telugu_and_chhatisgarhi&#x27;, &#x27;empowering_women_across_india_with_knowledge_in_their_native_languages&#x27;, &#x27;digital_audio_content_creation_for_womens_empowerment_using_language_technologies&#x27;]">
+    <div class="card has-dataset" data-title="Question-Answer Pairs on Health Related Content in Telugu and Chhatisgarhi" data-region="India" data-id="22" data-dir-names="[&#x27;digital_audio_content_creation_for_womens_empowerment_using_language_technologies&#x27;, &#x27;empowering_women_across_india_with_knowledge_in_their_native_languages&#x27;, &#x27;questionanswer_pairs_on_health_related_content_in_telugu_and_chhatisgarhi&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             
@@ -1124,7 +968,7 @@
         <div class="card-footer"><a href="https://www.audiopedia.foundation/bharat" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset" data-title="HCSA: High Carbon Stock Mapping in Southeast Asia" data-region="Indonesien" data-id="24" data-dir-names="[&#x27;forest_forward_i_using_ai_to_map_carbonrich_forests_to_combat_climate_change_and_protect_livelihoods_in_indonesia_high_carbon_stock_approach&#x27;, &#x27;hcsa_high_carbon_stock_mapping_in_southeast_asia&#x27;]">
+    <div class="card has-dataset" data-title="HCSA: High Carbon Stock Mapping in Southeast Asia" data-region="Indonesien" data-id="24" data-dir-names="[&#x27;hcsa_high_carbon_stock_mapping_in_southeast_asia&#x27;, &#x27;forest_forward_i_using_ai_to_map_carbonrich_forests_to_combat_climate_change_and_protect_livelihoods_in_indonesia_high_carbon_stock_approach&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -1183,7 +1027,7 @@
         <div class="card-footer"><a href="https://beta.source.coop/repositories/radiantearth/south-africa-crops-competition/description/" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset" data-title="ML4EO for Precision Agriculture" data-region="South Africa" data-id="44" data-dir-names="[&#x27;enabling_geoscientists_to_use_machine_learning_for_precision_agriculture_of_geospatial_data&#x27;, &#x27;ml4eo_for_precision_agriculture&#x27;]">
+    <div class="card has-dataset" data-title="ML4EO for Precision Agriculture" data-region="South Africa" data-id="44" data-dir-names="[&#x27;ml4eo_for_precision_agriculture&#x27;, &#x27;enabling_geoscientists_to_use_machine_learning_for_precision_agriculture_of_geospatial_data&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             
@@ -1203,7 +1047,7 @@
         <div class="card-footer"><a href="TBC Jonas N" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset" data-title="NLP grant Localising Common Voice for South African Languages" data-region="South Africa" data-id="45" data-dir-names="[&#x27;nlp_grant_localising_common_voice_for_south_african_languages&#x27;, &#x27;making_voice_data_available_in_all_official_languages_of_south_africa_as_a_digital_public_good__voices_of_mzansi&#x27;]">
+    <div class="card has-dataset" data-title="NLP grant Localising Common Voice for South African Languages" data-region="South Africa" data-id="45" data-dir-names="[&#x27;making_voice_data_available_in_all_official_languages_of_south_africa_as_a_digital_public_good__voices_of_mzansi&#x27;, &#x27;nlp_grant_localising_common_voice_for_south_african_languages&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
@@ -1452,12 +1296,7 @@
             applyFilters();
             
             // Detail Panel Functionality
-            const detailPanel = document.getElementById('detailPanel');
-            const panelOverlay = document.getElementById('panelOverlay');
-            const closeDetailPanel = document.getElementById('closeDetailPanel');
-            const detailPanelTitle = document.getElementById('detailPanelTitle');
-            const detailPanelLoader = document.getElementById('detailPanelLoader');
-            const detailPanelData = document.getElementById('detailPanelData');
+            // Side panel functionality is now in enhanced_side_panel.js
             
             // Add event listeners for detail panel
             document.querySelectorAll('.btn-view-details').forEach(btn => {
@@ -1468,237 +1307,13 @@
                     openDetailPanel(title, id);
                 });
             });
-            
-            if (closeDetailPanel) {
-                closeDetailPanel.addEventListener('click', function() {
-                    detailPanel.classList.remove('open');
-                    panelOverlay.classList.remove('active');
-                    document.body.style.overflow = '';
-                });
-            }
-            
-            if (panelOverlay) {
-                panelOverlay.addEventListener('click', function() {
-                    detailPanel.classList.remove('open');
-                    panelOverlay.classList.remove('active');
-                    document.body.style.overflow = '';
-                });
-            }
-            
-            // Function to open the detail panel
-            function openDetailPanel(title, itemId) {
-                const detailPanel = document.getElementById('detailPanel');
-                const detailPanelTitle = document.getElementById('detailPanelTitle');
-                const detailPanelLoader = document.getElementById('detailPanelLoader');
-                const detailPanelData = document.getElementById('detailPanelData');
-                const panelOverlay = document.getElementById('panelOverlay');
-                
-                if (!detailPanel || !detailPanelTitle || !detailPanelLoader || !detailPanelData || !panelOverlay) {
-                    console.error('Could not find required panel elements');
-                    return;
-                }
-                
-                // Set title and show panel
-                detailPanelTitle.textContent = title;
-                detailPanel.classList.add('open');
-                panelOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-                
-                // Show loader and hide content
-                detailPanelLoader.style.display = 'flex';
-                detailPanelData.classList.remove('active');
-                detailPanelData.style.display = 'none';
-                
-                // Load the details
-                loadItemDetails(itemId);
-            }
-            
-            // Simple markdown parser
-            function parseMarkdown(markdown) {
-                if (!markdown) return '';
-                
-                // Remove the first h1 header if it exists
-                markdown = markdown.replace(/^# .*$/m, '').trim();
-                
-                // Replace headers
-                let html = markdown
-                    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
-                    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
-                    .replace(/^# (.*$)/gim, '<h1>$1</h1>');
-                
-                // Replace links
-                html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2" target="_blank">$1</a>');
-                
-                // Replace images
-                html = html.replace(/!\[([^\]]+)\]\(([^)]+)\)/gim, '<img src="$2" alt="$1" style="max-width:100%;">');
-                
-                // Replace bold text
-                html = html.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>');
-                
-                // Replace italic text
-                html = html.replace(/\*(.*?)\*/gim, '<em>$1</em>');
-                
-                // Replace code blocks
-                html = html.replace(/```([^`]+)```/gim, '<pre><code>$1</code></pre>');
-                
-                // Replace inline code
-                html = html.replace(/`([^`]+)`/gim, '<code>$1</code>');
-                
-                // Replace lists
-                html = html.replace(/^\s*\*\s(.*$)/gim, '<li>$1</li>');
-                html = html.replace(/(<li>.*<\/li>)/gim, '<ul>$1</ul>');
-                
-                // Replace paragraphs (must be done last)
-                html = html.replace(/^(?!<[a-z])(.*$)/gim, '<p>$1</p>');
-                
-                // Fix nested lists and paragraphs
-                html = html.replace(/<\/ul>\s*<ul>/gim, '');
-                html = html.replace(/<\/p>\s*<p>/gim, '</p><p>');
-                
-                return html;
-            }
-            
-            // Function to load item details
-            function loadItemDetails(itemId) {
-                const card = document.querySelector(`.card[data-id="${itemId}"]`);
-                if (!card) return;
-                
-                const title = card.getAttribute('data-title');
-                const tags = Array.from(card.querySelectorAll('.tag')).map(tag => tag.textContent);
-                const region = card.getAttribute('data-region');
-                const dirNamesStr = card.getAttribute('data-dir-names');
-                
-                // Parse the directory names from the data attribute
-                let dirNames = [];
-                try {
-                    dirNames = JSON.parse(dirNamesStr.replace(/'/g, '"'));
-                } catch (e) {
-                    console.error('Error parsing directory names:', e);
-                    // Fallback to old behavior
-                    dirNames = [title.toLowerCase().replace(/ /g, '_').replace(/[^a-z0-9_]/g, '')];
-                }
-                
-                console.log('Possible directory names:', dirNames);
-                
-                // Show loading state
-                const detailPanelLoader = document.getElementById('detailPanelLoader');
-                const detailPanelData = document.getElementById('detailPanelData');
-                
-                if (detailPanelLoader && detailPanelData) {
-                    detailPanelLoader.style.display = 'flex';
-                    detailPanelData.style.display = 'none';
-                }
-                
-                // Initialize content sections
-                let contentSections = {
-                    'Description': '',
-                    'Data Characteristics': '',
-                    'Model Characteristics': '',
-                    'How to Use It': ''
-                };
-                
-                // Create a counter to track when all fetches are complete
-                let fetchesCompleted = 0;
-                let totalFetches = 0;
-                
-                // Function to update the UI when all fetches are complete
-                function updateDetailPanel() {
-                    console.log('Updating panel with sections:', contentSections);
-                    let detailContent = '';
-                    
-                    // Add each section that has content
-                    for (const [section, content] of Object.entries(contentSections)) {
-                        if (content) {
-                            detailContent += `
-                                <div class="detail-section">
-                                    <h3>${section}</h3>
-                                    <div class="documentation-content">${content}</div>
-                                </div>
-                            `;
-                        }
-                    }
-                    
-                    // Add tags section
-                    detailContent += `
-                        <div class="detail-section">
-                            <h3>Tags</h3>
-                            <div class="tags">
-                                ${tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                            </div>
-                        </div>
-                    `;
-                    
-                    // Add region section if available
-                    if (region) {
-                        detailContent += `
-                            <div class="detail-section">
-                                <h3>Region</h3>
-                                <p>${region}</p>
-                            </div>
-                        `;
-                    }
-                    
-                    // Update the detail panel content
-                    const detailPanelData = document.getElementById('detailPanelData');
-                    const detailPanelLoader = document.getElementById('detailPanelLoader');
-                    
-                    if (detailPanelData && detailPanelLoader) {
-                        detailPanelData.innerHTML = detailContent;
-                        detailPanelLoader.style.display = 'none';
-                        detailPanelData.classList.add('active');
-                        detailPanelData.style.display = 'block';
-                    } else {
-                        console.error('Could not find detail panel elements');
-                    }
-                }
-                
-                // Function to try loading a file from multiple possible directories
-                async function tryLoadFile(fileName, section) {
-                    for (const dirName of dirNames) {
-                        const path = `./public/projects/${dirName}/docs/${fileName}`;
-                        console.log('Trying to load from:', path);
-                        try {
-                            const response = await fetch(path);
-                            if (response.ok) {
-                                const content = await response.text();
-                                console.log('Successfully loaded content from:', path);
-                                return parseMarkdown(content);
-                            }
-                        } catch (error) {
-                            console.log('Error loading from', path, ':', error);
-                        }
-                    }
-                    return null;
-                }
-                
-                // Files to try loading
-                const filesToLoad = [
-                    { fileName: 'description.md', section: 'Description' },
-                    { fileName: 'data_characteristics.md', section: 'Data Characteristics' },
-                    { fileName: 'model_characteristics.md', section: 'Model Characteristics' },
-                    { fileName: 'how_to_use.md', section: 'How to Use It' }
-                ];
-                
-                // Load all files
-                totalFetches = filesToLoad.length;
-                
-                filesToLoad.forEach(async file => {
-                    const content = await tryLoadFile(file.fileName, file.section);
-                    if (content) {
-                        contentSections[file.section] = content;
-                    }
-                    fetchesCompleted++;
-                    
-                    if (fetchesCompleted === totalFetches) {
-                        updateDetailPanel();
-                    }
-                });
-            }
         });
     </script>
     
     
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Add enhanced side panel JavaScript -->
+    <script src="enhanced_side_panel.js"></script>
 </body>
 </html>

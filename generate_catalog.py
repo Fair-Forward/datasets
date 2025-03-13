@@ -565,12 +565,7 @@ def generate_js_code():
             applyFilters();
             
             // Detail Panel Functionality
-            const detailPanel = document.getElementById('detailPanel');
-            const panelOverlay = document.getElementById('panelOverlay');
-            const closeDetailPanel = document.getElementById('closeDetailPanel');
-            const detailPanelTitle = document.getElementById('detailPanelTitle');
-            const detailPanelLoader = document.getElementById('detailPanelLoader');
-            const detailPanelData = document.getElementById('detailPanelData');
+            // Side panel functionality is now in enhanced_side_panel.js
             
             // Add event listeners for detail panel
             document.querySelectorAll('.btn-view-details').forEach(btn => {
@@ -581,232 +576,6 @@ def generate_js_code():
                     openDetailPanel(title, id);
                 });
             });
-            
-            if (closeDetailPanel) {
-                closeDetailPanel.addEventListener('click', function() {
-                    detailPanel.classList.remove('open');
-                    panelOverlay.classList.remove('active');
-                    document.body.style.overflow = '';
-                });
-            }
-            
-            if (panelOverlay) {
-                panelOverlay.addEventListener('click', function() {
-                    detailPanel.classList.remove('open');
-                    panelOverlay.classList.remove('active');
-                    document.body.style.overflow = '';
-                });
-            }
-            
-            // Function to open the detail panel
-            function openDetailPanel(title, itemId) {
-                const detailPanel = document.getElementById('detailPanel');
-                const detailPanelTitle = document.getElementById('detailPanelTitle');
-                const detailPanelLoader = document.getElementById('detailPanelLoader');
-                const detailPanelData = document.getElementById('detailPanelData');
-                const panelOverlay = document.getElementById('panelOverlay');
-                
-                if (!detailPanel || !detailPanelTitle || !detailPanelLoader || !detailPanelData || !panelOverlay) {
-                    console.error('Could not find required panel elements');
-                    return;
-                }
-                
-                // Set title and show panel
-                detailPanelTitle.textContent = title;
-                detailPanel.classList.add('open');
-                panelOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-                
-                // Show loader and hide content
-                detailPanelLoader.style.display = 'flex';
-                detailPanelData.classList.remove('active');
-                detailPanelData.style.display = 'none';
-                
-                // Load the details
-                loadItemDetails(itemId);
-            }
-            
-            // Simple markdown parser
-            function parseMarkdown(markdown) {
-                if (!markdown) return '';
-                
-                // Remove the first h1 header if it exists
-                markdown = markdown.replace(/^# .*$/m, '').trim();
-                
-                // Replace headers
-                let html = markdown
-                    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
-                    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
-                    .replace(/^# (.*$)/gim, '<h1>$1</h1>');
-                
-                // Replace links
-                html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2" target="_blank">$1</a>');
-                
-                // Replace images
-                html = html.replace(/!\[([^\]]+)\]\(([^)]+)\)/gim, '<img src="$2" alt="$1" style="max-width:100%;">');
-                
-                // Replace bold text
-                html = html.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>');
-                
-                // Replace italic text
-                html = html.replace(/\*(.*?)\*/gim, '<em>$1</em>');
-                
-                // Replace code blocks
-                html = html.replace(/```([^`]+)```/gim, '<pre><code>$1</code></pre>');
-                
-                // Replace inline code
-                html = html.replace(/`([^`]+)`/gim, '<code>$1</code>');
-                
-                // Replace lists
-                html = html.replace(/^\s*\*\s(.*$)/gim, '<li>$1</li>');
-                html = html.replace(/(<li>.*<\/li>)/gim, '<ul>$1</ul>');
-                
-                // Replace paragraphs (must be done last)
-                html = html.replace(/^(?!<[a-z])(.*$)/gim, '<p>$1</p>');
-                
-                // Fix nested lists and paragraphs
-                html = html.replace(/<\/ul>\s*<ul>/gim, '');
-                html = html.replace(/<\/p>\s*<p>/gim, '</p><p>');
-                
-                return html;
-            }
-            
-            // Function to load item details
-            function loadItemDetails(itemId) {
-                const card = document.querySelector(`.card[data-id="${itemId}"]`);
-                if (!card) return;
-                
-                const title = card.getAttribute('data-title');
-                const tags = Array.from(card.querySelectorAll('.tag')).map(tag => tag.textContent);
-                const region = card.getAttribute('data-region');
-                const dirNamesStr = card.getAttribute('data-dir-names');
-                
-                // Parse the directory names from the data attribute
-                let dirNames = [];
-                try {
-                    dirNames = JSON.parse(dirNamesStr.replace(/'/g, '"'));
-                } catch (e) {
-                    console.error('Error parsing directory names:', e);
-                    // Fallback to old behavior
-                    dirNames = [title.toLowerCase().replace(/ /g, '_').replace(/[^a-z0-9_]/g, '')];
-                }
-                
-                console.log('Possible directory names:', dirNames);
-                
-                // Show loading state
-                const detailPanelLoader = document.getElementById('detailPanelLoader');
-                const detailPanelData = document.getElementById('detailPanelData');
-                
-                if (detailPanelLoader && detailPanelData) {
-                    detailPanelLoader.style.display = 'flex';
-                    detailPanelData.style.display = 'none';
-                }
-                
-                // Initialize content sections
-                let contentSections = {
-                    'Description': '',
-                    'Data Characteristics': '',
-                    'Model Characteristics': '',
-                    'How to Use It': ''
-                };
-                
-                // Create a counter to track when all fetches are complete
-                let fetchesCompleted = 0;
-                let totalFetches = 0;
-                
-                // Function to update the UI when all fetches are complete
-                function updateDetailPanel() {
-                    console.log('Updating panel with sections:', contentSections);
-                    let detailContent = '';
-                    
-                    // Add each section that has content
-                    for (const [section, content] of Object.entries(contentSections)) {
-                        if (content) {
-                            detailContent += `
-                                <div class="detail-section">
-                                    <h3>${section}</h3>
-                                    <div class="documentation-content">${content}</div>
-                                </div>
-                            `;
-                        }
-                    }
-                    
-                    // Add tags section
-                    detailContent += `
-                        <div class="detail-section">
-                            <h3>Tags</h3>
-                            <div class="tags">
-                                ${tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                            </div>
-                        </div>
-                    `;
-                    
-                    // Add region section if available
-                    if (region) {
-                        detailContent += `
-                            <div class="detail-section">
-                                <h3>Region</h3>
-                                <p>${region}</p>
-                            </div>
-                        `;
-                    }
-                    
-                    // Update the detail panel content
-                    const detailPanelData = document.getElementById('detailPanelData');
-                    const detailPanelLoader = document.getElementById('detailPanelLoader');
-                    
-                    if (detailPanelData && detailPanelLoader) {
-                        detailPanelData.innerHTML = detailContent;
-                        detailPanelLoader.style.display = 'none';
-                        detailPanelData.classList.add('active');
-                        detailPanelData.style.display = 'block';
-                    } else {
-                        console.error('Could not find detail panel elements');
-                    }
-                }
-                
-                // Function to try loading a file from multiple possible directories
-                async function tryLoadFile(fileName, section) {
-                    for (const dirName of dirNames) {
-                        const path = `./public/projects/${dirName}/docs/${fileName}`;
-                        console.log('Trying to load from:', path);
-                        try {
-                            const response = await fetch(path);
-                            if (response.ok) {
-                                const content = await response.text();
-                                console.log('Successfully loaded content from:', path);
-                                return parseMarkdown(content);
-                            }
-                        } catch (error) {
-                            console.log('Error loading from', path, ':', error);
-                        }
-                    }
-                    return null;
-                }
-                
-                // Files to try loading
-                const filesToLoad = [
-                    { fileName: 'description.md', section: 'Description' },
-                    { fileName: 'data_characteristics.md', section: 'Data Characteristics' },
-                    { fileName: 'model_characteristics.md', section: 'Model Characteristics' },
-                    { fileName: 'how_to_use.md', section: 'How to Use It' }
-                ];
-                
-                // Load all files
-                totalFetches = filesToLoad.length;
-                
-                filesToLoad.forEach(async file => {
-                    const content = await tryLoadFile(file.fileName, file.section);
-                    if (content) {
-                        contentSections[file.section] = content;
-                    }
-                    fetchesCompleted++;
-                    
-                    if (fetchesCompleted === totalFetches) {
-                        updateDetailPanel();
-                    }
-                });
-            }
         });
     </script>
     '''
@@ -856,6 +625,29 @@ try:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data & Use Cases Catalog</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Add enhanced side panel CSS -->
+    <link rel="stylesheet" href="enhanced_side_panel.css">
+    <!-- Add syntax highlighting for code blocks -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        // Initialize syntax highlighting when the page loads
+        document.addEventListener('DOMContentLoaded', function() {{
+            hljs.highlightAll();
+            
+            // Re-run highlighting when content is dynamically added
+            const observer = new MutationObserver(function(mutations) {{
+                mutations.forEach(function(mutation) {{
+                    if (mutation.addedNodes.length) {{
+                        hljs.highlightAll();
+                    }}
+                }});
+            }});
+            
+            // Start observing the document body for changes
+            observer.observe(document.body, {{ childList: true, subtree: true }});
+        }});
+    </script>
     <style>
         :root {{
             /* Claude.ai inspired color palette with Fair Forward influence */
@@ -1400,187 +1192,8 @@ try:
             display: none;
         }}
         
-        .detail-panel {{
-            position: fixed;
-            top: 0;
-            right: -800px;
-            width: 800px;
-            max-width: 90vw;
-            height: 100vh;
-            background-color: var(--card-bg);
-            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }}
+        /* Side panel styles are now in enhanced_side_panel.css */
         
-        .detail-panel.open {{
-            right: 0;
-        }}
-        
-        .detail-panel-header {{
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: rgba(0, 0, 0, 0.01);
-        }}
-        
-        .detail-panel-header h2 {{
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin: 0;
-            color: var(--text);
-        }}
-        
-        .close-panel-btn {{
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: var(--text-light);
-            font-size: 1.25rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 50%;
-            transition: all 0.2s;
-        }}
-        
-        .close-panel-btn:hover {{
-            background-color: rgba(0, 0, 0, 0.05);
-            color: var(--text);
-        }}
-        
-        .detail-panel-content {{
-            padding: 2rem;
-            overflow-y: auto;
-            flex-grow: 1;
-            line-height: 1.6;
-        }}
-        
-        .panel-loader {{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            color: var(--text-light);
-            padding: 2rem;
-        }}
-        
-        .loader-spinner {{
-            border: 3px solid rgba(59, 89, 152, 0.1);
-            border-top: 3px solid var(--primary);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin-bottom: 1.5rem;
-        }}
-        
-        @keyframes spin {{
-            0% {{ transform: rotate(0deg); }}
-            100% {{ transform: rotate(360deg); }}
-        }}
-        
-        .panel-data {{
-            display: none;
-        }}
-        
-        .panel-data.active {{
-            display: block;
-            animation: fadeIn 0.3s ease-in-out;
-        }}
-        
-        @keyframes fadeIn {{
-            from {{ opacity: 0; transform: translateY(10px); }}
-            to {{ opacity: 1; transform: translateY(0); }}
-        }}
-        
-        .panel-overlay {{
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(2px);
-            z-index: 999;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease;
-        }}
-        
-        .panel-overlay.active {{
-            opacity: 1;
-            visibility: visible;
-        }}
-        
-        .detail-section {{
-            margin-bottom: 2.5rem;
-        }}
-        
-        .detail-section h3 {{
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }}
-        
-        .detail-section h3::before {{
-            content: '';
-            display: block;
-            width: 4px;
-            height: 1.125rem;
-            background: var(--primary);
-            border-radius: 2px;
-        }}
-        
-        .detail-info {{
-            background-color: var(--light);
-            border-radius: 0.75rem;
-            padding: 1.25rem;
-        }}
-        
-        .detail-row {{
-            display: flex;
-            margin-bottom: 0.75rem;
-            font-size: 0.9375rem;
-        }}
-        
-        .detail-row:last-child {{
-            margin-bottom: 0;
-        }}
-        
-        .detail-label {{
-            font-weight: 500;
-            width: 120px;
-            color: var(--text-light);
-        }}
-        
-        .detail-value {{
-            flex: 1;
-            color: var(--text);
-        }}
-        
-        .code-sample {{
-            background-color: var(--light);
-            border-radius: 0.75rem;
-            padding: 1.25rem;
-            overflow-x: auto;
-            font-family: 'Fira Code', 'Roboto Mono', monospace;
-            font-size: 0.875rem;
-            color: var(--text);
-            border: 1px solid var(--border);
-        }}
     </style>
 </head>
 <body>
@@ -1642,6 +1255,8 @@ try:
     
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Add enhanced side panel JavaScript -->
+    <script src="enhanced_side_panel.js"></script>
 </body>
 </html>
 '''
