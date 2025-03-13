@@ -470,6 +470,16 @@
                 min-width: 100%;
             }
             
+            .share-filter-group {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+            
+            .btn-share-view {
+                width: 100%;
+                justify-content: center;
+            }
+            
             .grid {
                 grid-template-columns: 1fr;
             }
@@ -491,42 +501,42 @@
         }
         
         
-.label-natural-language-processing {
-    background-color: #e2cfcf;
-    color: #2d3748;
-}
-
-.domain-natural-language-processing {
-    background-color: #e2cfcf;
-    color: #2d3748;
-}
-
-.label-climate-action {
-    background-color: #e2d8cf;
-    color: #2d3748;
-}
-
-.domain-climate-action {
-    background-color: #e2d8cf;
-    color: #2d3748;
-}
-
 .label-agriculture {
-    background-color: #e2e2cf;
+    background-color: #e2cfcf;
     color: #2d3748;
 }
 
 .domain-agriculture {
+    background-color: #e2cfcf;
+    color: #2d3748;
+}
+
+.label-natural-language-processing {
+    background-color: #e2d8cf;
+    color: #2d3748;
+}
+
+.domain-natural-language-processing {
+    background-color: #e2d8cf;
+    color: #2d3748;
+}
+
+.label-climate-action {
     background-color: #e2e2cf;
     color: #2d3748;
 }
 
-.label-geospatial {
+.domain-climate-action {
+    background-color: #e2e2cf;
+    color: #2d3748;
+}
+
+.label-images {
     background-color: #d8e2cf;
     color: #2d3748;
 }
 
-.label-text {
+.label-audio {
     background-color: #cfe2cf;
     color: #2d3748;
 }
@@ -536,17 +546,17 @@
     color: #2d3748;
 }
 
-.label-images {
+.label-text {
     background-color: #cfe2e2;
     color: #2d3748;
 }
 
-.label-audio {
+.label-geospatial {
     background-color: #cfd8e2;
     color: #2d3748;
 }
 
-.label-dataset {
+.label-pilot {
     background-color: #cfcfe2;
     color: #2d3748;
 }
@@ -556,12 +566,12 @@
     color: #2d3748;
 }
 
-.label-pilot {
+.label-use-case {
     background-color: #e2cfe2;
     color: #2d3748;
 }
 
-.label-use-case {
+.label-dataset {
     background-color: #e2cfd8;
     color: #2d3748;
 }
@@ -649,6 +659,35 @@
         
         /* Side panel styles are now in enhanced_side_panel.css */
         
+        .share-filter-group {
+            margin-left: auto;
+        }
+        
+        .btn-share-view {
+            background-color: #f0f9ff;
+            color: #3b82f6;
+            border: 1px solid #bfdbfe;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-share-view:hover {
+            background-color: #e0f2fe;
+            transform: translateY(-2px);
+        }
+        
+        .btn-share-view.copied {
+            background-color: #ecfdf5;
+            color: #10b981;
+            border-color: #a7f3d0;
+        }
     </style>
 </head>
 <body>
@@ -720,6 +759,11 @@
 <option value="Uganda">Uganda</option>
                 </select>
             </div>
+            <div class="filter-group share-filter-group">
+                <button id="shareViewBtn" class="btn-share-view" title="Copy link to share this filtered view">
+                    <i class="fas fa-share-alt"></i> Share this view
+                </button>
+            </div>
         </div>
     </div>
     
@@ -767,7 +811,7 @@
         <div class="card-footer"><a href="https://huggingface.co/datasets/data354/Africa_Biomass_dataset" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset" data-title="Ghana Biomass Challenge: Ghana Crop Disease Detection Challenge" data-region="Ghana" data-id="2" data-dir-names="[&#x27;ghana_biomass_challenge_ghana_crop_disease_detection_challenge&#x27;, &#x27;leveraging_ml_for_crop_disease_detection&#x27;]">
+    <div class="card has-dataset" data-title="Ghana Biomass Challenge: Ghana Crop Disease Detection Challenge" data-region="Ghana" data-id="2" data-dir-names="[&#x27;leveraging_ml_for_crop_disease_detection&#x27;, &#x27;ghana_biomass_challenge_ghana_crop_disease_detection_challenge&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/ghana_biomass_challenge_ghana_crop_disease_detection_challenge/images/ghana_crop.JPG');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div></div>
@@ -829,7 +873,7 @@
         <div class="card-footer"><a href="https://github.com/digitalgreenorg/frame-templates" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><a href="https://github.com/digitalgreenorg/frame-templates" target="_blank" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Use Case</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset" data-title="Open Dataset of Farm Boundaries and Crop Cultivation in Telangana State" data-region="India" data-id="13" data-dir-names="[&#x27;support_sustainable_agriculture_in_telangana_through_aipowered_crop_identification&#x27;, &#x27;ml4eo_telangana_crop_identification&#x27;, &#x27;open_dataset_of_farm_boundaries_and_crop_cultivation_in_telangana_state&#x27;]">
+    <div class="card has-dataset" data-title="Open Dataset of Farm Boundaries and Crop Cultivation in Telangana State" data-region="India" data-id="13" data-dir-names="[&#x27;ml4eo_telangana_crop_identification&#x27;, &#x27;support_sustainable_agriculture_in_telangana_through_aipowered_crop_identification&#x27;, &#x27;open_dataset_of_farm_boundaries_and_crop_cultivation_in_telangana_state&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/ml4eo_telangana_crop_identification/images/image.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -849,7 +893,7 @@
         <div class="card-footer"><a href="https://dataexplorer.ts.adex.org.in/dataset/583e8f01-160e-4f51-bde5-31dc7f2a5887" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Combatting Air Pollution and GHG Emissions in India through hyperlocal AI-powered mapping" data-region="India" data-id="14" data-dir-names="[&#x27;open_air_pollution_data_for_patna_and_gurugram&#x27;, &#x27;combatting_air_pollution_and_ghg_emissions_in_india_through_hyperlocal_aipowered_mapping&#x27;, &#x27;hyperlocal_mapping_of_air_pollution_and_ghg_emissions_in_india_with_undp&#x27;]">
+    <div class="card has-dataset has-usecase" data-title="Combatting Air Pollution and GHG Emissions in India through hyperlocal AI-powered mapping" data-region="India" data-id="14" data-dir-names="[&#x27;hyperlocal_mapping_of_air_pollution_and_ghg_emissions_in_india_with_undp&#x27;, &#x27;open_air_pollution_data_for_patna_and_gurugram&#x27;, &#x27;combatting_air_pollution_and_ghg_emissions_in_india_through_hyperlocal_aipowered_mapping&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             
@@ -864,7 +908,7 @@
         <div class="card-footer"><a href="https://vayu.undp.org.in/" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><a href="https://vayu.undp.org.in/" target="_blank" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Use Case</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset" data-title="Open-source text-to-speech datasets in 9 Indian languages (Hindi | Bengali | Marathi | Telugu | Bhojpuri | Kannada | Magadhi | Chhattisgarhi | Maithili)" data-region="India" data-id="17" data-dir-names="[&#x27;build_inclusive_voice_technologies_in_9_indian_languages_through_open_language_datasets&#x27;, &#x27;iisc__open_voice_data_in_indian_languages&#x27;, &#x27;opensource_texttospeech_datasets_in_9_indian_languages_hindi__bengali__marathi__telugu__bhojpuri__kannada__magadhi__chhattisgarhi__maithili&#x27;]">
+    <div class="card has-dataset" data-title="Open-source text-to-speech datasets in 9 Indian languages (Hindi | Bengali | Marathi | Telugu | Bhojpuri | Kannada | Magadhi | Chhattisgarhi | Maithili)" data-region="India" data-id="17" data-dir-names="[&#x27;opensource_texttospeech_datasets_in_9_indian_languages_hindi__bengali__marathi__telugu__bhojpuri__kannada__magadhi__chhattisgarhi__maithili&#x27;, &#x27;iisc__open_voice_data_in_indian_languages&#x27;, &#x27;build_inclusive_voice_technologies_in_9_indian_languages_through_open_language_datasets&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
@@ -968,7 +1012,7 @@
         <div class="card-footer"><a href="https://www.audiopedia.foundation/bharat" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset" data-title="HCSA: High Carbon Stock Mapping in Southeast Asia" data-region="Indonesien" data-id="24" data-dir-names="[&#x27;hcsa_high_carbon_stock_mapping_in_southeast_asia&#x27;, &#x27;forest_forward_i_using_ai_to_map_carbonrich_forests_to_combat_climate_change_and_protect_livelihoods_in_indonesia_high_carbon_stock_approach&#x27;]">
+    <div class="card has-dataset" data-title="HCSA: High Carbon Stock Mapping in Southeast Asia" data-region="Indonesien" data-id="24" data-dir-names="[&#x27;forest_forward_i_using_ai_to_map_carbonrich_forests_to_combat_climate_change_and_protect_livelihoods_in_indonesia_high_carbon_stock_approach&#x27;, &#x27;hcsa_high_carbon_stock_mapping_in_southeast_asia&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -992,7 +1036,7 @@
         <div class="card-footer"><a href="https://huggingface.co/datasets/HCSA/HCSA_Indonesia_Forest_Plot_Data_2023" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset" data-title="Use case development Indonesia" data-region="Indonesien" data-id="26" data-dir-names="[&#x27;climate_disinformation_in_local_indonesian_languages&#x27;, &#x27;use_case_development_indonesia&#x27;]">
+    <div class="card has-dataset" data-title="Use case development Indonesia" data-region="Indonesien" data-id="26" data-dir-names="[&#x27;use_case_development_indonesia&#x27;, &#x27;climate_disinformation_in_local_indonesian_languages&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
@@ -1087,7 +1131,7 @@
         <div class="card-footer"><a href="https://lamwo-electrification-demo.vercel.app/" target="_blank" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Use Case</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Croppie- helping smallholder coffee producers to plan sales, get loans, and trace coffee - AI powered coffee yield prediction" data-region="Uganda" data-id="47" data-dir-names="[&#x27;croppie_coffee_yield_prediction&#x27;, &#x27;croppie_helping_smallholder_coffee_producers_to_plan_sales_get_loans_and_trace_coffee__ai_powered_coffee_yield_prediction&#x27;]">
+    <div class="card has-dataset has-usecase" data-title="Croppie- helping smallholder coffee producers to plan sales, get loans, and trace coffee - AI powered coffee yield prediction" data-region="Uganda" data-id="47" data-dir-names="[&#x27;croppie_helping_smallholder_coffee_producers_to_plan_sales_get_loans_and_trace_coffee__ai_powered_coffee_yield_prediction&#x27;, &#x27;croppie_coffee_yield_prediction&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -1107,7 +1151,7 @@
         <div class="card-footer"><a href="https://huggingface.co/datasets/rgautroncgiar/croppie_coffee_ug" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><a href="https://huggingface.co/rgautroncgiar/croppie_coffee_ug" target="_blank" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Use Case</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Finding good spots for decentralized green energy grids in Uganda I - AI based site identification for MiniGrids" data-region="Uganda" data-id="48" data-dir-names="[&#x27;scaling_mlbased_site_identification_for_minigrids_uganda&#x27;, &#x27;finding_good_spots_for_decentralized_green_energy_grids_in_uganda_i__ai_based_site_identification_for_minigrids&#x27;]">
+    <div class="card has-dataset has-usecase" data-title="Finding good spots for decentralized green energy grids in Uganda I - AI based site identification for MiniGrids" data-region="Uganda" data-id="48" data-dir-names="[&#x27;finding_good_spots_for_decentralized_green_energy_grids_in_uganda_i__ai_based_site_identification_for_minigrids&#x27;, &#x27;scaling_mlbased_site_identification_for_minigrids_uganda&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -1127,7 +1171,7 @@
         <div class="card-footer"><a href="https://github.com/SunbirdAI/lamwo-electrification-project/tree/main" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><a href="https://github.com/SunbirdAI/lamwo-electrification-project/tree/main" target="_blank" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Use Case</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
     </div>
     
-    <div class="card has-usecase" data-title="Predicting and Correcting Solar Irradiance wih unbiased AI Models in East Africa" data-region="Uganda" data-id="49" data-dir-names="[&#x27;development_of_unbiased_ai_models_for_solar_irradiance_uganda&#x27;, &#x27;predicting_and_correcting_solar_irradiance_wih_unbiased_ai_models_in_east_africa&#x27;]">
+    <div class="card has-usecase" data-title="Predicting and Correcting Solar Irradiance wih unbiased AI Models in East Africa" data-region="Uganda" data-id="49" data-dir-names="[&#x27;predicting_and_correcting_solar_irradiance_wih_unbiased_ai_models_in_east_africa&#x27;, &#x27;development_of_unbiased_ai_models_for_solar_irradiance_uganda&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             
@@ -1198,31 +1242,101 @@
             let selectedDomain = 'all';
             let selectedDataType = 'all';
             let selectedRegion = 'all';
+            let selectedItemId = null;
+            
+            // Function to parse URL parameters
+            function getUrlParams() {
+                const params = new URLSearchParams(window.location.search);
+                return {
+                    search: params.get('search') || '',
+                    view: params.get('view') || 'all',
+                    domain: params.get('domain') || 'all',
+                    dataType: params.get('dataType') || 'all',
+                    region: params.get('region') || 'all',
+                    item: params.get('item') || null
+                };
+            }
+            
+            // Function to update URL with current filters
+            function updateUrl(openPanel = false) {
+                const params = new URLSearchParams();
+                
+                // Only add parameters that are not default values
+                if (searchTerm) params.set('search', searchTerm);
+                if (currentView !== 'all') params.set('view', currentView);
+                if (selectedDomain !== 'all') params.set('domain', selectedDomain);
+                if (selectedDataType !== 'all') params.set('dataType', selectedDataType);
+                if (selectedRegion !== 'all') params.set('region', selectedRegion);
+                if (selectedItemId && openPanel) params.set('item', selectedItemId);
+                
+                // Update URL without reloading the page
+                const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+                window.history.pushState({ path: newUrl }, '', newUrl);
+            }
+            
+            // Function to apply filters from URL parameters
+            function applyUrlParams() {
+                const params = getUrlParams();
+                
+                // Set filter values from URL parameters
+                searchTerm = params.search;
+                currentView = params.view;
+                selectedDomain = params.domain;
+                selectedDataType = params.dataType;
+                selectedRegion = params.region;
+                selectedItemId = params.item;
+                
+                // Update UI to match URL parameters
+                if (searchTerm) searchInput.value = searchTerm;
+                if (currentView) viewFilter.value = currentView;
+                if (selectedDomain) domainFilter.value = selectedDomain;
+                if (selectedDataType) dataTypeFilter.value = selectedDataType;
+                if (selectedRegion) regionFilter.value = selectedRegion;
+                
+                // Apply filters
+                applyFilters();
+                
+                // Open detail panel if item is specified
+                if (selectedItemId) {
+                    const card = document.querySelector(`.card[data-id="${selectedItemId}"]`);
+                    if (card) {
+                        const title = card.getAttribute('data-title');
+                        setTimeout(() => {
+                            openDetailPanel(title, selectedItemId);
+                        }, 300); // Small delay to ensure filters are applied first
+                    }
+                }
+            }
             
             // Add event listeners for filters
             searchInput.addEventListener('input', function() {
                 searchTerm = this.value.toLowerCase();
                 applyFilters();
+                updateUrl();
             });
             
             viewFilter.addEventListener('change', function() {
                 currentView = this.value;
                 applyFilters();
+                updateUrl();
             });
             
             domainFilter.addEventListener('change', function() {
                 selectedDomain = this.value;
                 applyFilters();
+                updateUrl();
             });
             
             dataTypeFilter.addEventListener('change', function() {
                 selectedDataType = this.value;
                 applyFilters();
+                updateUrl();
             });
             
             regionFilter.addEventListener('change', function() {
                 selectedRegion = this.value;
                 applyFilters();
+                updateUrl();
             });
             
             // Set up read more buttons
@@ -1307,21 +1421,47 @@
                 emptyState.classList.toggle('visible', visibleCards === 0);
             }
             
-            // Initial filter application
-            applyFilters();
-            
-            // Detail Panel Functionality
-            // Side panel functionality is now in enhanced_side_panel.js
-            
             // Add event listeners for detail panel
             document.querySelectorAll('.btn-view-details').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const card = this.closest('.card');
                     const title = card.getAttribute('data-title');
                     const id = card.getAttribute('data-id');
+                    selectedItemId = id;
                     openDetailPanel(title, id);
+                    updateUrl(true); // Update URL with item ID
                 });
             });
+            
+            // Apply URL parameters on page load
+            applyUrlParams();
+            
+            // Handle browser back/forward navigation
+            window.addEventListener('popstate', function() {
+                applyUrlParams();
+            });
+            
+            // Share view button functionality
+            const shareViewBtn = document.getElementById('shareViewBtn');
+            if (shareViewBtn) {
+                shareViewBtn.addEventListener('click', function() {
+                    // Copy current URL to clipboard
+                    navigator.clipboard.writeText(window.location.href).then(() => {
+                        // Show success feedback
+                        const originalHTML = this.innerHTML;
+                        this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        this.classList.add('copied');
+                        
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            this.innerHTML = originalHTML;
+                            this.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy URL: ', err);
+                    });
+                });
+            }
         });
     </script>
     

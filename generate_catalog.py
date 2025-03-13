@@ -427,6 +427,11 @@ def generate_filter_html(domains, data_types, regions):
                     {region_options}
                 </select>
             </div>
+            <div class="filter-group share-filter-group">
+                <button id="shareViewBtn" class="btn-share-view" title="Copy link to share this filtered view">
+                    <i class="fas fa-share-alt"></i> Share this view
+                </button>
+            </div>
         </div>
     </div>
     '''
@@ -452,31 +457,101 @@ def generate_js_code():
             let selectedDomain = 'all';
             let selectedDataType = 'all';
             let selectedRegion = 'all';
+            let selectedItemId = null;
+            
+            // Function to parse URL parameters
+            function getUrlParams() {
+                const params = new URLSearchParams(window.location.search);
+                return {
+                    search: params.get('search') || '',
+                    view: params.get('view') || 'all',
+                    domain: params.get('domain') || 'all',
+                    dataType: params.get('dataType') || 'all',
+                    region: params.get('region') || 'all',
+                    item: params.get('item') || null
+                };
+            }
+            
+            // Function to update URL with current filters
+            function updateUrl(openPanel = false) {
+                const params = new URLSearchParams();
+                
+                // Only add parameters that are not default values
+                if (searchTerm) params.set('search', searchTerm);
+                if (currentView !== 'all') params.set('view', currentView);
+                if (selectedDomain !== 'all') params.set('domain', selectedDomain);
+                if (selectedDataType !== 'all') params.set('dataType', selectedDataType);
+                if (selectedRegion !== 'all') params.set('region', selectedRegion);
+                if (selectedItemId && openPanel) params.set('item', selectedItemId);
+                
+                // Update URL without reloading the page
+                const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+                window.history.pushState({ path: newUrl }, '', newUrl);
+            }
+            
+            // Function to apply filters from URL parameters
+            function applyUrlParams() {
+                const params = getUrlParams();
+                
+                // Set filter values from URL parameters
+                searchTerm = params.search;
+                currentView = params.view;
+                selectedDomain = params.domain;
+                selectedDataType = params.dataType;
+                selectedRegion = params.region;
+                selectedItemId = params.item;
+                
+                // Update UI to match URL parameters
+                if (searchTerm) searchInput.value = searchTerm;
+                if (currentView) viewFilter.value = currentView;
+                if (selectedDomain) domainFilter.value = selectedDomain;
+                if (selectedDataType) dataTypeFilter.value = selectedDataType;
+                if (selectedRegion) regionFilter.value = selectedRegion;
+                
+                // Apply filters
+                applyFilters();
+                
+                // Open detail panel if item is specified
+                if (selectedItemId) {
+                    const card = document.querySelector(`.card[data-id="${selectedItemId}"]`);
+                    if (card) {
+                        const title = card.getAttribute('data-title');
+                        setTimeout(() => {
+                            openDetailPanel(title, selectedItemId);
+                        }, 300); // Small delay to ensure filters are applied first
+                    }
+                }
+            }
             
             // Add event listeners for filters
             searchInput.addEventListener('input', function() {
                 searchTerm = this.value.toLowerCase();
                 applyFilters();
+                updateUrl();
             });
             
             viewFilter.addEventListener('change', function() {
                 currentView = this.value;
                 applyFilters();
+                updateUrl();
             });
             
             domainFilter.addEventListener('change', function() {
                 selectedDomain = this.value;
                 applyFilters();
+                updateUrl();
             });
             
             dataTypeFilter.addEventListener('change', function() {
                 selectedDataType = this.value;
                 applyFilters();
+                updateUrl();
             });
             
             regionFilter.addEventListener('change', function() {
                 selectedRegion = this.value;
                 applyFilters();
+                updateUrl();
             });
             
             // Set up read more buttons
@@ -561,21 +636,47 @@ def generate_js_code():
                 emptyState.classList.toggle('visible', visibleCards === 0);
             }
             
-            // Initial filter application
-            applyFilters();
-            
-            // Detail Panel Functionality
-            // Side panel functionality is now in enhanced_side_panel.js
-            
             // Add event listeners for detail panel
             document.querySelectorAll('.btn-view-details').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const card = this.closest('.card');
                     const title = card.getAttribute('data-title');
                     const id = card.getAttribute('data-id');
+                    selectedItemId = id;
                     openDetailPanel(title, id);
+                    updateUrl(true); // Update URL with item ID
                 });
             });
+            
+            // Apply URL parameters on page load
+            applyUrlParams();
+            
+            // Handle browser back/forward navigation
+            window.addEventListener('popstate', function() {
+                applyUrlParams();
+            });
+            
+            // Share view button functionality
+            const shareViewBtn = document.getElementById('shareViewBtn');
+            if (shareViewBtn) {
+                shareViewBtn.addEventListener('click', function() {
+                    // Copy current URL to clipboard
+                    navigator.clipboard.writeText(window.location.href).then(() => {
+                        // Show success feedback
+                        const originalHTML = this.innerHTML;
+                        this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        this.classList.add('copied');
+                        
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            this.innerHTML = originalHTML;
+                            this.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy URL: ', err);
+                    });
+                });
+            }
         });
     </script>
     '''
@@ -1090,6 +1191,16 @@ try:
                 min-width: 100%;
             }}
             
+            .share-filter-group {{
+                margin-left: 0;
+                margin-top: 1rem;
+            }}
+            
+            .btn-share-view {{
+                width: 100%;
+                justify-content: center;
+            }}
+            
             .grid {{
                 grid-template-columns: 1fr;
             }}
@@ -1194,6 +1305,35 @@ try:
         
         /* Side panel styles are now in enhanced_side_panel.css */
         
+        .share-filter-group {{
+            margin-left: auto;
+        }}
+        
+        .btn-share-view {{
+            background-color: #f0f9ff;
+            color: #3b82f6;
+            border: 1px solid #bfdbfe;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }}
+        
+        .btn-share-view:hover {{
+            background-color: #e0f2fe;
+            transform: translateY(-2px);
+        }}
+        
+        .btn-share-view.copied {{
+            background-color: #ecfdf5;
+            color: #10b981;
+            border-color: #a7f3d0;
+        }}
     </style>
 </head>
 <body>

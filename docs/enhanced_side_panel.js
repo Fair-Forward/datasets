@@ -128,6 +128,53 @@ function loadItemDetails(itemId) {
     const region = card.getAttribute('data-region');
     const dirNamesStr = card.getAttribute('data-dir-names');
     
+    // Get additional card information
+    const cardImage = card.querySelector('.card-image');
+    const hasImage = cardImage && cardImage.classList.contains('has-image');
+    
+    // Improved image style extraction
+    let imageStyle = null;
+    if (hasImage && cardImage) {
+        // Get the full style attribute
+        imageStyle = cardImage.getAttribute('style');
+        console.log('Image style found:', imageStyle);
+        
+        // If style doesn't contain background-image, try to extract it differently
+        if (!imageStyle || !imageStyle.includes('background-image')) {
+            const computedStyle = window.getComputedStyle(cardImage);
+            const backgroundImage = computedStyle.getPropertyValue('background-image');
+            if (backgroundImage && backgroundImage !== 'none') {
+                imageStyle = `background-image: ${backgroundImage};`;
+                console.log('Computed image style:', imageStyle);
+            }
+        }
+    }
+    
+    // Get dataset and use-case links
+    const datasetLink = card.querySelector('.btn-primary[href]');
+    const useCaseLink = card.querySelector('.btn-secondary[href]');
+    
+    // Get data type chips
+    const dataTypeChips = Array.from(card.querySelectorAll('.data-type-chip')).map(chip => {
+        const chipClass = Array.from(chip.classList).find(c => c.startsWith('label-'));
+        console.log('Data type chip class:', chipClass, 'from', chip.classList);
+        return {
+            text: chip.textContent.trim(),
+            class: chipClass,
+            filter: chip.getAttribute('data-filter')
+        };
+    });
+    
+    // Get domain badges
+    const domainBadges = Array.from(card.querySelectorAll('.domain-badge')).map(badge => {
+        const badgeClass = Array.from(badge.classList).find(c => c.startsWith('domain-'));
+        console.log('Domain badge class:', badgeClass, 'from', badge.classList);
+        return {
+            text: badge.textContent.trim(),
+            class: badgeClass
+        };
+    });
+    
     // Parse the directory names from the data attribute
     let dirNames = [];
     try {
@@ -165,6 +212,67 @@ function loadItemDetails(itemId) {
     function updateDetailPanel() {
         console.log('Updating panel with sections:', contentSections);
         let detailContent = '';
+        
+        // Add header image if available
+        if (hasImage && imageStyle) {
+            detailContent += `<div class="panel-header-image" style="${imageStyle}"></div>`;
+        }
+        
+        // Add domain badges and title section
+        detailContent += `<div class="panel-title-section">`;
+        
+        // Add domain badges
+        if (domainBadges.length > 0) {
+            detailContent += `<div class="panel-domain-badges">`;
+            domainBadges.forEach(badge => {
+                // Log the badge object to see what we're working with
+                console.log('Badge object:', badge);
+                
+                // Extract the domain name from the badge text and normalize it for use as a class
+                const domainText = badge.text.trim();
+                const domainClass = 'domain-' + domainText.toLowerCase().replace(/\s+/g, '-');
+                
+                // Create the badge HTML with the domain-specific class
+                const badgeHTML = `<div class="panel-domain-badge ${domainClass}">${domainText}</div>`;
+                console.log('Generated domain badge HTML:', badgeHTML);
+                detailContent += badgeHTML;
+            });
+            detailContent += `</div>`;
+        }
+        
+        // Add data type chips
+        if (dataTypeChips.length > 0) {
+            detailContent += `<div class="panel-data-type-chips">`;
+            dataTypeChips.forEach(chip => {
+                // Extract icon class from the original chip
+                const iconMatch = chip.text.match(/^(\s*<i class="fas ([^"]+)"><\/i>\s*)(.*)$/);
+                const iconClass = iconMatch ? iconMatch[2] : 'fa-database';
+                const chipText = iconMatch ? iconMatch[3].trim() : chip.text.trim();
+                
+                const chipHTML = `<span class="panel-data-type-chip ${chip.class || ''}" data-filter="${chip.filter || ''}">
+                    <i class="fas ${iconClass}"></i> ${chipText}
+                </span>`;
+                console.log('Generated data type chip HTML:', chipHTML);
+                detailContent += chipHTML;
+            });
+            detailContent += `</div>`;
+        }
+        
+        // Add links section
+        detailContent += `<div class="panel-links-section">`;
+        if (datasetLink) {
+            detailContent += `<a href="${datasetLink.getAttribute('href')}" target="_blank" class="panel-link-btn panel-dataset-link">
+                <i class="fas fa-database"></i> View Dataset
+            </a>`;
+        }
+        if (useCaseLink) {
+            detailContent += `<a href="${useCaseLink.getAttribute('href')}" target="_blank" class="panel-link-btn panel-usecase-link">
+                <i class="fas fa-lightbulb"></i> View Use Case
+            </a>`;
+        }
+        detailContent += `</div>`;
+        
+        detailContent += `</div>`; // Close panel-title-section
         
         // Create a table of contents if we have multiple sections
         let hasMultipleSections = Object.values(contentSections).filter(Boolean).length > 1;
@@ -216,6 +324,18 @@ function loadItemDetails(itemId) {
             }
         }
         
+        // Add region section if available with enhanced styling
+        if (region) {
+            detailContent += `
+                <div class="detail-section" id="region">
+                    <h3 data-section="Region">Region</h3>
+                    <div class="documentation-content">
+                        <p><i class="fas fa-map-marker-alt"></i> ${region}</p>
+                    </div>
+                </div>
+            `;
+        }
+        
         // Add tags section with enhanced styling
         if (tags && tags.length > 0) {
             detailContent += `
@@ -225,18 +345,6 @@ function loadItemDetails(itemId) {
                         <div class="tags">
                             ${tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
                         </div>
-                    </div>
-                </div>
-            `;
-        }
-        
-        // Add region section if available with enhanced styling
-        if (region) {
-            detailContent += `
-                <div class="detail-section" id="region">
-                    <h3 data-section="Region">Region</h3>
-                    <div class="documentation-content">
-                        <p><i class="fas fa-map-marker-alt"></i> ${region}</p>
                     </div>
                 </div>
             `;
@@ -322,6 +430,44 @@ function openDetailPanel(title, itemId) {
     detailPanelLoader.style.display = 'flex';
     detailPanelData.classList.remove('active');
     detailPanelData.style.display = 'none';
+    
+    // Add share button if it doesn't exist
+    let shareButton = detailPanel.querySelector('.share-panel-btn');
+    if (!shareButton) {
+        shareButton = document.createElement('button');
+        shareButton.className = 'share-panel-btn';
+        shareButton.innerHTML = '<i class="fas fa-share-alt"></i>';
+        shareButton.title = 'Share this view';
+        
+        // Add click event to copy the current URL
+        shareButton.addEventListener('click', function() {
+            // Create URL with current item
+            const url = new URL(window.location.href);
+            url.searchParams.set('item', itemId);
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(url.href).then(() => {
+                // Show success feedback
+                const originalHTML = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-check"></i>';
+                this.classList.add('copied');
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    this.innerHTML = originalHTML;
+                    this.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy URL: ', err);
+            });
+        });
+        
+        // Insert after the close button
+        const closeButton = detailPanel.querySelector('.close-panel-btn');
+        if (closeButton && closeButton.parentNode) {
+            closeButton.parentNode.insertBefore(shareButton, closeButton.nextSibling);
+        }
+    }
     
     // Load the details
     loadItemDetails(itemId);
