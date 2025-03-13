@@ -1,12 +1,22 @@
 To Dos:
 
-06.03.25
 
+13.03.25
+* Overall overhaup side panel:
+    * add links to datasets and use cases also in side panel.
+    * add images and also other tags in side panels.
+    * make them essentially stand-alone sites to share with others
+* Build subpage structure:
+    * To share links for specific datasets/use-cases
+    * To share link for domain/country etc. 
+* Replace "Read More" With "Details" and open directly panels with full information then.
+    * Remove dataset/use-case link from card. 
+    * Short description line cap to keep cards readable - alternative keep the read more hover but link then?
 
-4. MAJOR: Update script to display one-pager info in side panel
-5. Update script to properly show hyperlinks from excel (should produce hyperlinks itself if possible)
-6. Update visuals---- take orientation from claude website in coloring, font, style? Possible with our vannila design?
+* Find solution to switch between datasets and use-cases somehow...
 
+* Update script to properly show hyperlinks from excel (should produce hyperlinks itself if possible)
 
-MAJOR:
-Create a new branch feature/react-next and try to rebuild the website using more up to date tools such as next or react.
+Backlog:
+
+* Re-create with Nextjs or something similar for nicer visualisations.
