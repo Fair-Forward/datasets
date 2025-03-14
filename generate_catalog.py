@@ -777,93 +777,151 @@ try:
             font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }}
         
+        html {{
+            /* Set a smaller base font size to scale everything down */
+            font-size: 14px;
+        }}
+        
         body {{
             background-color: var(--background);
             color: var(--text);
             line-height: 1.7;
-            font-size: 16px;
+            font-size: 1rem; /* Use relative units based on html font-size */
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }}
         
         header {{
-            background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
-            padding: 80px 0 60px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+            background: white;
+            padding: 3rem 0; /* Reduced from 60px to 3rem */
+            border-bottom: 1px solid var(--border);
             text-align: center;
             position: relative;
+            color: var(--text);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }}
+        
+        /* Add a subtle pattern overlay to the header */
+        header::before {{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0id2hpdGUiPjwvcmVjdD4KPHBhdGggZD0iTTAgMjBMMjAgMFpNMjAgMTVMMTUgMjBaTTAgNUw1IDBaIiBzdHJva2U9IiMzYjU5OTgiIHN0cm9rZS13aWR0aD0iMC41IiBzdHJva2Utb3BhY2l0eT0iMC4wNSI+PC9wYXRoPgo8L3N2Zz4=');
+            opacity: 0.8;
+            z-index: 0;
+        }}
+        
+        /* Add a subtle accent border at the top of the header */
+        header::after {{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+            z-index: 2;
         }}
         
         .header-content {{
             display: flex;
             align-items: center;
-            justify-content: center;
-            max-width: 1200px;
+            justify-content: space-between;
+            max-width: 1100px; /* Reduced from 1200px to match container */
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 3rem; /* Increased from 2rem to match container */
+            position: relative;
+            z-index: 1;
         }}
         
         .header-text {{
             text-align: left;
             flex: 1;
+            max-width: 700px;
+            position: relative;
+            padding-left: 1.5rem;
+        }}
+        
+        /* Add a vertical accent line to the left of the header text */
+        .header-text::before {{
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            bottom: 0.5rem;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 2px;
         }}
         
         .header-logos {{
             display: flex;
             align-items: center;
-            gap: 1.5rem;
+            gap: 2rem;
             margin-left: 2rem;
+            padding-left: 2rem;
+            border-left: 1px solid var(--border);
         }}
         
         .header-logo {{
-            height: 70px;
+            height: 50px; /* Reduced from 60px */
             width: auto;
             opacity: 0.95;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.05));
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
         }}
         
         .header-logo:hover {{
             opacity: 1;
             transform: translateY(-2px);
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
         }}
         
         h1 {{
-            font-size: 2.5rem;
+            font-size: 2.2rem; /* Reduced from 2.5rem */
             margin-bottom: 1rem;
             font-weight: 700;
             color: var(--title-color);
             letter-spacing: -0.02em;
             line-height: 1.2;
+            position: relative;
+            display: inline-block;
         }}
         
         .subtitle {{
-            font-size: 1.125rem;
-            color: var(--gray);
+            font-size: 1rem; /* Reduced from 1.125rem */
+            color: var(--text-light);
             max-width: 800px;
             line-height: 1.6;
             font-weight: 400;
+            margin-top: 1.5rem;
         }}
         
         .filters {{
             background-color: var(--card-bg);
-            padding: 1.5rem 0;
+            padding: 1.25rem 0; /* Reduced from 1.5rem */
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 10;
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }}
         
         .filters-content {{
-            max-width: 1200px;
+            max-width: 1100px; /* Reduced from 1200px to match container */
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 3rem; /* Increased from 2rem to match container */
             display: flex;
             flex-wrap: wrap;
-            gap: 1.5rem;
+            gap: 1.25rem; /* Reduced from 1.5rem */
             justify-content: center;
+            align-items: center;
         }}
         
         .filter-group {{
@@ -879,10 +937,10 @@ try:
         }}
         
         select, input {{
-            padding: 0.625rem 1rem;
+            padding: 0.5rem 0.875rem; /* Reduced from 0.625rem 1rem */
             border-radius: 0.5rem;
             border: 1px solid var(--border);
-            min-width: 180px;
+            min-width: 160px; /* Reduced from 180px */
             background-color: white;
             font-size: 0.875rem;
             color: var(--text);
@@ -893,7 +951,7 @@ try:
         select:focus, input:focus {{
             outline: none;
             border-color: var(--primary-light);
-            box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.1);
+            box-shadow: 0 0 0 3px rgba(59, 89, 152, 0.1);
         }}
         
         .search-box {{
@@ -901,8 +959,8 @@ try:
             align-items: center;
             border: 1px solid var(--border);
             border-radius: 0.5rem;
-            padding: 0.625rem 1rem;
-            min-width: 300px;
+            padding: 0.5rem 0.875rem; /* Reduced from 0.625rem 1rem */
+            min-width: 280px; /* Reduced from 300px */
             background-color: white;
             box-shadow: 0 1px 2px var(--shadow);
             transition: all 0.2s ease;
@@ -910,7 +968,7 @@ try:
         
         .search-box:focus-within {{
             border-color: var(--primary-light);
-            box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.1);
+            box-shadow: 0 0 0 3px rgba(59, 89, 152, 0.1);
         }}
         
         .search-box input {{
@@ -931,15 +989,15 @@ try:
         }}
         
         .container {{
-            max-width: 1200px;
-            margin: 3rem auto;
-            padding: 0 2rem;
+            max-width: 1100px; /* Reduced from 1200px for a more narrow layout */
+            margin: 2.5rem auto;
+            padding: 0 3rem; /* Increased from 2rem for more side spacing */
         }}
         
         .grid {{
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* Reduced from 280px */
+            gap: 1.5rem; /* Increased from 1.25rem for more spacing between cards */
         }}
         
         .card {{
@@ -961,7 +1019,7 @@ try:
         }}
         
         .card-image {{
-            height: 140px;
+            height: 130px; /* Increased from 120px for less square proportions */
             background-color: #f8fafc;
             background-image: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
             background-size: cover;
@@ -1005,11 +1063,11 @@ try:
         }}
         
         .card-header {{
-            padding: 1.25rem 1.25rem 0.5rem;
+            padding: 1.25rem 1.25rem 0.5rem; /* Increased horizontal padding */
         }}
         
         .card-body {{
-            padding: 0 1.25rem 0.75rem;
+            padding: 0 1.25rem 0.75rem; /* Increased horizontal padding */
             flex-grow: 1;
             display: flex;
             flex-direction: column;
@@ -1064,7 +1122,7 @@ try:
         }}
         
         .card h3 {{
-            font-size: 1.125rem;
+            font-size: 1rem; /* Reduced from 1.125rem */
             margin-bottom: 0.5rem;
             color: var(--title-color);
             line-height: 1.3;
@@ -1184,7 +1242,7 @@ try:
         
         .card-footer {{
             border-top: 1px solid var(--border);
-            padding: 0.75rem 1.25rem;
+            padding: 0.625rem 1.25rem; /* Increased horizontal padding */
             display: flex;
             justify-content: flex-end;
             align-items: center;
@@ -1291,6 +1349,39 @@ try:
                 margin-left: 0.25rem;
                 order: 0;
             }}
+            
+            .header-content {{
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+            }}
+            
+            .header-text {{
+                text-align: center;
+                max-width: 100%;
+                padding-left: 0;
+            }}
+            
+            .header-text::before {{
+                display: none;
+            }}
+            
+            .header-logos {{
+                margin-left: 0;
+                padding-left: 0;
+                border-left: none;
+                justify-content: center;
+                width: 100%;
+            }}
+            
+            h1 {{
+                font-size: 2rem;
+                display: block;
+            }}
+            
+            .subtitle {{
+                font-size: 1rem;
+            }}
         }}
         
         {label_css}
@@ -1304,9 +1395,9 @@ try:
         }}
         
         .footer-content {{
-            max-width: 1200px;
+            max-width: 1100px; /* Reduced from 1200px to match container */
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 3rem; /* Increased from 2rem to match container */
         }}
         
         footer p {{
@@ -1383,13 +1474,13 @@ try:
         <div class="header-content">
             <div class="header-text">
                 <h1>Data & Use Cases Catalog</h1>
-                <p class="subtitle">Exploring datasets and solutions for global challenges across agriculture, language technology, climate action, energy, and more. Browse our collection of datasets and use cases for AI applications for sustainable development.</p>
+                <p class="subtitle">Exploring datasets and solutions for global challenges across agriculture, language technology, climate action, energy, and more.</p>
             </div>
             <div class="header-logos">
-                <a href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/" target="_blank">
+                <a href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/" target="_blank" title="Fair Forward Initiative">
                     <img src="img/fair_forward.png" alt="Fair Forward Logo" class="header-logo">
                 </a>
-                <a href="https://www.bmz-digital.global/en/" target="_blank">
+                <a href="https://www.bmz-digital.global/en/" target="_blank" title="Digital Global">
                     <img src="img/digital_global.png" alt="Digital Global Logo" class="header-logo">
                 </a>
             </div>
