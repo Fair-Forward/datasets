@@ -55,93 +55,151 @@
             font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
         
+        html {
+            /* Set a smaller base font size to scale everything down */
+            font-size: 14px;
+        }
+        
         body {
             background-color: var(--background);
             color: var(--text);
             line-height: 1.7;
-            font-size: 16px;
+            font-size: 1rem; /* Use relative units based on html font-size */
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
         
         header {
-            background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
-            padding: 80px 0 60px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+            background: white;
+            padding: 3rem 0; /* Reduced from 60px to 3rem */
+            border-bottom: 1px solid var(--border);
             text-align: center;
             position: relative;
+            color: var(--text);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+        
+        /* Add a subtle pattern overlay to the header */
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0id2hpdGUiPjwvcmVjdD4KPHBhdGggZD0iTTAgMjBMMjAgMFpNMjAgMTVMMTUgMjBaTTAgNUw1IDBaIiBzdHJva2U9IiMzYjU5OTgiIHN0cm9rZS13aWR0aD0iMC41IiBzdHJva2Utb3BhY2l0eT0iMC4wNSI+PC9wYXRoPgo8L3N2Zz4=');
+            opacity: 0.8;
+            z-index: 0;
+        }
+        
+        /* Add a subtle accent border at the top of the header */
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+            z-index: 2;
         }
         
         .header-content {
             display: flex;
             align-items: center;
-            justify-content: center;
-            max-width: 1200px;
+            justify-content: space-between;
+            max-width: 1100px; /* Reduced from 1200px to match container */
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 3rem; /* Increased from 2rem to match container */
+            position: relative;
+            z-index: 1;
         }
         
         .header-text {
             text-align: left;
             flex: 1;
+            max-width: 700px;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        /* Add a vertical accent line to the left of the header text */
+        .header-text::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            bottom: 0.5rem;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 2px;
         }
         
         .header-logos {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
+            gap: 2rem;
             margin-left: 2rem;
+            padding-left: 2rem;
+            border-left: 1px solid var(--border);
         }
         
         .header-logo {
-            height: 70px;
+            height: 50px; /* Reduced from 60px */
             width: auto;
             opacity: 0.95;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.05));
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
         }
         
         .header-logo:hover {
             opacity: 1;
             transform: translateY(-2px);
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
         }
         
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.2rem; /* Reduced from 2.5rem */
             margin-bottom: 1rem;
             font-weight: 700;
             color: var(--title-color);
             letter-spacing: -0.02em;
             line-height: 1.2;
+            position: relative;
+            display: inline-block;
         }
         
         .subtitle {
-            font-size: 1.125rem;
-            color: var(--gray);
+            font-size: 1rem; /* Reduced from 1.125rem */
+            color: var(--text-light);
             max-width: 800px;
             line-height: 1.6;
             font-weight: 400;
+            margin-top: 1.5rem;
         }
         
         .filters {
             background-color: var(--card-bg);
-            padding: 1.5rem 0;
+            padding: 1.25rem 0; /* Reduced from 1.5rem */
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 10;
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
         
         .filters-content {
-            max-width: 1200px;
+            max-width: 1100px; /* Reduced from 1200px to match container */
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 3rem; /* Increased from 2rem to match container */
             display: flex;
             flex-wrap: wrap;
-            gap: 1.5rem;
+            gap: 1.25rem; /* Reduced from 1.5rem */
             justify-content: center;
+            align-items: center;
         }
         
         .filter-group {
@@ -157,10 +215,10 @@
         }
         
         select, input {
-            padding: 0.625rem 1rem;
+            padding: 0.5rem 0.875rem; /* Reduced from 0.625rem 1rem */
             border-radius: 0.5rem;
             border: 1px solid var(--border);
-            min-width: 180px;
+            min-width: 160px; /* Reduced from 180px */
             background-color: white;
             font-size: 0.875rem;
             color: var(--text);
@@ -171,7 +229,7 @@
         select:focus, input:focus {
             outline: none;
             border-color: var(--primary-light);
-            box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.1);
+            box-shadow: 0 0 0 3px rgba(59, 89, 152, 0.1);
         }
         
         .search-box {
@@ -179,8 +237,8 @@
             align-items: center;
             border: 1px solid var(--border);
             border-radius: 0.5rem;
-            padding: 0.625rem 1rem;
-            min-width: 300px;
+            padding: 0.5rem 0.875rem; /* Reduced from 0.625rem 1rem */
+            min-width: 280px; /* Reduced from 300px */
             background-color: white;
             box-shadow: 0 1px 2px var(--shadow);
             transition: all 0.2s ease;
@@ -188,7 +246,7 @@
         
         .search-box:focus-within {
             border-color: var(--primary-light);
-            box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.1);
+            box-shadow: 0 0 0 3px rgba(59, 89, 152, 0.1);
         }
         
         .search-box input {
@@ -209,15 +267,15 @@
         }
         
         .container {
-            max-width: 1200px;
-            margin: 3rem auto;
-            padding: 0 2rem;
+            max-width: 1100px; /* Reduced from 1200px for a more narrow layout */
+            margin: 2.5rem auto;
+            padding: 0 3rem; /* Increased from 2rem for more side spacing */
         }
         
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* Reduced from 280px */
+            gap: 1.5rem; /* Increased from 1.25rem for more spacing between cards */
         }
         
         .card {
@@ -239,7 +297,7 @@
         }
         
         .card-image {
-            height: 140px;
+            height: 130px; /* Increased from 120px for less square proportions */
             background-color: #f8fafc;
             background-image: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
             background-size: cover;
@@ -283,11 +341,11 @@
         }
         
         .card-header {
-            padding: 1.25rem 1.25rem 0.5rem;
+            padding: 1.25rem 1.25rem 0.5rem; /* Increased horizontal padding */
         }
         
         .card-body {
-            padding: 0 1.25rem 0.75rem;
+            padding: 0 1.25rem 0.75rem; /* Increased horizontal padding */
             flex-grow: 1;
             display: flex;
             flex-direction: column;
@@ -342,7 +400,7 @@
         }
         
         .card h3 {
-            font-size: 1.125rem;
+            font-size: 1rem; /* Reduced from 1.125rem */
             margin-bottom: 0.5rem;
             color: var(--title-color);
             line-height: 1.3;
@@ -462,7 +520,7 @@
         
         .card-footer {
             border-top: 1px solid var(--border);
-            padding: 0.75rem 1.25rem;
+            padding: 0.625rem 1.25rem; /* Increased horizontal padding */
             display: flex;
             justify-content: flex-end;
             align-items: center;
@@ -569,25 +627,58 @@
                 margin-left: 0.25rem;
                 order: 0;
             }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+            }
+            
+            .header-text {
+                text-align: center;
+                max-width: 100%;
+                padding-left: 0;
+            }
+            
+            .header-text::before {
+                display: none;
+            }
+            
+            .header-logos {
+                margin-left: 0;
+                padding-left: 0;
+                border-left: none;
+                justify-content: center;
+                width: 100%;
+            }
+            
+            h1 {
+                font-size: 2rem;
+                display: block;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
         }
         
         
-.label-agriculture {
-    background-color: #e2cfcf;
-    color: #2d3748;
-}
-
-.domain-agriculture {
-    background-color: #e2cfcf;
-    color: #2d3748;
-}
-
 .label-climate-action {
-    background-color: #e2d8cf;
+    background-color: #e2cfcf;
     color: #2d3748;
 }
 
 .domain-climate-action {
+    background-color: #e2cfcf;
+    color: #2d3748;
+}
+
+.label-agriculture {
+    background-color: #e2d8cf;
+    color: #2d3748;
+}
+
+.domain-agriculture {
     background-color: #e2d8cf;
     color: #2d3748;
 }
@@ -607,17 +698,17 @@
     color: #2d3748;
 }
 
-.label-geospatial {
+.label-text {
     background-color: #cfe2cf;
     color: #2d3748;
 }
 
-.label-text {
+.label-audio {
     background-color: #cfe2d8;
     color: #2d3748;
 }
 
-.label-audio {
+.label-geospatial {
     background-color: #cfe2e2;
     color: #2d3748;
 }
@@ -627,22 +718,22 @@
     color: #2d3748;
 }
 
-.label-dataset {
+.label-use-case-with-business-model {
     background-color: #cfcfe2;
     color: #2d3748;
 }
 
-.label-use-case {
+.label-dataset {
     background-color: #d8cfe2;
     color: #2d3748;
 }
 
-.label-use-case-with-business-model {
+.label-pilot {
     background-color: #e2cfe2;
     color: #2d3748;
 }
 
-.label-pilot {
+.label-use-case {
     background-color: #e2cfd8;
     color: #2d3748;
 }
@@ -657,9 +748,9 @@
         }
         
         .footer-content {
-            max-width: 1200px;
+            max-width: 1100px; /* Reduced from 1200px to match container */
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 3rem; /* Increased from 2rem to match container */
         }
         
         footer p {
@@ -736,13 +827,13 @@
         <div class="header-content">
             <div class="header-text">
                 <h1>Data & Use Cases Catalog</h1>
-                <p class="subtitle">Exploring datasets and solutions for global challenges across agriculture, language technology, climate action, energy, and more. Browse our collection of datasets and use cases for AI applications for sustainable development.</p>
+                <p class="subtitle">Exploring datasets and solutions for global challenges across agriculture, language technology, climate action, energy, and more.</p>
             </div>
             <div class="header-logos">
-                <a href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/" target="_blank">
+                <a href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/" target="_blank" title="Fair Forward Initiative">
                     <img src="img/fair_forward.png" alt="Fair Forward Logo" class="header-logo">
                 </a>
-                <a href="https://www.bmz-digital.global/en/" target="_blank">
+                <a href="https://www.bmz-digital.global/en/" target="_blank" title="Digital Global">
                     <img src="img/digital_global.png" alt="Digital Global Logo" class="header-logo">
                 </a>
             </div>
@@ -847,7 +938,7 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-images" data-filter="Images"><i class="fas fa-image"></i> Images</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Ghana Biomass Challenge: Ghana Crop Disease Detection Challenge" data-region="Ghana" data-id="2" data-dir-names="[&#x27;leveraging_ml_for_crop_disease_detection&#x27;, &#x27;ghana_biomass_challenge_ghana_crop_disease_detection_challenge&#x27;]">
+    <div class="card has-dataset" data-title="Ghana Biomass Challenge: Ghana Crop Disease Detection Challenge" data-region="Ghana" data-id="2" data-dir-names="[&#x27;ghana_biomass_challenge_ghana_crop_disease_detection_challenge&#x27;, &#x27;leveraging_ml_for_crop_disease_detection&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/ghana_biomass_challenge_ghana_crop_disease_detection_challenge/images/ghana_crop.JPG');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div></div>
@@ -867,7 +958,7 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-images" data-filter="Images"><i class="fas fa-image"></i> Images</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Cotton Ace: AI-driven Pest Management for Cotton Farmers in India" data-region="India" data-id="11" data-dir-names="[&#x27;cotton_ace_aidriven_pest_management_for_cotton_farmers_in_india&#x27;, &#x27;ai_pest_management_open_data_for_pink_bollworms_and_american_bollworms&#x27;, &#x27;wadhwani_ai__open_ai_for_cotton_pest_control_with_smallholder_farmers__national_entrepreneurship_network_nen&#x27;]">
+    <div class="card has-dataset has-usecase" data-title="Cotton Ace: AI-driven Pest Management for Cotton Farmers in India" data-region="India" data-id="11" data-dir-names="[&#x27;ai_pest_management_open_data_for_pink_bollworms_and_american_bollworms&#x27;, &#x27;wadhwani_ai__open_ai_for_cotton_pest_control_with_smallholder_farmers__national_entrepreneurship_network_nen&#x27;, &#x27;cotton_ace_aidriven_pest_management_for_cotton_farmers_in_india&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/wadhwani_ai__open_ai_for_cotton_pest_control_with_smallholder_farmers__national_entrepreneurship_network_nen/images/cotton_ace.jpg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div></div>
@@ -909,7 +1000,7 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-tabular" data-filter="Tabular"><i class="fas fa-table"></i> Tabular</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Open Dataset of Farm Boundaries and Crop Cultivation in Telangana State" data-region="India" data-id="13" data-dir-names="[&#x27;open_dataset_of_farm_boundaries_and_crop_cultivation_in_telangana_state&#x27;, &#x27;support_sustainable_agriculture_in_telangana_through_aipowered_crop_identification&#x27;, &#x27;ml4eo_telangana_crop_identification&#x27;]">
+    <div class="card has-dataset" data-title="Open Dataset of Farm Boundaries and Crop Cultivation in Telangana State" data-region="India" data-id="13" data-dir-names="[&#x27;support_sustainable_agriculture_in_telangana_through_aipowered_crop_identification&#x27;, &#x27;ml4eo_telangana_crop_identification&#x27;, &#x27;open_dataset_of_farm_boundaries_and_crop_cultivation_in_telangana_state&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/ml4eo_telangana_crop_identification/images/image.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -929,7 +1020,7 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-geospatial" data-filter="Geospatial"><i class="fas fa-map"></i> Geospatial</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Combatting Air Pollution and GHG Emissions in India through hyperlocal AI-powered mapping" data-region="India" data-id="14" data-dir-names="[&#x27;hyperlocal_mapping_of_air_pollution_and_ghg_emissions_in_india_with_undp&#x27;, &#x27;open_air_pollution_data_for_patna_and_gurugram&#x27;, &#x27;combatting_air_pollution_and_ghg_emissions_in_india_through_hyperlocal_aipowered_mapping&#x27;]">
+    <div class="card has-dataset has-usecase" data-title="Combatting Air Pollution and GHG Emissions in India through hyperlocal AI-powered mapping" data-region="India" data-id="14" data-dir-names="[&#x27;open_air_pollution_data_for_patna_and_gurugram&#x27;, &#x27;combatting_air_pollution_and_ghg_emissions_in_india_through_hyperlocal_aipowered_mapping&#x27;, &#x27;hyperlocal_mapping_of_air_pollution_and_ghg_emissions_in_india_with_undp&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             
@@ -944,7 +1035,7 @@
         <div class="card-footer"><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Open-source text-to-speech datasets in 9 Indian languages (Hindi | Bengali | Marathi | Telugu | Bhojpuri | Kannada | Magadhi | Chhattisgarhi | Maithili)" data-region="India" data-id="17" data-dir-names="[&#x27;build_inclusive_voice_technologies_in_9_indian_languages_through_open_language_datasets&#x27;, &#x27;opensource_texttospeech_datasets_in_9_indian_languages_hindi__bengali__marathi__telugu__bhojpuri__kannada__magadhi__chhattisgarhi__maithili&#x27;, &#x27;iisc__open_voice_data_in_indian_languages&#x27;]">
+    <div class="card has-dataset" data-title="Open-source text-to-speech datasets in 9 Indian languages (Hindi | Bengali | Marathi | Telugu | Bhojpuri | Kannada | Magadhi | Chhattisgarhi | Maithili)" data-region="India" data-id="17" data-dir-names="[&#x27;opensource_texttospeech_datasets_in_9_indian_languages_hindi__bengali__marathi__telugu__bhojpuri__kannada__magadhi__chhattisgarhi__maithili&#x27;, &#x27;build_inclusive_voice_technologies_in_9_indian_languages_through_open_language_datasets&#x27;, &#x27;iisc__open_voice_data_in_indian_languages&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
@@ -1028,7 +1119,7 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-text" data-filter="Text"><i class="fas fa-file-alt"></i> Text</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Question-Answer Pairs on Health Related Content in Telugu and Chhatisgarhi" data-region="India" data-id="22" data-dir-names="[&#x27;digital_audio_content_creation_for_womens_empowerment_using_language_technologies&#x27;, &#x27;empowering_women_across_india_with_knowledge_in_their_native_languages&#x27;, &#x27;questionanswer_pairs_on_health_related_content_in_telugu_and_chhatisgarhi&#x27;]">
+    <div class="card has-dataset" data-title="Question-Answer Pairs on Health Related Content in Telugu and Chhatisgarhi" data-region="India" data-id="22" data-dir-names="[&#x27;questionanswer_pairs_on_health_related_content_in_telugu_and_chhatisgarhi&#x27;, &#x27;digital_audio_content_creation_for_womens_empowerment_using_language_technologies&#x27;, &#x27;empowering_women_across_india_with_knowledge_in_their_native_languages&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             
@@ -1107,7 +1198,7 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-tabular" data-filter="Tabular"><i class="fas fa-table"></i> Tabular</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="ML4EO for Precision Agriculture" data-region="South Africa" data-id="44" data-dir-names="[&#x27;ml4eo_for_precision_agriculture&#x27;, &#x27;enabling_geoscientists_to_use_machine_learning_for_precision_agriculture_of_geospatial_data&#x27;]">
+    <div class="card has-dataset" data-title="ML4EO for Precision Agriculture" data-region="South Africa" data-id="44" data-dir-names="[&#x27;enabling_geoscientists_to_use_machine_learning_for_precision_agriculture_of_geospatial_data&#x27;, &#x27;ml4eo_for_precision_agriculture&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             
