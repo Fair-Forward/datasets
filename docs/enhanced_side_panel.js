@@ -495,6 +495,13 @@ document.addEventListener('DOMContentLoaded', function() {
             detailPanel.classList.remove('open');
             panelOverlay.classList.remove('active');
             document.body.style.overflow = '';
+            
+            // Reset URL by removing the item parameter
+            const url = new URL(window.location.href);
+            if (url.searchParams.has('item')) {
+                url.searchParams.delete('item');
+                window.history.pushState({ path: url.href }, '', url.href);
+            }
         });
     }
     
@@ -503,6 +510,13 @@ document.addEventListener('DOMContentLoaded', function() {
             detailPanel.classList.remove('open');
             panelOverlay.classList.remove('active');
             document.body.style.overflow = '';
+            
+            // Reset URL by removing the item parameter
+            const url = new URL(window.location.href);
+            if (url.searchParams.has('item')) {
+                url.searchParams.delete('item');
+                window.history.pushState({ path: url.href }, '', url.href);
+            }
         });
     }
 }); 

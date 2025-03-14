@@ -495,6 +495,12 @@ def generate_js_code():
                 window.history.pushState({ path: newUrl }, '', newUrl);
             }
             
+            // Function to reset item ID in URL
+            function resetItemInUrl() {
+                selectedItemId = null;
+                updateUrl(false);
+            }
+            
             // Function to apply filters from URL parameters
             function applyUrlParams() {
                 const params = getUrlParams();
@@ -583,6 +589,29 @@ def generate_js_code():
                     }
                 }
             });
+            
+            // Add event listeners for closing the detail panel
+            const closeDetailPanel = document.getElementById('closeDetailPanel');
+            const panelOverlay = document.getElementById('panelOverlay');
+            const detailPanel = document.getElementById('detailPanel');
+            
+            if (closeDetailPanel) {
+                closeDetailPanel.addEventListener('click', function() {
+                    detailPanel.classList.remove('open');
+                    panelOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                    resetItemInUrl(); // Reset item ID in URL
+                });
+            }
+            
+            if (panelOverlay) {
+                panelOverlay.addEventListener('click', function() {
+                    detailPanel.classList.remove('open');
+                    panelOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                    resetItemInUrl(); // Reset item ID in URL
+                });
+            }
             
             // Function to apply all filters
             function applyFilters() {
