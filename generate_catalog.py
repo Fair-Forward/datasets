@@ -574,7 +574,8 @@ def generate_js_code():
                 const needsDetailsLink = descriptionText && (descriptionText.scrollHeight > descriptionText.clientHeight || descriptionText.textContent.length > 300);
                 
                 if (needsDetailsLink) {
-                    link.addEventListener('click', function() {
+                    link.addEventListener('click', function(e) {
+                        e.stopPropagation(); // Prevent the card-description click event from firing
                         const card = this.closest('.card');
                         const title = card.getAttribute('data-title');
                         const id = card.getAttribute('data-id');
@@ -588,6 +589,23 @@ def generate_js_code():
                         link.style.display = 'none';
                     }
                 }
+            });
+            
+            // Make card-description and card-footer areas clickable
+            document.querySelectorAll('.card-description, .card-footer').forEach(element => {
+                element.addEventListener('click', function(e) {
+                    // Don't trigger if clicking on a link or button inside
+                    if (e.target.closest('a') || e.target.closest('button')) {
+                        return;
+                    }
+                    
+                    const card = this.closest('.card');
+                    const title = card.getAttribute('data-title');
+                    const id = card.getAttribute('data-id');
+                    selectedItemId = id;
+                    openDetailPanel(title, id);
+                    updateUrl(true); // Update URL with item ID
+                });
             });
             
             // Add event listeners for closing the detail panel
@@ -1016,6 +1034,11 @@ try:
         .card:hover {{
             transform: translateY(-4px);
             box-shadow: 0 8px 15px var(--shadow-hover);
+        }}
+        
+        /* Make card description and footer areas look clickable */
+        .card-description, .card-footer {{
+            cursor: pointer;
         }}
         
         .card-image {{
