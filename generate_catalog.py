@@ -345,19 +345,30 @@ def generate_card_html(row, idx):
         description_html = f'''
             <div class="card-description">
                 <div class="description-text collapsed">{html.escape(str(description))}</div>
-                <div class="read-more-btn">Read more</div>
+                <div class="details-link"><i class="fas fa-arrow-right"></i><span>See Details</span></div>
             </div>
         '''
     
+    # Create hidden links for the side panel
+    hidden_links = []
+    if has_dataset and dataset_link:
+        hidden_links.append(f'<a href="{dataset_link}" target="_blank" class="btn btn-primary" style="display:none;">View Dataset</a>')
+    if has_usecase and model_links:
+        hidden_links.append(f'<a href="{model_links}" target="_blank" class="btn btn-secondary" style="display:none;">View Use Case</a>')
+    
+    hidden_links_html = ""
+    if hidden_links:
+        hidden_links_html = f'<div class="hidden-links" style="display:none;">{"".join(hidden_links)}</div>'
+    
     # Create footer with links
     footer_links = []
-    if has_dataset:
-        footer_links.append(f'<a href="{dataset_link}" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a>')
     
-    if has_usecase:
-        footer_links.append(f'<a href="{model_links}" target="_blank" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Use Case</a>')
+    # Add data type chips to the footer if they exist
+    if data_type_chips:
+        footer_links.append(f'<div class="data-type-chips footer-chips">{"".join(data_type_chips)}</div>')
     
-    footer_links.append('<button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button>')
+    # Add license tag to the footer (right side)
+    footer_links.append(f'<div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div>')
     
     footer_html = f'<div class="card-footer">{"".join(footer_links)}</div>'
     
@@ -375,8 +386,8 @@ def generate_card_html(row, idx):
         </div>
         <div class="card-body">
             {description_html}
-            {data_type_html}
             {tags_html}
+            {hidden_links_html}
         </div>
         {footer_html}
     </div>
@@ -452,53 +463,123 @@ def generate_js_code():
             let selectedDomain = 'all';
             let selectedDataType = 'all';
             let selectedRegion = 'all';
+            let selectedItemId = null;
+            
+            // Function to parse URL parameters
+            function getUrlParams() {
+                const params = new URLSearchParams(window.location.search);
+                return {
+                    search: params.get('search') || '',
+                    view: params.get('view') || 'all',
+                    domain: params.get('domain') || 'all',
+                    dataType: params.get('dataType') || 'all',
+                    region: params.get('region') || 'all',
+                    item: params.get('item') || null
+                };
+            }
+            
+            // Function to update URL with current filters
+            function updateUrl(openPanel = false) {
+                const params = new URLSearchParams();
+                
+                // Only add parameters that are not default values
+                if (searchTerm) params.set('search', searchTerm);
+                if (currentView !== 'all') params.set('view', currentView);
+                if (selectedDomain !== 'all') params.set('domain', selectedDomain);
+                if (selectedDataType !== 'all') params.set('dataType', selectedDataType);
+                if (selectedRegion !== 'all') params.set('region', selectedRegion);
+                if (selectedItemId && openPanel) params.set('item', selectedItemId);
+                
+                // Update URL without reloading the page
+                const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+                window.history.pushState({ path: newUrl }, '', newUrl);
+            }
+            
+            // Function to apply filters from URL parameters
+            function applyUrlParams() {
+                const params = getUrlParams();
+                
+                // Set filter values from URL parameters
+                searchTerm = params.search;
+                currentView = params.view;
+                selectedDomain = params.domain;
+                selectedDataType = params.dataType;
+                selectedRegion = params.region;
+                selectedItemId = params.item;
+                
+                // Update UI to match URL parameters
+                if (searchTerm) searchInput.value = searchTerm;
+                if (currentView) viewFilter.value = currentView;
+                if (selectedDomain) domainFilter.value = selectedDomain;
+                if (selectedDataType) dataTypeFilter.value = selectedDataType;
+                if (selectedRegion) regionFilter.value = selectedRegion;
+                
+                // Apply filters
+                applyFilters();
+                
+                // Open detail panel if item is specified
+                if (selectedItemId) {
+                    const card = document.querySelector(`.card[data-id="${selectedItemId}"]`);
+                    if (card) {
+                        const title = card.getAttribute('data-title');
+                        setTimeout(() => {
+                            openDetailPanel(title, selectedItemId);
+                        }, 300); // Small delay to ensure filters are applied first
+                    }
+                }
+            }
             
             // Add event listeners for filters
             searchInput.addEventListener('input', function() {
                 searchTerm = this.value.toLowerCase();
                 applyFilters();
+                updateUrl();
             });
             
             viewFilter.addEventListener('change', function() {
                 currentView = this.value;
                 applyFilters();
+                updateUrl();
             });
             
             domainFilter.addEventListener('change', function() {
                 selectedDomain = this.value;
                 applyFilters();
+                updateUrl();
             });
             
             dataTypeFilter.addEventListener('change', function() {
                 selectedDataType = this.value;
                 applyFilters();
+                updateUrl();
             });
             
             regionFilter.addEventListener('change', function() {
                 selectedRegion = this.value;
                 applyFilters();
+                updateUrl();
             });
             
-            // Set up read more buttons
-            const descriptionTexts = document.querySelectorAll('.description-text');
-            descriptionTexts.forEach(text => {
-                // Check if the text is long enough to need a read more button
-                const needsReadMore = text.scrollHeight > text.clientHeight || text.textContent.length > 300;
+            // Set up details links to open the side panel
+            const detailsLinks = document.querySelectorAll('.details-link');
+            detailsLinks.forEach(link => {
+                // Check if the text is long enough to need a details link
+                const descriptionText = link.previousElementSibling;
+                const needsDetailsLink = descriptionText && (descriptionText.scrollHeight > descriptionText.clientHeight || descriptionText.textContent.length > 300);
                 
-                if (needsReadMore) {
-                    const readMoreBtn = text.nextElementSibling;
-                    if (readMoreBtn && readMoreBtn.classList.contains('read-more-btn')) {
-                        readMoreBtn.addEventListener('click', function() {
-                            text.classList.toggle('collapsed');
-                            text.classList.toggle('expanded');
-                            this.textContent = text.classList.contains('expanded') ? 'Read less' : 'Read more';
-                        });
-                    }
+                if (needsDetailsLink) {
+                    link.addEventListener('click', function() {
+                        const card = this.closest('.card');
+                        const title = card.getAttribute('data-title');
+                        const id = card.getAttribute('data-id');
+                        selectedItemId = id;
+                        openDetailPanel(title, id);
+                        updateUrl(true); // Update URL with item ID
+                    });
                 } else {
-                    // Hide the read more button if not needed
-                    const readMoreBtn = text.nextElementSibling;
-                    if (readMoreBtn && readMoreBtn.classList.contains('read-more-btn')) {
-                        readMoreBtn.style.display = 'none';
+                    // Hide the details link if not needed
+                    if (link) {
+                        link.style.display = 'none';
                     }
                 }
             });
@@ -561,20 +642,12 @@ def generate_js_code():
                 emptyState.classList.toggle('visible', visibleCards === 0);
             }
             
-            // Initial filter application
-            applyFilters();
+            // Apply URL parameters on page load
+            applyUrlParams();
             
-            // Detail Panel Functionality
-            // Side panel functionality is now in enhanced_side_panel.js
-            
-            // Add event listeners for detail panel
-            document.querySelectorAll('.btn-view-details').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const card = this.closest('.card');
-                    const title = card.getAttribute('data-title');
-                    const id = card.getAttribute('data-id');
-                    openDetailPanel(title, id);
-                });
+            // Handle browser back/forward navigation
+            window.addEventListener('popstate', function() {
+                applyUrlParams();
             });
         });
     </script>
@@ -865,10 +938,41 @@ try:
             background-size: cover;
             background-position: center;
             position: relative;
+            overflow: hidden;
         }}
         
         .card-image.has-image {{
             background-image: none;
+        }}
+        
+        /* Add a gradient overlay that fades the image into the content */
+        .card-image.has-image::after {{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.5) 70%,
+                rgba(255, 255, 255, 0.9) 90%,
+                rgba(255, 255, 255, 1) 100%
+            );
+            z-index: 1;
+        }}
+        
+        /* Add a fallback background color in case the image fails to load */
+        .card-image.has-image::before {{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+            z-index: -1;
         }}
         
         .card-header {{
@@ -976,19 +1080,29 @@ try:
             -webkit-box-orient: vertical;
         }}
         
-        .read-more-btn {{
+        .details-link {{
             color: var(--primary);
-            font-size: 0.8125rem;
+            font-size: 0.875rem;
             font-weight: 500;
             cursor: pointer;
-            margin-top: 0.25rem;
-            display: inline-block;
-            transition: color 0.2s;
+            margin-top: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            transition: all 0.2s ease;
         }}
         
-        .read-more-btn:hover {{
-            color: var(--secondary);
-            text-decoration: underline;
+        .details-link i {{
+            font-size: 0.75rem;
+            transition: transform 0.2s ease;
+        }}
+        
+        .details-link:hover {{
+            color: var(--primary-light);
+        }}
+        
+        .details-link:hover i {{
+            transform: translateX(3px);
         }}
         
         .meta {{
@@ -1047,6 +1161,46 @@ try:
             align-items: center;
             gap: 0.5rem;
             background-color: rgba(0,0,0,0.01);
+            flex-wrap: wrap;
+        }}
+        
+        .footer-chips {{
+            margin-right: auto;
+            margin-bottom: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+        }}
+        
+        .footer-chips .data-type-chip {{
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            margin-bottom: 0;
+        }}
+        
+        .license-tag {{
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem;
+            background-color: rgba(245, 158, 11, 0.1);
+            color: #d97706;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-left: auto;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            transition: all 0.2s ease;
+        }}
+        
+        .license-tag:hover {{
+            background-color: rgba(245, 158, 11, 0.15);
+            transform: translateY(-2px);
+        }}
+        
+        .license-tag i {{
+            font-size: 0.7rem;
+            opacity: 0.8;
         }}
         
         .btn {{
@@ -1193,7 +1347,6 @@ try:
         }}
         
         /* Side panel styles are now in enhanced_side_panel.css */
-        
     </style>
 </head>
 <body>
