@@ -151,8 +151,8 @@ function loadItemDetails(itemId) {
     }
     
     // Get dataset and use-case links
-    const datasetLink = card.querySelector('.btn-primary[href]');
-    const useCaseLink = card.querySelector('.btn-secondary[href]');
+    const datasetLink = card.querySelector('.hidden-links .btn-primary[href]');
+    const useCaseLink = card.querySelector('.hidden-links .btn-secondary[href]');
     
     // Get data type chips
     const dataTypeChips = Array.from(card.querySelectorAll('.data-type-chip')).map(chip => {

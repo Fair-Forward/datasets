@@ -245,10 +245,41 @@
             background-size: cover;
             background-position: center;
             position: relative;
+            overflow: hidden;
         }
         
         .card-image.has-image {
             background-image: none;
+        }
+        
+        /* Add a gradient overlay that fades the image into the content */
+        .card-image.has-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.5) 70%,
+                rgba(255, 255, 255, 0.9) 90%,
+                rgba(255, 255, 255, 1) 100%
+            );
+            z-index: 1;
+        }
+        
+        /* Add a fallback background color in case the image fails to load */
+        .card-image.has-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+            z-index: -1;
         }
         
         .card-header {
@@ -356,19 +387,29 @@
             -webkit-box-orient: vertical;
         }
         
-        .read-more-btn {
+        .details-link {
             color: var(--primary);
-            font-size: 0.8125rem;
+            font-size: 0.875rem;
             font-weight: 500;
             cursor: pointer;
-            margin-top: 0.25rem;
-            display: inline-block;
-            transition: color 0.2s;
+            margin-top: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            transition: all 0.2s ease;
         }
         
-        .read-more-btn:hover {
-            color: var(--secondary);
-            text-decoration: underline;
+        .details-link i {
+            font-size: 0.75rem;
+            transition: transform 0.2s ease;
+        }
+        
+        .details-link:hover {
+            color: var(--primary-light);
+        }
+        
+        .details-link:hover i {
+            transform: translateX(3px);
         }
         
         .meta {
@@ -427,6 +468,46 @@
             align-items: center;
             gap: 0.5rem;
             background-color: rgba(0,0,0,0.01);
+            flex-wrap: wrap;
+        }
+        
+        .footer-chips {
+            margin-right: auto;
+            margin-bottom: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+        .footer-chips .data-type-chip {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            margin-bottom: 0;
+        }
+        
+        .license-tag {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem;
+            background-color: rgba(245, 158, 11, 0.1);
+            color: #d97706;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-left: auto;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            transition: all 0.2s ease;
+        }
+        
+        .license-tag:hover {
+            background-color: rgba(245, 158, 11, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .license-tag i {
+            font-size: 0.7rem;
+            opacity: 0.8;
         }
         
         .btn {
@@ -468,16 +549,6 @@
             
             .search-box {
                 min-width: 100%;
-            }
-            
-            .share-filter-group {
-                margin-left: 0;
-                margin-top: 1rem;
-            }
-            
-            .btn-share-view {
-                width: 100%;
-                justify-content: center;
             }
             
             .grid {
@@ -531,7 +602,7 @@
     color: #2d3748;
 }
 
-.label-images {
+.label-text {
     background-color: #d8e2cf;
     color: #2d3748;
 }
@@ -546,7 +617,7 @@
     color: #2d3748;
 }
 
-.label-text {
+.label-images {
     background-color: #cfe2e2;
     color: #2d3748;
 }
@@ -556,17 +627,17 @@
     color: #2d3748;
 }
 
-.label-pilot {
+.label-use-case {
     background-color: #cfcfe2;
     color: #2d3748;
 }
 
-.label-use-case-with-business-model {
+.label-pilot {
     background-color: #d8cfe2;
     color: #2d3748;
 }
 
-.label-use-case {
+.label-use-case-with-business-model {
     background-color: #e2cfe2;
     color: #2d3748;
 }
@@ -658,36 +729,6 @@
         }
         
         /* Side panel styles are now in enhanced_side_panel.css */
-        
-        .share-filter-group {
-            margin-left: auto;
-        }
-        
-        .btn-share-view {
-            background-color: #f0f9ff;
-            color: #3b82f6;
-            border: 1px solid #bfdbfe;
-            padding: 0.5rem 1rem;
-            border-radius: 0.375rem;
-            font-size: 0.875rem;
-            font-weight: 500;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.2s ease;
-        }
-        
-        .btn-share-view:hover {
-            background-color: #e0f2fe;
-            transform: translateY(-2px);
-        }
-        
-        .btn-share-view.copied {
-            background-color: #ecfdf5;
-            color: #10b981;
-            border-color: #a7f3d0;
-        }
     </style>
 </head>
 <body>
@@ -759,11 +800,6 @@
 <option value="Uganda">Uganda</option>
                 </select>
             </div>
-            <div class="filter-group share-filter-group">
-                <button id="shareViewBtn" class="btn-share-view" title="Copy link to share this filtered view">
-                    <i class="fas fa-share-alt"></i> Share this view
-                </button>
-            </div>
         </div>
     </div>
     
@@ -782,16 +818,16 @@
             
             <div class="card-description">
                 <div class="description-text collapsed">The Cashew Disease Identification (CADI AI) project was implemented to help early detection of diseases in cashew plantations in Ghana. Early intervention increases yields by up to 30%, securing livelihoods, boosting food security, and fueling further economic growth. The main outputs of the project are an openly accessible data set (4,736 UAV images), a machine learning model, and a desktop app.</div>
-                <div class="read-more-btn">Read more</div>
+                <div class="details-link"><i class="fas fa-arrow-right"></i><span>See Details</span></div>
             </div>
         
-            <div class="data-type-chips"><span class="data-type-chip label-images" data-filter="Images"><i class="fas fa-image"></i> Images</span></div>
             <div class="tags"><span class="tag label-climate-action" data-filter="Climate Action" style="display:none;">Climate Action</span><span class="tag label-agriculture" data-filter="Agriculture" style="display:none;">Agriculture</span><span class="tag label-images" data-filter="Images" style="display:none;">Images</span></div>
+            <div class="hidden-links" style="display:none;"><a href="https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana/data" target="_blank" class="btn btn-primary" style="display:none;">View Dataset</a><a href="https://huggingface.co/datasets/KaraAgroAI/CADI-AI/tree/main" target="_blank" class="btn btn-secondary" style="display:none;">View Use Case</a></div>
         </div>
-        <div class="card-footer"><a href="https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana/data" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><a href="https://huggingface.co/datasets/KaraAgroAI/CADI-AI/tree/main" target="_blank" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Use Case</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
+        <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-images" data-filter="Images"><i class="fas fa-image"></i> Images</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="African Biomass Challenge with Open Cocoa Data" data-region="Ghana" data-id="1" data-dir-names="[&#x27;african_biomass_challenge_with_open_cocoa_data&#x27;, &#x27;leveraging_ml_to_predict_aboveground_biomass_in_cocoa_plantations_in_cote_divoire&#x27;]">
+    <div class="card has-dataset" data-title="African Biomass Challenge with Open Cocoa Data" data-region="Ghana" data-id="1" data-dir-names="[&#x27;leveraging_ml_to_predict_aboveground_biomass_in_cocoa_plantations_in_cote_divoire&#x27;, &#x27;african_biomass_challenge_with_open_cocoa_data&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/african_biomass_challenge_with_open_cocoa_data/images/download.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -802,16 +838,16 @@
             
             <div class="card-description">
                 <div class="description-text collapsed">the challenge was organized to predict biomass in shaded regions (cocoa plantations) in Cote d’Ivoire based on GEDI, Sentinel-2 and ground truth biomass data. Remote monitoring of the increase of biomass will help measure the impact of reforestation efforts in Cote d’Ivoire as well as detect degradation of forests due to cocoa, without requiring expensive and labor-intensive biomass estimates on the ground.</div>
-                <div class="read-more-btn">Read more</div>
+                <div class="details-link"><i class="fas fa-arrow-right"></i><span>See Details</span></div>
             </div>
         
-            <div class="data-type-chips"><span class="data-type-chip label-images" data-filter="Images"><i class="fas fa-image"></i> Images</span></div>
             <div class="tags"><span class="tag label-climate-action" data-filter="Climate Action" style="display:none;">Climate Action</span><span class="tag label-images" data-filter="Images" style="display:none;">Images</span></div>
+            <div class="hidden-links" style="display:none;"><a href="https://huggingface.co/datasets/data354/Africa_Biomass_dataset" target="_blank" class="btn btn-primary" style="display:none;">View Dataset</a></div>
         </div>
-        <div class="card-footer"><a href="https://huggingface.co/datasets/data354/Africa_Biomass_dataset" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
+        <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-images" data-filter="Images"><i class="fas fa-image"></i> Images</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Ghana Biomass Challenge: Ghana Crop Disease Detection Challenge" data-region="Ghana" data-id="2" data-dir-names="[&#x27;leveraging_ml_for_crop_disease_detection&#x27;, &#x27;ghana_biomass_challenge_ghana_crop_disease_detection_challenge&#x27;]">
+    <div class="card has-dataset" data-title="Ghana Biomass Challenge: Ghana Crop Disease Detection Challenge" data-region="Ghana" data-id="2" data-dir-names="[&#x27;ghana_biomass_challenge_ghana_crop_disease_detection_challenge&#x27;, &#x27;leveraging_ml_for_crop_disease_detection&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/ghana_biomass_challenge_ghana_crop_disease_detection_challenge/images/ghana_crop.JPG');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div></div>
@@ -822,16 +858,16 @@
             
             <div class="card-description">
                 <div class="description-text collapsed">The Ghana Crop Disease Detection Challenge is an online data science challenge that seeks to leverage the power of Machine Learning and Artificial Intelligence to detect diseases that attack crops and offer immediate remedies.</div>
-                <div class="read-more-btn">Read more</div>
+                <div class="details-link"><i class="fas fa-arrow-right"></i><span>See Details</span></div>
             </div>
         
-            <div class="data-type-chips"><span class="data-type-chip label-images" data-filter="Images"><i class="fas fa-image"></i> Images</span></div>
             <div class="tags"><span class="tag label-agriculture" data-filter="Agriculture" style="display:none;">Agriculture</span><span class="tag label-images" data-filter="Images" style="display:none;">Images</span></div>
+            <div class="hidden-links" style="display:none;"><a href="https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana" target="_blank" class="btn btn-primary" style="display:none;">View Dataset</a></div>
         </div>
-        <div class="card-footer"><a href="https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
+        <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-images" data-filter="Images"><i class="fas fa-image"></i> Images</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Cotton Ace: AI-driven Pest Management for Cotton Farmers in India" data-region="India" data-id="11" data-dir-names="[&#x27;ai_pest_management_open_data_for_pink_bollworms_and_american_bollworms&#x27;, &#x27;wadhwani_ai__open_ai_for_cotton_pest_control_with_smallholder_farmers__national_entrepreneurship_network_nen&#x27;, &#x27;cotton_ace_aidriven_pest_management_for_cotton_farmers_in_india&#x27;]">
+    <div class="card has-dataset has-usecase" data-title="Cotton Ace: AI-driven Pest Management for Cotton Farmers in India" data-region="India" data-id="11" data-dir-names="[&#x27;wadhwani_ai__open_ai_for_cotton_pest_control_with_smallholder_farmers__national_entrepreneurship_network_nen&#x27;, &#x27;cotton_ace_aidriven_pest_management_for_cotton_farmers_in_india&#x27;, &#x27;ai_pest_management_open_data_for_pink_bollworms_and_american_bollworms&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/wadhwani_ai__open_ai_for_cotton_pest_control_with_smallholder_farmers__national_entrepreneurship_network_nen/images/cotton_ace.jpg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div></div>
@@ -844,16 +880,16 @@
                 <div class="description-text collapsed">Wadhwani AI has developed a mobile app to support cotton farmers combat pest infestations, a major threat to cotton productivity. For this, they have collaborated with FAIR Forward – AI for All, a project of German Development Cooperation. The app allows farmers to take photos of pheromone traps, which capture male bollworms, and uses an AI model to count the pests in the images. Based on the AI-generated counts, the app provides recommendations to farmers on how to respond. This technology empowers small-scale farmers to make informed decisions, reduce uncertainty in yield, and improve their livelihoods.
  
  As the codebase, dataset and research are openly available it can be used to build on, test and research similar applications in other contexts. This would esp. apply to problems of identification and counting of agricultural pests.</div>
-                <div class="read-more-btn">Read more</div>
+                <div class="details-link"><i class="fas fa-arrow-right"></i><span>See Details</span></div>
             </div>
         
-            <div class="data-type-chips"><span class="data-type-chip label-images" data-filter="Images"><i class="fas fa-image"></i> Images</span></div>
             <div class="tags"><span class="tag label-agriculture" data-filter="Agriculture" style="display:none;">Agriculture</span><span class="tag label-images" data-filter="Images" style="display:none;">Images</span></div>
+            <div class="hidden-links" style="display:none;"><a href="https://source.coop/repositories/wadhwani-ai/wiai-pm-open-data/description; https://github.com/WadhwaniAI/pest-management-opendata?tab=readme-ov-file; https://huggingface.co/datasets/wadhwani-ai/pest-management-opendata" target="_blank" class="btn btn-primary" style="display:none;">View Dataset</a><a href="https://github.com/WadhwaniAI/pest-monitoring, https://dl.acm.org/doi/10.1145/3394486.3403363" target="_blank" class="btn btn-secondary" style="display:none;">View Use Case</a></div>
         </div>
-        <div class="card-footer"><a href="https://source.coop/repositories/wadhwani-ai/wiai-pm-open-data/description; https://github.com/WadhwaniAI/pest-management-opendata?tab=readme-ov-file; https://huggingface.co/datasets/wadhwani-ai/pest-management-opendata" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><a href="https://github.com/WadhwaniAI/pest-monitoring, https://dl.acm.org/doi/10.1145/3394486.3403363" target="_blank" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Use Case</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
+        <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-images" data-filter="Images"><i class="fas fa-image"></i> Images</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Data-driven decision-making for farmers to increase climate resilience" data-region="India" data-id="12" data-dir-names="[&#x27;digital_green__local_dataset_collection_for_climatesmart_agriculture&#x27;, &#x27;datadriven_decisionmaking_for_farmers_to_increase_climate_resilience&#x27;, &#x27;geospatial_dataset_of_wheat_and_rice_farmers_in_bihar_india&#x27;]">
+    <div class="card has-dataset has-usecase" data-title="Data-driven decision-making for farmers to increase climate resilience" data-region="India" data-id="12" data-dir-names="[&#x27;datadriven_decisionmaking_for_farmers_to_increase_climate_resilience&#x27;, &#x27;digital_green__local_dataset_collection_for_climatesmart_agriculture&#x27;, &#x27;geospatial_dataset_of_wheat_and_rice_farmers_in_bihar_india&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/digital_green__local_dataset_collection_for_climatesmart_agriculture/images/image.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -864,16 +900,16 @@
             
             <div class="card-description">
                 <div class="description-text collapsed">The project developed a scalable data collection model for JEEViKA’s frontline workers, integrating digital tools and geofencing, and empowered farmers with personalized climate-smart advice through Farmer Scorecards.</div>
-                <div class="read-more-btn">Read more</div>
+                <div class="details-link"><i class="fas fa-arrow-right"></i><span>See Details</span></div>
             </div>
         
-            <div class="data-type-chips"><span class="data-type-chip label-tabular" data-filter="Tabular"><i class="fas fa-table"></i> Tabular</span></div>
             <div class="tags"><span class="tag label-agriculture" data-filter="Agriculture" style="display:none;">Agriculture</span><span class="tag label-climate-action" data-filter="Climate Action" style="display:none;">Climate Action</span><span class="tag label-tabular" data-filter="Tabular" style="display:none;">Tabular</span></div>
+            <div class="hidden-links" style="display:none;"><a href="https://github.com/digitalgreenorg/frame-templates" target="_blank" class="btn btn-primary" style="display:none;">View Dataset</a><a href="https://github.com/digitalgreenorg/frame-templates" target="_blank" class="btn btn-secondary" style="display:none;">View Use Case</a></div>
         </div>
-        <div class="card-footer"><a href="https://github.com/digitalgreenorg/frame-templates" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><a href="https://github.com/digitalgreenorg/frame-templates" target="_blank" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Use Case</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
+        <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-tabular" data-filter="Tabular"><i class="fas fa-table"></i> Tabular</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Open Dataset of Farm Boundaries and Crop Cultivation in Telangana State" data-region="India" data-id="13" data-dir-names="[&#x27;ml4eo_telangana_crop_identification&#x27;, &#x27;support_sustainable_agriculture_in_telangana_through_aipowered_crop_identification&#x27;, &#x27;open_dataset_of_farm_boundaries_and_crop_cultivation_in_telangana_state&#x27;]">
+    <div class="card has-dataset" data-title="Open Dataset of Farm Boundaries and Crop Cultivation in Telangana State" data-region="India" data-id="13" data-dir-names="[&#x27;open_dataset_of_farm_boundaries_and_crop_cultivation_in_telangana_state&#x27;, &#x27;support_sustainable_agriculture_in_telangana_through_aipowered_crop_identification&#x27;, &#x27;ml4eo_telangana_crop_identification&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/ml4eo_telangana_crop_identification/images/image.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -884,16 +920,16 @@
             
             <div class="card-description">
                 <div class="description-text collapsed">This AI application and replication-kit is about an AI-based crop type map for Telangana. This should be of use to anyone wishing to support sustainable farming practices and evidence-based decision-making for agricultural. Also, this can be used to empower you, as a local business, and NGOs, or a government agency to develop digital agricultural applications. The application focuses on creating localized ground-truth data on several different crop related variables to train AI models tailored to Telangana&#x27;s diverse agricultural landscape. This includes an open-access ground-truth dataset, a data challenge with openly available models for yield prediction, a crop classification model using satellite imagery applied to map the whole state of Telangana, and a roadmap for AI implementation in agriculture. Datasets, AI models, and crop maps are all openly available as an open-source replication kit and digital public good.</div>
-                <div class="read-more-btn">Read more</div>
+                <div class="details-link"><i class="fas fa-arrow-right"></i><span>See Details</span></div>
             </div>
         
-            <div class="data-type-chips"><span class="data-type-chip label-geospatial" data-filter="Geospatial"><i class="fas fa-map"></i> Geospatial</span></div>
             <div class="tags"><span class="tag label-agriculture" data-filter="Agriculture" style="display:none;">Agriculture</span><span class="tag label-climate-action" data-filter="Climate Action" style="display:none;">Climate Action</span><span class="tag label-geospatial" data-filter="Geospatial" style="display:none;">Geospatial</span></div>
+            <div class="hidden-links" style="display:none;"><a href="https://dataexplorer.ts.adex.org.in/dataset/583e8f01-160e-4f51-bde5-31dc7f2a5887" target="_blank" class="btn btn-primary" style="display:none;">View Dataset</a></div>
         </div>
-        <div class="card-footer"><a href="https://dataexplorer.ts.adex.org.in/dataset/583e8f01-160e-4f51-bde5-31dc7f2a5887" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
+        <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-geospatial" data-filter="Geospatial"><i class="fas fa-map"></i> Geospatial</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Combatting Air Pollution and GHG Emissions in India through hyperlocal AI-powered mapping" data-region="India" data-id="14" data-dir-names="[&#x27;hyperlocal_mapping_of_air_pollution_and_ghg_emissions_in_india_with_undp&#x27;, &#x27;open_air_pollution_data_for_patna_and_gurugram&#x27;, &#x27;combatting_air_pollution_and_ghg_emissions_in_india_through_hyperlocal_aipowered_mapping&#x27;]">
+    <div class="card has-dataset has-usecase" data-title="Combatting Air Pollution and GHG Emissions in India through hyperlocal AI-powered mapping" data-region="India" data-id="14" data-dir-names="[&#x27;open_air_pollution_data_for_patna_and_gurugram&#x27;, &#x27;hyperlocal_mapping_of_air_pollution_and_ghg_emissions_in_india_with_undp&#x27;, &#x27;combatting_air_pollution_and_ghg_emissions_in_india_through_hyperlocal_aipowered_mapping&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             
@@ -903,12 +939,12 @@
         <div class="card-body">
             
             
-            
+            <div class="hidden-links" style="display:none;"><a href="https://vayu.undp.org.in/" target="_blank" class="btn btn-primary" style="display:none;">View Dataset</a><a href="https://vayu.undp.org.in/" target="_blank" class="btn btn-secondary" style="display:none;">View Use Case</a></div>
         </div>
-        <div class="card-footer"><a href="https://vayu.undp.org.in/" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><a href="https://vayu.undp.org.in/" target="_blank" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Use Case</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
+        <div class="card-footer"><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Open-source text-to-speech datasets in 9 Indian languages (Hindi | Bengali | Marathi | Telugu | Bhojpuri | Kannada | Magadhi | Chhattisgarhi | Maithili)" data-region="India" data-id="17" data-dir-names="[&#x27;opensource_texttospeech_datasets_in_9_indian_languages_hindi__bengali__marathi__telugu__bhojpuri__kannada__magadhi__chhattisgarhi__maithili&#x27;, &#x27;iisc__open_voice_data_in_indian_languages&#x27;, &#x27;build_inclusive_voice_technologies_in_9_indian_languages_through_open_language_datasets&#x27;]">
+    <div class="card has-dataset" data-title="Open-source text-to-speech datasets in 9 Indian languages (Hindi | Bengali | Marathi | Telugu | Bhojpuri | Kannada | Magadhi | Chhattisgarhi | Maithili)" data-region="India" data-id="17" data-dir-names="[&#x27;opensource_texttospeech_datasets_in_9_indian_languages_hindi__bengali__marathi__telugu__bhojpuri__kannada__magadhi__chhattisgarhi__maithili&#x27;, &#x27;build_inclusive_voice_technologies_in_9_indian_languages_through_open_language_datasets&#x27;, &#x27;iisc__open_voice_data_in_indian_languages&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
@@ -922,16 +958,16 @@
                 <div class="description-text collapsed">This dataset is part of the initiative SYSPIN (SYnthesizing SPeech in INdian languages), that develops large open-source Text-to-Speech (TTS) corpora, i.e., speech training datasets and AI models in 9 Indian languages, namely – Bengali, Bhojpuri, Chhattisgarhi, Hindi, Kannada, Magahi, Maithili, Marathi, and Telugu. This data is useful for those wishing to build voice-enabled, user-friendly applications in Indian languages. Through voice-based solutions, these AI models can be used to empower communities that do not have access to digital services in their own native language. They can be used by private companies, researchers, NGOs or government departments to develop digital applications. 
  
  The datasets and TTS models are available to the AI community and anyone wishing to build voice-enabled applications in Indian languages.</div>
-                <div class="read-more-btn">Read more</div>
+                <div class="details-link"><i class="fas fa-arrow-right"></i><span>See Details</span></div>
             </div>
         
-            <div class="data-type-chips"><span class="data-type-chip label-audio" data-filter="Audio"><i class="fas fa-volume-up"></i> Audio</span></div>
             <div class="tags"><span class="tag label-natural-language-processing" data-filter="Natural Language Processing" style="display:none;">Natural Language Processing</span><span class="tag label-audio" data-filter="Audio" style="display:none;">Audio</span></div>
+            <div class="hidden-links" style="display:none;"><a href="https://syspin.iisc.ac.in/datasets" target="_blank" class="btn btn-primary" style="display:none;">View Dataset</a></div>
         </div>
-        <div class="card-footer"><a href="https://syspin.iisc.ac.in/datasets" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
+        <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-audio" data-filter="Audio"><i class="fas fa-volume-up"></i> Audio</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Open-source text-to-speech and machine translation datasets in Mundari" data-region="India" data-id="18" data-dir-names="[&#x27;100_hours_of_text_to_speech_dataset_for_mundari_language&#x27;, &#x27;opensource_texttospeech_and_machine_translation_datasets_in_mundari&#x27;]">
+    <div class="card has-dataset" data-title="Open-source text-to-speech and machine translation datasets in Mundari" data-region="India" data-id="18" data-dir-names="[&#x27;opensource_texttospeech_and_machine_translation_datasets_in_mundari&#x27;, &#x27;100_hours_of_text_to_speech_dataset_for_mundari_language&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
@@ -942,13 +978,13 @@
             
             <div class="card-description">
                 <div class="description-text collapsed">100 hours of Text to Speech Dataset for Mundari Language</div>
-                <div class="read-more-btn">Read more</div>
+                <div class="details-link"><i class="fas fa-arrow-right"></i><span>See Details</span></div>
             </div>
         
-            <div class="data-type-chips"><span class="data-type-chip label-text" data-filter="Text"><i class="fas fa-file-alt"></i> Text</span></div>
             <div class="tags"><span class="tag label-natural-language-processing" data-filter="Natural Language Processing" style="display:none;">Natural Language Processing</span><span class="tag label-text" data-filter="Text" style="display:none;">Text</span></div>
+            <div class="hidden-links" style="display:none;"><a href="https://github.com/karya-inc/dataset-hindi-mundari-translation; https://github.com/karya-inc/dataset-mundari-tts" target="_blank" class="btn btn-primary" style="display:none;">View Dataset</a></div>
         </div>
-        <div class="card-footer"><a href="https://github.com/karya-inc/dataset-hindi-mundari-translation; https://github.com/karya-inc/dataset-mundari-tts" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
+        <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-text" data-filter="Text"><i class="fas fa-file-alt"></i> Text</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
     <div class="card has-dataset" data-title="Gramvaani Automatic Speech Recognition (ASR)" data-region="India" data-id="20" data-dir-names="[&#x27;providing_better_information_on_sexual_and_reproductive_health_and_rights_srhr_of_young_people_through_the_kahi_ankahi_baatein_infloline_hindi_llm_finetuning&#x27;, &#x27;gramvaani_automatic_speech_recognition_asr&#x27;]">
@@ -962,16 +998,16 @@
             
             <div class="card-description">
                 <div class="description-text collapsed">Improve Kahi Ankahi Baatein (KAB) platform, m – Fine-tuned Hindi LLM for better user experience</div>
-                <div class="read-more-btn">Read more</div>
+                <div class="details-link"><i class="fas fa-arrow-right"></i><span>See Details</span></div>
             </div>
         
             
-            
+            <div class="hidden-links" style="display:none;"><a href="[GramVaani](https://gramvaani.org/)" target="_blank" class="btn btn-primary" style="display:none;">View Dataset</a></div>
         </div>
-        <div class="card-footer"><a href="[GramVaani](https://gramvaani.org/)" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
+        <div class="card-footer"><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Developing a concept with MFIN on voice-based chatbot" data-region="India" data-id="21" data-dir-names="[&#x27;developing_a_concept_with_mfin_on_voicebased_chatbot&#x27;, &#x27;microfinance_industry_network_india_use_of_voice_technology_gramvaani&#x27;]">
+    <div class="card has-dataset" data-title="Developing a concept with MFIN on voice-based chatbot" data-region="India" data-id="21" data-dir-names="[&#x27;microfinance_industry_network_india_use_of_voice_technology_gramvaani&#x27;, &#x27;developing_a_concept_with_mfin_on_voicebased_chatbot&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
@@ -983,16 +1019,16 @@
             <div class="card-description">
                 <div class="description-text collapsed">Contract name: Automation of components of the MFIN-CGRM CRM solution 
  Follow-up project from former MFIN engagement to move from prototype to production and implement the remaining use-cases.</div>
-                <div class="read-more-btn">Read more</div>
+                <div class="details-link"><i class="fas fa-arrow-right"></i><span>See Details</span></div>
             </div>
         
-            <div class="data-type-chips"><span class="data-type-chip label-text" data-filter="Text"><i class="fas fa-file-alt"></i> Text</span></div>
             <div class="tags"><span class="tag label-natural-language-processing" data-filter="Natural Language Processing" style="display:none;">Natural Language Processing</span><span class="tag label-text" data-filter="Text" style="display:none;">Text</span></div>
+            <div class="hidden-links" style="display:none;"><a href="https://gitlab.com/gramvaani/giz_kab_bert_sourcecode" target="_blank" class="btn btn-primary" style="display:none;">View Dataset</a></div>
         </div>
-        <div class="card-footer"><a href="https://gitlab.com/gramvaani/giz_kab_bert_sourcecode" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
+        <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-text" data-filter="Text"><i class="fas fa-file-alt"></i> Text</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Question-Answer Pairs on Health Related Content in Telugu and Chhatisgarhi" data-region="India" data-id="22" data-dir-names="[&#x27;digital_audio_content_creation_for_womens_empowerment_using_language_technologies&#x27;, &#x27;empowering_women_across_india_with_knowledge_in_their_native_languages&#x27;, &#x27;questionanswer_pairs_on_health_related_content_in_telugu_and_chhatisgarhi&#x27;]">
+    <div class="card has-dataset" data-title="Question-Answer Pairs on Health Related Content in Telugu and Chhatisgarhi" data-region="India" data-id="22" data-dir-names="[&#x27;empowering_women_across_india_with_knowledge_in_their_native_languages&#x27;, &#x27;digital_audio_content_creation_for_womens_empowerment_using_language_technologies&#x27;, &#x27;questionanswer_pairs_on_health_related_content_in_telugu_and_chhatisgarhi&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             
@@ -1003,16 +1039,16 @@
             
             <div class="card-description">
                 <div class="description-text collapsed">Using TTS models to create health-related audio messages that can be shared with civil society organizations for awareness raising and capacity building</div>
-                <div class="read-more-btn">Read more</div>
+                <div class="details-link"><i class="fas fa-arrow-right"></i><span>See Details</span></div>
             </div>
         
             
-            
+            <div class="hidden-links" style="display:none;"><a href="https://www.audiopedia.foundation/bharat" target="_blank" class="btn btn-primary" style="display:none;">View Dataset</a></div>
         </div>
-        <div class="card-footer"><a href="https://www.audiopedia.foundation/bharat" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
+        <div class="card-footer"><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="HCSA: High Carbon Stock Mapping in Southeast Asia" data-region="Indonesien" data-id="24" data-dir-names="[&#x27;forest_forward_i_using_ai_to_map_carbonrich_forests_to_combat_climate_change_and_protect_livelihoods_in_indonesia_high_carbon_stock_approach&#x27;, &#x27;hcsa_high_carbon_stock_mapping_in_southeast_asia&#x27;]">
+    <div class="card has-dataset" data-title="HCSA: High Carbon Stock Mapping in Southeast Asia" data-region="Indonesien" data-id="24" data-dir-names="[&#x27;hcsa_high_carbon_stock_mapping_in_southeast_asia&#x27;, &#x27;forest_forward_i_using_ai_to_map_carbonrich_forests_to_combat_climate_change_and_protect_livelihoods_in_indonesia_high_carbon_stock_approach&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -1027,16 +1063,16 @@
  • Young Regenerating Forests: Regrowing forests that are transitioning into higher carbon stock potential.
  • Scrub and Open Land: Areas with minimal carbon stock suitable for sustainable development.
  The maps integrate field data, satellite imagery, and AI to assist policymakers, NGOs, and businesses in making data-driven decisions for sustainable land-use planning and conservation. Stakeholders can use the outputs for spatial planning, reducing greenhouse gas emissions, and implementing &quot;no deforestation&quot; commitments. The High Carbon Stock Approach (HCSA) project was nominated for the prestigious UN SDG Game Changer award – Category 2: Planet – Innovation for our climate and environment “Artificial Intelligence Meets Jungle/ Forest Forward.</div>
-                <div class="read-more-btn">Read more</div>
+                <div class="details-link"><i class="fas fa-arrow-right"></i><span>See Details</span></div>
             </div>
         
-            <div class="data-type-chips"><span class="data-type-chip label-geospatial" data-filter="Geospatial"><i class="fas fa-map"></i> Geospatial</span></div>
             <div class="tags"><span class="tag label-climate-action" data-filter="Climate Action" style="display:none;">Climate Action</span><span class="tag label-geospatial" data-filter="Geospatial" style="display:none;">Geospatial</span></div>
+            <div class="hidden-links" style="display:none;"><a href="https://huggingface.co/datasets/HCSA/HCSA_Indonesia_Forest_Plot_Data_2023" target="_blank" class="btn btn-primary" style="display:none;">View Dataset</a></div>
         </div>
-        <div class="card-footer"><a href="https://huggingface.co/datasets/HCSA/HCSA_Indonesia_Forest_Plot_Data_2023" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
+        <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-geospatial" data-filter="Geospatial"><i class="fas fa-map"></i> Geospatial</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Use case development Indonesia" data-region="Indonesien" data-id="26" data-dir-names="[&#x27;use_case_development_indonesia&#x27;, &#x27;climate_disinformation_in_local_indonesian_languages&#x27;]">
+    <div class="card has-dataset" data-title="Use case development Indonesia" data-region="Indonesien" data-id="26" data-dir-names="[&#x27;climate_disinformation_in_local_indonesian_languages&#x27;, &#x27;use_case_development_indonesia&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
@@ -1047,13 +1083,13 @@
             
             <div class="card-description">
                 <div class="description-text collapsed">This AI application is about developing an AI-based system to tackle climate misinformation in Indonesia, focusing on creating accurate and accessible information tools. The initiative aims to build a multilingual disinformation detection system, covering Bahasa Indonesia and over 10,6 million words and 21 million words translation from Minangkabau, Balinese, and Buginese to classify and verify climate-related content. The application supports stakeholders, including government agencies, NGOs, and communities, in countering false narratives, promoting awareness, and enabling evidence-based decision-making. The AI outcomes include open-access datasets, disinformation, and topic classification models, a user-friendly website, and a chatbot. These tools empower users to identify climate misinformation, enhance public literacy, and foster collaboration for sustainable climate actions. The project emphasizes inclusivity, accessibility, and long-term impact, providing resources for researchers, local businesses, and policy-makers to advance AI applications in combating misinformation. Prosa has developed an AI-powered chatbot to address climate misinformation. The platform&#x27;s website is available at faktaiklim.prosa.ai, and the chatbot can be accessed via Telegram (Fakta Iklim Bot), with open-source code available on GitHub. User guides are provided in four languages: Indonesian, Minangkabau, Balinese, and Bugis.</div>
-                <div class="read-more-btn">Read more</div>
+                <div class="details-link"><i class="fas fa-arrow-right"></i><span>See Details</span></div>
             </div>
         
-            <div class="data-type-chips"><span class="data-type-chip label-text" data-filter="Text"><i class="fas fa-file-alt"></i> Text</span></div>
             <div class="tags"><span class="tag label-climate-action" data-filter="Climate Action" style="display:none;">Climate Action</span><span class="tag label-natural-language-processing" data-filter="Natural Language Processing" style="display:none;">Natural Language Processing</span><span class="tag label-text" data-filter="Text" style="display:none;">Text</span></div>
+            <div class="hidden-links" style="display:none;"><a href="https://huggingface.co/prosa-text" target="_blank" class="btn btn-primary" style="display:none;">View Dataset</a></div>
         </div>
-        <div class="card-footer"><a href="https://huggingface.co/prosa-text" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
+        <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-text" data-filter="Text"><i class="fas fa-file-alt"></i> Text</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
     <div class="card has-dataset" data-title="South Africa Crop Type Competition" data-region="South Africa" data-id="43" data-dir-names="[&#x27;south_africa_crop_type_competition&#x27;]">
@@ -1065,13 +1101,13 @@
         </div>
         <div class="card-body">
             
-            <div class="data-type-chips"><span class="data-type-chip label-tabular" data-filter="Tabular"><i class="fas fa-table"></i> Tabular</span></div>
             <div class="tags"><span class="tag label-climate-action" data-filter="Climate Action" style="display:none;">Climate Action</span><span class="tag label-agriculture" data-filter="Agriculture" style="display:none;">Agriculture</span><span class="tag label-tabular" data-filter="Tabular" style="display:none;">Tabular</span></div>
+            <div class="hidden-links" style="display:none;"><a href="https://beta.source.coop/repositories/radiantearth/south-africa-crops-competition/description/" target="_blank" class="btn btn-primary" style="display:none;">View Dataset</a></div>
         </div>
-        <div class="card-footer"><a href="https://beta.source.coop/repositories/radiantearth/south-africa-crops-competition/description/" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
+        <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-tabular" data-filter="Tabular"><i class="fas fa-table"></i> Tabular</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="ML4EO for Precision Agriculture" data-region="South Africa" data-id="44" data-dir-names="[&#x27;ml4eo_for_precision_agriculture&#x27;, &#x27;enabling_geoscientists_to_use_machine_learning_for_precision_agriculture_of_geospatial_data&#x27;]">
+    <div class="card has-dataset" data-title="ML4EO for Precision Agriculture" data-region="South Africa" data-id="44" data-dir-names="[&#x27;enabling_geoscientists_to_use_machine_learning_for_precision_agriculture_of_geospatial_data&#x27;, &#x27;ml4eo_for_precision_agriculture&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             
@@ -1082,13 +1118,13 @@
             
             <div class="card-description">
                 <div class="description-text collapsed">Field data collected on agricultural farm land (crops) with raw datasets + applied use cases of classification of land use cover using ML (based on individual projects presented)</div>
-                <div class="read-more-btn">Read more</div>
+                <div class="details-link"><i class="fas fa-arrow-right"></i><span>See Details</span></div>
             </div>
         
             
-            
+            <div class="hidden-links" style="display:none;"><a href="TBC Jonas N" target="_blank" class="btn btn-primary" style="display:none;">View Dataset</a></div>
         </div>
-        <div class="card-footer"><a href="TBC Jonas N" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
+        <div class="card-footer"><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
     <div class="card has-dataset" data-title="NLP grant Localising Common Voice for South African Languages" data-region="South Africa" data-id="45" data-dir-names="[&#x27;nlp_grant_localising_common_voice_for_south_african_languages&#x27;, &#x27;making_voice_data_available_in_all_official_languages_of_south_africa_as_a_digital_public_good__voices_of_mzansi&#x27;]">
@@ -1102,16 +1138,16 @@
             
             <div class="card-description">
                 <div class="description-text collapsed">Univ of Stellenbosch Grant (Febe de Wet) - Voices of Mzansi project / localise SA local languages on Mozilla CV platform</div>
-                <div class="read-more-btn">Read more</div>
+                <div class="details-link"><i class="fas fa-arrow-right"></i><span>See Details</span></div>
             </div>
         
-            <div class="data-type-chips"><span class="data-type-chip label-text" data-filter="Text"><i class="fas fa-file-alt"></i> Text</span></div>
             <div class="tags"><span class="tag label-natural-language-processing" data-filter="Natural Language Processing" style="display:none;">Natural Language Processing</span><span class="tag label-text" data-filter="Text" style="display:none;">Text</span></div>
+            <div class="hidden-links" style="display:none;"><a href="https://commonvoice.mozilla.org/de/languages" target="_blank" class="btn btn-primary" style="display:none;">View Dataset</a></div>
         </div>
-        <div class="card-footer"><a href="https://commonvoice.mozilla.org/de/languages" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
+        <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-text" data-filter="Text"><i class="fas fa-file-alt"></i> Text</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-usecase" data-title="Electrification Dashboard for Ugandan government - help to find the best energy sources for villages in Uganda" data-region="Uganda" data-id="46" data-dir-names="[&#x27;mlbased_site_identification_for_minigrids_in_uganda&#x27;, &#x27;electrification_dashboard_for_ugandan_government__help_to_find_the_best_energy_sources_for_villages_in_uganda&#x27;]">
+    <div class="card has-usecase" data-title="Electrification Dashboard for Ugandan government - help to find the best energy sources for villages in Uganda" data-region="Uganda" data-id="46" data-dir-names="[&#x27;electrification_dashboard_for_ugandan_government__help_to_find_the_best_energy_sources_for_villages_in_uganda&#x27;, &#x27;mlbased_site_identification_for_minigrids_in_uganda&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -1122,16 +1158,16 @@
             
             <div class="card-description">
                 <div class="description-text collapsed">This web application is a decision support tool. It is built as a prototype for a large-scale decision support tool for determining electrification strategies for different geographical areas. Currently implemented in Lamwo district electrification.</div>
-                <div class="read-more-btn">Read more</div>
+                <div class="details-link"><i class="fas fa-arrow-right"></i><span>See Details</span></div>
             </div>
         
-            
             <div class="tags"><span class="tag label-climate-action" data-filter="Climate Action" style="display:none;">Climate Action</span></div>
+            <div class="hidden-links" style="display:none;"><a href="https://lamwo-electrification-demo.vercel.app/" target="_blank" class="btn btn-secondary" style="display:none;">View Use Case</a></div>
         </div>
-        <div class="card-footer"><a href="https://lamwo-electrification-demo.vercel.app/" target="_blank" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Use Case</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
+        <div class="card-footer"><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Croppie- helping smallholder coffee producers to plan sales, get loans, and trace coffee - AI powered coffee yield prediction" data-region="Uganda" data-id="47" data-dir-names="[&#x27;croppie_helping_smallholder_coffee_producers_to_plan_sales_get_loans_and_trace_coffee__ai_powered_coffee_yield_prediction&#x27;, &#x27;croppie_coffee_yield_prediction&#x27;]">
+    <div class="card has-dataset has-usecase" data-title="Croppie- helping smallholder coffee producers to plan sales, get loans, and trace coffee - AI powered coffee yield prediction" data-region="Uganda" data-id="47" data-dir-names="[&#x27;croppie_coffee_yield_prediction&#x27;, &#x27;croppie_helping_smallholder_coffee_producers_to_plan_sales_get_loans_and_trace_coffee__ai_powered_coffee_yield_prediction&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -1142,16 +1178,16 @@
             
             <div class="card-description">
                 <div class="description-text collapsed">Croppie is a digital platform that integrates yield estimation functionality with agronomic advice and farm data management. The basic user interface is provided through a mobile application. Croppie’s core functionality is to allow for AI-supported coffee yield estimation. This is done by guiding a selective sampling for a statistical yield estimation service based on branch count and coffee branch picture taking, alongside the integration of additional data provided by the user.</div>
-                <div class="read-more-btn">Read more</div>
+                <div class="details-link"><i class="fas fa-arrow-right"></i><span>See Details</span></div>
             </div>
         
-            
             <div class="tags"><span class="tag label-agriculture" data-filter="Agriculture" style="display:none;">Agriculture</span><span class="tag label-climate-action" data-filter="Climate Action" style="display:none;">Climate Action</span></div>
+            <div class="hidden-links" style="display:none;"><a href="https://huggingface.co/datasets/rgautroncgiar/croppie_coffee_ug" target="_blank" class="btn btn-primary" style="display:none;">View Dataset</a><a href="https://huggingface.co/rgautroncgiar/croppie_coffee_ug" target="_blank" class="btn btn-secondary" style="display:none;">View Use Case</a></div>
         </div>
-        <div class="card-footer"><a href="https://huggingface.co/datasets/rgautroncgiar/croppie_coffee_ug" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><a href="https://huggingface.co/rgautroncgiar/croppie_coffee_ug" target="_blank" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Use Case</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
+        <div class="card-footer"><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Finding good spots for decentralized green energy grids in Uganda I - AI based site identification for MiniGrids" data-region="Uganda" data-id="48" data-dir-names="[&#x27;finding_good_spots_for_decentralized_green_energy_grids_in_uganda_i__ai_based_site_identification_for_minigrids&#x27;, &#x27;scaling_mlbased_site_identification_for_minigrids_uganda&#x27;]">
+    <div class="card has-dataset has-usecase" data-title="Finding good spots for decentralized green energy grids in Uganda I - AI based site identification for MiniGrids" data-region="Uganda" data-id="48" data-dir-names="[&#x27;scaling_mlbased_site_identification_for_minigrids_uganda&#x27;, &#x27;finding_good_spots_for_decentralized_green_energy_grids_in_uganda_i__ai_based_site_identification_for_minigrids&#x27;]">
         <div class="card-image"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -1162,13 +1198,13 @@
             
             <div class="card-description">
                 <div class="description-text collapsed">Moving towards scaling of the MiniGrid prototype</div>
-                <div class="read-more-btn">Read more</div>
+                <div class="details-link"><i class="fas fa-arrow-right"></i><span>See Details</span></div>
             </div>
         
-            <div class="data-type-chips"><span class="data-type-chip label-geospatial" data-filter="Geospatial"><i class="fas fa-map"></i> Geospatial</span></div>
             <div class="tags"><span class="tag label-climate-action" data-filter="Climate Action" style="display:none;">Climate Action</span><span class="tag label-geospatial" data-filter="Geospatial" style="display:none;">Geospatial</span></div>
+            <div class="hidden-links" style="display:none;"><a href="https://github.com/SunbirdAI/lamwo-electrification-project/tree/main" target="_blank" class="btn btn-primary" style="display:none;">View Dataset</a><a href="https://github.com/SunbirdAI/lamwo-electrification-project/tree/main" target="_blank" class="btn btn-secondary" style="display:none;">View Use Case</a></div>
         </div>
-        <div class="card-footer"><a href="https://github.com/SunbirdAI/lamwo-electrification-project/tree/main" target="_blank" class="btn btn-primary"><i class="fas fa-database"></i> Dataset</a><a href="https://github.com/SunbirdAI/lamwo-electrification-project/tree/main" target="_blank" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Use Case</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
+        <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-geospatial" data-filter="Geospatial"><i class="fas fa-map"></i> Geospatial</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
     <div class="card has-usecase" data-title="Predicting and Correcting Solar Irradiance wih unbiased AI Models in East Africa" data-region="Uganda" data-id="49" data-dir-names="[&#x27;predicting_and_correcting_solar_irradiance_wih_unbiased_ai_models_in_east_africa&#x27;, &#x27;development_of_unbiased_ai_models_for_solar_irradiance_uganda&#x27;]">
@@ -1181,9 +1217,9 @@
         <div class="card-body">
             
             
-            
+            <div class="hidden-links" style="display:none;"><a href="https://irradiation-portal-dev.onrender.com/" target="_blank" class="btn btn-secondary" style="display:none;">View Use Case</a></div>
         </div>
-        <div class="card-footer"><a href="https://irradiation-portal-dev.onrender.com/" target="_blank" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> Use Case</a><button class="btn btn-view-details"><i class="fas fa-info-circle"></i> How to use it</button></div>
+        <div class="card-footer"><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
         </div>
@@ -1339,26 +1375,26 @@
                 updateUrl();
             });
             
-            // Set up read more buttons
-            const descriptionTexts = document.querySelectorAll('.description-text');
-            descriptionTexts.forEach(text => {
-                // Check if the text is long enough to need a read more button
-                const needsReadMore = text.scrollHeight > text.clientHeight || text.textContent.length > 300;
+            // Set up details links to open the side panel
+            const detailsLinks = document.querySelectorAll('.details-link');
+            detailsLinks.forEach(link => {
+                // Check if the text is long enough to need a details link
+                const descriptionText = link.previousElementSibling;
+                const needsDetailsLink = descriptionText && (descriptionText.scrollHeight > descriptionText.clientHeight || descriptionText.textContent.length > 300);
                 
-                if (needsReadMore) {
-                    const readMoreBtn = text.nextElementSibling;
-                    if (readMoreBtn && readMoreBtn.classList.contains('read-more-btn')) {
-                        readMoreBtn.addEventListener('click', function() {
-                            text.classList.toggle('collapsed');
-                            text.classList.toggle('expanded');
-                            this.textContent = text.classList.contains('expanded') ? 'Read less' : 'Read more';
-                        });
-                    }
+                if (needsDetailsLink) {
+                    link.addEventListener('click', function() {
+                        const card = this.closest('.card');
+                        const title = card.getAttribute('data-title');
+                        const id = card.getAttribute('data-id');
+                        selectedItemId = id;
+                        openDetailPanel(title, id);
+                        updateUrl(true); // Update URL with item ID
+                    });
                 } else {
-                    // Hide the read more button if not needed
-                    const readMoreBtn = text.nextElementSibling;
-                    if (readMoreBtn && readMoreBtn.classList.contains('read-more-btn')) {
-                        readMoreBtn.style.display = 'none';
+                    // Hide the details link if not needed
+                    if (link) {
+                        link.style.display = 'none';
                     }
                 }
             });
@@ -1421,18 +1457,6 @@
                 emptyState.classList.toggle('visible', visibleCards === 0);
             }
             
-            // Add event listeners for detail panel
-            document.querySelectorAll('.btn-view-details').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const card = this.closest('.card');
-                    const title = card.getAttribute('data-title');
-                    const id = card.getAttribute('data-id');
-                    selectedItemId = id;
-                    openDetailPanel(title, id);
-                    updateUrl(true); // Update URL with item ID
-                });
-            });
-            
             // Apply URL parameters on page load
             applyUrlParams();
             
@@ -1440,28 +1464,6 @@
             window.addEventListener('popstate', function() {
                 applyUrlParams();
             });
-            
-            // Share view button functionality
-            const shareViewBtn = document.getElementById('shareViewBtn');
-            if (shareViewBtn) {
-                shareViewBtn.addEventListener('click', function() {
-                    // Copy current URL to clipboard
-                    navigator.clipboard.writeText(window.location.href).then(() => {
-                        // Show success feedback
-                        const originalHTML = this.innerHTML;
-                        this.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                        this.classList.add('copied');
-                        
-                        // Reset after 2 seconds
-                        setTimeout(() => {
-                            this.innerHTML = originalHTML;
-                            this.classList.remove('copied');
-                        }, 2000);
-                    }).catch(err => {
-                        console.error('Failed to copy URL: ', err);
-                    });
-                });
-            }
         });
     </script>
     

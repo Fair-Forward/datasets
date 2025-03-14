@@ -481,15 +481,33 @@
 /* Panel header image */
 .panel-header-image {
     width: 100%;
-    height: 200px;
+    height: 220px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    border-bottom: 1px solid #e2e8f0;
-    margin-bottom: 1.5rem;
     position: relative;
     overflow: hidden;
     display: block;
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+/* Add a gradient overlay that fades the image into the content */
+.panel-header-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.5) 70%,
+        rgba(255, 255, 255, 0.9) 90%,
+        rgba(255, 255, 255, 1) 100%
+    );
+    z-index: 1;
 }
 
 /* Add a fallback background color in case the image fails to load */
@@ -507,7 +525,10 @@
 /* Panel title section */
 .panel-title-section {
     margin-bottom: 2rem;
-    padding: 0 0.5rem;
+    padding: 0 1.5rem;
+    position: relative;
+    margin-top: -40px;
+    z-index: 2;
 }
 
 /* Panel domain badges */
@@ -672,4 +693,12 @@
     background-color: rgba(59, 89, 152, 0.15);
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.panel-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 } 
