@@ -946,7 +946,7 @@ try:
         
         header {{
             background: linear-gradient(to right, #f8f9fa, #f1f4f8); /* Subtle light gradient background */
-            padding: 0 0 2rem; /* Removed top padding as it's now handled by the nav area */
+            padding: 0 0 3.5rem; /* Increased bottom padding from 2rem to 3.5rem */
             position: relative;
             overflow: hidden;
             border-bottom: 1px solid rgba(226, 232, 240, 0.6);
@@ -959,14 +959,14 @@ try:
             padding: 0;
             width: 100%;
             box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
-            margin-bottom: 2rem; /* Add space between white nav and main header content */
+            margin-bottom: 2rem; /* Reverted back to 2rem from 3rem */
         }}
 
         .top-nav-area {{
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.75rem 3rem;
+            padding: 0.75rem 3rem; /* Reverted back to 0.75rem from 1.25rem */
             max-width: 1100px;
             margin-left: auto;
             margin-right: auto;
@@ -1002,17 +1002,17 @@ try:
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 2rem;
+            gap: 3rem; /* Increased from 2rem to 3rem for more space between text and stats */
         }}
         
         .header-logos {{
             display: flex;
-            gap: 1.75rem; /* Increased gap between logos */
+            gap: 1.75rem; /* Reverted back to 1.75rem from 2.25rem */
             align-items: center;
         }}
         
         .header-logo {{
-            height: 45px; /* Increased logo size */
+            height: 45px; /* Reverted back to 45px from 52px */
             width: auto;
             transition: opacity 0.2s;
             filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.05));
@@ -1513,12 +1513,12 @@ try:
             .top-nav-area {{
                 flex-direction: column;
                 align-items: flex-start;
-                padding: 0.5rem 1.5rem;
+                padding: 0.5rem 1.5rem; /* Reverted back to 0.5rem from 0.75rem */
                 gap: 0.75rem;
             }}
             
             .top-nav-container {{
-                margin-bottom: 1.5rem;
+                margin-bottom: 1.5rem; /* Reverted back to 1.5rem from 2rem */
             }}
             
             .about-link {{
@@ -1816,6 +1816,7 @@ try:
     <footer>
         <div class="footer-content">
             <p>&copy; {datetime.datetime.now().year} Fair Forward - Artificial Intelligence for All | A project by GIZ</p>
+            <p style="margin-top: 1rem; font-size: 0.875rem;"><a href="https://github.com/Fair-Forward/datasets" target="_blank" style="color: var(--primary); text-decoration: none;">Contribute to the Source Code on GitHub <i class="fab fa-github"></i></a></p>
         </div>
     </footer>
     
