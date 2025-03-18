@@ -21,17 +21,53 @@ def convert_markdown_links_to_html(text):
     if pd.isna(text) or not isinstance(text, str):
         return ""
     
-    # Convert markdown links [text](url) to HTML <a href="url">text</a>
-    pattern = r'\[(.*?)\]\((.*?)\)'
-    html_text = re.sub(pattern, r'<a href="\2" target="_blank">\1</a>', text)
+    # First, normalize whitespace around commas
+    text = re.sub(r'\s*,\s*', ', ', text)
     
-    # If no markdown links but contains a URL, make it clickable
-    if html_text == text and ('http://' in text or 'https://' in text):
-        # This pattern matches URLs that aren't already in HTML tags
-        url_pattern = r'(https?://[^\s<>]+)(?![^<]*>|[^<>]*</)'
-        html_text = re.sub(url_pattern, r'<a href="\1" target="_blank">\1</a>', text)
+    # Split by commas but keep the commas
+    parts = re.split(r'(,\s*)', text)
+    result = []
     
-    return html_text
+    for part in parts:
+        # If this part is just a comma and whitespace, add it as is
+        if re.match(r'^,\s*$', part):
+            result.append(part)
+            continue
+            
+        # Trim whitespace
+        part = part.strip()
+        if not part:
+            continue
+            
+        # Handle the format: "Name (URL)" - common in the Point of Contact field
+        url_match = re.search(r'([^(]+)\s*\((https?://[^)]+)\)', part)
+        if url_match:
+            display_name = url_match.group(1).strip()
+            link_url = url_match.group(2).strip()
+            result.append(f'<a href="{link_url}" target="_blank">{display_name}</a>')
+            continue
+            
+        # Handle email addresses: "Name (email@example.com)"
+        email_match = re.search(r'([^(]+)\s*\(([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\)', part)
+        if email_match:
+            display_name = email_match.group(1).strip()
+            email = email_match.group(2).strip()
+            result.append(f'<a href="mailto:{email}">{display_name}</a>')
+            continue
+            
+        # Handle markdown links: [Name](URL)
+        markdown_match = re.search(r'\[(.*?)\]\((.*?)\)', part)
+        if markdown_match:
+            display_name = markdown_match.group(1).strip()
+            link_url = markdown_match.group(2).strip()
+            result.append(f'<a href="{link_url}" target="_blank">{display_name}</a>')
+            continue
+            
+        # If no patterns match, keep the original text
+        result.append(part)
+    
+    # Join all parts back together
+    return ''.join(result)
 
 # Function to normalize label text for CSS class names
 def normalize_label(text):
@@ -254,8 +290,17 @@ def generate_card_html(row, idx):
         if os.path.exists(images_dir):
             # Look for any image file in the directory
             image_files = [f for f in os.listdir(images_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
-            if image_files:
-                project_image_path = f"public/projects/{dir_name}/images/{image_files[0]}"
+            
+            # Sort image files to prioritize real images over placeholder images
+            # Placeholder images start with "placeholder_" prefix
+            real_images = [f for f in image_files if not f.startswith('placeholder_')]
+            placeholder_images = [f for f in image_files if f.startswith('placeholder_')]
+            
+            # Use real images first, fall back to placeholder images if no real images exist
+            if real_images:
+                project_image_path = f"public/projects/{dir_name}/images/{real_images[0]}"
+            elif placeholder_images:
+                project_image_path = f"public/projects/{dir_name}/images/{placeholder_images[0]}"
     
     # Set the image if found
     if project_image_path:
@@ -352,9 +397,70 @@ def generate_card_html(row, idx):
     # Create hidden links for the side panel
     hidden_links = []
     if has_dataset and dataset_link:
-        hidden_links.append(f'<a href="{dataset_link}" target="_blank" class="btn btn-primary" style="display:none;">View Dataset</a>')
+        # Split multiple dataset links by semicolons
+        dataset_links = dataset_link.split(';')
+        processed_links = []
+        
+        for link in dataset_links:
+            link = link.strip()
+            if not link:
+                continue
+                
+            # Check if the dataset link is in the format "Name (URL)"
+            name_url_match = re.search(r'([^(]+)\s*\((https?://[^)]+)\)', link)
+            if name_url_match:
+                link_url = name_url_match.group(2).strip()
+                processed_links.append(link_url)
+            # Check if the link contains an email address
+            elif re.search(r'([^(]+)\s*\(([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\)', link):
+                email_match = re.search(r'([^(]+)\s*\(([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\)', link)
+                email = email_match.group(2).strip()
+                processed_links.append(f"mailto:{email}")
+            # Check if the dataset link is in Markdown format [text](url)
+            elif re.search(r'\[(.*?)\]\((.*?)\)', link):
+                markdown_match = re.search(r'\[(.*?)\]\((.*?)\)', link)
+                link_url = markdown_match.group(2).strip()
+                processed_links.append(link_url)
+            else:
+                processed_links.append(link)
+        
+        # Join all processed links with semicolons
+        if processed_links:
+            combined_links = "; ".join(processed_links)
+            hidden_links.append(f'<a href="{combined_links}" target="_blank" class="btn btn-primary" style="display:none;">View Dataset</a>')
+    
     if has_usecase and model_links:
-        hidden_links.append(f'<a href="{model_links}" target="_blank" class="btn btn-secondary" style="display:none;">View Use Case</a>')
+        # Split multiple use case links by semicolons
+        usecase_links = model_links.split(';')
+        processed_links = []
+        
+        for link in usecase_links:
+            link = link.strip()
+            if not link:
+                continue
+                
+            # Check if the use case link is in the format "Name (URL)"
+            name_url_match = re.search(r'([^(]+)\s*\((https?://[^)]+)\)', link)
+            if name_url_match:
+                link_url = name_url_match.group(2).strip()
+                processed_links.append(link_url)
+            # Check if the link contains an email address
+            elif re.search(r'([^(]+)\s*\(([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\)', link):
+                email_match = re.search(r'([^(]+)\s*\(([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\)', link)
+                email = email_match.group(2).strip()
+                processed_links.append(f"mailto:{email}")
+            # Check if the use case link is in Markdown format [text](url)
+            elif re.search(r'\[(.*?)\]\((.*?)\)', link):
+                markdown_match = re.search(r'\[(.*?)\]\((.*?)\)', link)
+                link_url = markdown_match.group(2).strip()
+                processed_links.append(link_url)
+            else:
+                processed_links.append(link)
+        
+        # Join all processed links with semicolons
+        if processed_links:
+            combined_links = "; ".join(processed_links)
+            hidden_links.append(f'<a href="{combined_links}" target="_blank" class="btn btn-secondary" style="display:none;">View Use Case</a>')
     
     hidden_links_html = ""
     if hidden_links:
@@ -784,7 +890,7 @@ try:
             --text-light: #64748b;
             --shadow: rgba(0, 0, 0, 0.04);
             --shadow-hover: rgba(0, 0, 0, 0.08);
-            --title-color: #1e3a6e;
+            --title-color: #2c4a7c; /* Slightly more subtle blue shade */
             --btn-text: #ffffff;
         }}
         
@@ -810,7 +916,7 @@ try:
         }}
         
         header {{
-            background: white;
+            background: #f8f9fa;
             padding: 3rem 0; /* Reduced from 60px to 3rem */
             border-bottom: 1px solid var(--border);
             text-align: center;
@@ -879,44 +985,44 @@ try:
         .header-logos {{
             display: flex;
             align-items: center;
-            gap: 2rem;
-            margin-left: 2rem;
-            padding-left: 2rem;
+            gap: 2.5rem;
+            margin-left: 2.5rem;
+            padding-left: 2.5rem;
             border-left: 1px solid var(--border);
         }}
         
         .header-logo {{
-            height: 50px; /* Reduced from 60px */
+            height: 55px; /* Adjusted for better visibility */
             width: auto;
-            opacity: 0.95;
+            opacity: 1;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
         }}
         
         .header-logo:hover {{
-            opacity: 1;
             transform: translateY(-2px);
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
         }}
         
         h1 {{
             font-size: 2.2rem; /* Reduced from 2.5rem */
             margin-bottom: 1rem;
-            font-weight: 700;
+            font-weight: 500; /* Reduced from 700 for a lighter appearance */
             color: var(--title-color);
-            letter-spacing: -0.02em;
-            line-height: 1.2;
+            letter-spacing: -0.01em; /* Slightly reduced letter spacing */
+            line-height: 1.3; /* Increased line height for better readability */
             position: relative;
             display: inline-block;
         }}
         
         .subtitle {{
-            font-size: 1rem; /* Reduced from 1.125rem */
+            font-size: 1.05rem; /* Slightly increased for better readability */
             color: var(--text-light);
             max-width: 800px;
             line-height: 1.6;
             font-weight: 400;
-            margin-top: 1.5rem;
+            margin-top: 0.75rem; /* Reduced from 1.5rem for tighter spacing with title */
+            letter-spacing: 0.01em; /* Slight letter spacing for better readability */
         }}
         
         .filters {{
@@ -1395,11 +1501,18 @@ try:
                 border-left: none;
                 justify-content: center;
                 width: 100%;
+                gap: 2rem;
+            }}
+            
+            .header-logo {{
+                height: 45px;
             }}
             
             h1 {{
                 font-size: 2rem;
                 display: block;
+                font-weight: 500; /* Match the main h1 style */
+                line-height: 1.3;
             }}
             
             .subtitle {{
@@ -1501,10 +1614,10 @@ try:
             </div>
             <div class="header-logos">
                 <a href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/" target="_blank" title="Fair Forward Initiative">
-                    <img src="img/fair_forward.png" alt="Fair Forward Logo" class="header-logo">
+                    <img src="img/ff_official.png" alt="Fair Forward Logo" class="header-logo">
                 </a>
                 <a href="https://www.bmz-digital.global/en/" target="_blank" title="Digital Global">
-                    <img src="img/digital_global.png" alt="Digital Global Logo" class="header-logo">
+                    <img src="img/digital_global_official.png" alt="Digital Global Logo" class="header-logo">
                 </a>
             </div>
         </div>

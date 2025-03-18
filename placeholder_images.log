@@ -1,0 +1,97 @@
+2025-03-14 16:39:29,522 - INFO - Loaded data catalog from docs/data_catalog.xlsx
+2025-03-14 16:39:29,523 - INFO - Found 51 project directories
+2025-03-14 16:39:29,523 - INFO - Limited to processing 3 projects
+2025-03-14 16:39:29,949 - INFO - Searching for images for early_warning_system_ldri with keywords: Agriculture, Climate Action, early, Kenya, system
+2025-03-14 16:39:31,578 - INFO - Downloaded image for early_warning_system_ldri: docs/public/projects/early_warning_system_ldri/images/placeholder_image.jpeg
+2025-03-14 16:39:32,585 - INFO - Searching for images for office_of_data_protection_commission_odpc_chatbot_kenya with keywords: placeholder, protection, Kenya, total:, data
+2025-03-14 16:39:34,587 - INFO - Downloaded image for office_of_data_protection_commission_odpc_chatbot_kenya: docs/public/projects/office_of_data_protection_commission_odpc_chatbot_kenya/images/placeholder_image.jpeg
+2025-03-14 16:39:35,590 - INFO - Completed processing. Downloaded 2 placeholder images.
+2025-03-14 16:40:17,542 - INFO - Loaded data catalog from docs/data_catalog.xlsx
+2025-03-14 16:40:17,542 - INFO - Found 51 project directories
+2025-03-14 16:40:17,553 - INFO - Searching for images for croppie_coffee_yield_prediction with keywords: coffee, croppie, Uganda, yield, digital
+2025-03-14 16:40:18,797 - INFO - Downloaded image for croppie_coffee_yield_prediction: docs/public/projects/croppie_coffee_yield_prediction/images/placeholder_image.jpeg
+2025-03-14 16:40:19,803 - INFO - Searching for images for early_warning_system_ldri__phase_3 with keywords: Kenya, system, warning, based, early
+2025-03-14 16:40:22,612 - INFO - Downloaded image for early_warning_system_ldri__phase_3: docs/public/projects/early_warning_system_ldri__phase_3/images/placeholder_image.png
+2025-03-14 16:40:23,625 - INFO - Searching for images for mlbased_site_identification_for_minigrids_in_uganda with keywords: application, site, Uganda, this, ml-based
+2025-03-14 16:40:26,873 - INFO - Downloaded image for mlbased_site_identification_for_minigrids_in_uganda: docs/public/projects/mlbased_site_identification_for_minigrids_in_uganda/images/placeholder_image.jpeg
+2025-03-14 16:40:27,880 - INFO - Searching for images for building_kenya_language_corpus_incl_governance_model with keywords: kenya, Kenya, building, language
+2025-03-14 16:40:33,846 - INFO - Downloaded image for building_kenya_language_corpus_incl_governance_model: docs/public/projects/building_kenya_language_corpus_incl_governance_model/images/placeholder_image.jpeg
+2025-03-14 16:40:34,917 - INFO - Searching for images for develop_mbaza_ai_chatbot_for_covid_19_with_mozilla with keywords: Rwanda, chatbot, placeholder, develop, budget
+2025-03-14 16:40:37,988 - INFO - Downloaded image for develop_mbaza_ai_chatbot_for_covid_19_with_mozilla: docs/public/projects/develop_mbaza_ai_chatbot_for_covid_19_with_mozilla/images/placeholder_image.jpeg
+2025-03-14 16:40:38,998 - INFO - Searching for images for developing_a_concept_with_mfin_on_voicebased_chatbot with keywords: contract, India, name:, developing, mfin
+2025-03-14 16:40:42,905 - INFO - Downloaded image for developing_a_concept_with_mfin_on_voicebased_chatbot: docs/public/projects/developing_a_concept_with_mfin_on_voicebased_chatbot/images/placeholder_image.jpeg
+2025-03-14 16:40:43,908 - INFO - Searching for images for forest_forward with keywords: India, forward, forest, mapping, carbon
+2025-03-14 16:40:45,810 - INFO - Downloaded image for forest_forward: docs/public/projects/forest_forward/images/placeholder_image.jpeg
+2025-03-14 16:40:46,817 - INFO - Searching for images for support_mozilla_swahili_grantee with keywords: further, Kenya, support, will, swahili
+2025-03-14 16:40:48,487 - INFO - Downloaded image for support_mozilla_swahili_grantee: docs/public/projects/support_mozilla_swahili_grantee/images/placeholder_image.jpeg
+2025-03-14 16:40:49,493 - INFO - Searching for images for soil_data_collection_in_telangana with keywords: India, data, collection, Climate Action, Agriculture
+2025-03-14 16:40:51,031 - INFO - Downloaded image for soil_data_collection_in_telangana: docs/public/projects/soil_data_collection_in_telangana/images/placeholder_image.jpeg
+2025-03-14 16:40:52,037 - INFO - Searching for images for bot_of_bots_activity__in_collaboration_with_govstack_for_kenya with keywords: collaboration, Rwanda, semantic, chatbot(s), bots
+2025-03-14 16:40:55,279 - INFO - Downloaded image for bot_of_bots_activity__in_collaboration_with_govstack_for_kenya: docs/public/projects/bot_of_bots_activity__in_collaboration_with_govstack_for_kenya/images/placeholder_image.jpeg
+2025-03-14 16:40:56,287 - INFO - Searching for images for geoai_for_soil_conservation_innovations_for_telangana with keywords: conservation:, India, merged, geoai, from
+2025-03-14 16:40:58,490 - INFO - Downloaded image for geoai_for_soil_conservation_innovations_for_telangana: docs/public/projects/geoai_for_soil_conservation_innovations_for_telangana/images/placeholder_image.jpeg
+2025-03-14 16:40:59,497 - INFO - Searching for images for scaling_language_ai_4_billion_conversations_with_clear_global with keywords: Global / Regional, billion, generic, open, scaling
+2025-03-14 16:41:01,309 - INFO - Downloaded image for scaling_language_ai_4_billion_conversations_with_clear_global: docs/public/projects/scaling_language_ai_4_billion_conversations_with_clear_global/images/placeholder_image.jpeg
+2025-03-14 16:41:02,322 - INFO - Searching for images for development_of_unbiased_ai_models_for_solar_irradiance_uganda with keywords: models, development, Uganda, unbiased
+2025-03-14 16:41:03,820 - INFO - Downloaded image for development_of_unbiased_ai_models_for_solar_irradiance_uganda: docs/public/projects/development_of_unbiased_ai_models_for_solar_irradiance_uganda/images/placeholder_image.jpeg
+2025-03-14 16:41:04,825 - INFO - Searching for images for 100_hours_of_text_to_speech_dataset_for_mundari_language with keywords: India, speech, text, Natural Language Processing, hours
+2025-03-14 16:41:07,378 - INFO - Downloaded image for 100_hours_of_text_to_speech_dataset_for_mundari_language: docs/public/projects/100_hours_of_text_to_speech_dataset_for_mundari_language/images/placeholder_image.jpeg
+2025-03-14 16:41:08,385 - INFO - Searching for images for masakhane_grant_local_subsidy with keywords: masakhane, Global / Regional, grant, supporting, (local
+2025-03-14 16:41:10,558 - INFO - Downloaded image for masakhane_grant_local_subsidy: docs/public/projects/masakhane_grant_local_subsidy/images/placeholder_image.jpeg
+2025-03-14 16:41:11,564 - INFO - Searching for images for lacuna_fund__needs_all_entries_seperately with keywords: Global / Regional, fund, lacuna, needs
+2025-03-14 16:41:12,992 - INFO - Downloaded image for lacuna_fund__needs_all_entries_seperately: docs/public/projects/lacuna_fund__needs_all_entries_seperately/images/placeholder_image.jpeg
+2025-03-14 16:41:14,002 - INFO - Searching for images for nlp_grant_localising_common_voice_for_south_african_languages with keywords: localising, grant, univ, common, stellenbosch
+2025-03-14 16:41:15,509 - INFO - Downloaded image for nlp_grant_localising_common_voice_for_south_african_languages: docs/public/projects/nlp_grant_localising_common_voice_for_south_african_languages/images/placeholder_image.jpeg
+2025-03-14 16:41:16,517 - INFO - Searching for images for innovate_africa_challenge_ai_for_climate_action with keywords: Global / Regional, challenge, innovate, smart, africa
+2025-03-14 16:41:19,144 - INFO - Downloaded image for innovate_africa_challenge_ai_for_climate_action: docs/public/projects/innovate_africa_challenge_ai_for_climate_action/images/placeholder_image.jpeg
+2025-03-14 16:41:20,152 - INFO - Searching for images for ml4eo_for_precision_agriculture with keywords: field, ml4eo, agriculture, data, South Africa
+2025-03-14 16:41:22,359 - INFO - Downloaded image for ml4eo_for_precision_agriculture: docs/public/projects/ml4eo_for_precision_agriculture/images/placeholder_image.jpeg
+2025-03-14 16:41:23,371 - INFO - Searching for images for agriculture_chatbot__early_warning_system_for_farmers__ai_entrepreneurship_competition with keywords: chatbot, agriculture, Rwanda, early
+2025-03-14 16:41:24,796 - INFO - Downloaded image for agriculture_chatbot__early_warning_system_for_farmers__ai_entrepreneurship_competition: docs/public/projects/agriculture_chatbot__early_warning_system_for_farmers__ai_entrepreneurship_competition/images/placeholder_image.jpeg
+2025-03-14 16:41:25,806 - INFO - Searching for images for south_africa_crop_type_competition with keywords: Agriculture, crop, south, Climate Action, africa
+2025-03-14 16:41:27,478 - INFO - Downloaded image for south_africa_crop_type_competition: docs/public/projects/south_africa_crop_type_competition/images/placeholder_image.jpeg
+2025-03-14 16:41:28,483 - INFO - Searching for images for cadi_ai_project_pilot_with_move_ml4cashew with keywords: Agriculture, pilot, cadi, this, Ghana
+2025-03-14 16:41:31,850 - INFO - Downloaded image for cadi_ai_project_pilot_with_move_ml4cashew: docs/public/projects/cadi_ai_project_pilot_with_move_ml4cashew/images/placeholder_image.jpeg
+2025-03-14 16:41:32,855 - INFO - Searching for images for blue_economy_for_climate_mitigation_and_climate__leveraging_ai_communitybased_approaches_and_local_iotmeasurements with keywords: Indonesien, follow, hcsa, blue, climate
+2025-03-14 16:41:34,193 - INFO - Downloaded image for blue_economy_for_climate_mitigation_and_climate__leveraging_ai_communitybased_approaches_and_local_iotmeasurements: docs/public/projects/blue_economy_for_climate_mitigation_and_climate__leveraging_ai_communitybased_approaches_and_local_iotmeasurements/images/placeholder_image.jpeg
+2025-03-14 16:41:35,201 - INFO - Searching for images for aiep_mvp_development with keywords: Kenya, products, developing, aiep, development
+2025-03-14 16:41:37,417 - INFO - Downloaded image for aiep_mvp_development: docs/public/projects/aiep_mvp_development/images/placeholder_image.jpeg
+2025-03-14 16:41:38,419 - INFO - Searching for images for text_data_collection_indonesia with keywords: text, Indonesien, data, collection
+2025-03-14 16:41:40,628 - INFO - Downloaded image for text_data_collection_indonesia: docs/public/projects/text_data_collection_indonesia/images/placeholder_image.jpeg
+2025-03-14 16:41:41,653 - INFO - Searching for images for african_nlp_network_federated_nlp_ecosystem with keywords: Global / Regional, dummy, network, (federated, african
+2025-03-14 16:41:42,834 - INFO - Downloaded image for african_nlp_network_federated_nlp_ecosystem: docs/public/projects/african_nlp_network_federated_nlp_ecosystem/images/placeholder_image.jpeg
+2025-03-14 16:41:43,843 - INFO - Searching for images for nlp_use_case_strengthening_relevance_of_auditing_reports_in_uganda with keywords: Uganda, strengthening, this, relevance, activity
+2025-03-14 16:41:47,561 - INFO - Downloaded image for nlp_use_case_strengthening_relevance_of_auditing_reports_in_uganda: docs/public/projects/nlp_use_case_strengthening_relevance_of_auditing_reports_in_uganda/images/placeholder_image.jpeg
+2025-03-14 16:41:48,569 - INFO - Searching for images for landslide_monitoring_use_case with keywords: case, monitoring, Rwanda, landslide
+2025-03-14 16:41:50,040 - INFO - Downloaded image for landslide_monitoring_use_case: docs/public/projects/landslide_monitoring_use_case/images/placeholder_image.jpeg
+2025-03-14 16:41:51,047 - INFO - Searching for images for landslide_monitoring_model_development__data_challengeuse_case_development_followup with keywords: model, monitoring, Rwanda, landslide
+2025-03-14 16:41:52,479 - INFO - Downloaded image for landslide_monitoring_model_development__data_challengeuse_case_development_followup: docs/public/projects/landslide_monitoring_model_development__data_challengeuse_case_development_followup/images/placeholder_image.jpeg
+2025-03-14 16:41:53,491 - INFO - Searching for images for ml4eo_crop_mapping_solution_rwanda with keywords: crop, Rwanda, mapping, ml4eo
+2025-03-14 16:41:55,633 - INFO - Downloaded image for ml4eo_crop_mapping_solution_rwanda: docs/public/projects/ml4eo_crop_mapping_solution_rwanda/images/placeholder_image.jpeg
+2025-03-14 16:41:56,641 - INFO - Searching for images for kinyarwanda_screen_reader_for_visually_impaired_people with keywords: reader, screen, Rwanda, kinyarwanda
+2025-03-14 16:41:57,696 - INFO - Downloaded image for kinyarwanda_screen_reader_for_visually_impaired_people: docs/public/projects/kinyarwanda_screen_reader_for_visually_impaired_people/images/placeholder_image.jpeg
+2025-03-14 16:41:58,700 - INFO - Searching for images for hcsa_high_carbon_stock_mapping_in_southeast_asia with keywords: high, Indonesien, this, hcsa:, carbon
+2025-03-14 16:42:01,358 - INFO - Downloaded image for hcsa_high_carbon_stock_mapping_in_southeast_asia: docs/public/projects/hcsa_high_carbon_stock_mapping_in_southeast_asia/images/placeholder_image.jpeg
+2025-03-14 16:42:02,364 - INFO - Searching for images for mozilla_community_licence_project with keywords: Global / Regional, language,, community, mozilla, data:
+2025-03-14 16:42:03,698 - INFO - Downloaded image for mozilla_community_licence_project: docs/public/projects/mozilla_community_licence_project/images/placeholder_image.jpeg
+2025-03-14 16:42:04,702 - INFO - Searching for images for use_case_development_indonesia with keywords: application, Indonesien, this, Natural Language Processing, indonesia
+2025-03-14 16:42:06,451 - INFO - Downloaded image for use_case_development_indonesia: docs/public/projects/use_case_development_indonesia/images/placeholder_image.jpeg
+2025-03-14 16:42:07,455 - INFO - Searching for images for ai_conversational_chatbot_with_govstack with keywords: govstack), conversational, Kenya, chatbot
+2025-03-14 16:42:10,474 - INFO - Downloaded image for ai_conversational_chatbot_with_govstack: docs/public/projects/ai_conversational_chatbot_with_govstack/images/placeholder_image.jpeg
+2025-03-14 16:42:11,482 - INFO - Searching for images for expansion_of_voice_data_collection_and_development_of_use_cases_mozilla with keywords: Rwanda, including, expansion, voice, data
+2025-03-14 16:42:13,459 - INFO - Downloaded image for expansion_of_voice_data_collection_and_development_of_use_cases_mozilla: docs/public/projects/expansion_of_voice_data_collection_and_development_of_use_cases_mozilla/images/placeholder_image.jpeg
+2025-03-14 16:42:14,466 - INFO - Searching for images for gramvaani_automatic_speech_recognition_asr with keywords: India, improve, speech, gramvaani, kahi
+2025-03-14 16:42:16,328 - INFO - Downloaded image for gramvaani_automatic_speech_recognition_asr: docs/public/projects/gramvaani_automatic_speech_recognition_asr/images/placeholder_image.jpeg
+2025-03-14 16:42:17,336 - INFO - Searching for images for hyperlocal_mapping_of_air_pollution_and_ghg_emissions_in_india_with_undp with keywords: mapping, hyperlocal, pollution, India
+2025-03-14 16:42:19,075 - INFO - Downloaded image for hyperlocal_mapping_of_air_pollution_and_ghg_emissions_in_india_with_undp: docs/public/projects/hyperlocal_mapping_of_air_pollution_and_ghg_emissions_in_india_with_undp/images/placeholder_image.jpeg
+2025-03-14 16:42:20,081 - INFO - Searching for images for iisc__open_voice_data_in_indian_languages with keywords: iisc, India, this, open, Natural Language Processing
+2025-03-14 16:42:21,455 - INFO - Downloaded image for iisc__open_voice_data_in_indian_languages: docs/public/projects/iisc__open_voice_data_in_indian_languages/images/placeholder_image.jpeg
+2025-03-14 16:42:22,465 - INFO - Searching for images for digital_audio_content_creation_for_womens_empowerment_using_language_technologies with keywords: using, content, India, models, digital
+2025-03-14 16:42:23,749 - INFO - Downloaded image for digital_audio_content_creation_for_womens_empowerment_using_language_technologies: docs/public/projects/digital_audio_content_creation_for_womens_empowerment_using_language_technologies/images/placeholder_image.jpeg
+2025-03-14 16:42:24,760 - INFO - Searching for images for scaling_mlbased_site_identification_for_minigrids_uganda with keywords: site, Uganda, ml-based, towards, scaling
+2025-03-14 16:42:26,235 - INFO - Downloaded image for scaling_mlbased_site_identification_for_minigrids_uganda: docs/public/projects/scaling_mlbased_site_identification_for_minigrids_uganda/images/placeholder_image.jpeg
+2025-03-14 16:42:27,240 - INFO - Searching for images for two_albased_dialogue_systems_eg_voicebased_chatbot_in_indian_languages__consultancy_for_design_implementation_etc with keywords: dialogue, India, systems, al-based, voice
+2025-03-14 16:42:30,853 - INFO - Downloaded image for two_albased_dialogue_systems_eg_voicebased_chatbot_in_indian_languages__consultancy_for_design_implementation_etc: docs/public/projects/two_albased_dialogue_systems_eg_voicebased_chatbot_in_indian_languages__consultancy_for_design_implementation_etc/images/placeholder_image.jpeg
+2025-03-14 16:42:31,859 - INFO - Searching for images for making_the_indian_voice_datasets_more_sustainable_hackathon_with_bhashini_on_voice_data_for_climate__sustainable_agriculture with keywords: India, making, indian, voice, combined
+2025-03-14 16:42:35,111 - INFO - Downloaded image for making_the_indian_voice_datasets_more_sustainable_hackathon_with_bhashini_on_voice_data_for_climate__sustainable_agriculture: docs/public/projects/making_the_indian_voice_datasets_more_sustainable_hackathon_with_bhashini_on_voice_data_for_climate__sustainable_agriculture/images/placeholder_image.jpeg
+2025-03-14 16:42:36,117 - INFO - Completed processing. Downloaded 43 placeholder images.
