@@ -512,7 +512,7 @@ def generate_filter_html(domains, data_types, regions):
             <div class="filter-group">
                 <div class="search-box">
                     <i class="fas fa-search"></i>
-                    <input type="text" id="searchInput" placeholder="Search datasets and use-cases...">
+                    <input type="text" id="searchInput" placeholder="Search datasets and use-cases..." autocomplete="off">
                 </div>
             </div>
             <div class="filter-group">
