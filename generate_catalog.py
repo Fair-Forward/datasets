@@ -916,13 +916,13 @@ try:
         }}
         
         header {{
-            background: #f8f9fa;
-            padding: 3rem 0; /* Reduced from 60px to 3rem */
+            background: linear-gradient(to right, #f8f9fa, #f1f4f8);
+            padding: 3.5rem 0 3rem; /* Adjusted padding for better proportions */
             border-bottom: 1px solid var(--border);
             text-align: center;
             position: relative;
             color: var(--text);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
             overflow: hidden;
         }}
         
@@ -967,7 +967,7 @@ try:
             flex: 1;
             max-width: 700px;
             position: relative;
-            padding-left: 1.5rem;
+            padding-left: 1.25rem; /* Reduced padding */
         }}
         
         /* Add a vertical accent line to the left of the header text */
@@ -975,28 +975,29 @@ try:
             content: '';
             position: absolute;
             left: 0;
-            top: 0.5rem;
-            bottom: 0.5rem;
-            width: 4px;
+            top: 0.75rem;
+            bottom: 0.75rem;
+            width: 3px; /* Thinner line */
             background: linear-gradient(to bottom, var(--primary) 0%, var(--primary-light) 100%);
-            border-radius: 2px;
+            border-radius: 3px;
+            opacity: 0.8; /* Slightly transparent for softer look */
         }}
         
         .header-logos {{
             display: flex;
             align-items: center;
-            gap: 2.5rem;
-            margin-left: 2.5rem;
-            padding-left: 2.5rem;
-            border-left: 1px solid var(--border);
+            gap: 2.25rem;
+            margin-left: 3rem;
+            padding-left: 3rem;
+            border-left: 1px solid rgba(226, 232, 240, 0.6); /* More subtle border */
         }}
         
         .header-logo {{
-            height: 55px; /* Adjusted for better visibility */
+            height: 50px; /* Slightly reduced for better proportion */
             width: auto;
-            opacity: 1;
+            opacity: 0.95;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
+            filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.03));
         }}
         
         .header-logo:hover {{
@@ -1005,24 +1006,51 @@ try:
         }}
         
         h1 {{
-            font-size: 2.2rem; /* Reduced from 2.5rem */
-            margin-bottom: 1rem;
-            font-weight: 500; /* Reduced from 700 for a lighter appearance */
+            font-size: 2.5rem; /* Increased for more impact */
+            margin-bottom: 0.75rem; /* Reduced for tighter layout */
+            font-weight: 400; /* Even lighter weight for more elegance */
             color: var(--title-color);
-            letter-spacing: -0.01em; /* Slightly reduced letter spacing */
-            line-height: 1.3; /* Increased line height for better readability */
+            letter-spacing: -0.015em; /* Subtle letter spacing adjustment */
+            line-height: 1.2; /* Tighter line height */
             position: relative;
             display: inline-block;
         }}
         
         .subtitle {{
-            font-size: 1.05rem; /* Slightly increased for better readability */
+            font-size: 1.15rem; /* Increased for better readability */
             color: var(--text-light);
             max-width: 800px;
-            line-height: 1.6;
-            font-weight: 400;
-            margin-top: 0.75rem; /* Reduced from 1.5rem for tighter spacing with title */
+            line-height: 1.5; /* Slightly reduced for tighter appearance */
+            font-weight: 300; /* Lighter weight for elegance */
+            margin-top: 0.5rem; /* Further reduced spacing with title */
             letter-spacing: 0.01em; /* Slight letter spacing for better readability */
+            margin-bottom: 1.25rem; /* Add space for the button below */
+        }}
+        
+        .header-learn-more {{
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--primary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(59, 89, 152, 0.3);
+            border-radius: 4px;
+            background-color: rgba(59, 89, 152, 0.05);
+            transition: all 0.2s ease;
+        }}
+        
+        .header-learn-more:hover {{
+            background-color: rgba(59, 89, 152, 0.1);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }}
+        
+        .header-learn-more i {{
+            font-size: 0.8rem;
+            opacity: 0.8;
         }}
         
         .filters {{
@@ -1172,9 +1200,10 @@ try:
             background: linear-gradient(
                 to bottom,
                 rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.5) 70%,
-                rgba(255, 255, 255, 0.9) 90%,
-                rgba(255, 255, 255, 1) 100%
+                rgba(255, 255, 255, 0) 50%,  /* Keep fully transparent until 50% of the way down */
+                rgba(255, 255, 255, 0.3) 75%,  /* Start subtle fade at 75% */
+                rgba(255, 255, 255, 0.8) 90%,  /* Increase fade more rapidly near bottom */
+                rgba(255, 255, 255, 1) 100%    /* Full white at the very bottom */
             );
             z-index: 1;
         }}
@@ -1509,14 +1538,26 @@ try:
             }}
             
             h1 {{
-                font-size: 2rem;
+                font-size: 2.2rem;
                 display: block;
-                font-weight: 500; /* Match the main h1 style */
-                line-height: 1.3;
+                font-weight: 400; /* Match the updated main style */
+                line-height: 1.2;
+                letter-spacing: -0.015em;
+                margin-bottom: 0.6rem;
             }}
             
             .subtitle {{
-                font-size: 1rem;
+                font-size: 1.05rem;
+                font-weight: 300; /* Match updated main style */
+                line-height: 1.5;
+                letter-spacing: 0.01em;
+                margin-bottom: 1rem;
+            }}
+            
+            .header-learn-more {{
+                font-size: 0.85rem;
+                padding: 0.4rem 0.9rem;
+                margin: 0 auto 1rem;
             }}
         }}
         
@@ -1611,6 +1652,9 @@ try:
             <div class="header-text">
                 <h1>Data & Use Cases Catalog</h1>
                 <p class="subtitle">Exploring datasets and solutions for global challenges across agriculture, language technology, climate action, energy, and more.</p>
+                <a href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/" target="_blank" class="header-learn-more">
+                    <i class="fas fa-info-circle"></i> Learn more about Fair Forward and BMZ Digital Global
+                </a>
             </div>
             <div class="header-logos">
                 <a href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/" target="_blank" title="Fair Forward Initiative">
