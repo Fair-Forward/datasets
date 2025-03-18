@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data & Use Cases Catalog</title>
+    <title>Fair Forward - Open Data & Use Cases</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!-- Add enhanced side panel CSS -->
     <link rel="stylesheet" href="enhanced_side_panel.css">
@@ -39,7 +39,7 @@
             --gray: #64748b;
             --border: #e2e8f0;
             --background: #f8fafc;
-            --card-bg: #ffffff;
+            --card-bg: #f5f8fc;
             --text: #1e293b;
             --text-light: #64748b;
             --shadow: rgba(0, 0, 0, 0.04);
@@ -70,117 +70,131 @@
         }
         
         header {
-            background: #f8f9fa;
-            padding: 3rem 0; /* Reduced from 60px to 3rem */
-            border-bottom: 1px solid var(--border);
-            text-align: center;
+            background: linear-gradient(to right, #f8f9fa, #f1f4f8); /* Subtle light gradient background */
+            padding: 0 0 2rem; /* Removed top padding as it's now handled by the nav area */
             position: relative;
-            color: var(--text);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             overflow: hidden;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
         }
-        
-        /* Add a subtle pattern overlay to the header */
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
+
+        /* Top navigation area that will contain both the logos and the about link */
+        .top-nav-container {
+            background-color: #ffffff;
+            padding: 0;
             width: 100%;
-            height: 100%;
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0id2hpdGUiPjwvcmVjdD4KPHBhdGggZD0iTTAgMjBMMjAgMFpNMjAgMTVMMTUgMjBaTTAgNUw1IDBaIiBzdHJva2U9IiMzYjU5OTgiIHN0cm9rZS13aWR0aD0iMC41IiBzdHJva2Utb3BhY2l0eT0iMC4wNSI+PC9wYXRoPgo8L3N2Zz4=');
-            opacity: 0.8;
-            z-index: 0;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+            margin-bottom: 2rem; /* Add space between white nav and main header content */
         }
-        
-        /* Add a subtle accent border at the top of the header */
-        header::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+
+        .top-nav-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 3rem;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 0; /* Removed bottom margin */
+            position: relative;
             z-index: 2;
+        }
+        
+        .about-link {
+            color: var(--text);
+            font-size: 0.9rem;
+            text-decoration: none;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            transition: background-color 0.2s;
+        }
+
+        .about-link:hover {
+            background-color: rgba(0, 0, 0, 0.05);
         }
         
         .header-content {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            max-width: 1100px; /* Reduced from 1200px to match container */
+            flex-direction: column;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 0 3rem; /* Increased from 2rem to match container */
+            padding: 0 3rem;
             position: relative;
             z-index: 1;
         }
-        
-        .header-text {
-            text-align: left;
-            flex: 1;
-            max-width: 700px;
-            position: relative;
-            padding-left: 1.5rem;
-        }
-        
-        /* Add a vertical accent line to the left of the header text */
-        .header-text::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0.5rem;
-            bottom: 0.5rem;
-            width: 4px;
-            background: linear-gradient(to bottom, var(--primary) 0%, var(--primary-light) 100%);
-            border-radius: 2px;
+
+        .header-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
         }
         
         .header-logos {
             display: flex;
+            gap: 1.75rem; /* Increased gap between logos */
             align-items: center;
-            gap: 2.5rem;
-            margin-left: 2.5rem;
-            padding-left: 2.5rem;
-            border-left: 1px solid var(--border);
         }
         
         .header-logo {
-            height: 55px; /* Adjusted for better visibility */
+            height: 45px; /* Increased logo size */
             width: auto;
-            opacity: 1;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
+            transition: opacity 0.2s;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.05));
+            vertical-align: middle; /* Better vertical alignment */
         }
         
         .header-logo:hover {
-            transform: translateY(-2px);
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+            opacity: 0.9;
         }
         
-        h1 {
-            font-size: 2.2rem; /* Reduced from 2.5rem */
-            margin-bottom: 1rem;
-            font-weight: 500; /* Reduced from 700 for a lighter appearance */
+        .header-text {
+            padding-right: 1rem;
+            max-width: 62%;
+        }
+        
+        .header-text h1 {
+            margin-bottom: 0.75rem;
+            font-size: 2.5rem;
+            font-weight: 400;
             color: var(--title-color);
-            letter-spacing: -0.01em; /* Slightly reduced letter spacing */
-            line-height: 1.3; /* Increased line height for better readability */
+            line-height: 1.2;
             position: relative;
-            display: inline-block;
+            letter-spacing: -0.015em;
         }
         
         .subtitle {
-            font-size: 1.05rem; /* Slightly increased for better readability */
+            font-size: 1.15rem;
             color: var(--text-light);
             max-width: 800px;
-            line-height: 1.6;
-            font-weight: 400;
-            margin-top: 0.75rem; /* Reduced from 1.5rem for tighter spacing with title */
-            letter-spacing: 0.01em; /* Slight letter spacing for better readability */
+            font-weight: 300;
+            line-height: 1.5;
+            margin-top: 1rem;
+            letter-spacing: 0.01em;
+            margin-bottom: 1.25rem;
+        }
+        
+        .header-learn-more {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--primary);
+            text-decoration: none;
+            margin-top: 0.25rem;
+            transition: all 0.2s ease;
+        }
+        
+        .header-learn-more:hover {
+            opacity: 0.85;
+            text-decoration: underline;
+        }
+        
+        .header-learn-more i {
+            display: none;
         }
         
         .filters {
-            background-color: var(--card-bg);
+            background-color: #ffffff;
             padding: 1.25rem 0; /* Reduced from 1.5rem */
             border-bottom: 1px solid var(--border);
             position: sticky;
@@ -188,7 +202,10 @@
             z-index: 10;
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            margin-top: -0.75rem;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
         }
         
         .filters-content {
@@ -279,21 +296,22 @@
         }
         
         .card {
-            background-color: var(--card-bg);
+            background: linear-gradient(145deg, var(--card-bg) 0%, #f8faff 100%);
             border-radius: 0.75rem;
             overflow: hidden;
-            box-shadow: 0 3px 5px var(--shadow);
+            box-shadow: 0 3px 6px var(--shadow);
             transition: transform 0.3s, box-shadow 0.3s;
             display: flex;
             flex-direction: column;
             height: 100%;
             position: relative;
-            border: 1px solid rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(59, 89, 152, 0.08);
         }
         
         .card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 15px var(--shadow-hover);
+            box-shadow: 0 8px 18px var(--shadow-hover);
+            border-color: rgba(59, 89, 152, 0.1);
         }
         
         /* Make card description and footer areas look clickable */
@@ -326,9 +344,10 @@
             background: linear-gradient(
                 to bottom,
                 rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.5) 70%,
-                rgba(255, 255, 255, 0.9) 90%,
-                rgba(255, 255, 255, 1) 100%
+                rgba(255, 255, 255, 0) 50%,  /* Keep fully transparent until 50% of the way down */
+                rgba(255, 255, 255, 0.3) 75%,  /* Start subtle fade at 75% */
+                rgba(255, 255, 255, 0.8) 90%,  /* Increase fade more rapidly near bottom */
+                rgba(255, 255, 255, 1) 100%    /* Full white at the very bottom */
             );
             z-index: 1;
         }
@@ -530,7 +549,7 @@
             justify-content: flex-end;
             align-items: center;
             gap: 0.5rem;
-            background-color: rgba(0,0,0,0.01);
+            background-color: rgba(59, 89, 152, 0.02);
             flex-wrap: wrap;
         }
         
@@ -607,100 +626,124 @@
         @media (max-width: 768px) {
             .filters-content {
                 flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .search-box {
-                min-width: 100%;
-            }
-            
-            .grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .card-footer {
-                flex-wrap: nowrap;
-                justify-content: space-between;
-            }
-            
-            .btn {
-                font-size: 0.7rem;
-                padding: 0.375rem 0.5rem;
-            }
-            
-            .btn-view-details {
-                margin-left: 0.25rem;
-                order: 0;
+                align-items: flex-start;
+                padding: 0 1.5rem;
+                gap: 1rem;
             }
             
             .header-content {
+                padding: 0 1.5rem;
+            }
+            
+            .top-nav-area {
                 flex-direction: column;
-                text-align: center;
-                gap: 2rem;
+                align-items: flex-start;
+                padding: 0.5rem 1.5rem;
+                gap: 0.75rem;
             }
             
-            .header-text {
-                text-align: center;
-                max-width: 100%;
-                padding-left: 0;
+            .top-nav-container {
+                margin-bottom: 1.5rem;
             }
             
-            .header-text::before {
-                display: none;
+            .about-link {
+                align-self: flex-end;
+                margin-top: -1.5rem; /* Negative margin to position it next to logos */
             }
             
             .header-logos {
-                margin-left: 0;
-                padding-left: 0;
-                border-left: none;
-                justify-content: center;
-                width: 100%;
-                gap: 2rem;
+                flex-wrap: wrap;
+                gap: 1.25rem;
+                justify-content: flex-start;
             }
             
             .header-logo {
-                height: 45px;
+                height: 38px; /* Adjusted for mobile but still larger than before */
+            }
+            
+            .header-main {
+                flex-direction: column;
+            }
+            
+            .header-text {
+                padding-right: 0;
+                max-width: 100%;
             }
             
             h1 {
-                font-size: 2rem;
-                display: block;
-                font-weight: 500; /* Match the main h1 style */
-                line-height: 1.3;
+                font-size: 2.2rem;
+                margin-bottom: 0.75rem;
             }
             
             .subtitle {
-                font-size: 1rem;
+                font-size: 1.05rem;
+                margin-top: 0.9rem;
+                margin-bottom: 1.1rem;
+            }
+            
+            .header-stats {
+                margin-top: 1.75rem;
+                width: 100%;
+                min-width: initial;
+            }
+            
+            .stats-row {
+                flex-direction: row;
+                justify-content: center;
+                gap: 0.9rem;
+            }
+            
+            .stat-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .stat-value {
+                font-size: 1.5rem;
+                line-height: 1.1;
+            }
+            
+            .stat-label {
+                font-size: 0.85rem;
+                margin-top: 0.1rem;
+            }
+            
+            header {
+                padding: 0.75rem 0 1.75rem;
+            }
+            
+            .filters {
+                margin-top: -0.75rem;
             }
         }
         
         
-.label-climate-action {
-    background-color: #e2cfcf;
-    color: #2d3748;
-}
-
-.domain-climate-action {
-    background-color: #e2cfcf;
-    color: #2d3748;
-}
-
 .label-natural-language-processing {
-    background-color: #e2d8cf;
+    background-color: #e2cfcf;
     color: #2d3748;
 }
 
 .domain-natural-language-processing {
-    background-color: #e2d8cf;
+    background-color: #e2cfcf;
     color: #2d3748;
 }
 
 .label-agriculture {
-    background-color: #e2e2cf;
+    background-color: #e2d8cf;
     color: #2d3748;
 }
 
 .domain-agriculture {
+    background-color: #e2d8cf;
+    color: #2d3748;
+}
+
+.label-climate-action {
+    background-color: #e2e2cf;
+    color: #2d3748;
+}
+
+.domain-climate-action {
     background-color: #e2e2cf;
     color: #2d3748;
 }
@@ -710,32 +753,32 @@
     color: #2d3748;
 }
 
-.label-audio {
+.label-images {
     background-color: #cfe2cf;
     color: #2d3748;
 }
 
-.label-images {
+.label-audio {
     background-color: #cfe2d8;
     color: #2d3748;
 }
 
-.label-geospatial {
+.label-text {
     background-color: #cfe2e2;
     color: #2d3748;
 }
 
-.label-text {
+.label-geospatial {
     background-color: #cfd8e2;
     color: #2d3748;
 }
 
-.label-use-case-with-business-model {
+.label-pilot {
     background-color: #cfcfe2;
     color: #2d3748;
 }
 
-.label-pilot {
+.label-use-case-with-business-model {
     background-color: #d8cfe2;
     color: #2d3748;
 }
@@ -832,22 +875,109 @@
         }
         
         /* Side panel styles are now in enhanced_side_panel.css */
+        
+        /* Stats panel styling */
+        .header-stats {
+            display: flex;
+            flex-direction: column;
+            min-width: 180px;
+            justify-content: center;
+            align-self: center;
+        }
+        
+        .stats-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .stats-bottom {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .stat-text {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 500;
+            color: var(--title-color);
+            line-height: 1.1;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 0.15rem;
+        }
     </style>
 </head>
 <body>
     <header>
-        <div class="header-content">
-            <div class="header-text">
-                <h1>Data & Use Cases Catalog</h1>
-                <p class="subtitle">Exploring datasets and solutions for global challenges across agriculture, language technology, climate action, energy, and more.</p>
+        <div class="top-nav-container">
+            <div class="top-nav-area">
+                <div class="header-logos">
+                    <a href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/" target="_blank" title="Fair Forward Initiative">
+                        <img src="img/ff_official.png" alt="Fair Forward Logo" class="header-logo">
+                    </a>
+                    <a href="https://www.bmz-digital.global/en/" target="_blank" title="Digital Global">
+                        <img src="img/digital_global_official.png" alt="Digital Global Logo" class="header-logo">
+                    </a>
+                    <a href="https://www.bmz.de/en" target="_blank" title="Federal Ministry for Economic Cooperation and Development">
+                        <img src="img/ministry_official.png" alt="BMZ Logo" class="header-logo">
+                    </a>
+                    <a href="https://www.giz.de/en/html/index.html" target="_blank" title="Deutsche Gesellschaft für Internationale Zusammenarbeit">
+                        <img src="img/giz_official.png" alt="GIZ Logo" class="header-logo">
+                    </a>
+                </div>
+                <a href="#" class="about-link">About the website</a>
             </div>
-            <div class="header-logos">
-                <a href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/" target="_blank" title="Fair Forward Initiative">
-                    <img src="img/ff_official.png" alt="Fair Forward Logo" class="header-logo">
-                </a>
-                <a href="https://www.bmz-digital.global/en/" target="_blank" title="Digital Global">
-                    <img src="img/digital_global_official.png" alt="Digital Global Logo" class="header-logo">
-                </a>
+        </div>
+        <div class="header-content">
+            <div class="header-main">
+                <div class="header-text">
+                    <h1>Fair Forward - Open Data & Use Cases</h1>
+                    <p class="subtitle">Exploring datasets and solutions for global challenges across agriculture, language technology, climate action, energy, and more.</p>
+                    <a href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/" target="_blank" class="header-learn-more">
+                        [Learn more about Fair Forward]
+                    </a>
+                </div>
+                <div class="header-stats">
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <div class="stat-text">
+                                <div class="stat-value">19</div>
+                                <div class="stat-label">Datasets</div>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-text">
+                                <div class="stat-value">8</div>
+                                <div class="stat-label">Use Cases</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stats-bottom">
+                        <div class="stat-item">
+                            <div class="stat-text">
+                                <div class="stat-value">8</div>
+                                <div class="stat-label">Countries</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
@@ -910,7 +1040,7 @@
     <div class="container">
         <div class="grid" id="dataGrid">
 
-    <div class="card has-dataset has-usecase" data-title="Leveraging ML for the Cashew sector" data-region="Ghana" data-id="0" data-dir-names="[&#x27;leveraging_ml_for_the_cashew_sector&#x27;, &#x27;cadi_ai_project_ml4cashew&#x27;]">
+    <div class="card has-dataset has-usecase" data-title="Leveraging ML for the Cashew sector" data-region="Ghana" data-id="0" data-dir-names="[&#x27;cadi_ai_project_ml4cashew&#x27;, &#x27;leveraging_ml_for_the_cashew_sector&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/cadi_ai_project_ml4cashew/images/cadiAI.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div><div class="domain-badge domain-agriculture">Agriculture</div></div>
@@ -970,7 +1100,7 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-images" data-filter="Images"><i class="fas fa-image"></i> Images</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Question-Answer Pairs on Health Related Content in Telugu and Chhatisgarhi" data-region="India" data-id="10" data-dir-names="[&#x27;digital_audio_content_creation_for_womens_empowerment_using_language_technologies&#x27;, &#x27;empowering_women_across_india_with_knowledge_in_their_native_languages&#x27;, &#x27;questionanswer_pairs_on_health_related_content_in_telugu_and_chhatisgarhi&#x27;]">
+    <div class="card has-dataset" data-title="Question-Answer Pairs on Health Related Content in Telugu and Chhatisgarhi" data-region="India" data-id="10" data-dir-names="[&#x27;questionanswer_pairs_on_health_related_content_in_telugu_and_chhatisgarhi&#x27;, &#x27;digital_audio_content_creation_for_womens_empowerment_using_language_technologies&#x27;, &#x27;empowering_women_across_india_with_knowledge_in_their_native_languages&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/digital_audio_content_creation_for_womens_empowerment_using_language_technologies/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             
@@ -1027,7 +1157,7 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-audio" data-filter="Audio"><i class="fas fa-volume-up"></i> Audio</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Cotton Ace: AI-driven Pest Management for Cotton Farmers in India" data-region="India" data-id="13" data-dir-names="[&#x27;wadhwani_ai__open_ai_for_cotton_pest_control_with_smallholder_farmers__national_entrepreneurship_network_nen&#x27;, &#x27;ai_pest_management_open_data_for_pink_bollworms_and_american_bollworms&#x27;, &#x27;cotton_ace_aidriven_pest_management_for_cotton_farmers_in_india&#x27;]">
+    <div class="card has-dataset has-usecase" data-title="Cotton Ace: AI-driven Pest Management for Cotton Farmers in India" data-region="India" data-id="13" data-dir-names="[&#x27;ai_pest_management_open_data_for_pink_bollworms_and_american_bollworms&#x27;, &#x27;cotton_ace_aidriven_pest_management_for_cotton_farmers_in_india&#x27;, &#x27;wadhwani_ai__open_ai_for_cotton_pest_control_with_smallholder_farmers__national_entrepreneurship_network_nen&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/wadhwani_ai__open_ai_for_cotton_pest_control_with_smallholder_farmers__national_entrepreneurship_network_nen/images/cotton_ace.jpg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div></div>
@@ -1049,7 +1179,7 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-images" data-filter="Images"><i class="fas fa-image"></i> Images</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Developing a concept with MFIN on voice-based chatbot" data-region="India" data-id="14" data-dir-names="[&#x27;microfinance_industry_network_india_use_of_voice_technology_gramvaani&#x27;, &#x27;developing_a_concept_with_mfin_on_voicebased_chatbot&#x27;]">
+    <div class="card has-dataset" data-title="Developing a concept with MFIN on voice-based chatbot" data-region="India" data-id="14" data-dir-names="[&#x27;developing_a_concept_with_mfin_on_voicebased_chatbot&#x27;, &#x27;microfinance_industry_network_india_use_of_voice_technology_gramvaani&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/developing_a_concept_with_mfin_on_voicebased_chatbot/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
@@ -1070,7 +1200,7 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-text" data-filter="Text"><i class="fas fa-file-alt"></i> Text</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Open-source text-to-speech and machine translation datasets in Mundari" data-region="India" data-id="15" data-dir-names="[&#x27;opensource_texttospeech_and_machine_translation_datasets_in_mundari&#x27;, &#x27;100_hours_of_text_to_speech_dataset_for_mundari_language&#x27;]">
+    <div class="card has-dataset" data-title="Open-source text-to-speech and machine translation datasets in Mundari" data-region="India" data-id="15" data-dir-names="[&#x27;100_hours_of_text_to_speech_dataset_for_mundari_language&#x27;, &#x27;opensource_texttospeech_and_machine_translation_datasets_in_mundari&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/100_hours_of_text_to_speech_dataset_for_mundari_language/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
@@ -1110,7 +1240,7 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-tabular" data-filter="Tabular"><i class="fas fa-table"></i> Tabular</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Open Dataset of Farm Boundaries and Crop Cultivation in Telangana State" data-region="India" data-id="17" data-dir-names="[&#x27;open_dataset_of_farm_boundaries_and_crop_cultivation_in_telangana_state&#x27;, &#x27;support_sustainable_agriculture_in_telangana_through_aipowered_crop_identification&#x27;, &#x27;ml4eo_telangana_crop_identification&#x27;]">
+    <div class="card has-dataset" data-title="Open Dataset of Farm Boundaries and Crop Cultivation in Telangana State" data-region="India" data-id="17" data-dir-names="[&#x27;ml4eo_telangana_crop_identification&#x27;, &#x27;open_dataset_of_farm_boundaries_and_crop_cultivation_in_telangana_state&#x27;, &#x27;support_sustainable_agriculture_in_telangana_through_aipowered_crop_identification&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/ml4eo_telangana_crop_identification/images/image.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -1150,7 +1280,7 @@
         <div class="card-footer"><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Use case development Indonesia" data-region="Indonesien" data-id="24" data-dir-names="[&#x27;climate_disinformation_in_local_indonesian_languages&#x27;, &#x27;use_case_development_indonesia&#x27;]">
+    <div class="card has-dataset" data-title="Use case development Indonesia" data-region="Indonesien" data-id="24" data-dir-names="[&#x27;use_case_development_indonesia&#x27;, &#x27;climate_disinformation_in_local_indonesian_languages&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/use_case_development_indonesia/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
@@ -1194,7 +1324,7 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-geospatial" data-filter="Geospatial"><i class="fas fa-map"></i> Geospatial</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="ML4EO for Precision Agriculture" data-region="South Africa" data-id="43" data-dir-names="[&#x27;enabling_geoscientists_to_use_machine_learning_for_precision_agriculture_of_geospatial_data&#x27;, &#x27;ml4eo_for_precision_agriculture&#x27;]">
+    <div class="card has-dataset" data-title="ML4EO for Precision Agriculture" data-region="South Africa" data-id="43" data-dir-names="[&#x27;ml4eo_for_precision_agriculture&#x27;, &#x27;enabling_geoscientists_to_use_machine_learning_for_precision_agriculture_of_geospatial_data&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/ml4eo_for_precision_agriculture/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             
@@ -1214,7 +1344,7 @@
         <div class="card-footer"><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="NLP grant Localising Common Voice for South African Languages" data-region="South Africa" data-id="44" data-dir-names="[&#x27;making_voice_data_available_in_all_official_languages_of_south_africa_as_a_digital_public_good__voices_of_mzansi&#x27;, &#x27;nlp_grant_localising_common_voice_for_south_african_languages&#x27;]">
+    <div class="card has-dataset" data-title="NLP grant Localising Common Voice for South African Languages" data-region="South Africa" data-id="44" data-dir-names="[&#x27;nlp_grant_localising_common_voice_for_south_african_languages&#x27;, &#x27;making_voice_data_available_in_all_official_languages_of_south_africa_as_a_digital_public_good__voices_of_mzansi&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/nlp_grant_localising_common_voice_for_south_african_languages/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
@@ -1269,7 +1399,7 @@
         <div class="card-footer"><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Finding good spots for decentralized green energy grids in Uganda I - AI based site identification for MiniGrids" data-region="Uganda" data-id="47" data-dir-names="[&#x27;finding_good_spots_for_decentralized_green_energy_grids_in_uganda_i__ai_based_site_identification_for_minigrids&#x27;, &#x27;scaling_mlbased_site_identification_for_minigrids_uganda&#x27;]">
+    <div class="card has-dataset has-usecase" data-title="Finding good spots for decentralized green energy grids in Uganda I - AI based site identification for MiniGrids" data-region="Uganda" data-id="47" data-dir-names="[&#x27;scaling_mlbased_site_identification_for_minigrids_uganda&#x27;, &#x27;finding_good_spots_for_decentralized_green_energy_grids_in_uganda_i__ai_based_site_identification_for_minigrids&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/scaling_mlbased_site_identification_for_minigrids_uganda/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
