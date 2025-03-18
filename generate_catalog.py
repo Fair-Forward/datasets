@@ -837,6 +837,35 @@ try:
     df = pd.read_excel(DATA_CATALOG)
     print(f"Successfully loaded data from {DATA_CATALOG}")
     
+    # Debug column names
+    print("DataFrame columns:", list(df.columns))
+    
+    # Clean and process data
+    # Replace NaN with empty strings for text fields
+    text_columns = ['Description - What can be done with this? What is this about?', 'Data - Key Characteristics', 
+                    'Model/Use-Case - Key Characteristics', 'Deep Dive - How can you concretely work with this and build on this?',
+                    'Region/Country', 'Domain/SDG', 'Data Type', 'License']
+    for col in text_columns:
+        if col in df.columns:
+            df[col] = df[col].fillna('')
+    
+    # Count the statistics for the header
+    dataset_count = sum(df['Dataset Link'].notna())
+    usecase_count = sum(df['Model/Use-Case Links'].notna())
+    
+    # Count unique countries
+    countries = []
+    # Use the 'Country Team' column that we identified from debugging
+    for country in df['Country Team'].dropna():
+        if isinstance(country, str):
+            # Split by commas, semicolons, or 'and'
+            parts = re.split(r',|\s+and\s+|;', country)
+            # Strip whitespace and add each non-empty part
+            countries.extend([p.strip() for p in parts if p.strip()])
+    
+    # Remove duplicates and count
+    country_count = len(set(countries))
+    
     # Get unique categories for filter and CSS generation
     domains, data_types, statuses, regions = get_unique_categories(df)
     
@@ -849,7 +878,7 @@ try:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data & Use Cases Catalog</title>
+    <title>Fair Forward - Open Data & Use Cases</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!-- Add enhanced side panel CSS -->
     <link rel="stylesheet" href="enhanced_side_panel.css">
@@ -885,7 +914,7 @@ try:
             --gray: #64748b;
             --border: #e2e8f0;
             --background: #f8fafc;
-            --card-bg: #ffffff;
+            --card-bg: #f5f8fc;
             --text: #1e293b;
             --text-light: #64748b;
             --shadow: rgba(0, 0, 0, 0.04);
@@ -916,145 +945,131 @@ try:
         }}
         
         header {{
-            background: linear-gradient(to right, #f8f9fa, #f1f4f8);
-            padding: 3.5rem 0 3rem; /* Adjusted padding for better proportions */
-            border-bottom: 1px solid var(--border);
-            text-align: center;
+            background: linear-gradient(to right, #f8f9fa, #f1f4f8); /* Subtle light gradient background */
+            padding: 0 0 2rem; /* Removed top padding as it's now handled by the nav area */
             position: relative;
-            color: var(--text);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
             overflow: hidden;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
         }}
-        
-        /* Add a subtle pattern overlay to the header */
-        header::before {{
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
+
+        /* Top navigation area that will contain both the logos and the about link */
+        .top-nav-container {{
+            background-color: #ffffff;
+            padding: 0;
             width: 100%;
-            height: 100%;
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0id2hpdGUiPjwvcmVjdD4KPHBhdGggZD0iTTAgMjBMMjAgMFpNMjAgMTVMMTUgMjBaTTAgNUw1IDBaIiBzdHJva2U9IiMzYjU5OTgiIHN0cm9rZS13aWR0aD0iMC41IiBzdHJva2Utb3BhY2l0eT0iMC4wNSI+PC9wYXRoPgo8L3N2Zz4=');
-            opacity: 0.8;
-            z-index: 0;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+            margin-bottom: 2rem; /* Add space between white nav and main header content */
         }}
-        
-        /* Add a subtle accent border at the top of the header */
-        header::after {{
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+
+        .top-nav-area {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 3rem;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 0; /* Removed bottom margin */
+            position: relative;
             z-index: 2;
+        }}
+        
+        .about-link {{
+            color: var(--text);
+            font-size: 0.9rem;
+            text-decoration: none;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            transition: background-color 0.2s;
+        }}
+
+        .about-link:hover {{
+            background-color: rgba(0, 0, 0, 0.05);
         }}
         
         .header-content {{
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            max-width: 1100px; /* Reduced from 1200px to match container */
+            flex-direction: column;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 0 3rem; /* Increased from 2rem to match container */
+            padding: 0 3rem;
             position: relative;
             z-index: 1;
         }}
-        
-        .header-text {{
-            text-align: left;
-            flex: 1;
-            max-width: 700px;
-            position: relative;
-            padding-left: 1.25rem; /* Reduced padding */
-        }}
-        
-        /* Add a vertical accent line to the left of the header text */
-        .header-text::before {{
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0.75rem;
-            bottom: 0.75rem;
-            width: 3px; /* Thinner line */
-            background: linear-gradient(to bottom, var(--primary) 0%, var(--primary-light) 100%);
-            border-radius: 3px;
-            opacity: 0.8; /* Slightly transparent for softer look */
+
+        .header-main {{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
         }}
         
         .header-logos {{
             display: flex;
+            gap: 1.75rem; /* Increased gap between logos */
             align-items: center;
-            gap: 2.25rem;
-            margin-left: 3rem;
-            padding-left: 3rem;
-            border-left: 1px solid rgba(226, 232, 240, 0.6); /* More subtle border */
         }}
         
         .header-logo {{
-            height: 50px; /* Slightly reduced for better proportion */
+            height: 45px; /* Increased logo size */
             width: auto;
-            opacity: 0.95;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.03));
+            transition: opacity 0.2s;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.05));
+            vertical-align: middle; /* Better vertical alignment */
         }}
         
         .header-logo:hover {{
-            transform: translateY(-2px);
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+            opacity: 0.9;
         }}
         
-        h1 {{
-            font-size: 2.5rem; /* Increased for more impact */
-            margin-bottom: 0.75rem; /* Reduced for tighter layout */
-            font-weight: 400; /* Even lighter weight for more elegance */
+        .header-text {{
+            padding-right: 1rem;
+            max-width: 62%;
+        }}
+        
+        .header-text h1 {{
+            margin-bottom: 0.75rem;
+            font-size: 2.5rem;
+            font-weight: 400;
             color: var(--title-color);
-            letter-spacing: -0.015em; /* Subtle letter spacing adjustment */
-            line-height: 1.2; /* Tighter line height */
+            line-height: 1.2;
             position: relative;
-            display: inline-block;
+            letter-spacing: -0.015em;
         }}
         
         .subtitle {{
-            font-size: 1.15rem; /* Increased for better readability */
+            font-size: 1.15rem;
             color: var(--text-light);
             max-width: 800px;
-            line-height: 1.5; /* Slightly reduced for tighter appearance */
-            font-weight: 300; /* Lighter weight for elegance */
-            margin-top: 0.5rem; /* Further reduced spacing with title */
-            letter-spacing: 0.01em; /* Slight letter spacing for better readability */
-            margin-bottom: 1.25rem; /* Add space for the button below */
+            font-weight: 300;
+            line-height: 1.5;
+            margin-top: 1rem;
+            letter-spacing: 0.01em;
+            margin-bottom: 1.25rem;
         }}
         
         .header-learn-more {{
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
             font-size: 0.9rem;
-            font-weight: 400;
             color: var(--primary);
             text-decoration: none;
-            padding: 0.5rem 1rem;
-            border: 1px solid rgba(59, 89, 152, 0.3);
-            border-radius: 4px;
-            background-color: rgba(59, 89, 152, 0.05);
+            margin-top: 0.25rem;
             transition: all 0.2s ease;
         }}
         
         .header-learn-more:hover {{
-            background-color: rgba(59, 89, 152, 0.1);
-            transform: translateY(-1px);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            opacity: 0.85;
+            text-decoration: underline;
         }}
         
         .header-learn-more i {{
-            font-size: 0.8rem;
-            opacity: 0.8;
+            display: none;
         }}
         
         .filters {{
-            background-color: var(--card-bg);
+            background-color: #ffffff;
             padding: 1.25rem 0; /* Reduced from 1.5rem */
             border-bottom: 1px solid var(--border);
             position: sticky;
@@ -1062,7 +1077,10 @@ try:
             z-index: 10;
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            margin-top: -0.75rem;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
         }}
         
         .filters-content {{
@@ -1153,21 +1171,22 @@ try:
         }}
         
         .card {{
-            background-color: var(--card-bg);
+            background: linear-gradient(145deg, var(--card-bg) 0%, #f8faff 100%);
             border-radius: 0.75rem;
             overflow: hidden;
-            box-shadow: 0 3px 5px var(--shadow);
+            box-shadow: 0 3px 6px var(--shadow);
             transition: transform 0.3s, box-shadow 0.3s;
             display: flex;
             flex-direction: column;
             height: 100%;
             position: relative;
-            border: 1px solid rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(59, 89, 152, 0.08);
         }}
         
         .card:hover {{
             transform: translateY(-4px);
-            box-shadow: 0 8px 15px var(--shadow-hover);
+            box-shadow: 0 8px 18px var(--shadow-hover);
+            border-color: rgba(59, 89, 152, 0.1);
         }}
         
         /* Make card description and footer areas look clickable */
@@ -1405,7 +1424,7 @@ try:
             justify-content: flex-end;
             align-items: center;
             gap: 0.5rem;
-            background-color: rgba(0,0,0,0.01);
+            background-color: rgba(59, 89, 152, 0.02);
             flex-wrap: wrap;
         }}
         
@@ -1482,82 +1501,94 @@ try:
         @media (max-width: 768px) {{
             .filters-content {{
                 flex-direction: column;
-                align-items: stretch;
-            }}
-            
-            .search-box {{
-                min-width: 100%;
-            }}
-            
-            .grid {{
-                grid-template-columns: 1fr;
-            }}
-            
-            .card-footer {{
-                flex-wrap: nowrap;
-                justify-content: space-between;
-            }}
-            
-            .btn {{
-                font-size: 0.7rem;
-                padding: 0.375rem 0.5rem;
-            }}
-            
-            .btn-view-details {{
-                margin-left: 0.25rem;
-                order: 0;
+                align-items: flex-start;
+                padding: 0 1.5rem;
+                gap: 1rem;
             }}
             
             .header-content {{
+                padding: 0 1.5rem;
+            }}
+            
+            .top-nav-area {{
                 flex-direction: column;
-                text-align: center;
-                gap: 2rem;
+                align-items: flex-start;
+                padding: 0.5rem 1.5rem;
+                gap: 0.75rem;
             }}
             
-            .header-text {{
-                text-align: center;
-                max-width: 100%;
-                padding-left: 0;
+            .top-nav-container {{
+                margin-bottom: 1.5rem;
             }}
             
-            .header-text::before {{
-                display: none;
+            .about-link {{
+                align-self: flex-end;
+                margin-top: -1.5rem; /* Negative margin to position it next to logos */
             }}
             
             .header-logos {{
-                margin-left: 0;
-                padding-left: 0;
-                border-left: none;
-                justify-content: center;
-                width: 100%;
-                gap: 2rem;
+                flex-wrap: wrap;
+                gap: 1.25rem;
+                justify-content: flex-start;
             }}
             
             .header-logo {{
-                height: 45px;
+                height: 38px; /* Adjusted for mobile but still larger than before */
+            }}
+            
+            .header-main {{
+                flex-direction: column;
+            }}
+            
+            .header-text {{
+                padding-right: 0;
+                max-width: 100%;
             }}
             
             h1 {{
                 font-size: 2.2rem;
-                display: block;
-                font-weight: 400; /* Match the updated main style */
-                line-height: 1.2;
-                letter-spacing: -0.015em;
-                margin-bottom: 0.6rem;
+                margin-bottom: 0.75rem;
             }}
             
             .subtitle {{
                 font-size: 1.05rem;
-                font-weight: 300; /* Match updated main style */
-                line-height: 1.5;
-                letter-spacing: 0.01em;
-                margin-bottom: 1rem;
+                margin-top: 0.9rem;
+                margin-bottom: 1.1rem;
             }}
             
-            .header-learn-more {{
+            .header-stats {{
+                margin-top: 1.75rem;
+                width: 100%;
+                min-width: initial;
+            }}
+            
+            .stats-row {{
+                flex-direction: row;
+                justify-content: center;
+                gap: 0.9rem;
+            }}
+            
+            .stat-item {{
+                flex-direction: column;
+                text-align: center;
+            }}
+            
+            .stat-value {{
+                font-size: 1.5rem;
+                line-height: 1.1;
+            }}
+            
+            .stat-label {{
                 font-size: 0.85rem;
-                padding: 0.4rem 0.9rem;
-                margin: 0 auto 1rem;
+                margin-top: 0.1rem;
+            }}
+            
+            header {{
+                padding: 0.75rem 0 1.75rem;
+            }}
+            
+            .filters {{
+                margin-top: -0.75rem;
             }}
         }}
         
@@ -1644,25 +1675,109 @@ try:
         }}
         
         /* Side panel styles are now in enhanced_side_panel.css */
+        
+        /* Stats panel styling */
+        .header-stats {{
+            display: flex;
+            flex-direction: column;
+            min-width: 180px;
+            justify-content: center;
+            align-self: center;
+        }}
+        
+        .stats-row {{
+            display: flex;
+            justify-content: space-between;
+            gap: 1.2rem;
+            margin-bottom: 1rem;
+        }}
+        
+        .stats-bottom {{
+            display: flex;
+            justify-content: center;
+        }}
+        
+        .stat-item {{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }}
+        
+        .stat-text {{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }}
+        
+        .stat-value {{
+            font-size: 1.75rem;
+            font-weight: 500;
+            color: var(--title-color);
+            line-height: 1.1;
+        }}
+        
+        .stat-label {{
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 0.15rem;
+        }}
     </style>
 </head>
 <body>
     <header>
-        <div class="header-content">
-            <div class="header-text">
-                <h1>Data & Use Cases Catalog</h1>
-                <p class="subtitle">Exploring datasets and solutions for global challenges across agriculture, language technology, climate action, energy, and more.</p>
-                <a href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/" target="_blank" class="header-learn-more">
-                    <i class="fas fa-info-circle"></i> Learn more about Fair Forward and BMZ Digital Global
-                </a>
+        <div class="top-nav-container">
+            <div class="top-nav-area">
+                <div class="header-logos">
+                    <a href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/" target="_blank" title="Fair Forward Initiative">
+                        <img src="img/ff_official.png" alt="Fair Forward Logo" class="header-logo">
+                    </a>
+                    <a href="https://www.bmz-digital.global/en/" target="_blank" title="Digital Global">
+                        <img src="img/digital_global_official.png" alt="Digital Global Logo" class="header-logo">
+                    </a>
+                    <a href="https://www.bmz.de/en" target="_blank" title="Federal Ministry for Economic Cooperation and Development">
+                        <img src="img/ministry_official.png" alt="BMZ Logo" class="header-logo">
+                    </a>
+                    <a href="https://www.giz.de/en/html/index.html" target="_blank" title="Deutsche Gesellschaft für Internationale Zusammenarbeit">
+                        <img src="img/giz_official.png" alt="GIZ Logo" class="header-logo">
+                    </a>
+                </div>
+                <a href="#" class="about-link">About the website</a>
             </div>
-            <div class="header-logos">
-                <a href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/" target="_blank" title="Fair Forward Initiative">
-                    <img src="img/ff_official.png" alt="Fair Forward Logo" class="header-logo">
-                </a>
-                <a href="https://www.bmz-digital.global/en/" target="_blank" title="Digital Global">
-                    <img src="img/digital_global_official.png" alt="Digital Global Logo" class="header-logo">
-                </a>
+        </div>
+        <div class="header-content">
+            <div class="header-main">
+                <div class="header-text">
+                    <h1>Fair Forward - Open Data & Use Cases</h1>
+                    <p class="subtitle">Exploring datasets and solutions for global challenges across agriculture, language technology, climate action, energy, and more.</p>
+                    <a href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/" target="_blank" class="header-learn-more">
+                        [Learn more about Fair Forward]
+                    </a>
+                </div>
+                <div class="header-stats">
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <div class="stat-text">
+                                <div class="stat-value">{dataset_count}</div>
+                                <div class="stat-label">Datasets</div>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-text">
+                                <div class="stat-value">{usecase_count}</div>
+                                <div class="stat-label">Use Cases</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stats-bottom">
+                        <div class="stat-item">
+                            <div class="stat-text">
+                                <div class="stat-value">{country_count}</div>
+                                <div class="stat-label">Countries</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
