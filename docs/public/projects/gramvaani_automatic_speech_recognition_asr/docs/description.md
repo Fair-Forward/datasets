@@ -1,1 +1,1 @@
-Improve Kahi Ankahi Baatein (KAB) platform, m – Fine-tuned Hindi LLM for better user experience
+Improve the Kahi Ankahi Baatein (KAB) platform by fine-tuning Hindi LLMs for better user experience.
