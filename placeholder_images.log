@@ -95,3 +95,27 @@
 2025-03-14 16:42:31,859 - INFO - Searching for images for making_the_indian_voice_datasets_more_sustainable_hackathon_with_bhashini_on_voice_data_for_climate__sustainable_agriculture with keywords: India, making, indian, voice, combined
 2025-03-14 16:42:35,111 - INFO - Downloaded image for making_the_indian_voice_datasets_more_sustainable_hackathon_with_bhashini_on_voice_data_for_climate__sustainable_agriculture: docs/public/projects/making_the_indian_voice_datasets_more_sustainable_hackathon_with_bhashini_on_voice_data_for_climate__sustainable_agriculture/images/placeholder_image.jpeg
 2025-03-14 16:42:36,117 - INFO - Completed processing. Downloaded 43 placeholder images.
+2025-04-03 09:55:54,491 - INFO - Loaded data catalog from docs/data_catalog.xlsx
+2025-04-03 09:55:54,493 - INFO - Found 54 project directories
+2025-04-03 09:55:54,526 - WARNING - Could not find project info for voice_data_collection_luandamozilla_common_voice
+2025-04-03 09:55:54,527 - WARNING - Could not find project info for voice_data_collection_swahili_mozilla_common_voice
+2025-04-03 09:55:54,529 - WARNING - Could not find project info for voice_data_collection_kinyarwanda_mozilla_common_voice
+2025-04-03 09:55:54,529 - INFO - Completed processing. Downloaded 0 placeholder images.
+2025-04-03 09:57:07,034 - INFO - Loaded data catalog from docs/data_catalog.xlsx
+2025-04-03 09:57:07,035 - INFO - Found 60 project directories
+2025-04-03 09:57:07,045 - INFO - Searching for images for labelled_open_solar_panel_data_for_madagascar with keywords: open, this, Climate Action, labelled, solar
+2025-04-03 09:57:08,380 - INFO - Downloaded image for labelled_open_solar_panel_data_for_madagascar: docs/public/projects/labelled_open_solar_panel_data_for_madagascar/images/placeholder_image.jpeg
+2025-04-03 09:57:09,388 - INFO - Searching for images for building_parallel_corpora_for_kenyas_indigenous_languages_and_swahili with keywords: Kenya, this, Climate Action, corpora, building
+2025-04-03 09:57:10,830 - INFO - Downloaded image for building_parallel_corpora_for_kenyas_indigenous_languages_and_swahili: docs/public/projects/building_parallel_corpora_for_kenyas_indigenous_languages_and_swahili/images/placeholder_image.jpeg
+2025-04-03 09:57:11,842 - WARNING - Could not find project info for voice_data_collection_luandamozilla_common_voice
+2025-04-03 09:57:11,847 - WARNING - Could not find project info for voice_data_collection_swahili_mozilla_common_voice
+2025-04-03 09:57:11,850 - INFO - Searching for images for datasets_marking_personal_identifiable_information_pii_and_gender_bias with keywords: Natural Language Processing, datasets, Climate Action, Uganda,Kenya,Nigeria, marking
+2025-04-03 09:57:15,031 - INFO - Downloaded image for datasets_marking_personal_identifiable_information_pii_and_gender_bias: docs/public/projects/datasets_marking_personal_identifiable_information_pii_and_gender_bias/images/placeholder_image.jpeg
+2025-04-03 09:57:16,035 - INFO - Searching for images for dronebased_agricultural_dataset_for_crop_yield_estimation with keywords: this, drone-based, Climate Action, dataset, Agriculture
+2025-04-03 09:57:17,501 - INFO - Downloaded image for dronebased_agricultural_dataset_for_crop_yield_estimation: docs/public/projects/dronebased_agricultural_dataset_for_crop_yield_estimation/images/placeholder_image.jpeg
+2025-04-03 09:57:18,505 - INFO - Searching for images for financial_inclusion_speech_dataset_for_some_ghanaian_languages with keywords: inclusion, Ghana, Natural Language Processing, this, Climate Action
+2025-04-03 09:57:20,567 - INFO - Downloaded image for financial_inclusion_speech_dataset_for_some_ghanaian_languages: docs/public/projects/financial_inclusion_speech_dataset_for_some_ghanaian_languages/images/placeholder_image.jpeg
+2025-04-03 09:57:21,575 - INFO - Searching for images for a_nigerian_twitter_sentiment_corpus_for_multilingual_sentiment_analysis with keywords: Natural Language Processing, this, Climate Action, dataset, nigerian
+2025-04-03 09:57:23,853 - INFO - Downloaded image for a_nigerian_twitter_sentiment_corpus_for_multilingual_sentiment_analysis: docs/public/projects/a_nigerian_twitter_sentiment_corpus_for_multilingual_sentiment_analysis/images/placeholder_image.jpeg
+2025-04-03 09:57:24,864 - WARNING - Could not find project info for voice_data_collection_kinyarwanda_mozilla_common_voice
+2025-04-03 09:57:24,866 - INFO - Completed processing. Downloaded 6 placeholder images.
