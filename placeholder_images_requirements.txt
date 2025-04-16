@@ -1,6 +1,0 @@
-requests>=2.25.0
-pandas>=1.2.0
-openpyxl>=3.0.0
-tqdm>=4.50.0
-python-dotenv>=0.15.0
-thefuzz[speedup] 
