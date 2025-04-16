@@ -11,3 +11,4 @@ ipython_config.py
 # folders/files
 data_sources/google_sheets_api/service_account_JN.json
 .specstory/
+.cursorindexingignore
