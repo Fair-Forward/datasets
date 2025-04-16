@@ -1,8 +1,6 @@
-name: Update Website from Google Sheets with New Design
+name: Manually Update Website from Google Sheets
 
 on:
-  schedule:
-    - cron: '0 0 * * *'  # Run daily at midnight
   workflow_dispatch:  # Allow manual triggering
 
 jobs:
@@ -10,10 +8,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout main branch
       uses: actions/checkout@v3
       with:
-        ref: feature/new-website
+        ref: main # Checkout the main branch
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -22,29 +20,51 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install pandas openpyxl gspread oauth2client
+        # Install all necessary dependencies for build and backup
+        pip install pandas openpyxl gspread oauth2client python-dotenv thefuzz[speedup]
 
     - name: Create service account credentials
+      env:
+        GOOGLE_SHEETS_CREDENTIALS: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}
       run: |
-        echo '${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}' > service_account_JN.json
-        mkdir -p data_sources/google_sheets_api
-        mv service_account_JN.json data_sources/google_sheets_api/
+        echo "Creating credentials file..."
+        CRED_DIR="data_sources/google_sheets_api"
+        CRED_FILE="$CRED_DIR/service_account_JN.json"
+        mkdir -p $CRED_DIR
+        echo "${GOOGLE_SHEETS_CREDENTIALS}" > "$CRED_FILE"
+        if [ ! -f "$CRED_FILE" ] || [ ! -s "$CRED_FILE" ]; then
+          echo "Error: Failed to create credentials file."
+          exit 1
+        fi
+        echo "Credentials file created."
 
-    - name: Update from Google Sheets
+    - name: Build Website and Backup Data
       run: |
-        python build_from_google_sheets.py --template docs/index.html
+        echo "Running build script..."
+        python build_from_google_sheets.py
+        if [ $? -ne 0 ]; then
+          echo "::error::Build script failed."
+          exit 1
+        fi
+        echo "Build script finished."
 
-    - name: Commit and push changes
+    - name: Commit and push changes to main
       run: |
-        git config --global user.name "GitHub Actions"
+        git config --global user.name "GitHub Actions (Manual Trigger)"
         git config --global user.email "actions@github.com"
-        git add --all
-        git commit -m "Update website and backup data from Google Sheets" || echo "No changes to commit"
-        git push 
+        git add --all # Add all changes (index.html, excel, backups, etc.)
+        # Check if there are changes staged
+        if git diff --staged --quiet; then
+          echo "No changes to commit."
+        else
+          echo "Committing changes..."
+          # Commit with a timestamp
+          commit_msg="Manually triggered update from Google Sheets - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+          git commit -m "$commit_msg"
+          echo "Pushing changes to main branch..."
+          # Ensure push goes to the correct branch (main)
+          git push origin main 
+        fi
 
-    - name: Check GitHub Pages status
-      run: |
-        echo "Checking GitHub Pages build status..."
-        curl -s "https://api.github.com/repos/${{ github.repository }}/pages/builds/latest" \
-          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          -H "Accept: application/vnd.github.v3+json" 
+    # Removed the GitHub Pages status check as it might not be relevant
+    # depending on exact deployment setup. 

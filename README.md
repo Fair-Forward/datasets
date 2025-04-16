@@ -6,6 +6,35 @@ You can access the catalog here: [Data Catalog!](https://fair-forward.github.io/
 
 > **Note:** This data catalog is currently a prototype and is not yet fully developed. It is intended to showcase the concept and functionality, but may undergo significant changes in the future.
 
+## How to Update the Catalog
+
+The content of this catalog is primarily sourced from a [Google Sheet](https://docs.google.com/spreadsheets/d/18sgZgPGZuZjeBTHrmbr1Ra7mx8vSToUqnx8vCjhIp0c/edit?gid=561894456#gid=561894456). Changes made to the sheet (e.g., adding a new project, updating details) need to be reflected on the website.
+
+There are two main ways to update the website:
+
+1.  **Local Update (for Developers):**
+    *   Ensure you have the prerequisites installed (see Development section).
+    *   Run the build script locally: `python build_from_google_sheets.py`
+    *   This fetches the latest data, generates `docs/index.html`, updates `docs/data_catalog.xlsx`, and creates project files.
+    *   Commit and push all changed files (including `index.html`, `.xlsx`, backups, and any new files in `docs/public/projects/`) to the `main` branch.
+
+2.  **Update via GitHub Actions (for Non-Developers with Repo Access):**
+    *   This method allows updating the website directly from GitHub without running code locally.
+    *   Go to the repository's **Actions** tab on GitHub.
+    *   In the left sidebar, click on the "**Manually Update Website from Google Sheets**" workflow.
+    *   Above the list of workflow runs, click the "**Run workflow**" dropdown button.
+    *   Ensure the "Branch: `main`" is selected.
+    *   Click the green "**Run workflow**" button.
+    *   The workflow will fetch the latest data from the Google Sheet, rebuild the website, and automatically commit the changes to the `main` branch. The live website will be updated shortly after the workflow completes successfully.
+
+## How to Contribute Data
+
+Want to add your dataset or AI use case to this catalog? Great!
+
+1.  **Access the Source:** The data for this catalog lives in this [Google Sheet](https://docs.google.com/spreadsheets/d/18sgZgPGZuZjeBTHrmbr1Ra7mx8vSToUqnx8vCjhIp0c/edit?gid=561894456#gid=561894456).
+2.  **Add Your Project:** Add a new row to the sheet and fill in the details for your project. Please follow the format of existing entries and use the second row as a guide for the expected content in each column.
+3.  **Update the Website:** Once you've added your information to the Google Sheet, the website needs to be rebuilt to include it. Please contact one of the repository maintainers or follow the "Update via GitHub Actions" steps above (if you have write access) to trigger an update.
+
 ## Development
 
 This repository contains the code for generating a static website that displays a catalog of datasets and use cases. The website is built from data stored in an Excel file or fetched from a Google Spreadsheet. The repository includes both a static HTML generator and a React frontend.
@@ -133,10 +162,10 @@ The `download_placeholder_images.py` script accepts these arguments:
 
 ### GitHub Actions
 
-This repository uses GitHub Actions to automatically build and deploy the website:
+This repository uses GitHub Actions:
 
-- `.github/workflows/update_markdown.yml`: Builds the website from the local Excel file when changes are pushed
-- `.github/workflows/update_from_google_sheets.yml`: Fetches data from Google Sheets and builds the website on a schedule
+- `.github/workflows/update_from_google_sheets.yml`: **Manually triggered** workflow to fetch data from Google Sheets, build the website (`docs/index.html`), and commit changes to the `main` branch.
+- `.github/workflows/monthly_backup.yml`: **Automatically triggered** workflow (1st of the month) to create a raw CSV backup of the Google Sheet data.
 
 ### Features
 
@@ -152,9 +181,9 @@ The data catalog includes the following features:
 - Automatic placeholder images for projects without custom images
 - React frontend for a more interactive user experience
 
-### Contributing
+### Contributing (Code)
 
-If you would like to contribute to this project, please follow these steps:
+If you would like to contribute *code changes* to this project, please follow these steps:
 
 1. Fork the repository
 2. Create a new branch for your feature
