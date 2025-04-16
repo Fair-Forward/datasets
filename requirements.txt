@@ -1,0 +1,4 @@
+pandas
+gspread
+oauth2client
+thefuzz[speedup] 
