@@ -1,4 +1,8 @@
 pandas
+openpyxl
 gspread
 oauth2client
-thefuzz[speedup] 
+requests
+python-dotenv
+thefuzz[speedup]
+tqdm 
