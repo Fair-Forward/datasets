@@ -119,3 +119,9 @@
 2025-04-03 09:57:23,853 - INFO - Downloaded image for a_nigerian_twitter_sentiment_corpus_for_multilingual_sentiment_analysis: docs/public/projects/a_nigerian_twitter_sentiment_corpus_for_multilingual_sentiment_analysis/images/placeholder_image.jpeg
 2025-04-03 09:57:24,864 - WARNING - Could not find project info for voice_data_collection_kinyarwanda_mozilla_common_voice
 2025-04-03 09:57:24,866 - INFO - Completed processing. Downloaded 6 placeholder images.
+2025-04-16 16:49:41,348 - INFO - Loaded data catalog from docs/data_catalog.xlsx
+2025-04-16 16:49:41,349 - INFO - Found 60 project directories
+2025-04-16 16:49:41,393 - WARNING - Could not find project info for voice_data_collection_luandamozilla_common_voice
+2025-04-16 16:49:41,395 - WARNING - Could not find project info for voice_data_collection_swahili_mozilla_common_voice
+2025-04-16 16:49:41,398 - WARNING - Could not find project info for voice_data_collection_kinyarwanda_mozilla_common_voice
+2025-04-16 16:49:41,398 - INFO - Completed processing. Downloaded 0 placeholder images.
