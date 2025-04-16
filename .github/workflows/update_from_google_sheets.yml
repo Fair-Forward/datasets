@@ -39,7 +39,7 @@ jobs:
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
         git add --all
-        git commit -m "Update website from Google Sheets" || echo "No changes to commit"
+        git commit -m "Update website and backup data from Google Sheets" || echo "No changes to commit"
         git push 
 
     - name: Check GitHub Pages status

@@ -1,0 +1,80 @@
+name: Monthly Google Sheet Backup
+
+on:
+  schedule:
+    - cron: '0 3 1 * *'  # Run at 03:00 on the 1st day of every month
+  workflow_dispatch:      # Allow manual triggering
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    # Prevent running concurrently with the main build
+    concurrency: 
+      group: sheet-backup
+      cancel-in-progress: true
+
+    steps:
+    - name: Checkout repository
+      # Use the main branch or the branch where backups should be stored
+      uses: actions/checkout@v3 
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.x"
+
+    - name: Install dependencies
+      run: |
+        # Install only necessary packages for backup
+        pip install gspread oauth2client
+
+    - name: Create service account credentials
+      env:
+        GOOGLE_SHEETS_CREDENTIALS: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}
+      run: |
+        echo "Creating credentials file..."
+        CRED_DIR="data_sources/google_sheets_api"
+        CRED_FILE="$CRED_DIR/service_account_JN.json"
+        mkdir -p $CRED_DIR
+        echo "${GOOGLE_SHEETS_CREDENTIALS}" > "$CRED_FILE"
+        if [ ! -f "$CRED_FILE" ] || [ ! -s "$CRED_FILE" ]; then
+          echo "Error: Failed to create credentials file."
+          exit 1
+        fi
+        echo "Credentials file created."
+
+    - name: Run Backup Script
+      id: backup_run
+      run: |
+        echo "Running backup script..."
+        BACKUP_DIR="data_sources/google_sheets_backup"
+        CRED_FILE="data_sources/google_sheets_api/service_account_JN.json"
+        python backup_google_sheet.py \
+          --credentials "$CRED_FILE" \
+          --backup-dir "$BACKUP_DIR"
+        # Check exit code
+        if [ $? -ne 0 ]; then
+          echo "::error::Backup script failed."
+          exit 1
+        fi
+        echo "Backup script finished."
+        # Store the expected filename for commit step
+        current_month=$(date +'%Y%m')
+        echo "backup_file=$BACKUP_DIR/monthly_sheet_backup_${current_month}.csv" >> $GITHUB_OUTPUT
+
+    - name: Commit and push backup file
+      run: |
+        git config --global user.name "GitHub Actions (Monthly Backup)"
+        git config --global user.email "actions@github.com"
+        backup_file="${{ steps.backup_run.outputs.backup_file }}"
+        echo "Checking for changes in $backup_file"
+        git add "$backup_file"
+        # Check if there are changes staged for the specific file
+        if git diff --staged --quiet -- "$backup_file"; then
+          echo "No changes in backup file to commit."
+        else
+          echo "Committing changes to $backup_file"
+          git commit -m "Automated monthly backup of Google Sheet data ($backup_file)"
+          echo "Pushing changes..."
+          git push
+        fi 
