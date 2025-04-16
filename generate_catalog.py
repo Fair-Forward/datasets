@@ -802,6 +802,39 @@ def generate_js_code():
             window.addEventListener('popstate', function() {
                 applyUrlParams();
             });
+
+            // --- Start: Count-up Animation --- 
+            function animateValue(id, start, end, duration) {
+                const element = document.getElementById(id);
+                if (!element) return;
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    const currentValue = Math.floor(progress * (end - start) + start);
+                    element.textContent = currentValue;
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            }
+
+            // Animate the stat values
+            const datasetCounter = document.getElementById('stat-datasets');
+            const usecaseCounter = document.getElementById('stat-usecases');
+            const countryCounter = document.getElementById('stat-countries');
+
+            if (datasetCounter) {
+                animateValue('stat-datasets', 0, parseInt(datasetCounter.getAttribute('data-target') || '0', 10), 1500);
+            }
+            if (usecaseCounter) {
+                animateValue('stat-usecases', 0, parseInt(usecaseCounter.getAttribute('data-target') || '0', 10), 1500);
+            }
+            if (countryCounter) {
+                animateValue('stat-countries', 0, parseInt(countryCounter.getAttribute('data-target') || '0', 10), 1500);
+            }
+            // --- End: Count-up Animation --- 
         });
     </script>
     '''
@@ -1758,13 +1791,13 @@ try:
                     <div class="stats-row">
                         <div class="stat-item">
                             <div class="stat-text">
-                                <div class="stat-value">{dataset_count}</div>
+                                <div class="stat-value" id="stat-datasets" data-target="{dataset_count}">0</div>
                                 <div class="stat-label">Datasets</div>
                             </div>
                         </div>
                         <div class="stat-item">
                             <div class="stat-text">
-                                <div class="stat-value">{usecase_count}</div>
+                                <div class="stat-value" id="stat-usecases" data-target="{usecase_count}">0</div>
                                 <div class="stat-label">Use Cases</div>
                             </div>
                         </div>
@@ -1772,7 +1805,7 @@ try:
                     <div class="stats-bottom">
                         <div class="stat-item">
                             <div class="stat-text">
-                                <div class="stat-value">{country_count}</div>
+                                <div class="stat-value" id="stat-countries" data-target="{country_count}">0</div>
                                 <div class="stat-label">Countries</div>
                             </div>
                         </div>
