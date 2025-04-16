@@ -6,6 +6,14 @@ You can access the catalog here: [Data Catalog!](https://fair-forward.github.io/
 
 > **Note:** This data catalog is currently a prototype and is not yet fully developed. It is intended to showcase the concept and functionality, but may undergo significant changes in the future.
 
+## How to Contribute Data
+
+Want to add your dataset or AI use case to this catalog? Great!
+
+1.  **Access the Source:** The data for this catalog lives in this [Google Sheet](https://docs.google.com/spreadsheets/d/18sgZgPGZuZjeBTHrmbr1Ra7mx8vSToUqnx8vCjhIp0c/edit?gid=561894456#gid=561894456).
+2.  **Add Your Project:** Add a new row to the sheet and fill in the details for your project. Please follow the format of existing entries and use the second row as a guide for the expected content in each column.
+3.  **Update the Website:** Once you've added your information to the Google Sheet, the website needs to be rebuilt to include it. Please contact one of the repository maintainers or follow the "Update via GitHub Actions" steps above (if you have write access) to trigger an update.
+
 ## How to Update the Catalog
 
 The content of this catalog is primarily sourced from a [Google Sheet](https://docs.google.com/spreadsheets/d/18sgZgPGZuZjeBTHrmbr1Ra7mx8vSToUqnx8vCjhIp0c/edit?gid=561894456#gid=561894456). Changes made to the sheet (e.g., adding a new project, updating details) need to be reflected on the website.
@@ -27,13 +35,6 @@ There are two main ways to update the website:
     *   Click the green "**Run workflow**" button.
     *   The workflow will fetch the latest data from the Google Sheet, rebuild the website, and automatically commit the changes to the `main` branch. The live website will be updated shortly after the workflow completes successfully.
 
-## How to Contribute Data
-
-Want to add your dataset or AI use case to this catalog? Great!
-
-1.  **Access the Source:** The data for this catalog lives in this [Google Sheet](https://docs.google.com/spreadsheets/d/18sgZgPGZuZjeBTHrmbr1Ra7mx8vSToUqnx8vCjhIp0c/edit?gid=561894456#gid=561894456).
-2.  **Add Your Project:** Add a new row to the sheet and fill in the details for your project. Please follow the format of existing entries and use the second row as a guide for the expected content in each column.
-3.  **Update the Website:** Once you've added your information to the Google Sheet, the website needs to be rebuilt to include it. Please contact one of the repository maintainers or follow the "Update via GitHub Actions" steps above (if you have write access) to trigger an update.
 
 ## Development
 
