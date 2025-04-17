@@ -1,1 +1,1 @@
-Using TTS models to create health-related audio messages that can be shared with civil society organizations for awareness raising and capacity building
+Empowering Women Across India with Voice-based Knowledge in Their Native Languages: By using openly accessible text-to-speech models from the Indian Institute of Science (IISc) and MeitY's Digital India Bhashini Division, Audiopedia created health-related 400+ audio messages that can be shared with civil society organizations for awareness raising and capacity building
