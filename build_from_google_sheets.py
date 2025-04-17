@@ -172,7 +172,8 @@ if not args.skip_fetch:
             "Description - What can be done with this? What is this about?": [
                 "Description - What can be done with this? What is this about?",
                 "Description - What can be done", "Description", "About",
-                "What this is about and how can I use this? " # Added from log
+                "What this is about and how can I use this? ", # Added from log
+                "What this is about/Description" # Added from user input
             ],
             "Dataset Link": ["Dataset Link", "Dataset URL", "Access to the dataset [link]"],
             "Model/Use-Case Links": [

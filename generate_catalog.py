@@ -473,8 +473,19 @@ def generate_card_html(row, idx):
     if data_type_chips:
         footer_links.append(f'<div class="data-type-chips footer-chips">{"".join(data_type_chips)}</div>')
     
-    # Add license tag to the footer (right side)
-    footer_links.append(f'<div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div>')
+    # Add license tag dynamically
+    license_text = row.get('License', '')
+    license_html = '' # Initialize
+    if license_text and not pd.isna(license_text) and str(license_text).strip():
+        # Use the license from the sheet, escape it for safety
+        escaped_license = html.escape(str(license_text).strip())
+        license_html = f'<div class="license-tag"><i class="fas fa-copyright"></i> {escaped_license}</div>'
+    else:
+        # Use the default placeholder if license is empty or invalid
+        license_html = f'<div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div>'
+
+    # Add the generated or default license HTML to footer links
+    footer_links.append(license_html)
     
     footer_html = f'<div class="card-footer">{"".join(footer_links)}</div>'
     
