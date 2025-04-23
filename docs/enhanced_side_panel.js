@@ -201,7 +201,7 @@ function loadItemDetails(itemId) {
     
     // Initialize content sections
     let contentSections = {
-        'What is this about and how can I use this?': '',
+        'What is this about?': '',
         'Data Characteristics': '',
         'Model Characteristics': '',
         'How to Use It': ''
@@ -298,7 +298,7 @@ function loadItemDetails(itemId) {
                         icon = 'fa-robot';
                     } else if (section.includes('How to Use')) {
                         icon = 'fa-lightbulb';
-                    } else if (section.includes('What is this about')) {
+                    } else if (section === 'What is this about?') {
                         icon = 'fa-info-circle';
                     }
                     
@@ -390,7 +390,7 @@ function loadItemDetails(itemId) {
     
     // Files to try loading
     const filesToLoad = [
-        { fileName: 'description.md', section: 'What is this about and how can I use this?' },
+        { fileName: 'description.md', section: 'What is this about?' },
         { fileName: 'data_characteristics.md', section: 'Data Characteristics' },
         { fileName: 'model_characteristics.md', section: 'Model Characteristics' },
         { fileName: 'how_to_use.md', section: 'How to Use It' }
