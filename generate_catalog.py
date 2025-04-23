@@ -846,6 +846,58 @@ def generate_js_code():
                 animateValue('stat-countries', 0, parseInt(countryCounter.getAttribute('data-target') || '0', 10), 1500);
             }
             // --- End: Count-up Animation --- 
+
+            // --- Start: Fair Sharing Modal --- 
+            const fairSharingLink = document.getElementById('fair-sharing-link');
+            const fairSharingModal = document.getElementById('fair-sharing-modal');
+            const fairSharingCloseBtn = document.getElementById('fair-sharing-close');
+
+            if (fairSharingLink && fairSharingModal) {
+                fairSharingLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    fairSharingModal.classList.add('visible');
+                });
+            }
+            if (fairSharingCloseBtn && fairSharingModal) {
+                fairSharingCloseBtn.addEventListener('click', () => {
+                    fairSharingModal.classList.remove('visible');
+                });
+            }
+            if (fairSharingModal) {
+                // Close modal if clicking on the background overlay
+                fairSharingModal.addEventListener('click', (e) => {
+                    if (e.target === fairSharingModal) { // Check if the click is directly on the container
+                        fairSharingModal.classList.remove('visible');
+                    }
+                });
+            }
+            // --- End: Fair Sharing Modal --- 
+
+            // --- Start: About Website Modal --- 
+            const aboutWebsiteLink = document.getElementById('about-website-link');
+            const aboutWebsiteModal = document.getElementById('about-website-modal');
+            const aboutWebsiteCloseBtn = document.getElementById('about-website-close');
+
+            if (aboutWebsiteLink && aboutWebsiteModal) {
+                aboutWebsiteLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    aboutWebsiteModal.classList.add('visible');
+                });
+            }
+            if (aboutWebsiteCloseBtn && aboutWebsiteModal) {
+                aboutWebsiteCloseBtn.addEventListener('click', () => {
+                    aboutWebsiteModal.classList.remove('visible');
+                });
+            }
+            if (aboutWebsiteModal) {
+                // Close modal if clicking on the background overlay
+                aboutWebsiteModal.addEventListener('click', (e) => {
+                    if (e.target === aboutWebsiteModal) { // Check if the click is directly on the container
+                        aboutWebsiteModal.classList.remove('visible');
+                    }
+                });
+            }
+            // --- End: About Website Modal --- 
         });
     </script>
     '''
@@ -1017,6 +1069,12 @@ try:
             margin-bottom: 0; /* Removed bottom margin */
             position: relative;
             z-index: 2;
+        }}
+        
+        .top-nav-links {{ /* Add this new rule */
+            display: flex;
+            align-items: center;
+            gap: 0.75rem; /* Adjust this value for desired spacing */
         }}
         
         .about-link {{
@@ -1766,6 +1824,70 @@ try:
             color: var(--text-light);
             margin-top: 0.15rem;
         }}
+
+        /* Modal Styles */
+        .modal-container {{
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1050;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }}
+        .modal-container.visible {{
+            display: flex;
+            opacity: 1;
+        }}
+        .modal-content {{
+            position: relative;
+            background-color: #fff;
+            padding: 2.5rem;
+            border-radius: 0.75rem;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: fadeInModal 0.3s ease-out;
+        }}
+        .modal-close {{
+            position: absolute;
+            top: 0.75rem;
+            right: 1rem;
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: #aaa;
+            background: none;
+            border: none;
+            cursor: pointer;
+            line-height: 1;
+        }}
+        .modal-close:hover,
+        .modal-close:focus {{
+            color: #333;
+            text-decoration: none;
+        }}
+        .modal-content h2 {{
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            color: var(--title-color);
+            font-weight: 600;
+            font-size: 1.25rem;
+        }}
+        .modal-content p {{
+            margin-bottom: 0;
+            color: var(--text);
+            line-height: 1.6;
+        }}
+        @keyframes fadeInModal {{
+            from {{ opacity: 0; transform: translateY(-20px); }}
+            to {{ opacity: 1; transform: translateY(0); }}
+        }}
     </style>
 </head>
 <body>
@@ -1786,7 +1908,10 @@ try:
                         <img src="img/giz_official.png" alt="GIZ Logo" class="header-logo">
                     </a>
                 </div>
-                <a href="#" class="about-link">About the website</a>
+                <div class="top-nav-links"> <!-- Add this wrapper div -->
+                    <a href="#" id="fair-sharing-link" class="about-link">Info on Fair Sharing</a>
+                    <a href="#" id="about-website-link" class="about-link">About the website</a> <!-- Added ID -->
+                </div> <!-- Close the wrapper div -->
             </div>
         </div>
         <div class="header-content">
@@ -1870,6 +1995,32 @@ try:
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Add enhanced side panel JavaScript -->
     <script src="enhanced_side_panel.js"></script>
+
+    <!-- Fair Sharing Modal HTML -->
+    <div id="fair-sharing-modal" class="modal-container">
+        <div class="modal-content">
+            <button id="fair-sharing-close" class="modal-close">&times;</button>
+            <h2>Fair Sharing & Digital Public Goods</h2>
+            <p>
+                Adhere to fair contributing: "This is a global digital public good under open-source licenses as named under "licenses" - Please consider fair sharing and giving back to communities in an appropriate way."
+            </p>
+        </div>
+    </div>
+
+    <!-- About Website Modal HTML -->
+    <div id="about-website-modal" class="modal-container">
+        <div class="modal-content">
+            <button id="about-website-close" class="modal-close">&times;</button>
+            <h2>About This Website</h2>
+            <p>
+                Welcome to our organization's data and use-case catalog. Below is a list of datasets and use-cases that have been collected throughout our programme Fair Forward. This website aims to function as an open-sourced community place to link to our partners work and provide clear information on how the datasets and use-cases can be replicated and worked with. All listed datasets and use-cases are openly available as digital public goods.
+            </p>
+            <p>
+                Please adhere to fair contributing: "This is a global digital public good under open-source licenses as named under "licenses" - Please consider fair sharing and giving back to communities in an appropriate way."
+            </p>
+        </div>
+    </div>
+
 </body>
 </html>
 '''

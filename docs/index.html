@@ -100,6 +100,12 @@
             z-index: 2;
         }
         
+        .top-nav-links { /* Add this new rule */
+            display: flex;
+            align-items: center;
+            gap: 0.75rem; /* Adjust this value for desired spacing */
+        }
+        
         .about-link {
             color: var(--text);
             font-size: 0.9rem;
@@ -718,22 +724,22 @@
         }
         
         
-.label-natural-language-processing {
-    background-color: #e2cfcf;
-    color: #2d3748;
-}
-
-.domain-natural-language-processing {
-    background-color: #e2cfcf;
-    color: #2d3748;
-}
-
 .label-agriculture {
-    background-color: #e2d8cf;
+    background-color: #e2cfcf;
     color: #2d3748;
 }
 
 .domain-agriculture {
+    background-color: #e2cfcf;
+    color: #2d3748;
+}
+
+.label-natural-language-processing {
+    background-color: #e2d8cf;
+    color: #2d3748;
+}
+
+.domain-natural-language-processing {
     background-color: #e2d8cf;
     color: #2d3748;
 }
@@ -748,12 +754,12 @@
     color: #2d3748;
 }
 
-.label-tabular {
+.label-audio {
     background-color: #dae2cf;
     color: #2d3748;
 }
 
-.label-audio {
+.label-images {
     background-color: #d2e2cf;
     color: #2d3748;
 }
@@ -763,12 +769,12 @@
     color: #2d3748;
 }
 
-.label-geospatial {
+.label-tabular {
     background-color: #cfe2dd;
     color: #2d3748;
 }
 
-.label-images {
+.label-geospatial {
     background-color: #cfdde2;
     color: #2d3748;
 }
@@ -778,12 +784,12 @@
     color: #2d3748;
 }
 
-.label-tts-model----dataset {
+.label-dataset----pilot----use-case {
     background-color: #d2cfe2;
     color: #2d3748;
 }
 
-.label-dataset----pilot----use-case {
+.label-dataset {
     background-color: #dacfe2;
     color: #2d3748;
 }
@@ -793,7 +799,7 @@
     color: #2d3748;
 }
 
-.label-dataset {
+.label-tts-model----dataset {
     background-color: #e2cfd8;
     color: #2d3748;
 }
@@ -927,6 +933,70 @@
             color: var(--text-light);
             margin-top: 0.15rem;
         }
+
+        /* Modal Styles */
+        .modal-container {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1050;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal-container.visible {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-content {
+            position: relative;
+            background-color: #fff;
+            padding: 2.5rem;
+            border-radius: 0.75rem;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: fadeInModal 0.3s ease-out;
+        }
+        .modal-close {
+            position: absolute;
+            top: 0.75rem;
+            right: 1rem;
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: #aaa;
+            background: none;
+            border: none;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .modal-close:hover,
+        .modal-close:focus {
+            color: #333;
+            text-decoration: none;
+        }
+        .modal-content h2 {
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            color: var(--title-color);
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+        .modal-content p {
+            margin-bottom: 0;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        @keyframes fadeInModal {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
@@ -947,7 +1017,10 @@
                         <img src="img/giz_official.png" alt="GIZ Logo" class="header-logo">
                     </a>
                 </div>
-                <a href="#" class="about-link">About the website</a>
+                <div class="top-nav-links"> <!-- Add this wrapper div -->
+                    <a href="#" id="fair-sharing-link" class="about-link">Info on Fair Sharing</a>
+                    <a href="#" id="about-website-link" class="about-link">About the website</a> <!-- Added ID -->
+                </div> <!-- Close the wrapper div -->
             </div>
         </div>
         <div class="header-content">
@@ -977,7 +1050,7 @@
                     <div class="stats-bottom">
                         <div class="stat-item">
                             <div class="stat-text">
-                                <div class="stat-value" id="stat-countries" data-target="11">0</div>
+                                <div class="stat-value" id="stat-countries" data-target="27">0</div>
                                 <div class="stat-label">Countries</div>
                             </div>
                         </div>
@@ -1028,17 +1101,33 @@
                 <span class="filter-label">Region:</span>
                 <select id="regionFilter">
                     <option value="all">All Regions</option>
-                    <option value="Ghana">Ghana</option>
+                    <option value="Angola">Angola</option>
+<option value="Benin">Benin</option>
+<option value="Cameroon">Cameroon</option>
+<option value="Colombia">Colombia</option>
+<option value="Columbia">Columbia</option>
+<option value="Cote d'Ivoire">Cote d'Ivoire</option>
+<option value="DRC">DRC</option>
+<option value="Ecuador">Ecuador</option>
+<option value="Germany">Germany</option>
+<option value="Ghana">Ghana</option>
 <option value="Global / Regional">Global / Regional</option>
 <option value="India">India</option>
 <option value="Indonesia">Indonesia</option>
 <option value="Kenya">Kenya</option>
 <option value="Madagascar">Madagascar</option>
+<option value="Mozambique">Mozambique</option>
+<option value="Netherlands">Netherlands</option>
+<option value="Niger">Niger</option>
 <option value="Nigeria">Nigeria</option>
+<option value="Pakistan">Pakistan</option>
 <option value="Rwanda">Rwanda</option>
 <option value="South Africa">South Africa</option>
 <option value="Tanzania">Tanzania</option>
+<option value="Togo">Togo</option>
 <option value="Uganda">Uganda</option>
+<option value="United Kingdom">United Kingdom</option>
+<option value="Zambia">Zambia</option>
                 </select>
             </div>
         </div>
@@ -1048,7 +1137,7 @@
     <div class="container">
         <div class="grid" id="dataGrid">
 
-    <div class="card has-dataset has-usecase" data-title="AI-powered detection of diseases for Cashew farmers in Ghana" data-region="Ghana" data-id="0" data-dir-names="[&#x27;aipowered_detection_of_diseases_for_cashew_farmers_in_ghana&#x27;, &#x27;cadi_ai_project_ml4cashew&#x27;]">
+    <div class="card has-dataset has-usecase" data-title="AI-powered detection of diseases for Cashew farmers in Ghana" data-region="Ghana" data-id="0" data-dir-names="[&#x27;cadi_ai_project_ml4cashew&#x27;, &#x27;aipowered_detection_of_diseases_for_cashew_farmers_in_ghana&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/cadi_ai_project_ml4cashew/images/cadiAI.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div><div class="domain-badge domain-agriculture">Agriculture</div></div>
@@ -1068,7 +1157,7 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-images" data-filter="Images"><i class="fas fa-image"></i> Images</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Ghana Biomass Challenge: Ghana Crop Disease Detection Challenge" data-region="Ghana" data-id="1" data-dir-names="[&#x27;ghana_biomass_challenge_ghana_crop_disease_detection_challenge&#x27;, &#x27;leveraging_ai_for_crop_disease_detection_in_ghana&#x27;]">
+    <div class="card has-dataset" data-title="Ghana Biomass Challenge: Ghana Crop Disease Detection Challenge" data-region="Ghana" data-id="1" data-dir-names="[&#x27;leveraging_ai_for_crop_disease_detection_in_ghana&#x27;, &#x27;ghana_biomass_challenge_ghana_crop_disease_detection_challenge&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/ghana_biomass_challenge_ghana_crop_disease_detection_challenge/images/ghana_crop.JPG');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div></div>
@@ -1152,7 +1241,7 @@
     
     <div class="card has-dataset" data-title="AI-generated Voice Content in Indian Languages on Health, Sustainable Agriculture and Education
 
-" data-region="India" data-id="12" data-dir-names="[&#x27;digital_audio_content_creation_for_womens_empowerment_using_language_technologies&#x27;, &#x27;empowering_women_across_india_with_voicebased_knowledge_in_their_native_languages&#x27;, &#x27;aigenerated_voice_content_in_indian_languages_on_health_sustainable_agriculture_and_education&#x27;]">
+" data-region="India" data-id="12" data-dir-names="[&#x27;digital_audio_content_creation_for_womens_empowerment_using_language_technologies&#x27;, &#x27;aigenerated_voice_content_in_indian_languages_on_health_sustainable_agriculture_and_education&#x27;, &#x27;empowering_women_across_india_with_voicebased_knowledge_in_their_native_languages&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/digital_audio_content_creation_for_womens_empowerment_using_language_technologies/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
@@ -1194,7 +1283,7 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-geospatial" data-filter="Geospatial"><i class="fas fa-map"></i> Geospatial</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Open-source text-to-speech datasets in 9 Indian languages (Hindi | Bengali | Marathi | Telugu | Bhojpuri | Kannada | Magadhi | Chhattisgarhi | Maithili)" data-region="India" data-id="14" data-dir-names="[&#x27;iisc__open_voice_data_in_indian_languages&#x27;, &#x27;opensource_texttospeech_datasets_in_9_indian_languages_hindi__bengali__marathi__telugu__bhojpuri__kannada__magadhi__chhattisgarhi__maithili&#x27;, &#x27;build_inclusive_voice_technologies_in_9_indian_languages_through_open_language_datasets&#x27;]">
+    <div class="card has-dataset" data-title="Open-source text-to-speech datasets in 9 Indian languages (Hindi | Bengali | Marathi | Telugu | Bhojpuri | Kannada | Magadhi | Chhattisgarhi | Maithili)" data-region="India" data-id="14" data-dir-names="[&#x27;opensource_texttospeech_datasets_in_9_indian_languages_hindi__bengali__marathi__telugu__bhojpuri__kannada__magadhi__chhattisgarhi__maithili&#x27;, &#x27;iisc__open_voice_data_in_indian_languages&#x27;, &#x27;build_inclusive_voice_technologies_in_9_indian_languages_through_open_language_datasets&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/iisc__open_voice_data_in_indian_languages/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
@@ -1216,7 +1305,7 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-audio" data-filter="Audio"><i class="fas fa-volume-up"></i> Audio</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Cotton Ace: AI-driven Pest Management for Cotton Farmers in India" data-region="India" data-id="15" data-dir-names="[&#x27;wadhwani_ai__open_ai_for_cotton_pest_control_with_smallholder_farmers__national_entrepreneurship_network_nen&#x27;, &#x27;cotton_ace_aidriven_pest_management_for_cotton_farmers_in_india&#x27;, &#x27;ai_pest_management_open_data_for_pink_bollworms_and_american_bollworms&#x27;]">
+    <div class="card has-dataset has-usecase" data-title="Cotton Ace: AI-driven Pest Management for Cotton Farmers in India" data-region="India" data-id="15" data-dir-names="[&#x27;wadhwani_ai__open_ai_for_cotton_pest_control_with_smallholder_farmers__national_entrepreneurship_network_nen&#x27;, &#x27;ai_pest_management_open_data_for_pink_bollworms_and_american_bollworms&#x27;, &#x27;cotton_ace_aidriven_pest_management_for_cotton_farmers_in_india&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/wadhwani_ai__open_ai_for_cotton_pest_control_with_smallholder_farmers__national_entrepreneurship_network_nen/images/cotton_ace.jpg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div></div>
@@ -1238,7 +1327,7 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-images" data-filter="Images"><i class="fas fa-image"></i> Images</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Gramvaani Automatic Speech Recognition (ASR)" data-region="India" data-id="16" data-dir-names="[&#x27;gramvaani_automatic_speech_recognition_asr&#x27;, &#x27;providing_better_information_on_sexual_and_reproductive_health_and_rights_srhr_of_young_people_through_the_kahi_ankahi_baatein_infloline_hindi_llm_finetuning&#x27;]">
+    <div class="card has-dataset" data-title="Gramvaani Automatic Speech Recognition (ASR)" data-region="India" data-id="16" data-dir-names="[&#x27;providing_better_information_on_sexual_and_reproductive_health_and_rights_srhr_of_young_people_through_the_kahi_ankahi_baatein_infloline_hindi_llm_finetuning&#x27;, &#x27;gramvaani_automatic_speech_recognition_asr&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/gramvaani_automatic_speech_recognition_asr/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
@@ -1258,7 +1347,7 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-text" data-filter="Text"><i class="fas fa-file-alt"></i> Text</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Open-source text-to-speech and machine translation datasets in Mundari" data-region="India" data-id="17" data-dir-names="[&#x27;100_hours_of_text_to_speech_dataset_for_mundari_language&#x27;, &#x27;opensource_texttospeech_and_machine_translation_datasets_in_mundari&#x27;]">
+    <div class="card has-dataset" data-title="Open-source text-to-speech and machine translation datasets in Mundari" data-region="India" data-id="17" data-dir-names="[&#x27;opensource_texttospeech_and_machine_translation_datasets_in_mundari&#x27;, &#x27;100_hours_of_text_to_speech_dataset_for_mundari_language&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/100_hours_of_text_to_speech_dataset_for_mundari_language/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
@@ -1278,7 +1367,7 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-text" data-filter="Text"><i class="fas fa-file-alt"></i> Text</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Data-driven decision-making for farmers to increase climate resilience" data-region="India" data-id="18" data-dir-names="[&#x27;digital_green__local_dataset_collection_for_climatesmart_agriculture&#x27;, &#x27;datadriven_decisionmaking_for_farmers_to_increase_climate_resilience&#x27;, &#x27;geospatial_dataset_of_wheat_and_rice_farmers_in_bihar_india&#x27;]">
+    <div class="card has-dataset has-usecase" data-title="Data-driven decision-making for farmers to increase climate resilience" data-region="India" data-id="18" data-dir-names="[&#x27;digital_green__local_dataset_collection_for_climatesmart_agriculture&#x27;, &#x27;geospatial_dataset_of_wheat_and_rice_farmers_in_bihar_india&#x27;, &#x27;datadriven_decisionmaking_for_farmers_to_increase_climate_resilience&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/digital_green__local_dataset_collection_for_climatesmart_agriculture/images/image.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -1298,7 +1387,7 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-tabular" data-filter="Tabular"><i class="fas fa-table"></i> Tabular</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Open Dataset of Farm Boundaries and Crop Cultivation in Telangana State" data-region="India" data-id="19" data-dir-names="[&#x27;ml4eo_telangana_crop_identification&#x27;, &#x27;support_sustainable_agriculture_in_telangana_through_aipowered_crop_identification&#x27;, &#x27;open_dataset_of_farm_boundaries_and_crop_cultivation_in_telangana_state&#x27;]">
+    <div class="card has-dataset" data-title="Open Dataset of Farm Boundaries and Crop Cultivation in Telangana State" data-region="India" data-id="19" data-dir-names="[&#x27;ml4eo_telangana_crop_identification&#x27;, &#x27;open_dataset_of_farm_boundaries_and_crop_cultivation_in_telangana_state&#x27;, &#x27;support_sustainable_agriculture_in_telangana_through_aipowered_crop_identification&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/ml4eo_telangana_crop_identification/images/image.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -1318,7 +1407,7 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-geospatial" data-filter="Geospatial"><i class="fas fa-map"></i> Geospatial</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Use case development Indonesia" data-region="Indonesia" data-id="26" data-dir-names="[&#x27;climate_disinformation_in_local_indonesian_languages&#x27;, &#x27;use_case_development_indonesia&#x27;]">
+    <div class="card has-dataset" data-title="Use case development Indonesia" data-region="Indonesia" data-id="26" data-dir-names="[&#x27;use_case_development_indonesia&#x27;, &#x27;climate_disinformation_in_local_indonesian_languages&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/use_case_development_indonesia/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
@@ -1338,7 +1427,7 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-text" data-filter="Text"><i class="fas fa-file-alt"></i> Text</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="HCSA: High Carbon Stock Mapping in Southeast Asia" data-region="Indonesia" data-id="27" data-dir-names="[&#x27;forest_forward_using_ai_to_protect_forests_and_combat_the_climate_crisis_in_indonesia_by_maping_carbon_using_high_carbon_stock_approach&#x27;, &#x27;hcsa_high_carbon_stock_mapping_in_southeast_asia&#x27;]">
+    <div class="card has-dataset" data-title="HCSA: High Carbon Stock Mapping in Southeast Asia" data-region="Indonesia" data-id="27" data-dir-names="[&#x27;hcsa_high_carbon_stock_mapping_in_southeast_asia&#x27;, &#x27;forest_forward_using_ai_to_protect_forests_and_combat_the_climate_crisis_in_indonesia_by_maping_carbon_using_high_carbon_stock_approach&#x27;]">
         <div class="card-image has-image" style="background-image: url('public/projects/hcsa_high_carbon_stock_mapping_in_southeast_asia/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -1941,6 +2030,58 @@
                 animateValue('stat-countries', 0, parseInt(countryCounter.getAttribute('data-target') || '0', 10), 1500);
             }
             // --- End: Count-up Animation --- 
+
+            // --- Start: Fair Sharing Modal --- 
+            const fairSharingLink = document.getElementById('fair-sharing-link');
+            const fairSharingModal = document.getElementById('fair-sharing-modal');
+            const fairSharingCloseBtn = document.getElementById('fair-sharing-close');
+
+            if (fairSharingLink && fairSharingModal) {
+                fairSharingLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    fairSharingModal.classList.add('visible');
+                });
+            }
+            if (fairSharingCloseBtn && fairSharingModal) {
+                fairSharingCloseBtn.addEventListener('click', () => {
+                    fairSharingModal.classList.remove('visible');
+                });
+            }
+            if (fairSharingModal) {
+                // Close modal if clicking on the background overlay
+                fairSharingModal.addEventListener('click', (e) => {
+                    if (e.target === fairSharingModal) { // Check if the click is directly on the container
+                        fairSharingModal.classList.remove('visible');
+                    }
+                });
+            }
+            // --- End: Fair Sharing Modal --- 
+
+            // --- Start: About Website Modal --- 
+            const aboutWebsiteLink = document.getElementById('about-website-link');
+            const aboutWebsiteModal = document.getElementById('about-website-modal');
+            const aboutWebsiteCloseBtn = document.getElementById('about-website-close');
+
+            if (aboutWebsiteLink && aboutWebsiteModal) {
+                aboutWebsiteLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    aboutWebsiteModal.classList.add('visible');
+                });
+            }
+            if (aboutWebsiteCloseBtn && aboutWebsiteModal) {
+                aboutWebsiteCloseBtn.addEventListener('click', () => {
+                    aboutWebsiteModal.classList.remove('visible');
+                });
+            }
+            if (aboutWebsiteModal) {
+                // Close modal if clicking on the background overlay
+                aboutWebsiteModal.addEventListener('click', (e) => {
+                    if (e.target === aboutWebsiteModal) { // Check if the click is directly on the container
+                        aboutWebsiteModal.classList.remove('visible');
+                    }
+                });
+            }
+            // --- End: About Website Modal --- 
         });
     </script>
     
@@ -1949,5 +2090,31 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Add enhanced side panel JavaScript -->
     <script src="enhanced_side_panel.js"></script>
+
+    <!-- Fair Sharing Modal HTML -->
+    <div id="fair-sharing-modal" class="modal-container">
+        <div class="modal-content">
+            <button id="fair-sharing-close" class="modal-close">&times;</button>
+            <h2>Fair Sharing & Digital Public Goods</h2>
+            <p>
+                Adhere to fair contributing: "This is a global digital public good under open-source licenses as named under "licenses" - Please consider fair sharing and giving back to communities in an appropriate way."
+            </p>
+        </div>
+    </div>
+
+    <!-- About Website Modal HTML -->
+    <div id="about-website-modal" class="modal-container">
+        <div class="modal-content">
+            <button id="about-website-close" class="modal-close">&times;</button>
+            <h2>About This Website</h2>
+            <p>
+                Welcome to our organization's data and use-case catalog. Below is a list of datasets and use-cases that have been collected throughout our programme Fair Forward. This website aims to function as an open-sourced community place to link to our partners work and provide clear information on how the datasets and use-cases can be replicated and worked with. All listed datasets and use-cases are openly available as digital public goods.
+            </p>
+            <p>
+                Please adhere to fair contributing: "This is a global digital public good under open-source licenses as named under "licenses" - Please consider fair sharing and giving back to communities in an appropriate way."
+            </p>
+        </div>
+    </div>
+
 </body>
 </html>

@@ -1,6 +1,6 @@
 # Data Catalog
 
-Welcome to our organization's data catalog. Below is a list of datasets that have been collected throughout our programme Fair Forward.
+Welcome to our organization's data and use-case catalog. Below is a list of datasets and use-cases that have been collected throughout our programme Fair Forward. 
 
 You can access the live website here: [Data Catalog!](https://fair-forward.github.io/datasets/)
 
