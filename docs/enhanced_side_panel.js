@@ -126,7 +126,22 @@ function loadItemDetails(itemId) {
     const title = card.getAttribute('data-title');
     const tags = Array.from(card.querySelectorAll('.tag')).map(tag => tag.textContent);
     const region = card.getAttribute('data-region');
-    const dirNamesStr = card.getAttribute('data-dir-names');
+    const projectId = card.getAttribute('data-project-id');
+    
+    // Basic check if projectId exists
+    if (!projectId) {
+        console.error('Could not find project ID for card with data-id:', itemId);
+        // Optionally display an error in the panel
+        const detailPanelLoader = document.getElementById('detailPanelLoader');
+        const detailPanelData = document.getElementById('detailPanelData');
+        if (detailPanelLoader) detailPanelLoader.style.display = 'none';
+        if (detailPanelData) {
+             detailPanelData.innerHTML = '<p>Error: Could not load project details (missing project ID).</p>';
+             detailPanelData.style.display = 'block';
+        }
+        return;
+    }
+    console.log('Project ID for fetching docs:', projectId);
     
     // Get additional card information
     const cardImage = card.querySelector('.card-image');
@@ -174,18 +189,6 @@ function loadItemDetails(itemId) {
             class: badgeClass
         };
     });
-    
-    // Parse the directory names from the data attribute
-    let dirNames = [];
-    try {
-        dirNames = JSON.parse(dirNamesStr.replace(/'/g, '"'));
-    } catch (e) {
-        console.error('Error parsing directory names:', e);
-        // Fallback to old behavior
-        dirNames = [title.toLowerCase().replace(/ /g, '_').replace(/[^a-z0-9_]/g, '')];
-    }
-    
-    console.log('Possible directory names:', dirNames);
     
     // Show loading state
     const detailPanelLoader = document.getElementById('detailPanelLoader');
@@ -366,20 +369,22 @@ function loadItemDetails(itemId) {
     
     // Function to try loading a file from multiple possible directories
     async function tryLoadFile(fileName, section) {
-        for (const dirName of dirNames) {
-            const path = `./public/projects/${dirName}/docs/${fileName}`;
-            console.log('Trying to load from:', path);
-            try {
-                const response = await fetch(path);
-                if (response.ok) {
-                    const content = await response.text();
-                    console.log('Successfully loaded content from:', path);
-                    return parseMarkdown(content);
-                }
-            } catch (error) {
-                console.log('Error loading from', path, ':', error);
+        // Use the projectId obtained earlier
+        const path = `./public/projects/${projectId}/docs/${fileName}`;
+        console.log('Trying to load from:', path);
+        try {
+            const response = await fetch(path);
+            if (response.ok) {
+                const content = await response.text();
+                console.log('Successfully loaded content from:', path);
+                return parseMarkdown(content);
+            } else {
+                 console.log('File not found or fetch error for:', path, 'Status:', response.status);
             }
+        } catch (error) {
+            console.log('Error loading from', path, ':', error);
         }
+        // If fetch failed or file not found, return null
         return null;
     }
     

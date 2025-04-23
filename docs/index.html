@@ -29,6 +29,7 @@
         });
     </script>
     <style>
+        
         :root {
             /* Claude.ai inspired color palette with Fair Forward influence */
             --primary: #3b5998;
@@ -302,25 +303,24 @@
         }
         
         .card {
-            background: linear-gradient(145deg, var(--card-bg) 0%, #f8faff 100%);
+            background: #ffffff; /* Solid white for contrast */
             border-radius: 0.75rem;
             overflow: hidden;
-            box-shadow: 0 3px 6px var(--shadow);
-            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06); /* Slightly stronger shadow */
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
             display: flex;
             flex-direction: column;
             height: 100%;
             position: relative;
-            border: 1px solid rgba(59, 89, 152, 0.08);
+            border: 1px solid var(--border); /* Use standard border color */
         }
         
         .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 18px var(--shadow-hover);
-            border-color: rgba(59, 89, 152, 0.1);
+            transform: translateY(-5px); /* More lift */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* More pronounced shadow */
+            border-color: var(--primary-light); /* Highlight border */
         }
         
-        /* Make card description and footer areas look clickable */
         .card-description, .card-footer {
             cursor: pointer;
         }
@@ -339,7 +339,6 @@
             background-image: none;
         }
         
-        /* Add a gradient overlay that fades the image into the content */
         .card-image.has-image::after {
             content: '';
             position: absolute;
@@ -358,7 +357,6 @@
             z-index: 1;
         }
         
-        /* Add a fallback background color in case the image fails to load */
         .card-image.has-image::before {
             content: '';
             position: absolute;
@@ -723,87 +721,7 @@
             }
         }
         
-        
-.label-agriculture {
-    background-color: #e2cfcf;
-    color: #2d3748;
-}
-
-.domain-agriculture {
-    background-color: #e2cfcf;
-    color: #2d3748;
-}
-
-.label-natural-language-processing {
-    background-color: #e2d8cf;
-    color: #2d3748;
-}
-
-.domain-natural-language-processing {
-    background-color: #e2d8cf;
-    color: #2d3748;
-}
-
-.label-climate-action {
-    background-color: #e2e0cf;
-    color: #2d3748;
-}
-
-.domain-climate-action {
-    background-color: #e2e0cf;
-    color: #2d3748;
-}
-
-.label-audio {
-    background-color: #dae2cf;
-    color: #2d3748;
-}
-
-.label-images {
-    background-color: #d2e2cf;
-    color: #2d3748;
-}
-
-.label-text {
-    background-color: #cfe2d5;
-    color: #2d3748;
-}
-
-.label-tabular {
-    background-color: #cfe2dd;
-    color: #2d3748;
-}
-
-.label-geospatial {
-    background-color: #cfdde2;
-    color: #2d3748;
-}
-
-.label-dataset----pilot----use-case----use-case-with-business-model {
-    background-color: #cfd5e2;
-    color: #2d3748;
-}
-
-.label-dataset----pilot----use-case {
-    background-color: #d2cfe2;
-    color: #2d3748;
-}
-
-.label-dataset {
-    background-color: #dacfe2;
-    color: #2d3748;
-}
-
-.label-dataset----pilot {
-    background-color: #e2cfe0;
-    color: #2d3748;
-}
-
-.label-tts-model----dataset {
-    background-color: #e2cfd8;
-    color: #2d3748;
-}
-
+        /* {label_css} Will be appended here */
         
         footer {
             background-color: var(--light);
@@ -997,6 +915,90 @@
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+    
+
+/* === Generated Label CSS === */
+
+.label-climate-action {
+    background-color: #e2cfcf;
+    color: #2d3748;
+}
+
+.domain-climate-action {
+    background-color: #e2cfcf;
+    color: #2d3748;
+}
+
+.label-natural-language-processing {
+    background-color: #e2d8cf;
+    color: #2d3748;
+}
+
+.domain-natural-language-processing {
+    background-color: #e2d8cf;
+    color: #2d3748;
+}
+
+.label-agriculture {
+    background-color: #e2e0cf;
+    color: #2d3748;
+}
+
+.domain-agriculture {
+    background-color: #e2e0cf;
+    color: #2d3748;
+}
+
+.label-audio {
+    background-color: #dae2cf;
+    color: #2d3748;
+}
+
+.label-tabular {
+    background-color: #d2e2cf;
+    color: #2d3748;
+}
+
+.label-text {
+    background-color: #cfe2d5;
+    color: #2d3748;
+}
+
+.label-images {
+    background-color: #cfe2dd;
+    color: #2d3748;
+}
+
+.label-geospatial {
+    background-color: #cfdde2;
+    color: #2d3748;
+}
+
+.label-dataset {
+    background-color: #cfd5e2;
+    color: #2d3748;
+}
+
+.label-dataset----pilot----use-case----use-case-with-business-model {
+    background-color: #d2cfe2;
+    color: #2d3748;
+}
+
+.label-dataset----pilot----use-case {
+    background-color: #dacfe2;
+    color: #2d3748;
+}
+
+.label-tts-model----use-case {
+    background-color: #e2cfe0;
+    color: #2d3748;
+}
+
+.label-dataset----pilot {
+    background-color: #e2cfd8;
+    color: #2d3748;
+}
+ /* Inject the combined CSS here */
     </style>
 </head>
 <body>
@@ -1042,7 +1044,7 @@
                         </div>
                         <div class="stat-item">
                             <div class="stat-text">
-                                <div class="stat-value" id="stat-usecases" data-target="8">0</div>
+                                <div class="stat-value" id="stat-usecases" data-target="9">0</div>
                                 <div class="stat-label">Use Cases</div>
                             </div>
                         </div>
@@ -1050,7 +1052,7 @@
                     <div class="stats-bottom">
                         <div class="stat-item">
                             <div class="stat-text">
-                                <div class="stat-value" id="stat-countries" data-target="27">0</div>
+                                <div class="stat-value" id="stat-countries" data-target="10">0</div>
                                 <div class="stat-label">Countries</div>
                             </div>
                         </div>
@@ -1101,33 +1103,16 @@
                 <span class="filter-label">Region:</span>
                 <select id="regionFilter">
                     <option value="all">All Regions</option>
-                    <option value="Angola">Angola</option>
-<option value="Benin">Benin</option>
-<option value="Cameroon">Cameroon</option>
-<option value="Colombia">Colombia</option>
-<option value="Columbia">Columbia</option>
-<option value="Cote d'Ivoire">Cote d'Ivoire</option>
-<option value="DRC">DRC</option>
-<option value="Ecuador">Ecuador</option>
-<option value="Germany">Germany</option>
-<option value="Ghana">Ghana</option>
-<option value="Global / Regional">Global / Regional</option>
+                    <option value="Ghana">Ghana</option>
 <option value="India">India</option>
 <option value="Indonesia">Indonesia</option>
 <option value="Kenya">Kenya</option>
 <option value="Madagascar">Madagascar</option>
-<option value="Mozambique">Mozambique</option>
-<option value="Netherlands">Netherlands</option>
-<option value="Niger">Niger</option>
 <option value="Nigeria">Nigeria</option>
-<option value="Pakistan">Pakistan</option>
 <option value="Rwanda">Rwanda</option>
 <option value="South Africa">South Africa</option>
 <option value="Tanzania">Tanzania</option>
-<option value="Togo">Togo</option>
 <option value="Uganda">Uganda</option>
-<option value="United Kingdom">United Kingdom</option>
-<option value="Zambia">Zambia</option>
                 </select>
             </div>
         </div>
@@ -1137,8 +1122,8 @@
     <div class="container">
         <div class="grid" id="dataGrid">
 
-    <div class="card has-dataset has-usecase" data-title="AI-powered detection of diseases for Cashew farmers in Ghana" data-region="Ghana" data-id="0" data-dir-names="[&#x27;cadi_ai_project_ml4cashew&#x27;, &#x27;aipowered_detection_of_diseases_for_cashew_farmers_in_ghana&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/cadi_ai_project_ml4cashew/images/cadiAI.png');"></div>
+    <div class="card has-dataset has-usecase" data-title="AI-powered detection of diseases for Cashew farmers in Ghana" data-region="Ghana" data-id="0" data-project-id="ui_0">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_0/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div><div class="domain-badge domain-agriculture">Agriculture</div></div>
             <h3>AI-powered detection of diseases for Cashew farmers in Ghana</h3>
@@ -1157,8 +1142,8 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-images" data-filter="Images"><i class="fas fa-image"></i> Images</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Ghana Biomass Challenge: Ghana Crop Disease Detection Challenge" data-region="Ghana" data-id="1" data-dir-names="[&#x27;leveraging_ai_for_crop_disease_detection_in_ghana&#x27;, &#x27;ghana_biomass_challenge_ghana_crop_disease_detection_challenge&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/ghana_biomass_challenge_ghana_crop_disease_detection_challenge/images/ghana_crop.JPG');"></div>
+    <div class="card has-dataset" data-title="Ghana Biomass Challenge: Ghana Crop Disease Detection Challenge" data-region="Ghana" data-id="1" data-project-id="ui_1">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_1/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div></div>
             <h3>Ghana Biomass Challenge: Ghana Crop Disease Detection Challenge</h3>
@@ -1177,8 +1162,8 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-images" data-filter="Images"><i class="fas fa-image"></i> Images</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="African Biomass Challenge with Open Cocoa Data" data-region="Ghana" data-id="2" data-dir-names="[&#x27;african_biomass_challenge_with_open_cocoa_data&#x27;, &#x27;leveraging_ml_to_predict_aboveground_biomass_in_cocoa_plantations_in_cote_divoire&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/african_biomass_challenge_with_open_cocoa_data/images/download.png');"></div>
+    <div class="card has-dataset" data-title="African Biomass Challenge with Open Cocoa Data" data-region="Ghana" data-id="2" data-project-id="ui_2">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_2/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
             <h3>African Biomass Challenge with Open Cocoa Data</h3>
@@ -1197,8 +1182,8 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-images" data-filter="Images"><i class="fas fa-image"></i> Images</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Making access to financial applications possible in native Ghanaian languages in informal settings: Akan (Akuapem Twi, Asante Twi, Fante) and Ga" data-region="Ghana" data-id="4" data-dir-names="[&#x27;making_access_to_financial_applications_possible_in_native_ghanaian_languages_in_informal_settings_akan_akuapem_twi_asante_twi_fante_and_ga&#x27;, &#x27;financial_inclusion_speech_dataset_for_some_ghanaian_languages&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/financial_inclusion_speech_dataset_for_some_ghanaian_languages/images/placeholder_image.jpeg');"></div>
+    <div class="card has-dataset" data-title="Making access to financial applications possible in native Ghanaian languages in informal settings: Akan (Akuapem Twi, Asante Twi, Fante) and Ga" data-region="Ghana" data-id="4" data-project-id="ui_4">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_4/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
             <h3>Making access to financial applications possible in native Ghanaian languages in informal settings: Akan (Akuapem Twi, Asante Twi, Fante) and Ga</h3>
@@ -1217,8 +1202,8 @@
         <div class="card-footer"><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Drone-based Agricultural Dataset for Crop Yield Estimation" data-region="Ghana,Uganda" data-id="5" data-dir-names="[&#x27;dronebased_agricultural_dataset_for_crop_yield_estimation&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/dronebased_agricultural_dataset_for_crop_yield_estimation/images/placeholder_image.jpeg');"></div>
+    <div class="card has-dataset" data-title="Drone-based Agricultural Dataset for Crop Yield Estimation" data-region="Ghana,Uganda" data-id="5" data-project-id="ui_5">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_5/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div><div class="domain-badge domain-agriculture">Agriculture</div></div>
             <h3>Drone-based Agricultural Dataset for Crop Yield Estimation</h3>
@@ -1239,16 +1224,12 @@
         <div class="card-footer"><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="AI-generated Voice Content in Indian Languages on Health, Sustainable Agriculture and Education
-
-" data-region="India" data-id="12" data-dir-names="[&#x27;digital_audio_content_creation_for_womens_empowerment_using_language_technologies&#x27;, &#x27;aigenerated_voice_content_in_indian_languages_on_health_sustainable_agriculture_and_education&#x27;, &#x27;empowering_women_across_india_with_voicebased_knowledge_in_their_native_languages&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/digital_audio_content_creation_for_womens_empowerment_using_language_technologies/images/placeholder_image.jpeg');"></div>
+    <div class="card has-dataset has-usecase" data-title="Empowering Women Across India with Voice-based Knowledge in Their Native Languages" data-region="India" data-id="12" data-project-id="ui_12">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_12/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
-            <h3>AI-generated Voice Content in Indian Languages on Health, Sustainable Agriculture and Education
-
-</h3>
-            <div class="meta"><div class="meta-item"><i class="fas fa-map-marker-alt"></i> India</div><div class="meta-item"><i class="fas fa-user"></i> <a href="https://www.audiopedia.foundation/" target="_blank">Audiopedia Foundation</a>, <a href="mailto:marcel@audiopedia.org">Marcel Heyne</a></div></div>
+            <h3>Empowering Women Across India with Voice-based Knowledge in Their Native Languages</h3>
+            <div class="meta"><div class="meta-item"><i class="fas fa-map-marker-alt"></i> India</div><div class="meta-item"><i class="fas fa-user"></i> <a href="https://www.audiopedia.foundation/" target="_blank">Audiopedia Foundation</a>, <a href="mailto:contact@audiopedia.org">Marcel Heyne</a></div></div>
         </div>
         <div class="card-body">
             
@@ -1257,14 +1238,14 @@
                 <div class="details-link"><i class="fas fa-arrow-right"></i><span>See Details</span></div>
             </div>
         
-            <div class="tags"><span class="tag label-natural-language-processing" data-filter="Natural Language Processing" style="display:none;">Natural Language Processing</span><span class="tag label-text" data-filter="Text" style="display:none;">Text</span></div>
-            <div class="hidden-links" style="display:none;"><a href="https://www.audiopedia.foundation/bharat" target="_blank" class="btn btn-primary" style="display:none;">View Dataset</a></div>
+            <div class="tags"><span class="tag label-natural-language-processing" data-filter="Natural Language Processing" style="display:none;">Natural Language Processing</span><span class="tag label-text" data-filter="Text" style="display:none;">Text</span><span class="tag label-audio" data-filter="Audio" style="display:none;">Audio</span></div>
+            <div class="hidden-links" style="display:none;"><a href="https://audiopedia.app.box.com/s/4wtqy4idpnilf3b3abisuuu2vdi0oi1q" target="_blank" class="btn btn-primary" style="display:none;">View Dataset</a><a href="https://www.audiopedia.foundation/bharat" target="_blank" class="btn btn-secondary" style="display:none;">View Use Case</a></div>
         </div>
-        <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-text" data-filter="Text"><i class="fas fa-file-alt"></i> Text</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
+        <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-text" data-filter="Text"><i class="fas fa-file-alt"></i> Text</span><span class="data-type-chip label-audio" data-filter="Audio"><i class="fas fa-volume-up"></i> Audio</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC-BY-SA</div></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Combatting Air Pollution and GHG Emissions in India through hyperlocal AI-powered mapping" data-region="India" data-id="13" data-dir-names="[&#x27;combatting_air_pollution_and_ghg_emissions_in_india_through_hyperlocal_aipowered_mapping&#x27;, &#x27;open_air_pollution_data_for_patna_and_gurugram&#x27;, &#x27;hyperlocal_mapping_of_air_pollution_and_ghg_emissions_in_india_with_undp&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/hyperlocal_mapping_of_air_pollution_and_ghg_emissions_in_india_with_undp/images/placeholder_image.jpeg');"></div>
+    <div class="card has-dataset has-usecase" data-title="Combatting Air Pollution and GHG Emissions in India through hyperlocal AI-powered mapping" data-region="India" data-id="13" data-project-id="ui_13">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_13/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
             <h3>Combatting Air Pollution and GHG Emissions in India through hyperlocal AI-powered mapping</h3>
@@ -1283,8 +1264,8 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-geospatial" data-filter="Geospatial"><i class="fas fa-map"></i> Geospatial</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Open-source text-to-speech datasets in 9 Indian languages (Hindi | Bengali | Marathi | Telugu | Bhojpuri | Kannada | Magadhi | Chhattisgarhi | Maithili)" data-region="India" data-id="14" data-dir-names="[&#x27;opensource_texttospeech_datasets_in_9_indian_languages_hindi__bengali__marathi__telugu__bhojpuri__kannada__magadhi__chhattisgarhi__maithili&#x27;, &#x27;iisc__open_voice_data_in_indian_languages&#x27;, &#x27;build_inclusive_voice_technologies_in_9_indian_languages_through_open_language_datasets&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/iisc__open_voice_data_in_indian_languages/images/placeholder_image.jpeg');"></div>
+    <div class="card has-dataset" data-title="Open-source text-to-speech datasets in 9 Indian languages (Hindi | Bengali | Marathi | Telugu | Bhojpuri | Kannada | Magadhi | Chhattisgarhi | Maithili)" data-region="India" data-id="14" data-project-id="ui_14">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_14/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
             <h3>Open-source text-to-speech datasets in 9 Indian languages (Hindi | Bengali | Marathi | Telugu | Bhojpuri | Kannada | Magadhi | Chhattisgarhi | Maithili)</h3>
@@ -1305,8 +1286,8 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-audio" data-filter="Audio"><i class="fas fa-volume-up"></i> Audio</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Cotton Ace: AI-driven Pest Management for Cotton Farmers in India" data-region="India" data-id="15" data-dir-names="[&#x27;wadhwani_ai__open_ai_for_cotton_pest_control_with_smallholder_farmers__national_entrepreneurship_network_nen&#x27;, &#x27;ai_pest_management_open_data_for_pink_bollworms_and_american_bollworms&#x27;, &#x27;cotton_ace_aidriven_pest_management_for_cotton_farmers_in_india&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/wadhwani_ai__open_ai_for_cotton_pest_control_with_smallholder_farmers__national_entrepreneurship_network_nen/images/cotton_ace.jpg');"></div>
+    <div class="card has-dataset has-usecase" data-title="Cotton Ace: AI-driven Pest Management for Cotton Farmers in India" data-region="India" data-id="15" data-project-id="ui_15">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_15/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div></div>
             <h3>Cotton Ace: AI-driven Pest Management for Cotton Farmers in India</h3>
@@ -1327,8 +1308,8 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-images" data-filter="Images"><i class="fas fa-image"></i> Images</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Gramvaani Automatic Speech Recognition (ASR)" data-region="India" data-id="16" data-dir-names="[&#x27;providing_better_information_on_sexual_and_reproductive_health_and_rights_srhr_of_young_people_through_the_kahi_ankahi_baatein_infloline_hindi_llm_finetuning&#x27;, &#x27;gramvaani_automatic_speech_recognition_asr&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/gramvaani_automatic_speech_recognition_asr/images/placeholder_image.jpeg');"></div>
+    <div class="card has-dataset" data-title="Gramvaani Automatic Speech Recognition (ASR)" data-region="India" data-id="16" data-project-id="ui_16">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_16/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
             <h3>Gramvaani Automatic Speech Recognition (ASR)</h3>
@@ -1347,8 +1328,8 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-text" data-filter="Text"><i class="fas fa-file-alt"></i> Text</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Open-source text-to-speech and machine translation datasets in Mundari" data-region="India" data-id="17" data-dir-names="[&#x27;opensource_texttospeech_and_machine_translation_datasets_in_mundari&#x27;, &#x27;100_hours_of_text_to_speech_dataset_for_mundari_language&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/100_hours_of_text_to_speech_dataset_for_mundari_language/images/placeholder_image.jpeg');"></div>
+    <div class="card has-dataset" data-title="Open-source text-to-speech and machine translation datasets in Mundari" data-region="India" data-id="17" data-project-id="ui_17">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_17/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
             <h3>Open-source text-to-speech and machine translation datasets in Mundari</h3>
@@ -1367,8 +1348,8 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-text" data-filter="Text"><i class="fas fa-file-alt"></i> Text</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Data-driven decision-making for farmers to increase climate resilience" data-region="India" data-id="18" data-dir-names="[&#x27;digital_green__local_dataset_collection_for_climatesmart_agriculture&#x27;, &#x27;geospatial_dataset_of_wheat_and_rice_farmers_in_bihar_india&#x27;, &#x27;datadriven_decisionmaking_for_farmers_to_increase_climate_resilience&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/digital_green__local_dataset_collection_for_climatesmart_agriculture/images/image.png');"></div>
+    <div class="card has-dataset has-usecase" data-title="Data-driven decision-making for farmers to increase climate resilience" data-region="India" data-id="18" data-project-id="ui_18">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_18/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-climate-action">Climate Action</div></div>
             <h3>Data-driven decision-making for farmers to increase climate resilience</h3>
@@ -1387,8 +1368,8 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-tabular" data-filter="Tabular"><i class="fas fa-table"></i> Tabular</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Open Dataset of Farm Boundaries and Crop Cultivation in Telangana State" data-region="India" data-id="19" data-dir-names="[&#x27;ml4eo_telangana_crop_identification&#x27;, &#x27;open_dataset_of_farm_boundaries_and_crop_cultivation_in_telangana_state&#x27;, &#x27;support_sustainable_agriculture_in_telangana_through_aipowered_crop_identification&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/ml4eo_telangana_crop_identification/images/image.png');"></div>
+    <div class="card has-dataset" data-title="Open Dataset of Farm Boundaries and Crop Cultivation in Telangana State" data-region="India" data-id="19" data-project-id="ui_19">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_19/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-climate-action">Climate Action</div></div>
             <h3>Open Dataset of Farm Boundaries and Crop Cultivation in Telangana State</h3>
@@ -1407,8 +1388,8 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-geospatial" data-filter="Geospatial"><i class="fas fa-map"></i> Geospatial</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Use case development Indonesia" data-region="Indonesia" data-id="26" data-dir-names="[&#x27;use_case_development_indonesia&#x27;, &#x27;climate_disinformation_in_local_indonesian_languages&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/use_case_development_indonesia/images/placeholder_image.jpeg');"></div>
+    <div class="card has-dataset" data-title="Use case development Indonesia" data-region="Indonesia" data-id="26" data-project-id="ui_26">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_26/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
             <h3>Use case development Indonesia</h3>
@@ -1427,8 +1408,8 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-text" data-filter="Text"><i class="fas fa-file-alt"></i> Text</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="HCSA: High Carbon Stock Mapping in Southeast Asia" data-region="Indonesia" data-id="27" data-dir-names="[&#x27;hcsa_high_carbon_stock_mapping_in_southeast_asia&#x27;, &#x27;forest_forward_using_ai_to_protect_forests_and_combat_the_climate_crisis_in_indonesia_by_maping_carbon_using_high_carbon_stock_approach&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/hcsa_high_carbon_stock_mapping_in_southeast_asia/images/placeholder_image.jpeg');"></div>
+    <div class="card has-dataset" data-title="HCSA: High Carbon Stock Mapping in Southeast Asia" data-region="Indonesia" data-id="27" data-project-id="ui_27">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_27/images/placeholder_image.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
             <h3>HCSA: High Carbon Stock Mapping in Southeast Asia</h3>
@@ -1451,8 +1432,8 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-geospatial" data-filter="Geospatial"><i class="fas fa-map"></i> Geospatial</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Enable Swahili speakers to speak to digital devices and access information in their mother tongue" data-region="Kenya, Tanzania, Uganda" data-id="32" data-dir-names="[&#x27;enable_swahili_speakers_to_speak_to_digital_devices_and_access_information_in_their_mother_tongue&#x27;]">
-        <div class="card-image"></div>
+    <div class="card has-dataset" data-title="Enable Swahili speakers to speak to digital devices and access information in their mother tongue" data-region="Kenya, Tanzania, Uganda" data-id="32" data-project-id="ui_32">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_32/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             
             <h3>Enable Swahili speakers to speak to digital devices and access information in their mother tongue</h3>
@@ -1471,8 +1452,8 @@
         <div class="card-footer"><div class="license-tag"><i class="fas fa-copyright"></i> CC-0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Building parallel corpora for Kenya’s Indigenous Languages and Swahili" data-region="Kenya" data-id="38" data-dir-names="[&#x27;building_parallel_corpora_for_kenyas_indigenous_languages_and_swahili&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/building_parallel_corpora_for_kenyas_indigenous_languages_and_swahili/images/placeholder_image.jpeg');"></div>
+    <div class="card has-dataset" data-title="Building parallel corpora for Kenya’s Indigenous Languages and Swahili" data-region="Kenya" data-id="38" data-project-id="ui_38">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_38/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
             <h3>Building parallel corpora for Kenya’s Indigenous Languages and Swahili</h3>
@@ -1493,8 +1474,8 @@
         <div class="card-footer"><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Labelled Open solar panel data for Madagascar" data-region="Madagascar" data-id="39" data-dir-names="[&#x27;labelled_open_solar_panel_data_for_madagascar&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/labelled_open_solar_panel_data_for_madagascar/images/placeholder_image.jpeg');"></div>
+    <div class="card has-dataset" data-title="Labelled Open solar panel data for Madagascar" data-region="Madagascar" data-id="39" data-project-id="ui_39">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_39/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
             <h3>Labelled Open solar panel data for Madagascar</h3>
@@ -1515,8 +1496,8 @@
         <div class="card-footer"><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="A Nigerian Twitter Sentiment Corpus for Multilingual Sentiment Analysis" data-region="Nigeria" data-id="40" data-dir-names="[&#x27;a_nigerian_twitter_sentiment_corpus_for_multilingual_sentiment_analysis&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/a_nigerian_twitter_sentiment_corpus_for_multilingual_sentiment_analysis/images/placeholder_image.jpeg');"></div>
+    <div class="card has-dataset" data-title="A Nigerian Twitter Sentiment Corpus for Multilingual Sentiment Analysis" data-region="Nigeria" data-id="40" data-project-id="ui_40">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_40/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
             <h3>A Nigerian Twitter Sentiment Corpus for Multilingual Sentiment Analysis</h3>
@@ -1535,8 +1516,8 @@
         <div class="card-footer"><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Enable Kinyarwanda speakers to speak to digital devices and access information in their mother tongue" data-region="Rwanda" data-id="46" data-dir-names="[&#x27;enable_kinyarwanda_speakers_to_speak_to_digital_devices_and_access_information_in_their_mother_tongue&#x27;]">
-        <div class="card-image"></div>
+    <div class="card has-dataset" data-title="Enable Kinyarwanda speakers to speak to digital devices and access information in their mother tongue" data-region="Rwanda" data-id="46" data-project-id="ui_46">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_46/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             
             <h3>Enable Kinyarwanda speakers to speak to digital devices and access information in their mother tongue</h3>
@@ -1555,8 +1536,8 @@
         <div class="card-footer"><div class="license-tag"><i class="fas fa-copyright"></i> CC-0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Enabling geo-scientists to use Machine Learning for Precision Agriculture of geospatial data" data-region="South Africa" data-id="50" data-dir-names="[&#x27;ml4eo_for_precision_agriculture&#x27;, &#x27;enabling_geoscientists_to_use_machine_learning_for_precision_agriculture_of_geospatial_data&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/ml4eo_for_precision_agriculture/images/placeholder_image.jpeg');"></div>
+    <div class="card has-dataset" data-title="Enabling geo-scientists to use Machine Learning for Precision Agriculture of geospatial data" data-region="South Africa" data-id="50" data-project-id="ui_50">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_50/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-climate-action">Climate Action</div></div>
             <h3>Enabling geo-scientists to use Machine Learning for Precision Agriculture of geospatial data</h3>
@@ -1575,8 +1556,8 @@
         <div class="card-footer"><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="NLP grant Localising Common Voice for South African Languages" data-region="South Africa" data-id="51" data-dir-names="[&#x27;nlp_grant_localising_common_voice_for_south_african_languages&#x27;, &#x27;making_voice_data_available_in_all_official_languages_of_south_africa_as_a_digital_public_good__voices_of_mzansi&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/nlp_grant_localising_common_voice_for_south_african_languages/images/placeholder_image.jpeg');"></div>
+    <div class="card has-dataset" data-title="NLP grant Localising Common Voice for South African Languages" data-region="South Africa" data-id="51" data-project-id="ui_51">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_51/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
             <h3>NLP grant Localising Common Voice for South African Languages</h3>
@@ -1595,8 +1576,8 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-text" data-filter="Text"><i class="fas fa-file-alt"></i> Text</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="South Africa Crop Type Competition" data-region="South Africa" data-id="52" data-dir-names="[&#x27;south_africa_crop_type_competition&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/south_africa_crop_type_competition/images/placeholder_image.jpeg');"></div>
+    <div class="card has-dataset" data-title="South Africa Crop Type Competition" data-region="South Africa" data-id="52" data-project-id="ui_52">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_52/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div><div class="domain-badge domain-agriculture">Agriculture</div></div>
             <h3>South Africa Crop Type Competition</h3>
@@ -1610,8 +1591,8 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-tabular" data-filter="Tabular"><i class="fas fa-table"></i> Tabular</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Croppie- helping smallholder coffee producers to plan sales, get loans, and trace coffee - AI powered coffee yield prediction" data-region="Uganda" data-id="53" data-dir-names="[&#x27;croppie_coffee_yield_prediction&#x27;, &#x27;croppie_helping_smallholder_coffee_producers_to_plan_sales_get_loans_and_trace_coffee__ai_powered_coffee_yield_prediction&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/croppie_coffee_yield_prediction/images/placeholder_image.jpeg');"></div>
+    <div class="card has-dataset has-usecase" data-title="Croppie- helping smallholder coffee producers to plan sales, get loans, and trace coffee - AI powered coffee yield prediction" data-region="Uganda" data-id="53" data-project-id="ui_53">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_53/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-climate-action">Climate Action</div></div>
             <h3>Croppie- helping smallholder coffee producers to plan sales, get loans, and trace coffee - AI powered coffee yield prediction</h3>
@@ -1630,8 +1611,8 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-tabular" data-filter="Tabular"><i class="fas fa-table"></i> Tabular</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset has-usecase" data-title="Finding good spots for decentralized green energy grids in Uganda I - AI based site identification for MiniGrids" data-region="Uganda" data-id="54" data-dir-names="[&#x27;scaling_mlbased_site_identification_for_minigrids_uganda&#x27;, &#x27;finding_good_spots_for_decentralized_green_energy_grids_in_uganda_i__ai_based_site_identification_for_minigrids&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/scaling_mlbased_site_identification_for_minigrids_uganda/images/placeholder_image.jpeg');"></div>
+    <div class="card has-dataset has-usecase" data-title="Finding good spots for decentralized green energy grids in Uganda I - AI based site identification for MiniGrids" data-region="Uganda" data-id="54" data-project-id="ui_54">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_54/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
             <h3>Finding good spots for decentralized green energy grids in Uganda I - AI based site identification for MiniGrids</h3>
@@ -1650,8 +1631,8 @@
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-geospatial" data-filter="Geospatial"><i class="fas fa-map"></i> Geospatial</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-usecase" data-title="Electrification Dashboard for Ugandan government - help to find the best energy sources for villages in Uganda" data-region="Uganda" data-id="55" data-dir-names="[&#x27;mlbased_site_identification_for_minigrids_in_uganda&#x27;, &#x27;electrification_dashboard_for_ugandan_government__help_to_find_the_best_energy_sources_for_villages_in_uganda&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/mlbased_site_identification_for_minigrids_in_uganda/images/placeholder_image.jpeg');"></div>
+    <div class="card has-usecase" data-title="Electrification Dashboard for Ugandan government - help to find the best energy sources for villages in Uganda" data-region="Uganda" data-id="55" data-project-id="ui_55">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_55/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
             <h3>Electrification Dashboard for Ugandan government - help to find the best energy sources for villages in Uganda</h3>
@@ -1670,8 +1651,8 @@
         <div class="card-footer"><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-usecase" data-title="Finding good spots for decentralized green energy grids in Uganda II - Measuring Solar Irradiance wih unbiased AI Models" data-region="Uganda" data-id="56" data-dir-names="[&#x27;development_of_unbiased_ai_models_for_solar_irradiance_uganda&#x27;, &#x27;finding_good_spots_for_decentralized_green_energy_grids_in_uganda_ii__measuring_solar_irradiance_wih_unbiased_ai_models&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/development_of_unbiased_ai_models_for_solar_irradiance_uganda/images/placeholder_image.jpeg');"></div>
+    <div class="card has-usecase" data-title="Finding good spots for decentralized green energy grids in Uganda II - Measuring Solar Irradiance wih unbiased AI Models" data-region="Uganda" data-id="56" data-project-id="ui_56">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_56/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
             <h3>Finding good spots for decentralized green energy grids in Uganda II - Measuring Solar Irradiance wih unbiased AI Models</h3>
@@ -1685,8 +1666,8 @@
         <div class="card-footer"><div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset" data-title="Datasets marking Personal Identifiable Information (PII) and Gender Bias" data-region="Uganda,Kenya,Nigeria" data-id="58" data-dir-names="[&#x27;datasets_marking_personal_identifiable_information_pii_and_gender_bias&#x27;]">
-        <div class="card-image has-image" style="background-image: url('public/projects/datasets_marking_personal_identifiable_information_pii_and_gender_bias/images/placeholder_image.jpeg');"></div>
+    <div class="card has-dataset" data-title="Datasets marking Personal Identifiable Information (PII) and Gender Bias" data-region="Uganda,Kenya,Nigeria" data-id="58" data-project-id="ui_58">
+        <div class="card-image has-image" style="background-image: url('public/projects/ui_58/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
             <h3>Datasets marking Personal Identifiable Information (PII) and Gender Bias</h3>

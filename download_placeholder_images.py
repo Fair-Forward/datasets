@@ -74,41 +74,63 @@ def has_existing_images(project_dir):
     return len(image_files) > 0
 
 def get_project_info(project_dir, df):
-    """Get project title and description from the Excel file."""
-    # Normalize the project directory name for comparison
-    normalized_dir = project_dir.lower()
+    """Get project title and description from the Excel file by matching the Project ID."""
+    # project_dir is the normalized Project ID (e.g., ui_0)
+    target_normalized_id = project_dir.lower()
     
-    # Try to find a matching row in the dataframe
-    for _, row in df.iterrows():
-        onsite_name = row.get('OnSite Name', '')
-        dataset_title = row.get('Dataset Speaking Titles', '')
-        usecase_title = row.get('Use Case Speaking Title', '')
-        description = row.get('Description - What can be done with this? What is this about?', '')
-        domain = row.get('Domain/SDG', '')
-        region = row.get('Country Team', '')
-        
-        # Normalize the titles for comparison
-        titles = []
-        if isinstance(onsite_name, str) and not pd.isna(onsite_name):
-            titles.append(onsite_name)
-        if isinstance(dataset_title, str) and not pd.isna(dataset_title):
-            titles.append(dataset_title)
-        if isinstance(usecase_title, str) and not pd.isna(usecase_title):
-            titles.append(usecase_title)
-        
-        # Check if any of the normalized titles match the project directory
-        for title in titles:
-            normalized_title = normalize_for_directory(title)
-            if normalized_title and normalized_title.lower() == normalized_dir:
-                # Found a match
+    # Check if 'Project ID' column exists
+    if 'Project ID' not in df.columns:
+        logger.error("'Project ID' column not found in the DataFrame.")
+        return None
+
+    # Try to find a matching row in the dataframe based on Project ID
+    for index, row in df.iterrows():
+        project_id = row.get('Project ID')
+        if project_id and not pd.isna(project_id):
+            # Normalize the Project ID from the current row
+            current_normalized_id = normalize_for_directory(str(project_id))
+            
+            # Compare with the target directory name (normalized ID)
+            if current_normalized_id == target_normalized_id:
+                # Found the matching row based on Project ID
+                
+                # Now, determine the best *display* title for keyword extraction
+                display_title = None
+                if 'Dataset Speaking Titles' in df.columns:
+                    dataset_title = row.get('Dataset Speaking Titles', '')
+                    if dataset_title and not pd.isna(dataset_title):
+                        display_title = dataset_title
+                
+                if not display_title and 'Use Case Speaking Title' in df.columns:
+                    usecase_title = row.get('Use Case Speaking Title', '')
+                    if usecase_title and not pd.isna(usecase_title):
+                        display_title = usecase_title
+                        
+                if not display_title and 'OnSite Name' in df.columns:
+                    onsite_name = row.get('OnSite Name', '')
+                    if onsite_name and not pd.isna(onsite_name):
+                        display_title = onsite_name
+                
+                # Fallback display title if none found
+                if not display_title:
+                    display_title = f"Project {project_id}" # Use raw Project ID if no other title
+
+                # Get other necessary info
+                description = row.get('Description - What can be done with this? What is this about?', '')
+                domain = row.get('Domain/SDG', '')
+                region = row.get('Country Team', '')
+                
+                # Return the collected info for keyword extraction
                 return {
-                    'title': title,
+                    'title': display_title, # Use the best display title for keywords
                     'description': description if isinstance(description, str) and not pd.isna(description) else '',
                     'domain': domain if isinstance(domain, str) and not pd.isna(domain) else '',
                     'region': region if isinstance(region, str) and not pd.isna(region) else ''
+                    # We could also return project_id if needed later
                 }
     
-    # If no match found, return None
+    # If no row matched the Project ID
+    logger.warning(f"No row found in Excel matching Project ID directory: {project_dir}")
     return None
 
 def normalize_for_directory(text):
@@ -120,44 +142,119 @@ def normalize_for_directory(text):
     normalized = re.sub(r'[^a-z0-9_]', '', text.lower().replace(' ', '_'))
     return normalized
 
-def extract_keywords(project_info):
-    """Extract relevant keywords from project title and description."""
+# Define common stop words (expand as needed)
+STOP_WORDS = set([
+    "a", "an", "and", "are", "as", "at", "be", "but", "by", "for", "if", "in", 
+    "into", "is", "it", "no", "not", "of", "on", "or", "such", "that", "the", 
+    "their", "then", "there", "these", "they", "this", "to", "was", "will", "with",
+    "using", "based", "dataset", "use-case", "model", "about", "can", "done", 
+    "what", "how", "who", "which", "when", "where", "why", "also", "from", 
+    "get", "has", "have", "he", "her", "here", "him", "his", "i", "just", "like",
+    "make", "many", "me", "might", "more", "most", "my", "never", "now", "our",
+    "out", "over", "said", "same", "see", "should", "since", "so", "some", 
+    "still", "take", "than", "too", "under", "up", "use", "very", "want", "way",
+    "we", "well", "were", "what", "where", "which", "who", "why", "your", "ai",
+    "open", "data", "development", "application", "solution" # Added more context-specific words
+])
+
+# Define some common technical/domain terms to look for
+TECH_TERMS = [
+    'satellite', 'imagery', 'remote sensing', 'geospatial', 'map', 'mapping',
+    'crop', 'agriculture', 'farming', 'yield', 'harvest',
+    'language', 'nlp', 'text', 'speech', 'translation',
+    'health', 'medical', 'disease', 'patient', 'clinic',
+    'energy', 'power', 'solar', 'wind', 'grid',
+    'climate', 'weather', 'environment', 'carbon', 'emission',
+    'finance', 'economic', 'market', 'trade',
+    'education', 'learning', 'school',
+    'water', 'irrigation', 'resource',
+    'transport', 'mobility', 'traffic',
+    'identification', 'detection', 'classification', 'prediction', 'analysis',
+    'monitoring', 'optimization', 'automation', 'platform', 'tool', 'technology',
+    'computer vision', 'machine learning'
+]
+
+def extract_keywords(project_info, max_keywords=4):
+    """Extract relevant keywords from project info, prioritizing specificity."""
     if not project_info:
         return []
-    
-    # Start with domain and region as they're often good keywords
+
     keywords = []
-    if project_info['domain']:
-        # Split domain by commas and semicolons
-        domains = re.split(r'[,;]', project_info['domain'])
-        keywords.extend([d.strip() for d in domains if d.strip()])
+    title = project_info.get('title', '')
+    description = project_info.get('description', '')
+    domain = project_info.get('domain', '')
+    region = project_info.get('region', '')
+
+    # 1. Extract primary domain
+    if domain:
+        primary_domain = re.split(r'[,;]', domain)[0].strip()
+        if primary_domain:
+            keywords.append(primary_domain.lower())
+
+    # 2. Extract keywords from title
+    if title:
+        title_words = re.findall(r'\b\w+\b', title.lower())
+        # Prioritize nouns/adjectives, longer words, remove stop words
+        potential_title_keywords = [
+            word for word in title_words 
+            if word not in STOP_WORDS and len(word) > 3
+        ]
+        # Add the first 1-2 most relevant title words
+        keywords.extend(potential_title_keywords[:2])
+
+    # 3. Extract specific terms from description
+    if description:
+        desc_lower = description.lower()
+        found_terms = []
+        # Find specific technical terms first
+        for term in TECH_TERMS:
+            if term in desc_lower:
+                found_terms.append(term)
+                if len(found_terms) >= 2: # Limit terms from description
+                    break
+        keywords.extend(found_terms)
+        
+        # If no tech terms found, try extracting nouns from the first sentence
+        if not found_terms:
+             first_sentence = description.split('.')[0]
+             desc_words = re.findall(r'\b\w+\b', first_sentence.lower())
+             potential_desc_keywords = [
+                 word for word in desc_words 
+                 if word not in STOP_WORDS and len(word) > 4 # Slightly longer words
+             ]
+             keywords.extend(potential_desc_keywords[:1]) # Add max 1 generic keyword
+
+    # 4. Add region as a fallback/supplement
+    if region and len(keywords) < max_keywords:
+        keywords.append(region.lower())
+
+    # 5. Refine and finalize
+    # Remove duplicates while preserving order (important for keyword priority)
+    seen = set()
+    unique_keywords = [k for k in keywords if not (k in seen or seen.add(k))]
+
+    # Ensure relevance - if only region/generic domain, add 'technology' or 'data'
+    meaningful_keywords = [k for k in unique_keywords if k not in [region.lower() if region else '', primary_domain.lower() if domain else '']]
+    if not meaningful_keywords and len(unique_keywords) < max_keywords:
+         # Prefer 'technology' if domain is present, else 'data'
+        if domain:
+            unique_keywords.append('technology')
+        else:
+            unique_keywords.append('data')
+
+    # Limit the total number of keywords
+    final_keywords = unique_keywords[:max_keywords]
+
+    # Basic cleaning (remove plurals for consistency if simple 's' suffix)
+    final_keywords = [re.sub(r's$', '', k) if len(k) > 3 else k for k in final_keywords]
     
-    if project_info['region']:
-        keywords.append(project_info['region'])
-    
-    # Extract key terms from title
-    title = project_info['title']
-    # Remove common filler words
-    title_words = re.sub(r'\b(and|the|for|with|in|on|of|to|a|an)\b', ' ', title.lower())
-    # Split into words and filter out short words
-    title_keywords = [word.strip() for word in title_words.split() if len(word.strip()) > 3]
-    keywords.extend(title_keywords[:3])  # Limit to first 3 meaningful words from title
-    
-    # If we have a description, extract some keywords from it
-    if project_info['description']:
-        # Get the first sentence or up to 100 characters
-        first_part = project_info['description'].split('.')[0][:100]
-        # Remove common filler words
-        desc_words = re.sub(r'\b(and|the|for|with|in|on|of|to|a|an)\b', ' ', first_part.lower())
-        # Split into words and filter out short words
-        desc_keywords = [word.strip() for word in desc_words.split() if len(word.strip()) > 3]
-        keywords.extend(desc_keywords[:2])  # Limit to first 2 meaningful words from description
-    
-    # Remove duplicates and empty strings
-    keywords = list(set(filter(None, keywords)))
-    
-    # Limit to 5 keywords max
-    return keywords[:5]
+    # Final duplicate check after cleaning
+    seen_final = set()
+    final_keywords = [k for k in final_keywords if not (k in seen_final or seen_final.add(k))]
+
+
+    logger.debug(f"Extracted keywords for '{title}': {final_keywords}")
+    return final_keywords
 
 def search_pexels_images(keywords, api_key, min_width=800, min_height=600):
     """Search for images on Pexels API based on keywords."""

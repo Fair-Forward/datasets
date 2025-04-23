@@ -104,48 +104,60 @@ def create_label_html(text, label_type):
     
     return "".join(html_labels)
 
-# Function to get unique categories for generating CSS
+# Function to get unique categories for generating CSS and filters
 def get_unique_categories(df):
     domains = set()
     data_types = set()
     statuses = set()
-    regions = set()
+    regions = set() # This will store unique regions from *valid* rows
     
-    # Extract domains
-    domain_col = 'Domain/SDG'
-    if domain_col in df.columns:
-        for domain_text in df[domain_col].dropna():
-            if isinstance(domain_text, str):
+    # Iterate through DataFrame rows to check for valid links
+    for index, row in df.iterrows():
+        # Check for valid links
+        has_dataset_link = isinstance(row.get('Dataset Link'), str) and not pd.isna(row.get('Dataset Link'))
+        has_usecase_link = isinstance(row.get('Model/Use-Case Links'), str) and not pd.isna(row.get('Model/Use-Case Links'))
+        is_valid_row = has_dataset_link or has_usecase_link
+
+        # Process Domains (only if row is valid - optional, based on user need)
+        # If you want Domains/Data Types/Statuses filters to also only show
+        # categories from active projects, apply the is_valid_row check here too.
+        domain_col = 'Domain/SDG'
+        if domain_col in df.columns:
+            domain_text = row.get(domain_col)
+            if isinstance(domain_text, str) and not pd.isna(domain_text):
+                # if is_valid_row: # <<< Uncomment this to filter domains
                 for domain in re.split(r'[,;]', domain_text):
                     domain = domain.strip()
                     if domain:
                         domains.add(domain)
-    
-    # Extract data types
-    data_type_col = 'Data Type'
-    if data_type_col in df.columns:
-        for type_text in df[data_type_col].dropna():
-            if isinstance(type_text, str):
+        
+        # Process Data Types (only if row is valid - optional)
+        data_type_col = 'Data Type'
+        if data_type_col in df.columns:
+            type_text = row.get(data_type_col)
+            if isinstance(type_text, str) and not pd.isna(type_text):
+                 # if is_valid_row: # <<< Uncomment this to filter data types
                 for data_type in re.split(r'[,;]', type_text):
                     data_type = data_type.strip()
                     if data_type:
                         data_types.add(data_type)
-    
-    # Extract statuses
-    status_col = 'Use Case Pipeline Status'
-    if status_col in df.columns:
-        for status_text in df[status_col].dropna():
-            if isinstance(status_text, str):
+        
+        # Process Statuses (only if row is valid - optional)
+        status_col = 'Use Case Pipeline Status'
+        if status_col in df.columns:
+            status_text = row.get(status_col)
+            if isinstance(status_text, str) and not pd.isna(status_text):
+                # if is_valid_row: # <<< Uncomment this to filter statuses
                 for status in re.split(r'[,;]', status_text):
                     status = status.strip()
                     if status:
                         statuses.add(status)
-    
-    # Extract regions
-    region_col = 'Country Team'
-    if region_col in df.columns:
-        for region_text in df[region_col].dropna():
-            if isinstance(region_text, str):
+        
+        # --- Process Regions (ONLY if row is valid) ---
+        region_col = 'Country Team'
+        if region_col in df.columns and is_valid_row: # Apply the check here
+            region_text = row.get(region_col)
+            if isinstance(region_text, str) and not pd.isna(region_text):
                 for region in re.split(r'[,;]', region_text):
                     region = region.strip()
                     if region:
@@ -221,7 +233,8 @@ def generate_color_palette(n):
     return [i/n for i in range(n)]
 
 def generate_card_html(row, idx):
-    # Extract card data
+    # --- Extract card data ---
+    project_id = row.get('Project ID', '') # Get Project ID
     onsite_name = row.get('OnSite Name', '')
     dataset_speaking_title = row.get('Dataset Speaking Titles', '')
     usecase_speaking_title = row.get('Use Case Speaking Title', '')
@@ -234,79 +247,71 @@ def generate_card_html(row, idx):
     contact = row.get('Point of Contact/Communities', '')
     region = row.get('Country Team', '')
     
+    # --- Basic Checks ---
+    # Skip if Project ID is missing (shouldn't happen if build script requires it, but good check)
+    if not project_id or pd.isna(project_id):
+        print(f"Warning: Skipping card generation for row {idx} due to missing Project ID.")
+        return "" # Return empty string to skip card
+        
+    # Normalize the Project ID once
+    normalized_project_id = normalize_for_directory(str(project_id))
+    if not normalized_project_id:
+        print(f"Warning: Skipping card generation for row {idx} due to invalid Project ID '{project_id}'.")
+        return ""
+
     # Determine if row has dataset and/or use case
     has_dataset = isinstance(dataset_link, str) and not pd.isna(dataset_link)
     has_usecase = isinstance(model_links, str) and not pd.isna(model_links)
     
-    # Select the appropriate title based on content type and speaking titles
+    # --- Determine Display Title --- 
+    # Select the appropriate title based on content type and speaking titles (for display)
     if has_usecase and usecase_speaking_title and not pd.isna(usecase_speaking_title):
         title = usecase_speaking_title
     elif has_dataset and dataset_speaking_title and not pd.isna(dataset_speaking_title):
         title = dataset_speaking_title
-    else:
+    elif onsite_name and not pd.isna(onsite_name):
         title = onsite_name
-    
-    # Generate all possible directory names from different titles
-    possible_titles = []
-    if onsite_name and not pd.isna(onsite_name):
-        possible_titles.append(onsite_name)
-    if dataset_speaking_title and not pd.isna(dataset_speaking_title):
-        possible_titles.append(dataset_speaking_title)
-    if usecase_speaking_title and not pd.isna(usecase_speaking_title):
-        possible_titles.append(usecase_speaking_title)
-    
-    # Generate normalized directory names for each title
-    dir_names = [normalize_for_directory(t) for t in possible_titles]
-    # Remove duplicates and empty strings
-    dir_names = list(set(filter(None, dir_names)))
-    
-    # Use the first directory name that exists, or the first one if none exist
-    dir_name = None
-    for d in dir_names:
-        if os.path.exists(os.path.join("docs/public/projects", d)):
-            dir_name = d
-            break
-    if not dir_name and dir_names:
-        dir_name = dir_names[0]
-    
-    # Card classes based on what it contains
+    else:
+        title = f"Project {project_id}" # Fallback display title
+
+    # --- Card Classes --- 
     card_classes = ["card"]
     if has_dataset:
         card_classes.append("has-dataset")
     if has_usecase:
         card_classes.append("has-usecase")
-    
     card_class = " ".join(card_classes)
     
-    # Check for project-specific image
-    card_image = '<div class="card-image"></div>'
-    
-    # First check in the project directory
+    # --- Image Handling (Using Project ID) ---
+    card_image = '<div class="card-image"></div>' # Default: no image div
     project_image_path = None
-    if dir_name:
-        images_dir = f"docs/public/projects/{dir_name}/images"
+    images_dir = os.path.join("docs/public/projects", normalized_project_id, "images")
+
+    # Check if the images directory exists and contains any images
+    if os.path.exists(images_dir):
+        image_files = [f for f in os.listdir(images_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
         
-        # Check if the images directory exists and contains any images
-        if os.path.exists(images_dir):
-            # Look for any image file in the directory
-            image_files = [f for f in os.listdir(images_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
-            
+        if image_files: # Only proceed if images are found
             # Sort image files to prioritize real images over placeholder images
-            # Placeholder images start with "placeholder_" prefix
             real_images = [f for f in image_files if not f.startswith('placeholder_')]
             placeholder_images = [f for f in image_files if f.startswith('placeholder_')]
             
-            # Use real images first, fall back to placeholder images if no real images exist
+            chosen_image_file = None
             if real_images:
-                project_image_path = f"public/projects/{dir_name}/images/{real_images[0]}"
+                chosen_image_file = real_images[0] # Use the first real image
             elif placeholder_images:
-                project_image_path = f"public/projects/{dir_name}/images/{placeholder_images[0]}"
-    
-    # Set the image if found
-    if project_image_path:
-        card_image = f'<div class="card-image has-image" style="background-image: url(\'{project_image_path}\');"></div>'
-    
-    # Create domain badges
+                chosen_image_file = placeholder_images[0] # Use the first placeholder image
+            
+            if chosen_image_file:
+                 # Construct the relative path for the HTML src attribute
+                project_image_path = f"public/projects/{normalized_project_id}/images/{chosen_image_file}"
+                # Escape path for CSS background-image style
+                # Fixed: ensure proper escaping for CSS url()
+                escaped_image_path = project_image_path.replace("\\", "/").replace("'", "\\'").replace("\"", "\\\"") 
+                card_image = f'<div class="card-image has-image" style="background-image: url(\'{escaped_image_path}\');"></div>'
+
+    # --- Domain Badges --- 
+    # (No changes needed here)
     domain_badges = ""
     domain_list = []
     if domain and not pd.isna(domain):
@@ -321,7 +326,8 @@ def generate_card_html(row, idx):
         if domain_badges_html:
             domain_badges = f'<div class="domain-badges">{"".join(domain_badges_html)}</div>'
     
-    # Create meta items
+    # --- Meta Items (Region, Contact) --- 
+    # (No changes needed here)
     meta_items = []
     if region and not pd.isna(region):
         # Clean up region text by removing extra spaces and normalizing
@@ -337,7 +343,8 @@ def generate_card_html(row, idx):
     if meta_items:
         meta_html = f'<div class="meta">{"".join(meta_items)}</div>'
     
-    # Create data type chips with different icons based on type
+    # --- Data Type Chips --- 
+    # (No changes needed here)
     data_type_chips = []
     if data_type and not pd.isna(data_type):
         for dt in re.split(r'[,;]', str(data_type)):
@@ -365,7 +372,8 @@ def generate_card_html(row, idx):
     if data_type_chips:
         data_type_html = f'<div class="data-type-chips">{"".join(data_type_chips)}</div>'
     
-    # Create tags for filtering (hidden)
+    # --- Tags for Filtering (Hidden) --- 
+    # (No changes needed here)
     tags = []
     # Add domain tags for filtering (hidden)
     for d in domain_list:
@@ -384,7 +392,8 @@ def generate_card_html(row, idx):
     if tags:
         tags_html = f'<div class="tags">{"".join(tags)}</div>'
     
-    # Create description
+    # --- Description --- 
+    # (No changes needed here)
     description_html = ""
     if description and not pd.isna(description):
         description_html = f'''
@@ -394,7 +403,8 @@ def generate_card_html(row, idx):
             </div>
         '''
     
-    # Create hidden links for the side panel
+    # --- Hidden Links (Dataset/Use Case Buttons) --- 
+    # (No changes needed here)
     hidden_links = []
     if has_dataset and dataset_link:
         # Split multiple dataset links by semicolons
@@ -466,7 +476,8 @@ def generate_card_html(row, idx):
     if hidden_links:
         hidden_links_html = f'<div class="hidden-links" style="display:none;">{"".join(hidden_links)}</div>'
     
-    # Create footer with links
+    # --- Footer Links (Data Type Chips, License) --- 
+    # (No changes needed here)
     footer_links = []
     
     # Add data type chips to the footer if they exist
@@ -489,12 +500,10 @@ def generate_card_html(row, idx):
     
     footer_html = f'<div class="card-footer">{"".join(footer_links)}</div>'
     
-    # Store all possible directory names as a data attribute for JavaScript to use
-    dir_names_json = html.escape(str(dir_names))
-    
-    # Construct the complete card
+    # --- Construct the complete card --- 
+    # Use data-project-id, remove data-dir-names
     card_html = f'''
-    <div class="{card_class}" data-title="{html.escape(str(title))}" data-region="{html.escape(str(region))}" data-id="{idx}" data-dir-names="{dir_names_json}">
+    <div class="{card_class}" data-title="{html.escape(str(title))}" data-region="{html.escape(str(region))}" data-id="{idx}" data-project-id="{normalized_project_id}">
         {card_image}
         <div class="card-header">
             {domain_badges}
@@ -949,25 +958,929 @@ try:
     dataset_count = sum(df['Dataset Link'].notna())
     usecase_count = sum(df['Model/Use-Case Links'].notna())
     
-    # Count unique countries
-    countries = []
-    # Use the 'Country Team' column that we identified from debugging
-    for country in df['Country Team'].dropna():
-        if isinstance(country, str):
-            # Split by commas, semicolons, or 'and'
-            parts = re.split(r',|\s+and\s+|;', country)
-            # Strip whitespace and add each non-empty part
-            countries.extend([p.strip() for p in parts if p.strip()])
+    # Count unique countries ONLY from rows with a valid dataset or use-case link
+    valid_countries = set()
+    for index, row in df.iterrows():
+        # Check if the row has a valid dataset or use-case link
+        has_dataset_link = isinstance(row.get('Dataset Link'), str) and not pd.isna(row.get('Dataset Link'))
+        has_usecase_link = isinstance(row.get('Model/Use-Case Links'), str) and not pd.isna(row.get('Model/Use-Case Links'))
+        
+        if has_dataset_link or has_usecase_link:
+            # If it has a link, process the Country Team column for this row
+            country_text = row.get('Country Team')
+            if isinstance(country_text, str) and not pd.isna(country_text):
+                # Split by commas, semicolons, or 'and'
+                parts = re.split(r',|\s+and\s+|;', country_text)
+                # Strip whitespace and add each non-empty part to the set
+                for part in parts:
+                    country = part.strip()
+                    if country:
+                        valid_countries.add(country)
     
-    # Remove duplicates and count
-    country_count = len(set(countries))
+    # The final count is the number of unique countries found in valid rows
+    country_count = len(valid_countries)
     
     # Get unique categories for filter and CSS generation
+    # Note: get_unique_categories might need similar filtering if its results
+    # should only reflect active projects, but for now, we only adjust the count.
     domains, data_types, statuses, regions = get_unique_categories(df)
     
     # Generate CSS for labels
     label_css = generate_label_css(domains, data_types, statuses)
     
+    # --- Define Static CSS --- 
+    # Moved static CSS rules out of the main f-string to avoid syntax errors
+    static_css = r'''
+        :root {
+            /* Claude.ai inspired color palette with Fair Forward influence */
+            --primary: #3b5998;
+            --primary-light: #4c70ba;
+            --secondary: #5b7fb9;
+            --light: #f9fafb;
+            --dark: #1a202c;
+            --gray: #64748b;
+            --border: #e2e8f0;
+            --background: #f8fafc;
+            --card-bg: #f5f8fc;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --shadow: rgba(0, 0, 0, 0.04);
+            --shadow-hover: rgba(0, 0, 0, 0.08);
+            --title-color: #2c4a7c; /* Slightly more subtle blue shade */
+            --btn-text: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        
+        html {
+            /* Set a smaller base font size to scale everything down */
+            font-size: 14px;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.7;
+            font-size: 1rem; /* Use relative units based on html font-size */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        header {
+            background: linear-gradient(to right, #f8f9fa, #f1f4f8); /* Subtle light gradient background */
+            padding: 0 0 3.5rem; /* Increased bottom padding from 2rem to 3.5rem */
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+        }
+
+        /* Top navigation area that will contain both the logos and the about link */
+        .top-nav-container {
+            background-color: #ffffff;
+            padding: 0;
+            width: 100%;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+            margin-bottom: 2rem; /* Reverted back to 2rem from 3rem */
+        }
+
+        .top-nav-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 3rem; /* Reverted back to 0.75rem from 1.25rem */
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 0; /* Removed bottom margin */
+            position: relative;
+            z-index: 2;
+        }
+        
+        .top-nav-links { /* Add this new rule */
+            display: flex;
+            align-items: center;
+            gap: 0.75rem; /* Adjust this value for desired spacing */
+        }
+        
+        .about-link {
+            color: var(--text);
+            font-size: 0.9rem;
+            text-decoration: none;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            transition: background-color 0.2s;
+        }
+
+        .about-link:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 3rem; /* Increased from 2rem to 3rem for more space between text and stats */
+        }
+        
+        .header-logos {
+            display: flex;
+            gap: 1.75rem; /* Reverted back to 1.75rem from 2.25rem */
+            align-items: center;
+        }
+        
+        .header-logo {
+            height: 45px; /* Reverted back to 45px from 52px */
+            width: auto;
+            transition: opacity 0.2s;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.05));
+            vertical-align: middle; /* Better vertical alignment */
+        }
+        
+        .header-logo:hover {
+            opacity: 0.9;
+        }
+        
+        .header-text {
+            padding-right: 1rem;
+            max-width: 62%;
+        }
+        
+        .header-text h1 {
+            margin-bottom: 0.75rem;
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: var(--title-color);
+            line-height: 1.2;
+            position: relative;
+            letter-spacing: -0.015em;
+        }
+        
+        .subtitle {
+            font-size: 1.15rem;
+            color: var(--text-light);
+            max-width: 800px;
+            font-weight: 300;
+            line-height: 1.5;
+            margin-top: 1rem;
+            letter-spacing: 0.01em;
+            margin-bottom: 1.25rem;
+        }
+        
+        .header-learn-more {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--primary);
+            text-decoration: none;
+            margin-top: 0.25rem;
+            transition: all 0.2s ease;
+        }
+        
+        .header-learn-more:hover {
+            opacity: 0.85;
+            text-decoration: underline;
+        }
+        
+        .header-learn-more i {
+            display: none;
+        }
+        
+        .filters {
+            background-color: #ffffff;
+            padding: 1.25rem 0; /* Reduced from 1.5rem */
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            margin-top: -0.75rem;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+        
+        .filters-content {
+            max-width: 1100px; /* Reduced from 1200px to match container */
+            margin: 0 auto;
+            padding: 0 3rem; /* Increased from 2rem to match container */
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.25rem; /* Reduced from 1.5rem */
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .filter-label {
+            font-weight: 500;
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+        
+        select, input {
+            padding: 0.5rem 0.875rem; /* Reduced from 0.625rem 1rem */
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+            min-width: 160px; /* Reduced from 180px */
+            background-color: white;
+            font-size: 0.875rem;
+            color: var(--text);
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 2px var(--shadow);
+        }
+        
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(59, 89, 152, 0.1);
+        }
+        
+        .search-box {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 0.5rem 0.875rem; /* Reduced from 0.625rem 1rem */
+            min-width: 280px; /* Reduced from 300px */
+            background-color: white;
+            box-shadow: 0 1px 2px var(--shadow);
+            transition: all 0.2s ease;
+        }
+        
+        .search-box:focus-within {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(59, 89, 152, 0.1);
+        }
+        
+        .search-box input {
+            border: none;
+            flex-grow: 1;
+            min-width: 0;
+            padding: 0;
+            box-shadow: none;
+        }
+        
+        .search-box input:focus {
+            box-shadow: none;
+        }
+        
+        .search-box i {
+            color: var(--gray);
+            margin-right: 0.75rem;
+        }
+        
+        .container {
+            max-width: 1100px; /* Reduced from 1200px for a more narrow layout */
+            margin: 2.5rem auto;
+            padding: 0 3rem; /* Increased from 2rem for more side spacing */
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* Reduced from 280px */
+            gap: 1.5rem; /* Increased from 1.25rem for more spacing between cards */
+        }
+        
+        .card {
+            background: #ffffff; /* Solid white for contrast */
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06); /* Slightly stronger shadow */
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            border: 1px solid var(--border); /* Use standard border color */
+        }
+        
+        .card:hover {
+            transform: translateY(-5px); /* More lift */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* More pronounced shadow */
+            border-color: var(--primary-light); /* Highlight border */
+        }
+        
+        .card-description, .card-footer {
+            cursor: pointer;
+        }
+        
+        .card-image {
+            height: 130px; /* Increased from 120px for less square proportions */
+            background-color: #f8fafc;
+            background-image: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-image.has-image {
+            background-image: none;
+        }
+        
+        .card-image.has-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0) 50%,  /* Keep fully transparent until 50% of the way down */
+                rgba(255, 255, 255, 0.3) 75%,  /* Start subtle fade at 75% */
+                rgba(255, 255, 255, 0.8) 90%,  /* Increase fade more rapidly near bottom */
+                rgba(255, 255, 255, 1) 100%    /* Full white at the very bottom */
+            );
+            z-index: 1;
+        }
+        
+        .card-image.has-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+            z-index: -1;
+        }
+        
+        .card-header {
+            padding: 1.25rem 1.25rem 0.5rem; /* Increased horizontal padding */
+        }
+        
+        .card-body {
+            padding: 0 1.25rem 0.75rem; /* Increased horizontal padding */
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .domain-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1;
+        }
+        
+        .domain-badge {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2rem;
+            font-size: 0.7rem;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(59, 89, 152, 0.15);
+        }
+        
+        .data-type-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            margin-top: 0.25rem;
+        }
+        
+        .data-type-chip {
+            font-size: 0.7rem;
+            font-weight: 400;
+            padding: 0.2rem 0.5rem;
+            border-radius: 1rem;
+            background-color: rgba(0, 0, 0, 0.05);
+            color: var(--gray);
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .data-type-chip i {
+            margin-right: 0.25rem;
+            font-size: 0.65rem;
+            opacity: 0.7;
+        }
+        
+        .card h3 {
+            font-size: 1rem; /* Reduced from 1.125rem */
+            margin-bottom: 0.5rem;
+            color: var(--title-color);
+            line-height: 1.3;
+            font-weight: 600;
+        }
+        
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .meta-item {
+            font-size: 0.75rem;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+        }
+        
+        .meta-item i {
+            margin-right: 0.25rem;
+        }
+        
+        .card-description {
+            margin-bottom: 0.75rem;
+            flex-grow: 1;
+        }
+        
+        .description-text {
+            color: var(--text-light);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .description-text.collapsed {
+            max-height: 4.8em; /* Show 3 lines of text */
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+        
+        .details-link {
+            color: var(--primary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            transition: all 0.2s ease;
+        }
+        
+        .details-link i {
+            font-size: 0.75rem;
+            transition: transform 0.2s ease;
+        }
+        
+        .details-link:hover {
+            color: var(--primary-light);
+        }
+        
+        .details-link:hover i {
+            transform: translateX(3px);
+        }
+        
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.8125rem;
+            color: var(--text-light);
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+        
+        .meta-item a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .meta-item a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+        
+        .tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tag {
+            background-color: rgba(142, 68, 173, 0.08);
+            padding: 0.25rem 0.75rem;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            color: var(--primary);
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        
+        .tag:hover {
+            background-color: rgba(142, 68, 173, 0.12);
+            transform: translateY(-2px);
+        }
+        
+        .card-footer {
+            border-top: 1px solid var(--border);
+            padding: 0.625rem 1.25rem; /* Increased horizontal padding */
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: rgba(59, 89, 152, 0.02);
+            flex-wrap: wrap;
+        }
+        
+        .footer-chips {
+            margin-right: auto;
+            margin-bottom: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+        .footer-chips .data-type-chip {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            margin-bottom: 0;
+        }
+        
+        .license-tag {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem;
+            background-color: rgba(245, 158, 11, 0.1);
+            color: #d97706;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-left: auto;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            transition: all 0.2s ease;
+        }
+        
+        .license-tag:hover {
+            background-color: rgba(245, 158, 11, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .license-tag i {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+            padding: 0.375rem 0.625rem;
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            white-space: nowrap;
+            min-width: 0;
+            flex-shrink: 0;
+        }
+        
+        .btn i {
+            font-size: 0.75rem;
+        }
+        
+        .btn-view-details {
+            background-color: #fff0f0;  /* Light red background */
+            color: var(--text-light);
+            border: 1px solid #ffdddd;  /* Light red border */
+            margin-left: auto;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .filters-content {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0 1.5rem;
+                gap: 1rem;
+            }
+            
+            .header-content {
+                padding: 0 1.5rem;
+            }
+            
+            .top-nav-area {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0.5rem 1.5rem; /* Reverted back to 0.5rem from 0.75rem */
+                gap: 0.75rem;
+            }
+            
+            .top-nav-container {
+                margin-bottom: 1.5rem; /* Reverted back to 1.5rem from 2rem */
+            }
+            
+            .about-link {
+                align-self: flex-end;
+                margin-top: -1.5rem; /* Negative margin to position it next to logos */
+            }
+            
+            .header-logos {
+                flex-wrap: wrap;
+                gap: 1.25rem;
+                justify-content: flex-start;
+            }
+            
+            .header-logo {
+                height: 38px; /* Adjusted for mobile but still larger than before */
+            }
+            
+            .header-main {
+                flex-direction: column;
+            }
+            
+            .header-text {
+                padding-right: 0;
+                max-width: 100%;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+                margin-bottom: 0.75rem;
+            }
+            
+            .subtitle {
+                font-size: 1.05rem;
+                margin-top: 0.9rem;
+                margin-bottom: 1.1rem;
+            }
+            
+            .header-stats {
+                margin-top: 1.75rem;
+                width: 100%;
+                min-width: initial;
+            }
+            
+            .stats-row {
+                flex-direction: row;
+                justify-content: center;
+                gap: 0.9rem;
+            }
+            
+            .stat-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .stat-value {
+                font-size: 1.5rem;
+                line-height: 1.1;
+            }
+            
+            .stat-label {
+                font-size: 0.85rem;
+                margin-top: 0.1rem;
+            }
+            
+            header {
+                padding: 0.75rem 0 1.75rem;
+            }
+            
+            .filters {
+                margin-top: -0.75rem;
+            }
+        }
+        
+        /* {label_css} Will be appended here */
+        
+        footer {
+            background-color: var(--light);
+            color: var(--text-light);
+            padding: 4rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+        
+        .footer-content {
+            max-width: 1100px; /* Reduced from 1200px to match container */
+            margin: 0 auto;
+            padding: 0 3rem; /* Increased from 2rem to match container */
+        }
+        
+        footer p {
+            font-size: 0.9375rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--btn-text);
+            box-shadow: 0 2px 4px rgba(59, 89, 152, 0.15);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(59, 89, 152, 0.2);
+        }
+        
+        .btn-secondary {
+            background-color: rgba(59, 89, 152, 0.08);
+            color: var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(59, 89, 152, 0.12);
+            transform: translateY(-2px);
+        }
+        
+        .btn-view-details:hover {
+            background-color: #ffe0e0;  /* Slightly darker red on hover */
+            color: #d63031;  /* Darker red text on hover */
+            transform: translateY(-2px);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 1rem;
+            border: 1px solid var(--border);
+            display: none;
+            margin: 2rem auto;
+            max-width: 600px;
+        }
+        
+        .empty-state.visible {
+            display: block;
+        }
+        
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+            font-weight: 600;
+        }
+        
+        .empty-state p {
+            color: var(--text-light);
+            font-size: 1.0625rem;
+            line-height: 1.6;
+        }
+        
+        .card.filtered-out {
+            display: none;
+        }
+        
+        /* Side panel styles are now in enhanced_side_panel.css */
+        
+        /* Stats panel styling */
+        .header-stats {
+            display: flex;
+            flex-direction: column;
+            min-width: 180px;
+            justify-content: center;
+            align-self: center;
+        }
+        
+        .stats-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .stats-bottom {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .stat-text {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 500;
+            color: var(--title-color);
+            line-height: 1.1;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 0.15rem;
+        }
+
+        /* Modal Styles */
+        .modal-container {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1050;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal-container.visible {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-content {
+            position: relative;
+            background-color: #fff;
+            padding: 2.5rem;
+            border-radius: 0.75rem;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: fadeInModal 0.3s ease-out;
+        }
+        .modal-close {
+            position: absolute;
+            top: 0.75rem;
+            right: 1rem;
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: #aaa;
+            background: none;
+            border: none;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .modal-close:hover,
+        .modal-close:focus {
+            color: #333;
+            text-decoration: none;
+        }
+        .modal-content h2 {
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            color: var(--title-color);
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+        .modal-content p {
+            margin-bottom: 0;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        @keyframes fadeInModal {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    ''' # End of static_css definition
+
+    # --- Combine Static and Dynamic CSS ---
+    final_css = static_css + "\n\n/* === Generated Label CSS === */\n" + label_css
+
     # Create a completely new HTML file from scratch
     html_template = f'''<!DOCTYPE html>
 <html lang="en">
@@ -1000,894 +1913,7 @@ try:
         }});
     </script>
     <style>
-        :root {{
-            /* Claude.ai inspired color palette with Fair Forward influence */
-            --primary: #3b5998;
-            --primary-light: #4c70ba;
-            --secondary: #5b7fb9;
-            --light: #f9fafb;
-            --dark: #1a202c;
-            --gray: #64748b;
-            --border: #e2e8f0;
-            --background: #f8fafc;
-            --card-bg: #f5f8fc;
-            --text: #1e293b;
-            --text-light: #64748b;
-            --shadow: rgba(0, 0, 0, 0.04);
-            --shadow-hover: rgba(0, 0, 0, 0.08);
-            --title-color: #2c4a7c; /* Slightly more subtle blue shade */
-            --btn-text: #ffffff;
-        }}
-        
-        * {{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        }}
-        
-        html {{
-            /* Set a smaller base font size to scale everything down */
-            font-size: 14px;
-        }}
-        
-        body {{
-            background-color: var(--background);
-            color: var(--text);
-            line-height: 1.7;
-            font-size: 1rem; /* Use relative units based on html font-size */
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }}
-        
-        header {{
-            background: linear-gradient(to right, #f8f9fa, #f1f4f8); /* Subtle light gradient background */
-            padding: 0 0 3.5rem; /* Increased bottom padding from 2rem to 3.5rem */
-            position: relative;
-            overflow: hidden;
-            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
-        }}
-
-        /* Top navigation area that will contain both the logos and the about link */
-        .top-nav-container {{
-            background-color: #ffffff;
-            padding: 0;
-            width: 100%;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
-            margin-bottom: 2rem; /* Reverted back to 2rem from 3rem */
-        }}
-
-        .top-nav-area {{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.75rem 3rem; /* Reverted back to 0.75rem from 1.25rem */
-            max-width: 1100px;
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 0; /* Removed bottom margin */
-            position: relative;
-            z-index: 2;
-        }}
-        
-        .top-nav-links {{ /* Add this new rule */
-            display: flex;
-            align-items: center;
-            gap: 0.75rem; /* Adjust this value for desired spacing */
-        }}
-        
-        .about-link {{
-            color: var(--text);
-            font-size: 0.9rem;
-            text-decoration: none;
-            padding: 0.25rem 0.5rem;
-            border-radius: 3px;
-            transition: background-color 0.2s;
-        }}
-
-        .about-link:hover {{
-            background-color: rgba(0, 0, 0, 0.05);
-        }}
-        
-        .header-content {{
-            display: flex;
-            flex-direction: column;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 3rem;
-            position: relative;
-            z-index: 1;
-        }}
-
-        .header-main {{
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 3rem; /* Increased from 2rem to 3rem for more space between text and stats */
-        }}
-        
-        .header-logos {{
-            display: flex;
-            gap: 1.75rem; /* Reverted back to 1.75rem from 2.25rem */
-            align-items: center;
-        }}
-        
-        .header-logo {{
-            height: 45px; /* Reverted back to 45px from 52px */
-            width: auto;
-            transition: opacity 0.2s;
-            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.05));
-            vertical-align: middle; /* Better vertical alignment */
-        }}
-        
-        .header-logo:hover {{
-            opacity: 0.9;
-        }}
-        
-        .header-text {{
-            padding-right: 1rem;
-            max-width: 62%;
-        }}
-        
-        .header-text h1 {{
-            margin-bottom: 0.75rem;
-            font-size: 2.5rem;
-            font-weight: 400;
-            color: var(--title-color);
-            line-height: 1.2;
-            position: relative;
-            letter-spacing: -0.015em;
-        }}
-        
-        .subtitle {{
-            font-size: 1.15rem;
-            color: var(--text-light);
-            max-width: 800px;
-            font-weight: 300;
-            line-height: 1.5;
-            margin-top: 1rem;
-            letter-spacing: 0.01em;
-            margin-bottom: 1.25rem;
-        }}
-        
-        .header-learn-more {{
-            display: inline-flex;
-            align-items: center;
-            font-size: 0.9rem;
-            color: var(--primary);
-            text-decoration: none;
-            margin-top: 0.25rem;
-            transition: all 0.2s ease;
-        }}
-        
-        .header-learn-more:hover {{
-            opacity: 0.85;
-            text-decoration: underline;
-        }}
-        
-        .header-learn-more i {{
-            display: none;
-        }}
-        
-        .filters {{
-            background-color: #ffffff;
-            padding: 1.25rem 0; /* Reduced from 1.5rem */
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-            margin-top: -0.75rem;
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
-        }}
-        
-        .filters-content {{
-            max-width: 1100px; /* Reduced from 1200px to match container */
-            margin: 0 auto;
-            padding: 0 3rem; /* Increased from 2rem to match container */
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.25rem; /* Reduced from 1.5rem */
-            justify-content: center;
-            align-items: center;
-        }}
-        
-        .filter-group {{
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }}
-        
-        .filter-label {{
-            font-weight: 500;
-            font-size: 0.875rem;
-            color: var(--text-light);
-        }}
-        
-        select, input {{
-            padding: 0.5rem 0.875rem; /* Reduced from 0.625rem 1rem */
-            border-radius: 0.5rem;
-            border: 1px solid var(--border);
-            min-width: 160px; /* Reduced from 180px */
-            background-color: white;
-            font-size: 0.875rem;
-            color: var(--text);
-            transition: all 0.2s ease;
-            box-shadow: 0 1px 2px var(--shadow);
-        }}
-        
-        select:focus, input:focus {{
-            outline: none;
-            border-color: var(--primary-light);
-            box-shadow: 0 0 0 3px rgba(59, 89, 152, 0.1);
-        }}
-        
-        .search-box {{
-            display: flex;
-            align-items: center;
-            border: 1px solid var(--border);
-            border-radius: 0.5rem;
-            padding: 0.5rem 0.875rem; /* Reduced from 0.625rem 1rem */
-            min-width: 280px; /* Reduced from 300px */
-            background-color: white;
-            box-shadow: 0 1px 2px var(--shadow);
-            transition: all 0.2s ease;
-        }}
-        
-        .search-box:focus-within {{
-            border-color: var(--primary-light);
-            box-shadow: 0 0 0 3px rgba(59, 89, 152, 0.1);
-        }}
-        
-        .search-box input {{
-            border: none;
-            flex-grow: 1;
-            min-width: 0;
-            padding: 0;
-            box-shadow: none;
-        }}
-        
-        .search-box input:focus {{
-            box-shadow: none;
-        }}
-        
-        .search-box i {{
-            color: var(--gray);
-            margin-right: 0.75rem;
-        }}
-        
-        .container {{
-            max-width: 1100px; /* Reduced from 1200px for a more narrow layout */
-            margin: 2.5rem auto;
-            padding: 0 3rem; /* Increased from 2rem for more side spacing */
-        }}
-        
-        .grid {{
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* Reduced from 280px */
-            gap: 1.5rem; /* Increased from 1.25rem for more spacing between cards */
-        }}
-        
-        .card {{
-            background: linear-gradient(145deg, var(--card-bg) 0%, #f8faff 100%);
-            border-radius: 0.75rem;
-            overflow: hidden;
-            box-shadow: 0 3px 6px var(--shadow);
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            position: relative;
-            border: 1px solid rgba(59, 89, 152, 0.08);
-        }}
-        
-        .card:hover {{
-            transform: translateY(-4px);
-            box-shadow: 0 8px 18px var(--shadow-hover);
-            border-color: rgba(59, 89, 152, 0.1);
-        }}
-        
-        /* Make card description and footer areas look clickable */
-        .card-description, .card-footer {{
-            cursor: pointer;
-        }}
-        
-        .card-image {{
-            height: 130px; /* Increased from 120px for less square proportions */
-            background-color: #f8fafc;
-            background-image: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            overflow: hidden;
-        }}
-        
-        .card-image.has-image {{
-            background-image: none;
-        }}
-        
-        /* Add a gradient overlay that fades the image into the content */
-        .card-image.has-image::after {{
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                to bottom,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0) 50%,  /* Keep fully transparent until 50% of the way down */
-                rgba(255, 255, 255, 0.3) 75%,  /* Start subtle fade at 75% */
-                rgba(255, 255, 255, 0.8) 90%,  /* Increase fade more rapidly near bottom */
-                rgba(255, 255, 255, 1) 100%    /* Full white at the very bottom */
-            );
-            z-index: 1;
-        }}
-        
-        /* Add a fallback background color in case the image fails to load */
-        .card-image.has-image::before {{
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
-            z-index: -1;
-        }}
-        
-        .card-header {{
-            padding: 1.25rem 1.25rem 0.5rem; /* Increased horizontal padding */
-        }}
-        
-        .card-body {{
-            padding: 0 1.25rem 0.75rem; /* Increased horizontal padding */
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }}
-        
-        .domain-badges {{
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 0.75rem;
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            z-index: 1;
-        }}
-        
-        .domain-badge {{
-            display: inline-block;
-            background-color: var(--primary);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 2rem;
-            font-size: 0.7rem;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(59, 89, 152, 0.15);
-        }}
-        
-        .data-type-chips {{
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 0.75rem;
-            margin-top: 0.25rem;
-        }}
-        
-        .data-type-chip {{
-            font-size: 0.7rem;
-            font-weight: 400;
-            padding: 0.2rem 0.5rem;
-            border-radius: 1rem;
-            background-color: rgba(0, 0, 0, 0.05);
-            color: var(--gray);
-            display: inline-flex;
-            align-items: center;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }}
-        
-        .data-type-chip i {{
-            margin-right: 0.25rem;
-            font-size: 0.65rem;
-            opacity: 0.7;
-        }}
-        
-        .card h3 {{
-            font-size: 1rem; /* Reduced from 1.125rem */
-            margin-bottom: 0.5rem;
-            color: var(--title-color);
-            line-height: 1.3;
-            font-weight: 600;
-        }}
-        
-        .meta {{
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 0.5rem;
-        }}
-        
-        .meta-item {{
-            font-size: 0.75rem;
-            color: var(--gray);
-            display: flex;
-            align-items: center;
-        }}
-        
-        .meta-item i {{
-            margin-right: 0.25rem;
-        }}
-        
-        .card-description {{
-            margin-bottom: 0.75rem;
-            flex-grow: 1;
-        }}
-        
-        .description-text {{
-            color: var(--text-light);
-            font-size: 0.9375rem;
-            line-height: 1.6;
-            overflow: hidden;
-            position: relative;
-        }}
-        
-        .description-text.collapsed {{
-            max-height: 4.8em; /* Show 3 lines of text */
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-        }}
-        
-        .details-link {{
-            color: var(--primary);
-            font-size: 0.875rem;
-            font-weight: 500;
-            cursor: pointer;
-            margin-top: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.375rem;
-            transition: all 0.2s ease;
-        }}
-        
-        .details-link i {{
-            font-size: 0.75rem;
-            transition: transform 0.2s ease;
-        }}
-        
-        .details-link:hover {{
-            color: var(--primary-light);
-        }}
-        
-        .details-link:hover i {{
-            transform: translateX(3px);
-        }}
-        
-        .meta {{
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            font-size: 0.8125rem;
-            color: var(--text-light);
-        }}
-        
-        .meta-item {{
-            display: flex;
-            align-items: center;
-            gap: 0.375rem;
-        }}
-        
-        .meta-item a {{
-            color: var(--primary);
-            text-decoration: none;
-            transition: color 0.2s;
-        }}
-        
-        .meta-item a:hover {{
-            color: var(--secondary);
-            text-decoration: underline;
-        }}
-        
-        .tags {{
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-bottom: 1.5rem;
-        }}
-        
-        .tag {{
-            background-color: rgba(142, 68, 173, 0.08);
-            padding: 0.25rem 0.75rem;
-            border-radius: 2rem;
-            font-size: 0.75rem;
-            color: var(--primary);
-            transition: all 0.2s;
-            font-weight: 500;
-        }}
-        
-        .tag:hover {{
-            background-color: rgba(142, 68, 173, 0.12);
-            transform: translateY(-2px);
-        }}
-        
-        .card-footer {{
-            border-top: 1px solid var(--border);
-            padding: 0.625rem 1.25rem; /* Increased horizontal padding */
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            gap: 0.5rem;
-            background-color: rgba(59, 89, 152, 0.02);
-            flex-wrap: wrap;
-        }}
-        
-        .footer-chips {{
-            margin-right: auto;
-            margin-bottom: 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            align-items: center;
-        }}
-        
-        .footer-chips .data-type-chip {{
-            font-size: 0.7rem;
-            padding: 0.2rem 0.5rem;
-            margin-bottom: 0;
-        }}
-        
-        .license-tag {{
-            font-size: 0.75rem;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.375rem;
-            background-color: rgba(245, 158, 11, 0.1);
-            color: #d97706;
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-            margin-left: auto;
-            border: 1px solid rgba(245, 158, 11, 0.2);
-            transition: all 0.2s ease;
-        }}
-        
-        .license-tag:hover {{
-            background-color: rgba(245, 158, 11, 0.15);
-            transform: translateY(-2px);
-        }}
-        
-        .license-tag i {{
-            font-size: 0.7rem;
-            opacity: 0.8;
-        }}
-        
-        .btn {{
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.25rem;
-            padding: 0.375rem 0.625rem;
-            border-radius: 0.375rem;
-            font-size: 0.75rem;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.2s;
-            cursor: pointer;
-            border: none;
-            white-space: nowrap;
-            min-width: 0;
-            flex-shrink: 0;
-        }}
-        
-        .btn i {{
-            font-size: 0.75rem;
-        }}
-        
-        .btn-view-details {{
-            background-color: #fff0f0;  /* Light red background */
-            color: var(--text-light);
-            border: 1px solid #ffdddd;  /* Light red border */
-            margin-left: auto;
-            padding-left: 0.5rem;
-            padding-right: 0.5rem;
-        }}
-        
-        @media (max-width: 768px) {{
-            .filters-content {{
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 0 1.5rem;
-                gap: 1rem;
-            }}
-            
-            .header-content {{
-                padding: 0 1.5rem;
-            }}
-            
-            .top-nav-area {{
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 0.5rem 1.5rem; /* Reverted back to 0.5rem from 0.75rem */
-                gap: 0.75rem;
-            }}
-            
-            .top-nav-container {{
-                margin-bottom: 1.5rem; /* Reverted back to 1.5rem from 2rem */
-            }}
-            
-            .about-link {{
-                align-self: flex-end;
-                margin-top: -1.5rem; /* Negative margin to position it next to logos */
-            }}
-            
-            .header-logos {{
-                flex-wrap: wrap;
-                gap: 1.25rem;
-                justify-content: flex-start;
-            }}
-            
-            .header-logo {{
-                height: 38px; /* Adjusted for mobile but still larger than before */
-            }}
-            
-            .header-main {{
-                flex-direction: column;
-            }}
-            
-            .header-text {{
-                padding-right: 0;
-                max-width: 100%;
-            }}
-            
-            h1 {{
-                font-size: 2.2rem;
-                margin-bottom: 0.75rem;
-            }}
-            
-            .subtitle {{
-                font-size: 1.05rem;
-                margin-top: 0.9rem;
-                margin-bottom: 1.1rem;
-            }}
-            
-            .header-stats {{
-                margin-top: 1.75rem;
-                width: 100%;
-                min-width: initial;
-            }}
-            
-            .stats-row {{
-                flex-direction: row;
-                justify-content: center;
-                gap: 0.9rem;
-            }}
-            
-            .stat-item {{
-                flex-direction: column;
-                text-align: center;
-            }}
-            
-            .stat-value {{
-                font-size: 1.5rem;
-                line-height: 1.1;
-            }}
-            
-            .stat-label {{
-                font-size: 0.85rem;
-                margin-top: 0.1rem;
-            }}
-            
-            header {{
-                padding: 0.75rem 0 1.75rem;
-            }}
-            
-            .filters {{
-                margin-top: -0.75rem;
-            }}
-        }}
-        
-        {label_css}
-        
-        footer {{
-            background-color: var(--light);
-            color: var(--text-light);
-            padding: 4rem 0;
-            text-align: center;
-            border-top: 1px solid var(--border);
-        }}
-        
-        .footer-content {{
-            max-width: 1100px; /* Reduced from 1200px to match container */
-            margin: 0 auto;
-            padding: 0 3rem; /* Increased from 2rem to match container */
-        }}
-        
-        footer p {{
-            font-size: 0.9375rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }}
-        
-        .btn-primary {{
-            background-color: var(--primary);
-            color: var(--btn-text);
-            box-shadow: 0 2px 4px rgba(59, 89, 152, 0.15);
-        }}
-        
-        .btn-primary:hover {{
-            background-color: var(--primary-light);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(59, 89, 152, 0.2);
-        }}
-        
-        .btn-secondary {{
-            background-color: rgba(59, 89, 152, 0.08);
-            color: var(--primary);
-        }}
-        
-        .btn-secondary:hover {{
-            background-color: rgba(59, 89, 152, 0.12);
-            transform: translateY(-2px);
-        }}
-        
-        .btn-view-details:hover {{
-            background-color: #ffe0e0;  /* Slightly darker red on hover */
-            color: #d63031;  /* Darker red text on hover */
-            transform: translateY(-2px);
-        }}
-        
-        .empty-state {{
-            text-align: center;
-            padding: 4rem 2rem;
-            background-color: rgba(255, 255, 255, 0.5);
-            border-radius: 1rem;
-            border: 1px solid var(--border);
-            display: none;
-            margin: 2rem auto;
-            max-width: 600px;
-        }}
-        
-        .empty-state.visible {{
-            display: block;
-        }}
-        
-        .empty-state h3 {{
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--text);
-            font-weight: 600;
-        }}
-        
-        .empty-state p {{
-            color: var(--text-light);
-            font-size: 1.0625rem;
-            line-height: 1.6;
-        }}
-        
-        .card.filtered-out {{
-            display: none;
-        }}
-        
-        /* Side panel styles are now in enhanced_side_panel.css */
-        
-        /* Stats panel styling */
-        .header-stats {{
-            display: flex;
-            flex-direction: column;
-            min-width: 180px;
-            justify-content: center;
-            align-self: center;
-        }}
-        
-        .stats-row {{
-            display: flex;
-            justify-content: space-between;
-            gap: 1.2rem;
-            margin-bottom: 1rem;
-        }}
-        
-        .stats-bottom {{
-            display: flex;
-            justify-content: center;
-        }}
-        
-        .stat-item {{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }}
-        
-        .stat-text {{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }}
-        
-        .stat-value {{
-            font-size: 1.75rem;
-            font-weight: 500;
-            color: var(--title-color);
-            line-height: 1.1;
-        }}
-        
-        .stat-label {{
-            font-size: 0.9rem;
-            color: var(--text-light);
-            margin-top: 0.15rem;
-        }}
-
-        /* Modal Styles */
-        .modal-container {{
-            display: none; /* Hidden by default */
-            position: fixed;
-            z-index: 1050;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }}
-        .modal-container.visible {{
-            display: flex;
-            opacity: 1;
-        }}
-        .modal-content {{
-            position: relative;
-            background-color: #fff;
-            padding: 2.5rem;
-            border-radius: 0.75rem;
-            width: 90%;
-            max-width: 600px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            animation: fadeInModal 0.3s ease-out;
-        }}
-        .modal-close {{
-            position: absolute;
-            top: 0.75rem;
-            right: 1rem;
-            font-size: 1.75rem;
-            font-weight: bold;
-            color: #aaa;
-            background: none;
-            border: none;
-            cursor: pointer;
-            line-height: 1;
-        }}
-        .modal-close:hover,
-        .modal-close:focus {{
-            color: #333;
-            text-decoration: none;
-        }}
-        .modal-content h2 {{
-            margin-top: 0;
-            margin-bottom: 1.5rem;
-            color: var(--title-color);
-            font-weight: 600;
-            font-size: 1.25rem;
-        }}
-        .modal-content p {{
-            margin-bottom: 0;
-            color: var(--text);
-            line-height: 1.6;
-        }}
-        @keyframes fadeInModal {{
-            from {{ opacity: 0; transform: translateY(-20px); }}
-            to {{ opacity: 1; transform: translateY(0); }}
-        }}
+        {final_css} /* Inject the combined CSS here */
     </style>
 </head>
 <body>

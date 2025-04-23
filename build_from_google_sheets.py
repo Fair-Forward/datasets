@@ -42,16 +42,20 @@ def create_project_directories(df):
     print("Creating project directories...")
     public_projects_dir = "docs/public/projects"  # Only use public directory
     
-    # Check if essential columns exist after potential renaming
-    required_cols = ['OnSite Name', 'Description - What can be done with this? What is this about?',
-                     'Data - Key Characteristics', 'Model/Use-Case - Key Characteristics',
-                     'Deep Dive - How can you concretely work with this and build on this?']
-    missing_cols = [col for col in required_cols if col not in df.columns]
-    if missing_cols:
-        print(f"Error: Missing required columns in DataFrame for directory creation: {missing_cols}")
-        # Optionally, you might want to exit or handle this differently
-        # exit(1)
-        return # Stop directory creation if columns are missing
+    # Check if Project ID column exists (it's critical)
+    if 'Project ID' not in df.columns:
+        print(f"Error: Critical column 'Project ID' is missing from the DataFrame. Cannot create directories.")
+        exit(1)
+        
+    # Check for content columns (optional, for warnings)
+    critical_content_cols = [
+        'Description - What can be done with this? What is this about?',
+        'Data - Key Characteristics', 'Model/Use-Case - Key Characteristics',
+        'Deep Dive - How can you concretely work with this and build on this?'
+    ]
+    missing_content_cols = [col for col in critical_content_cols if col not in df.columns]
+    if missing_content_cols:
+        print(f"Warning: Missing content columns, markdown files might be incomplete: {missing_content_cols}")
 
     # Create the projects directory if it doesn't exist
     if not os.path.exists(public_projects_dir):
@@ -59,61 +63,100 @@ def create_project_directories(df):
     
     # Iterate through each row in the dataframe
     for index, row in df.iterrows():
-        title = row.get('OnSite Name', '')
-        if not title or pd.isna(title):
+        # --- Get Project ID ---
+        project_id = row.get('Project ID', '')
+        if not project_id or pd.isna(project_id):
+            # print(f"Skipping row {index}: Missing 'Project ID'.") # Less verbose
             continue
-        
-        # Normalize the title for use as a directory name
-        dir_name = normalize_for_directory(title)
+            
+        # Normalize the Project ID for use as a directory name
+        dir_name = normalize_for_directory(str(project_id))
         if not dir_name:
+            print(f"Skipping row {index}: Could not normalize Project ID '{project_id}' to a valid directory name.")
             continue
+
+        # --- Determine Display Title (and check if any exists) ---
+        display_title = None
+        has_real_title = False
+        # Check for columns existence before trying to get data
+        if 'Dataset Speaking Titles' in df.columns:
+            dataset_title = row.get('Dataset Speaking Titles', '')
+            if dataset_title and not pd.isna(dataset_title):
+                display_title = dataset_title
+                has_real_title = True
         
-        # Create the project directory
-        project_dir = os.path.join(public_projects_dir, dir_name)
-        
-        if not os.path.exists(project_dir):
-            os.makedirs(project_dir)
-            print(f"Created directory: {project_dir}")
-        
-        # Create images and docs subdirectories
-        images_dir = os.path.join(project_dir, "images")
-        docs_dir = os.path.join(project_dir, "docs")
-        
-        if not os.path.exists(images_dir):
-            os.makedirs(images_dir)
-        
-        if not os.path.exists(docs_dir):
-            os.makedirs(docs_dir)
-        
-        # Extract and save additional columns as markdown files
-        columns_to_extract = {
-            'Description - What can be done with this? What is this about?': 'description.md',
-            'Data - Key Characteristics': 'data_characteristics.md',
-            'Model/Use-Case - Key Characteristics': 'model_characteristics.md',
-            'Deep Dive - How can you concretely work with this and build on this?': 'how_to_use.md'
-        }
-        
-        for column, filename in columns_to_extract.items():
-            content = row.get(column, '')
-            if content and not pd.isna(content):
-                # Create markdown file with the content
-                file_path = os.path.join(docs_dir, filename)
+        if not display_title and 'Use Case Speaking Title' in df.columns:
+            usecase_title = row.get('Use Case Speaking Title', '')
+            if usecase_title and not pd.isna(usecase_title):
+                display_title = usecase_title
+                has_real_title = True
                 
-                # Write the content directly without adding a title
-                # The title will be added by the HTML template
-                with open(file_path, 'w', encoding='utf-8') as f:
-                    f.write(content)
-                print(f"Created file: {file_path}")
-        
-        # Check for existing project images in the old location and copy them if they exist
-        old_images_dir = os.path.join("docs/projects", dir_name, "images")
-        if os.path.exists(old_images_dir):
-            for image_file in os.listdir(old_images_dir):
-                if image_file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
-                    src_path = os.path.join(old_images_dir, image_file)
-                    dst_path = os.path.join(images_dir, image_file)
-                    shutil.copy2(src_path, dst_path)
-                    print(f"Copied image: {image_file} to {images_dir}")
+        if not display_title and 'OnSite Name' in df.columns:
+            onsite_name = row.get('OnSite Name', '')
+            if onsite_name and not pd.isna(onsite_name):
+                display_title = onsite_name
+                has_real_title = True
+
+        # --- Create Directories and Files ONLY IF Project ID and a Real Title exist ---
+        if project_id and has_real_title:
+            # Create main project directory
+            project_dir = os.path.join(public_projects_dir, dir_name)
+            if not os.path.exists(project_dir):
+                os.makedirs(project_dir)
+                print(f"Created directory: {project_dir}")
+            
+            # Create images and docs subdirectories
+            images_dir = os.path.join(project_dir, "images")
+            docs_dir = os.path.join(project_dir, "docs")
+            
+            if not os.path.exists(images_dir):
+                os.makedirs(images_dir)
+            if not os.path.exists(docs_dir):
+                os.makedirs(docs_dir)
+                
+            # --- Create empty file named after normalized display title ---
+            normalized_display_title = normalize_for_directory(str(display_title))
+            if normalized_display_title: # Ensure title normalization didn't result in empty string
+                title_filename = f"{normalized_display_title}.txt"
+                title_file_path = os.path.join(project_dir, title_filename)
+                try:
+                    # Create an empty file (or update timestamp if exists)
+                    with open(title_file_path, 'a'): 
+                        os.utime(title_file_path, None)
+                    print(f"Created/Touched title file: {title_file_path}")
+                except Exception as e_title:
+                    print(f"Error creating/touching title file {title_file_path}: {e_title}")
+            else:
+                 print(f"Warning: Could not create title file for row {index} because title '{display_title}' normalized to empty string.")
+
+            # --- Extract and save additional columns as markdown files ---
+            columns_to_extract = {
+                'Description - What can be done with this? What is this about?': 'description.md',
+                'Data - Key Characteristics': 'data_characteristics.md',
+                'Model/Use-Case - Key Characteristics': 'model_characteristics.md',
+                'Deep Dive - How can you concretely work with this and build on this?': 'how_to_use.md'
+            }
+            
+            for column, filename in columns_to_extract.items():
+                if column in df.columns:
+                    content = row.get(column, '')
+                    if content and not pd.isna(content):
+                        file_path = os.path.join(docs_dir, filename)
+                        try:
+                            with open(file_path, 'w', encoding='utf-8') as f:
+                                f.write(str(content)) 
+                            print(f"Created/Updated file: {file_path}")
+                        except Exception as e_md:
+                            print(f"Error writing markdown file {file_path}: {e_md}")
+                else:
+                    # Less verbose logging
+                    # print(f"Skipping file {filename} for row {index}: Column '{column}' not found.")
+                    pass # Silently skip if column doesn't exist
+        else:
+            # Skipped because no Project ID or no real title was found
+            if project_id:
+                print(f"Skipping directory creation for Project ID '{project_id}' (row {index}): No display title found.")
+            # No need to print if project_id was missing, already handled
 
 # Fetch data from Google Sheets
 if not args.skip_fetch:
@@ -166,6 +209,7 @@ if not args.skip_fetch:
         # Define the canonical column names used by scripts and potential aliases in the sheet
         CANONICAL_COLUMN_MAP = {
             # Canonical Name: [List of potential aliases in Google Sheet]
+            "Project ID": ["Project ID", "Stable ID", "Unique Project ID"], # Added Project ID
             "OnSite Name": ["OnSite Name", "Name in GIZ-internal database", "Project Title", "Title"],
             "Dataset Speaking Titles": ["Dataset Speaking Titles", "Dataset Title", "Expressive Title [for dataset]"],
             "Use Case Speaking Title": ["Use Case Speaking Title", "Use Case Title", "Expressive Title [for use case, application]"],
@@ -204,7 +248,7 @@ if not args.skip_fetch:
 
         # Identify which canonical columns are absolutely required
         CRITICAL_COLUMNS = [
-            "OnSite Name",
+            "Project ID", # Added Project ID as critical for directory creation
             "Dataset Link", # Needed for generate_catalog.py
             "Description - What can be done with this? What is this about?", # Needed for create_project_dirs
             "Data - Key Characteristics", # Needed for create_project_dirs
