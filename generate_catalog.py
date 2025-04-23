@@ -1273,13 +1273,14 @@ try:
             flex-direction: column;
             height: 100%;
             position: relative;
-            border: 1px solid var(--border); /* Use standard border color */
+            /* Make blue border permanent */
+            border: 1px solid var(--primary-light);
         }
         
         .card:hover {
             transform: translateY(-5px); /* More lift */
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* More pronounced shadow */
-            border-color: var(--primary-light); /* Highlight border */
+            /* border-color: var(--primary-light); No longer needed here */
         }
         
         .card-description, .card-footer {
