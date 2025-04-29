@@ -2133,6 +2133,7 @@ try:
         <div class="footer-content">
             <p>&copy; {datetime.datetime.now().year} Fair Forward - Artificial Intelligence for All | A project by GIZ</p>
             <p style="margin-top: 1rem; font-size: 0.875rem;"><a href="https://github.com/Fair-Forward/datasets" target="_blank" style="color: var(--primary); text-decoration: none;">Contribute to the Source Code on GitHub <i class="fab fa-github"></i></a></p>
+            <p style="margin-top: 0.5rem; font-size: 0.875rem;">For technical questions/feedback <a href="https://github.com/Fair-Forward/datasets/issues" target="_blank" style="color: var(--primary);">open an issue on Github</a> or contact <a href="mailto:jonas.nothnagel@gmail.com" style="color: var(--primary);">Jonas Nothnagel</a>.</p>
         </div>
     </footer>
     
