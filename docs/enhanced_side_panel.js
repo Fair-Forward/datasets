@@ -128,6 +128,13 @@ function loadItemDetails(itemId) {
     const region = card.getAttribute('data-region');
     const projectId = card.getAttribute('data-project-id');
     
+    // --- START: Extract Authors and Orgs from Data Attributes ---
+    const authorsContentHTML = card.getAttribute('data-authors');
+    const organizationsContentHTML = card.getAttribute('data-organizations');
+    console.log('Authors data:', authorsContentHTML);
+    console.log('Organizations data:', organizationsContentHTML);
+    // --- END: Extract Authors and Orgs from Data Attributes ---
+    
     // Basic check if projectId exists
     if (!projectId) {
         console.error('Could not find project ID for card with data-id:', itemId);
@@ -285,22 +292,15 @@ function loadItemDetails(itemId) {
             tocContent += '<div class="panel-toc-title"><i class="fas fa-list"></i> Contents</div>';
             tocContent += '<ul class="panel-toc-list">';
             
-            // Add TOC items for each section with content
+            // Add TOC items for each main documentation section with content
             for (const [section, content] of Object.entries(contentSections)) {
                 if (content) {
                     const sectionId = section.toLowerCase().replace(/\s+/g, '-');
                     let icon = 'fa-file-alt';
-                    
-                    // Choose appropriate icon for each section
-                    if (section.includes('Data')) {
-                        icon = 'fa-database';
-                    } else if (section.includes('Model')) {
-                        icon = 'fa-robot';
-                    } else if (section.includes('How to Use')) {
-                        icon = 'fa-lightbulb';
-                    } else if (section === 'What is this about?') {
-                        icon = 'fa-info-circle';
-                    }
+                    if (section.includes('Data')) icon = 'fa-database';
+                    else if (section.includes('Model')) icon = 'fa-robot';
+                    else if (section.includes('How to Use')) icon = 'fa-lightbulb';
+                    else if (section === 'What is this about?') icon = 'fa-info-circle';
                     
                     tocContent += `<li class="panel-toc-item">
                         <a href="#${sectionId}" class="panel-toc-link">
@@ -308,6 +308,15 @@ function loadItemDetails(itemId) {
                         </a>
                     </li>`;
                 }
+            }
+            
+            // Add TOC item for Organizations if it exists
+            if (organizationsContentHTML) {
+                 tocContent += `<li class="panel-toc-item">
+                    <a href="#organizations" class="panel-toc-link">
+                        <i class="fas fa-building"></i> Organizations Involved
+                    </a>
+                </li>`;
             }
             
             tocContent += '</ul></div>';
@@ -327,7 +336,21 @@ function loadItemDetails(itemId) {
             }
         }
         
-        // Add region section if available with enhanced styling
+        // --- Reorder sections: Orgs -> Region -> Authors -> Tags ---
+        
+        // Add Organizations Section
+        if (organizationsContentHTML) {
+            detailContent += `
+                <div class="detail-section" id="organizations">
+                    <h3 data-section="Organizations Involved">Organizations Involved</h3>
+                    <div class="documentation-content">
+                        ${organizationsContentHTML} 
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Add region section if available
         if (region) {
             detailContent += `
                 <div class="detail-section" id="region">
@@ -339,7 +362,19 @@ function loadItemDetails(itemId) {
             `;
         }
         
-        // Add tags section with enhanced styling
+        // Add Authors Section
+        if (authorsContentHTML) {
+            detailContent += `
+                <div class="detail-section" id="authors">
+                    <h3 data-section="Authors">Authors</h3>
+                    <div class="documentation-content">
+                        ${authorsContentHTML} 
+                    </div>
+                </div>
+            `;
+        }
+
+        // Add tags section LAST
         if (tags && tags.length > 0) {
             detailContent += `
                 <div class="detail-section" id="tags">
@@ -352,6 +387,7 @@ function loadItemDetails(itemId) {
                 </div>
             `;
         }
+        // --- End Reordering ---
         
         // Update the detail panel content
         const detailPanelData = document.getElementById('detailPanelData');

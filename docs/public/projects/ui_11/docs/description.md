@@ -1,3 +1,1 @@
-DUMMY (to be refined with partners)
- 
- Supporting the set-up of a federated NLP ecosystem of NLP companies across Africa
+Supporting the Masakhane network to develop an NLP data catalogue, handbook, datasheets, and governance models for management of catalogue, see https://www.masakhane.io/

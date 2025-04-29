@@ -1,1 +1,1 @@
-Combined from two formerly planned service contracts (1) Making the IISc datasets more sustainable, usable, support AIEP, make use-cases possible + (2) Hackathon for IISc voice datasets with Bhashini on climate & sustainable agriculture
+Merged from 2 service contract: (1) implement CC recommendations nationla (110k) and (2) implement CC recommendations state (20k)

@@ -1,1 +1,1 @@
-Supporting the Masakhane network to develop an NLP data catalogue, handbook, datasheets, and governance models for management of catalogue, see https://www.masakhane.io/
+Smart Africa, With the following start-ups and organizations: CropScan Africa, Faminga, Farmer Lifeline Technologies, ignitia, KivuGreen Corporation, NjordFrey, Strathmore Research and Consultancy Centre, VaxusImplemented through Smart Africa, see: https://smartafrica.org/innovate-africa-challenge/

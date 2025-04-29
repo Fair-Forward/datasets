@@ -216,6 +216,18 @@
     content: '\f279'; /* map icon */
 }
 
+/* START: Add Authors section icon */
+.detail-section h3[data-section="Authors"]::before {
+    content: '\f559'; /* user-edit icon (or fa-pen-alt: \f305) */
+}
+/* END: Add Authors section icon */
+
+/* START: Add Organizations section icon */
+.detail-section h3[data-section="Organizations Involved"]::before {
+    content: '\f1ad'; /* building icon */
+}
+/* END: Add Organizations section icon */
+
 .documentation-content {
     padding: 1.5rem;
     color: #1e293b;

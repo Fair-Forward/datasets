@@ -242,8 +242,16 @@ if not args.skip_fetch:
                 "Deep Dive - How can you concretely work", "Deep Dive", "How to Use",
                 "Deep dive: How can you concretely work with this and built on this? How much will this cost and which resources are available to help me? " # Added from log
                 ],
-            "License": ["License", "Usage Rights"]
-            # Add other columns if they become necessary for scripts
+            "License": ["License", "Usage Rights"],
+            # --- Add new columns here ---
+            "Organizations Involved": [
+                "Organizations involved - including logos, links and visual elements",
+                "Organizations Involved", "Contributing Organizations", "Partners"
+            ],
+            "Authors": [
+                "Authors of this information.", "Authors", "Information Authors", "Data Curators"
+            ]
+            # --- End of new columns ---
         }
 
         # Identify which canonical columns are absolutely required

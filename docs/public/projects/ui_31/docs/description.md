@@ -1,3 +1,1 @@
-Placeholder
- Total: 69,820
- Budget: total 40k EUR from FF (29,820k EUR come from DTC Kenya)
+Follow up of HCSA with focus on blue carbon and training of marginalized communities, as well as policy dialogue on climate

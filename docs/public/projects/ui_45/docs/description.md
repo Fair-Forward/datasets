@@ -1,2 +1,1 @@
-Semantic Chatbot(s) & IVR for G2C services in Public Service Delivery and Good Governance 
- in Collaboration with Konza Technopolis, ICTA
+Running system (during Covid with 2 Million info requests ) / Business Model training on open source AI business with Digital Umuganda / Open Source system to allow for easy scaling and replication and sustainability

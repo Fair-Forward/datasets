@@ -5,6 +5,7 @@ import re
 import colorsys
 import argparse
 import datetime
+from urllib.parse import urlparse
 
 # Parse command line arguments
 parser = argparse.ArgumentParser(description='Generate HTML catalog from Excel file.')
@@ -246,6 +247,10 @@ def generate_card_html(row, idx):
     data_type = row.get('Data Type', '')
     contact = row.get('Point of Contact/Communities', '')
     region = row.get('Country Team', '')
+    # --- Extract new columns ---
+    organizations = row.get('Organizations Involved', '')
+    authors = row.get('Authors', '')
+    # --- End Extract new columns ---
     
     # --- Basic Checks ---
     # Skip if Project ID is missing (shouldn't happen if build script requires it, but good check)
@@ -326,23 +331,42 @@ def generate_card_html(row, idx):
         if domain_badges_html:
             domain_badges = f'<div class="domain-badges">{"".join(domain_badges_html)}</div>'
     
-    # --- Meta Items (Region, Contact) --- 
-    # (No changes needed here)
+    # --- Meta Items (Region, Contact) ---
     meta_items = []
+    # Region
     if region and not pd.isna(region):
-        # Clean up region text by removing extra spaces and normalizing
         clean_region = re.sub(r'\s+', ' ', str(region).strip())
         meta_items.append(f'<div class="meta-item"><i class="fas fa-map-marker-alt"></i> {html.escape(clean_region)}</div>')
     
+    # Contact
     if contact and not pd.isna(contact):
-        # Process contact information with markdown links
         contact_html = convert_markdown_links_to_html(contact)
         meta_items.append(f'<div class="meta-item"><i class="fas fa-user"></i> {contact_html}</div>')
-    
+        
+    # --- REMOVE Authors and Organizations from visible meta items ---
+    # if authors and not pd.isna(authors):
+    #     authors_html = convert_markdown_links_to_html(str(authors))
+    #     meta_items.append(f'<div class="meta-item"><i class="fas fa-pen-alt"></i> {authors_html}</div>')
+    # if organizations and not pd.isna(organizations):
+    #     organizations_html = convert_markdown_links_to_html(str(organizations))
+    #     meta_items.append(f'<div class="meta-item"><i class="fas fa-building"></i> {organizations_html}</div>')
+        
+    # --- Combine Remaining Meta Items ---
     meta_html = ""
     if meta_items:
         meta_html = f'<div class="meta">{"".join(meta_items)}</div>'
     
+    # --- Process Authors and Organizations for Data Attributes ---
+    authors_data_attr = ""
+    if authors and not pd.isna(authors):
+        # Process potential links/markdown within the authors string
+        authors_data_attr = html.escape(convert_markdown_links_to_html(str(authors)), quote=True)
+        
+    organizations_data_attr = ""
+    if organizations and not pd.isna(organizations):
+        # Process potential links/markdown within the organizations string
+        organizations_data_attr = html.escape(convert_markdown_links_to_html(str(organizations)), quote=True)
+
     # --- Data Type Chips --- 
     # (No changes needed here)
     data_type_chips = []
@@ -484,16 +508,96 @@ def generate_card_html(row, idx):
     if data_type_chips:
         footer_links.append(f'<div class="data-type-chips footer-chips">{"".join(data_type_chips)}</div>')
     
-    # Add license tag dynamically
+    # --- Process License Tag with Link Handling ---
     license_text = row.get('License', '')
     license_html = '' # Initialize
+    
     if license_text and not pd.isna(license_text) and str(license_text).strip():
-        # Use the license from the sheet, escape it for safety
-        escaped_license = html.escape(str(license_text).strip())
-        license_html = f'<div class="license-tag"><i class="fas fa-copyright"></i> {escaped_license}</div>'
+        text_content = str(license_text).strip()
+        link_name = None
+        link_url = None
+        
+        # 1. Check for Markdown link: [Name](URL)
+        md_match = re.search(r'\[(.*?)\]\((.*?)\)', text_content)
+        if md_match:
+            link_name = md_match.group(1).strip()
+            link_url = md_match.group(2).strip()
+            
+        # 2. Check for Name (URL) format
+        elif '(' in text_content and ')' in text_content and 'http' in text_content:
+             name_url_match = re.search(r'([^(]+)\s*\((https?://[^)]+)\)', text_content)
+             if name_url_match:
+                 link_name = name_url_match.group(1).strip()
+                 link_url = name_url_match.group(2).strip()
+
+        # 3. Check for bare URL
+        elif text_content.startswith('http://') or text_content.startswith('https://'):
+            url_match = re.search(r'(https?://\S+)', text_content)
+            if url_match:
+                link_url = url_match.group(1)
+                link_name = None # Initialize link_name here
+
+                try:
+                    parsed_url = urlparse(link_url)
+                    path = parsed_url.path.strip('/') # Get path e.g., 'licenses/agpl-3.0.html'
+                    
+                    # --- START: Specific Creative Commons URL Handling ---
+                    is_cc_url = "creativecommons.org" in parsed_url.netloc and path.startswith("licenses/")
+                    if is_cc_url:
+                        path_parts = [part for part in path.split('/') if part] # e.g., ['licenses', 'by', '4.0']
+                        if len(path_parts) >= 3 and path_parts[0] == 'licenses':
+                            version = path_parts[-1]
+                            components = path_parts[1:-1]
+                            if version and components:
+                                link_name = f"cc-{'-'.join(components)}-{version}" # e.g., cc-by-4.0
+                    # --- END: Specific Creative Commons URL Handling ---
+                    
+                    # --- START: Specific Open Data Commons URL Handling ---
+                    # Check if already handled by CC or if it's an ODC URL
+                    elif not link_name and "opendatacommons.org" in parsed_url.netloc and path.startswith("licenses/"):
+                        path_parts = [part for part in path.split('/') if part] # e.g., ['licenses', 'dbcl', '1-0']
+                        if len(path_parts) >= 3 and path_parts[0] == 'licenses':
+                            version = path_parts[-1]
+                            # Assume the part before version is the license abbreviation
+                            license_abbr = path_parts[-2]
+                            if version and license_abbr:
+                                link_name = f"{license_abbr}-{version}" # e.g., dbcl-1-0
+                    # --- END: Specific Open Data Commons URL Handling ---
+
+                    # --- General Path/Filename Extraction (if not handled by specific cases) ---
+                    if not link_name and path:
+                        filename = os.path.basename(path) # Get e.g., 'agpl-3.0.html' or '4.0'
+                        name_part, _ = os.path.splitext(filename) # Get e.g., 'agpl-3.0' or '4.0'
+                        if name_part:
+                            link_name = name_part
+
+                    # Fallback to domain name if no name extracted yet
+                    if not link_name:
+                        link_name = parsed_url.netloc or "License Link" # Use domain or default
+
+                except Exception as e:
+                    # If any error occurs during parsing, fall back safely
+                    print(f"Warning: Could not parse license URL '{link_url}' effectively: {e}")
+                    # Attempt fallback to domain name again, just in case
+                    try:
+                         parsed_url_fallback = urlparse(link_url)
+                         link_name = parsed_url_fallback.netloc or "License Link"
+                    except:
+                         link_name = "License Link" # Absolute fallback
+
+        # 4. If URL found, create link, otherwise use plain text
+        if link_url and link_name:
+            # Escape name for safety, URL is used directly in href
+            escaped_name = html.escape(link_name)
+            license_html = f'<div class="license-tag"><i class="fas fa-copyright"></i> <a href="{link_url}" target="_blank">{escaped_name}</a></div>'
+        else:
+            # No link found or extracted, display plain text
+            escaped_license = html.escape(text_content)
+            license_html = f'<div class="license-tag"><i class="fas fa-copyright"></i> {escaped_license}</div>'
+            
     else:
         # Use the default placeholder if license is empty or invalid
-        license_html = f'<div class="license-tag"><i class="fas fa-copyright"></i> CC BY 4.0</div>'
+        license_html = f'<div class="license-tag"><i class="fas fa-copyright"></i> cc-by-4.0 </div>'
 
     # Add the generated or default license HTML to footer links
     footer_links.append(license_html)
@@ -501,9 +605,15 @@ def generate_card_html(row, idx):
     footer_html = f'<div class="card-footer">{"".join(footer_links)}</div>'
     
     # --- Construct the complete card --- 
-    # Use data-project-id, remove data-dir-names
+    # Add data-authors and data-organizations attributes
     card_html = f'''
-    <div class="{card_class}" data-title="{html.escape(str(title))}" data-region="{html.escape(str(region))}" data-id="{idx}" data-project-id="{normalized_project_id}">
+    <div class="{card_class}" \
+         data-title="{html.escape(str(title))}" \
+         data-region="{html.escape(str(region))}" \
+         data-id="{idx}" \
+         data-project-id="{normalized_project_id}" \
+         data-authors="{authors_data_attr}" \
+         data-organizations="{organizations_data_attr}">
         {card_image}
         <div class="card-header">
             {domain_badges}
@@ -1273,14 +1383,15 @@ try:
             flex-direction: column;
             height: 100%;
             position: relative;
-            /* Make blue border permanent */
-            border: 1px solid var(--primary-light);
+            /* Set a default transparent border to prevent layout shifts */
+            border: 1px solid transparent;
         }
         
         .card:hover {
             transform: translateY(-5px); /* More lift */
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* More pronounced shadow */
-            /* border-color: var(--primary-light); No longer needed here */
+            /* Apply blue border color on hover */
+            border-color: var(--primary-light);
         }
         
         .card-description, .card-footer {
@@ -1876,6 +1987,15 @@ try:
         @keyframes fadeInModal {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Style for links within license tags */
+        .license-tag a {
+            color: inherit; /* Inherit text color from parent */
+            text-decoration: none; /* Remove underline */
+        }
+        .license-tag a:hover {
+            text-decoration: underline; /* Add underline on hover */
         }
     ''' # End of static_css definition
 

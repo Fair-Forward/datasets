@@ -1,2 +1,1 @@
-Contract name: Automation of components of the MFIN-CGRM CRM solution 
- Follow-up project from former MFIN engagement to move from prototype to production and implement the remaining use-cases.
+The project developed a scalable data collection model for JEEViKA’s frontline workers, integrating digital tools and geofencing, and empowered farmers with personalized climate-smart advice through Farmer Scorecards.

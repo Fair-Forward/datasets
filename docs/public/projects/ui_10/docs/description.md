@@ -1,1 +1,1 @@
-Our language, our data: Co-creating equitable governance models with African language communities
+A generic open source set of tools and practices that should enable all other innovators to build (and perhaps scale) more easily chatbots in African languages

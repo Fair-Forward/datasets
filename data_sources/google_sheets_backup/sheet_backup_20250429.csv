@@ -1,0 +1,439 @@
+Name in GIZ-internal database,Project ID,Catchy Title [for dataset],"Catchy Title [for use case, application]",Country / Region ,What this is about/Description,Access to the dataset [link],"Access to AI Model, Software, AI Application [link]",Sector /Sustainable Development Goal ,Use Case Pipeline Status / maturity [INTERNAL],Type of Data,Point of contact & community support ,Data characteristics: how to use it & key characteristics ,"Model characteristics: How to use & key characteristics of the AI Model, Software, AI Application",How to use it: How can you concretely work with this and built on this? How much will this cost and which resources are available to help me? ,"Organizations involved - including logos, links and visual elements",Authors of this information:,Technical Domain,Expressive visualization / picture related to dataset / possible use / story-tellling,License,"Additional Resources (Paper, Publications, etc)",,Info on fair sharing as as Digital Public Good 
+,don't change - for backend processing,"The title should express clearly „what this is useful for, why it makes sense to replicate this” - not the action itself (not: „data collection” or “model training”, rather “Improving livelihoods in Ghana and Uganda: Drone-based Agricultural Dataset for Crop Yield Estimation of cashew, cocoa, and coffee”). 
+•        Think about the primary goal or outcome of this AI application and how to put it in plain, attractive language (see key audiences)?
+•        How does the title convey key information about the project's impact?
+•        How can you succinctly describe what users can do with this AI application?
+•        Can you subtly link the title to possible development outcomes (e.g., ""for climate mitigation"")?
+","The title should express clearly „what this is this useful for, why it makes sense to replicate this” - not the action itself (not: „data collection” or “model training”, rather “Improving livelihoods in Ghana and Uganda: Drone-based Agricultural Dataset for Crop Yield Estimation of cashew, cocoa, and coffee”). 
+•        Think about the primary goal or outcome of this AI application and how to put it in plain, attractive language (see key audiences)?
+•        How does the title convey key information about the project's impact?
+•        How can you succinctly describe what users can do with this AI application?
+•        Can you subtly link the title to possible development outcomes (e.g., ""for climate mitigation"")?
+","•        In which country/region/district will the use-case have its major impact?  Where did the activity take place? Which regions would fit the data collected?
+•        Mention, if there are already plans for scaling to other areas or if this is likely to succeed.
+
+This field can include different countries/regions. For example, if we collected language data to train a multi-model LLM that potentially spans over a distinct region/country. You might also put “worldwide” if this is globally applicable.
+","Try to tell and convey the story in the first sentences. Be direct, concise and avoid the use of overly promotional language. People should immediately understand what this is about, if it is interesting for their application and therefore also what they can do with this. Focus on: 1) What is it?  2) Why was it created? 3) How/for what can it be used?
+
+•        What specific problem does this AI  dataset / application address? What is the challenge that the AI system is intended to solve? 
+•        What parts are now are all openly available as an open-source replication kit and digital public good? (How specifically can this foster local AI innovation for sustainable development?)
+•        Goal of the AI dataset / AI system: What intended change/impact shall the AI system create? (If possible, add numbers to show the impact e.g. “this might help farmers to get up to 30 percent more revenue” or similar)
+•        Who could be future primary beneficiaries or users of this use case? Who is mainly considered as direct beneficiary of the system? You might consider directly addressing people, e.g. “This can be used to empower you as a forest monitoring agency to do xyz”). Consider, how different stakeholders (e.g., businesses, NGOs, government agencies) might want to utilize this AI application/use case?
+•        What are the key features or capabilities of this AI system?
+•        How does this application contribute to broader development goals or social impact?
+•        Optional: How specifically can this foster local AI innovation for sustainable development?
+",Where can the dataset be accessed?  -->Provide direct links ,"Where can the AI model or necessary Software or the application be accessed? 
+--> Provide links to code repositories, data processing steps,  APIs, or platforms
+","• Which sector(s) does this AI application primarily serve?
+•  Are there any cross-cutting themes (e.g., climate adaptation, gender equality, Agriculture, etc)?
+Ideally, we could employ some sort of repeatedly used taxonomy to make the domain classification more standardized. You may take orientation from the Sustainable Development Goals (SDGs= (https://sdgs.un.org/goals ) for language.
+","Please specify status/maturity, which can be additive (name multiple then). 
+First status: Dataset (data available, Ind 1.1),
+Second status: Pilot (an experiment or pilot has been implemented, Ind 2)
+Third status: Use-Case (A concrete application with users has been implemented)
+Fourth status: Use-Case with Business Model (ind.3)","-        Which data type(s) does the dataset contain?  Please chose from “Geospacial”, “Audio”, “Text”, “Tabular”,  “Images” or “other”.","Think about who to contact if someone would like to get the answer to the following two questions 
+a.        How can I get in touch with someone for more information or support?
+b.        “How can I get involved in a community to further build this as a joint resource or get community support?” 
+
+2)        On contact: Be realistic and practical: who can we expect to be available and responsive mid- (long) term for inquiries. / Who are the primary organizations or individuals having implemented this project and willing to be contacted later on?List partners / contact. / Link directly to mail address or similar if possible.
+3)        On community support: Please mandatorily also add a reference and link to at least an online support community / mailing-list / github community / social-media group that people can join to get involved
+•        Inquire: Are there any community forums, mailing lists, Github or hugging-faces community pages / repositories or recurrent events related to this use case / dataset? If no such support community for a exist, please encourage the partner to open one such community and link to it.
+","•        What rights do people have using this data?  Provide direct link to license if applicable,  make clear, that this is for re-use and replication, but also link to the restrictions / what to give back to the community … / Under what license is the data published? 
+•        Are there any critical known limitations, imbalances, or biases in the dataset? / hat steps have been taken to ensure responsible and ethical use of AI in this project?
+•        Who is responsible for maintaining and updating the dataset? (please also consider making this part of section Point of contact / Community)
+•        Link to data-card.
+","--> Provide links to license if applicable, make clear, that this is for re-use and replication, but also link to the restrictions / what to give back to the community
+-        Ask for crediting the source work always when building a new product such that new development are at least linked to the original ressources (and we can track impact over future uses better).
+•        What does the model/application do? Very simple and straightforward explanation?
+•        Are there any critical known limitations, imbalances, or biases in the model? / what steps have been taken to ensure responsible and ethical use of AI in this project (e.g. has gone through “ethical AI assessment”, or “should always go through ethical AI assessment before replication)?
+•        If it is a model, briefly describe what input the model expect and what output it will generate. Keep it easy to understand and perhaps merge with description of the application already.
+•        Only if critical for running it: What software or hardware requirements are needed to run the model?
+•        Only if critical to know: Are there any usage restrictions or ethical considerations to be aware of?
+","Here we want to outline what the reader can concretely do with this use-case/application more deeply:
+The two most important things to lay out here are:
+•	What are some specific use cases or applications for this AI system that can already be tackled now with the existing tools and resources – what can be done immediately with it?
+•	How can researchers or developers extend or improve upon this work?
+•	Are there any critical known limitations, imbalances, or biases that need to be taken into account when replicatin this - to ensure responsible and ethical use of AI in future uses (e.g. recommendation to always go through ethical AI assessment before replication)?
+•	[As far as available]  How much will it cost someone to build an application based on this data/use case? Add cost estimates e.g. for adaptation, training compute, compute for running it per user etc – this can be rough estimates
+
+Other considerations for answering:
+•	What are the concrete opportunities for collaboration or further development?
+•	What resources (e.g., documentation, tutorials) are available for those wanting to use or build upon this work?
+•	Are there any success stories or case studies of this AI application in use?
+o	This can also be added under Main Field 3.
+•	How does this project align with or support other initiatives in the field?
+If applicable, you may add a small paragraph on the following:
+Sustainability and Future Plans
+•	What are the plans for long-term maintenance and sustainability of this project?
+•	How will the dataset and models be kept up-to-date and how can you as a reader be part of this?
+•	Are there plans for expanding or scaling the project and how can you as a reader be part of this?","•        PLEASE SPECIFY ROLE OF ORGS - START BY: Powered by: Include links in brackest, send logos to Jonas Nothnagel - of the creating entity, implementing partners,  
+•        Catalyzed by: Include institutions that facilitated action, this would always be FAIR Forward, but might also include others like Meridian or even consultancies that added other expertise, or DFKI etc. (for FAIR Forward, we will need “Text form” and Link in addition to Logo 
+•        Financed by: Add BMZ and possibly other funders 
+•        Links to Logos- Consider adding relevant visual elements that enhance understanding of the AI application (e.g., screenshots, diagrams). 
+","-        Please add all names of persons who contributed to writing the one-pager (this should be displayed in a way to make sure, that it is not “point of contact”, those should be the persons /e-mails as in “Header Field 4: Point of contact / Community”","- Which technical domain(s) does the dataset contain? - Please chose from “Computer Vision/Picture data”, “Natural language Processing” (NLP), “Earth Observation/Satellite& drone data” or “other”.","-        Please  link to one picture  & expressive visualization / picture related to dataset / possible use / story-telling
+- if you can't link to is, please send it to jonas.nothnagel@giz.de
+- if possible, the picture should be high-res (for use in a printable pdf or printable report), but web-resolution is fine if no high-res is available.",Please add concrete info on the specific license and possible things you need to add to a licence (also add link in brackets),,,"   Adhere to fair contributing: “This is a global digital public good under open-source licenses as named under ""licenses"" - Please consider fair sharing and giving back to communities in an appropriate way."
+CADI AI Project (ML4Cashew),ui_0,Drone images of disease manifestations in cashew plantations in Ghana,AI-powered detection of diseases for Cashew farmers in Ghana,Ghana,"Imagine, that you are a small-holder farmer in Ghana fearing  crop disease in your Cashew farm. You also know that early intervention could increase yields by up to 30%  - The Cashew Disease Identification (CADI AI) dataset and application is there to make early detection of diseases in cashew plantations in Ghana through AI possible. This helps securing livelihoods, boosting food security, and fueling further economic growth. You will be able to use an openly accessible data set (4,736 UAV images), a machine learning model, and a desktop app to replicate this approach.",https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana/data,https://huggingface.co/datasets/KaraAgroAI/CADI-AI/tree/main,"Climate Action, Agriculture",Dataset --> Pilot --> Use-Case,Images,KaraAgro (https://karaagro.com/),"This project is currently undergoing ethical AI assessment
+
+License:  https://www.gnu.org/licenses/agpl-3.0.html",,,"Powered by: Kara Agro (https://karaagro.com/)
+Catalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)
+Financed by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)","Mary Seiwah Afram, Elikplim Sabblah",Computer Vision / Drone Data,,"
+
+https://www.gnu.org/licenses/agpl-3.0.html",,,
+Ghana Biomass Challenge: Ghana Crop Disease Detection Challenge,ui_1,"Support food security and climate change adaptation efforts with the Ghana Crop Disease Detection data set (tomatoes, pepper and maize)","AI-powered crop disease identification models (tomatoes, pepper and maize)",Ghana,"The Crop Disease data set contains images of diseases data found in tomatoes, pepper and maize. The data was collected in 10 districts of the Ashanti Region of Ghana by the RAIL-KNUST team and the Plant Protection and Research Services Directorate (PPRSD) of the Ministry of Food and Agriculture. A 3-month long data challenge was hosted on Zindi based on this data set and the 3 winning models are also available as open source resources to serve as your base models in your research into crop diseases in Ghana. ",https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana,https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana/code,Agriculture,Dataset,Images,RAIL - KNUST (https://rail.knust.edu.gh/),https://creativecommons.org/licenses/by/4.0/,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)
+Financed by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",Elikplim Sabblah ,Computer Vision,,https://creativecommons.org/licenses/by/4.0/,,,
+African Biomass Challenge with Open Cocoa Data,ui_2,"Leverage Sentinel-2 Satellite Data to predict biomass in cocoa plantations in Cote d'Ivoire",Leveraging ML to predict above-ground biomass in cocoa plantations in Cote d'Ivoire,Cote d'Ivoire,"This dataset and the models developed from it aim to predict biomass levels in shaded regions of Côte d'Ivoire using a combination of GEDI, Sentinel-2 satellite imagery, and ground truth biomass measurements. The resulting models enable efficient and cost-effective remote monitoring of biomass changes, crucial for assessing reforestation success and detecting forest degradation due to cocoa farming, reducing the need for extensive on-the-ground surveys.",https://huggingface.co/datasets/data354/Africa_Biomass_dataset,,Climate Action,Dataset --> Pilot,Images,Data354 (https://data354.com/en/),,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)
+Financed by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",Elikplim Sabblah ,Computer Vision,,https://creativecommons.org/licenses/by/4.0/,,,
+Financial Inclusion Speech Dataset for Some Ghanaian Languages,ui_4,"Making access to financial applications possible in native Ghanaian languages in informal settings: Akan (Akuapem Twi, Asante Twi, Fante) and Ga",Build AI-powered solutions to improve financial inclusion within the informal sector of Ghana's economy,Ghana,"This speech dataset for the Ghanian languages Akan (Akuapem Twi, Asante Twi, Fante) and Ga includes 104,000 utterances (speech) across the four dialects/languages with approximately 200 speakers per dialect/language. This amounts to about 148 hours of speech in total. The dataset was developed to support the development of financial applications in native Ghanaian languages to allow illiterate and semi-literate people to fully benefit from digital financial services. Secondly, it aims to answer research questions related to domain-specific vs. general-purpose dataset development, dialects, as well as NLP system development in low resource settings.",https://github.com/Ashesi-Org/Financial-Inclusion-Speech-Dataset,,"Climate Action, Natural Language Processing",Data available,Audio,Dennis Asamoah Owusu (DOWUSU@ASHESI.EDU.GH),,,,"Powered by:  
+Catalyzed by: Lacuna-Fund / Meridian & FAIR Forward - AI for All
+Financed by: BMZ",Elikplim Sabblah ,NLP,,https://creativecommons.org/licenses/by/4.0/,,,
+Drone-based Agricultural Dataset for Crop Yield Estimation,ui_5,"Drone-based Agricultural Dataset for Crop Yield Estimation in Ghana and Uganda (Cashew, Cocoa and Coffee) ",,"Ghana,Uganda","This dataset supports yield estimation, crop type detection and classification, fruit detection and counting, and fruit maturity stage detection (unripe, ripe, and spoiled) for three products that are important sources of livelihood for millions of households in Sub-Saharan Africa.
+ 
+ It contains 14,870 drone images with bounding box annotations of cashew, cocoa, and coffee trees collected across multiple farms in Ghana and Uganda. Conventional methods of yield estimation are expensive, require a lot of labor and time, and are prone to error due to incomplete ground observations. This results in poor crop yield estimations and hinders farmers’ ability to appropriately plan and manage their fields and production pipelines. This dataset will help transform African agriculture into agribusiness by allowing for the development of yield estimation solutions that enable farmers to make good business decisions. Having key details about agricultural production readily accessible enables a timely harvest, helping farmers ensure healthy, fresh produce and, in addition, better sales.",https://huggingface.co/datasets/KaraAgroAI/Drone-based-Agricultural-Dataset-for-Crop-Yield-Estimation,,"Climate Action, Agriculture",Data available,images,"Darlington Akogo (darlington@gudra-studio.com), KaraAgro (https://www.karaagro.com/index.html)",,,,"Powered by:  Karaagro AI - Ghana, Makerere AI Lab, Uganda Marconi Lab, National Coffee Research Institute, National Crops Resources Research Institute
+Catalyzed by: Lacuna-Fund / Meridian & FAIR Forward - AI for All
+Financed by: BMZ",Elikplim Sabblah ,Computer Vision / Drone Data,,https://creativecommons.org/licenses/by/4.0/,,,
+,ui_6,Unravel Ghanaian-accented English with the accent classification dataset.,Develop efficient speech recognition technology for Ghanaian-accented English,Ghana,"The Accent Classification Dataset (Ghana) is a collection of audio recordings from native and non-native English speakers across Ghana's diverse regions. Participants read the same three scripts, capturing distinct regional accents and speech patterns. This consistent dataset is valuable for linguistic analysis, accent classification, and speech recognition research focused on Ghanaian English.",https://www.kaggle.com/datasets/responsibleailab/accent-classification-dataset-ghana,,Natural Language Processing,Data Available,Audio,RAIL - KNUST (https://rail.knust.edu.gh/),https://opendatacommons.org/licenses/dbcl/1-0/,,,"""Powered by: RAIL - KNUST (https://rail.knust.edu.gh/)
+ Catalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)
+ Financed by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)""",Elikplim Sabblah,NLP,,https://opendatacommons.org/licenses/dbcl/1-0/,,,
+,ui_7,Explore the effectiveness of Agrivoltaic farming systems to optimize productivity of farmlands,"Optimize the use of farm-lands, maximize output and monitor the efficiency of Solar PVs with the Agrivoltaics dataset.",Ghana,The Agrivoltaic system offers a transformative solution for farming communities by providing a means to generate electricity without sacrificing agricultural productivity. The dataset showcases the effectivenesss of Solar PVs and also crop yield under solar PVs and in the open-sun on the same farm.,https://www.kaggle.com/datasets/responsibleailab/agrivoltaic-dataset-ghana,,"Agriculture, Climate adaptation, Energy",Data Available,Tabular,RAIL - KNUST (https://rail.knust.edu.gh/),https://creativecommons.org/licenses/by/4.0/,,,"""Powered by: RAIL - KNUST (https://rail.knust.edu.gh/)
+ Catalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)
+ Financed by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)""",Elikplim Sabblah,Other,,https://creativecommons.org/licenses/by/4.0/,,,
+LACUNA FUND - needs all entries seperately,ui_8,,"[note this is a bundle of applications - to be divided and checked]  Saving forests, wetlands and promoting green energy through AI - 25 initiatives on AI for Climate action in the field of Forestry and Energy (through Lacuna Fund)",Global / Regional,,,,,Dataset,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)
+Financed by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",,Computer Vision,,,,,
+"Innovate Africa Challenge AI for Climate Action,",ui_9,,"[note this is a bundle of applications - to be divided and checked] Climate Smart Agriculture in Africa: eight AI applications supported through the ""Innovate Africa Challenge"", e.g. real-time weather forecasts, solar-powered AI robots for crop pest detections, AI forcasting natural disasters, AI-powered farming advise, high-yield farming in fish and vegetables",Global / Regional,"Smart Africa, With the following start-ups and organizations: CropScan Africa, Faminga, Farmer Lifeline Technologies, ignitia, KivuGreen Corporation, NjordFrey, Strathmore Research and Consultancy Centre, VaxusImplemented through Smart Africa, see: https://smartafrica.org/innovate-africa-challenge/",,,,,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)
+Financed by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",,Computer Vision,,,,,
+Scaling Language AI: 4 Billion Conversations with CLEAR Global,ui_10,,Providing a toolbox to build chatbots in African languages,Global / Regional,A generic open source set of tools and practices that should enable all other innovators to build (and perhaps scale) more easily chatbots in African languages,,,,,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)
+Financed by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",,NLP,,,,,
+Masakhane Grant (Local Subsidy),ui_11,,Supporting Pan-African research Networks on natural language processing (Masakhane),Global / Regional,"Supporting the Masakhane network to develop an NLP data catalogue, handbook, datasheets, and governance models for management of catalogue, see https://www.masakhane.io/",,,,,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)
+Financed by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",,NLP,,,,,
+Mozilla Community Licence Project,ui_12,,"Our language, our data: Co-creating equitable governance models with African language communities",Global / Regional,"Our language, our data: Co-creating equitable governance models with African language communities",,,,,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)
+Financed by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",,NLP,,,,,
+African NLP network (Federated NLP Ecosystem),ui_13,,[draft] African NLP network (Federated NLP Ecosystem),Global / Regional,"DUMMY (to be refined with partners)
+ 
+ Supporting the set-up of a federated NLP ecosystem of NLP companies across Africa",,,,,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)
+Financed by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",,NLP,,,,,
+Digital Audio Content Creation for Women's Empowerment Using Language Technologies,ui_14,"AI-generated Voice Content in Indian Languages on Health, Sustainable Agriculture and Education
+
+",Empowering Women Across India with Voice-based Knowledge in Their Native Languages,India,"Empowering Women Across India with Voice-based Knowledge in Their Native Languages: By using openly accessible text-to-speech models from the Indian Institute of Science (IISc) and MeitY's Digital India Bhashini Division, Audiopedia created health-related 400+ audio messages that can be shared with civil society organizations for awareness raising and capacity building",https://audiopedia.app.box.com/s/4wtqy4idpnilf3b3abisuuu2vdi0oi1q,https://www.audiopedia.foundation/bharat,Natural Language Processing,TTS Model --> Use-Case,"Text, Audio","Audiopedia Foundation (https://www.audiopedia.foundation/), Marcel Heyne (contact@audiopedia.org)","Audiopedia has created useful content on various topics including health, education, financial literacy. This data is available in text and audio format in multiple languages incl. low-resource languages.","For the generation of audio messages, Audiopedia used openly accessible text-to-speech models from the Indian Institute of Science (IISc) and MeitY's Digital India Bhashini Division.","Civil society organizations can use the existing voice content to generate tailored, AI-powered messages in various Indian languages across different topics including health, education, agriculture and other social topics. Civil society organizations can deploy these messages in rural and semi-urban areas using easy-to-use digital tools incl. WhatsApp messaging or feature phones.","Powered by: Audiopedia
+Catalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)
+Financed by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",Philipp Olbrich,NLP,https://gizonline.sharepoint.com/:i:/r/teams/AI-Labwithguests/Freigegebene%20Dokumente/L%C3%A4nderanalyse%20Indien/33_Activity%20Y_of_India%20Audiopedia/Audiopedia%20-%20credit%20Audiopedia%20Foundation.jpg?csf=1&web=1&e=eJSqhM,CC-BY-SA,,,
+Hyperlocal Mapping of Air Pollution and GHG Emissions in India with UNDP,ui_15,Open Air Pollution Data for Patna and Gurugram,Combatting Air Pollution and GHG Emissions in India through hyperlocal AI-powered mapping,India,"Under this initiative, a novel approach is employed by leveraging citizen scientists and IoT-based low-cost sensors to collect hyperlocal air quality data. This data is used to identify pollution sources and risk zones, facilitating targeted actions by regulatory authorities.To showcase data outreach, the project features the VAYU Android-based application and the VAYU citizen portal digital stack, which support targeted interventions and customized solutions backed by AI/ML algorithms. These tools potentially develop new approaches in air pollution management while reducing public investment costs.",https://vayu.undp.org.in/,https://vayu.undp.org.in/,Climate Action,Dataset --> Pilot --> Use-Case,Geospatial,UNDP India (https://www.undp.org/india),,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)
+Financed by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",,Computer Vision,,,,,
+IISc - Open Voice Data in Indian Languages,ui_16,Open-source text-to-speech datasets in 9 Indian languages (Hindi | Bengali | Marathi | Telugu | Bhojpuri | Kannada | Magadhi | Chhattisgarhi | Maithili),Build inclusive voice technologies in 9 Indian Languages through open language datasets,India,"This dataset is part of the initiative SYSPIN (SYnthesizing SPeech in INdian languages), that develops large open-source Text-to-Speech (TTS) corpora, i.e., speech training datasets and AI models in 9 Indian languages, namely – Bengali, Bhojpuri, Chhattisgarhi, Hindi, Kannada, Magahi, Maithili, Marathi, and Telugu. This data is useful for those wishing to build voice-enabled, user-friendly applications in Indian languages. Through voice-based solutions, these AI models can be used to empower communities that do not have access to digital services in their own native language. They can be used by private companies, researchers, NGOs or government departments to develop digital applications. 
+ 
+ The datasets and TTS models are available to the AI community and anyone wishing to build voice-enabled applications in Indian languages.",https://syspin.iisc.ac.in/datasets,,Natural Language Processing,Dataset --> Pilot,Audio,"Dr. Prasanta Ghosh (prasantag@iisc.ac.in), Dr. Philipp Olbrich (philipp.olbrich@giz.de)","The Data is fully open-sourced and can be accessed at:
+ • Hugging face: <Link To be added>
+ • <Source Cooperative> TBD
+ • <Bhashini> TBD
+ TTS Dataset:
+ • License: CC BY 4.0
+ • Data Type: Audio recording
+ • Sentence creation: Variety of domains covered in the sentences/text and phonetically rich sentence selection
+ • Accounts for dialect variability
+ • Voice artist selection and balanced duration per voice artist 
+ • Voice recording: 40 hours of recording by 1 male voice artist and 1 female voice artist for each of the 9 languages
+ • Studio-quality audio with 48kHz, 24 bits per sample from every voice artist
+ • Data was collected and created over 3 years from 2021-2024","Processed Data:
+ The validated sentences were recording in a recording room (size 10'3"" x 5'9"") by voice artists using a Neumann TLM-103 studio microphone and Audio Interface UAD Apollo Twin X. 
+ Application:
+ IISc has organised the LIMMITS challenges (2023, 2025) as part of IEEE International Conference on Acoustics, Speech, and Signal Processing (ICASSP) to build TTS voices, share web API for evaluation, and allow researchers to contribute towards the development of streaming and neural codec-based TTS systems. 
+ Audio files of Audiopedia Foundation’s content created in the low-resource language Chhattisgarhi using IISc TTS Chhattisgarhi model can be found here.","The TTS models can be used to develop innovative solutions and voice-based services for Indians in their native language. This would be especially beneficial for those who cannot read/write or have speech and visual disabilities but can access digital services through audio/voice-based mediums. The data and models are a crucial stepping stone for developing such assistive technologies. Including low-resource languages, some of which do not even have enough print/digital literature, would benefit vulnerable communities for whom language barriers make access to technological solutions even more difficult. The 720 hours of open-source TTS data also present immense opportunities for academic and industrial research.","Powered by: Indian Institute of Science 
+Catalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)
+Financed by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",,NLP,,,,,
+Wadhwani AI - Open AI for Cotton Pest Control with smallholder farmers - National Entrepreneurship Network (NEN),ui_17,AI Pest Management: Open Data for Pink Bollworms and American Bollworms,Cotton Ace: AI-driven Pest Management for Cotton Farmers in India,India,"Wadhwani AI has developed a mobile app to support cotton farmers combat pest infestations, a major threat to cotton productivity. For this, they have collaborated with FAIR Forward – AI for All, a project of German Development Cooperation. The app allows farmers to take photos of pheromone traps, which capture male bollworms, and uses an AI model to count the pests in the images. Based on the AI-generated counts, the app provides recommendations to farmers on how to respond. This technology empowers small-scale farmers to make informed decisions, reduce uncertainty in yield, and improve their livelihoods.
+ 
+ As the codebase, dataset and research are openly available it can be used to build on, test and research similar applications in other contexts. This would esp. apply to problems of identification and counting of agricultural pests.",https://source.coop/repositories/wadhwani-ai/wiai-pm-open-data/description; https://github.com/WadhwaniAI/pest-management-opendata?tab=readme-ov-file; https://huggingface.co/datasets/wadhwani-ai/pest-management-opendata,"https://github.com/WadhwaniAI/pest-monitoring, https://dl.acm.org/doi/10.1145/3394486.3403363",Agriculture,Dataset --> Pilot --> Use-Case,Images,"Wadhwani AI (agri-ai@wadhwaniai.org), Github (https://github.com/WadhwaniAI/pest-monitoring)","Wadhwani AI with support from German Development Cooperation provided training data consisting of ca. 13,000 images:
+ 
+ (a) These images were captured by farmers and farm extension workers since 2018
+ (b) The dataset contains two types of images: those with pests and bounding boxes labelling either pink bollworm (PBW) or American bollworm (ABW), and those without pests, representing real-world user behavior.
+ (c) License: Apache 2.0","Wadhwani AI with support from German Development cooperation provided the codebase of the pest identification model:
+ 
+ (a) At its core, this repository packages an object detection implementation. 
+ (b) While there are several object detection implementations, and even implementation aggregations, there are none that completely solve for the challenges faced here (e.g., highly diverse image quality, model size restrictions)
+ (c) License: Apache 2.0",,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)
+Financed by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",,Computer Vision,,,,,
+Gramvaani Automatic Speech Recognition (ASR),ui_18,,Providing better information on sexual and reproductive health and rights (SRHR) of young people through the Kahi Ankahi Baatein infloline (Hindi LLM finetuning),India,Improve the Kahi Ankahi Baatein (KAB) platform by fine-tuning Hindi LLMs for better user experience.,https://gitlab.com/gramvaani/giz_kab_bert_sourcecode,,Natural Language Processing,Dataset --> Pilot,Text,GramVaani (https://gramvaani.org/),,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)
+Financed by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",,NLP,,,,,
+100 hours of Text to Speech Dataset for Mundari Language,ui_19,Open-source text-to-speech and machine translation datasets in Mundari,Open-source text-to-speech and machine translation datasets in Mundari,India,100 hours of Text to Speech Dataset for Mundari Language,https://github.com/karya-inc/dataset-hindi-mundari-translation; https://github.com/karya-inc/dataset-mundari-tts,,Natural Language Processing,Dataset,Text,Karya (https://karya.in/),,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)
+Financed by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",,NLP,,,,,
+Digital Green - Local dataset collection for climate-smart agriculture,ui_20,"Geospatial dataset of wheat and rice farmers in Bihar, India",Data-driven decision-making for farmers to increase climate resilience,India,"The project developed a scalable data collection model for JEEViKA’s frontline workers, integrating digital tools and geofencing, and empowered farmers with personalized climate-smart advice through Farmer Scorecards.",https://github.com/digitalgreenorg/frame-templates,https://github.com/digitalgreenorg/frame-templates,"Agriculture, Climate Action",Dataset --> Pilot,Tabular,Digital Green (https://digitalgreen.org/ourwork/india/),,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)
+Financed by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)
+",,Computer Vision,,,,,
+ML4EO Telangana: Crop Identification,ui_21,Open Dataset of Farm Boundaries and Crop Cultivation in Telangana State,Support Sustainable Agriculture in Telangana through AI-powered Crop Identification,India,"This AI application and replication-kit is about an AI-based crop type map for Telangana. This should be of use to anyone wishing to support sustainable farming practices and evidence-based decision-making for agricultural. Also, this can be used to empower you, as a local business, and NGOs, or a government agency to develop digital agricultural applications. The application focuses on creating localized ground-truth data on several different crop related variables to train AI models tailored to Telangana's diverse agricultural landscape. This includes an open-access ground-truth dataset, a data challenge with openly available models for yield prediction, a crop classification model using satellite imagery applied to map the whole state of Telangana, and a roadmap for AI implementation in agriculture. Datasets, AI models, and crop maps are all openly available as an open-source replication kit and digital public good.",https://dataexplorer.ts.adex.org.in/dataset/583e8f01-160e-4f51-bde5-31dc7f2a5887,,"Agriculture, Climate Action",Dataset --> Pilot --> Use-Case,Geospatial,WRMS (https://wrmsglobal.com/),"The Data is fully open-sourced and can be accessed at the Telangana Data Exchange Platform: ADEX
+ • License: CC BY 4.0
+ • Data Type: Tabular
+ • Key Variables: Crop type (6), Crop Health, Crop Yield, Irrigation Methods.
+ • Appr. No of observations: > 12000 
+ • Appr. No of dimensions: 45 
+ • Covering 6 Mandals in Telangana
+ • Format: dbf, csv
+ 
+ The data was collected over the span of 1.5 years covering different crop cycles between 2022 and 2024. The Data Collection was conducted by WRMS via on-the-ground visits of the fields and by surveying farmers in Telangana State.","Processed Data:
+ The ground truth data was combined with open-source Sentinel-2 data to create a geospatial dataset with crop type as labels.
+ The processed dataset can be accessed here: Processed Data
+ Code for Crop Classification Model:
+ Code to create the training data and for training the models for crop mapping can be accessed here: Code
+ Application:
+ The resulting shapefiles that predict crop type for the state of Telangana are deployed on DICRA – a digital public good ran by the Indian Development Bank NABARD and UNDP: DICRA
+ Based on the collected data, GIZ organised a data challenged together with Zindi to build state-of-the-art crop mapping models. The outcomes of the challenge can be accessed here: Zindi","You can make use of the existing models on yield prediction and crop type mapping to infer other similar datapoints – for example neighbouring states of Telangana. Additionally, you can try to combine the dataset with other existing open-source datasets from the ADEX platform and conduct research/commercial scoping on these. 
+ The present dataset is quite unique in the fact that it includes observations such as irrigation methods, crop health and expected yield. You may combine these with other data sources, i.e. satellite/remote sensing data (open-source or commercial) to build high-quality crop monitoring/recommendation systems to support various agricultural entities, farmers and decision makers in India. This could also inform commercial products. 
+ As crop mapping is a prominent use-case, the data can be used for benchmarking different available crop datasets and models or inform foundational geospatial models as well as constitute to a region-wide crop mapping. Potential partners on the ground for collaboration, commercial involvement or funding are the Telangana Government, specifically the IT and Agricultural department and Nabard Dicra.","Powered by:  
+Catalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)
+Financed by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",,Computer Vision,,,,,
+Developing a concept with MFIN on voice-based chatbot,ui_22,,MicroFinance Industry Network India use of voice technology (Gramvaani),India,"Contract name: Automation of components of the MFIN-CGRM CRM solution 
+ Follow-up project from former MFIN engagement to move from prototype to production and implement the remaining use-cases.",,,Natural Language Processing,Dataset --> Pilot,Text,GramVaani (https://gramvaani.org/),,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)
+Financed by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",,NLP,,,,,
+Soil Data Collection in Telangana,ui_23,Open Soil Data for local AI Innovation in Telangana,Measuring Soil Health for more Sustainable Agriculture in Telangana and beyond,India,,,,"Agriculture, Climate Action",Dataset,Geospatial,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)
+Financed by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",,Computer Vision,,,,,
+Forest Forward,ui_24,,Forest Forward II: Using AI to map carbon in forests using High Carbon Stock Approach and assess fire vulnerability of forests to Combat Climate Change and Protect Livelihoods in India,India,"Mapping carbon content in forests: This application leverages advanced geospatial technologies, such as remote sensing and AI, to support forest conservation efforts in India. The application will allow stakeholders to better monitor forest health, estimate biomass, and contribute to climate mitigation efforts.
+ Fire Vulnerability Mapping: This application would help develop a fire vulnerability map which could help to identify areas that are prone to fires based on several forest degradation indicators.",,,Climate Action,Dataset --> Pilot,Geospatial,"Michael Anthony <michael@vertify.earth>
+ Aishwarya Salvi <aishwarya.santoshsalvi@giz.de>
+ Jonas Nothnagel <jonas.nothnagel@giz.de>",,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)
+Financed by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",,Computer Vision,,,,,
+GeoAI for Soil Conservation: Innovations for Telangana,ui_25,Open Soil Data for local AI Innovation in Telangana,Measuring Soil Health for more Sustainable Agriculture in Telangana and beyond,India,Merged from 2 service contract: (1) implement CC recommendations nationla (110k) and (2) implement CC recommendations state (20k),,,,,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,Computer Vision,,,,,
+Two Al-based dialogue systems (e.g. voice-based chatbot) in Indian Languages - consultancy for design implementation etc,ui_26,,Voice-based advisory for farmers (female kitchen gardeners) with NiceSSM / Use Case Gramvaani,India,Creation of voice based chatbots,,,,,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,NLP,,,,,
+Making the Indian voice datasets more sustainable: Hackathon with Bhashini on voice data for climate & sustainable agriculture,ui_27,Open-source text-to-speech datasets in 9 Indian languages (Hindi | Bengali | Marathi | Telugu | Bhojpuri | Kannada | Magadhi | Chhattisgarhi | Maithili),Hack4TTS: Crafting Voice for India’s Low-Resource Languages - Building TTS Systems for Low-Resource Indian Languages with Accent and Style Transfer,India,"Combined from two formerly planned service contracts (1) Making the IISc datasets more sustainable, usable, support AIEP, make use-cases possible + (2) Hackathon for IISc voice datasets with Bhashini on climate & sustainable agriculture",,,,,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,NLP,,,,,
+Use case development Indonesia,ui_28,,Climate Disinformation in Local Indonesian Languages,Indonesia,"This AI application is about developing an AI-based system to tackle climate misinformation in Indonesia, focusing on creating accurate and accessible information tools. The initiative aims to build a multilingual disinformation detection system, covering Bahasa Indonesia and over 10,6 million words and 21 million words translation from Minangkabau, Balinese, and Buginese to classify and verify climate-related content. The application supports stakeholders, including government agencies, NGOs, and communities, in countering false narratives, promoting awareness, and enabling evidence-based decision-making. The AI outcomes include open-access datasets, disinformation, and topic classification models, a user-friendly website, and a chatbot. These tools empower users to identify climate misinformation, enhance public literacy, and foster collaboration for sustainable climate actions. The project emphasizes inclusivity, accessibility, and long-term impact, providing resources for researchers, local businesses, and policy-makers to advance AI applications in combating misinformation. Prosa has developed an AI-powered chatbot to address climate misinformation. The platform's website is available at faktaiklim.prosa.ai, and the chatbot can be accessed via Telegram (Fakta Iklim Bot), with open-source code available on GitHub. User guides are provided in four languages: Indonesian, Minangkabau, Balinese, and Bugis.",https://huggingface.co/prosa-text,https://faktaiklim.prosa.ai/,"Climate Action, Natural Language Processing",Dataset --> Pilot --> Use-Case,Text,"Bappenas (https://www.bappenas.go.id/), Prosa AI (https://prosa.ai/)","The data for this project is fully open-sourced and can be accessed through Hugging Face.
+ ● License: CC BY-SA 4.0
+ ● Data Type: Tabular
+ ● Key Variables: Climate disinformation classification, topic categorization, language distribution (Bahasa Indonesia and regional languages: Minangkabau, Balinese, Buginese)
+ ● Format: CSV
+ ● Data Collection Period: Over 3 months, covering diverse misinformation cases in climate-related domains
+ 
+ Data collection involved web crawling and inputs from local communities and experts, using sources like government websites, news articles, and scientific literature. Annotations by trained linguists and marginalized community members followed strict guidelines for consistency. The datasets are formatted for easy integration with AI tools.","Processed Data and Pretrained Models:
+ Use the multilingual datasets and pre-trained models (IndoBERT, IndoBERTNusa) to detect climate misinformation. The processed dataset can be accessed here: Processed Data
+ 
+ Code for AI Models:
+ Access the GitHub repository containing scripts for preprocessing datasets, fine-tuning language models, and training disinformation classifiers. These can be customized for various applications.
+ 
+ Application Deployment:
+ The resulting models are integrated into platforms like Kominfo's Anti-Hoax portal and social media crawling APIs. Additionally, a chatbot leveraging these AI models is available to verify climate-related information in real-time. The chatbot and models are publicly accessible via APIs to support further innovation and integration by developers.","You can leverage AI models and datasets to develop or enhance applications to address climate misinformation and advance public education. These resources can be adapted to new languages, regions, or even other misinformation topics, such as health or political issues. Combining the datasets with additional sources, like satellite imagery or weather data, could lead to innovative AI applications, including real-time fact-checking tools or misinformation monitoring dashboards. Researchers and developers can also use the models to benchmark against other datasets or refine methodologies, unlocking opportunities for both academic and commercial advancements.
+ 
+ These tools can be integrated into platforms like government portals or social media moderation systems to maximize impact. Interactive educational applications, such as gamified platforms or public learning modules, could further engage communities. Collaboration with stakeholders—including government agencies, NGOs, and private companies—can help scale the tools, secure funding, and drive wider adoption. Through partnerships and expanded deployment, this project can contribute to fostering critical awareness and combating misinformation effectively.","Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,NLP,,,,,
+HCSA: High Carbon Stock Mapping in Southeast Asia,ui_29,,"Forest Forward: Using AI to protect forests and combat the climate crisis in Indonesia by maping carbon using ""High Carbon Stock Approach""",Indonesia,"This project focuses on creating validated, open-source High Carbon Stock (HCS) forest maps for Indonesia using an AI-driven approach. It adopts the HCS classification system to identify forests suitable for conservation versus sustainable development:
+ • High, Medium, and Low-Density Forests (Conservation Priority): Forests with closed or patchy canopies, rich biodiversity, and carbon storage.
+ • Young Regenerating Forests: Regrowing forests that are transitioning into higher carbon stock potential.
+ • Scrub and Open Land: Areas with minimal carbon stock suitable for sustainable development.
+ The maps integrate field data, satellite imagery, and AI to assist policymakers, NGOs, and businesses in making data-driven decisions for sustainable land-use planning and conservation. Stakeholders can use the outputs for spatial planning, reducing greenhouse gas emissions, and implementing ""no deforestation"" commitments. The High Carbon Stock Approach (HCSA) project was nominated for the prestigious UN SDG Game Changer award – Category 2: Planet – Innovation for our climate and environment “Artificial Intelligence Meets Jungle/ Forest Forward.",https://huggingface.co/datasets/HCSA/HCSA_Indonesia_Forest_Plot_Data_2023,,Climate Action,Dataset --> Pilot --> Use-Case,Geospatial,"Bappenas (https://www.bappenas.go.id/), JKPP (https://jkpp.org/), HCSA (https://highcarbonstock.org/public-consultation/), EcoVision Lab (https://www.spacehub.uzh.ch/en/research-areas/earth-observation/EcoVision-Lab.html)","The finalized HCS dataset and maps are available on Hugging Face HCSA/Forest_Plot_Data_2023, and Global Forest Watch.
+ 
+ • License: Open-source (CC BY 4.0) 
+ • Data Type: Geospatial and tabular 
+ • Key Variables: Vegetation classification, carbon stock levels, validation points, and FPIC (Free, Prior and Informed Consent) compliance
+ • Appr. No of observations: Covers ~1.5 million hectares of tropical forests 
+ • Appr. No of dimensions: 60+ attributes, covering vegetation classifications, carbon stock levels, biomass measurements, land-use types, validation points, and FPIC (Free, Prior and Informed Consent) compliance data
+ • Covering 150 field plot high-carbon stock areas across Sumatra, Kalimantan, and West Papua
+ • Format: Geo TIFF, shapefile, CSV
+ The data adheres to FAIR (Findable, Accessible, Interoperable, Reusable) principles and includes anonymization measures to protect sensitive information.","Processed Data:
+ Field measurements (e.g., biomass and tree species) were combined with Sentinel-2 imagery and NASA GEDI lidar to enhance map accuracy. The resulting geospatial data includes classifications of High Carbon Stock forests and other land-use categories.
+ Model Development:
+ AI models, trained using Convolutional Neural Networks (CNNs) and calibrated with aerial LiDAR and ground-truth data, are hosted on the HCSA GitHub repository: HCS Mapping Code.
+ Application:
+ Validated HCS maps are deployed on Google Earth Engine and Global Forest Watch for conservation planning and policy support, with an ODK-based mobile app under development for offline data collection. The project integrates FPIC (Free, Prior, and Informed Consent) principles throughout, ensuring community involvement and respect for land rights in data collection and mapping.",,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,Computer Vision,,,,,
+Text data collection Indonesia,ui_30,,Text data collection Indonesia,Indonesia,Text data collection for 3 regional languages,,,,,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,NLP,,,,,
+"Blue economy for climate mitigation and climate - leveraging AI, community-based approaches and local IoT-measurements",ui_31,,"Blue economy for climate mitigation and climate - leveraging AI, community-based approaches and local IoT-measurements",Indonesia,"Follow up of HCSA with focus on blue carbon and training of marginalized communities, as well as policy dialogue on climate",,,,,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,ML4EO,,,,,
+Early Warning System LDRI,ui_32,,Early Warning System LDRI,Kenya,"The Early Warning System (EWS) is an AI-powered platform that monitors farming activities and supports climate-smart precision agriculture for smallholder farms. It uses geo-referenced data collected from farms through mobile phones and high-resolution satellite imagery. The system provides crop monitoring, yield prediction, pest/disease detection, and localized agricultural advisory services in multiple languages. The platform is currently accessed through both WhatsApp by farmers and a self-serve platform/API for institutional users.",,,"Agriculture, Climate Action",Dataset --> Pilot --> Use-Case,"Geospatial, Images","University of Western Cape, CSIR, SAICA, GIZ","Ground truth geo-tagged data from 1,521 farms across 5 regions in Kenya
+ Types of data: Crop images, farm boundaries, crop conditions, weekly activity logs
+ Coverage: Multiple crop types including maize, beans, sweet potatoes, cassava, kales, Irish potatoes, cowpeas, soya beans, and indigenous vegetables
+ Language data: ~150 hours of voice data and transcriptions in KiEmbu, Kikuyu, Kiswahili and Luhya
+ Timeline: Data collected over multiple growing seasons from 2022-2024
+ Collection conducted by LDRI in partnership with champion farmers and agronomists.","Processed Data and Models:
+ 1. Uses geo-tagged images collected from farms and annotated for crop types, health status, and specific afflictions (pests/diseases/nutrition deficiency) 
+ 2. Derived vegetation indices, moisture indices, and time-series data from satellite imagery.
+ 3. A corpus of voice and text data is being developed for local language processing.
+ 4. Crop classification models using CNN architectures : Identifies 
+ 5. Crop Yield prediction models 
+ 6. Language models for agricultural advisory in multiple local languages (in development)
+ Application:
+ The system can be used for:
+ • Early warning of potential crop failure
+ • Yield prediction and crop health monitoring
+ • Localized agricultural advisory in multiple languages
+ • Farm productivity tracking and management
+ • Regional agricultural monitoring and planning","The EWS provides a comprehensive platform that combines AI-powered crop monitoring with localized advisory services. Organizations can access the data and models through :A self-serve platform and API for accessing predictions and analytics; Mobile applications for farmers to receive personalized crop management recommendations in local language; Integration possibilities with existing agricultural extension services and Analytics dashboards for value chain stakeholders and policy institutions. The system can be scaled to new regions and crops through transfer learning and the modular architecture allowing for continuous improvement of individual components. The platform supports both individual farmer-level insights and aggregated regional analytics to optimize crop yields and manage stressors effectively, making it valuable for various stakeholders across the agricultural sector.","Powered by: Local Development Research Institute (LDRI) 
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,Computer Vision,,,,,
+Office of Data Protection Commission (ODPC) Chatbot Kenya,ui_33,,Providing citizens with information on data protection through the Chatbot of the office of the data protection commissioner in Kenya,Kenya,"Placeholder
+ Total: 69,820
+ Budget: total 40k EUR from FF (29,820k EUR come from DTC Kenya)",,,,,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,NLP,,,,,
+,ui_34,Enable Swahili speakers to speak to digital devices and access information in their mother tongue,,"Kenya, Tanzania, Uganda","By collecting more than 1000 hours of AI voice data (by 04/2025), this effort created the largest open-source voice dataset of diverse Swahili speakers for speech recognition (speech-to-text). You can use this resource to build AI systems understanding spoken Swahili e.g. in cellphones . This facilitates access to information in mother tongue, including by illiterate persons. ",https://commonvoice.mozilla.org/en/datasets ,,,Dataset,,,,,,"Powered by: Mozilla Common voice Initiative
+Catalyzed by: FAIR Forward
+Financed by: BMZ, Gates Foundation, FCDO
+
+",Balthas Seibold,NLP,,CC-0,,,
+AIEP MVP Development,ui_35,,"Providing farmers in Kenya and Bihar, India with high-quality, personalized information through AI and developing blueprints for AI-powered Agriculture Information Exchange Platforms","Kenya, India","Developing products that can be replicated through four initiatives: 1. DynAG: 
+ Focused on rice, wheat, and maize, DynAG's platform uses a RAG pipeline powered by LLMs like the GPT suite to provide farmers with advisory services. Accessible via chatbots, Android and Jio-based mobile apps, IVR, and SMS, it ensures wide reach. With machine translation and speech recognition, the platform supports communication in English and Hindi while utilizing CGIAR's data backbone for accurate, data-driven insights. 
+  
+ 2. Digital Green: 
+ Digital Green's platform supports agricultural value chains like dairy, coffee, and wheat in Bihar and Kenya. It integrates a RAG pipeline, using LLMs under evaluation, and offers services through an app, Telegram, and IVR. Features like machine translation, speech technology, image recognition, and weather data enable localized insights. The platform supports multiple languages, including Hindi, Swahili, Gikuyu, and Marathi, ensuring flexibility across regions. 
+  
+ 3. Viamo and Partners: 
+ This platform targets farmers in Kenya and Bihar, focusing on beans and wheat, respectively. Using IVR, SMS, and WhatsApp, the platform is built on a RAG pipeline powered by LLMs, with potential for intent and entity recognition. Machine translation and speech-enabled IVR support English, Hindi, and Swahili, making it accessible across regions. The initiative is part of a broader plan to enhance voice technology for agricultural advisory. 
+ 
+ 4. Tech for Her: 
+ Tech for Her empowers women farmers in Bihar and Kenya, focusing on tomatoes and cattle. Accessible via IVR, WhatsApp, and a mobile app, the platform uses LLM-powered intent and entity recognition for personalized chatbot interactions and speech-enabled IVR for voice support. AI-based video generation further enhances engagement. Available in English, Hindi, and Swahili, it caters to the specific needs of women in agriculture.",,,,,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: Gates Foundation",,NLP,,,,,
+Support Mozilla Swahili grantee,ui_36,,Paza Sauti - chatbot and interactive voice response service in Swahili to raise awareness about the use of collateral (security) to access credit for women in Kenya - see above,Kenya,Will see further enhancement of Mozilla grantee work - to actionable data sets and community based engagement feeding back into MCV,,,,,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,NLP,,,,,
+Building Kenya Language Corpus incl. governance model,ui_37,,Building Kenya Language Corpus incl. governance model,Kenya,,,,,,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,NLP,,,,,
+AI Conversational Chatbot (with GovStack),ui_38,,"Hello, government - better citizen services through ""AI Chatbots"" as a digital public good",Kenya,,,,,,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,NLP,,,,,
+Early Warning System LDRI – Phase 3,ui_39,,SEE ABOVE,Kenya,Extension of AI based Food and Nutrition EWS (Phase 3),,,,,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,ML4EO,,,,,
+Building parallel corpora for Kenya’s Indigenous Languages and Swahili,ui_40,Building parallel corpora for Kenya’s Indigenous Languages and Swahili,,Kenya,"This team collected parallel text corpora for three Kenyan indigenous languages, Kidaw’ida, Kalenjin, and Dholuo, alongside Kiswahili, resulting in approximately 90,000 sentence pairs in total. After collection, the team separated out the Kidaw’ida, Kalenjin, and Dholuo sentences and used them as monolingual datasets for crowd-sourcing speech data, facilitated by uploading the sentences to Mozilla Common Voice. A total of 109 members of the three language communities were recruited to read and record sentences from their respective native languages. Emphasizing gender balance and including different ages and regional variants helped to make the datasets more representative. The voice datasets offer a substantial amount of speech data, comprising 56 hours of Kidaw’ida, 92 hours of Kalenjin, and 120 hours of Dholuo, for a total of 268 hours.
+ 
+ Use cases for these parallel corpora include training models to translate text between Kiswahili and Kidaw’ida, Kalenjin, and Dholuo. The speech data on Mozilla Common Voice, along with its associated text data, is intended to be used for the development of speech recognition applications. The languages that comprise this dataset are low-resource, especially Kidaw’ida, which has only around 400,000 speakers and faces a more immediate risk of loss. By collecting the text and speech data, this team contributed to the preservation of these languages. They hope that once enough data has been collected to train accurate models and create NLP applications for these three languages, they will become more relevant in the modern digital age, thus mitigating the risk of loss.",https://zenodo.org/records/13355021,,Climate Action,,,Audrey Mbogho (ambogho@usiu.ac.ke),,,,"Powered by:  
+Catalyzed by: Lacuna-Fund / Meridian & FAIR Forward - AI for All
+Financed by: BMZ",,,,,,,
+Labelled Open solar panel data for Madagascar,ui_41,Labelled Open solar panel data for Madagascar,,Madagascar,"This team annotated 2,125 Google Earth satellite images and 9,202 drone images, forming a combination of low and high-definition solar panel views in Madagascar. The Madagascar Initiatives for Digital Innovation (MAIDI) team performed field checks for up to 25% of satellite images and, in total, annotated 22,488 polygons.
+ 
+ This dataset will help data scientists and users develop a solar panel detection algorithm to measure solar energy adoption across Madagascar. Notably, this project represented all regions of the country; instead of focusing only on big cities, it also covered average and small villages as well as coasts and mountains.",https://openstat-madagascar.com/bdd/energie-et-environnement/131-donnees-sur-l-energie-solaire-et-labellisation-d-images-de-panneaux-photovoltaiques-a-madagascar,,Climate Action,,,"Fabienne Rafidiharinirina (f.rafidiharinirina@association-maidi.mg), Association Maidi (assomaidi@gmail.com)",,,,"Powered by:  
+Catalyzed by: Lacuna-Fund / Meridian & FAIR Forward - AI for All
+Financed by: BMZ",,,,,,,
+A Nigerian Twitter Sentiment Corpus for Multilingual Sentiment Analysis,ui_42,A Nigerian Twitter Sentiment Corpus for Multilingual Sentiment Analysis,,Nigeria,"This dataset is the first large-scale human-annotated Twitter sentiment dataset for Hausa, Igbo, Nigerian-Pidgin, and Yorùbá, the four most widely spoken languages in Nigeria.",https://github.com/hausanlp/NaijaSenti,,"Climate Action, Natural Language Processing",,,NaijaSenti (https://github.com/hausanlp/NaijaSenti?tab=readme-ov-file#contact-us),,,,"Powered by:  
+Catalyzed by: Lacuna-Fund / Meridian &  FAIR Forward - AI for All
+Financed by: BMZ",,,,,,,
+Landslide monitoring use case,ui_43,,Landslide monitoring and early warning system with AI in Rwanda,Rwanda,,,,,Dataset --> Pilot --> Use-Case,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,Computer Vision,,,https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5087469,,
+Expansion of voice data collection and development of use cases [Mozilla],ui_44,,Services to citizens in Swahili: Paza Sauti - chatbot and interactive voice response service in Swahili for better access to credit for women in Kenya and 5 other AI-powered services in Swahili based on Mozillas Common-Voice dataset,Rwanda,"Activity including local subactivities (Kinyarwanda, Luganda, Kiswahili)",,,,,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,NLP,,,,,
+Develop Mbaza AI Chatbot for Covid 19 [with Mozilla],ui_45,,Mbaza Chatbot Rwanda for health related inquiries by citizens,Rwanda,Running system (during Covid with 2 Million info requests ) / Business Model training on open source AI business with Digital Umuganda / Open Source system to allow for easy scaling and replication and sustainability,,,,,,,,,,"Powered by: Digital Umuganda 
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,NLP,,,,,
+Agriculture chatbot / early warning system for farmers / AI entrepreneurship competition,ui_46,,Better Advise to farmers in Rwanda through Agricultural chatbot (Mbaza Chatbot scaling),Rwanda,,,,,,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,NLP,,,,,
+Bot of Bots Activity - in collaboration with Govstack for Kenya,ui_47,,"Hello, government - better citizen services through ""AI Chatbots"" as a digital public good",Rwanda,"Semantic Chatbot(s) & IVR for G2C services in Public Service Delivery and Good Governance 
+ in Collaboration with Konza Technopolis, ICTA",,,,,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,NLP,,,,,
+,ui_48,A large scale collection of voice data in Kinyarwanda to allow the building of inclusive language technology ,,Rwanda,"This effort created the largest open-source voice dataset of diverse Kinyarwanda speakers for speech recognition (speech-to-text). It collected more than 2300  hours of AI voice data in Kinyarwanda (by 04/2025). You can use this resource to build AI systems understanding spoken Kinyarwanda e.g. in cellphones . This facilitates access to information in mother tongue, including by illiterate persons. ",https://commonvoice.mozilla.org/en/datasets and https://huggingface.co/datasets/mbazaNLP/common-voice-kinyarwanda-english-dataset ,,,Dataset,,,,,,"Powered by: Digital Umuganda & Mozilla Common voice Initiative
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ
+
+",Balthas Seibold,NLP,,CC-0,,,
+Kinyarwanda Screen Reader for visually impaired people,ui_49,,Supporting visually impaired people in Rwanda through a Kinyarwanda Screen Reader,,,,,,,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,,,,,,
+ML4EO Crop Mapping Solution Rwanda,ui_50,,Forecasting crop yield and managing crops through AI and Earth Observation,Rwanda,,,,,,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,ML4EO,,,,,
+Landslide monitoring model development – data challenge/use case development follow-up,ui_51,,SEE ABOVE,Rwanda,,,,,,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,ML4EO,,,,,
+ML4EO for Precision Agriculture,ui_52,Enabling geo-scientists to use Machine Learning for Precision Agriculture of geospatial data,Enabling geo-scientists to use Machine Learning for Precision Agriculture of geospatial data,South Africa,Field data collected on agricultural farm land (crops) with raw datasets + applied use cases of classification of land use cover using ML (based on individual projects presented),https://drive.google.com/drive/folders/1X0u_BkiGGOn5ZRjrX9DIr6XT9yueoD3K?usp=drive_link,,"Agriculture, Climate Action",Dataset,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,Computer Vision,,,,,
+NLP grant Localising Common Voice for South African Languages,ui_53,,Making voice data available in all official languages of South Africa as a digital public good - Voices of Mzansi,South Africa,Univ of Stellenbosch Grant (Febe de Wet) - Voices of Mzansi project / localise SA local languages on Mozilla CV platform,https://commonvoice.mozilla.org/de/languages,,Natural Language Processing,Dataset,Text,Prof Febe de Wet,,,,"Powered by:  University of Stellenbosch 
+Catalyzed by: South African Digital Language Resources (SADILAR), FAIR Forward - AI for All, Mozilla Foundation, UNESCO decade of indigenous languages
+Financed by: BMZ",,NLP,,,,,
+South Africa Crop Type Competition,ui_54,,South Africa Crop Type Competition,South Africa,,https://beta.source.coop/repositories/radiantearth/south-africa-crops-competition/description/,,"Climate Action, Agriculture",,Tabular,Radiant Earth (https://radiant.earth/),,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,,,,,,
+Croppie Coffee Yield Prediction,ui_55,,"Croppie- helping smallholder coffee producers to plan sales, get loans, and trace coffee - AI powered coffee yield prediction",Uganda,"Unpredictable weather conditions and price fluctuations pose major challenges for coffee farmers in Uganda. The platform and app 'Croppie' supports them with targeted cultivation recommendations and precise crop forecasts—using AI-supported image recognition of coffee plants. As a digital public good based on open-source technology, it can be adapted and further developed locally. The basic user interface is provided through a mobile application. Croppie’s core functionality is to allow for AI-supported coffee yield estimation. This is done by guiding a selective sampling for a statistical yield estimation service based on branch count and coffee branch picture taking, alongside the integration of additional data provided by the user.",https://huggingface.co/datasets/rgautroncgiar/croppie_coffee_ug,https://huggingface.co/rgautroncgiar/croppie_coffee_ug,"Agriculture, Climate Action",Dataset --> Pilot --> Use-Case --> Use-Case with Business Model,Tabular,"Croppie (https://croppie.org/#contact), Producers Direct (https://producersdirect.org/), M-Omolumisa, CIAT","The Data is fully open-sourced and can be accessed on Hugging Face
+ • License: CC BY SA 4.0
+ • Data Type: Tabular
+ • Key Variables: Coffee cherry color (5), coffee cherry size
+ • Appr. No of observations: 8333
+ • Format: dbf, csv
+ 
+ The data was collected over the span of 1.5 years covering different crop cycles between 2022 and 2024. The Data Collection was conducted by Alliance Bioversity & CIAT and M-Omolumisa via on-the-ground visits of the farms.","Processed Data:
+ The dataset is made of a mix of Arabica and Robusta coffee tree parts (with and without a background isolation element) with individual bounding boxes around all coffee cherries. These RGB pictures were on-farm collected with smartphones with the collaboration of smallholder farmers. 
+ Code for Crop Classification Model:
+ Code to create the training data and for training the models for crop mapping can be accessed here: 
+ - Dataset
+ - Model
+ Application:
+ The dataset/model can be used for automated cherry count or coffee ripeness assessment.","Instead of manual cherry counts (the traditional approach to harvest estimation), pictures of the coffee branches are used to automate this task. The coffee harvest on a plot level is estimated by processing pictures through AI-supported image recognition software along with a manual branch count (= tree level estimation) and a tree-per-ha estimation (or recall data) (scaling to plot level). Thus, Croppie serves as a central system for managing yield data at the farmer level. It also provides the option to share this data with external users; with for example cooperatives having the possibility to feed information from the application in an integrated database of their member’s performance and farm characteristics, provided they obtained prior consent to do so. This would then scale the Croppie system to have an aggregated data view of multiple users in a region, e.g. as a cooperative level dashboard.","Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,Computer Vision,,,,,
+Scaling ML-based site identification for MiniGrids Uganda,ui_56,,Finding good spots for decentralized green energy grids in Uganda I - AI based site identification for MiniGrids,Uganda,Moving towards scaling of the MiniGrid prototype,https://github.com/SunbirdAI/lamwo-electrification-project/tree/main,https://lamwo-electrification-demo-47qi01med-evie-8s-projects.vercel.app/,Climate Action,Dataset --> Pilot --> Use-Case,Geospatial,"Sunbird.ai
+
+
+Ernest Mwebaze <emwebaze@sunbird.ai>",,This web application is a decision support tool. It is built as a prototype for a large-scale decision support tool for determining electrification strategies for different geographical areas. Currently implemented in Lamwo district electrification. ,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,Computer Vision,,,,,
+ML-based site identification for MiniGrids in Uganda,ui_57,,Electrification Dashboard for Ugandan government - help to find the best energy sources for villages in Uganda,Uganda,This web application is a decision support tool. It is built as a prototype for a large-scale decision support tool for determining electrification strategies for different geographical areas. Currently implemented in Lamwo district electrification.,,https://lamwo-electrification-demo.vercel.app/,Climate Action,,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,Computer Vision,,,,,
+Development of Unbiased AI Models for Solar Irradiance Uganda,ui_58,,Finding good spots for decentralized green energy grids in Uganda II - Measuring Solar Irradiance wih unbiased AI Models,Uganda,,,https://irradiation-portal-dev.onrender.com/,Climate Action,,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,Computer Vision,,,,,
+NLP Use Case Strengthening relevance of Auditing reports in Uganda,ui_59,,NLP Use Case Strengthening relevance of Auditing reports in Uganda,Uganda,This activity is requested by Uganda country office and paid for by them. It is run by the DSC and FF is supporting with technical input. No own funds needed for this.,,,Climate Action,,,,,,,"Powered by:  
+Catalyzed by: FAIR Forward - AI for All
+Financed by: BMZ",,NLP,,,,,
+Datasets marking Personal Identifiable Information (PII) and Gender Bias,ui_60,Datasets marking Personal Identifiable Information (PII) and Gender Bias,,"Uganda,Kenya,Nigeria","This dataset contains annotated sentences with personally identifiable information (PII) in Luganda, Lumasaba, Hausa, and Kanuri. These four languages span Central and Eastern Uganda, Nigeria, Ghana, and Northern Cameroon. The team collected 3,000 sentences for both Kanuri and Hausa, 5,000 for Lumasaba, and 4,000 for Luganda. Potential use cases for these datasets include named entity recognition (NER), text classification, privacy-preserving data analysis and research, language modeling, machine translation, and linguistic research.
+ 
+ The team aimed to curate a dataset that is gender inclusive, and their work highlighted the need for standardized guidelines for annotating low-resourced languages. Having these guidelines would help to avoid common pitfalls and errors when labeling text data in these low-resource languages.",https://dataverse.harvard.edu/citation?persistentId=doi:10.7910/DVN/CGHWZE,,"Climate Action, Natural Language Processing",,,Andrew Katumba - Makerere University (katumba@mak.ac.ug),,,,"Powered by:  
+Catalyzed by: Lacuna-Fund / Meridian &  FAIR Forward - AI for All
+Financed by: BMZ",,,,,,,
+,ui_61,"Ecuadorian Dataset on Access, Demand, & Availability of Electricity Supply",,Ecuador,,,,,,,ESPOL University,,,,,,,,,,,
+,ui_62,Artificial Intelligence for Energy Access (AI4EA),,"Benin,Ghana,Niger,Togo",,,,,,,Reiner Lemoine Institut gGmbH (RLI),,,,,,,,,,,
+,ui_63,Residential Energy and Weather Dataset (REWD) of Pakistan,,Pakistan,,,,,,,Lahore University of Management Sciences (LUMS),,,,,,,,,,,
+,ui_64,Datasets for transportation impact evaluation,,Colombia,,,,,,,"Fundación Despacio,World Resources Institute,Fundación Despacio",,,,,,,,,,,
+,ui_65,Machine learning training data for continental Ecuador and Galapagos,,Ecuador,,,,,,,Fundacion Ecociencia,,,,,,,,,,,
+,ui_66,Forest carbon sequestration in the Congo Basin,,"Cameroon,DRC",,,,,,,World Resources Institute,,,,,,,,,,,
+,ui_67,GEO Indigenous Alliance,,"Ecuador,Kenya",,,,,,,GEO Indigenous Alliance,,,,,,,,,,,
+,ui_68,Ivorian mangroves and carbon stock,,Cote d'Ivoire,,,,,,,data354,,,,,,,,,,,
+,ui_69,Reference Data Collection for Improving Land Use Change Mapping in Ghana,,Ghana,,,,,,,Center for Remote Sensing and Geographic Information Services,,,,,,,,,,,
+,ui_70,Remote sensing and weather dataset for improved reforestation monitoring,,Kenya,,,,,,,"Dedan Kimathi University of Technology,Data Science Africa",,,,,,,,,,,
+,ui_71,DATASETS FOR PREDICTION OF LAND USE/COVER CHANGES IN UGANDA,,Uganda,,,,,,,Makerere University,,,,,,,,,,,
+,ui_72,African Trees for Climate Resilience: A Comprehensive Database,,"Angola,DRC,Germany,Kenya,Mozambique,Nigeria,South Africa,Tanzania,United Kingdom,Zambia",,,,,,,University of Stellenbosch,,,,,,,,,,,
+,ui_73,Datasets to understand mangroves health in relationship to climate change,,Benin,,,,,,,"""Laboratory of Biomathematics and Forest Estimations, University of Abomey-Calavi""",,,,,,,,,,,
+,ui_74,Advancing oil palm mapping with social forestry and machine learning,,Indonesia,,,,,,,RECOFTC,,,,,,,,,,,
+,ui_75,Inclusive MRV for India's Eastern Himalayas,,India,,,,,,,Balipara Foundation,,,,,,,,,,,
+,ui_76,Data-enabled climate shock absorbance through agroforestry (Agrof4resilience),,Kenya,,,,,,,International Center of Insect Physiology and Ecology (ICIPE),,,,,,,,,,,
+,ui_77,QUANTIFYING COLOMBIAN MANGROVES ABOVEGROUND BIOMASS AND CARBON CONTENT,,Columbia,,,,,,,Centre Tecnològic de Telecomunicacions de Catalunya (CTTC),,,,,,,,,,,
+,ui_78,Phenological Dataset for Ecological Forecasting (PheDEF Project),,"Ghana,Netherlands",,,,,,,"""Department of Biological Science, School of Science, University of Energy and Natural Resources, Sunyani, Ghana""",,,,,,,,,,,
+,ui_79,,,,,,,,,,,,,,,,,,,,,
+,ui_80,,,,,,,,,,,,,,,,,,,,,
+,ui_81,,,,,,,,,,,,,,,,,,,,,
+,ui_82,,,,,,,,,,,,,,,,,,,,,
+,ui_83,,,,,,,,,,,,,,,,,,,,,
+,ui_84,,,,,,,,,,,,,,,,,,,,,
+,ui_85,,,,,,,,,,,,,,,,,,,,,
+,ui_86,,,,,,,,,,,,,,,,,,,,,
+,ui_87,,,,,,,,,,,,,,,,,,,,,
+,ui_88,,,,,,,,,,,,,,,,,,,,,
+,ui_89,,,,,,,,,,,,,,,,,,,,,
+,ui_90,,,,,,,,,,,,,,,,,,,,,
+,ui_91,,,,,,,,,,,,,,,,,,,,,
