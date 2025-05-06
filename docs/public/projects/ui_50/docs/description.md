@@ -1,1 +1,1 @@
-Field data collected on agricultural farm land (crops) with raw datasets + applied use cases of classification of land use cover using ML (based on individual projects presented)
+to be filled in once data, code and models are available

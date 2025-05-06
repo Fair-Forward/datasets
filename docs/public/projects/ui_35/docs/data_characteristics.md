@@ -1,0 +1,1 @@
+The platform allows for uploading and downloading AI model training data for sharing with the community. The data owner can set up access rights for the shared datasets
