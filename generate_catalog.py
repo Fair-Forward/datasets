@@ -427,74 +427,80 @@ def generate_card_html(row, idx):
             </div>
         '''
     
-    # --- Hidden Links (Dataset/Use Case Buttons) --- 
-    # (No changes needed here)
+    # --- Hidden Links (Dataset/Use Case Buttons) ---
     hidden_links = []
+    # Process Dataset Links
     if has_dataset and dataset_link:
-        # Split multiple dataset links by semicolons
-        dataset_links = dataset_link.split(';')
-        processed_links = []
-        
-        for link in dataset_links:
-            link = link.strip()
-            if not link:
-                continue
-                
-            # Check if the dataset link is in the format "Name (URL)"
-            name_url_match = re.search(r'([^(]+)\s*\((https?://[^)]+)\)', link)
+        # --- Revised splitting logic ---
+        processed_link_string = str(dataset_link).replace(',', ';') # Replace commas with semicolons
+        dataset_link_entries = [s.strip() for s in processed_link_string.split(';') if s.strip()]
+        # --- End revised splitting logic ---
+        is_single_dataset = len(dataset_link_entries) == 1
+        for i, link_entry in enumerate(dataset_link_entries):
+            link_url = link_entry
+            # Adjust default link name based on count
+            link_name = "Dataset" if is_single_dataset else f"Dataset {i+1}"
+
+            # Check for "Name (URL)" format
+            name_url_match = re.search(r'([^(]+)\s*\((https?://[^)]+)\)', link_entry)
             if name_url_match:
+                link_name = name_url_match.group(1).strip()
                 link_url = name_url_match.group(2).strip()
-                processed_links.append(link_url)
-            # Check if the link contains an email address
-            elif re.search(r'([^(]+)\s*\(([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\)', link):
-                email_match = re.search(r'([^(]+)\s*\(([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\)', link)
-                email = email_match.group(2).strip()
-                processed_links.append(f"mailto:{email}")
-            # Check if the dataset link is in Markdown format [text](url)
-            elif re.search(r'\[(.*?)\]\((.*?)\)', link):
-                markdown_match = re.search(r'\[(.*?)\]\((.*?)\)', link)
-                link_url = markdown_match.group(2).strip()
-                processed_links.append(link_url)
+            # Check for Markdown link: [Name](URL)
             else:
-                processed_links.append(link)
-        
-        # Join all processed links with semicolons
-        if processed_links:
-            combined_links = "; ".join(processed_links)
-            hidden_links.append(f'<a href="{combined_links}" target="_blank" class="btn btn-primary" style="display:none;">View Dataset</a>')
-    
+                md_match = re.search(r'\[(.*?)\]\((.*?)\)', link_entry)
+                if md_match:
+                    link_name = md_match.group(1).strip()
+                    link_url = md_match.group(2).strip()
+                # else: it's a bare URL, link_url is already set, link_name is default
+            
+            # Check for email (should ideally not be a primary dataset link, but handle)
+            email_match = re.search(r'mailto:([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})', link_url, re.IGNORECASE)
+            if email_match:
+                 # For mailto, link_name might be better derived if not explicitly given
+                if link_name == f"Dataset {i+1}": # if still default
+                    name_part_of_email_match = re.search(r'([^(]+)\s*\(([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\)', link_entry)
+                    if name_part_of_email_match: link_name = name_part_of_email_match.group(1).strip() 
+                    else: link_name = f"Email Contact {i+1}"
+                link_url = f"mailto:{email_match.group(1)}"
+            
+            escaped_link_name = html.escape(link_name)
+            # Ensure this append is INSIDE the loop for each link_entry
+            hidden_links.append(f'<a href="{link_url}" target="_blank" class="btn btn-primary hidden-link" data-link-type="dataset" data-link-name="{escaped_link_name}" style="display:none;">View {escaped_link_name}</a>')
+
+    # Process Use Case Links (similarly)
     if has_usecase and model_links:
-        # Split multiple use case links by semicolons
-        usecase_links = model_links.split(';')
-        processed_links = []
-        
-        for link in usecase_links:
-            link = link.strip()
-            if not link:
-                continue
-                
-            # Check if the use case link is in the format "Name (URL)"
-            name_url_match = re.search(r'([^(]+)\s*\((https?://[^)]+)\)', link)
+        # --- Revised splitting logic ---
+        processed_model_link_string = str(model_links).replace(',', ';')
+        usecase_link_entries = [s.strip() for s in processed_model_link_string.split(';') if s.strip()]
+        # --- End revised splitting logic ---
+        is_single_usecase = len(usecase_link_entries) == 1
+        for i, link_entry in enumerate(usecase_link_entries):
+            link_url = link_entry
+            # Adjust default link name based on count
+            link_name = "Use Case" if is_single_usecase else f"Use Case {i+1}"
+
+            name_url_match = re.search(r'([^(]+)\s*\((https?://[^)]+)\)', link_entry)
             if name_url_match:
+                link_name = name_url_match.group(1).strip()
                 link_url = name_url_match.group(2).strip()
-                processed_links.append(link_url)
-            # Check if the link contains an email address
-            elif re.search(r'([^(]+)\s*\(([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\)', link):
-                email_match = re.search(r'([^(]+)\s*\(([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\)', link)
-                email = email_match.group(2).strip()
-                processed_links.append(f"mailto:{email}")
-            # Check if the use case link is in Markdown format [text](url)
-            elif re.search(r'\[(.*?)\]\((.*?)\)', link):
-                markdown_match = re.search(r'\[(.*?)\]\((.*?)\)', link)
-                link_url = markdown_match.group(2).strip()
-                processed_links.append(link_url)
             else:
-                processed_links.append(link)
-        
-        # Join all processed links with semicolons
-        if processed_links:
-            combined_links = "; ".join(processed_links)
-            hidden_links.append(f'<a href="{combined_links}" target="_blank" class="btn btn-secondary" style="display:none;">View Use Case</a>')
+                md_match = re.search(r'\[(.*?)\]\((.*?)\)', link_entry)
+                if md_match:
+                    link_name = md_match.group(1).strip()
+                    link_url = md_match.group(2).strip()
+
+            email_match = re.search(r'mailto:([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})', link_url, re.IGNORECASE)
+            if email_match:
+                if link_name == f"Use Case {i+1}":
+                    name_part_of_email_match = re.search(r'([^(]+)\s*\(([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\)', link_entry)
+                    if name_part_of_email_match: link_name = name_part_of_email_match.group(1).strip()
+                    else: link_name = f"Email Contact {i+1}"
+                link_url = f"mailto:{email_match.group(1)}"
+
+            escaped_link_name = html.escape(link_name)
+            # Ensure this append is INSIDE the loop for each link_entry
+            hidden_links.append(f'<a href="{link_url}" target="_blank" class="btn btn-secondary hidden-link" data-link-type="usecase" data-link-name="{escaped_link_name}" style="display:none;">View {escaped_link_name}</a>')
     
     hidden_links_html = ""
     if hidden_links:

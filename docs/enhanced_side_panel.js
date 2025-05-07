@@ -135,6 +135,22 @@ function loadItemDetails(itemId) {
     console.log('Organizations data:', organizationsContentHTML);
     // --- END: Extract Authors and Orgs from Data Attributes ---
     
+    // --- START: Extract multiple Dataset and Use Case links ---
+    const datasetLinkElements = card.querySelectorAll('.hidden-links .hidden-link[data-link-type="dataset"]');
+    const useCaseLinkElements = card.querySelectorAll('.hidden-links .hidden-link[data-link-type="usecase"]');
+    
+    const datasetLinks = Array.from(datasetLinkElements).map(el => ({
+        href: el.getAttribute('href'),
+        name: el.getAttribute('data-link-name') || el.textContent.replace('View ', '').trim() || 'Dataset Link'
+    }));
+    const useCaseLinks = Array.from(useCaseLinkElements).map(el => ({
+        href: el.getAttribute('href'),
+        name: el.getAttribute('data-link-name') || el.textContent.replace('View ', '').trim() || 'Use Case Link'
+    }));
+    console.log('Dataset links for panel:', datasetLinks);
+    console.log('Use Case links for panel:', useCaseLinks);
+    // --- END: Extract multiple Dataset and Use Case links ---
+    
     // Basic check if projectId exists
     if (!projectId) {
         console.error('Could not find project ID for card with data-id:', itemId);
@@ -171,10 +187,6 @@ function loadItemDetails(itemId) {
             }
         }
     }
-    
-    // Get dataset and use-case links
-    const datasetLink = card.querySelector('.hidden-links .btn-primary[href]');
-    const useCaseLink = card.querySelector('.hidden-links .btn-secondary[href]');
     
     // Get data type chips
     const dataTypeChips = Array.from(card.querySelectorAll('.data-type-chip')).map(chip => {
@@ -270,16 +282,36 @@ function loadItemDetails(itemId) {
         
         // Add links section
         detailContent += `<div class="panel-links-section">`;
-        if (datasetLink) {
-            detailContent += `<a href="${datasetLink.getAttribute('href')}" target="_blank" class="panel-link-btn panel-dataset-link">
-                <i class="fas fa-database"></i> View Dataset
-            </a>`;
+        // if (datasetLink) { // Old single link logic
+        //     detailContent += `<a href="${datasetLink.getAttribute('href')}" target="_blank" class="panel-link-btn panel-dataset-link">
+        //         <i class="fas fa-database"></i> View Dataset
+        //     </a>`;
+        // }
+        // if (useCaseLink) { // Old single link logic
+        //     detailContent += `<a href="${useCaseLink.getAttribute('href')}" target="_blank" class="panel-link-btn panel-usecase-link">
+        //         <i class="fas fa-lightbulb"></i> View Use Case
+        //     </a>`;
+        // }
+        
+        // --- START: Add multiple Dataset links/buttons ---
+        if (datasetLinks.length > 0) {
+            datasetLinks.forEach(link => {
+                detailContent += `<a href="${link.href}" target="_blank" class="panel-link-btn panel-dataset-link">
+                    <i class="fas fa-database"></i> ${link.name}
+                </a>`;
+            });
         }
-        if (useCaseLink) {
-            detailContent += `<a href="${useCaseLink.getAttribute('href')}" target="_blank" class="panel-link-btn panel-usecase-link">
-                <i class="fas fa-lightbulb"></i> View Use Case
-            </a>`;
+        // --- END: Add multiple Dataset links/buttons ---
+        
+        // --- START: Add multiple Use Case links/buttons ---
+        if (useCaseLinks.length > 0) {
+            useCaseLinks.forEach(link => {
+                detailContent += `<a href="${link.href}" target="_blank" class="panel-link-btn panel-usecase-link">
+                    <i class="fas fa-lightbulb"></i> ${link.name}
+                </a>`;
+            });
         }
+        // --- END: Add multiple Use Case links/buttons ---
         detailContent += `</div>`;
         
         detailContent += `</div>`; // Close panel-title-section
