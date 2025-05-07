@@ -1070,24 +1070,39 @@ try:
         if col in df.columns:
             df[col] = df[col].fillna('')
     
-    # Count the statistics for the header
-    dataset_count = sum(df['Dataset Link'].notna())
-    usecase_count = sum(df['Model/Use-Case Links'].notna())
-    
-    # Count unique countries ONLY from rows with a valid dataset or use-case link
+    # Count the statistics for the header - REVISED for multiple links
+    # dataset_count = sum(df['Dataset Link'].notna())
+    # usecase_count = sum(df['Model/Use-Case Links'].notna())
+    dataset_count = 0
+    usecase_count = 0
     valid_countries = set()
+
     for index, row in df.iterrows():
-        # Check if the row has a valid dataset or use-case link
-        has_dataset_link = isinstance(row.get('Dataset Link'), str) and not pd.isna(row.get('Dataset Link'))
-        has_usecase_link = isinstance(row.get('Model/Use-Case Links'), str) and not pd.isna(row.get('Model/Use-Case Links'))
+        # Count individual dataset links
+        dataset_link_text = row.get('Dataset Link', '')
+        has_dataset_link = False
+        if isinstance(dataset_link_text, str) and not pd.isna(dataset_link_text):
+            processed_link_string = str(dataset_link_text).replace(',', ';')
+            dataset_link_entries = [s.strip() for s in processed_link_string.split(';') if s.strip()]
+            if dataset_link_entries:
+                dataset_count += len(dataset_link_entries)
+                has_dataset_link = True
         
+        # Count individual use case links
+        usecase_link_text = row.get('Model/Use-Case Links', '')
+        has_usecase_link = False
+        if isinstance(usecase_link_text, str) and not pd.isna(usecase_link_text):
+            processed_model_link_string = str(usecase_link_text).replace(',', ';')
+            usecase_link_entries = [s.strip() for s in processed_model_link_string.split(';') if s.strip()]
+            if usecase_link_entries:
+                usecase_count += len(usecase_link_entries)
+                has_usecase_link = True
+        
+        # Count unique countries ONLY from rows with at least one valid link
         if has_dataset_link or has_usecase_link:
-            # If it has a link, process the Country Team column for this row
             country_text = row.get('Country Team')
             if isinstance(country_text, str) and not pd.isna(country_text):
-                # Split by commas, semicolons, or 'and'
                 parts = re.split(r',|\s+and\s+|;', country_text)
-                # Strip whitespace and add each non-empty part to the set
                 for part in parts:
                     country = part.strip()
                     if country:
