@@ -99,13 +99,13 @@ def create_project_directories(df):
 
         # --- Create Directories and Files ONLY IF Project ID and a Real Title exist ---
         if project_id and has_real_title:
-            # Create main project directory
+            # Create main project directory (INDENTED)
             project_dir = os.path.join(public_projects_dir, dir_name)
             if not os.path.exists(project_dir):
                 os.makedirs(project_dir)
                 print(f"Created directory: {project_dir}")
             
-            # Create images and docs subdirectories
+            # Create images and docs subdirectories (INDENTED)
             images_dir = os.path.join(project_dir, "images")
             docs_dir = os.path.join(project_dir, "docs")
             
@@ -114,11 +114,25 @@ def create_project_directories(df):
             if not os.path.exists(docs_dir):
                 os.makedirs(docs_dir)
                 
-            # --- Create empty file named after normalized display title ---
-            normalized_display_title = normalize_for_directory(str(display_title))
-            if normalized_display_title: # Ensure title normalization didn't result in empty string
-                title_filename = f"{normalized_display_title}.txt"
-                title_file_path = os.path.join(project_dir, title_filename)
+            # --- START: Clean up old/incorrect .txt title files ---
+            correct_normalized_title = normalize_for_directory(str(display_title))
+            correct_title_filename = f"{correct_normalized_title}.txt" if correct_normalized_title else None
+            
+            if correct_title_filename:
+                try:
+                    for filename in os.listdir(project_dir):
+                        # Check if it's a file directly in project_dir and ends with .txt
+                        file_path = os.path.join(project_dir, filename)
+                        if os.path.isfile(file_path) and filename.endswith('.txt') and filename != correct_title_filename:
+                            os.remove(file_path)
+                            print(f"Removed old title file: {file_path}")
+                except OSError as e:
+                    print(f"Error cleaning old title files in {project_dir}: {e}")
+            # --- END: Clean up ---
+            
+            # --- Create empty file named after normalized display title (INDENTED) ---
+            if correct_normalized_title: # Ensure title normalization didn't result in empty string
+                title_file_path = os.path.join(project_dir, correct_title_filename)
                 try:
                     # Create an empty file (or update timestamp if exists)
                     with open(title_file_path, 'a'): 
@@ -129,7 +143,7 @@ def create_project_directories(df):
             else:
                  print(f"Warning: Could not create title file for row {index} because title '{display_title}' normalized to empty string.")
 
-            # --- Extract and save additional columns as markdown files ---
+            # --- Extract and save additional columns as markdown files (INDENTED) ---
             columns_to_extract = {
                 'Description - What can be done with this? What is this about?': 'description.md',
                 'Data - Key Characteristics': 'data_characteristics.md',
@@ -140,14 +154,15 @@ def create_project_directories(df):
             for column, filename in columns_to_extract.items():
                 if column in df.columns:
                     content = row.get(column, '')
-                    if content and not pd.isna(content):
-                        file_path = os.path.join(docs_dir, filename)
-                        try:
-                            with open(file_path, 'w', encoding='utf-8') as f:
-                                f.write(str(content)) 
-                            print(f"Created/Updated file: {file_path}")
-                        except Exception as e_md:
-                            print(f"Error writing markdown file {file_path}: {e_md}")
+                    # Write file even if content is empty, to ensure old files are overwritten
+                    file_path = os.path.join(docs_dir, filename)
+                    try:
+                        with open(file_path, 'w', encoding='utf-8') as f:
+                            # Write empty string if content is NaN or None, otherwise write content
+                            f.write(str(content) if content and not pd.isna(content) else '') 
+                        print(f"Created/Updated file: {file_path}")
+                    except Exception as e_md:
+                        print(f"Error writing markdown file {file_path}: {e_md}")
                 else:
                     # Less verbose logging
                     # print(f"Skipping file {filename} for row {index}: Column '{column}' not found.")

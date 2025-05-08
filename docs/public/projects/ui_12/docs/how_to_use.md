@@ -1,1 +1,0 @@
-Civil society organizations can use the existing voice content to generate tailored, AI-powered messages in various Indian languages across different topics including health, education, agriculture and other social topics. Civil society organizations can deploy these messages in rural and semi-urban areas using easy-to-use digital tools incl. WhatsApp messaging or feature phones.
