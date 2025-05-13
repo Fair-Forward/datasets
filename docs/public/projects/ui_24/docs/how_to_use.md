@@ -1,1 +1,0 @@
-Details to follow once development has been concluded.
