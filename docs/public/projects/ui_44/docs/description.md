@@ -1,0 +1,1 @@
+Activity including local subactivities (Kinyarwanda, Luganda, Kiswahili)

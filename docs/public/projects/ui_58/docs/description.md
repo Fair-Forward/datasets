@@ -1,0 +1,1 @@
+Machine Learning models to predict unbiased solar irradiance for a given location in sub-saharan Africa

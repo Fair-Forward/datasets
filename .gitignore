@@ -1,0 +1,14 @@
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# Environments
+.env
+
+# folders/files
+data_sources/google_sheets_api/service_account_JN.json
+.specstory/
+.cursorindexingignore

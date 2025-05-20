@@ -1,0 +1,8 @@
+pandas
+openpyxl
+gspread
+oauth2client
+requests
+python-dotenv
+thefuzz[speedup]
+tqdm 

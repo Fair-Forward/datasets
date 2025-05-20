@@ -1,0 +1,1 @@
+Running system (during Covid with 2 Million info requests ) / Business Model training on open source AI business with Digital Umuganda / Open Source system to allow for easy scaling and replication and sustainability

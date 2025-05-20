@@ -1,0 +1,1 @@
+By collecting more than 1000 hours of AI voice data (by 04/2025), this effort created the largest open-source voice dataset of diverse Swahili speakers for speech recognition (speech-to-text). You can use this resource to build AI systems understanding spoken Swahili e.g. in cellphones . This facilitates access to information in mother tongue, including by illiterate persons. 

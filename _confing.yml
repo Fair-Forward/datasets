@@ -1,0 +1,7 @@
+source: docs 
+title: "Data Catalog"
+description: "Centralized catalog of datasets collected throughout Fair Forward"
+theme: jekyll-theme-cayman
+url: "https://fair-forward.github.io/datasets/"
+
+  
