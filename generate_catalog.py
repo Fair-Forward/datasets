@@ -707,6 +707,57 @@ def generate_js_code():
             let selectedRegion = 'all';
             let selectedItemId = null;
             
+            // === THEME TOGGLE FUNCTIONALITY ===
+            // To add a new theme:
+            // 1. Add theme variables to CSS :root section (e.g., --newtheme-primary: #color)
+            // 2. Add theme override section in CSS (e.g., [data-theme="newtheme"] { --primary: var(--newtheme-primary); })
+            // 3. Add theme to this themes object with name and icon
+            // 4. Update the theme cycling logic in the click handler below
+            const themes = {
+                'classic': { name: 'Classic', icon: 'fas fa-moon' },
+                'solarized': { name: 'Solarized', icon: 'fas fa-sun' }
+            };
+            
+            let currentTheme = localStorage.getItem('theme') || 'classic';
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeName = document.getElementById('theme-name');
+            
+            // Apply saved theme on page load
+            function applyTheme(theme) {
+                if (theme === 'solarized') {
+                    document.documentElement.setAttribute('data-theme', 'solarized');
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                }
+                
+                // Update button text and icon
+                if (themeName && themeToggle) {
+                    themeName.textContent = themes[theme].name;
+                    const icon = themeToggle.querySelector('i');
+                    if (icon) {
+                        icon.className = themes[theme].icon;
+                    }
+                }
+                
+                currentTheme = theme;
+                localStorage.setItem('theme', theme);
+            }
+            
+            // Initialize theme
+            applyTheme(currentTheme);
+            
+            // Theme toggle event listener
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    // Cycle through themes
+                    const themeKeys = Object.keys(themes);
+                    const currentIndex = themeKeys.indexOf(currentTheme);
+                    const nextIndex = (currentIndex + 1) % themeKeys.length;
+                    const nextTheme = themeKeys[nextIndex];
+                    applyTheme(nextTheme);
+                });
+            }
+            
             // Function to parse URL parameters
             function getUrlParams() {
                 const params = new URLSearchParams(window.location.search);
@@ -1123,40 +1174,78 @@ try:
     # Moved static CSS rules out of the main f-string to avoid syntax errors
     static_css = r'''
         :root {
-            /* Solarized Light color palette - simplified two-tone approach */
-            --base03: #002b36;
-            --base02: #073642;
-            --base01: #586e75;
-            --base00: #657b83;
-            --base0: #839496;
-            --base1: #93a1a1;
-            --base2: #eee8d5;
-            --base3: #fdf6e3;
-            --yellow: #b58900;
-            --orange: #cb4b16;
-            --red: #dc322f;
-            --magenta: #d33682;
-            --violet: #6c71c4;
-            --blue: #268bd2;
-            --cyan: #2aa198;
-            --green: #859900;
-
-            /* Simplified two-tone theme - lighter colors */
-            --light-bg: #fefcf5; /* Slightly lighter than base3 for main background */
-            --card-bg: #f5f2ea; /* Slightly lighter than base2 for cards/sections */
+            /* === THEME SYSTEM === */
+            /* To add a new theme, follow this pattern:
+               1. Define theme-specific variables (e.g., --newtheme-primary: #color)
+               2. Add a [data-theme="newtheme"] selector with variable overrides
+               3. Update the JavaScript themes object and cycling logic */
             
-            /* Theme application - simplified to two main colors (swapped) */
-            --primary: var(--blue); /* Keep blue for accents */
-            --primary-light: var(--cyan); /* Keep cyan for hover states */
-            --background: var(--card-bg); /* Main page background - now using card color */
-            --card-background: var(--light-bg); /* Card/section background - now using lighter color */
-            --text: var(--base00); /* Main text color */
-            --text-light: var(--base01); /* Lighter text color */
-            --border: rgba(147, 161, 161, 0.3); /* Very subtle borders */
-            --shadow: rgba(0, 0, 0, 0.02); /* Even more subtle shadows */
+            /* Solarized Light Theme (Default) */
+            --solarized-base03: #002b36;
+            --solarized-base02: #073642;
+            --solarized-base01: #586e75;
+            --solarized-base00: #657b83;
+            --solarized-base0: #839496;
+            --solarized-base1: #93a1a1;
+            --solarized-base2: #eee8d5;
+            --solarized-base3: #fdf6e3;
+            --solarized-yellow: #b58900;
+            --solarized-orange: #cb4b16;
+            --solarized-red: #dc322f;
+            --solarized-magenta: #d33682;
+            --solarized-violet: #6c71c4;
+            --solarized-blue: #268bd2;
+            --solarized-cyan: #2aa198;
+            --solarized-green: #859900;
+            --solarized-light-bg: #fefcf5;
+            --solarized-card-bg: #f5f2ea;
+
+            /* Classic Blue Theme */
+            --classic-primary: #3b5998;
+            --classic-primary-light: #4c70ba;
+            --classic-secondary: #5b7fb9;
+            --classic-light: #f9fafb;
+            --classic-dark: #1a202c;
+            --classic-gray: #64748b;
+            --classic-border: #e2e8f0;
+            --classic-background: #f8fafc;
+            --classic-card-bg: #f5f8fc;
+            --classic-text: #1e293b;
+            --classic-text-light: #64748b;
+            --classic-shadow: rgba(0, 0, 0, 0.04);
+            --classic-shadow-hover: rgba(0, 0, 0, 0.08);
+            --classic-title-color: #2c4a7c;
+            --classic-btn-text: #ffffff;
+
+            /* Active Theme Variables (Default: Classic) */
+            --primary: var(--classic-primary);
+            --primary-light: var(--classic-primary-light);
+            --background: var(--classic-background);
+            --card-background: #ffffff;
+            --text: var(--classic-text);
+            --text-light: var(--classic-text-light);
+            --border: var(--classic-border);
+            --shadow: var(--classic-shadow);
+            --shadow-hover: var(--classic-shadow-hover);
+            --title-color: var(--classic-title-color);
+            --btn-text: var(--classic-btn-text);
+            --yellow: #d97706;
+        }
+
+        /* Solarized Theme Override */
+        [data-theme="solarized"] {
+            --primary: var(--solarized-blue);
+            --primary-light: var(--solarized-cyan);
+            --background: var(--solarized-card-bg);
+            --card-background: var(--solarized-light-bg);
+            --text: var(--solarized-base00);
+            --text-light: var(--solarized-base01);
+            --border: rgba(147, 161, 161, 0.3);
+            --shadow: rgba(0, 0, 0, 0.02);
             --shadow-hover: rgba(0, 0, 0, 0.04);
-            --title-color: var(--base02); /* Darker color for titles */
-            --btn-text: var(--light-bg); /* Text on primary buttons */
+            --title-color: var(--solarized-base02);
+            --btn-text: var(--solarized-light-bg);
+            --yellow: var(--solarized-yellow);
         }
         
         * {
@@ -1228,6 +1317,35 @@ try:
 
         .about-link:hover {
             background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Theme Toggle Button */
+        .theme-toggle {
+            background: var(--card-background);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            white-space: nowrap;
+            box-shadow: 0 1px 3px var(--shadow);
+        }
+        
+        .theme-toggle:hover {
+            background: var(--background);
+            border-color: var(--primary-light);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px var(--shadow-hover);
+        }
+        
+        .theme-toggle i {
+            font-size: 0.75rem;
+            opacity: 0.8;
         }
         
         .header-content {
@@ -1758,14 +1876,24 @@ try:
                 gap: 0.75rem;
             }
             
+            .top-nav-links {
+                align-self: flex-end;
+                margin-top: -2rem; /* Position next to logos */
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            
             .top-nav-container {
                 margin-bottom: 1.5rem; /* Reverted back to 1.5rem from 2rem */
             }
             
-            .about-link {
-                align-self: flex-end;
-                margin-top: -1.5rem; /* Negative margin to position it next to logos */
+            .theme-toggle {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.75rem;
+                gap: 0.3rem;
             }
+            
+
             
             .header-logos {
                 flex-wrap: wrap;
@@ -2095,6 +2223,10 @@ try:
                     </a>
                 </div>
                 <div class="top-nav-links"> <!-- Add this wrapper div -->
+                    <button id="theme-toggle" class="theme-toggle" title="Switch theme">
+                        <i class="fas fa-moon"></i>
+                        <span id="theme-name">Classic</span>
+                    </button>
                     <a href="#" id="fair-sharing-link" class="about-link">Info on Fair Sharing</a>
                     <a href="#" id="about-website-link" class="about-link">About the website</a> <!-- Added ID -->
                 </div> <!-- Close the wrapper div -->
