@@ -31,7 +31,7 @@
     <style>
         
         :root {
-            /* Solarized Light color palette */
+            /* Solarized Light color palette - simplified two-tone approach */
             --base03: #002b36;
             --base02: #073642;
             --base01: #586e75;
@@ -49,22 +49,22 @@
             --cyan: #2aa198;
             --green: #859900;
 
-            /* Theme application */
-            --primary: var(--blue); /* Using blue as primary accent */
-            --primary-light: var(--cyan); /* Using cyan as a lighter accent */
-            --secondary: var(--violet); /* Using violet as secondary accent */
-            --light: var(--base2); /* Light background */
-            --dark: var(--base03); /* Dark text/elements on light background */
-            --gray: var(--base0);
-            --border: var(--base1); 
-            --background: var(--base3); /* Main page background */
-            --card-bg: var(--base2); /* Card background */
+            /* Simplified two-tone theme - lighter colors */
+            --light-bg: #fefcf5; /* Slightly lighter than base3 for main background */
+            --card-bg: #f5f2ea; /* Slightly lighter than base2 for cards/sections */
+            
+            /* Theme application - simplified to two main colors (swapped) */
+            --primary: var(--blue); /* Keep blue for accents */
+            --primary-light: var(--cyan); /* Keep cyan for hover states */
+            --background: var(--card-bg); /* Main page background - now using card color */
+            --card-background: var(--light-bg); /* Card/section background - now using lighter color */
             --text: var(--base00); /* Main text color */
             --text-light: var(--base01); /* Lighter text color */
-            --shadow: rgba(0, 0, 0, 0.04); /* Keeping shadows subtle */
-            --shadow-hover: rgba(0, 0, 0, 0.08);
+            --border: rgba(147, 161, 161, 0.3); /* Very subtle borders */
+            --shadow: rgba(0, 0, 0, 0.02); /* Even more subtle shadows */
+            --shadow-hover: rgba(0, 0, 0, 0.04);
             --title-color: var(--base02); /* Darker color for titles */
-            --btn-text: var(--base3); /* Text on primary buttons */
+            --btn-text: var(--light-bg); /* Text on primary buttons */
         }
         
         * {
@@ -89,20 +89,20 @@
         }
         
         header {
-            background: linear-gradient(to right, var(--base2), var(--base3)); /* Subtle light gradient background */
+            background-color: var(--background); /* Simplified to single background color */
             padding: 0 0 3.5rem; /* Increased bottom padding from 2rem to 3.5rem */
             position: relative;
             overflow: hidden;
-            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 2px 10px var(--shadow);
         }
 
         /* Top navigation area that will contain both the logos and the about link */
         .top-nav-container {
-            background-color: var(--base3); /* Changed from #ffffff */
+            background-color: var(--card-background); /* Use card background for subtle contrast */
             padding: 0;
             width: 100%;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 1px 4px var(--shadow);
             margin-bottom: 2rem; /* Reverted back to 2rem from 3rem */
         }
 
@@ -219,7 +219,7 @@
         }
         
         .filters {
-            background-color: var(--base2); /* Changed from #ffffff */
+            background-color: var(--card-background); /* Use card background for subtle contrast */
             padding: 1.25rem 0; /* Reduced from 1.5rem */
             border-bottom: 1px solid var(--border);
             position: sticky;
@@ -227,7 +227,7 @@
             z-index: 10;
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 10px var(--shadow-hover);
             margin-top: -0.75rem;
             border-top-left-radius: 12px;
             border-top-right-radius: 12px;
@@ -261,7 +261,7 @@
             border-radius: 0.5rem;
             border: 1px solid var(--border);
             min-width: 160px; /* Reduced from 180px */
-            background-color: var(--base3); /* Changed from white */
+            background-color: var(--card-background); /* Match filter bar background */
             font-size: 0.875rem;
             color: var(--text);
             transition: all 0.2s ease;
@@ -281,7 +281,7 @@
             border-radius: 0.5rem;
             padding: 0.5rem 0.875rem; /* Reduced from 0.625rem 1rem */
             min-width: 280px; /* Reduced from 300px */
-            background-color: var(--base3); /* Changed from white */
+            background-color: var(--card-background); /* Match filter bar background */
             box-shadow: 0 1px 2px var(--shadow);
             transition: all 0.2s ease;
         }
@@ -321,10 +321,10 @@
         }
         
         .card {
-            background: var(--card-bg); /* Changed from #ffffff */
+            background: var(--card-background); /* Use card background for subtle contrast */
             border-radius: 0.75rem;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06); /* Slightly stronger shadow */
+            box-shadow: 0 4px 10px var(--shadow-hover); /* Use theme shadow */
             transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
             display: flex;
             flex-direction: column;
@@ -336,7 +336,7 @@
         
         .card:hover {
             transform: translateY(-5px); /* More lift */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* More pronounced shadow */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); /* Lighter shadow on hover */
             /* Apply blue border color on hover */
             border-color: var(--primary-light);
         }
@@ -347,8 +347,8 @@
         
         .card-image {
             height: 130px; /* Increased from 120px for less square proportions */
-            background-color: var(--base2); /* Placeholder background color */
-            background-image: linear-gradient(135deg, var(--base2) 0%, var(--base1) 100%); /* Placeholder gradient */
+            background-color: var(--background); /* Use main background as placeholder */
+            background-image: linear-gradient(135deg, var(--card-background) 0%, var(--background) 100%); /* Simple two-tone gradient */
             background-size: cover;
             background-position: center;
             position: relative;
@@ -368,11 +368,11 @@
             height: 100%;
             background: linear-gradient(
                 to bottom,
-                rgba(253, 246, 227, 0) 0%,   /* var(--base3) with alpha */
-                rgba(253, 246, 227, 0) 50%,  /* var(--base3) with alpha */
-                rgba(253, 246, 227, 0.3) 75%,/* var(--base3) with alpha */
-                rgba(253, 246, 227, 0.8) 90%,/* var(--base3) with alpha */
-                rgba(253, 246, 227, 1) 100%  /* var(--base3) full */
+                rgba(254, 252, 245, 0) 0%,   /* --light-bg (card background) with alpha */
+                rgba(254, 252, 245, 0) 50%,  /* --light-bg (card background) with alpha */
+                rgba(254, 252, 245, 0.3) 75%,/* --light-bg (card background) with alpha */
+                rgba(254, 252, 245, 0.8) 90%,/* --light-bg (card background) with alpha */
+                rgba(254, 252, 245, 1) 100%  /* --light-bg (card background) full */
             );
             z-index: 1;
         }
@@ -384,7 +384,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--base2) 0%, var(--base1) 100%); /* Fallback gradient using Solarized colors */
+            background: linear-gradient(135deg, var(--card-background) 0%, var(--background) 100%); /* Simple two-tone fallback */
             z-index: -1;
         }
         
@@ -413,7 +413,7 @@
         .domain-badge {
             display: inline-block;
             background-color: var(--primary); /* Using primary accent */
-            color: var(--base3); /* Text on primary accent */
+            color: var(--btn-text); /* Text on primary accent */
             padding: 0.25rem 0.75rem;
             border-radius: 2rem;
             font-size: 0.7rem;
@@ -434,11 +434,11 @@
             font-weight: 400;
             padding: 0.2rem 0.5rem;
             border-radius: 1rem;
-            background-color: rgba(0, 43, 54, 0.07); /* base03 with alpha */
-            color: var(--gray);
+            background-color: var(--background); /* Use main background */
+            color: var(--text-light);
             display: inline-flex;
             align-items: center;
-            border: 1px solid rgba(0, 43, 54, 0.1); /* base03 with alpha */
+            border: 1px solid var(--border); /* Use theme border */
         }
         
         .data-type-chip i {
@@ -573,7 +573,7 @@
             justify-content: flex-end;
             align-items: center;
             gap: 0.5rem;
-            background-color: rgba(38, 139, 210, 0.02); /* blue with low alpha */
+            background-color: var(--background); /* Use main background for footer */
             flex-wrap: wrap;
         }
         
@@ -639,9 +639,9 @@
         }
         
         .btn-view-details {
-            background-color: var(--base2);  /* Light red background -> base2 */
+            background-color: var(--card-background);  /* Use card background */
             color: var(--text-light);
-            border: 1px solid var(--base1);  /* Light red border -> base1 */
+            border: 1px solid var(--border);  /* Use theme border */
             margin-left: auto;
             padding-left: 0.5rem;
             padding-right: 0.5rem;
@@ -744,7 +744,7 @@
         /* {label_css} Will be appended here */
         
         footer {
-            background-color: var(--light);
+            background-color: var(--background);
             color: var(--text-light);
             padding: 4rem 0;
             text-align: center;
@@ -786,15 +786,15 @@
         }
         
         .btn-view-details:hover {
-            background-color: var(--base1);  /* Slightly darker red on hover -> base1 */
-            color: var(--blue);  /* Darker red text on hover -> blue */
+            background-color: var(--background);  /* Use main background on hover */
+            color: var(--primary);  /* Use primary color for text */
             transform: translateY(-2px);
         }
         
         .empty-state {
             text-align: center;
             padding: 4rem 2rem;
-            background-color: rgba(238, 232, 213, 0.5); /* base2 with alpha */
+            background-color: var(--card-background); /* Use card background */
             border-radius: 1rem;
             border: 1px solid var(--border);
             display: none;
@@ -894,7 +894,7 @@
         }
         .modal-content {
             position: relative;
-            background-color: var(--base3); /* Changed from #fff */
+            background-color: var(--background); /* Use main background */
             padding: 2.5rem;
             border-radius: 0.75rem;
             width: 90%;
@@ -948,82 +948,82 @@
 
 /* === Generated Label CSS === */
 
-.label-natural-language-processing {
-    background-color: #e2cfcf;
-    color: #2d3748;
-}
-
-.domain-natural-language-processing {
-    background-color: #e2cfcf;
-    color: #2d3748;
-}
-
-.label-climate-adaptation {
-    background-color: #e2d3cf;
-    color: #2d3748;
-}
-
-.domain-climate-adaptation {
-    background-color: #e2d3cf;
-    color: #2d3748;
-}
-
-.label-inclusive-education {
-    background-color: #e2d8cf;
-    color: #2d3748;
-}
-
-.domain-inclusive-education {
-    background-color: #e2d8cf;
-    color: #2d3748;
-}
-
-.label-agriculturefood-security {
-    background-color: #e2dccf;
-    color: #2d3748;
-}
-
-.domain-agriculturefood-security {
-    background-color: #e2dccf;
-    color: #2d3748;
-}
-
-.label-energy {
-    background-color: #e2e1cf;
-    color: #2d3748;
-}
-
-.domain-energy {
-    background-color: #e2e1cf;
-    color: #2d3748;
-}
-
-.label-agriculture {
-    background-color: #dee2cf;
-    color: #2d3748;
-}
-
-.domain-agriculture {
-    background-color: #dee2cf;
-    color: #2d3748;
-}
-
 .label-climate-action {
-    background-color: #d9e2cf;
+    background-color: #e2cfcf;
     color: #2d3748;
 }
 
 .domain-climate-action {
-    background-color: #d9e2cf;
+    background-color: #e2cfcf;
+    color: #2d3748;
+}
+
+.label-inclusive-education {
+    background-color: #e2d3cf;
+    color: #2d3748;
+}
+
+.domain-inclusive-education {
+    background-color: #e2d3cf;
     color: #2d3748;
 }
 
 .label-disaster-risk-reduction-management {
-    background-color: #d5e2cf;
+    background-color: #e2d8cf;
     color: #2d3748;
 }
 
 .domain-disaster-risk-reduction-management {
+    background-color: #e2d8cf;
+    color: #2d3748;
+}
+
+.label-agriculture {
+    background-color: #e2dccf;
+    color: #2d3748;
+}
+
+.domain-agriculture {
+    background-color: #e2dccf;
+    color: #2d3748;
+}
+
+.label-climate-adaptation {
+    background-color: #e2e1cf;
+    color: #2d3748;
+}
+
+.domain-climate-adaptation {
+    background-color: #e2e1cf;
+    color: #2d3748;
+}
+
+.label-agriculturefood-security {
+    background-color: #dee2cf;
+    color: #2d3748;
+}
+
+.domain-agriculturefood-security {
+    background-color: #dee2cf;
+    color: #2d3748;
+}
+
+.label-natural-language-processing {
+    background-color: #d9e2cf;
+    color: #2d3748;
+}
+
+.domain-natural-language-processing {
+    background-color: #d9e2cf;
+    color: #2d3748;
+}
+
+.label-energy {
+    background-color: #d5e2cf;
+    color: #2d3748;
+}
+
+.domain-energy {
     background-color: #d5e2cf;
     color: #2d3748;
 }
@@ -1033,22 +1033,22 @@
     color: #2d3748;
 }
 
-.label-text {
+.label-geospatial-biomass {
     background-color: #cfe2d2;
     color: #2d3748;
 }
 
-.label-image-and-tabular-weather-data {
+.label-audio {
     background-color: #cfe2d6;
     color: #2d3748;
 }
 
-.label-audio {
+.label-images {
     background-color: #cfe2db;
     color: #2d3748;
 }
 
-.label-geospatial {
+.label-image-and-tabular-weather-data {
     background-color: #cfe2e0;
     color: #2d3748;
 }
@@ -1058,57 +1058,57 @@
     color: #2d3748;
 }
 
-.label-images {
+.label-text {
     background-color: #cfdbe2;
     color: #2d3748;
 }
 
-.label-geospatial-biomass {
+.label-geospatial {
     background-color: #cfd6e2;
     color: #2d3748;
 }
 
-.label-dataset----pilot----use-case {
+.label-dataset----pilot----use-case----use-case-with-business-model {
     background-color: #cfd2e2;
     color: #2d3748;
 }
 
-.label-tts-model----use-case {
+.label-data-available {
     background-color: #d0cfe2;
     color: #2d3748;
 }
 
-.label-completed {
+.label-dataset----pilot {
     background-color: #d5cfe2;
     color: #2d3748;
 }
 
-.label-dataset {
+.label-tts-model----use-case {
     background-color: #d9cfe2;
     color: #2d3748;
 }
 
-.label-data-sharing-platform {
+.label-data-available {
     background-color: #decfe2;
     color: #2d3748;
 }
 
-.label-dataset----pilot----use-case----use-case-with-business-model {
+.label-dataset----pilot----use-case {
     background-color: #e2cfe1;
     color: #2d3748;
 }
 
-.label-data-available {
+.label-completed {
     background-color: #e2cfdc;
     color: #2d3748;
 }
 
-.label-dataset----pilot {
+.label-dataset {
     background-color: #e2cfd8;
     color: #2d3748;
 }
 
-.label-data-available {
+.label-data-sharing-platform {
     background-color: #e2cfd3;
     color: #2d3748;
 }
@@ -1786,6 +1786,7 @@ Financed by: BMZ">
     </div>
     
     <div class="card has-dataset"          data-title="Enabling geo-scientists to use Machine Learning for Precision Agriculture of geospatial data"          data-region="South Africa"          data-id="50"          data-project-id="ui_52"          data-authors="Meena Lysko"          data-organizations="Powered by:  Move Beyond Consulting
+Implementing partners: WITS, CSIR, ARC
 Catalyzed by: FAIR Forward - AI for All
 Financed by: BMZ">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_52/images/drone_crop.jpg');"></div>

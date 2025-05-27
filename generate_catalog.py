@@ -1123,7 +1123,7 @@ try:
     # Moved static CSS rules out of the main f-string to avoid syntax errors
     static_css = r'''
         :root {
-            /* Solarized Light color palette */
+            /* Solarized Light color palette - simplified two-tone approach */
             --base03: #002b36;
             --base02: #073642;
             --base01: #586e75;
@@ -1141,22 +1141,22 @@ try:
             --cyan: #2aa198;
             --green: #859900;
 
-            /* Theme application */
-            --primary: var(--blue); /* Using blue as primary accent */
-            --primary-light: var(--cyan); /* Using cyan as a lighter accent */
-            --secondary: var(--violet); /* Using violet as secondary accent */
-            --light: var(--base2); /* Light background */
-            --dark: var(--base03); /* Dark text/elements on light background */
-            --gray: var(--base0);
-            --border: var(--base1); 
-            --background: var(--base3); /* Main page background */
-            --card-bg: var(--base2); /* Card background */
+            /* Simplified two-tone theme - lighter colors */
+            --light-bg: #fefcf5; /* Slightly lighter than base3 for main background */
+            --card-bg: #f5f2ea; /* Slightly lighter than base2 for cards/sections */
+            
+            /* Theme application - simplified to two main colors (swapped) */
+            --primary: var(--blue); /* Keep blue for accents */
+            --primary-light: var(--cyan); /* Keep cyan for hover states */
+            --background: var(--card-bg); /* Main page background - now using card color */
+            --card-background: var(--light-bg); /* Card/section background - now using lighter color */
             --text: var(--base00); /* Main text color */
             --text-light: var(--base01); /* Lighter text color */
-            --shadow: rgba(0, 0, 0, 0.04); /* Keeping shadows subtle */
-            --shadow-hover: rgba(0, 0, 0, 0.08);
+            --border: rgba(147, 161, 161, 0.3); /* Very subtle borders */
+            --shadow: rgba(0, 0, 0, 0.02); /* Even more subtle shadows */
+            --shadow-hover: rgba(0, 0, 0, 0.04);
             --title-color: var(--base02); /* Darker color for titles */
-            --btn-text: var(--base3); /* Text on primary buttons */
+            --btn-text: var(--light-bg); /* Text on primary buttons */
         }
         
         * {
@@ -1181,20 +1181,20 @@ try:
         }
         
         header {
-            background: linear-gradient(to right, var(--base2), var(--base3)); /* Subtle light gradient background */
+            background-color: var(--background); /* Simplified to single background color */
             padding: 0 0 3.5rem; /* Increased bottom padding from 2rem to 3.5rem */
             position: relative;
             overflow: hidden;
-            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 2px 10px var(--shadow);
         }
 
         /* Top navigation area that will contain both the logos and the about link */
         .top-nav-container {
-            background-color: var(--base3); /* Changed from #ffffff */
+            background-color: var(--card-background); /* Use card background for subtle contrast */
             padding: 0;
             width: 100%;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 1px 4px var(--shadow);
             margin-bottom: 2rem; /* Reverted back to 2rem from 3rem */
         }
 
@@ -1311,7 +1311,7 @@ try:
         }
         
         .filters {
-            background-color: var(--base2); /* Changed from #ffffff */
+            background-color: var(--card-background); /* Use card background for subtle contrast */
             padding: 1.25rem 0; /* Reduced from 1.5rem */
             border-bottom: 1px solid var(--border);
             position: sticky;
@@ -1319,7 +1319,7 @@ try:
             z-index: 10;
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 10px var(--shadow-hover);
             margin-top: -0.75rem;
             border-top-left-radius: 12px;
             border-top-right-radius: 12px;
@@ -1353,7 +1353,7 @@ try:
             border-radius: 0.5rem;
             border: 1px solid var(--border);
             min-width: 160px; /* Reduced from 180px */
-            background-color: var(--base3); /* Changed from white */
+            background-color: var(--card-background); /* Match filter bar background */
             font-size: 0.875rem;
             color: var(--text);
             transition: all 0.2s ease;
@@ -1373,7 +1373,7 @@ try:
             border-radius: 0.5rem;
             padding: 0.5rem 0.875rem; /* Reduced from 0.625rem 1rem */
             min-width: 280px; /* Reduced from 300px */
-            background-color: var(--base3); /* Changed from white */
+            background-color: var(--card-background); /* Match filter bar background */
             box-shadow: 0 1px 2px var(--shadow);
             transition: all 0.2s ease;
         }
@@ -1413,10 +1413,10 @@ try:
         }
         
         .card {
-            background: var(--card-bg); /* Changed from #ffffff */
+            background: var(--card-background); /* Use card background for subtle contrast */
             border-radius: 0.75rem;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06); /* Slightly stronger shadow */
+            box-shadow: 0 4px 10px var(--shadow-hover); /* Use theme shadow */
             transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
             display: flex;
             flex-direction: column;
@@ -1428,7 +1428,7 @@ try:
         
         .card:hover {
             transform: translateY(-5px); /* More lift */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* More pronounced shadow */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); /* Lighter shadow on hover */
             /* Apply blue border color on hover */
             border-color: var(--primary-light);
         }
@@ -1439,8 +1439,8 @@ try:
         
         .card-image {
             height: 130px; /* Increased from 120px for less square proportions */
-            background-color: var(--base2); /* Placeholder background color */
-            background-image: linear-gradient(135deg, var(--base2) 0%, var(--base1) 100%); /* Placeholder gradient */
+            background-color: var(--background); /* Use main background as placeholder */
+            background-image: linear-gradient(135deg, var(--card-background) 0%, var(--background) 100%); /* Simple two-tone gradient */
             background-size: cover;
             background-position: center;
             position: relative;
@@ -1460,11 +1460,11 @@ try:
             height: 100%;
             background: linear-gradient(
                 to bottom,
-                rgba(253, 246, 227, 0) 0%,   /* var(--base3) with alpha */
-                rgba(253, 246, 227, 0) 50%,  /* var(--base3) with alpha */
-                rgba(253, 246, 227, 0.3) 75%,/* var(--base3) with alpha */
-                rgba(253, 246, 227, 0.8) 90%,/* var(--base3) with alpha */
-                rgba(253, 246, 227, 1) 100%  /* var(--base3) full */
+                rgba(254, 252, 245, 0) 0%,   /* --light-bg (card background) with alpha */
+                rgba(254, 252, 245, 0) 50%,  /* --light-bg (card background) with alpha */
+                rgba(254, 252, 245, 0.3) 75%,/* --light-bg (card background) with alpha */
+                rgba(254, 252, 245, 0.8) 90%,/* --light-bg (card background) with alpha */
+                rgba(254, 252, 245, 1) 100%  /* --light-bg (card background) full */
             );
             z-index: 1;
         }
@@ -1476,7 +1476,7 @@ try:
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--base2) 0%, var(--base1) 100%); /* Fallback gradient using Solarized colors */
+            background: linear-gradient(135deg, var(--card-background) 0%, var(--background) 100%); /* Simple two-tone fallback */
             z-index: -1;
         }
         
@@ -1505,7 +1505,7 @@ try:
         .domain-badge {
             display: inline-block;
             background-color: var(--primary); /* Using primary accent */
-            color: var(--base3); /* Text on primary accent */
+            color: var(--btn-text); /* Text on primary accent */
             padding: 0.25rem 0.75rem;
             border-radius: 2rem;
             font-size: 0.7rem;
@@ -1526,11 +1526,11 @@ try:
             font-weight: 400;
             padding: 0.2rem 0.5rem;
             border-radius: 1rem;
-            background-color: rgba(0, 43, 54, 0.07); /* base03 with alpha */
-            color: var(--gray);
+            background-color: var(--background); /* Use main background */
+            color: var(--text-light);
             display: inline-flex;
             align-items: center;
-            border: 1px solid rgba(0, 43, 54, 0.1); /* base03 with alpha */
+            border: 1px solid var(--border); /* Use theme border */
         }
         
         .data-type-chip i {
@@ -1665,7 +1665,7 @@ try:
             justify-content: flex-end;
             align-items: center;
             gap: 0.5rem;
-            background-color: rgba(38, 139, 210, 0.02); /* blue with low alpha */
+            background-color: var(--background); /* Use main background for footer */
             flex-wrap: wrap;
         }
         
@@ -1731,9 +1731,9 @@ try:
         }
         
         .btn-view-details {
-            background-color: var(--base2);  /* Light red background -> base2 */
+            background-color: var(--card-background);  /* Use card background */
             color: var(--text-light);
-            border: 1px solid var(--base1);  /* Light red border -> base1 */
+            border: 1px solid var(--border);  /* Use theme border */
             margin-left: auto;
             padding-left: 0.5rem;
             padding-right: 0.5rem;
@@ -1836,7 +1836,7 @@ try:
         /* {label_css} Will be appended here */
         
         footer {
-            background-color: var(--light);
+            background-color: var(--background);
             color: var(--text-light);
             padding: 4rem 0;
             text-align: center;
@@ -1878,15 +1878,15 @@ try:
         }
         
         .btn-view-details:hover {
-            background-color: var(--base1);  /* Slightly darker red on hover -> base1 */
-            color: var(--blue);  /* Darker red text on hover -> blue */
+            background-color: var(--background);  /* Use main background on hover */
+            color: var(--primary);  /* Use primary color for text */
             transform: translateY(-2px);
         }
         
         .empty-state {
             text-align: center;
             padding: 4rem 2rem;
-            background-color: rgba(238, 232, 213, 0.5); /* base2 with alpha */
+            background-color: var(--card-background); /* Use card background */
             border-radius: 1rem;
             border: 1px solid var(--border);
             display: none;
@@ -1986,7 +1986,7 @@ try:
         }
         .modal-content {
             position: relative;
-            background-color: var(--base3); /* Changed from #fff */
+            background-color: var(--background); /* Use main background */
             padding: 2.5rem;
             border-radius: 0.75rem;
             width: 90%;
