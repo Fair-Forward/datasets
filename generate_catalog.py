@@ -1123,22 +1123,40 @@ try:
     # Moved static CSS rules out of the main f-string to avoid syntax errors
     static_css = r'''
         :root {
-            /* Claude.ai inspired color palette with Fair Forward influence */
-            --primary: #3b5998;
-            --primary-light: #4c70ba;
-            --secondary: #5b7fb9;
-            --light: #f9fafb;
-            --dark: #1a202c;
-            --gray: #64748b;
-            --border: #e2e8f0;
-            --background: #f8fafc;
-            --card-bg: #f5f8fc;
-            --text: #1e293b;
-            --text-light: #64748b;
-            --shadow: rgba(0, 0, 0, 0.04);
+            /* Solarized Light color palette */
+            --base03: #002b36;
+            --base02: #073642;
+            --base01: #586e75;
+            --base00: #657b83;
+            --base0: #839496;
+            --base1: #93a1a1;
+            --base2: #eee8d5;
+            --base3: #fdf6e3;
+            --yellow: #b58900;
+            --orange: #cb4b16;
+            --red: #dc322f;
+            --magenta: #d33682;
+            --violet: #6c71c4;
+            --blue: #268bd2;
+            --cyan: #2aa198;
+            --green: #859900;
+
+            /* Theme application */
+            --primary: var(--blue); /* Using blue as primary accent */
+            --primary-light: var(--cyan); /* Using cyan as a lighter accent */
+            --secondary: var(--violet); /* Using violet as secondary accent */
+            --light: var(--base2); /* Light background */
+            --dark: var(--base03); /* Dark text/elements on light background */
+            --gray: var(--base0);
+            --border: var(--base1); 
+            --background: var(--base3); /* Main page background */
+            --card-bg: var(--base2); /* Card background */
+            --text: var(--base00); /* Main text color */
+            --text-light: var(--base01); /* Lighter text color */
+            --shadow: rgba(0, 0, 0, 0.04); /* Keeping shadows subtle */
             --shadow-hover: rgba(0, 0, 0, 0.08);
-            --title-color: #2c4a7c; /* Slightly more subtle blue shade */
-            --btn-text: #ffffff;
+            --title-color: var(--base02); /* Darker color for titles */
+            --btn-text: var(--base3); /* Text on primary buttons */
         }
         
         * {
@@ -1163,7 +1181,7 @@ try:
         }
         
         header {
-            background: linear-gradient(to right, #f8f9fa, #f1f4f8); /* Subtle light gradient background */
+            background: linear-gradient(to right, var(--base2), var(--base3)); /* Subtle light gradient background */
             padding: 0 0 3.5rem; /* Increased bottom padding from 2rem to 3.5rem */
             position: relative;
             overflow: hidden;
@@ -1173,7 +1191,7 @@ try:
 
         /* Top navigation area that will contain both the logos and the about link */
         .top-nav-container {
-            background-color: #ffffff;
+            background-color: var(--base3); /* Changed from #ffffff */
             padding: 0;
             width: 100%;
             box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
@@ -1293,7 +1311,7 @@ try:
         }
         
         .filters {
-            background-color: #ffffff;
+            background-color: var(--base2); /* Changed from #ffffff */
             padding: 1.25rem 0; /* Reduced from 1.5rem */
             border-bottom: 1px solid var(--border);
             position: sticky;
@@ -1335,7 +1353,7 @@ try:
             border-radius: 0.5rem;
             border: 1px solid var(--border);
             min-width: 160px; /* Reduced from 180px */
-            background-color: white;
+            background-color: var(--base3); /* Changed from white */
             font-size: 0.875rem;
             color: var(--text);
             transition: all 0.2s ease;
@@ -1345,7 +1363,7 @@ try:
         select:focus, input:focus {
             outline: none;
             border-color: var(--primary-light);
-            box-shadow: 0 0 0 3px rgba(59, 89, 152, 0.1);
+            box-shadow: 0 0 0 3px rgba(38, 139, 210, 0.1); /* Using blue for focus, alpha adjusted */
         }
         
         .search-box {
@@ -1355,14 +1373,14 @@ try:
             border-radius: 0.5rem;
             padding: 0.5rem 0.875rem; /* Reduced from 0.625rem 1rem */
             min-width: 280px; /* Reduced from 300px */
-            background-color: white;
+            background-color: var(--base3); /* Changed from white */
             box-shadow: 0 1px 2px var(--shadow);
             transition: all 0.2s ease;
         }
         
         .search-box:focus-within {
             border-color: var(--primary-light);
-            box-shadow: 0 0 0 3px rgba(59, 89, 152, 0.1);
+            box-shadow: 0 0 0 3px rgba(38, 139, 210, 0.1); /* Using blue for focus, alpha adjusted */
         }
         
         .search-box input {
@@ -1395,7 +1413,7 @@ try:
         }
         
         .card {
-            background: #ffffff; /* Solid white for contrast */
+            background: var(--card-bg); /* Changed from #ffffff */
             border-radius: 0.75rem;
             overflow: hidden;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06); /* Slightly stronger shadow */
@@ -1421,8 +1439,8 @@ try:
         
         .card-image {
             height: 130px; /* Increased from 120px for less square proportions */
-            background-color: #f8fafc;
-            background-image: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+            background-color: var(--base2); /* Placeholder background color */
+            background-image: linear-gradient(135deg, var(--base2) 0%, var(--base1) 100%); /* Placeholder gradient */
             background-size: cover;
             background-position: center;
             position: relative;
@@ -1430,10 +1448,10 @@ try:
         }
         
         .card-image.has-image {
-            background-image: none;
+            background-image: none; /* Correct: remove placeholder if actual image is set inline */
         }
         
-        .card-image.has-image::after {
+        .card-image.has-image::after { /* This is the overlay gradient on top of the image */
             content: '';
             position: absolute;
             top: 0;
@@ -1442,23 +1460,23 @@ try:
             height: 100%;
             background: linear-gradient(
                 to bottom,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0) 50%,  /* Keep fully transparent until 50% of the way down */
-                rgba(255, 255, 255, 0.3) 75%,  /* Start subtle fade at 75% */
-                rgba(255, 255, 255, 0.8) 90%,  /* Increase fade more rapidly near bottom */
-                rgba(255, 255, 255, 1) 100%    /* Full white at the very bottom */
+                rgba(253, 246, 227, 0) 0%,   /* var(--base3) with alpha */
+                rgba(253, 246, 227, 0) 50%,  /* var(--base3) with alpha */
+                rgba(253, 246, 227, 0.3) 75%,/* var(--base3) with alpha */
+                rgba(253, 246, 227, 0.8) 90%,/* var(--base3) with alpha */
+                rgba(253, 246, 227, 1) 100%  /* var(--base3) full */
             );
             z-index: 1;
         }
         
-        .card-image.has-image::before {
+        .card-image.has-image::before { /* This is for the fallback background if image fails, beneath actual image */
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+            background: linear-gradient(135deg, var(--base2) 0%, var(--base1) 100%); /* Fallback gradient using Solarized colors */
             z-index: -1;
         }
         
@@ -1486,13 +1504,13 @@ try:
         
         .domain-badge {
             display: inline-block;
-            background-color: var(--primary);
-            color: white;
+            background-color: var(--primary); /* Using primary accent */
+            color: var(--base3); /* Text on primary accent */
             padding: 0.25rem 0.75rem;
             border-radius: 2rem;
             font-size: 0.7rem;
             font-weight: 500;
-            box-shadow: 0 2px 4px rgba(59, 89, 152, 0.15);
+            box-shadow: 0 2px 4px rgba(38, 139, 210, 0.15); /* Using blue for shadow, alpha adjusted */
         }
         
         .data-type-chips {
@@ -1508,11 +1526,11 @@ try:
             font-weight: 400;
             padding: 0.2rem 0.5rem;
             border-radius: 1rem;
-            background-color: rgba(0, 0, 0, 0.05);
+            background-color: rgba(0, 43, 54, 0.07); /* base03 with alpha */
             color: var(--gray);
             display: inline-flex;
             align-items: center;
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 43, 54, 0.1); /* base03 with alpha */
         }
         
         .data-type-chip i {
@@ -1626,7 +1644,7 @@ try:
         }
         
         .tag {
-            background-color: rgba(142, 68, 173, 0.08);
+            background-color: rgba(38, 139, 210, 0.08); /* blue with alpha */
             padding: 0.25rem 0.75rem;
             border-radius: 2rem;
             font-size: 0.75rem;
@@ -1636,7 +1654,7 @@ try:
         }
         
         .tag:hover {
-            background-color: rgba(142, 68, 173, 0.12);
+            background-color: rgba(38, 139, 210, 0.12); /* blue with alpha, slightly darker */
             transform: translateY(-2px);
         }
         
@@ -1647,7 +1665,7 @@ try:
             justify-content: flex-end;
             align-items: center;
             gap: 0.5rem;
-            background-color: rgba(59, 89, 152, 0.02);
+            background-color: rgba(38, 139, 210, 0.02); /* blue with low alpha */
             flex-wrap: wrap;
         }
         
@@ -1670,18 +1688,18 @@ try:
             font-size: 0.75rem;
             padding: 0.25rem 0.5rem;
             border-radius: 0.375rem;
-            background-color: rgba(245, 158, 11, 0.1);
-            color: #d97706;
+            background-color: rgba(181, 137, 0, 0.1); /* yellow with alpha */
+            color: var(--yellow); /* yellow */
             display: flex;
             align-items: center;
             gap: 0.25rem;
             margin-left: auto;
-            border: 1px solid rgba(245, 158, 11, 0.2);
+            border: 1px solid rgba(181, 137, 0, 0.2); /* yellow with alpha */
             transition: all 0.2s ease;
         }
         
         .license-tag:hover {
-            background-color: rgba(245, 158, 11, 0.15);
+            background-color: rgba(181, 137, 0, 0.15); /* yellow with alpha, slightly darker */
             transform: translateY(-2px);
         }
         
@@ -1713,9 +1731,9 @@ try:
         }
         
         .btn-view-details {
-            background-color: #fff0f0;  /* Light red background */
+            background-color: var(--base2);  /* Light red background -> base2 */
             color: var(--text-light);
-            border: 1px solid #ffdddd;  /* Light red border */
+            border: 1px solid var(--base1);  /* Light red border -> base1 */
             margin-left: auto;
             padding-left: 0.5rem;
             padding-right: 0.5rem;
@@ -1840,35 +1858,35 @@ try:
         .btn-primary {
             background-color: var(--primary);
             color: var(--btn-text);
-            box-shadow: 0 2px 4px rgba(59, 89, 152, 0.15);
+            box-shadow: 0 2px 4px rgba(38, 139, 210, 0.15); /* blue with alpha */
         }
         
         .btn-primary:hover {
             background-color: var(--primary-light);
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(59, 89, 152, 0.2);
+            box-shadow: 0 4px 8px rgba(38, 139, 210, 0.2); /* blue with alpha */
         }
         
         .btn-secondary {
-            background-color: rgba(59, 89, 152, 0.08);
+            background-color: rgba(38, 139, 210, 0.08); /* blue with alpha */
             color: var(--primary);
         }
         
         .btn-secondary:hover {
-            background-color: rgba(59, 89, 152, 0.12);
+            background-color: rgba(38, 139, 210, 0.12); /* blue with alpha, slightly darker */
             transform: translateY(-2px);
         }
         
         .btn-view-details:hover {
-            background-color: #ffe0e0;  /* Slightly darker red on hover */
-            color: #d63031;  /* Darker red text on hover */
+            background-color: var(--base1);  /* Slightly darker red on hover -> base1 */
+            color: var(--blue);  /* Darker red text on hover -> blue */
             transform: translateY(-2px);
         }
         
         .empty-state {
             text-align: center;
             padding: 4rem 2rem;
-            background-color: rgba(255, 255, 255, 0.5);
+            background-color: rgba(238, 232, 213, 0.5); /* base2 with alpha */
             border-radius: 1rem;
             border: 1px solid var(--border);
             display: none;
@@ -1968,7 +1986,7 @@ try:
         }
         .modal-content {
             position: relative;
-            background-color: #fff;
+            background-color: var(--base3); /* Changed from #fff */
             padding: 2.5rem;
             border-radius: 0.75rem;
             width: 90%;

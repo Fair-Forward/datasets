@@ -7,13 +7,14 @@
     width: 800px;
     max-width: 90vw;
     height: 100vh;
-    background-color: #ffffff;
+    background-color: var(--base3);
     box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: right 0.3s ease;
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    border-left: 1px solid var(--base1);
 }
 
 .detail-panel.open {
@@ -22,25 +23,25 @@
 
 .detail-panel-header {
     padding: 1.5rem;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid var(--base1);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: rgba(0, 0, 0, 0.01);
+    background-color: var(--base2);
 }
 
 .detail-panel-header h2 {
     font-size: 1.25rem;
     font-weight: 600;
     margin: 0;
-    color: #1e293b;
+    color: var(--base02);
 }
 
 .close-panel-btn {
     background: none;
     border: none;
     cursor: pointer;
-    color: #64748b;
+    color: var(--base00);
     font-size: 1.25rem;
     display: flex;
     align-items: center;
@@ -52,8 +53,8 @@
 }
 
 .close-panel-btn:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-    color: #334155;
+    background-color: var(--base2);
+    color: var(--base02);
 }
 
 .share-panel-btn {
@@ -95,13 +96,13 @@
     align-items: center;
     justify-content: center;
     height: 100%;
-    color: #64748b;
+    color: var(--base01);
     padding: 2rem;
 }
 
 .loader-spinner {
-    border: 3px solid rgba(59, 89, 152, 0.1);
-    border-top: 3px solid #3b5998;
+    border: 3px solid var(--base2);
+    border-top: 3px solid var(--blue);
     border-radius: 50%;
     width: 40px;
     height: 40px;
