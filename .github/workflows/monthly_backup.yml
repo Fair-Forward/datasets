@@ -49,7 +49,7 @@ jobs:
         echo "Running backup script..."
         BACKUP_DIR="data_sources/google_sheets_backup"
         CRED_FILE="data_sources/google_sheets_api/service_account_JN.json"
-        python backup_google_sheet.py \
+        python scripts/backup_google_sheet.py \
           --credentials "$CRED_FILE" \
           --backup-dir "$BACKUP_DIR"
         # Check exit code

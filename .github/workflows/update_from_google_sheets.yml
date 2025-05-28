@@ -41,7 +41,7 @@ jobs:
     - name: Build Website and Backup Data
       run: |
         echo "Running build script..."
-        python build_from_google_sheets.py
+        python scripts/build_from_google_sheets.py
         if [ $? -ne 0 ]; then
           echo "::error::Build script failed."
           exit 1

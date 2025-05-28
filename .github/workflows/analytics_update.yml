@@ -1,0 +1,72 @@
+name: Update Analytics Dashboard
+
+on:
+  schedule:
+    # Run daily at 6 AM UTC
+    - cron: '0 6 * * *'
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  update-analytics:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        ref: main
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.x"
+
+    - name: Install dependencies
+      run: |
+        pip install pandas requests
+
+    - name: Collect analytics data
+      run: |
+        echo "Collecting analytics data..."
+        python data_sources/analytics/collect_analytics.py --output data_sources/analytics/analytics_data.json
+        if [ $? -ne 0 ]; then
+          echo "::error::Analytics collection failed."
+          exit 1
+        fi
+        echo "Analytics data collected."
+
+    - name: Generate analytics dashboard
+      run: |
+        echo "Generating analytics dashboard..."
+        python data_sources/analytics/analytics_dashboard.py --input data_sources/analytics/analytics_data.json --output docs/analytics.html
+        if [ $? -ne 0 ]; then
+          echo "::error::Dashboard generation failed."
+          exit 1
+        fi
+        echo "Dashboard generated."
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name "GitHub Actions (Analytics Update)"
+        git config --global user.email "actions@github.com"
+        git add data_sources/analytics/analytics_data.json docs/analytics.html
+        # Check if there are changes staged
+        if git diff --staged --quiet; then
+          echo "No analytics changes to commit."
+        else
+          echo "Committing analytics updates..."
+          commit_msg="Update analytics dashboard - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+          git commit -m "$commit_msg"
+          echo "Pushing analytics updates to main branch..."
+          git push origin main 
+        fi
+
+    - name: Summary
+      run: |
+        echo "Analytics update completed successfully!"
+        if [ -f "data_sources/analytics/analytics_data.json" ]; then
+          echo "Analytics data file size: $(du -h data_sources/analytics/analytics_data.json | cut -f1)"
+        fi
+        if [ -f "docs/analytics.html" ]; then
+          echo "Dashboard file size: $(du -h docs/analytics.html | cut -f1)"
+        fi 

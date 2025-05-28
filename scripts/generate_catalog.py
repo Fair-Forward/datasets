@@ -2305,6 +2305,7 @@ try:
             <p>&copy; {datetime.datetime.now().year} Fair Forward - Artificial Intelligence for All | A project by GIZ</p>
             <p style="margin-top: 1rem; font-size: 0.875rem;"><a href="https://github.com/Fair-Forward/datasets" target="_blank" style="color: var(--primary); text-decoration: none;">Contribute to the Source Code on GitHub <i class="fab fa-github"></i></a></p>
             <p style="margin-top: 0.5rem; font-size: 0.875rem;">For technical questions/feedback <a href="https://github.com/Fair-Forward/datasets/issues" target="_blank" style="color: var(--primary);">open an issue on Github</a> or contact <a href="mailto:jonas.nothnagel@gmail.com" style="color: var(--primary);">Jonas Nothnagel</a>.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.875rem;"><a href="analytics.html" style="color: var(--primary);">View Analytics Dashboard</a></p>
         </div>
     </footer>
     
@@ -2314,6 +2315,8 @@ try:
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Add enhanced side panel JavaScript -->
     <script src="enhanced_side_panel.js"></script>
+    <!-- Add analytics tracking -->
+    <!-- <script src="umami-analytics.js"></script> -->
 
     <!-- Fair Sharing Modal HTML -->
     <div id="fair-sharing-modal" class="modal-container">
