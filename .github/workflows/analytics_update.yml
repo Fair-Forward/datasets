@@ -28,7 +28,8 @@ jobs:
     - name: Collect analytics data
       run: |
         echo "Collecting analytics data..."
-        python data_sources/analytics/collect_analytics.py --output data_sources/analytics/analytics_data.json
+        # Store analytics data in a temporary location to avoid committing it
+        python data_sources/analytics/collect_analytics.py --output /tmp/analytics_data.json
         if [ $? -ne 0 ]; then
           echo "::error::Analytics collection failed."
           exit 1
@@ -38,35 +39,48 @@ jobs:
     - name: Generate analytics dashboard
       run: |
         echo "Generating analytics dashboard..."
-        python data_sources/analytics/analytics_dashboard.py --input data_sources/analytics/analytics_data.json --output docs/analytics.html
+        python data_sources/analytics/analytics_dashboard.py --input /tmp/analytics_data.json --output docs/analytics.html
         if [ $? -ne 0 ]; then
           echo "::error::Dashboard generation failed."
           exit 1
         fi
         echo "Dashboard generated."
 
-    - name: Commit and push changes
+    - name: Check if analytics changed and commit only if needed
       run: |
         git config --global user.name "GitHub Actions (Analytics Update)"
         git config --global user.email "actions@github.com"
-        git add data_sources/analytics/analytics_data.json docs/analytics.html
-        # Check if there are changes staged
-        if git diff --staged --quiet; then
-          echo "No analytics changes to commit."
+        
+        # Check if analytics.html actually changed
+        if git diff --quiet docs/analytics.html; then
+          echo "Analytics dashboard unchanged, no commit needed."
         else
-          echo "Committing analytics updates..."
+          echo "Analytics dashboard changed, committing update..."
+          git add docs/analytics.html
           commit_msg="Update analytics dashboard - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
           git commit -m "$commit_msg"
-          echo "Pushing analytics updates to main branch..."
-          git push origin main 
+          
+          # Use a retry mechanism for push in case of conflicts
+          for i in {1..3}; do
+            echo "Push attempt $i..."
+            if git push origin main; then
+              echo "Successfully pushed analytics update."
+              break
+            else
+              echo "Push failed, pulling latest changes and retrying..."
+              git pull --rebase origin main
+              if [ $i -eq 3 ]; then
+                echo "::error::Failed to push after 3 attempts."
+                exit 1
+              fi
+            fi
+          done
         fi
 
     - name: Summary
       run: |
         echo "Analytics update completed successfully!"
-        if [ -f "data_sources/analytics/analytics_data.json" ]; then
-          echo "Analytics data file size: $(du -h data_sources/analytics/analytics_data.json | cut -f1)"
-        fi
         if [ -f "docs/analytics.html" ]; then
           echo "Dashboard file size: $(du -h docs/analytics.html | cut -f1)"
-        fi 
+        fi
+        echo "Analytics dashboard available at your GitHub Pages URL/analytics.html" 
