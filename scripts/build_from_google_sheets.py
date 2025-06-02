@@ -385,7 +385,7 @@ else:
 # Build the website
 print("Building the website...")
 build_cmd = [
-    "python", "generate_catalog.py",
+    "python", "scripts/generate_catalog.py",
     "--input", args.output
 ]
 
