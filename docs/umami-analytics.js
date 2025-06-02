@@ -7,38 +7,44 @@
 class FairForwardAnalytics {
     constructor(config = {}) {
         this.config = {
-            // Umami configuration
-            websiteId: config.websiteId || null,
-            apiEndpoint: config.apiEndpoint || 'https://analytics.umami.is/api/send',
-            
-            // Custom tracking configuration
-            trackClicks: config.trackClicks !== false,
-            trackViews: config.trackViews !== false,
-            trackFilters: config.trackFilters !== false,
-            trackDownloads: config.trackDownloads !== false,
-            
-            // Debug mode (set to false in production)
-            debug: false
+            githubRepo: null,
+            githubToken: null,
+            trackClicks: true,
+            trackViews: true,
+            trackFilters: true,
+            trackDownloads: true,
+            batchSize: 5,
+            batchTimeout: 30000,
+            debug: false,
+            ...config
         };
         
         this.sessionId = this.generateSessionId();
+        this.eventQueue = [];
+        this.batchTimer = null;
+        
         this.init();
     }
     
     generateSessionId() {
-        return 'ff_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        return 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
     }
     
     init() {
+        if (this.config.trackViews) {
+            this.trackPageView();
+        }
+        
+        if (this.config.trackClicks) {
+            this.setupEventListeners();
+        }
+        
+        // Start batch processing
+        this.startBatchTimer();
+        
         if (this.config.debug) {
             console.log('Fair Forward Analytics initialized', this.config);
         }
-        
-        // Track page view
-        this.trackPageView();
-        
-        // Set up event listeners
-        this.setupEventListeners();
     }
     
     setupEventListeners() {
@@ -217,51 +223,122 @@ class FairForwardAnalytics {
     }
     
     sendEvent(eventName, eventData) {
-        // Send to Umami if configured
-        if (this.config.websiteId && window.umami) {
-            window.umami.track(eventName, eventData);
-        }
+        // Add to event queue for batch processing
+        this.addToQueue(eventName, eventData);
         
-        // Send to custom endpoint if configured
-        if (this.config.apiEndpoint && this.config.websiteId) {
-            this.sendToCustomEndpoint(eventName, eventData);
-        }
-        
-        // Store locally for potential batch sending
+        // Store locally as backup
         this.storeEventLocally(eventName, eventData);
         
         if (this.config.debug) {
-            console.log('Event sent:', eventName, eventData);
+            console.log('Event queued:', eventName, eventData);
         }
     }
     
-    sendToCustomEndpoint(eventName, eventData) {
-        const payload = {
-            website_id: this.config.websiteId,
-            session_id: this.sessionId,
+    addToQueue(eventName, eventData) {
+        const event = {
             event_name: eventName,
             event_data: eventData,
+            timestamp: new Date().toISOString(),
+            session_id: this.sessionId,
             url: window.location.href,
-            timestamp: new Date().toISOString()
+            user_agent: navigator.userAgent.substring(0, 100) // Truncated for privacy
         };
         
-        // Use sendBeacon for reliability, fallback to fetch
-        if (navigator.sendBeacon) {
-            navigator.sendBeacon(this.config.apiEndpoint, JSON.stringify(payload));
-        } else {
-            fetch(this.config.apiEndpoint, {
+        this.eventQueue.push(event);
+        
+        // Send batch if queue is full
+        if (this.eventQueue.length >= this.config.batchSize) {
+            this.sendBatchNow();
+        }
+    }
+    
+    sendBatchNow() {
+        if (this.eventQueue.length === 0) return;
+        
+        const batch = [...this.eventQueue];
+        this.eventQueue = []; // Clear queue
+        
+        this.sendBatch(batch);
+    }
+    
+    // Method to send batch to GitHub Issues API
+    async sendBatch(events) {
+        if (!this.config.githubRepo || events.length === 0) {
+            if (this.config.debug) {
+                console.log('Skipping batch send - no repo configured or no events');
+            }
+            return;
+        }
+        
+        try {
+            // Create a summary of the batch
+            const summary = this.createBatchSummary(events);
+            
+            // Send to GitHub Issues API (public endpoint, no auth needed)
+            const response = await fetch(`https://api.github.com/repos/${this.config.githubRepo}/issues`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/vnd.github.v3+json'
                 },
-                body: JSON.stringify(payload),
-                keepalive: true
-            }).catch(error => {
-                if (this.config.debug) {
-                    console.error('Failed to send analytics event:', error);
-                }
+                body: JSON.stringify({
+                    title: `Analytics Batch: ${summary.date} (${events.length} events)`,
+                    body: this.formatBatchForIssue(events, summary),
+                    labels: ['analytics', 'automated', `session-${this.sessionId.split('_')[1]}`]
+                })
             });
+            
+            if (response.ok) {
+                if (this.config.debug) {
+                    console.log('Analytics batch sent successfully:', events.length, 'events');
+                }
+                // Clear localStorage backup since data was sent successfully
+                this.clearStoredEvents();
+            } else {
+                throw new Error(`GitHub API responded with ${response.status}`);
+            }
+        } catch (error) {
+            if (this.config.debug) {
+                console.error('Failed to send analytics batch:', error);
+            }
+            // Keep events in localStorage as backup
         }
+    }
+    
+    createBatchSummary(events) {
+        const eventTypes = {};
+        events.forEach(event => {
+            eventTypes[event.event_name] = (eventTypes[event.event_name] || 0) + 1;
+        });
+        
+        return {
+            date: new Date().toISOString().split('T')[0],
+            time: new Date().toISOString(),
+            total_events: events.length,
+            event_types: eventTypes,
+            session_id: this.sessionId,
+            url: window.location.href
+        };
+    }
+    
+    formatBatchForIssue(events, summary) {
+        return `## Analytics Batch Report
+
+**Session:** ${summary.session_id}
+**Date:** ${summary.date}
+**URL:** ${summary.url}
+**Total Events:** ${summary.total_events}
+
+### Event Summary
+${Object.entries(summary.event_types).map(([type, count]) => `- ${type}: ${count}`).join('\n')}
+
+### Detailed Events
+\`\`\`json
+${JSON.stringify(events, null, 2)}
+\`\`\`
+
+---
+*Automated analytics collection for Fair Forward Data Catalog*`;
     }
     
     storeEventLocally(eventName, eventData) {
@@ -296,9 +373,78 @@ class FairForwardAnalytics {
         }
     }
     
+    // Method to export analytics data for sharing
+    exportAnalyticsData() {
+        const events = this.getStoredEvents();
+        if (events.length === 0) {
+            alert('No analytics data to export yet. Browse some datasets first!');
+            return null;
+        }
+        
+        const exportData = {
+            export_timestamp: new Date().toISOString(),
+            session_count: 1, // This session
+            total_events: events.length,
+            events: events
+        };
+        
+        // Create downloadable file
+        const blob = new Blob([JSON.stringify(exportData, null, 2)], {type: 'application/json'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `ff_analytics_${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        return exportData;
+    }
+    
+    // Add a small analytics sharing prompt
+    addAnalyticsPrompt() {
+        // Only show after user has some activity
+        setTimeout(() => {
+            const events = this.getStoredEvents();
+            if (events.length >= 5 && !localStorage.getItem('ff_analytics_prompt_shown')) {
+                const shouldShow = confirm(
+                    'Help improve Fair Forward! 📊\n\n' +
+                    'You\'ve browsed several datasets. Would you like to share your anonymous usage data to help us improve the catalog?\n\n' +
+                    'This will download a file you can optionally send to us. No personal data is included.'
+                );
+                
+                if (shouldShow) {
+                    this.exportAnalyticsData();
+                }
+                
+                localStorage.setItem('ff_analytics_prompt_shown', 'true');
+            }
+        }, 30000); // Show after 30 seconds of activity
+    }
+
     // Method to clear stored events
     clearStoredEvents() {
         localStorage.removeItem('ff_analytics_events');
+    }
+
+    // Method to start batch processing
+    startBatchTimer() {
+        if (this.batchTimer) {
+            clearTimeout(this.batchTimer);
+        }
+        this.batchTimer = setTimeout(() => {
+            this.processBatch();
+        }, this.config.batchTimeout);
+    }
+
+    // Method to process batch
+    processBatch() {
+        const events = this.getStoredEvents();
+        if (events.length > 0) {
+            this.sendBatch(events);
+        }
+        this.startBatchTimer();
     }
 }
 
@@ -306,9 +452,9 @@ class FairForwardAnalytics {
 document.addEventListener('DOMContentLoaded', function() {
     // Configuration - you can modify these values
     const analyticsConfig = {
-        // Umami configuration (set these when you have Umami set up)
-        websiteId: null, // Set this to your Umami website ID
-        apiEndpoint: null, // Set this to your Umami API endpoint
+        // GitHub Analytics Backend (serverless)
+        githubRepo: 'giz-t-hub/fair-forward-analytics', // Repository for analytics data
+        githubToken: null, // Will be set via environment or public collection
         
         // Tracking options
         trackClicks: true,
@@ -316,12 +462,24 @@ document.addEventListener('DOMContentLoaded', function() {
         trackFilters: true,
         trackDownloads: true,
         
+        // Batch settings
+        batchSize: 5, // Send events in batches of 5
+        batchTimeout: 30000, // Send batch after 30 seconds
+        
         // Debug mode (set to false in production)
-        debug: false
+        debug: false,
+        
+        // Prompt option
+        prompt: false // Disabled since we're auto-collecting
     };
     
     // Initialize analytics
     window.fairForwardAnalytics = new FairForwardAnalytics(analyticsConfig);
+    
+    // Add optional analytics sharing prompt (can be disabled by setting prompt: false in config)
+    if (analyticsConfig.prompt !== false) {
+        window.fairForwardAnalytics.addAnalyticsPrompt();
+    }
 });
 
 // Export for use in other scripts
