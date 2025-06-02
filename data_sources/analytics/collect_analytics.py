@@ -94,7 +94,11 @@ class AnalyticsCollector:
             return []
     
     def simulate_sample_data(self):
-        """Generate sample analytics data for testing"""
+        """Generate sample analytics data for testing
+        
+        WARNING: This is for testing/development only!
+        Should NEVER be used in production. Only activated with --sample flag.
+        """
         sample_events = []
         
         # Generate sample data for the last 30 days
