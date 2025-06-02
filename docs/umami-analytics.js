@@ -18,7 +18,7 @@ class FairForwardAnalytics {
             trackDownloads: config.trackDownloads !== false,
             
             // Debug mode (set to false in production)
-            debug: true
+            debug: false
         };
         
         this.sessionId = this.generateSessionId();
@@ -317,7 +317,7 @@ document.addEventListener('DOMContentLoaded', function() {
         trackDownloads: true,
         
         // Debug mode (set to false in production)
-        debug: true
+        debug: false
     };
     
     // Initialize analytics

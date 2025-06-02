@@ -78,16 +78,26 @@ class AnalyticsCollector:
             return []
     
     def collect_from_local_storage(self):
-        """Load existing analytics data from local storage"""
+        """Load existing analytics data from local storage
+        
+        Note: This method loads from the analytics_data.json file that accumulates
+        events from browser localStorage. The browser stores events in localStorage
+        under 'ff_analytics_events' key, but those need to be manually exported
+        or collected via the analytics workflow.
+        """
         file_path = self.config['local_storage']['file_path']
         
         if not os.path.exists(file_path):
+            print("No existing analytics data file found - this is normal for first run")
             return []
         
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
-                print(f"Loaded {len(data)} events from local storage")
+                if data:
+                    print(f"Loaded {len(data)} events from local storage")
+                else:
+                    print("Analytics data file exists but is empty")
                 return data
         except Exception as e:
             print(f"Error loading local analytics data: {e}")
