@@ -17,37 +17,38 @@ class AnalyticsCollector:
         self.events = []
     
     def load_config(self, config_file):
-        """Load configuration from file or use defaults"""
-        default_config = {
-            'umami': {
-                'enabled': False,
-                'api_url': None,
-                'website_id': None,
-                'api_key': None
+        """Load configuration from JSON file"""
+        if config_file and os.path.exists(config_file):
+            with open(config_file, 'r') as f:
+                return json.load(f)
+        
+        # Default configuration
+        return {
+            "github_issues": {
+                "enabled": True,
+                "repo": "jonas-nothnagel/fair-forward-analytics",
+                "labels": ["analytics", "automated"]
             },
-            'github': {
-                'enabled': True,
-                'repo': None,
-                'token': None
+            "umami": {
+                "enabled": False,
+                "api_url": "https://analytics.umami.is/api",
+                "website_id": None,
+                "username": None,
+                "password": None
             },
-            'local_storage': {
-                'enabled': True,
-                'file_path': 'analytics_data.json'
+            "github_pages": {
+                "enabled": False,
+                "api_url": "https://api.github.com/repos/your-org/your-repo/pages/views"
+            },
+            "local_storage": {
+                "enabled": True,
+                "file_path": "data_sources/analytics/analytics_data.json"
+            },
+            "data_retention": {
+                "days": 90,
+                "create_monthly_archives": True
             }
         }
-        
-        if config_file and os.path.exists(config_file):
-            try:
-                with open(config_file, 'r') as f:
-                    user_config = json.load(f)
-                    # Merge with defaults
-                    for key, value in user_config.items():
-                        if key in default_config:
-                            default_config[key].update(value)
-            except Exception as e:
-                print(f"Error loading config: {e}")
-        
-        return default_config
     
     def collect_from_umami(self):
         """Collect data from Umami Analytics API"""
@@ -65,16 +66,71 @@ class AnalyticsCollector:
     
     def collect_from_github_pages(self):
         """Collect basic traffic data from GitHub Pages (if available)"""
-        if not self.config['github']['enabled']:
+        if not self.config['github_pages']['enabled']:
             return []
         
         try:
-            # GitHub doesn't provide detailed analytics via API for Pages
-            # This is mainly for repository traffic data
-            print("GitHub Pages analytics collection (limited)")
+            # This would require authentication and specific API access
+            # For now, return empty list
+            print("GitHub Pages analytics collection not implemented yet")
             return []
         except Exception as e:
-            print(f"Error collecting from GitHub: {e}")
+            print(f"Error collecting from GitHub Pages: {e}")
+            return []
+    
+    def collect_from_github_issues(self):
+        """Collect analytics data from GitHub Issues"""
+        if not self.config['github_issues']['enabled']:
+            return []
+        
+        try:
+            import requests
+            
+            repo = self.config['github_issues']['repo']
+            labels = ','.join(self.config['github_issues']['labels'])
+            
+            # Get all analytics issues
+            url = f"https://api.github.com/repos/{repo}/issues"
+            params = {
+                'labels': labels,
+                'state': 'all',
+                'per_page': 100,
+                'sort': 'created',
+                'direction': 'desc'
+            }
+            
+            print(f"Collecting analytics from GitHub Issues: {repo}")
+            response = requests.get(url, params=params)
+            response.raise_for_status()
+            
+            issues = response.json()
+            all_events = []
+            
+            for issue in issues:
+                try:
+                    # Extract JSON data from issue body
+                    body = issue['body']
+                    if '```json' in body:
+                        # Find JSON block
+                        json_start = body.find('```json') + 7
+                        json_end = body.find('```', json_start)
+                        json_data = body[json_start:json_end].strip()
+                        
+                        # Parse events
+                        events = json.loads(json_data)
+                        if isinstance(events, list):
+                            all_events.extend(events)
+                            print(f"Extracted {len(events)} events from issue #{issue['number']}")
+                        
+                except Exception as e:
+                    print(f"Error parsing issue #{issue['number']}: {e}")
+                    continue
+            
+            print(f"Total events collected from GitHub Issues: {len(all_events)}")
+            return all_events
+            
+        except Exception as e:
+            print(f"Error collecting from GitHub Issues: {e}")
             return []
     
     def collect_from_local_storage(self):
@@ -311,6 +367,7 @@ class AnalyticsCollector:
         new_events.extend(self.collect_from_local_storage())
         new_events.extend(self.collect_from_umami())
         new_events.extend(self.collect_from_github_pages())
+        new_events.extend(self.collect_from_github_issues())
         
         # Add sample data if requested (useful for testing)
         if include_sample:
@@ -376,6 +433,50 @@ Analytics Data Summary:
 - Date range: {self.events[0].get('timestamp', 'unknown')} to {self.events[-1].get('timestamp', 'unknown')}
 """
         return summary
+    
+    def cleanup_old_issues(self, days_to_keep=30):
+        """Clean up old analytics issues to keep repository tidy"""
+        if not self.config['github_issues']['enabled']:
+            return
+        
+        try:
+            import requests
+            from datetime import datetime, timedelta
+            
+            repo = self.config['github_issues']['repo']
+            labels = ','.join(self.config['github_issues']['labels'])
+            cutoff_date = datetime.now() - timedelta(days=days_to_keep)
+            
+            # Get old issues
+            url = f"https://api.github.com/repos/{repo}/issues"
+            params = {
+                'labels': labels,
+                'state': 'open',
+                'per_page': 100,
+                'sort': 'created',
+                'direction': 'asc'  # Oldest first
+            }
+            
+            response = requests.get(url, params=params)
+            response.raise_for_status()
+            
+            issues = response.json()
+            closed_count = 0
+            
+            for issue in issues:
+                created_at = datetime.fromisoformat(issue['created_at'].replace('Z', '+00:00'))
+                if created_at < cutoff_date:
+                    # Close old issue (would need authentication to actually close)
+                    print(f"Would close old issue #{issue['number']} from {created_at.date()}")
+                    closed_count += 1
+            
+            if closed_count > 0:
+                print(f"Found {closed_count} old issues that could be cleaned up")
+            else:
+                print("No old issues found for cleanup")
+                
+        except Exception as e:
+            print(f"Error during cleanup: {e}")
 
 def main():
     parser = argparse.ArgumentParser(description='Collect analytics data')

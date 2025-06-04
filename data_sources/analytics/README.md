@@ -1,7 +1,147 @@
 # Fair Forward Analytics System
 
 ## Overview
-The analytics system tracks user interactions on the Fair Forward Data Catalog website and generates usage dashboards. It's designed to be privacy-focused and works entirely with local data storage.
+The analytics system tracks user interactions on the Fair Forward Data Catalog website and generates usage dashboards. It's designed to be privacy-focused, serverless, and fully automated.
+
+## 🔄 How It Works: Complete Data Flow
+
+### **What Gets Tracked**
+- ✅ **Page visits**: When someone opens the website
+- ✅ **Dataset card views**: When someone clicks on a dataset card  
+- ✅ **Link clicks**: When someone opens dataset/model links
+- ✅ **Search queries**: What people search for
+- ✅ **Filter usage**: Which filters are most popular
+
+### **The Complete Journey**
+
+```
+1. 👤 User visits Fair Forward website
+   ↓
+2. 📊 JavaScript automatically tracks interactions:
+   • Page view recorded
+   • Card clicks tracked  
+   • Link clicks captured
+   ↓
+3. 🚀 After 5 events OR 30 seconds:
+   • Data automatically sent to GitHub Issues API
+   • No user action required!
+   ↓
+4. 📝 GitHub Issue created:
+   Title: "Analytics Batch: 2024-01-15 (5 events)"
+   Body: JSON data with all interactions
+   ↓
+5. ⏰ Daily at 6 AM UTC:
+   • GitHub Action runs automatically
+   • Reads all analytics issues
+   • Extracts and aggregates data
+   ↓
+6. 📈 Dashboard generated:
+   • Real usage statistics calculated
+   • Beautiful HTML dashboard created
+   • Automatically deployed to GitHub Pages
+   ↓
+7. 🎯 Result: Live dashboard shows real user engagement!
+```
+
+### **Why This Approach?**
+
+**✅ Fully Automated**: No manual intervention needed  
+**✅ Zero Cost**: Uses free GitHub features as database  
+**✅ Privacy-First**: No external tracking services  
+**✅ Reliable**: Built on GitHub's infrastructure  
+**✅ Scalable**: Handles thousands of events  
+**✅ Transparent**: All data visible in GitHub Issues  
+
+## 🏗️ Technical Architecture
+
+### **Frontend (Website)**
+- **File**: `docs/umami-analytics.js`
+- **Function**: Tracks user interactions in real-time
+- **Storage**: Batches events and sends to GitHub Issues API
+- **Privacy**: No cookies, no personal data collected
+
+### **Backend (Serverless)**
+- **Database**: GitHub Issues API (`jonas-nothnagel/fair-forward-analytics`)
+- **Processing**: GitHub Actions workflow
+- **Schedule**: Daily at 6 AM UTC
+- **Output**: Static HTML dashboard
+
+### **Data Flow Details**
+
+#### 1. Event Collection (Browser)
+```javascript
+// Automatic tracking when user interacts with site
+fairForwardAnalytics.trackPageView();
+fairForwardAnalytics.trackCardView(card);
+fairForwardAnalytics.trackLinkClick(link);
+```
+
+#### 2. Batch Sending (Automatic)
+```javascript
+// Every 5 events or 30 seconds, automatically:
+POST https://api.github.com/repos/jonas-nothnagel/fair-forward-analytics/issues
+{
+  "title": "Analytics Batch: 2024-01-15 (5 events)",
+  "body": "## Analytics Data\n```json\n[...events...]\n```",
+  "labels": ["analytics", "automated"]
+}
+```
+
+#### 3. Data Processing (GitHub Action)
+```python
+# Daily workflow:
+1. Fetch all analytics issues from GitHub
+2. Extract JSON data from issue bodies  
+3. Aggregate events into statistics
+4. Generate HTML dashboard
+5. Deploy to GitHub Pages
+```
+
+## 📊 What You'll See
+
+### **In Analytics Repository**
+Issues like:
+```
+Title: Analytics Batch: 2024-01-15 (5 events)
+Labels: analytics, automated
+
+Body:
+## Analytics Batch Report
+**Session:** session_1705123456_abc123
+**Total Events:** 5
+
+### Event Summary
+- page_view: 1
+- card_view: 3  
+- link_click: 1
+
+### Detailed Events
+```json
+[...detailed event data...]
+```
+```
+
+### **In Dashboard** 
+Live statistics:
+```
+📊 Fair Forward Analytics Dashboard
+
+📈 Usage Overview
+• Total Page Views: 1,247
+• Dataset Cards Viewed: 892
+• External Links Clicked: 234
+• Search Queries: 156
+
+🔍 Popular Searches
+• "climate data" (23 searches)
+• "agriculture AI" (18 searches)
+• "health datasets" (15 searches)
+
+🌍 Most Viewed Datasets
+• Climate Change Indicators (89 views)
+• Agricultural AI Models (67 views)
+• Health Data Commons (45 views)
+```
 
 ## Current Setup: Local-Only Analytics
 

@@ -453,7 +453,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Configuration - you can modify these values
     const analyticsConfig = {
         // GitHub Analytics Backend (serverless)
-        githubRepo: 'giz-t-hub/fair-forward-analytics', // Repository for analytics data
+        githubRepo: 'jonas-nothnagel/fair-forward-analytics', // Repository for analytics data
         githubToken: null, // Will be set via environment or public collection
         
         // Tracking options
