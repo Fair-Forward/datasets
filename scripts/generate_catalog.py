@@ -2316,7 +2316,7 @@ try:
     <!-- Add enhanced side panel JavaScript -->
     <script src="enhanced_side_panel.js"></script>
     <!-- Add analytics tracking -->
-    <!-- <script src="umami-analytics.js"></script> -->
+    <script src="umami-analytics.js"></script>
 
     <!-- Fair Sharing Modal HTML -->
     <div id="fair-sharing-modal" class="modal-container">
