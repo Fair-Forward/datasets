@@ -1,0 +1,1 @@
+For the content database of the chatbot, Q&A pairs created and tested together with ODPC and citizens

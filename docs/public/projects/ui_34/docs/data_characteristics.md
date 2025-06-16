@@ -1,0 +1,1 @@
+The datasets for the three languages consist of text data and the corresponding voice data. They are hosted on Mozilla's Common Voice Platform.

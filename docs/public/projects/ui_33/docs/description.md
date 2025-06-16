@@ -1,3 +1,1 @@
-Placeholder
- Total: 69,820
- Budget: total 40k EUR from FF (29,820k EUR come from DTC Kenya)
+The citizen chatbot enables the Kenyan public to access information about Kenya's data protection laws and regulation in an easily accessible conversation on the ODPC's website. The aim is to make legal information more understandable and facilitate access. The content database of the chatbot was developed jointly with expert from the ODPC and tested with citizens.

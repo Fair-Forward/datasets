@@ -1,9 +1,7 @@
 The Data is fully open-sourced and can be accessed at:
- • Hugging face: <Link To be added>
- • <Source Cooperative> TBD
- • <Bhashini> TBD
+ • IISc website: <https://spiredatasets.ee.iisc.ac.in/syspincorpus>
  TTS Dataset:
- • License: CC BY 4.0
+ • License: CC-BY 4.0
  • Data Type: Audio recording
  • Sentence creation: Variety of domains covered in the sentences/text and phonetically rich sentence selection
  • Accounts for dialect variability
