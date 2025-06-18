@@ -1,0 +1,1 @@
+Key variable: Solar Irradiation
