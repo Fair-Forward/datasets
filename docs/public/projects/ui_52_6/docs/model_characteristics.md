@@ -1,0 +1,1 @@
+Bagging, Boosting, ANN, SVR; Software/Application: Chlorophyll estimation ML

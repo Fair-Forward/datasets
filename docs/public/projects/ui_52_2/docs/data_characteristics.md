@@ -1,0 +1,1 @@
+Spectral response to stress; Sentinel-2, NIR bands
