@@ -1,1 +1,0 @@
-Train RF using spectral indices; cost includes UAV flights, ASD rentals; open-source RF models or GEE usable

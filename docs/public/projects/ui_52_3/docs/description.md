@@ -1,1 +1,0 @@
-Assesses the capabilities of Earth observation and machine learning algorithms, specifically Random Forest and Support Vector Machines, in detecting maize disease stress using drone data. The study was conducted on a small-scale farm in Limpopo, South Africa, focusing on healthy maize, maize with streak virus, and maize with phosphorus deficiency. 

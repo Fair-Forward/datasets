@@ -1,1 +1,0 @@
-Crop separability via bands 7, 8, 8A, 11

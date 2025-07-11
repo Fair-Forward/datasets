@@ -1,1 +1,0 @@
-Thermal + multispectral image fusion
