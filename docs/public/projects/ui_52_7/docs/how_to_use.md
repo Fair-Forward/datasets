@@ -1,0 +1,1 @@
+Needs UAV & thermal cam; costly setup unless shared or borrowed

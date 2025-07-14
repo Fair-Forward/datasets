@@ -1,0 +1,1 @@
+Train model on SPAD + satellite indices; uses open-source ML tools

@@ -1,0 +1,1 @@
+Investigates the use of remote sensing and machine learning to characterize maize stress in the Limpopo Province, South Africa. The study concludes that integrating field spectra and remotely sensed reflectance provides valuable information for maize stress investigation, supporting the development of mitigation and prevention strategies to ensure food security.

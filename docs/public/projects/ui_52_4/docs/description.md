@@ -1,0 +1,1 @@
+Drone high-resolution images were used with a semi-automated random forest (RF) classifier algorithm in Google Earth Engine to classify bare soil, weeds, and tomatoes. The findings can serve as a reference for agricultural researchers and advise farmers on crop management, potentially reducing costs and herbicide use.
