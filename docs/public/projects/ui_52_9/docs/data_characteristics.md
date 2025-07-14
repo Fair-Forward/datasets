@@ -1,1 +1,1 @@
-Crop separability via bands 7, 8, 8A, 11
+Crop separability via bands 7, 8, 8A, 11. Sentinel-1 (SAR) and  Sentinel-2 (optical) based
