@@ -126,33 +126,33 @@ def get_unique_categories(df):
         if domain_col in df.columns:
             domain_text = row.get(domain_col)
             if isinstance(domain_text, str) and not pd.isna(domain_text):
-                # if is_valid_row: # <<< Uncomment this to filter domains
-                for domain in re.split(r'[,;]', domain_text):
-                    domain = domain.strip()
-                    if domain:
-                        domains.add(domain)
+                if is_valid_row: # <<< Filter domains to only show from valid projects
+                    for domain in re.split(r'[,;]', domain_text):
+                        domain = domain.strip()
+                        if domain:
+                            domains.add(domain)
         
         # Process Data Types (only if row is valid - optional)
         data_type_col = 'Data Type'
         if data_type_col in df.columns:
             type_text = row.get(data_type_col)
             if isinstance(type_text, str) and not pd.isna(type_text):
-                 # if is_valid_row: # <<< Uncomment this to filter data types
-                for data_type in re.split(r'[,;]', type_text):
-                    data_type = data_type.strip()
-                    if data_type:
-                        data_types.add(data_type)
+                if is_valid_row: # <<< Filter data types to only show from valid projects
+                    for data_type in re.split(r'[,;]', type_text):
+                        data_type = data_type.strip()
+                        if data_type:
+                            data_types.add(data_type)
         
         # Process Statuses (only if row is valid - optional)
         status_col = 'Use Case Pipeline Status'
         if status_col in df.columns:
             status_text = row.get(status_col)
             if isinstance(status_text, str) and not pd.isna(status_text):
-                # if is_valid_row: # <<< Uncomment this to filter statuses
-                for status in re.split(r'[,;]', status_text):
-                    status = status.strip()
-                    if status:
-                        statuses.add(status)
+                if is_valid_row: # <<< Filter statuses to only show from valid projects
+                    for status in re.split(r'[,;]', status_text):
+                        status = status.strip()
+                        if status:
+                            statuses.add(status)
         
         # --- Process Regions (ONLY if row is valid) ---
         region_col = 'Country Team'
