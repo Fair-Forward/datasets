@@ -1,0 +1,27 @@
+2025-07-15 13:26:37,740 - INFO - Loaded data catalog from docs/data_catalog.xlsx
+2025-07-15 13:26:37,740 - INFO - Found 90 project directories
+2025-07-15 13:26:37,740 - INFO - Limited to processing 5 projects
+2025-07-15 13:26:37,832 - INFO - Completed processing. Downloaded 0 placeholder images.
+2025-07-15 13:26:50,318 - INFO - Loaded data catalog from docs/data_catalog.xlsx
+2025-07-15 13:26:50,319 - INFO - Found 90 project directories
+2025-07-15 13:26:50,328 - INFO - Searching for images for ui_52_4 with keywords: agriculture, weetie, crop, south africa
+2025-07-15 13:26:51,937 - INFO - Downloaded image for ui_52_4: docs/public/projects/ui_52_4/images/placeholder_image.jpeg
+2025-07-15 13:26:52,943 - INFO - Searching for images for ui_52_3 with keywords: agriculture, detecting, assessing, health
+2025-07-15 13:26:54,205 - INFO - Downloaded image for ui_52_3: docs/public/projects/ui_52_3/images/placeholder_image.jpeg
+2025-07-15 13:26:55,213 - INFO - Searching for images for ui_52_2 with keywords: agriculture, artificial, intelligence, remote sensing
+2025-07-15 13:26:58,307 - INFO - Downloaded image for ui_52_2: docs/public/projects/ui_52_2/images/placeholder_image.jpeg
+2025-07-15 13:26:59,314 - INFO - Searching for images for ui_52_5 with keywords: agriculture, chlorophyll, buster, imagery
+2025-07-15 13:27:01,230 - INFO - Downloaded image for ui_52_5: docs/public/projects/ui_52_5/images/placeholder_image.jpeg
+2025-07-15 13:27:02,239 - INFO - Searching for images for ui_52_10 with keywords: agriculture, internet, crop, satellite
+2025-07-15 13:27:04,193 - INFO - Downloaded image for ui_52_10: docs/public/projects/ui_52_10/images/placeholder_image.jpeg
+2025-07-15 13:27:05,201 - INFO - Searching for images for ui_52_7 with keywords: agriculture, agro, thermography, map
+2025-07-15 13:27:07,232 - INFO - Downloaded image for ui_52_7: docs/public/projects/ui_52_7/images/placeholder_image.jpeg
+2025-07-15 13:27:08,238 - INFO - Searching for images for ui_52_9 with keywords: agriculture, buster, satellite, map
+2025-07-15 13:27:10,842 - INFO - Downloaded image for ui_52_9: docs/public/projects/ui_52_9/images/placeholder_image.jpeg
+2025-07-15 13:27:11,851 - INFO - Searching for images for ui_52_8 with keywords: agriculture, discovering, remote sensing, education
+2025-07-15 13:27:13,235 - INFO - Downloaded image for ui_52_8: docs/public/projects/ui_52_8/images/placeholder_image.jpeg
+2025-07-15 13:27:14,244 - INFO - Searching for images for ui_52_6 with keywords: agriculture, agro, innovator, satellite
+2025-07-15 13:27:17,302 - INFO - Downloaded image for ui_52_6: docs/public/projects/ui_52_6/images/placeholder_image.jpeg
+2025-07-15 13:27:18,309 - INFO - Searching for images for ui_52_1 with keywords: agriculture, detecting, assessing, investigate
+2025-07-15 13:27:19,826 - INFO - Downloaded image for ui_52_1: docs/public/projects/ui_52_1/images/placeholder_image.jpeg
+2025-07-15 13:27:20,831 - INFO - Completed processing. Downloaded 10 placeholder images.

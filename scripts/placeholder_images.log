@@ -646,3 +646,4 @@
 2025-05-06 16:53:05,371 - INFO - Searching for images for ui_78 with keywords: phenological, ecological, ghana,netherland
 2025-05-06 16:53:34,942 - INFO - Downloaded image for ui_78: docs/public/projects/ui_78/images/placeholder_image.jpeg
 2025-05-06 16:53:35,948 - INFO - Completed processing. Downloaded 3 placeholder images.
+2025-07-15 13:26:27,905 - ERROR - Error loading data catalog: [Errno 2] No such file or directory: 'docs/data_catalog.xlsx'
