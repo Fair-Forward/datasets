@@ -678,7 +678,8 @@ def generate_card_html(row, idx):
     return card_html
 
 def generate_filter_html(domains, data_types, regions, lacuna_datasets):
-    domain_options = '\n'.join([f'<option value="{domain}">{domain}</option>' for domain in sorted(domains)])
+    # Use shortened domain names for display in dropdown, but keep full names as values
+    domain_options = '\n'.join([f'<option value="{domain}" title="{html.escape(domain)}">{shorten_domain_name(domain)}</option>' for domain in sorted(domains)])
     data_type_options = '\n'.join([f'<option value="{data_type}">{data_type}</option>' for data_type in sorted(data_types)])
     region_options = '\n'.join([f'<option value="{region}">{region}</option>' for region in sorted(regions)])
     lacuna_options = '\n'.join([f'<option value="{lacuna}">{lacuna}</option>' for lacuna in sorted(lacuna_datasets)])
