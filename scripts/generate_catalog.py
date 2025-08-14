@@ -87,6 +87,27 @@ def normalize_for_directory(text):
     normalized = re.sub(r'[^a-z0-9_]', '', text.lower().replace(' ', '_'))
     return normalized
 
+# Function to shorten domain names for display
+def shorten_domain_name(domain):
+    """Shorten long domain names for better display on cards"""
+    if not domain:
+        return domain
+    
+    # Specific shortening rules
+    if "Reduced inequality through access to info in local languages/NLP" in domain:
+        return "SDG 10"
+    elif "Sustainable Development Goal" in domain:
+        # Extract SDG number if present
+        sdg_match = re.search(r'SDG\s*(\d+)', domain, re.IGNORECASE)
+        if sdg_match:
+            return f"SDG {sdg_match.group(1)}"
+    
+    # If domain is longer than 20 characters, truncate it
+    if len(domain) > 20:
+        return domain[:17] + "..."
+    
+    return domain
+
 # Function to create HTML for labels
 def create_label_html(text, label_type):
     if pd.isna(text) or not isinstance(text, str) or text.strip() == "":
@@ -333,7 +354,6 @@ def generate_card_html(row, idx):
                 card_image = f'<div class="card-image has-image" style="background-image: url(\'{escaped_image_path}\');"></div>'
 
     # --- Domain Badges --- 
-    # (No changes needed here)
     domain_badges = ""
     domain_list = []
     if domain and not pd.isna(domain):
@@ -343,7 +363,9 @@ def generate_card_html(row, idx):
             if d:
                 domain_list.append(d)
                 normalized = normalize_label(d)
-                domain_badges_html.append(f'<div class="domain-badge domain-{normalized}">{d}</div>')
+                # Use shortened display name for the badge text, but keep full name for filtering
+                display_name = shorten_domain_name(d)
+                domain_badges_html.append(f'<div class="domain-badge domain-{normalized}" title="{html.escape(d)}">{display_name}</div>')
         
         if domain_badges_html:
             domain_badges = f'<div class="domain-badges">{"".join(domain_badges_html)}</div>'
