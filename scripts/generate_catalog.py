@@ -2065,30 +2065,7 @@ try:
             display: none;
         }
         
-        /* Lacuna Fund card styling */
-        .card.has-lacuna {
-            border: 2px solid #d97706; /* Orange border for Lacuna Fund projects */
-        }
-        
-        .card.has-lacuna:hover {
-            border-color: #b45309; /* Darker orange on hover */
-        }
-        
-        .card.has-lacuna::before {
-            content: '🏆';
-            position: absolute;
-            top: 0.5rem;
-            left: 0.5rem;
-            font-size: 1.2rem;
-            z-index: 2;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            width: 2rem;
-            height: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+
         
         /* Side panel styles are now in enhanced_side_panel.css */
         
