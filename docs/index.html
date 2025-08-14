@@ -900,6 +900,31 @@
             display: none;
         }
         
+        /* Lacuna Fund card styling */
+        .card.has-lacuna {
+            border: 2px solid #d97706; /* Orange border for Lacuna Fund projects */
+        }
+        
+        .card.has-lacuna:hover {
+            border-color: #b45309; /* Darker orange on hover */
+        }
+        
+        .card.has-lacuna::before {
+            content: '🏆';
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+            font-size: 1.2rem;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
         /* Side panel styles are now in enhanced_side_panel.css */
         
         /* Stats panel styling */
@@ -1025,97 +1050,97 @@
 
 /* === Generated Label CSS === */
 
-.label-reduced-inequality-through-access-to-info-in-local-languagesnlp--sdg-10 {
-    background-color: #e2cfcf;
-    color: #2d3748;
-}
-
-.domain-reduced-inequality-through-access-to-info-in-local-languagesnlp--sdg-10 {
-    background-color: #e2cfcf;
-    color: #2d3748;
-}
-
-.label-energy {
-    background-color: #e2d6cf;
-    color: #2d3748;
-}
-
-.domain-energy {
-    background-color: #e2d6cf;
-    color: #2d3748;
-}
-
-.label-inclusive-education {
-    background-color: #e2ddcf;
-    color: #2d3748;
-}
-
-.domain-inclusive-education {
-    background-color: #e2ddcf;
-    color: #2d3748;
-}
-
 .label-disaster-risk-management {
-    background-color: #dfe2cf;
+    background-color: #e2cfcf;
     color: #2d3748;
 }
 
 .domain-disaster-risk-management {
-    background-color: #dfe2cf;
-    color: #2d3748;
-}
-
-.label-sdg-2 {
-    background-color: #d8e2cf;
-    color: #2d3748;
-}
-
-.domain-sdg-2 {
-    background-color: #d8e2cf;
+    background-color: #e2cfcf;
     color: #2d3748;
 }
 
 .label-sdg-12 {
-    background-color: #d1e2cf;
+    background-color: #e2d6cf;
     color: #2d3748;
 }
 
 .domain-sdg-12 {
-    background-color: #d1e2cf;
+    background-color: #e2d6cf;
     color: #2d3748;
 }
 
 .label-natural-language-processing {
-    background-color: #cfe2d3;
+    background-color: #e2ddcf;
     color: #2d3748;
 }
 
 .domain-natural-language-processing {
-    background-color: #cfe2d3;
+    background-color: #e2ddcf;
     color: #2d3748;
 }
 
-.label-climate-action {
-    background-color: #cfe2db;
+.label-inclusive-education {
+    background-color: #dfe2cf;
     color: #2d3748;
 }
 
-.domain-climate-action {
-    background-color: #cfe2db;
+.domain-inclusive-education {
+    background-color: #dfe2cf;
+    color: #2d3748;
+}
+
+.label-energy {
+    background-color: #d8e2cf;
+    color: #2d3748;
+}
+
+.domain-energy {
+    background-color: #d8e2cf;
+    color: #2d3748;
+}
+
+.label-reduced-inequality-through-access-to-info-in-local-languagesnlp--sdg-10 {
+    background-color: #d1e2cf;
+    color: #2d3748;
+}
+
+.domain-reduced-inequality-through-access-to-info-in-local-languagesnlp--sdg-10 {
+    background-color: #d1e2cf;
     color: #2d3748;
 }
 
 .label-agriculture {
-    background-color: #cfe2e2;
+    background-color: #cfe2d3;
     color: #2d3748;
 }
 
 .domain-agriculture {
+    background-color: #cfe2d3;
+    color: #2d3748;
+}
+
+.label-sdg-2 {
+    background-color: #cfe2db;
+    color: #2d3748;
+}
+
+.domain-sdg-2 {
+    background-color: #cfe2db;
+    color: #2d3748;
+}
+
+.label-climate-action {
     background-color: #cfe2e2;
     color: #2d3748;
 }
 
-.label-geospatial {
+.domain-climate-action {
+    background-color: #cfe2e2;
+    color: #2d3748;
+}
+
+.label-text {
     background-color: #cfdbe2;
     color: #2d3748;
 }
@@ -1125,27 +1150,27 @@
     color: #2d3748;
 }
 
-.label-voice {
+.label-drone-imagery {
     background-color: #d1cfe2;
     color: #2d3748;
 }
 
-.label-text {
+.label-voice {
     background-color: #d8cfe2;
     color: #2d3748;
 }
 
-.label-meterological {
+.label-tabular {
     background-color: #dfcfe2;
     color: #2d3748;
 }
 
-.label-drone-imagery {
+.label-meterological {
     background-color: #e2cfdd;
     color: #2d3748;
 }
 
-.label-tabular {
+.label-geospatial {
     background-color: #e2cfd6;
     color: #2d3748;
 }
@@ -1232,6 +1257,7 @@
                     <option value="all">All Items</option>
                     <option value="datasets">Datasets Only</option>
                     <option value="usecases">Use Cases Only</option>
+                    <option value="lacuna">Lacuna Fund</option>
                 </select>
             </div>
             <div class="filter-group">
@@ -1285,9 +1311,9 @@
     <div class="container">
         <div class="grid" id="dataGrid">
 
-    <div class="card has-dataset"          data-title="Making access to financial applications possible in native Ghanaian languages in informal settings: Akan (Akuapem Twi, Asante Twi, Fante) and Ga"          data-region="Ghana"          data-id="0"          data-project-id="ui_4"          data-authors="Elikplim Sabblah"          data-organizations="Powered by:  
+    <div class="card has-dataset has-lacuna"          data-title="Making access to financial applications possible in native Ghanaian languages in informal settings: Akan (Akuapem Twi, Asante Twi, Fante) and Ga"          data-region="Ghana"          data-id="0"          data-project-id="ui_4"          data-authors="Elikplim Sabblah"          data-organizations="Powered by:  
 Catalyzed by: Lacuna-Fund / Meridian &amp; FAIR Forward - AI for All
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="true">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_4/images/pexels-kwei-kofi-8493777.jpg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div><div class="domain-badge domain-reduced-inequality-through-access-to-info-in-local-languagesnlp--sdg-10">Reduced inequality through access to info in local languages/NLP  (SDG 10)</div></div>
@@ -1307,9 +1333,9 @@ Financed by: BMZ">
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-voice" data-filter="Voice"><i class="fas fa-database"></i> Voice</span></div><div class="license-tag"><i class="fas fa-copyright"></i> <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">cc-by-4.0</a></div></div>
     </div>
     
-    <div class="card has-dataset"          data-title="Drone-based Agricultural Dataset for Crop Yield Estimation in Ghana and Uganda (Cashew, Cocoa and Coffee) "          data-region="Ghana,Uganda"          data-id="1"          data-project-id="ui_5"          data-authors="Elikplim Sabblah"          data-organizations="Powered by:  Karaagro AI - Ghana, Makerere AI Lab, Uganda Marconi Lab, National Coffee Research Institute, National Crops Resources Research Institute
+    <div class="card has-dataset has-lacuna"          data-title="Drone-based Agricultural Dataset for Crop Yield Estimation in Ghana and Uganda (Cashew, Cocoa and Coffee) "          data-region="Ghana,Uganda"          data-id="1"          data-project-id="ui_5"          data-authors="Elikplim Sabblah"          data-organizations="Powered by:  Karaagro AI - Ghana, Makerere AI Lab, Uganda Marconi Lab, National Coffee Research Institute, National Crops Resources Research Institute
 Catalyzed by: Lacuna-Fund / Meridian &amp; FAIR Forward - AI for All
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="true">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_5/images/Screenshot 2025-05-13 at 11.49.19.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div><div class="domain-badge domain-agriculture">Agriculture</div></div>
@@ -1331,9 +1357,9 @@ Financed by: BMZ">
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-images" data-filter="Images"><i class="fas fa-image"></i> Images</span></div><div class="license-tag"><i class="fas fa-copyright"></i> <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">cc-by-4.0</a></div></div>
     </div>
     
-    <div class="card has-dataset"          data-title="Building parallel corpora for Kenya’s Indigenous Languages and Swahili"          data-region="Kenya"          data-id="2"          data-project-id="ui_40"          data-authors=""          data-organizations="Powered by:  
+    <div class="card has-dataset has-lacuna"          data-title="Building parallel corpora for Kenya’s Indigenous Languages and Swahili"          data-region="Kenya"          data-id="2"          data-project-id="ui_40"          data-authors=""          data-organizations="Powered by:  
 Catalyzed by: Lacuna-Fund / Meridian &amp; FAIR Forward - AI for All
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="true">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_40/images/kiswahili.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -1353,9 +1379,9 @@ Financed by: BMZ">
         <div class="card-footer"><div class="license-tag"><i class="fas fa-copyright"></i> cc-by-4.0 </div></div>
     </div>
     
-    <div class="card has-dataset"          data-title="Labelled Open solar panel data for Madagascar"          data-region="Madagascar"          data-id="3"          data-project-id="ui_41"          data-authors=""          data-organizations="Powered by:  
+    <div class="card has-dataset has-lacuna"          data-title="Labelled Open solar panel data for Madagascar"          data-region="Madagascar"          data-id="3"          data-project-id="ui_41"          data-authors=""          data-organizations="Powered by:  
 Catalyzed by: Lacuna-Fund / Meridian &amp; FAIR Forward - AI for All
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="true">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_41/images/solar_bmz.jpg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -1377,9 +1403,9 @@ Financed by: BMZ">
         <div class="card-footer"><div class="license-tag"><i class="fas fa-copyright"></i> cc-by-4.0 </div></div>
     </div>
     
-    <div class="card has-dataset"          data-title="A Nigerian Twitter Sentiment Corpus for Multilingual Sentiment Analysis"          data-region="Nigeria"          data-id="4"          data-project-id="ui_42"          data-authors=""          data-organizations="Powered by:  
+    <div class="card has-dataset has-lacuna"          data-title="A Nigerian Twitter Sentiment Corpus for Multilingual Sentiment Analysis"          data-region="Nigeria"          data-id="4"          data-project-id="ui_42"          data-authors=""          data-organizations="Powered by:  
 Catalyzed by: Lacuna-Fund / Meridian &amp;  FAIR Forward - AI for All
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="true">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_42/images/sentiment.pn.jpg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
@@ -1399,9 +1425,9 @@ Financed by: BMZ">
         <div class="card-footer"><div class="license-tag"><i class="fas fa-copyright"></i> cc-by-4.0 </div></div>
     </div>
     
-    <div class="card has-dataset"          data-title="Datasets marking Personal Identifiable Information (PII) and Gender Bias"          data-region="Uganda,Kenya,Nigeria"          data-id="5"          data-project-id="ui_60"          data-authors=""          data-organizations="Powered by:  
+    <div class="card has-dataset has-lacuna"          data-title="Datasets marking Personal Identifiable Information (PII) and Gender Bias"          data-region="Uganda,Kenya,Nigeria"          data-id="5"          data-project-id="ui_60"          data-authors=""          data-organizations="Powered by:  
 Catalyzed by: Lacuna-Fund / Meridian &amp;  FAIR Forward - AI for All
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="true">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_60/images/placeholder_image.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
@@ -1423,8 +1449,8 @@ Financed by: BMZ">
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-text" data-filter="Text"><i class="fas fa-file-alt"></i> Text</span></div><div class="license-tag"><i class="fas fa-copyright"></i> cc-by-4.0 </div></div>
     </div>
     
-    <div class="card has-dataset has-usecase"          data-title="Combatting Air Pollution and GHG Emissions in India through hyperlocal AI-powered mapping"          data-region="India"          data-id="24"          data-project-id="ui_15"          data-authors="Jonas Nothnagel, Arun Kumar Yadav"          data-organizations="&lt;a href=&quot;https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/&quot; target=&quot;_blank&quot;&gt;Powered by:  UNDP India
-Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;">
+    <div class="card has-dataset has-usecase has-lacuna"          data-title="Combatting Air Pollution and GHG Emissions in India through hyperlocal AI-powered mapping"          data-region="India"          data-id="24"          data-project-id="ui_15"          data-authors="Jonas Nothnagel, Arun Kumar Yadav"          data-organizations="&lt;a href=&quot;https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/&quot; target=&quot;_blank&quot;&gt;Powered by:  UNDP India
+Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;"          data-lacuna="true">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_15/images/airpollution.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -1444,7 +1470,7 @@ Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;">
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-geospatial" data-filter="Geospatial"><i class="fas fa-map"></i> Geospatial</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC-BY</div></div>
     </div>
     
-    <div class="card has-dataset has-usecase"          data-title="AI-powered detection of diseases for Cashew farmers in Ghana"          data-region="Ghana"          data-id="25"          data-project-id="ui_0"          data-authors="Mary Seiwah Afram, Elikplim Sabblah"          data-organizations="&lt;a href=&quot;https://karaagro.com/&quot; target=&quot;_blank&quot;&gt;Powered by: Kara Agro&lt;/a&gt;">
+    <div class="card has-dataset has-usecase"          data-title="AI-powered detection of diseases for Cashew farmers in Ghana"          data-region="Ghana"          data-id="25"          data-project-id="ui_0"          data-authors="Mary Seiwah Afram, Elikplim Sabblah"          data-organizations="&lt;a href=&quot;https://karaagro.com/&quot; target=&quot;_blank&quot;&gt;Powered by: Kara Agro&lt;/a&gt;"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_0/images/Screenshot 2025-05-13 at 11.58.32.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div><div class="domain-badge domain-agriculture">Agriculture</div></div>
@@ -1465,7 +1491,7 @@ Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;">
     </div>
     
     <div class="card has-dataset has-usecase"          data-title="AI-powered crop disease identification models (tomatoes, pepper and maize)"          data-region="Ghana"          data-id="26"          data-project-id="ui_1"          data-authors="Elikplim Sabblah"          data-organizations="&lt;a href=&quot;https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/&quot; target=&quot;_blank&quot;&gt;Powered by:  
-Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;">
+Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_1/images/crop_diseases.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div></div>
@@ -1487,7 +1513,7 @@ Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;">
     
     <div class="card has-dataset"          data-title="Leverage Sentinel-2 Satellite Data to predict biomass in cocoa plantations in Cote d&#x27;Ivoire
 "          data-region="Cote d&#x27;Ivoire"          data-id="27"          data-project-id="ui_2"          data-authors="Elikplim Sabblah"          data-organizations="&lt;a href=&quot;https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/&quot; target=&quot;_blank&quot;&gt;Powered by:  
-Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;">
+Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_2/images/cocoa_biomass.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -1508,7 +1534,7 @@ Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;">
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-images" data-filter="Images"><i class="fas fa-image"></i> Images</span></div><div class="license-tag"><i class="fas fa-copyright"></i> <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">cc-by-4.0</a></div></div>
     </div>
     
-    <div class="card has-dataset"          data-title="Unravel Ghanaian-accented English with the accent classification dataset."          data-region="Ghana"          data-id="28"          data-project-id="ui_6"          data-authors="Elikplim Sabblah"          data-organizations="&lt;a href=&quot;https://rail.knust.edu.gh/&quot; target=&quot;_blank&quot;&gt;&quot;Powered by: RAIL - KNUST&lt;/a&gt;">
+    <div class="card has-dataset"          data-title="Unravel Ghanaian-accented English with the accent classification dataset."          data-region="Ghana"          data-id="28"          data-project-id="ui_6"          data-authors="Elikplim Sabblah"          data-organizations="&lt;a href=&quot;https://rail.knust.edu.gh/&quot; target=&quot;_blank&quot;&gt;&quot;Powered by: RAIL - KNUST&lt;/a&gt;"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_6/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-reduced-inequality-through-access-to-info-in-local-languagesnlp--sdg-10">Reduced inequality through access to info in local languages/NLP  (SDG 10)</div></div>
@@ -1528,7 +1554,7 @@ Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;">
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-voice" data-filter="Voice"><i class="fas fa-database"></i> Voice</span></div><div class="license-tag"><i class="fas fa-copyright"></i> <a href="https://opendatacommons.org/licenses/dbcl/1-0/" target="_blank">dbcl-1-0</a></div></div>
     </div>
     
-    <div class="card has-dataset"          data-title="Explore the effectiveness of Agrivoltaic farming systems to optimize productivity of farmlands"          data-region="Ghana"          data-id="29"          data-project-id="ui_7"          data-authors="Elikplim Sabblah"          data-organizations="&lt;a href=&quot;https://rail.knust.edu.gh/&quot; target=&quot;_blank&quot;&gt;&quot;Powered by: RAIL - KNUST&lt;/a&gt;">
+    <div class="card has-dataset"          data-title="Explore the effectiveness of Agrivoltaic farming systems to optimize productivity of farmlands"          data-region="Ghana"          data-id="29"          data-project-id="ui_7"          data-authors="Elikplim Sabblah"          data-organizations="&lt;a href=&quot;https://rail.knust.edu.gh/&quot; target=&quot;_blank&quot;&gt;&quot;Powered by: RAIL - KNUST&lt;/a&gt;"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_7/images/agrivoltaic.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-climate-action">Climate Action</div><div class="domain-badge domain-energy">Energy</div></div>
@@ -1549,7 +1575,7 @@ Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;">
     </div>
     
     <div class="card has-dataset has-usecase"          data-title="Empowering Women Across India with Voice-based Knowledge in Their Native Languages"          data-region="India"          data-id="35"          data-project-id="ui_14"          data-authors="Philipp Olbrich"          data-organizations="&lt;a href=&quot;https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/&quot; target=&quot;_blank&quot;&gt;Powered by: Audiopedia
-Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;">
+Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_14/images/image.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-natural-language-processing">Natural Language Processing</div></div>
@@ -1570,7 +1596,7 @@ Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;">
     </div>
     
     <div class="card has-dataset has-usecase"          data-title="Build inclusive voice technologies in 9 Indian Languages through open language datasets"          data-region="India"          data-id="36"          data-project-id="ui_16"          data-authors="Philipp Olbrich, Prasanta Ghosh"          data-organizations="Powered by: Indian Institute of Science IISc 
-Catalyzed by: Bhashini, &lt;a href=&quot;https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/&quot; target=&quot;_blank&quot;&gt;FAIR Forward - AI for All&lt;/a&gt;">
+Catalyzed by: Bhashini, &lt;a href=&quot;https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/&quot; target=&quot;_blank&quot;&gt;FAIR Forward - AI for All&lt;/a&gt;"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_16/images/pexels-photo-18636912.jpg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-reduced-inequality-through-access-to-info-in-local-languagesnlp--sdg-10">Reduced inequality through access to info in local languages/NLP  (SDG 10)</div></div>
@@ -1593,7 +1619,7 @@ Catalyzed by: Bhashini, &lt;a href=&quot;https://www.bmz-digital.global/en/overv
     </div>
     
     <div class="card has-dataset has-usecase"          data-title="Cotton Ace: AI-driven Pest Management for Cotton Farmers in India"          data-region="India"          data-id="37"          data-project-id="ui_17"          data-authors="JP Tripathi, Philipp Olbrich"          data-organizations="&lt;a href=&quot;https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/&quot; target=&quot;_blank&quot;&gt;Powered by:  Wadhwani AI
-Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;">
+Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_17/images/cotton_ace.jpg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div></div>
@@ -1616,7 +1642,7 @@ Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;">
     </div>
     
     <div class="card has-dataset has-usecase"          data-title="Providing better information on sexual and reproductive health and rights (SRHR) of young people through the Kahi Ankahi Baatein infloline (Hindi LLM finetuning)"          data-region="India"          data-id="38"          data-project-id="ui_18"          data-authors="Jonas Nothnagel"          data-organizations="&lt;a href=&quot;https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/&quot; target=&quot;_blank&quot;&gt;Powered by: GramVaani
-Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;">
+Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_18/images/Screenshot 2025-05-13 at 11.40.55.jpg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-reduced-inequality-through-access-to-info-in-local-languagesnlp--sdg-10">Reduced inequality through access to info in local languages/NLP  (SDG 10)</div></div>
@@ -1637,7 +1663,7 @@ Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;">
     </div>
     
     <div class="card has-dataset has-usecase"          data-title="Open-source text-to-speech and machine translation datasets in Mundari"          data-region="India"          data-id="39"          data-project-id="ui_19"          data-authors="Philipp Olbrich"          data-organizations="&lt;a href=&quot;https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/&quot; target=&quot;_blank&quot;&gt;Powered by: Karya Inc. 
-Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;">
+Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_19/images/karyain.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-reduced-inequality-through-access-to-info-in-local-languagesnlp--sdg-10">Reduced inequality through access to info in local languages/NLP  (SDG 10)</div></div>
@@ -1658,7 +1684,7 @@ Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;">
     </div>
     
     <div class="card has-dataset has-usecase"          data-title="Data-driven decision-making for farmers to increase climate resilience"          data-region="India"          data-id="40"          data-project-id="ui_20"          data-authors="Philipp Olbrich"          data-organizations="&lt;a href=&quot;https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/&quot; target=&quot;_blank&quot;&gt;Powered by: Digital Green 
-Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;">
+Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_20/images/digital_green.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -1678,7 +1704,7 @@ Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;">
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-tabular" data-filter="Tabular"><i class="fas fa-table"></i> Tabular</span></div><div class="license-tag"><i class="fas fa-copyright"></i> CC-BY 4.0</div></div>
     </div>
     
-    <div class="card has-dataset has-usecase"          data-title="Support Sustainable Agriculture in Telangana through AI-powered Crop Identification and Crop Health Prediction"          data-region="India"          data-id="41"          data-project-id="ui_21"          data-authors="Jonas Nothnagel"          data-organizations="&lt;a href=&quot;https://wrmsglobal.com/&quot; target=&quot;_blank&quot;&gt;Powered by:  WRMS for Data Collection&lt;/a&gt;, &lt;a href=&quot;https://zindi.africa/&quot; target=&quot;_blank&quot;&gt;ZINDI for the data challenge&lt;/a&gt;">
+    <div class="card has-dataset has-usecase"          data-title="Support Sustainable Agriculture in Telangana through AI-powered Crop Identification and Crop Health Prediction"          data-region="India"          data-id="41"          data-project-id="ui_21"          data-authors="Jonas Nothnagel"          data-organizations="&lt;a href=&quot;https://wrmsglobal.com/&quot; target=&quot;_blank&quot;&gt;Powered by:  WRMS for Data Collection&lt;/a&gt;, &lt;a href=&quot;https://zindi.africa/&quot; target=&quot;_blank&quot;&gt;ZINDI for the data challenge&lt;/a&gt;"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_21/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -1699,7 +1725,7 @@ Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;">
     </div>
     
     <div class="card has-usecase"          data-title="Forest Forward II: Using AI to map carbon in forests using High Carbon Stock Approach and assess fire vulnerability of forests to Combat Climate Change and Protect Livelihoods in India"          data-region="India"          data-id="43"          data-project-id="ui_24"          data-authors="Jonas Nothnagel, Philipp Olbrich"          data-organizations="&lt;a href=&quot;https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/&quot; target=&quot;_blank&quot;&gt;Powered by:  Vertify.Earth
-Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;">
+Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_24/images/goa-forest.jpg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -1725,7 +1751,7 @@ Ruth Schmidt <ruth.schmidt@giz.de>
     
     <div class="card has-dataset has-usecase"          data-title="Climate Disinformation in Local Indonesian Languages"          data-region="Indonesia"          data-id="47"          data-project-id="ui_28"          data-authors="Karlina Octaviany"          data-organizations="Powered by:  
 Catalyzed by: FAIR Forward - AI for All
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_28/images/climate_dissinformation.jpg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div><div class="domain-badge domain-reduced-inequality-through-access-to-info-in-local-languagesnlp--sdg-10">Reduced inequality through access to info in local languages/NLP  (SDG 10)</div></div>
@@ -1747,7 +1773,7 @@ Financed by: BMZ">
     
     <div class="card has-dataset"          data-title="HCSA: High Carbon Stock Mapping in Southeast Asia"          data-region="Indonesia"          data-id="48"          data-project-id="ui_29"          data-authors="Karlina Octaviany"          data-organizations="Powered by:  
 Catalyzed by: FAIR Forward - AI for All
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_29/images/indonesia_forest.jpg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -1773,7 +1799,7 @@ Financed by: BMZ">
     
     <div class="card has-dataset"          data-title="Building inclusive voice technologies in the 3 Indonesian Languages Balinese, Bugis and Minangkabau through open language datasets"          data-region="Indonesia"          data-id="49"          data-project-id="ui_30"          data-authors="Prosa.ai / Balthas Seibold"          data-organizations="Powered by: Prosa.ai 
 Catalyzed by: FAIR Forward - AI for All
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_30/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-reduced-inequality-through-access-to-info-in-local-languagesnlp--sdg-10">Reduced inequality through access to info in local languages/NLP  (SDG 10)</div></div>
@@ -1797,7 +1823,7 @@ NusaDialogue covers 3 underrepresented languages under the Malayo-Polynesian lan
     
     <div class="card has-dataset"          data-title="Open voice datasets for Kiswahili, Kinyarwanda and Luganda"          data-region="Kenya, Rwanda, Uganda"          data-id="53"          data-project-id="ui_34"          data-authors="Balthas Seibold"          data-organizations="Powered by: Mozilla Common Voice
 Catalyzed by: FAIR Forward - AI for All
-Financed by: BMZ, Gates Foundation, FCDO">
+Financed by: BMZ, Gates Foundation, FCDO"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_34/images/phoneswahili.jpg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-reduced-inequality-through-access-to-info-in-local-languagesnlp--sdg-10">Reduced inequality through access to info in local languages/NLP  (SDG 10)</div></div>
@@ -1819,7 +1845,7 @@ Financed by: BMZ, Gates Foundation, FCDO">
     
     <div class="card has-dataset"          data-title="AIEP MVP Development"          data-region="Kenya, India"          data-id="54"          data-project-id="ui_35"          data-authors=""          data-organizations="Powered by: 
 Catalyzed by: FAIR Forward - AI for All
-Financed by: Gates Foundation">
+Financed by: Gates Foundation"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_35/images/AIEP.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-reduced-inequality-through-access-to-info-in-local-languagesnlp--sdg-10">Reduced inequality through access to info in local languages/NLP  (SDG 10)</div></div>
@@ -1851,7 +1877,7 @@ Financed by: Gates Foundation">
     
     <div class="card has-dataset"          data-title="A large scale collection of voice data in Kinyarwanda to allow the building of inclusive language technology "          data-region="Rwanda"          data-id="63"          data-project-id="ui_48"          data-authors="Balthas Seibold"          data-organizations="Powered by: Digital Umuganda &amp; Mozilla Common voice Initiative
 Catalyzed by: FAIR Forward - AI for All
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_48/images/voice_ai.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-reduced-inequality-through-access-to-info-in-local-languagesnlp--sdg-10">Reduced inequality through access to info in local languages/NLP  (SDG 10)</div></div>
@@ -1875,7 +1901,7 @@ Financed by: BMZ">
 "          data-region="South Africa"          data-id="67"          data-project-id="ui_52"          data-authors="Meena Lysko"          data-organizations="Powered by:  Move Beyond Consulting
 Implementing partners: MBC, WITS, CSIR, ARC
 Catalyzed by: FAIR Forward - AI for All
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_52/images/drone_crop.jpg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-climate-action">Climate Action</div><div class="domain-badge domain-disaster-risk-management">Disaster Risk Management</div></div>
@@ -1900,7 +1926,7 @@ Field data collected on small holder agricultural farm land (crops) with raw dat
     <div class="card has-dataset"          data-title="Data for Detecting and Assessing Tomato Stress"          data-region="South Africa"          data-id="68"          data-project-id="ui_52_1"          data-authors="Gladness Khoza and Chuma Majova"          data-organizations="Powered by:  Move Beyond Consulting
 Implementing partners: MBC, WITS, CSIR, ARC
 Catalyzed by: FAIR Forward - AI for All
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_52_1/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-disaster-risk-management">Disaster Risk Management</div><div class="domain-badge domain-sdg-2">SDG 2</div></div>
@@ -1924,7 +1950,7 @@ Financed by: BMZ">
     <div class="card has-dataset"          data-title="Artificial Intelligence for Maize (AIM)"          data-region="South Africa"          data-id="69"          data-project-id="ui_52_2"          data-authors="Gerhardt Botha and Mikka Parag"          data-organizations="Powered by:  Move Beyond Consulting
 Implementing partners: MBC, WITS, CSIR, ARC
 Catalyzed by: FAIR Forward - AI for All
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_52_2/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-disaster-risk-management">Disaster Risk Management</div><div class="domain-badge domain-sdg-2">SDG 2</div></div>
@@ -1947,7 +1973,7 @@ Financed by: BMZ">
     <div class="card has-dataset"          data-title="Data for Detecting and Assessing Maize Stress"          data-region="South Africa"          data-id="70"          data-project-id="ui_52_3"          data-authors="Khanyisa Mpisane and Kanya Xongo"          data-organizations="Powered by:  Move Beyond Consulting
 Implementing partners: MBC, WITS, CSIR, ARC
 Catalyzed by: FAIR Forward - AI for All
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_52_3/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-disaster-risk-management">Disaster Risk Management</div><div class="domain-badge domain-sdg-2">SDG 2</div></div>
@@ -1970,7 +1996,7 @@ Financed by: BMZ">
     <div class="card has-dataset"          data-title="Weeties"          data-region="South Africa"          data-id="71"          data-project-id="ui_52_4"          data-authors="Martin Chari and Makgabo Mashala"          data-organizations="Powered by:  Move Beyond Consulting
 Implementing partners: MBC, WITS, CSIR, ARC
 Catalyzed by: FAIR Forward - AI for All
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_52_4/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-disaster-risk-management">Disaster Risk Management</div><div class="domain-badge domain-sdg-2">SDG 2</div><div class="domain-badge domain-sdg-12">SDG 12</div></div>
@@ -1993,7 +2019,7 @@ Financed by: BMZ">
     <div class="card has-dataset"          data-title="Chlorophyll-Busters"          data-region="South Africa"          data-id="72"          data-project-id="ui_52_5"          data-authors="Cindy Viviers and Dr. Abraham Thomas"          data-organizations="Powered by:  Move Beyond Consulting
 Implementing partners: MBC, WITS, CSIR, ARC
 Catalyzed by: FAIR Forward - AI for All
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_52_5/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-disaster-risk-management">Disaster Risk Management</div><div class="domain-badge domain-sdg-2">SDG 2</div></div>
@@ -2016,7 +2042,7 @@ Financed by: BMZ">
     <div class="card has-dataset"          data-title="The Agro-Innovators"          data-region="South Africa"          data-id="73"          data-project-id="ui_52_6"          data-authors="Sisipho Ngebe and Afika Singano"          data-organizations="Powered by:  Move Beyond Consulting
 Implementing partners: MBC, WITS, CSIR, ARC
 Catalyzed by: FAIR Forward - AI for All
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_52_6/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-disaster-risk-management">Disaster Risk Management</div><div class="domain-badge domain-sdg-2">SDG 2</div></div>
@@ -2039,7 +2065,7 @@ Financed by: BMZ">
     <div class="card has-dataset"          data-title="Agro-thermography"          data-region="South Africa"          data-id="74"          data-project-id="ui_52_7"          data-authors="Dr. Mohamed Ahmed and Phumlani Zwane"          data-organizations="Powered by:  Move Beyond Consulting
 Implementing partners: MBC, WITS, CSIR, ARC
 Catalyzed by: FAIR Forward - AI for All
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_52_7/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-disaster-risk-management">Disaster Risk Management</div><div class="domain-badge domain-climate-action">Climate Action</div><div class="domain-badge domain-sdg-2">SDG 2</div></div>
@@ -2062,7 +2088,7 @@ Financed by: BMZ">
     <div class="card has-dataset"          data-title="Discovering Agriculture Insurance"          data-region="South Africa"          data-id="75"          data-project-id="ui_52_8"          data-authors="Shereen Francis and Yashoda Maharaj"          data-organizations="Powered by:  Move Beyond Consulting
 Implementing partners: MBC, WITS, CSIR, ARC
 Catalyzed by: FAIR Forward - AI for All
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_52_8/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-climate-action">Climate Action</div><div class="domain-badge domain-sdg-2">SDG 2</div></div>
@@ -2085,7 +2111,7 @@ Financed by: BMZ">
     <div class="card has-dataset"          data-title="SAR Busters"          data-region="South Africa"          data-id="76"          data-project-id="ui_52_9"          data-authors="Dleme Tswai and Dr. Theunis Morgenthal"          data-organizations="Powered by:  Move Beyond Consulting
 Implementing partners: MBC, WITS, CSIR, ARC
 Catalyzed by: FAIR Forward - AI for All
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_52_9/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-sdg-2">SDG 2</div></div>
@@ -2109,7 +2135,7 @@ Financed by: BMZ">
     <div class="card has-dataset"          data-title="The internet of Crops (IOC)"          data-region="South Africa"          data-id="77"          data-project-id="ui_52_10"          data-authors="Frederick Mashao and Dr. Olufemi Olayiwola"          data-organizations="Powered by:  Move Beyond Consulting
 Implementing partners: MBC, WITS, CSIR, ARC
 Catalyzed by: FAIR Forward - AI for All
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_52_10/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-sdg-2">SDG 2</div></div>
@@ -2137,7 +2163,7 @@ Our voices, our code
 
 Voices of Mzansi (project title)"          data-region="South Africa"          data-id="78"          data-project-id="ui_53"          data-authors=""          data-organizations="Powered by:  University of Stellenbosch 
 Catalyzed by: South African Digital Language Resources (SADILAR), FAIR Forward - AI for All, Mozilla Foundation, UNESCO decade of indigenous languages
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_53/images/voice_data_2.jpg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-reduced-inequality-through-access-to-info-in-local-languagesnlp--sdg-10">Reduced inequality through access to info in local languages/NLP  (SDG 10)</div></div>
@@ -2165,7 +2191,7 @@ Voices of Mzansi (project title)</h3>
     
     <div class="card has-dataset has-usecase"          data-title="Crop Type Identification from Satellite Imagery in Western Cape, South Africa"          data-region="South Africa"          data-id="79"          data-project-id="ui_54"          data-authors="Philipp Olbrich"          data-organizations="Powered by: Radiant Earth, Western Cape Department of Agriculture
 Catalyzed by: FAIR Forward - AI for All
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_54/images/crop.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div><div class="domain-badge domain-agriculture">Agriculture</div></div>
@@ -2187,7 +2213,7 @@ Financed by: BMZ">
     
     <div class="card has-dataset has-usecase"          data-title="Croppie- helping smallholder coffee producers to plan sales, get loans, and trace coffee - AI powered coffee yield prediction"          data-region="Uganda"          data-id="80"          data-project-id="ui_55"          data-authors=""          data-organizations="Powered by:  
 Catalyzed by: FAIR Forward - AI for All
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_55/images/croppie.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-agriculture">Agriculture</div><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -2209,7 +2235,7 @@ Financed by: BMZ">
     
     <div class="card has-dataset has-usecase"          data-title="Finding good spots for decentralized green energy grids in Uganda I - AI based site identification for MiniGrids"          data-region="Uganda"          data-id="81"          data-project-id="ui_56"          data-authors=""          data-organizations="Powered by:  
 Catalyzed by: FAIR Forward - AI for All
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_56/images/solar_grid.jpg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -2235,7 +2261,7 @@ Ernest Mwebaze <emwebaze@sunbird.ai></div></div>
     <div class="card has-usecase"          data-title="Developing AI Models for Estimating Solar Irradiance for
 Improved Solar Energy Planning in Sub-Saharan Africa"          data-region="Uganda"          data-id="83"          data-project-id="ui_58"          data-authors=""          data-organizations="Powered by:  Marconi Lab
 Catalyzed by: FAIR Forward - AI for All
-Financed by: BMZ">
+Financed by: BMZ"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_58/images/solar.png');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-climate-action">Climate Action</div></div>
@@ -2256,7 +2282,7 @@ Improved Solar Energy Planning in Sub-Saharan Africa</h3>
         <div class="card-footer"><div class="data-type-chips footer-chips"><span class="data-type-chip label-geospatial" data-filter="Geospatial"><i class="fas fa-map"></i> Geospatial</span><span class="data-type-chip label-tabular" data-filter="Tabular"><i class="fas fa-table"></i> Tabular</span><span class="data-type-chip label-meterological" data-filter="Meterological"><i class="fas fa-database"></i> Meterological</span></div><div class="license-tag"><i class="fas fa-copyright"></i> cc-by-4.0 </div></div>
     </div>
     
-    <div class="card has-dataset has-usecase"          data-title="Parallel Text for machine translation in Eng-Kin; Domain-specific for Education (digital literacy)"          data-region="Rwanda"          data-id="85"          data-project-id="ui_79"          data-authors="Isaac"          data-organizations="Atingi, Digital Umuganda, Clear Global">
+    <div class="card has-dataset has-usecase"          data-title="Parallel Text for machine translation in Eng-Kin; Domain-specific for Education (digital literacy)"          data-region="Rwanda"          data-id="85"          data-project-id="ui_79"          data-authors="Isaac"          data-organizations="Atingi, Digital Umuganda, Clear Global"          data-lacuna="false">
         <div class="card-image has-image" style="background-image: url('public/projects/ui_79/images/placeholder_image.jpeg');"></div>
         <div class="card-header">
             <div class="domain-badges"><div class="domain-badge domain-inclusive-education">Inclusive Education</div><div class="domain-badge domain-reduced-inequality-through-access-to-info-in-local-languagesnlp--sdg-10">Reduced inequality through access to info in local languages/NLP  (SDG 10)</div></div>
@@ -2565,6 +2591,8 @@ Improved Solar Energy Planning in Sub-Saharan Africa</h3>
                         viewMatch = card.classList.contains('has-dataset');
                     } else if (currentView === 'usecases') {
                         viewMatch = card.classList.contains('has-usecase');
+                    } else if (currentView === 'lacuna') {
+                        viewMatch = card.classList.contains('has-lacuna');
                     }
                     
                     // Check if card matches the search term

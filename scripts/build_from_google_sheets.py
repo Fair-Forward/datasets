@@ -265,6 +265,9 @@ if not args.skip_fetch:
             ],
             "Authors": [
                 "Authors of this information.", "Authors", "Information Authors", "Data Curators"
+            ],
+            "Lacuna Dataset": [
+                "Lacuna Dataset (Yes/No)", "Lacuna Dataset", "Lacuna Fund Dataset", "Is Lacuna Dataset"
             ]
             # --- End of new columns ---
         }

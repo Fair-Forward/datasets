@@ -111,6 +111,7 @@ def get_unique_categories(df):
     data_types = set()
     statuses = set()
     regions = set() # This will store unique regions from *valid* rows
+    lacuna_datasets = set() # This will store Lacuna Fund datasets
     
     # Iterate through DataFrame rows to check for valid links
     for index, row in df.iterrows():
@@ -163,8 +164,17 @@ def get_unique_categories(df):
                     region = region.strip()
                     if region:
                         regions.add(region)
+        
+        # --- Process Lacuna Dataset (ONLY if row is valid) ---
+        lacuna_col = 'Lacuna Dataset'
+        if lacuna_col in df.columns and is_valid_row:
+            lacuna_text = row.get(lacuna_col)
+            if isinstance(lacuna_text, str) and not pd.isna(lacuna_text):
+                lacuna_text = lacuna_text.strip().lower()
+                if lacuna_text in ['yes', 'y', 'true', '1']:
+                    lacuna_datasets.add('Yes')
     
-    return list(domains), list(data_types), list(statuses), list(regions)
+    return list(domains), list(data_types), list(statuses), list(regions), list(lacuna_datasets)
 
 # Function to generate CSS for labels
 def generate_label_css(domains, data_types, statuses):
@@ -250,6 +260,7 @@ def generate_card_html(row, idx):
     # --- Extract new columns ---
     organizations = row.get('Organizations Involved', '')
     authors = row.get('Authors', '')
+    lacuna_dataset = row.get('Lacuna Dataset', '')
     # --- End Extract new columns ---
     
     # --- Basic Checks ---
@@ -285,6 +296,12 @@ def generate_card_html(row, idx):
         card_classes.append("has-dataset")
     if has_usecase:
         card_classes.append("has-usecase")
+    
+    # Add Lacuna Fund class if applicable
+    has_lacuna = isinstance(lacuna_dataset, str) and not pd.isna(lacuna_dataset) and lacuna_dataset.strip().lower() in ['yes', 'y', 'true', '1']
+    if has_lacuna:
+        card_classes.append("has-lacuna")
+    
     card_class = " ".join(card_classes)
     
     # --- Image Handling (Using Project ID) ---
@@ -619,7 +636,8 @@ def generate_card_html(row, idx):
          data-id="{idx}" \
          data-project-id="{normalized_project_id}" \
          data-authors="{authors_data_attr}" \
-         data-organizations="{organizations_data_attr}">
+         data-organizations="{organizations_data_attr}" \
+         data-lacuna="{str(has_lacuna).lower()}">
         {card_image}
         <div class="card-header">
             {domain_badges}
@@ -637,10 +655,11 @@ def generate_card_html(row, idx):
     
     return card_html
 
-def generate_filter_html(domains, data_types, regions):
+def generate_filter_html(domains, data_types, regions, lacuna_datasets):
     domain_options = '\n'.join([f'<option value="{domain}">{domain}</option>' for domain in sorted(domains)])
     data_type_options = '\n'.join([f'<option value="{data_type}">{data_type}</option>' for data_type in sorted(data_types)])
     region_options = '\n'.join([f'<option value="{region}">{region}</option>' for region in sorted(regions)])
+    lacuna_options = '\n'.join([f'<option value="{lacuna}">{lacuna}</option>' for lacuna in sorted(lacuna_datasets)])
     
     filter_html = f'''
     <div class="filters">
@@ -657,6 +676,7 @@ def generate_filter_html(domains, data_types, regions):
                     <option value="all">All Items</option>
                     <option value="datasets">Datasets Only</option>
                     <option value="usecases">Use Cases Only</option>
+                    <option value="lacuna">Lacuna Fund</option>
                 </select>
             </div>
             <div class="filter-group">
@@ -935,6 +955,8 @@ def generate_js_code():
                         viewMatch = card.classList.contains('has-dataset');
                     } else if (currentView === 'usecases') {
                         viewMatch = card.classList.contains('has-usecase');
+                    } else if (currentView === 'lacuna') {
+                        viewMatch = card.classList.contains('has-lacuna');
                     }
                     
                     // Check if card matches the search term
@@ -1165,7 +1187,7 @@ try:
     # Get unique categories for filter and CSS generation
     # Note: get_unique_categories might need similar filtering if its results
     # should only reflect active projects, but for now, we only adjust the count.
-    domains, data_types, statuses, regions = get_unique_categories(df)
+    domains, data_types, statuses, regions, lacuna_datasets = get_unique_categories(df)
     
     # Generate CSS for labels
     label_css = generate_label_css(domains, data_types, statuses)
@@ -2043,6 +2065,31 @@ try:
             display: none;
         }
         
+        /* Lacuna Fund card styling */
+        .card.has-lacuna {
+            border: 2px solid #d97706; /* Orange border for Lacuna Fund projects */
+        }
+        
+        .card.has-lacuna:hover {
+            border-color: #b45309; /* Darker orange on hover */
+        }
+        
+        .card.has-lacuna::before {
+            content: '🏆';
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+            font-size: 1.2rem;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
         /* Side panel styles are now in enhanced_side_panel.css */
         
         /* Stats panel styling */
@@ -2269,7 +2316,7 @@ try:
         </div>
     </header>
     
-    {generate_filter_html(domains, data_types, regions)}
+    {generate_filter_html(domains, data_types, regions, lacuna_datasets)}
     
     <div class="container">
         <div class="grid" id="dataGrid">
