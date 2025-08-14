@@ -1,0 +1,1 @@
+It's a vector DB that has been developed by Tech4Her cohort to map user requests with semantically similar data
