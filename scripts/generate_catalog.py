@@ -93,14 +93,12 @@ def shorten_domain_name(domain):
     if not domain:
         return domain
     
-    # Specific shortening rules
-    if "Reduced inequality through access to info in local languages/NLP" in domain:
-        return "SDG 10"
-    elif "Sustainable Development Goal" in domain:
-        # Extract SDG number if present
-        sdg_match = re.search(r'SDG\s*(\d+)', domain, re.IGNORECASE)
-        if sdg_match:
-            return f"SDG {sdg_match.group(1)}"
+    # Only extract explicit SDG mentions (SDG followed by number 1-17)
+    sdg_match = re.search(r'SDG\s*(\d+)', domain, re.IGNORECASE)
+    if sdg_match:
+        sdg_num = int(sdg_match.group(1))
+        if 1 <= sdg_num <= 17:
+            return f"SDG {sdg_num}"
     
     # If domain is longer than 20 characters, truncate it
     if len(domain) > 20:
@@ -141,9 +139,7 @@ def get_unique_categories(df):
         has_usecase_link = isinstance(row.get('Model/Use-Case Links'), str) and not pd.isna(row.get('Model/Use-Case Links'))
         is_valid_row = has_dataset_link or has_usecase_link
 
-        # Process Domains (only if row is valid - optional, based on user need)
-        # If you want Domains/Data Types/Statuses filters to also only show
-        # categories from active projects, apply the is_valid_row check here too.
+        # Process Domains (only if row is valid and contains explicit SDG references)
         domain_col = 'Domain/SDG'
         if domain_col in df.columns:
             domain_text = row.get(domain_col)
@@ -152,7 +148,14 @@ def get_unique_categories(df):
                     for domain in re.split(r'[,;]', domain_text):
                         domain = domain.strip()
                         if domain:
-                            domains.add(domain)
+                            # Only add domains that contain explicit SDG references
+                            sdg_match = re.search(r'SDG\s*(\d+)', domain, re.IGNORECASE)
+                            if sdg_match:
+                                sdg_num = int(sdg_match.group(1))
+                                if 1 <= sdg_num <= 17:
+                                    # Normalize the SDG format to ensure no duplicates
+                                    normalized_sdg = f"SDG {sdg_num}"
+                                    domains.add(normalized_sdg)
         
         # Process Data Types (only if row is valid - optional)
         data_type_col = 'Data Type'
@@ -353,7 +356,7 @@ def generate_card_html(row, idx):
                 escaped_image_path = project_image_path.replace("\\", "/").replace("'", "\\'").replace("\"", "\\\"") 
                 card_image = f'<div class="card-image has-image" style="background-image: url(\'{escaped_image_path}\');"></div>'
 
-    # --- Domain Badges --- 
+    # --- Domain Badges (only for SDG domains) --- 
     domain_badges = ""
     domain_list = []
     if domain and not pd.isna(domain):
@@ -361,11 +364,13 @@ def generate_card_html(row, idx):
         for d in re.split(r'[,;]', str(domain)):
             d = d.strip()
             if d:
-                domain_list.append(d)
-                normalized = normalize_label(d)
-                # Use shortened display name for the badge text, but keep full name for filtering
-                display_name = shorten_domain_name(d)
-                domain_badges_html.append(f'<div class="domain-badge domain-{normalized}" title="{html.escape(d)}">{display_name}</div>')
+                # Only add domains that contain explicit SDG references
+                if re.search(r'SDG\s*(\d+)', d, re.IGNORECASE):
+                    domain_list.append(d)
+                    normalized = normalize_label(d)
+                    # Use shortened display name for the badge text, but keep full name for filtering
+                    display_name = shorten_domain_name(d)
+                    domain_badges_html.append(f'<div class="domain-badge domain-{normalized}" title="{html.escape(d)}">{display_name}</div>')
         
         if domain_badges_html:
             domain_badges = f'<div class="domain-badges">{"".join(domain_badges_html)}</div>'
@@ -678,8 +683,15 @@ def generate_card_html(row, idx):
     return card_html
 
 def generate_filter_html(domains, data_types, regions, lacuna_datasets):
-    # Use shortened domain names for display in dropdown, but keep full names as values
-    domain_options = '\n'.join([f'<option value="{domain}" title="{html.escape(domain)}">{shorten_domain_name(domain)}</option>' for domain in sorted(domains)])
+    # Sort SDGs numerically by extracting the number
+    def sort_sdg_key(sdg):
+        sdg_match = re.search(r'SDG\s*(\d+)', sdg, re.IGNORECASE)
+        if sdg_match:
+            return int(sdg_match.group(1))
+        return 999  # Put non-SDG items at the end
+    
+    sorted_domains = sorted(domains, key=sort_sdg_key)
+    domain_options = '\n'.join([f'<option value="{domain}" title="{html.escape(domain)}">{shorten_domain_name(domain)}</option>' for domain in sorted_domains])
     data_type_options = '\n'.join([f'<option value="{data_type}">{data_type}</option>' for data_type in sorted(data_types)])
     region_options = '\n'.join([f'<option value="{region}">{region}</option>' for region in sorted(regions)])
     lacuna_options = '\n'.join([f'<option value="{lacuna}">{lacuna}</option>' for lacuna in sorted(lacuna_datasets)])
@@ -703,9 +715,9 @@ def generate_filter_html(domains, data_types, regions, lacuna_datasets):
                 </select>
             </div>
             <div class="filter-group">
-                <span class="filter-label">Domain:</span>
+                <span class="filter-label">Domain/SDG:</span>
                 <select id="domainFilter">
-                    <option value="all">All Domains</option>
+                    <option value="all">All Domains/SDGs</option>
                     {domain_options}
                 </select>
             </div>
