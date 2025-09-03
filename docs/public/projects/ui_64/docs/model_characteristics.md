@@ -1,0 +1,1 @@
+Model that was tested for the entire city of Bogotá to clasify urban roadspace..And it worked with 98% reliability. Unfortunately not more info available

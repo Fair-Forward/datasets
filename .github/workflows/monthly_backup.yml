@@ -36,12 +36,24 @@ jobs:
         CRED_DIR="data_sources/google_sheets_api"
         CRED_FILE="$CRED_DIR/service_account_JN.json"
         mkdir -p $CRED_DIR
-        echo "${GOOGLE_SHEETS_CREDENTIALS}" > "$CRED_FILE"
+        
+        # Write credentials and validate JSON format
+        # Use printf to avoid newline issues
+        printf '%s' "${GOOGLE_SHEETS_CREDENTIALS}" > "$CRED_FILE"
+        
+        # Validate that the file is valid JSON
+        if ! python -m json.tool "$CRED_FILE" > /dev/null 2>&1; then
+          echo "Error: Invalid JSON in credentials file"
+          echo "First few lines of the file:"
+          head -5 "$CRED_FILE"
+          exit 1
+        fi
+        
         if [ ! -f "$CRED_FILE" ] || [ ! -s "$CRED_FILE" ]; then
           echo "Error: Failed to create credentials file."
           exit 1
         fi
-        echo "Credentials file created."
+        echo "Credentials file created and validated."
 
     - name: Run Backup Script
       id: backup_run

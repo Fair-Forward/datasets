@@ -1,0 +1,3 @@
+Two datasets available: 
+- BaseDatosValidacionFinal30052: This is the raw dataset containing 20,000 georeferenced points along with their respective land cover classifications.
+- LULC Training Data for Ecuador ML: This dataset builds upon the first by incorporating additional information on the conservation status of each point. This includes whether the location falls within protected areas, indigenous territories, areas under government forest incentive programs, and other conservation-related designations.
