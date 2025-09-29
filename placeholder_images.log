@@ -25,3 +25,4 @@
 2025-07-15 13:27:18,309 - INFO - Searching for images for ui_52_1 with keywords: agriculture, detecting, assessing, investigate
 2025-07-15 13:27:19,826 - INFO - Downloaded image for ui_52_1: docs/public/projects/ui_52_1/images/placeholder_image.jpeg
 2025-07-15 13:27:20,831 - INFO - Completed processing. Downloaded 10 placeholder images.
+2025-09-29 15:25:06,790 - ERROR - No Pexels API key provided. Use --api-key or set PEXELS_API_KEY environment variable.
