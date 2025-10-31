@@ -7,6 +7,7 @@ import pandas as pd
 import gspread
 import re
 import csv
+from urllib.parse import urlparse
 from oauth2client.service_account import ServiceAccountCredentials
 from thefuzz import process, fuzz
 
@@ -36,6 +37,16 @@ def normalize_for_directory(text):
     # Convert to lowercase, replace spaces with underscores, remove special characters
     normalized = re.sub(r'[^a-z0-9_]', '', text.lower().replace(' ', '_'))
     return normalized
+
+# Minimal URL validator for http(s)
+def is_valid_http_url(value):
+    if value is None or (isinstance(value, float) and pd.isna(value)):
+        return False
+    text = str(value).strip()
+    if not text:
+        return False
+    parsed = urlparse(text)
+    return parsed.scheme in ("http", "https") and bool(parsed.netloc)
 
 # Function to create project directories
 def create_project_directories(df):
@@ -359,6 +370,12 @@ if not args.skip_fetch:
         # Select and reorder columns - mapped ones first, then others
         df = df[final_df_columns]
         print(f"Final DataFrame columns: {list(df.columns)}")
+
+        # Validate Dataset Link URLs: keep only valid http(s) URLs, else clear
+        if "Dataset Link" in df.columns:
+            df["Dataset Link"] = df["Dataset Link"].apply(
+                lambda v: v if is_valid_http_url(v) else ""
+            )
 
         # Save to Excel
         df.to_excel(args.output, index=False)
