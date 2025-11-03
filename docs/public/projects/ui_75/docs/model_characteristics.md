@@ -1,0 +1,4 @@
+The AI model estimates forest biomass and vegetation health in the Eastern Himalayas using multi-source satellite data combined with local ground measurements. It outputs Above-Ground Biomass (AGB) maps, enabling accurate tracking of forest carbon, degradation, and restoration progress.
+The model accepts pre-processed satellite imagery as input and produces spatial biomass layers compatible with MRV dashboards. It runs on standard Python environments and can be adapted for other tropical regions with local calibration.
+
+Calibrated for South Asian forests; retraining is needed for other regions. Seasonal cloud cover can affect results. All training data are anonymized, and community consent was obtained. Users should validate outputs locally before application. Released under CC-BY 4.0 for open reuse and replication. Please credit Vertify.earth and Earth Analytics India and share improvements through the Vertify.earth GitHub
