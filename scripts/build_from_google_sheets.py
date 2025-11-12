@@ -371,11 +371,8 @@ if not args.skip_fetch:
         df = df[final_df_columns]
         print(f"Final DataFrame columns: {list(df.columns)}")
 
-        # Validate Dataset Link URLs: keep only valid http(s) URLs, else clear
-        if "Dataset Link" in df.columns:
-            df["Dataset Link"] = df["Dataset Link"].apply(
-                lambda v: v if is_valid_http_url(v) else ""
-            )
+        # Note: We don't validate/clear URLs here anymore - let generate_catalog.py handle it
+        # This preserves URLs that might be in formatted strings like "Name (URL)" or "[Name](URL)"
 
         # Save to Excel
         df.to_excel(args.output, index=False)

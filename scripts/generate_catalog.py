@@ -87,47 +87,64 @@ def normalize_for_directory(text):
     normalized = re.sub(r'[^a-z0-9_]', '', text.lower().replace(' ', '_'))
     return normalized
 
-# Minimal URL validator for http(s)
+# Simplified URL validator - checks if a string looks like a valid http(s) URL
 def is_valid_http_url(value):
+    """Check if value is a valid http(s) URL. More permissive - just checks for http/https scheme."""
     if value is None or (isinstance(value, float) and pd.isna(value)):
         return False
     text = str(value).strip()
     if not text:
         return False
-    parsed = urlparse(text)
-    return parsed.scheme in ("http", "https") and bool(parsed.netloc)
-
-# Check if a string contains at least one valid URL (handles formatted strings like "Name (URL)" or multiple URLs)
-def has_valid_url(value):
-    if value is None or (isinstance(value, float) and pd.isna(value)):
-        return False
-    text = str(value).strip()
-    if not text:
-        return False
-    
-    # First check if the entire string is a valid URL
-    if is_valid_http_url(text):
-        return True
-    
-    # Check for URLs in "Name (URL)" format
-    if re.search(r'\(https?://[^)]+\)', text):
-        return True
-    
-    # Check for URLs in markdown format [Name](URL)
-    if re.search(r'\[.*?\]\(https?://[^)]+\)', text):
-        return True
-    
-    # Check if string contains multiple URLs separated by semicolons or commas
-    processed = text.replace(',', ';')
-    for entry in processed.split(';'):
-        entry = entry.strip()
-        if is_valid_http_url(entry):
+    # Simple check: starts with http:// or https:// and has at least one dot (basic domain check)
+    if text.startswith(('http://', 'https://')):
+        # Check if it has at least a domain-like structure (contains a dot after the scheme)
+        scheme_removed = text[text.find('://') + 3:]
+        if '.' in scheme_removed and len(scheme_removed.split('/')[0]) > 0:
             return True
-        # Also check for formatted URLs within each entry
-        if re.search(r'\(https?://[^)]+\)', entry) or re.search(r'\[.*?\]\(https?://[^)]+\)', entry):
-            return True
-    
     return False
+
+# Extract all URLs from a string (handles bare URLs, "Name (URL)", "[Name](URL)", and multiple URLs)
+def extract_urls(value):
+    """Extract all valid URLs from a string, handling various formats."""
+    if value is None or (isinstance(value, float) and pd.isna(value)):
+        return []
+    text = str(value).strip()
+    if not text:
+        return []
+    
+    urls = []
+    
+    # Split by semicolons and commas to handle multiple URLs
+    processed = text.replace(',', ';')
+    entries = [e.strip() for e in processed.split(';') if e.strip()]
+    
+    for entry in entries:
+        # Try to extract URL from "Name (URL)" format
+        name_url_match = re.search(r'\(https?://[^)]+\)', entry)
+        if name_url_match:
+            url = name_url_match.group(0)[1:-1]  # Remove parentheses
+            if is_valid_http_url(url):
+                urls.append(url)
+                continue
+        
+        # Try to extract URL from markdown format [Name](URL)
+        md_match = re.search(r'\[.*?\]\((https?://[^)]+)\)', entry)
+        if md_match:
+            url = md_match.group(1)
+            if is_valid_http_url(url):
+                urls.append(url)
+                continue
+        
+        # Check if the entire entry is a bare URL
+        if is_valid_http_url(entry):
+            urls.append(entry)
+    
+    return urls
+
+# Check if a string contains at least one valid URL
+def has_valid_url(value):
+    """Check if string contains at least one valid URL."""
+    return len(extract_urls(value)) > 0
 
 # Function to shorten domain names for display
 def shorten_domain_name(domain):
@@ -515,101 +532,62 @@ def generate_card_html(row, idx):
     
     # --- Hidden Links (Dataset/Use Case Buttons) ---
     hidden_links = []
-    # Process Dataset Links
+    # Process Dataset Links - extract all valid URLs
     if has_dataset and dataset_link:
-        # --- Revised splitting logic ---
-        processed_link_string = str(dataset_link).replace(',', ';') # Replace commas with semicolons
-        dataset_link_entries = [s.strip() for s in processed_link_string.split(';') if s.strip()]
-        # Filter to only include valid URLs
-        dataset_link_entries = [entry for entry in dataset_link_entries if is_valid_http_url(entry)]
-        # --- End revised splitting logic ---
-        is_single_dataset = len(dataset_link_entries) == 1
-        for i, link_entry in enumerate(dataset_link_entries):
-            link_url = link_entry
-            # Adjust default link name based on count
+        extracted_urls = extract_urls(dataset_link)
+        is_single_dataset = len(extracted_urls) == 1
+        
+        for i, link_url in enumerate(extracted_urls):
+            # Try to extract a name from the original string
             link_name = "Dataset" if is_single_dataset else f"Dataset {i+1}"
-
-            # Check for "Name (URL)" format
-            name_url_match = re.search(r'([^(]+)\s*\((https?://[^)]+)\)', link_entry)
+            
+            # Check if we can find a name in the original string for this URL
+            text = str(dataset_link)
+            # Look for "Name (URL)" format
+            name_url_match = re.search(r'([^(]+?)\s*\((' + re.escape(link_url) + r')\)', text)
             if name_url_match:
                 link_name = name_url_match.group(1).strip()
-                link_url = name_url_match.group(2).strip()
-                # Validate extracted URL
-                if not is_valid_http_url(link_url):
-                    continue  # Skip this entry if extracted URL is invalid
-            # Check for Markdown link: [Name](URL)
             else:
-                md_match = re.search(r'\[(.*?)\]\((.*?)\)', link_entry)
+                # Look for markdown format [Name](URL)
+                md_match = re.search(r'\[(.*?)\]\((' + re.escape(link_url) + r')\)', text)
                 if md_match:
                     link_name = md_match.group(1).strip()
-                    link_url = md_match.group(2).strip()
-                    # Validate extracted URL
-                    if not is_valid_http_url(link_url):
-                        continue  # Skip this entry if extracted URL is invalid
-                # else: it's a bare URL, link_url is already set, link_name is default
-                # Validate bare URL (already validated in the filter above, but double-check)
-                elif not is_valid_http_url(link_url):
-                    continue  # Skip this entry if URL is invalid
             
-            # Check for email (should ideally not be a primary dataset link, but handle)
-            email_match = re.search(r'mailto:([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})', link_url, re.IGNORECASE)
-            if email_match:
-                 # For mailto, link_name might be better derived if not explicitly given
-                if link_name == f"Dataset {i+1}": # if still default
-                    name_part_of_email_match = re.search(r'([^(]+)\s*\(([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\)', link_entry)
-                    if name_part_of_email_match: link_name = name_part_of_email_match.group(1).strip() 
-                    else: link_name = f"Email Contact {i+1}"
-                link_url = f"mailto:{email_match.group(1)}"
+            # Skip email addresses (mailto:)
+            if link_url.startswith('mailto:'):
+                continue
             
             escaped_link_name = html.escape(link_name)
             escaped_link_url = html.escape(link_url)
-            # Ensure this append is INSIDE the loop for each link_entry
             hidden_links.append(f'<a href="{escaped_link_url}" target="_blank" class="btn btn-primary hidden-link" data-link-type="dataset" data-link-name="{escaped_link_name}" style="display:none;">View {escaped_link_name}</a>')
 
-    # Process Use Case Links (similarly)
+    # Process Use Case Links - extract all valid URLs
     if has_usecase and model_links:
-        # --- Revised splitting logic ---
-        processed_model_link_string = str(model_links).replace(',', ';')
-        usecase_link_entries = [s.strip() for s in processed_model_link_string.split(';') if s.strip()]
-        # Filter to only include valid URLs
-        usecase_link_entries = [entry for entry in usecase_link_entries if is_valid_http_url(entry)]
-        # --- End revised splitting logic ---
-        is_single_usecase = len(usecase_link_entries) == 1
-        for i, link_entry in enumerate(usecase_link_entries):
-            link_url = link_entry
-            # Adjust default link name based on count
+        extracted_urls = extract_urls(model_links)
+        is_single_usecase = len(extracted_urls) == 1
+        
+        for i, link_url in enumerate(extracted_urls):
+            # Try to extract a name from the original string
             link_name = "Use Case" if is_single_usecase else f"Use Case {i+1}"
-
-            name_url_match = re.search(r'([^(]+)\s*\((https?://[^)]+)\)', link_entry)
+            
+            # Check if we can find a name in the original string for this URL
+            text = str(model_links)
+            # Look for "Name (URL)" format
+            name_url_match = re.search(r'([^(]+?)\s*\((' + re.escape(link_url) + r')\)', text)
             if name_url_match:
                 link_name = name_url_match.group(1).strip()
-                link_url = name_url_match.group(2).strip()
-                # Validate extracted URL
-                if not is_valid_http_url(link_url):
-                    continue  # Skip this entry if extracted URL is invalid
             else:
-                md_match = re.search(r'\[(.*?)\]\((.*?)\)', link_entry)
+                # Look for markdown format [Name](URL)
+                md_match = re.search(r'\[(.*?)\]\((' + re.escape(link_url) + r')\)', text)
                 if md_match:
                     link_name = md_match.group(1).strip()
-                    link_url = md_match.group(2).strip()
-                    # Validate extracted URL
-                    if not is_valid_http_url(link_url):
-                        continue  # Skip this entry if extracted URL is invalid
-                # Validate bare URL (already validated in the filter above, but double-check)
-                elif not is_valid_http_url(link_url):
-                    continue  # Skip this entry if URL is invalid
-
-            email_match = re.search(r'mailto:([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})', link_url, re.IGNORECASE)
-            if email_match:
-                if link_name == f"Use Case {i+1}":
-                    name_part_of_email_match = re.search(r'([^(]+)\s*\(([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\)', link_entry)
-                    if name_part_of_email_match: link_name = name_part_of_email_match.group(1).strip()
-                    else: link_name = f"Email Contact {i+1}"
-                link_url = f"mailto:{email_match.group(1)}"
+            
+            # Skip email addresses (mailto:)
+            if link_url.startswith('mailto:'):
+                continue
 
             escaped_link_name = html.escape(link_name)
             escaped_link_url = html.escape(link_url)
-            # Ensure this append is INSIDE the loop for each link_entry
             hidden_links.append(f'<a href="{escaped_link_url}" target="_blank" class="btn btn-secondary hidden-link" data-link-type="usecase" data-link-name="{escaped_link_name}" style="display:none;">View {escaped_link_name}</a>')
     
     hidden_links_html = ""
@@ -1252,25 +1230,19 @@ try:
     valid_countries = set()
 
     for index, row in df.iterrows():
-        # Count individual dataset links (only valid URLs)
+        # Count individual dataset links (extract all valid URLs)
         dataset_link_text = row.get('Dataset Link', '')
-        has_dataset_link = False
-        if has_valid_url(dataset_link_text):
-            processed_link_string = str(dataset_link_text).replace(',', ';')
-            dataset_link_entries = [s.strip() for s in processed_link_string.split(';') if s.strip() and is_valid_http_url(s.strip())]
-            if dataset_link_entries:
-                dataset_count += len(dataset_link_entries)
-                has_dataset_link = True
+        extracted_dataset_urls = extract_urls(dataset_link_text)
+        has_dataset_link = len(extracted_dataset_urls) > 0
+        if has_dataset_link:
+            dataset_count += len(extracted_dataset_urls)
         
-        # Count individual use case links (only valid URLs)
+        # Count individual use case links (extract all valid URLs)
         usecase_link_text = row.get('Model/Use-Case Links', '')
-        has_usecase_link = False
-        if has_valid_url(usecase_link_text):
-            processed_model_link_string = str(usecase_link_text).replace(',', ';')
-            usecase_link_entries = [s.strip() for s in processed_model_link_string.split(';') if s.strip() and is_valid_http_url(s.strip())]
-            if usecase_link_entries:
-                usecase_count += len(usecase_link_entries)
-                has_usecase_link = True
+        extracted_usecase_urls = extract_urls(usecase_link_text)
+        has_usecase_link = len(extracted_usecase_urls) > 0
+        if has_usecase_link:
+            usecase_count += len(extracted_usecase_urls)
         
         # Count unique countries ONLY from rows with at least one valid link
         if has_dataset_link or has_usecase_link:
