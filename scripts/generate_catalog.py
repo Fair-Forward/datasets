@@ -87,6 +87,16 @@ def normalize_for_directory(text):
     normalized = re.sub(r'[^a-z0-9_]', '', text.lower().replace(' ', '_'))
     return normalized
 
+# Minimal URL validator for http(s)
+def is_valid_http_url(value):
+    if value is None or (isinstance(value, float) and pd.isna(value)):
+        return False
+    text = str(value).strip()
+    if not text:
+        return False
+    parsed = urlparse(text)
+    return parsed.scheme in ("http", "https") and bool(parsed.netloc)
+
 # Function to shorten domain names for display
 def shorten_domain_name(domain):
     """Shorten long domain names for better display on cards"""
@@ -134,9 +144,9 @@ def get_unique_categories(df):
     
     # Iterate through DataFrame rows to check for valid links
     for index, row in df.iterrows():
-        # Check for valid links
-        has_dataset_link = isinstance(row.get('Dataset Link'), str) and not pd.isna(row.get('Dataset Link'))
-        has_usecase_link = isinstance(row.get('Model/Use-Case Links'), str) and not pd.isna(row.get('Model/Use-Case Links'))
+        # Check for valid links (must be valid URLs, not just non-empty strings)
+        has_dataset_link = is_valid_http_url(row.get('Dataset Link', ''))
+        has_usecase_link = is_valid_http_url(row.get('Model/Use-Case Links', ''))
         is_valid_row = has_dataset_link or has_usecase_link
 
         # Process Domains (only if row is valid and contains explicit SDG references)
@@ -299,9 +309,9 @@ def generate_card_html(row, idx):
         print(f"Warning: Skipping card generation for row {idx} due to invalid Project ID '{project_id}'.")
         return ""
 
-    # Determine if row has dataset and/or use case
-    has_dataset = isinstance(dataset_link, str) and not pd.isna(dataset_link)
-    has_usecase = isinstance(model_links, str) and not pd.isna(model_links)
+    # Determine if row has dataset and/or use case (must be valid URLs, not just non-empty strings)
+    has_dataset = is_valid_http_url(dataset_link)
+    has_usecase = is_valid_http_url(model_links)
     
     # --- Determine Display Title --- 
     # Select the appropriate title based on content type and speaking titles (for display)
@@ -1186,22 +1196,22 @@ try:
     valid_countries = set()
 
     for index, row in df.iterrows():
-        # Count individual dataset links
+        # Count individual dataset links (only valid URLs)
         dataset_link_text = row.get('Dataset Link', '')
         has_dataset_link = False
-        if isinstance(dataset_link_text, str) and not pd.isna(dataset_link_text):
+        if is_valid_http_url(dataset_link_text):
             processed_link_string = str(dataset_link_text).replace(',', ';')
-            dataset_link_entries = [s.strip() for s in processed_link_string.split(';') if s.strip()]
+            dataset_link_entries = [s.strip() for s in processed_link_string.split(';') if s.strip() and is_valid_http_url(s.strip())]
             if dataset_link_entries:
                 dataset_count += len(dataset_link_entries)
                 has_dataset_link = True
         
-        # Count individual use case links
+        # Count individual use case links (only valid URLs)
         usecase_link_text = row.get('Model/Use-Case Links', '')
         has_usecase_link = False
-        if isinstance(usecase_link_text, str) and not pd.isna(usecase_link_text):
+        if is_valid_http_url(usecase_link_text):
             processed_model_link_string = str(usecase_link_text).replace(',', ';')
-            usecase_link_entries = [s.strip() for s in processed_model_link_string.split(';') if s.strip()]
+            usecase_link_entries = [s.strip() for s in processed_model_link_string.split(';') if s.strip() and is_valid_http_url(s.strip())]
             if usecase_link_entries:
                 usecase_count += len(usecase_link_entries)
                 has_usecase_link = True
@@ -2336,11 +2346,11 @@ try:
     
     # Generate cards for each row in the dataframe
     for idx, row in df.iterrows():
-        # Skip rows without dataset or use case links
+        # Skip rows without valid dataset or use case links
         dataset_link = row.get('Dataset Link', '')
         model_links = row.get('Model/Use-Case Links', '')
-        has_dataset = isinstance(dataset_link, str) and not pd.isna(dataset_link)
-        has_usecase = isinstance(model_links, str) and not pd.isna(model_links)
+        has_dataset = is_valid_http_url(dataset_link)
+        has_usecase = is_valid_http_url(model_links)
         
         if not has_dataset and not has_usecase:
             continue
