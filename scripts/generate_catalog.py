@@ -97,6 +97,38 @@ def is_valid_http_url(value):
     parsed = urlparse(text)
     return parsed.scheme in ("http", "https") and bool(parsed.netloc)
 
+# Check if a string contains at least one valid URL (handles formatted strings like "Name (URL)" or multiple URLs)
+def has_valid_url(value):
+    if value is None or (isinstance(value, float) and pd.isna(value)):
+        return False
+    text = str(value).strip()
+    if not text:
+        return False
+    
+    # First check if the entire string is a valid URL
+    if is_valid_http_url(text):
+        return True
+    
+    # Check for URLs in "Name (URL)" format
+    if re.search(r'\(https?://[^)]+\)', text):
+        return True
+    
+    # Check for URLs in markdown format [Name](URL)
+    if re.search(r'\[.*?\]\(https?://[^)]+\)', text):
+        return True
+    
+    # Check if string contains multiple URLs separated by semicolons or commas
+    processed = text.replace(',', ';')
+    for entry in processed.split(';'):
+        entry = entry.strip()
+        if is_valid_http_url(entry):
+            return True
+        # Also check for formatted URLs within each entry
+        if re.search(r'\(https?://[^)]+\)', entry) or re.search(r'\[.*?\]\(https?://[^)]+\)', entry):
+            return True
+    
+    return False
+
 # Function to shorten domain names for display
 def shorten_domain_name(domain):
     """Shorten long domain names for better display on cards"""
@@ -144,9 +176,9 @@ def get_unique_categories(df):
     
     # Iterate through DataFrame rows to check for valid links
     for index, row in df.iterrows():
-        # Check for valid links (must be valid URLs, not just non-empty strings)
-        has_dataset_link = is_valid_http_url(row.get('Dataset Link', ''))
-        has_usecase_link = is_valid_http_url(row.get('Model/Use-Case Links', ''))
+        # Check for valid links (check if string contains at least one valid URL)
+        has_dataset_link = has_valid_url(row.get('Dataset Link', ''))
+        has_usecase_link = has_valid_url(row.get('Model/Use-Case Links', ''))
         is_valid_row = has_dataset_link or has_usecase_link
 
         # Process Domains (only if row is valid and contains explicit SDG references)
@@ -309,9 +341,9 @@ def generate_card_html(row, idx):
         print(f"Warning: Skipping card generation for row {idx} due to invalid Project ID '{project_id}'.")
         return ""
 
-    # Determine if row has dataset and/or use case (must be valid URLs, not just non-empty strings)
-    has_dataset = is_valid_http_url(dataset_link)
-    has_usecase = is_valid_http_url(model_links)
+    # Determine if row has dataset and/or use case (check if string contains at least one valid URL)
+    has_dataset = has_valid_url(dataset_link)
+    has_usecase = has_valid_url(model_links)
     
     # --- Determine Display Title --- 
     # Select the appropriate title based on content type and speaking titles (for display)
@@ -488,6 +520,8 @@ def generate_card_html(row, idx):
         # --- Revised splitting logic ---
         processed_link_string = str(dataset_link).replace(',', ';') # Replace commas with semicolons
         dataset_link_entries = [s.strip() for s in processed_link_string.split(';') if s.strip()]
+        # Filter to only include valid URLs
+        dataset_link_entries = [entry for entry in dataset_link_entries if is_valid_http_url(entry)]
         # --- End revised splitting logic ---
         is_single_dataset = len(dataset_link_entries) == 1
         for i, link_entry in enumerate(dataset_link_entries):
@@ -500,13 +534,22 @@ def generate_card_html(row, idx):
             if name_url_match:
                 link_name = name_url_match.group(1).strip()
                 link_url = name_url_match.group(2).strip()
+                # Validate extracted URL
+                if not is_valid_http_url(link_url):
+                    continue  # Skip this entry if extracted URL is invalid
             # Check for Markdown link: [Name](URL)
             else:
                 md_match = re.search(r'\[(.*?)\]\((.*?)\)', link_entry)
                 if md_match:
                     link_name = md_match.group(1).strip()
                     link_url = md_match.group(2).strip()
+                    # Validate extracted URL
+                    if not is_valid_http_url(link_url):
+                        continue  # Skip this entry if extracted URL is invalid
                 # else: it's a bare URL, link_url is already set, link_name is default
+                # Validate bare URL (already validated in the filter above, but double-check)
+                elif not is_valid_http_url(link_url):
+                    continue  # Skip this entry if URL is invalid
             
             # Check for email (should ideally not be a primary dataset link, but handle)
             email_match = re.search(r'mailto:([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})', link_url, re.IGNORECASE)
@@ -519,14 +562,17 @@ def generate_card_html(row, idx):
                 link_url = f"mailto:{email_match.group(1)}"
             
             escaped_link_name = html.escape(link_name)
+            escaped_link_url = html.escape(link_url)
             # Ensure this append is INSIDE the loop for each link_entry
-            hidden_links.append(f'<a href="{link_url}" target="_blank" class="btn btn-primary hidden-link" data-link-type="dataset" data-link-name="{escaped_link_name}" style="display:none;">View {escaped_link_name}</a>')
+            hidden_links.append(f'<a href="{escaped_link_url}" target="_blank" class="btn btn-primary hidden-link" data-link-type="dataset" data-link-name="{escaped_link_name}" style="display:none;">View {escaped_link_name}</a>')
 
     # Process Use Case Links (similarly)
     if has_usecase and model_links:
         # --- Revised splitting logic ---
         processed_model_link_string = str(model_links).replace(',', ';')
         usecase_link_entries = [s.strip() for s in processed_model_link_string.split(';') if s.strip()]
+        # Filter to only include valid URLs
+        usecase_link_entries = [entry for entry in usecase_link_entries if is_valid_http_url(entry)]
         # --- End revised splitting logic ---
         is_single_usecase = len(usecase_link_entries) == 1
         for i, link_entry in enumerate(usecase_link_entries):
@@ -538,11 +584,20 @@ def generate_card_html(row, idx):
             if name_url_match:
                 link_name = name_url_match.group(1).strip()
                 link_url = name_url_match.group(2).strip()
+                # Validate extracted URL
+                if not is_valid_http_url(link_url):
+                    continue  # Skip this entry if extracted URL is invalid
             else:
                 md_match = re.search(r'\[(.*?)\]\((.*?)\)', link_entry)
                 if md_match:
                     link_name = md_match.group(1).strip()
                     link_url = md_match.group(2).strip()
+                    # Validate extracted URL
+                    if not is_valid_http_url(link_url):
+                        continue  # Skip this entry if extracted URL is invalid
+                # Validate bare URL (already validated in the filter above, but double-check)
+                elif not is_valid_http_url(link_url):
+                    continue  # Skip this entry if URL is invalid
 
             email_match = re.search(r'mailto:([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})', link_url, re.IGNORECASE)
             if email_match:
@@ -553,8 +608,9 @@ def generate_card_html(row, idx):
                 link_url = f"mailto:{email_match.group(1)}"
 
             escaped_link_name = html.escape(link_name)
+            escaped_link_url = html.escape(link_url)
             # Ensure this append is INSIDE the loop for each link_entry
-            hidden_links.append(f'<a href="{link_url}" target="_blank" class="btn btn-secondary hidden-link" data-link-type="usecase" data-link-name="{escaped_link_name}" style="display:none;">View {escaped_link_name}</a>')
+            hidden_links.append(f'<a href="{escaped_link_url}" target="_blank" class="btn btn-secondary hidden-link" data-link-type="usecase" data-link-name="{escaped_link_name}" style="display:none;">View {escaped_link_name}</a>')
     
     hidden_links_html = ""
     if hidden_links:
@@ -1199,7 +1255,7 @@ try:
         # Count individual dataset links (only valid URLs)
         dataset_link_text = row.get('Dataset Link', '')
         has_dataset_link = False
-        if is_valid_http_url(dataset_link_text):
+        if has_valid_url(dataset_link_text):
             processed_link_string = str(dataset_link_text).replace(',', ';')
             dataset_link_entries = [s.strip() for s in processed_link_string.split(';') if s.strip() and is_valid_http_url(s.strip())]
             if dataset_link_entries:
@@ -1209,7 +1265,7 @@ try:
         # Count individual use case links (only valid URLs)
         usecase_link_text = row.get('Model/Use-Case Links', '')
         has_usecase_link = False
-        if is_valid_http_url(usecase_link_text):
+        if has_valid_url(usecase_link_text):
             processed_model_link_string = str(usecase_link_text).replace(',', ';')
             usecase_link_entries = [s.strip() for s in processed_model_link_string.split(';') if s.strip() and is_valid_http_url(s.strip())]
             if usecase_link_entries:
@@ -2349,8 +2405,8 @@ try:
         # Skip rows without valid dataset or use case links
         dataset_link = row.get('Dataset Link', '')
         model_links = row.get('Model/Use-Case Links', '')
-        has_dataset = is_valid_http_url(dataset_link)
-        has_usecase = is_valid_http_url(model_links)
+        has_dataset = has_valid_url(dataset_link)
+        has_usecase = has_valid_url(model_links)
         
         if not has_dataset and not has_usecase:
             continue
