@@ -5,11 +5,13 @@ import datetime
 import shutil
 import pandas as pd
 import gspread
+import sys
 import re
 import csv
 from urllib.parse import urlparse
 from oauth2client.service_account import ServiceAccountCredentials
 from thefuzz import process, fuzz
+from utils import normalize_for_directory, is_valid_http_url
 
 # Parse command line arguments
 parser = argparse.ArgumentParser(description='Fetch data from Google Sheets and build the website.')
@@ -30,23 +32,6 @@ if args.backup and os.path.exists(args.output) and not args.skip_fetch:
     except Exception as e:
         print(f"Error creating backup: {e}")
 
-# Function to normalize a string for use as a directory name
-def normalize_for_directory(text):
-    if not text:
-        return ""
-    # Convert to lowercase, replace spaces with underscores, remove special characters
-    normalized = re.sub(r'[^a-z0-9_]', '', text.lower().replace(' ', '_'))
-    return normalized
-
-# Minimal URL validator for http(s)
-def is_valid_http_url(value):
-    if value is None or (isinstance(value, float) and pd.isna(value)):
-        return False
-    text = str(value).strip()
-    if not text:
-        return False
-    parsed = urlparse(text)
-    return parsed.scheme in ("http", "https") and bool(parsed.netloc)
 
 # Function to create project directories
 def create_project_directories(df):
@@ -383,13 +368,10 @@ if not args.skip_fetch:
     except gspread.exceptions.APIError as api_e:
         print(f"Google Sheets API Error: {api_e}")
         # Handle specific API errors if needed
-        exit(1)
+        sys.exit(1)
     except Exception as e:
         print(f"Error fetching data from Google Sheets: {e}")
-        # Print traceback for unexpected errors
-        import traceback
-        traceback.print_exc()
-        exit(1)
+        sys.exit(1)
 else:
     # If skipping fetch, still create project directories from the existing Excel file
     try:

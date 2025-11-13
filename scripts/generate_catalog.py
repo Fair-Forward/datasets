@@ -6,6 +6,8 @@ import colorsys
 import argparse
 import datetime
 from urllib.parse import urlparse
+import sys
+from utils import normalize_for_directory, is_valid_http_url
 
 # Parse command line arguments
 parser = argparse.ArgumentParser(description='Generate HTML catalog from Excel file.')
@@ -79,29 +81,29 @@ def normalize_label(text):
     normalized = re.sub(r'[^a-z0-9\-]', '', text.lower().replace(' ', '-'))
     return normalized
 
-# Function to normalize a string for use as a directory name
-def normalize_for_directory(text):
-    if not text or pd.isna(text) or not isinstance(text, str):
-        return ""
-    # Convert to lowercase, replace spaces with underscores, remove special characters
-    normalized = re.sub(r'[^a-z0-9_]', '', text.lower().replace(' ', '_'))
-    return normalized
+# # Function to normalize a string for use as a directory name
+# def normalize_for_directory(text):
+#     if not text or pd.isna(text) or not isinstance(text, str):
+#         return ""
+#     # Convert to lowercase, replace spaces with underscores, remove special characters
+#     normalized = re.sub(r'[^a-z0-9_]', '', text.lower().replace(' ', '_'))
+#     return normalized
 
 # Simplified URL validator - checks if a string looks like a valid http(s) URL
-def is_valid_http_url(value):
-    """Check if value is a valid http(s) URL. More permissive - just checks for http/https scheme."""
-    if value is None or (isinstance(value, float) and pd.isna(value)):
-        return False
-    text = str(value).strip()
-    if not text:
-        return False
-    # Simple check: starts with http:// or https:// and has at least one dot (basic domain check)
-    if text.startswith(('http://', 'https://')):
-        # Check if it has at least a domain-like structure (contains a dot after the scheme)
-        scheme_removed = text[text.find('://') + 3:]
-        if '.' in scheme_removed and len(scheme_removed.split('/')[0]) > 0:
-            return True
-    return False
+# def is_valid_http_url(value):
+#     """Check if value is a valid http(s) URL. More permissive - just checks for http/https scheme."""
+#     if value is None or (isinstance(value, float) and pd.isna(value)):
+#         return False
+#     text = str(value).strip()
+#     if not text:
+#         return False
+#     # Simple check: starts with http:// or https:// and has at least one dot (basic domain check)
+#     if text.startswith(('http://', 'https://')):
+#         # Check if it has at least a domain-like structure (contains a dot after the scheme)
+#         scheme_removed = text[text.find('://') + 3:]
+#         if '.' in scheme_removed and len(scheme_removed.split('/')[0]) > 0:
+#             return True
+#     return False
 
 # Extract all URLs from a string (handles bare URLs, "Name (URL)", "[Name](URL)", and multiple URLs)
 def extract_urls(value):
@@ -445,14 +447,6 @@ def generate_card_html(row, idx):
     if contact and not pd.isna(contact):
         contact_html = convert_markdown_links_to_html(contact)
         meta_items.append(f'<div class="meta-item"><i class="fas fa-user"></i> {contact_html}</div>')
-        
-    # --- REMOVE Authors and Organizations from visible meta items ---
-    # if authors and not pd.isna(authors):
-    #     authors_html = convert_markdown_links_to_html(str(authors))
-    #     meta_items.append(f'<div class="meta-item"><i class="fas fa-pen-alt"></i> {authors_html}</div>')
-    # if organizations and not pd.isna(organizations):
-    #     organizations_html = convert_markdown_links_to_html(str(organizations))
-    #     meta_items.append(f'<div class="meta-item"><i class="fas fa-building"></i> {organizations_html}</div>')
         
     # --- Combine Remaining Meta Items ---
     meta_html = ""
@@ -2443,25 +2437,12 @@ try:
 </body>
 </html>
 '''
-    
     # Write the HTML to the output file
     with open(HTML_OUTPUT, 'w', encoding='utf-8') as f:
         f.write(html_template)
     
     print(f"Successfully generated {HTML_OUTPUT}")
 
-    # After you've processed your data and before writing the HTML output
-    # Create frontend directory if it doesn't exist
-    frontend_dir = os.path.join(os.path.dirname(os.path.dirname(HTML_OUTPUT)), 'frontend')
-    os.makedirs(frontend_dir, exist_ok=True)
-
-    # Export data as JSON for React frontend
-    json_output = os.path.join(frontend_dir, 'data.json')
-    df.to_json(json_output, orient='records')
-    print(f"Successfully generated {json_output}")
-
 except Exception as e:
     print(f"Error generating catalog: {str(e)}")
-    import traceback
-    traceback.print_exc()
-    exit(1) 
+    sys.exit(1) 
