@@ -261,6 +261,41 @@ def get_unique_categories(df):
     
     return list(domains), list(data_types), list(statuses), list(regions), list(lacuna_datasets)
 
+# Function to get meaningful color for data types
+def get_data_type_color(normalized_data_type):
+    """Returns a meaningful color hex code for specific data types."""
+    # Define meaningful colors for different data types
+    color_map = {
+        # Geospatial/Remote Sensing - green for climate/environment
+        "geospatial": "#d4edda",  # Light green
+        "geospatialremote-sensing": "#d4edda",  # Light green
+        "geospatial-remote-sensing": "#d4edda",  # Light green (alternative normalization)
+        
+        # Images - blue for visual content
+        "images": "#cfe2ff",  # Light blue
+        "drone-imagery": "#b3d9ff",  # Slightly darker blue for drone imagery
+        
+        # Text - purple/indigo for documents
+        "text": "#e2d9f3",  # Light purple
+        
+        # Tabular - orange for structured data
+        "tabular": "#ffe4cc",  # Light orange
+        
+        # Audio/Voice - teal/cyan for sound
+        "audio": "#cff4fc",  # Light cyan
+        "voice": "#cff4fc",  # Light cyan
+        
+        # Video - red/pink for motion
+        "video": "#f8d7da",  # Light pink/red
+        
+        # Meteorological - darker green for weather/climate
+        "meterological": "#b8e6b8",  # Medium green
+        "meteorological": "#b8e6b8",  # Medium green (correct spelling)
+    }
+    
+    # Return mapped color or None if not found
+    return color_map.get(normalized_data_type, None)
+
 # Function to generate CSS for labels
 def generate_label_css(domains, data_types, statuses):
     css = ""
@@ -270,36 +305,22 @@ def generate_label_css(domains, data_types, statuses):
     colors = generate_color_palette(total_categories)
     color_index = 0
     
-    # Generate CSS for domains
+    # Generate CSS for domains - using consistent white background with purple border
+    # (No specific color styling needed - all badges use the same clean style)
     for domain in domains:
         normalized = normalize_label(domain)
         if normalized:
-            hue = colors[color_index]
-            # Create styles for both label- and domain- prefixes
-            css += f"""
-.label-{normalized} {{
-    background-color: {get_pastel_color(hue)};
-    color: #2d3748;
-}}
-
-.domain-{normalized} {{
-    background-color: {get_pastel_color(hue)};
-    color: #2d3748;
-}}
-"""
+            # All domain badges use the same clean style defined in .domain-badge
+            # No need for individual color overrides
             color_index += 1
     
-    # Generate CSS for data types
+    # Generate CSS for data types - using consistent white background with purple border
+    # (No specific color styling needed - all chips use the same clean style)
     for data_type in data_types:
         normalized = normalize_label(data_type)
         if normalized:
-            hue = colors[color_index]
-            css += f"""
-.label-{normalized} {{
-    background-color: {get_pastel_color(hue)};
-    color: #2d3748;
-}}
-"""
+            # All data type chips use the same clean style defined in .data-type-chip
+            # No need for individual color overrides
             color_index += 1
     
     # Generate CSS for statuses
@@ -441,7 +462,7 @@ def generate_card_html(row, idx):
     # Region
     if region and not pd.isna(region):
         clean_region = re.sub(r'\s+', ' ', str(region).strip())
-        meta_items.append(f'<div class="meta-item"><i class="fas fa-map-marker-alt"></i> {html.escape(clean_region)}</div>')
+        meta_items.append(f'<div class="meta-item"><i class="fas fa-location-dot"></i> {html.escape(clean_region)}</div>')
     
     # Contact
     if contact and not pd.isna(contact):
@@ -465,29 +486,16 @@ def generate_card_html(row, idx):
         organizations_data_attr = html.escape(convert_markdown_links_to_html(str(organizations)), quote=True)
 
     # --- Data Type Chips --- 
-    # (No changes needed here)
     data_type_chips = []
     if data_type and not pd.isna(data_type):
         for dt in re.split(r'[,;]', str(data_type)):
             dt = dt.strip()
             if dt:
                 normalized = normalize_label(dt)
-                # Choose icon based on data type
-                icon = "fa-database"  # default icon
-                if normalized == "images":
-                    icon = "fa-image"
-                elif normalized == "audio":
-                    icon = "fa-volume-up"
-                elif normalized == "text":
-                    icon = "fa-file-alt"
-                elif normalized == "geospatial":
-                    icon = "fa-map"
-                elif normalized == "tabular":
-                    icon = "fa-table"
-                elif normalized == "video":
-                    icon = "fa-video"
+                # Add 'long' class if tag text is longer than 10 characters
+                long_class = "data-type-chip-long" if len(dt) > 15 else ""
                 
-                data_type_chips.append(f'<span class="data-type-chip label-{normalized}" data-filter="{dt}"><i class="fas {icon}"></i> {dt}</span>')
+                data_type_chips.append(f'<span class="data-type-chip label-{normalized} {long_class}" data-filter="{dt}">{dt}</span>')
     
     data_type_html = ""
     if data_type_chips:
@@ -520,7 +528,7 @@ def generate_card_html(row, idx):
         description_html = f'''
             <div class="card-description">
                 <div class="description-text collapsed">{html.escape(str(description))}</div>
-                <div class="details-link"><i class="fas fa-arrow-right"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
             </div>
         '''
     
@@ -596,6 +604,66 @@ def generate_card_html(row, idx):
     if data_type_chips:
         footer_links.append(f'<div class="data-type-chips footer-chips">{"".join(data_type_chips)}</div>')
     
+    # Function to normalize license text
+    def normalize_license_text(text):
+        """Normalize license text to handle variations in capitalization, spacing, and typos."""
+        if not text:
+            return None, None
+        
+        text_lower = text.lower().strip()
+        
+        # Remove common prefixes/suffixes and clean up
+        text_clean = re.sub(r'^(license|licence|licensed under|under|via):?\s*', '', text_lower, flags=re.IGNORECASE)
+        text_clean = re.sub(r'\s+', ' ', text_clean)  # Normalize whitespace
+        text_clean = text_clean.strip()
+        
+        # Check if it's already a normalized cc-by format (e.g., "cc-by-4.0", "cc-by-4", "cc by 4.0")
+        # This should catch exact matches first - be more flexible with spacing and dashes
+        cc_by_match = re.search(r'cc[\s\-_]*by[\s\-_]*(\d+\.?\d*)', text_clean)
+        if cc_by_match:
+            version = cc_by_match.group(1) if cc_by_match.groups() else '4.0'
+            # Normalize version (ensure it's like 4.0 not just 4)
+            if '.' not in version:
+                version = version + '.0'
+            normalized = f'cc-by-{version}'
+            url = f'https://creativecommons.org/licenses/by/{version}/'
+            return normalized, url
+        
+        # Creative Commons variations - more comprehensive patterns
+        cc_patterns = [
+            (r'cc[\s\-_]*by[\s\-_]*(\d+\.?\d*)', 'cc-by'),  # CC-BY-4.0, CC BY 4.0, cc-by-4.0, etc.
+            (r'creative[\s\-_]*commons[\s\-_]*attribution[\s\-_]*(\d+\.?\d*)', 'cc-by'),  # Creative Commons Attribution 4.0
+            (r'attribution[\s\-_]*(\d+\.?\d*)', 'cc-by'),  # Attribution 4.0
+            (r'cc[\s\-_]*by[\s\-_]*(\d+)', 'cc-by'),  # CC-BY-4, CC BY 4 (without .0)
+        ]
+        
+        for pattern, license_type in cc_patterns:
+            match = re.search(pattern, text_clean, re.IGNORECASE)
+            if match:
+                version = match.group(1) if match.groups() else '4.0'
+                # Normalize version (ensure it's like 4.0 not just 4)
+                if '.' not in version:
+                    version = version + '.0'
+                normalized = f'{license_type}-{version}'
+                url = f'https://creativecommons.org/licenses/by/{version}/'
+                return normalized, url
+        
+        # Other common licenses (add more as needed)
+        license_map = {
+            'mit': ('mit', 'https://opensource.org/licenses/MIT'),
+            'apache': ('apache-2.0', 'https://www.apache.org/licenses/LICENSE-2.0'),
+            'gpl': ('gpl-3.0', 'https://www.gnu.org/licenses/gpl-3.0.html'),
+            'agpl': ('agpl-3.0', 'https://www.gnu.org/licenses/agpl-3.0.html'),
+            'bsd': ('bsd-3-clause', 'https://opensource.org/licenses/BSD-3-Clause'),
+        }
+        
+        for key, (normalized, url) in license_map.items():
+            if key in text_clean:
+                return normalized, url
+        
+        # If no match, return None to use original processing
+        return None, None
+    
     # --- Process License Tag with Link Handling ---
     license_text = row.get('License', '')
     license_html = '' # Initialize
@@ -605,87 +673,113 @@ def generate_card_html(row, idx):
         link_name = None
         link_url = None
         
-        # 1. Check for Markdown link: [Name](URL)
-        md_match = re.search(r'\[(.*?)\]\((.*?)\)', text_content)
-        if md_match:
-            link_name = md_match.group(1).strip()
-            link_url = md_match.group(2).strip()
-            
-        # 2. Check for Name (URL) format
-        elif '(' in text_content and ')' in text_content and 'http' in text_content:
-             name_url_match = re.search(r'([^(]+)\s*\((https?://[^)]+)\)', text_content)
-             if name_url_match:
-                 link_name = name_url_match.group(1).strip()
-                 link_url = name_url_match.group(2).strip()
+        # Try to normalize the license text first (before checking for URLs/markdown)
+        normalized_license, normalized_url = normalize_license_text(text_content)
+        if normalized_license and normalized_url:
+            # Use normalized version - skip URL/markdown processing
+            link_name = normalized_license
+            link_url = normalized_url
+        elif not (text_content.startswith('http://') or text_content.startswith('https://') or '[' in text_content or '(' in text_content):
+            # If it's plain text (no URLs/markdown), try normalization again as fallback
+            # This catches cases where normalization might have failed initially
+            normalized_license, normalized_url = normalize_license_text(text_content)
+            if normalized_license and normalized_url:
+                link_name = normalized_license
+                link_url = normalized_url
+        else:
+            # Continue with original processing for URLs and markdown links
+            # 1. Check for Markdown link: [Name](URL)
+            md_match = re.search(r'\[(.*?)\]\((.*?)\)', text_content)
+            if md_match:
+                link_name = md_match.group(1).strip()
+                link_url = md_match.group(2).strip()
+                
+            # 2. Check for Name (URL) format
+            elif '(' in text_content and ')' in text_content and 'http' in text_content:
+                 name_url_match = re.search(r'([^(]+)\s*\((https?://[^)]+)\)', text_content)
+                 if name_url_match:
+                     link_name = name_url_match.group(1).strip()
+                     link_url = name_url_match.group(2).strip()
 
-        # 3. Check for bare URL
-        elif text_content.startswith('http://') or text_content.startswith('https://'):
-            url_match = re.search(r'(https?://\S+)', text_content)
-            if url_match:
-                link_url = url_match.group(1)
-                link_name = None # Initialize link_name here
+            # 3. Check for bare URL
+            elif text_content.startswith('http://') or text_content.startswith('https://'):
+                url_match = re.search(r'(https?://\S+)', text_content)
+                if url_match:
+                    link_url = url_match.group(1)
+                    link_name = None # Initialize link_name here
 
-                try:
-                    parsed_url = urlparse(link_url)
-                    path = parsed_url.path.strip('/') # Get path e.g., 'licenses/agpl-3.0.html'
-                    
-                    # --- START: Specific Creative Commons URL Handling ---
-                    is_cc_url = "creativecommons.org" in parsed_url.netloc and path.startswith("licenses/")
-                    if is_cc_url:
-                        path_parts = [part for part in path.split('/') if part] # e.g., ['licenses', 'by', '4.0']
-                        if len(path_parts) >= 3 and path_parts[0] == 'licenses':
-                            version = path_parts[-1]
-                            components = path_parts[1:-1]
-                            if version and components:
-                                link_name = f"cc-{'-'.join(components)}-{version}" # e.g., cc-by-4.0
-                    # --- END: Specific Creative Commons URL Handling ---
-                    
-                    # --- START: Specific Open Data Commons URL Handling ---
-                    # Check if already handled by CC or if it's an ODC URL
-                    elif not link_name and "opendatacommons.org" in parsed_url.netloc and path.startswith("licenses/"):
-                        path_parts = [part for part in path.split('/') if part] # e.g., ['licenses', 'dbcl', '1-0']
-                        if len(path_parts) >= 3 and path_parts[0] == 'licenses':
-                            version = path_parts[-1]
-                            # Assume the part before version is the license abbreviation
-                            license_abbr = path_parts[-2]
-                            if version and license_abbr:
-                                link_name = f"{license_abbr}-{version}" # e.g., dbcl-1-0
-                    # --- END: Specific Open Data Commons URL Handling ---
-
-                    # --- General Path/Filename Extraction (if not handled by specific cases) ---
-                    if not link_name and path:
-                        filename = os.path.basename(path) # Get e.g., 'agpl-3.0.html' or '4.0'
-                        name_part, _ = os.path.splitext(filename) # Get e.g., 'agpl-3.0' or '4.0'
-                        if name_part:
-                            link_name = name_part
-
-                    # Fallback to domain name if no name extracted yet
-                    if not link_name:
-                        link_name = parsed_url.netloc or "License Link" # Use domain or default
-
-                except Exception as e:
-                    # If any error occurs during parsing, fall back safely
-                    print(f"Warning: Could not parse license URL '{link_url}' effectively: {e}")
-                    # Attempt fallback to domain name again, just in case
                     try:
-                         parsed_url_fallback = urlparse(link_url)
-                         link_name = parsed_url_fallback.netloc or "License Link"
-                    except:
-                         link_name = "License Link" # Absolute fallback
+                        parsed_url = urlparse(link_url)
+                        path = parsed_url.path.strip('/') # Get path e.g., 'licenses/agpl-3.0.html'
+                        
+                        # --- START: Specific Creative Commons URL Handling ---
+                        is_cc_url = "creativecommons.org" in parsed_url.netloc and path.startswith("licenses/")
+                        if is_cc_url:
+                            path_parts = [part for part in path.split('/') if part] # e.g., ['licenses', 'by', '4.0']
+                            if len(path_parts) >= 3 and path_parts[0] == 'licenses':
+                                version = path_parts[-1]
+                                components = path_parts[1:-1]
+                                if version and components:
+                                    link_name = f"cc-{'-'.join(components)}-{version}" # e.g., cc-by-4.0
+                        # --- END: Specific Creative Commons URL Handling ---
+                        
+                        # --- START: Specific Open Data Commons URL Handling ---
+                        # Check if already handled by CC or if it's an ODC URL
+                        elif not link_name and "opendatacommons.org" in parsed_url.netloc and path.startswith("licenses/"):
+                            path_parts = [part for part in path.split('/') if part] # e.g., ['licenses', 'dbcl', '1-0']
+                            if len(path_parts) >= 3 and path_parts[0] == 'licenses':
+                                version = path_parts[-1]
+                                # Assume the part before version is the license abbreviation
+                                license_abbr = path_parts[-2]
+                                if version and license_abbr:
+                                    link_name = f"{license_abbr}-{version}" # e.g., dbcl-1-0
+                        # --- END: Specific Open Data Commons URL Handling ---
 
-        # 4. If URL found, create link, otherwise use plain text
+                        # --- General Path/Filename Extraction (if not handled by specific cases) ---
+                        if not link_name and path:
+                            filename = os.path.basename(path) # Get e.g., 'agpl-3.0.html' or '4.0'
+                            name_part, _ = os.path.splitext(filename) # Get e.g., 'agpl-3.0' or '4.0'
+                            if name_part:
+                                link_name = name_part
+
+                        # Fallback to domain name if no name extracted yet
+                        if not link_name:
+                            link_name = parsed_url.netloc or "License Link" # Use domain or default
+
+                    except Exception as e:
+                        # If any error occurs during parsing, fall back safely
+                        print(f"Warning: Could not parse license URL '{link_url}' effectively: {e}")
+                        # Attempt fallback to domain name again, just in case
+                        try:
+                             parsed_url_fallback = urlparse(link_url)
+                             link_name = parsed_url_fallback.netloc or "License Link"
+                        except:
+                             link_name = "License Link" # Absolute fallback
+
+        # 4. If URL found, create link (and normalize the name if it's a CC license)
+        # Otherwise try to normalize plain text
         if link_url and link_name:
+            # Check if link_name looks like a CC license and normalize it
+            normalized_name, _ = normalize_license_text(link_name)
+            display_name = normalized_name if normalized_name else link_name
+            
             # Escape name for safety, URL is used directly in href
-            escaped_name = html.escape(link_name)
+            escaped_name = html.escape(display_name)
             license_html = f'<div class="license-tag"><i class="fas fa-copyright"></i> <a href="{link_url}" target="_blank">{escaped_name}</a></div>'
         else:
-            # No link found or extracted, display plain text
-            escaped_license = html.escape(text_content)
-            license_html = f'<div class="license-tag"><i class="fas fa-copyright"></i> {escaped_license}</div>'
+            # No link found, try to normalize the text and create link if possible
+            normalized_license, normalized_url = normalize_license_text(text_content)
+            if normalized_license and normalized_url:
+                escaped_name = html.escape(normalized_license)
+                license_html = f'<div class="license-tag"><i class="fas fa-copyright"></i> <a href="{normalized_url}" target="_blank">{escaped_name}</a></div>'
+            else:
+                # No normalization possible, display plain text
+                escaped_license = html.escape(text_content)
+                license_html = f'<div class="license-tag"><i class="fas fa-copyright"></i> {escaped_license}</div>'
             
     else:
         # Use the default placeholder if license is empty or invalid
-        license_html = f'<div class="license-tag"><i class="fas fa-copyright"></i> cc-by-4.0 </div>'
+        license_html = f'<div class="license-tag"><i class="fas fa-copyright"></i> <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">cc-by-4.0</a></div>'
 
     # Add the generated or default license HTML to footer links
     footer_links.append(license_html)
@@ -739,7 +833,7 @@ def generate_filter_html(domains, data_types, regions, lacuna_datasets):
         <div class="filters-content">
             <div class="filter-group">
                 <div class="search-box">
-                    <i class="fas fa-search"></i>
+                    <i class="fas fa-magnifying-glass"></i>
                     <input type="text" id="searchInput" placeholder="Search datasets and use-cases..." autocomplete="off">
                 </div>
             </div>
@@ -1318,7 +1412,7 @@ try:
             --shadow-hover: var(--classic-shadow-hover);
             --title-color: var(--classic-title-color);
             --btn-text: var(--classic-btn-text);
-            --yellow: #d97706;
+            --yellow: #f59e0b; /* Updated to modern amber */
         }
 
         /* Solarized Theme Override */
@@ -1710,40 +1804,59 @@ try:
         }
         
         .domain-badge {
-            display: inline-block;
-            background-color: var(--primary); /* Using primary accent */
-            color: var(--btn-text); /* Text on primary accent */
-            padding: 0.25rem 0.75rem;
-            border-radius: 2rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffffff;
+            color: #2d3748;
+            padding: 0.25rem 0.6rem;
+            border-radius: 1rem;
             font-size: 0.7rem;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(38, 139, 210, 0.15); /* Using blue for shadow, alpha adjusted */
+            font-weight: 400;
+            border: 1px solid #3b82f6; /* Blue border to distinguish from data type tags */
+            white-space: nowrap;
+            width: fit-content;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .domain-badge:hover {
+            background-color: #eff6ff; /* Light blue background on hover */
         }
         
         .data-type-chips {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(2, max-content);
             gap: 0.5rem;
             margin-bottom: 0.75rem;
             margin-top: 0.25rem;
+            min-height: 1.5rem; /* Fixed minimum height to keep cards consistent */
         }
         
         .data-type-chip {
             font-size: 0.7rem;
             font-weight: 400;
-            padding: 0.2rem 0.5rem;
+            padding: 0.25rem 0.6rem;
             border-radius: 1rem;
-            background-color: var(--background); /* Use main background */
-            color: var(--text-light);
+            background-color: #ffffff;
+            color: #2d3748;
             display: inline-flex;
             align-items: center;
-            border: 1px solid var(--border); /* Use theme border */
+            justify-content: center;
+            border: 1px solid #8b5cf6; /* Purple border like screenshot */
+            white-space: nowrap;
+            width: fit-content;
+            max-width: 100%;
+            box-sizing: border-box;
         }
         
-        .data-type-chip i {
-            margin-right: 0.25rem;
-            font-size: 0.65rem;
-            opacity: 0.7;
+        .data-type-chip:hover {
+            background-color: #f5f3ff; /* Light purple background on hover */
+        }
+        
+        .data-type-chip-long {
+            grid-column: 1 / -1; /* Span full width for long tags */
+            width: fit-content; /* Still size to content, not full width */
         }
         
         .card h3 {
@@ -1879,15 +1992,15 @@ try:
         .footer-chips {
             margin-right: auto;
             margin-bottom: 0;
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(2, max-content);
             gap: 0.5rem;
-            align-items: center;
+            align-items: flex-start;
         }
         
         .footer-chips .data-type-chip {
             font-size: 0.7rem;
-            padding: 0.2rem 0.5rem;
+            padding: 0.25rem 0.6rem;
             margin-bottom: 0;
         }
         
@@ -1895,18 +2008,19 @@ try:
             font-size: 0.75rem;
             padding: 0.25rem 0.5rem;
             border-radius: 0.375rem;
-            background-color: rgba(181, 137, 0, 0.1); /* yellow with alpha */
-            color: var(--yellow); /* yellow */
+            background-color: #ffffff;
+            color: #2d3748;
             display: flex;
             align-items: center;
             gap: 0.25rem;
             margin-left: auto;
-            border: 1px solid rgba(181, 137, 0, 0.2); /* yellow with alpha */
+            border: 1px solid #f59e0b; /* Modern amber/orange border */
             transition: all 0.2s ease;
         }
         
         .license-tag:hover {
-            background-color: rgba(181, 137, 0, 0.15); /* yellow with alpha, slightly darker */
+            background-color: #fffbeb; /* Very light amber background on hover */
+            border-color: #d97706; /* Slightly darker amber on hover */
             transform: translateY(-2px);
         }
         
@@ -2267,7 +2381,7 @@ try:
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fair Forward - Open Data & Use Cases</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Add enhanced side panel CSS -->
     <link rel="stylesheet" href="enhanced_side_panel.css">
     <!-- Add syntax highlighting for code blocks -->

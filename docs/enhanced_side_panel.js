@@ -17,7 +17,7 @@ function parseMarkdown(markdown) {
         .replace(/^# (.*$)/gim, '<h1>$1</h1>');
     
     // Replace links
-    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2" target="_blank" class="panel-link"><i class="fas fa-external-link-alt"></i> $1</a>');
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2" target="_blank" class="panel-link"><i class="fas fa-arrow-up-right-from-square"></i> $1</a>');
     
     // Replace images
     html = html.replace(/!\[([^\]]+)\]\(([^)]+)\)/gim, '<div class="panel-image-container"><img src="$2" alt="$1" class="panel-image"><div class="panel-image-caption">$1</div></div>');
@@ -188,19 +188,60 @@ function loadItemDetails(itemId) {
         }
     }
     
+    // Function to get icon for data type based on normalized class
+    const getDataTypeIcon = (normalized) => {
+        if (!normalized) return 'fa-database';
+        
+        const iconMap = {
+            'images': 'fa-images',
+            'image': 'fa-images',
+            'drone-imagery': 'fa-satellite',
+            'audio': 'fa-microphone',
+            'text': 'fa-file-lines',
+            'geospatial': 'fa-earth-americas',
+            'geospatialremote-sensing': 'fa-earth-americas',
+            'geospatial-remote-sensing': 'fa-earth-americas',
+            'tabular': 'fa-table-cells',
+            'video': 'fa-film',
+            'voice': 'fa-microphone-lines',
+            'meterological': 'fa-cloud-sun',
+            'meteorological': 'fa-cloud-sun'
+        };
+        
+        // Check if normalized starts with any key
+        for (const [key, icon] of Object.entries(iconMap)) {
+            if (normalized === key || normalized.startsWith(key)) {
+                return icon;
+            }
+        }
+        
+        return 'fa-database'; // default
+    };
+    
     // Get data type chips
     const dataTypeChips = Array.from(card.querySelectorAll('.data-type-chip')).map(chip => {
         const chipClass = Array.from(chip.classList).find(c => c.startsWith('label-'));
         console.log('Data type chip class:', chipClass, 'from', chip.classList);
+        
+        // Get normalized class name (remove 'label-' prefix)
+        const normalized = chipClass ? chipClass.replace('label-', '') : '';
+        
+        // Get icon based on normalized class
+        const iconClass = getDataTypeIcon(normalized);
+        
+        // Get text content
+        const chipText = chip.textContent.trim();
+        
         return {
-            text: chip.textContent.trim(),
+            text: chipText,
+            iconClass: iconClass,
             class: chipClass,
             filter: chip.getAttribute('data-filter')
         };
     });
     
-    // Get domain badges
-    const domainBadges = Array.from(card.querySelectorAll('.domain-badge')).map(badge => {
+    // Get domain badges and separate SDG badges
+    const allDomainBadges = Array.from(card.querySelectorAll('.domain-badge')).map(badge => {
         const badgeClass = Array.from(badge.classList).find(c => c.startsWith('domain-'));
         console.log('Domain badge class:', badgeClass, 'from', badge.classList);
         return {
@@ -208,6 +249,25 @@ function loadItemDetails(itemId) {
             class: badgeClass
         };
     });
+    
+    // Separate SDG badges from other domain badges
+    const sdgBadges = [];
+    const domainBadges = [];
+    
+    allDomainBadges.forEach(badge => {
+        const sdgMatch = badge.text.match(/SDG\s*(\d+)/i);
+        if (sdgMatch) {
+            const sdgNum = parseInt(sdgMatch[1]);
+            if (sdgNum >= 1 && sdgNum <= 17) {
+                sdgBadges.push(sdgNum);
+            }
+        } else {
+            domainBadges.push(badge);
+        }
+    });
+    
+    // Remove duplicates from SDG badges
+    const uniqueSdgBadges = [...new Set(sdgBadges)].sort((a, b) => a - b);
     
     // Show loading state
     const detailPanelLoader = document.getElementById('detailPanelLoader');
@@ -262,42 +322,13 @@ function loadItemDetails(itemId) {
             detailContent += `</div>`;
         }
         
-        // Add data type chips
-        if (dataTypeChips.length > 0) {
-            detailContent += `<div class="panel-data-type-chips">`;
-            dataTypeChips.forEach(chip => {
-                // Extract icon class from the original chip
-                const iconMatch = chip.text.match(/^(\s*<i class="fas ([^"]+)"><\/i>\s*)(.*)$/);
-                const iconClass = iconMatch ? iconMatch[2] : 'fa-database';
-                const chipText = iconMatch ? iconMatch[3].trim() : chip.text.trim();
-                
-                const chipHTML = `<span class="panel-data-type-chip ${chip.class || ''}" data-filter="${chip.filter || ''}">
-                    <i class="fas ${iconClass}"></i> ${chipText}
-                </span>`;
-                console.log('Generated data type chip HTML:', chipHTML);
-                detailContent += chipHTML;
-            });
-            detailContent += `</div>`;
-        }
-        
         // Add links section
         detailContent += `<div class="panel-links-section">`;
-        // if (datasetLink) { // Old single link logic
-        //     detailContent += `<a href="${datasetLink.getAttribute('href')}" target="_blank" class="panel-link-btn panel-dataset-link">
-        //         <i class="fas fa-database"></i> View Dataset
-        //     </a>`;
-        // }
-        // if (useCaseLink) { // Old single link logic
-        //     detailContent += `<a href="${useCaseLink.getAttribute('href')}" target="_blank" class="panel-link-btn panel-usecase-link">
-        //         <i class="fas fa-lightbulb"></i> View Use Case
-        //     </a>`;
-        // }
-        
         // --- START: Add multiple Dataset links/buttons ---
         if (datasetLinks.length > 0) {
             datasetLinks.forEach(link => {
                 detailContent += `<a href="${link.href}" target="_blank" class="panel-link-btn panel-dataset-link">
-                    <i class="fas fa-database"></i> ${link.name}
+                    <i class="fas fa-cloud-arrow-down"></i> ${link.name}
                 </a>`;
             });
         }
@@ -307,12 +338,12 @@ function loadItemDetails(itemId) {
         if (useCaseLinks.length > 0) {
             useCaseLinks.forEach(link => {
                 detailContent += `<a href="${link.href}" target="_blank" class="panel-link-btn panel-usecase-link">
-                    <i class="fas fa-lightbulb"></i> ${link.name}
+                    <i class="fas fa-sparkles"></i> ${link.name}
                 </a>`;
             });
         }
         // --- END: Add multiple Use Case links/buttons ---
-        detailContent += `</div>`;
+        detailContent += `</div>`; // Close panel-links-section
         
         detailContent += `</div>`; // Close panel-title-section
         
@@ -328,11 +359,11 @@ function loadItemDetails(itemId) {
             for (const [section, content] of Object.entries(contentSections)) {
                 if (content) {
                     const sectionId = section.toLowerCase().replace(/\s+/g, '-');
-                    let icon = 'fa-file-alt';
+                    let icon = 'fa-file-lines';
                     if (section.includes('Data')) icon = 'fa-database';
                     else if (section.includes('Model')) icon = 'fa-robot';
                     else if (section.includes('How to Use')) icon = 'fa-lightbulb';
-                    else if (section === 'What is this about?') icon = 'fa-info-circle';
+                    else if (section === 'What is this about?') icon = 'fa-circle-info';
                     
                     tocContent += `<li class="panel-toc-item">
                         <a href="#${sectionId}" class="panel-toc-link">
@@ -359,12 +390,60 @@ function loadItemDetails(itemId) {
         for (const [section, content] of Object.entries(contentSections)) {
             if (content) {
                 const sectionId = section.toLowerCase().replace(/\s+/g, '-');
-                detailContent += `
-                    <div class="detail-section" id="${sectionId}">
-                        <h3 data-section="${section}">${section}</h3>
-                        <div class="documentation-content">${content}</div>
-                    </div>
-                `;
+                
+                // Special handling for "What is this about?" section - add SDG icons
+                if (section === 'What is this about?' && uniqueSdgBadges.length > 0) {
+                    let sdgIconsHTML = '<div class="sdg-icons-container">';
+                    uniqueSdgBadges.forEach(sdgNum => {
+                        sdgIconsHTML += `
+                            <img src="./img/sdg-${sdgNum}.png" 
+                                 alt="SDG ${sdgNum}" 
+                                 class="sdg-icon"
+                                 onerror="this.style.display='none'">
+                        `;
+                    });
+                    sdgIconsHTML += '</div>';
+                    
+                    detailContent += `
+                        <div class="detail-section" id="${sectionId}">
+                            <h3 data-section="${section}">${section}</h3>
+                            <div class="documentation-content">${content}</div>
+                            ${sdgIconsHTML}
+                        </div>
+                    `;
+                }
+                // Special handling for Data Characteristics section - add data type chips
+                else if (section === 'Data Characteristics' && dataTypeChips.length > 0) {
+                    let dataTypesHTML = '<div class="data-types-container">';
+                    dataTypeChips.forEach(chip => {
+                        const iconClass = chip.iconClass || 'fa-database';
+                        const chipText = chip.text;
+                        dataTypesHTML += `
+                            <div class="data-type-item ${chip.class || ''}">
+                                <div class="data-type-header">
+                                    <i class="fas ${iconClass}"></i>
+                                    <span class="data-type-label">${chipText}</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    dataTypesHTML += '</div>';
+                    
+                    detailContent += `
+                        <div class="detail-section" id="${sectionId}">
+                            <h3 data-section="${section}">${section}</h3>
+                            ${dataTypesHTML}
+                            <div class="documentation-content">${content}</div>
+                        </div>
+                    `;
+                } else {
+                    detailContent += `
+                        <div class="detail-section" id="${sectionId}">
+                            <h3 data-section="${section}">${section}</h3>
+                            <div class="documentation-content">${content}</div>
+                        </div>
+                    `;
+                }
             }
         }
         
@@ -372,11 +451,61 @@ function loadItemDetails(itemId) {
         
         // Add Organizations Section
         if (organizationsContentHTML) {
+            // Parse organizations into three categories, preserving HTML
+            const extractOrgSection = (label) => {
+                const labelPattern = new RegExp(`${label}:\\s*`, 'i');
+                const labelIndex = organizationsContentHTML.search(labelPattern);
+                if (labelIndex === -1) return null;
+                
+                const startIndex = labelIndex + organizationsContentHTML.substring(labelIndex).indexOf(':') + 1;
+                const remainingText = organizationsContentHTML.substring(startIndex);
+                
+                // Find the next label or end of string
+                const nextLabels = [
+                    remainingText.search(/Catalyzed by:/i),
+                    remainingText.search(/Financed by:/i),
+                    remainingText.search(/Powered by:/i)
+                ].filter(idx => idx >= 0);
+                
+                const endIndex = nextLabels.length > 0 ? Math.min(...nextLabels) : remainingText.length;
+                return remainingText.substring(0, endIndex).trim();
+            };
+            
+            const poweredBy = extractOrgSection('Powered by');
+            const catalyzedBy = extractOrgSection('Catalyzed by');
+            const financedBy = extractOrgSection('Financed by');
+            
             detailContent += `
                 <div class="detail-section" id="organizations">
                     <h3 data-section="Organizations Involved">Organizations Involved</h3>
-                    <div class="documentation-content">
-                        ${organizationsContentHTML} 
+                    <div class="organizations-container">
+                        ${poweredBy ? `
+                            <div class="org-type org-powered">
+                                <div class="org-type-header">
+                                    <i class="fas fa-rocket"></i>
+                                    <span class="org-type-label">Powered by</span>
+                                </div>
+                                <div class="org-type-content">${poweredBy}</div>
+                            </div>
+                        ` : ''}
+                        ${catalyzedBy ? `
+                            <div class="org-type org-catalyzed">
+                                <div class="org-type-header">
+                                    <i class="fas fa-seedling"></i>
+                                    <span class="org-type-label">Catalyzed by</span>
+                                </div>
+                                <div class="org-type-content">${catalyzedBy}</div>
+                            </div>
+                        ` : ''}
+                        ${financedBy ? `
+                            <div class="org-type org-financed">
+                                <div class="org-type-header">
+                                    <i class="fas fa-coins"></i>
+                                    <span class="org-type-label">Financed by</span>
+                                </div>
+                                <div class="org-type-content">${financedBy}</div>
+                            </div>
+                        ` : ''}
                     </div>
                 </div>
             `;
@@ -388,7 +517,7 @@ function loadItemDetails(itemId) {
                 <div class="detail-section" id="region">
                     <h3 data-section="Region">Region</h3>
                     <div class="documentation-content">
-                        <p><i class="fas fa-map-marker-alt"></i> ${region}</p>
+                        <p><i class="fas fa-location-dot"></i> ${region}</p>
                     </div>
                 </div>
             `;
@@ -509,7 +638,7 @@ function openDetailPanel(title, itemId) {
     if (!shareButton) {
         shareButton = document.createElement('button');
         shareButton.className = 'share-panel-btn';
-        shareButton.innerHTML = '<i class="fas fa-share-alt"></i>';
+        shareButton.innerHTML = '<i class="fas fa-share"></i>';
         shareButton.title = 'Share this view';
         
         // Add click event to copy the current URL
