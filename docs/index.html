@@ -408,8 +408,12 @@
             border-color: var(--primary-light);
         }
         
-        .card-description, .card-footer {
+        .card {
             cursor: pointer;
+        }
+        
+        .card a, .card button, .card .details-link {
+            cursor: default;
         }
         
         .card-image {
@@ -581,7 +585,7 @@
         
         .details-link {
             color: var(--primary);
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             font-weight: 500;
             cursor: pointer;
             margin-top: 0.75rem;
@@ -1205,7 +1209,7 @@ Financed by: BMZ"          data-lacuna="true">
             
             <div class="card-description">
                 <div class="description-text collapsed">Extensive bioinformatics resource that leverages tree species’ distribution, medicinal, food provision, and other trait data, together with southern African trees’ climate relationships and growth characteristics for climate adaptation and mitigation planning.  The data can serve to promote the use of indigenous trees for reforestation, regenerative agriculture, ecological restoration, human health and livelihood support, and urban afforestation programs to adapt to and mitigate the impacts of climate change.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-15" data-filter="SDG 15" style="display:none;">SDG 15</span><span class="tag label-images" data-filter="Images" style="display:none;">Images</span><span class="tag label-tabular" data-filter="Tabular" style="display:none;">Tabular</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span></div>
@@ -1227,7 +1231,7 @@ Financed by: BMZ"          data-lacuna="true">
             
             <div class="card-description">
                 <div class="description-text collapsed">The team developed a labeled training dataset, derived from 50cm or better satellite imagery, based on a novel, pre-defined road space classification taxonomy appropriate for training and deployment of large-scale deep-learning models</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-10" data-filter="SDG 10" style="display:none;">SDG 10</span><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span></div>
@@ -1250,7 +1254,7 @@ Financed by: BMZ"          data-lacuna="true">
             <div class="card-description">
                 <div class="description-text collapsed">This open-access dataset supports machine learning (ML) applications for mangrove forest monitoring, addressing the need for more openly available and well-annotated datasets to calibrate and validate ML models. It focuses on improving the estimation of above-ground biomass (AGB) and above-ground carbon (AGC) in Colombian Caribbean mangroves. The pilot area, Via Parque Isla de Salamanca National Natural Park (VIPIS) in the Magdalena department, is a Ramsar and UNESCO Biosphere Reserve. Existing global AGB and AGC models often lack the precision and cost-effectiveness needed for regional monitoring.
 The dataset includes both plot-level and tree-level field measurements from 20 newly surveyed plots, providing detailed attributes such as DBH, height, species, AGB (from allometric equations), and AGC. Using these field data, high-resolution satellite imagery, and machine learning models, satellite-based AGB and AGC maps covering ~6,000 ha of mangroves at 10 m spatial resolution have also been generated. </div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-15" data-filter="SDG 15" style="display:none;">SDG 15</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span></div>
@@ -1274,7 +1278,7 @@ Financed by: BMZ"          data-lacuna="true">
                 <div class="description-text collapsed">This dataset contains biomass and carbon stock records from mangroves in Côte d’Ivoire (sites of Sassandra and Fresco). It includes measurements of aboveground and belowground biomass and carbon stock, soil carbon stock, as well as bands derived from Sentinel-2 and Sentinel-1 satellite imagery.
 
 </div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span></div>
@@ -1297,7 +1301,7 @@ Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;"          data-lacuna="false">
             
             <div class="card-description">
                 <div class="description-text collapsed">The AI model based on this dataset enables efficient and cost-effective remote monitoring of biomass changes. This is crucial for assessing reforestation success and detecting forest degradation due to cocoa farming. Also it reduces the need for extensive and expensive on-the-ground surveys. The dataset and the models developed from it aim to predict biomass levels in shaded regions of Côte d&#x27;Ivoire using a combination of GEDI, Sentinel-2 satellite imagery, and ground truth biomass measurements. </div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-13" data-filter="SDG 13" style="display:none;">SDG 13</span><span class="tag label-sdg-15" data-filter="SDG 15" style="display:none;">SDG 15</span><span class="tag label-images" data-filter="Images" style="display:none;">Images</span></div>
@@ -1319,7 +1323,7 @@ Financed by: BMZ"          data-lacuna="true">
             
             <div class="card-description">
                 <div class="description-text collapsed">This project has created a web platform that centralises and visualises energy consumption and production data in Ecuador. It integrates historical and real-time information from official sources such as CENACE, CELEC and INAMHI. The platform presents this information in the form of graphs and heat maps. Additionally, a second application uses satellite images to predict incidents in the electrical system associated with meteorological variables. The project aimed to address a lack of data by making energy information more accessible and representative, enabling proactive management in the face of climatic events. Alongside the platform, the project involved measuring device consumption to improve energy efficiency, and the resulting dataset is publicly available to researchers and students.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-7" data-filter="SDG 7" style="display:none;">SDG 7</span><span class="tag label-sdg-11" data-filter="SDG 11" style="display:none;">SDG 11</span><span class="tag label-meterological" data-filter="Meterological" style="display:none;">Meterological</span><span class="tag label-text" data-filter="Text" style="display:none;">Text</span></div>
@@ -1341,7 +1345,7 @@ Financed by: BMZ"          data-lacuna="true">
             
             <div class="card-description">
                 <div class="description-text collapsed">The dataset can help to build systems, that can monitor the impact of palm oil monoculture, shrimp aquaculture, mining and other land transformations in continental Ecuador and Galapagos. The project created a 20.000 points land use/cover classification training dataset from existing data, with labels that can be used to train multi-spectral Earth observation (EO) data machine learning (ML)  models covering continental Ecuador and the Galapagos islands.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-13" data-filter="SDG 13" style="display:none;">SDG 13</span><span class="tag label-sdg-15" data-filter="SDG 15" style="display:none;">SDG 15</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span></div>
@@ -1363,7 +1367,7 @@ Financed by: BMZ"          data-lacuna="true">
             
             <div class="card-description">
                 <div class="description-text collapsed">The Ltome-Katip datasets are the first Indigenous-labelled bioacoustic datasets designed specifically to support the development of ethical AI for biodiversity monitoring. Co-created by Indigenous data stewards from the Samburu tribe in northern Kenya and the Shuar Nation in the Ecuadorian Amazon, the recordings focus on two sentinel species: Ltome (elephant) and Katip (rodent), both of which signal ecological shifts under climate stress. All data were collected, annotated, and governed by the Indigenous communities, following locally defined protocols rooted in Indigenous data sovereignty. These datasets are not only scientifically valuable — they establish a precedent for how Indigenous communities can lead in setting standards for responsible, consent-based AI development.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-voice" data-filter="Voice" style="display:none;">Voice</span></div>
@@ -1385,7 +1389,7 @@ Financed by: BMZ"          data-lacuna="true">
             
             <div class="card-description">
                 <div class="description-text collapsed">This speech dataset for the Ghanian languages Akan (Akuapem Twi, Asante Twi, Fante) and Ga includes 104,000 utterances (speech) across the four dialects/languages with approximately 200 speakers per dialect/language. This amounts to about 148 hours of speech in total. The dataset was developed to support the development of financial applications in native Ghanaian languages to allow illiterate and semi-literate people to fully benefit from digital financial services. Secondly, it aims to answer research questions related to domain-specific vs. general-purpose dataset development, dialects, as well as NLP system development in low resource settings.  Overall, a total of 83,829 audios were recorded from which the datasets were published and made publicly accessible.  </div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-10" data-filter="SDG 10" style="display:none;">SDG 10</span><span class="tag label-sdg-8" data-filter="SDG 8" style="display:none;">SDG 8</span><span class="tag label-voice" data-filter="Voice" style="display:none;">Voice</span></div>
@@ -1407,7 +1411,7 @@ Financed by: BMZ"          data-lacuna="true">
             
             <div class="card-description">
                 <div class="description-text collapsed">This dataset was produced by the Centre for Remote Sensing and Geographic Information Services (CERSGIS) as part of the project Reference Data Collection for Improving Land Use Change Mapping in Ghana. The primary objective was to develop high-quality reference data to enhance the accuracy of remote sensing-based land use and land cover (LULC) change mapping using machine learning methods in Ghana’s cocoa production landscapes.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-15" data-filter="SDG 15" style="display:none;">SDG 15</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span></div>
@@ -1427,7 +1431,7 @@ Financed by: BMZ"          data-lacuna="true">
             
             <div class="card-description">
                 <div class="description-text collapsed">Imagine, that you are a small-holder farmer in Ghana fearing  crop disease in your Cashew farm. You also know that early intervention could increase yields by up to 30%  - The Cashew Disease Identification (CADI AI) dataset and application is there to make early detection of diseases in cashew plantations in Ghana through AI possible. This helps securing livelihoods, boosting food security, and fueling further economic growth. You will be able to use an openly accessible data set (4,736 UAV images), a machine learning model, and a desktop app to replicate this approach.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-sdg-13" data-filter="SDG 13" style="display:none;">SDG 13</span><span class="tag label-drone-imagery" data-filter="Drone Imagery" style="display:none;">Drone Imagery</span></div>
@@ -1447,7 +1451,7 @@ Financed by: BMZ"          data-lacuna="true">
             
             <div class="card-description">
                 <div class="description-text collapsed">The Crop Disease data set contains images of diseases data found in tomatoes, pepper and maize. The data was collected in 10 districts of the Ashanti Region of Ghana by the RAIL-KNUST team and the Plant Protection and Research Services Directorate (PPRSD) of the Ministry of Food and Agriculture. A 3-month long data challenge was hosted on Zindi based on this data set and the 3 winning models are also available as open source resources to serve as your base models in your research into crop diseases in Ghana. </div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-images" data-filter="Images" style="display:none;">Images</span></div>
@@ -1467,7 +1471,7 @@ Financed by: BMZ"          data-lacuna="true">
             
             <div class="card-description">
                 <div class="description-text collapsed">The Accent Classification Dataset (Ghana) is a collection of audio recordings from native and non-native English speakers across Ghana&#x27;s diverse regions. Participants read the same three scripts, capturing distinct regional accents and speech patterns. This consistent dataset is valuable for linguistic analysis, accent classification, and speech recognition research focused on Ghanaian English.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-10" data-filter="SDG 10" style="display:none;">SDG 10</span><span class="tag label-voice" data-filter="Voice" style="display:none;">Voice</span></div>
@@ -1487,7 +1491,7 @@ Financed by: BMZ"          data-lacuna="true">
             
             <div class="card-description">
                 <div class="description-text collapsed">The Agrivoltaic system offers a transformative solution for farming communities by providing a means to generate electricity without sacrificing agricultural productivity. The dataset showcases the effectivenesss of Solar PVs and also crop yield under solar PVs and in the open-sun on the same farm.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-tabular" data-filter="Tabular" style="display:none;">Tabular</span></div>
@@ -1509,7 +1513,7 @@ Financed by: BMZ"          data-lacuna="true">
             
             <div class="card-description">
                 <div class="description-text collapsed">The health of tropical forest ecosystems faces pressures from climate change, threatening the sustainable supply of leaves, flowers and fruits which provide important resources for wildlife, domestic animals and human settlements. Monitoring the timing of plant life cycle events (phenology) is one effective way to track the availability of plant resources and the impact of climate change and weather variability on their sustainable supply. This dataset is on 48 weeks of liana and tree phenology from ground observations, traditonal ecological knowedge and camera traps in the canopy in two tropical forest ecosystems (a moist semi-deciduous and a dry semi-deciduous forest). The dataset also includes land surface phenology from satellite images and in situ weather data. Phenology data from multiple sources and climate data could be combined via a machine learning model that can be used to predict phenology at community and landscape scales. This data will enhance the representation of tropical African forests in phenology research and contribute meaningful data from tropical African forests for machine learning applications in climate, forests and biodiversity conservation. The images and phenology labels could also be used to train an automation of identifying phenology events in forest canopy images.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-15" data-filter="SDG 15" style="display:none;">SDG 15</span><span class="tag label-tabular" data-filter="Tabular" style="display:none;">Tabular</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span></div>
@@ -1533,7 +1537,7 @@ Financed by: BMZ"          data-lacuna="true">
                 <div class="description-text collapsed">This dataset supports yield estimation, crop type detection and classification, fruit detection and counting, and fruit maturity stage detection (unripe, ripe, and spoiled) for three products that are important sources of livelihood for millions of households in Sub-Saharan Africa.
  
  It contains 14,870 drone images with bounding box annotations of cashew, cocoa, and coffee trees collected across multiple farms in Ghana and Uganda. Conventional methods of yield estimation are expensive, require a lot of labor and time, and are prone to error due to incomplete ground observations. This results in poor crop yield estimations and hinders farmers’ ability to appropriately plan and manage their fields and production pipelines. This dataset will help transform African agriculture into agribusiness by allowing for the development of yield estimation solutions that enable farmers to make good business decisions. Having key details about agricultural production readily accessible enables a timely harvest, helping farmers ensure healthy, fresh produce and, in addition, better sales.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-sdg-13" data-filter="SDG 13" style="display:none;">SDG 13</span><span class="tag label-images" data-filter="Images" style="display:none;">Images</span></div>
@@ -1554,7 +1558,7 @@ Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;"          data-lacuna="true">
             
             <div class="card-description">
                 <div class="description-text collapsed">Under this initiative, a novel approach is employed by leveraging citizen scientists and IoT-based low-cost sensors to collect hyperlocal air quality data. This data is used to identify pollution sources and risk zones, facilitating targeted actions by regulatory authorities.To showcase data outreach, the project features the VAYU Android-based application and the VAYU citizen portal digital stack, which support targeted interventions and customized solutions backed by AI/ML algorithms. These tools potentially develop new approaches in air pollution management while reducing public investment costs.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-13" data-filter="SDG 13" style="display:none;">SDG 13</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span></div>
@@ -1577,7 +1581,7 @@ Financed by: BMZ"          data-lacuna="true">
             <div class="card-description">
                 <div class="description-text collapsed">An AI-Driven Dataset for Nature-Positive Livelihoods and Forest Restoration in Eastern Himalayas.This open-access dataset and digital MRV (Monitoring, Reporting, and Verification) toolkit was  developed to help communities, NGOs and policymakers in the Eastern Himalayas measure and manage the links between forests, livelihoods and climate resilience. The project was created in response to a persistent data gap in the Himalayan region where limited open data and difficult terrain have hindered effective monitoring of forest degradation and the impact of restoration programs. Using locally calibrated AI models trained on Indian biomass data, the system combines satellite observations with ground level socio-economic surveys to measure forest dependency, identify degradation hotspots and track restoration outcomes. All datasets ranging from community level livelihood surveys in Sikkim and Mizoram to forest biomass and land use layers in Assam are openly available. Together they form a replicable, open-source “digital public good” that can be used to train local AI models for forest monitoring, biodiversity accounting or impact assessment. By providing a scalable, context-aware dataset, this initiative enables indigenous start-ups, environmental NGOs and impact investors to quantify nature positive outcomes, align with IRIS+ indicators, and guide conservation investments.
 The goal is to make environmental monitoring inclusive and data driven, empowering local actors to track changes in forest carbon, identify erosion risks and measure the socio-economic benefits of restoration. Ultimately, this approach helps governments, researchers and entrepreneurs build locally adapted AI systems that support both ecosystem regeneration and sustainable livelihoods in fragile mountain regions.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-15" data-filter="SDG 15" style="display:none;">SDG 15</span><span class="tag label-sdg-13" data-filter="SDG 13" style="display:none;">SDG 13</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span></div>
@@ -1598,7 +1602,7 @@ Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;"          data-lacuna="false">
             
             <div class="card-description">
                 <div class="description-text collapsed">Empowering Women Across India with Voice-based Knowledge in Their Native Languages: By using openly accessible text-to-speech models from the Indian Institute of Science (IISc) and MeitY&#x27;s Digital India Bhashini Division, Audiopedia created health-related 400+ audio messages that can be shared with civil society organizations for awareness raising and capacity building</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-sdg-10" data-filter="SDG 10" style="display:none;">SDG 10</span><span class="tag label-sdg-5" data-filter="SDG 5" style="display:none;">SDG 5</span><span class="tag label-text" data-filter="Text" style="display:none;">Text</span><span class="tag label-voice" data-filter="Voice" style="display:none;">Voice</span></div>
@@ -1621,7 +1625,7 @@ Catalyzed by: Bhashini, &lt;a href=&quot;https://www.bmz-digital.global/en/overv
                 <div class="description-text collapsed">This dataset is part of the initiative SYSPIN (SYnthesizing SPeech in INdian languages), that develops large open-source Text-to-Speech (TTS) corpora, i.e., speech training datasets and AI models in 9 Indian languages, namely – Bengali, Bhojpuri, Chhattisgarhi, Hindi, Kannada, Magahi, Maithili, Marathi, and Telugu. This data is useful for those wishing to build voice-enabled, user-friendly applications in Indian languages. Through voice-based solutions, these AI models can be used to empower communities that do not have access to digital services in their own native language. They can be used by private companies, researchers, NGOs or government departments to develop digital applications. 
  
  The datasets and TTS models are available to the AI community and anyone wishing to build voice-enabled applications in Indian languages. Given the distribution of speakers. some of the languages are especially useful for programmes wishing to engage with rural communities and promote sustainable agriculture in rural settings.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-sdg-10" data-filter="SDG 10" style="display:none;">SDG 10</span><span class="tag label-voice" data-filter="Voice" style="display:none;">Voice</span></div>
@@ -1644,7 +1648,7 @@ Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;"          data-lacuna="false">
                 <div class="description-text collapsed">Wadhwani AI has developed a mobile app to support cotton farmers combat pest infestations, a major threat to cotton productivity. For this, they have collaborated with FAIR Forward – AI for All, a project of German Development Cooperation. The app allows farmers to take photos of pheromone traps, which capture male bollworms, and uses an AI model to count the pests in the images. Based on the AI-generated counts, the app provides recommendations to farmers on how to respond. This technology empowers small-scale farmers to make informed decisions, reduce uncertainty in yield, and improve their livelihoods.
  
  As the codebase, dataset and research are openly available it can be used to build on, test and research similar applications in other contexts. This would esp. apply to problems of identification and counting of agricultural pests.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-images" data-filter="Images" style="display:none;">Images</span></div>
@@ -1665,7 +1669,7 @@ Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;"          data-lacuna="false">
             
             <div class="card-description">
                 <div class="description-text collapsed">Improve the Kahi Ankahi Baatein (KAB) platform by fine-tuning Hindi LLMs for better user experience.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-10" data-filter="SDG 10" style="display:none;">SDG 10</span><span class="tag label-text" data-filter="Text" style="display:none;">Text</span></div>
@@ -1686,7 +1690,7 @@ Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;"          data-lacuna="false">
             
             <div class="card-description">
                 <div class="description-text collapsed">100 hours of Text to Speech Dataset for Mundari Language</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-10" data-filter="SDG 10" style="display:none;">SDG 10</span><span class="tag label-text" data-filter="Text" style="display:none;">Text</span></div>
@@ -1707,7 +1711,7 @@ Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;"          data-lacuna="false">
             
             <div class="card-description">
                 <div class="description-text collapsed">The project developed a scalable data collection model for JEEViKA’s frontline workers, integrating digital tools and geofencing, and empowered farmers with personalized climate-smart advice through Farmer Scorecards.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-tabular" data-filter="Tabular" style="display:none;">Tabular</span></div>
@@ -1727,7 +1731,7 @@ Catalyzed by: FAIR Forward - AI for All&lt;/a&gt;"          data-lacuna="false">
             
             <div class="card-description">
                 <div class="description-text collapsed">This AI application and replication-kit is about an AI-based crop type map for Telangana. This should be of use to anyone wishing to support sustainable farming practices and evidence-based decision-making for agricultural. Also, this can be used to empower you, as a local business, and NGOs, or a government agency to develop digital agricultural applications. The application focuses on creating localized ground-truth data on several different crop related variables to train AI models tailored to Telangana&#x27;s diverse agricultural landscape. This includes an open-access ground-truth dataset, a data challenge with openly available models for yield prediction, a crop classification model using satellite imagery applied to map the whole state of Telangana, and a roadmap for AI implementation in agriculture. Datasets, AI models, and crop maps are all openly available as an open-source replication kit and digital public good.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span></div>
@@ -1752,7 +1756,7 @@ Ruth Schmidt <ruth.schmidt@giz.de>
             <div class="card-description">
                 <div class="description-text collapsed">Mapping carbon content in forests: This application leverages advanced geospatial technologies, such as remote sensing and AI, to support forest conservation efforts in India. The application will allow stakeholders to better monitor forest health, estimate biomass, and contribute to climate mitigation efforts.
  Fire Vulnerability Mapping: This application would help develop a fire vulnerability map which could help to identify areas that are prone to fires based on several forest degradation indicators.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-13-climate-action" data-filter="SDG 13 (Climate Action)" style="display:none;">SDG 13 (Climate Action)</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span></div>
@@ -1774,7 +1778,7 @@ Financed by: BMZ"          data-lacuna="false">
             
             <div class="card-description">
                 <div class="description-text collapsed">This AI application is about developing an AI-based system to tackle climate misinformation in Indonesia, focusing on creating accurate and accessible information tools. The initiative aims to build a multilingual disinformation detection system, covering Bahasa Indonesia and over 10,6 million words and 21 million words translation from Minangkabau, Balinese, and Buginese to classify and verify climate-related content. The application supports stakeholders, including government agencies, NGOs, and communities, in countering false narratives, promoting awareness, and enabling evidence-based decision-making. The AI outcomes include open-access datasets, disinformation, and topic classification models, a user-friendly website, and a chatbot. These tools empower users to identify climate misinformation, enhance public literacy, and foster collaboration for sustainable climate actions. The project emphasizes inclusivity, accessibility, and long-term impact, providing resources for researchers, local businesses, and policy-makers to advance AI applications in combating misinformation. Prosa has developed an AI-powered chatbot to address climate misinformation. The platform&#x27;s website is available at faktaiklim.prosa.ai, and the chatbot can be accessed via Telegram (Fakta Iklim Bot), with open-source code available on GitHub. User guides are provided in four languages: Indonesian, Minangkabau, Balinese, and Bugis.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-10" data-filter="SDG 10" style="display:none;">SDG 10</span><span class="tag label-text" data-filter="Text" style="display:none;">Text</span></div>
@@ -1800,7 +1804,7 @@ Financed by: BMZ"          data-lacuna="false">
  • Young Regenerating Forests: Regrowing forests that are transitioning into higher carbon stock potential.
  • Scrub and Open Land: Areas with minimal carbon stock suitable for sustainable development.
  The maps integrate field data, satellite imagery, and AI to assist policymakers, NGOs, and businesses in making data-driven decisions for sustainable land-use planning and conservation. Stakeholders can use the outputs for spatial planning, reducing greenhouse gas emissions, and implementing &quot;no deforestation&quot; commitments. The High Carbon Stock Approach (HCSA) project was nominated for the prestigious UN SDG Game Changer award – Category 2: Planet – Innovation for our climate and environment “Artificial Intelligence Meets Jungle/ Forest Forward.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-13" data-filter="SDG 13" style="display:none;">SDG 13</span><span class="tag label-sdg-15" data-filter="SDG 15" style="display:none;">SDG 15</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span></div>
@@ -1824,7 +1828,7 @@ Financed by: BMZ"          data-lacuna="true">
                 <div class="description-text collapsed">The dataset was created to enable translation from Kiswahili, which is the national language in Kenya, into three indigenous languages, namely, Kidaw&#x27;ida, Kalenjin, and Dholuo. All three languages are low resource, especially Kidaw&#x27;ida, which has only around 400,000 speakers and is at immediate risk of loss. By collecting the text and speech data, the project has taken a step towards preservation of these languages . The dataset consists of three parallel corpora: Kidaw&#x27;ida-Kiswahili; Kalenjin-Kiswahili; Dholuo-Kiswahili. On average, each corpus has thirty thousand sentence pairs. 
 
 In addition, the dataset has helped to preserve, revitalise and elevate the languages Kidaw&#x27;ida, Kalenjin, and Dholuo by making them work on Mozillas Common Voice Platform. The text and speech datasets are thereby supporting crowd-sourced voice recognition, promoting linguistic diversity and empoweromg local communities by enabling Natural Language Processing applications tailored to their needs. Namely, the resulting voice recognition datasets can be used to build AI voice applications such as advisory systems in local languages for farmers, citizens etc that &quot;understand&quot; speech input (instead of written input). As of August 2025, 120 hours of speech data have been recorded on Common Voice in Dholuo (with 14692 sentences available), 92 hours have been recorded for Kalendjin (With 29900 sentences available) and 56 hours have been recorded for Kidaw&#x27;ida (with 11773 sentences available). To download the crowd-sourced speech datasets in Kidaw&#x27;ida, Kalenjin, and Dholuo, visit https://commonvoice.mozilla.org/en/datasets </div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-10" data-filter="SDG 10" style="display:none;">SDG 10</span><span class="tag label-sdg-5" data-filter="SDG 5" style="display:none;">SDG 5</span><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-voice" data-filter="Voice" style="display:none;">Voice</span><span class="tag label-text" data-filter="Text" style="display:none;">Text</span></div>
@@ -1846,7 +1850,7 @@ Financed by: BMZ"          data-lacuna="true">
             
             <div class="card-description">
                 <div class="description-text collapsed">The Agrof4Resilience geospatial datasets are open-access utilized by artificial intelligence (AI) and machine learning (ML) algorithms that are aimed at creating more robust, productive, resilient and diverse agro-ecological systems to achieve productive agro-ecosystems that have potential to improve resilience over time. This is crucial especially in dryland which are plagued with land degredation and other effects of climate change. The data demonstrates that agroforestry in Kenya is fairly low while models developed from the data indicate high agroforestry potential in Kenya. This is affected by socioeconomic factors such as education levels, occupation, age, landsize, income, gender, marital status, cultural beliefs, and family size. These datasets could be utilized to demostrate regions and practices that are environementally and socio-economically sound. This could provide insights on practices that could enhance livelihoods and promote environmental resilience in target communities across Kenya. The data was collected from 35 out of 47 counties in Kenya, spread across four predetermined transects that cover four main agro-ecological zones, and stored in a freely accessible database within icipe’s servers.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span></div>
@@ -1878,7 +1882,7 @@ Financed by: Gates Foundation"          data-lacuna="false">
  
  4. Tech for Her: 
  Tech for Her empowers women farmers in Bihar and Kenya, focusing on tomatoes and cattle. Accessible via IVR, WhatsApp, and a mobile app, the platform uses LLM-powered intent and entity recognition for personalized chatbot interactions and speech-enabled IVR for voice support. AI-based video generation further enhances engagement. Available in English, Hindi, and Swahili, it caters to the specific needs of women in agriculture.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-sdg-10" data-filter="SDG 10" style="display:none;">SDG 10</span><span class="tag label-text" data-filter="Text" style="display:none;">Text</span></div>
@@ -1900,7 +1904,7 @@ Financed by: BMZ, Gates Foundation, FCDO"          data-lacuna="false">
             
             <div class="card-description">
                 <div class="description-text collapsed">By collecting more than 1000 hours of AI voice data (by 04/2025), this effort created the largest open-source voice dataset of diverse Swahili speakers for speech recognition (speech-to-text). You can use this resource to build AI systems understanding spoken Swahili e.g. in cellphones . This facilitates access to information in mother tongue, including by illiterate persons and persons in rural settings.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-sdg-10" data-filter="SDG 10" style="display:none;">SDG 10</span><span class="tag label-text" data-filter="Text" style="display:none;">Text</span><span class="tag label-voice" data-filter="Voice" style="display:none;">Voice</span></div>
@@ -1924,7 +1928,7 @@ Financed by: BMZ"          data-lacuna="true">
                 <div class="description-text collapsed">This dataset will help data scientists, government and users to measure solar energy adoption across Madagascar. It laid the groundwork needed to develop a solar panel detection algorithm working in Madagaskar. Notably, this project represented all regions of the country; instead of focusing only on big cities, it also covered average and small villages as well as coasts and mountains.
 
 The team annotated 2,125 Google Earth satellite images and 9,202 drone images, forming a combination of low and high-definition solar panel views in Madagascar. The Madagascar Initiatives for Digital Innovation (MAIDI) team performed field checks for up to 25% of satellite images and, in total, annotated 22,488 polygons.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-13" data-filter="SDG 13" style="display:none;">SDG 13</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span></div>
@@ -1946,7 +1950,7 @@ Financed by: BMZ"          data-lacuna="true">
             
             <div class="card-description">
                 <div class="description-text collapsed">The NaijaSenti dataset is the first large-scale human-annotated Twitter sentiment dataset for Hausa, Igbo, Nigerian-Pidgin, and Yorùbá, the four most widely spoken languages in Nigeria. It consists of around 30,000 annotated tweets per language (except for Nigerian-Pidgin), including a significant fraction of code-mixed tweets. These datasets are useful not only for sentiment analysis but also for hate speech detection. The open-source package consists of datasets, trained models, sentiment lexicons, and code. With more than 200 million people and 522 native languages, Nigeria is the most populous and linguistically diverse country in Africa, as well as the third most multilingual country in the world. The majority of the population speaks either Hausa, Igbo, Yorùbá, or Nigerian-Pidgin.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-10" data-filter="SDG 10" style="display:none;">SDG 10</span><span class="tag label-text" data-filter="Text" style="display:none;">Text</span></div>
@@ -1969,7 +1973,7 @@ Financed by: BMZ"          data-lacuna="true">
             <div class="card-description">
                 <div class="description-text collapsed">This dataset helps to understand energy consumption patterns in relation to weather conditions in Pakistan. This can guide policymaking on energy and energy conservation, sustainabe energy initiatives and private sector use (market assessment and strategic planning as new entrants in the restructured energy market). 
 The project produced an energy dataset of residential consumption data from buildings across six climatic zones. The energy dataset is recorded on a 1-minute granularity for entire household usage as well as for individual appliances. With over a year of detailed energy consumption data and 18 months of weather data collected from a diverse array of households across six distinct climatic zones, it is one of the most comprehensive datasets of its kind. This meteorological dataset has been accumulated over a period of 18 months for the six urban centers. This weather data comprises of up to 10 essential variables such as temperature, atmospheric pressure, humidity and Precipitation, thus providing an all-around perspective of the environmental elements impacting energy consumption.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-13" data-filter="SDG 13" style="display:none;">SDG 13</span><span class="tag label-sdg-7" data-filter="SDG 7" style="display:none;">SDG 7</span><span class="tag label-tabular" data-filter="Tabular" style="display:none;">Tabular</span></div>
@@ -1991,7 +1995,7 @@ Financed by: BMZ"          data-lacuna="false">
             
             <div class="card-description">
                 <div class="description-text collapsed">This effort created the largest open-source voice dataset of diverse Kinyarwanda speakers for speech recognition (speech-to-text). It collected more than 2300  hours of AI voice data in Kinyarwanda (by 04/2025). You can use this resource to build AI systems understanding spoken Kinyarwanda e.g. in cellphones . This facilitates access to information in mother tongue, including by illiterate persons and in rural settings. </div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-sdg-10" data-filter="SDG 10" style="display:none;">SDG 10</span><span class="tag label-voice" data-filter="Voice" style="display:none;">Voice</span></div>
@@ -2014,7 +2018,7 @@ Financed by: BMZ"          data-lacuna="false">
             <div class="card-description">
                 <div class="description-text collapsed">This prototype automated crop type mapping system for Rwanda leverages multi-sensor remote sensing data (Sentinel 1 &amp; 2, dynamic world, SRTM). The crop mapping pipeline can be used to map the four most important staple foods in Rwanda (rice, maize, beans, Irish potatoes) in four Rwandan districts, and produce timely, 10-meter resolution crop type maps. Reference data from different sources including project field work, global research projects, and Rwandan authorities were used to fine-tune the geospatial foundational model Galileo for the downstream task of mapping what type of crop grows where. The reference data collected in the field was supported through the creation of polygon labels with PlanetScope imagery in collaboration with Rwandan academia. The crop mapping pipeline, the fine-tuned model, and the project&#x27;s reference data are openly available for further usage. The overall good accuracy yielded by the approach under conditions with small field sizes, varying elevation and high cloud cover are promising for a successful application in all kinds of regions. Nevertheless, local reference data remains crucial for crop type mapping and an ideal approach should include all types of crops. You can follow the approach to create your own crop type mapping system, utilize the pipeline to fetch satellite imagery for various purposes, get inspired by the use and fine-tuning of the geospatial foundational model and apply it to a different task. You can also use the collected reference data for your own model. Accurate data on which crop grows were can be used in various applications e.g. improving agricultural policy and business decisions, integrating with yield estimation frameworks for spatially detailed predictions of seasonal production, crop health monitoring, crop insurance design, value chain assessments, supply and demand forecasting, and more. 
 </div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span></div>
@@ -2036,7 +2040,7 @@ Financed by: BMZ"          data-lacuna="false">
             
             <div class="card-description">
                 <div class="description-text collapsed">Enabling language translation capabilities on the Moodle LMS platform, through a collaboration with Atingi; the use case explores 3 modes of translation. The first mode is navigation based, simply translating static messages such as buttons and notifications, secondly it explores full content translation, lastly, in-line translation. The project uses the NLLB-200 model for translation, other models could be experimented to explore feasibility of additional features such as QA or summarization, leveraging the plugin built by the team. </div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-4" data-filter="SDG 4" style="display:none;">SDG 4</span><span class="tag label-text" data-filter="Text" style="display:none;">Text</span></div>
@@ -2062,7 +2066,7 @@ Financed by: BMZ"          data-lacuna="false">
             <div class="card-description">
                 <div class="description-text collapsed">Development and implementation of a training program to enable practitioners in the field of Earth Observation in South Africa to use machine learning. 
 Field data collected on small holder agricultural farm land (crops) with raw datasets + applied use cases of classification of land use cover using ML (based on individual projects presented)</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-sdg-13" data-filter="SDG 13" style="display:none;">SDG 13</span><span class="tag label-sdg-11" data-filter="SDG 11" style="display:none;">SDG 11</span><span class="tag label-drone-imagery" data-filter="Drone Imagery" style="display:none;">Drone Imagery</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span></div>
@@ -2086,7 +2090,7 @@ Financed by: BMZ"          data-lacuna="false">
             <div class="card-description">
                 <div class="description-text collapsed">Investigates methods for detecting and assessing stress in tomato plants using ASD measurements and drone data, focusing on Project Munei Holding Investment in Ha-Mphaila, Limpopo
 </div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-sdg-11" data-filter="SDG 11" style="display:none;">SDG 11</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span><span class="tag label-images" data-filter="Images" style="display:none;">Images</span></div>
@@ -2109,7 +2113,7 @@ Financed by: BMZ"          data-lacuna="false">
             
             <div class="card-description">
                 <div class="description-text collapsed">Investigates the use of Sentinel-2 satellite imagery and a random forest (RF) machine learning algorithm to estimate the Leaf Area Index (LAI) of tomato crops in the Ha-Mphaila irrigation scheme, Limpopo Province, South Africa. The research aimed to determine key wavebands and vegetation indices for LAI estimation, compare the performance of RF models with stepwise multiple linear regression (SMLR) models, and map the spatial distribution of LAI.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span><span class="tag label-images" data-filter="Images" style="display:none;">Images</span><span class="tag label-tabular" data-filter="Tabular" style="display:none;">Tabular</span></div>
@@ -2132,7 +2136,7 @@ Financed by: BMZ"          data-lacuna="false">
             
             <div class="card-description">
                 <div class="description-text collapsed">Investigates the use of remote sensing and machine learning to characterize maize stress in the Limpopo Province, South Africa. The study concludes that integrating field spectra and remotely sensed reflectance provides valuable information for maize stress investigation, supporting the development of mitigation and prevention strategies to ensure food security.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-sdg-11" data-filter="SDG 11" style="display:none;">SDG 11</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span><span class="tag label-images" data-filter="Images" style="display:none;">Images</span></div>
@@ -2155,7 +2159,7 @@ Financed by: BMZ"          data-lacuna="false">
             
             <div class="card-description">
                 <div class="description-text collapsed">Assesses the capabilities of Earth observation and machine learning algorithms, specifically Random Forest and Support Vector Machines, in detecting maize disease stress using drone data. The study was conducted on a small-scale farm in Limpopo, South Africa, focusing on healthy maize, maize with streak virus, and maize with phosphorus deficiency. </div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-sdg-11" data-filter="SDG 11" style="display:none;">SDG 11</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span><span class="tag label-images" data-filter="Images" style="display:none;">Images</span><span class="tag label-drone-imagery" data-filter="Drone Imagery" style="display:none;">Drone Imagery</span></div>
@@ -2178,7 +2182,7 @@ Financed by: BMZ"          data-lacuna="false">
             
             <div class="card-description">
                 <div class="description-text collapsed">Drone high-resolution images were used with a semi-automated random forest (RF) classifier algorithm in Google Earth Engine to classify bare soil, weeds, and tomatoes. The findings can serve as a reference for agricultural researchers and advise farmers on crop management, potentially reducing costs and herbicide use.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-sdg-11" data-filter="SDG 11" style="display:none;">SDG 11</span><span class="tag label-sdg-12" data-filter="SDG 12" style="display:none;">SDG 12</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span><span class="tag label-images" data-filter="Images" style="display:none;">Images</span><span class="tag label-drone-imagery" data-filter="Drone Imagery" style="display:none;">Drone Imagery</span></div>
@@ -2201,7 +2205,7 @@ Financed by: BMZ"          data-lacuna="false">
             
             <div class="card-description">
                 <div class="description-text collapsed">Explores using the Random Forest Regression (RFR) machine learning algorithm with Sentinel-2 and drone imagery to estimate relative chlorophyll values in tomato and maize crops within South Africa&#x27;s Ha-Mphaila farming area. The research concludes that both Sentinel-2 imagery (10m and 20m spatial resolution) and high-resolution drone images are valuable for rapidly assessing crop chlorophyll content across significant areas, offering useful insights for precision agriculture.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-sdg-11" data-filter="SDG 11" style="display:none;">SDG 11</span><span class="tag label-sdg-13" data-filter="SDG 13" style="display:none;">SDG 13</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span><span class="tag label-images" data-filter="Images" style="display:none;">Images</span><span class="tag label-drone-imagery" data-filter="Drone Imagery" style="display:none;">Drone Imagery</span></div>
@@ -2224,7 +2228,7 @@ Financed by: BMZ"          data-lacuna="false">
             
             <div class="card-description">
                 <div class="description-text collapsed">Evaluates the performance of machine learning algorithms for estimating chlorophyll content in tomatoes using Sentinel-2 satellite data. </div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-sdg-11" data-filter="SDG 11" style="display:none;">SDG 11</span><span class="tag label-sdg-13" data-filter="SDG 13" style="display:none;">SDG 13</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span><span class="tag label-images" data-filter="Images" style="display:none;">Images</span><span class="tag label-drone-imagery" data-filter="Drone Imagery" style="display:none;">Drone Imagery</span></div>
@@ -2247,7 +2251,7 @@ Financed by: BMZ"          data-lacuna="false">
             
             <div class="card-description">
                 <div class="description-text collapsed">Explores the integration of ground-based vegetation parameters, thermal infrared data from handheld cameras, and UAV multispectral data to map crop canopy temperature at high resolution. The research, conducted at the Ha-Mphaila irrigation scheme in Limpopo, South Africa, focused on tomato crops.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-sdg-11" data-filter="SDG 11" style="display:none;">SDG 11</span><span class="tag label-sdg-13" data-filter="SDG 13" style="display:none;">SDG 13</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span><span class="tag label-images" data-filter="Images" style="display:none;">Images</span><span class="tag label-tabular" data-filter="Tabular" style="display:none;">Tabular</span></div>
@@ -2270,7 +2274,7 @@ Financed by: BMZ"          data-lacuna="false">
             
             <div class="card-description">
                 <div class="description-text collapsed">Investigates how remote sensing and machine learning can be used to improve Agricultural Index Insurance (AII) for smallholder farmers in South Africa, who often lack access to affordable insurance.  Key recommendations include supporting further research and development in these areas and implementing educational campaigns to build farmer trust and awareness of index insurance benefits.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-sdg-13" data-filter="SDG 13" style="display:none;">SDG 13</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span><span class="tag label-images" data-filter="Images" style="display:none;">Images</span><span class="tag label-tabular" data-filter="Tabular" style="display:none;">Tabular</span></div>
@@ -2294,7 +2298,7 @@ Financed by: BMZ"          data-lacuna="false">
             <div class="card-description">
                 <div class="description-text collapsed">Explores the use of Sentinel-1 and Sentinel-2 satellite data for crop type mapping in smallholder farming areas. The study focuses on improving classification accuracy by identifying optimal spectral bands and evaluating machine learning algorithms like decision tree and random forest classifiers
 </div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span><span class="tag label-images" data-filter="Images" style="display:none;">Images</span><span class="tag label-tabular" data-filter="Tabular" style="display:none;">Tabular</span></div>
@@ -2316,7 +2320,7 @@ Financed by: BMZ"          data-lacuna="false">
             
             <div class="card-description">
                 <div class="description-text collapsed">Univ of Stellenbosch Grant (Febe de Wet) - Voices of Mzansi project aimed to get South Africa&#x27;s languages launched on the Mozilla Common Voice platform1. To achieve this aim the Common Voice website had to be translated from English into the other official languages and at least 5 000 sentences had to be collected for each language. The collected sentences have to be available in the open domain under CC-0 licensing. Once a languages is launched, the sentences are used as prompts for speech data collection through the Common Voice platform. This unlocks open-source text-to-speech dataset collection and thereby ultimately facilitates access to information in mother tongue, including by illiterate persons and in rural settings. </div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-sdg-10" data-filter="SDG 10" style="display:none;">SDG 10</span><span class="tag label-text" data-filter="Text" style="display:none;">Text</span><span class="tag label-voice" data-filter="Voice" style="display:none;">Voice</span></div>
@@ -2338,7 +2342,7 @@ Financed by: BMZ"          data-lacuna="false">
             
             <div class="card-description">
                 <div class="description-text collapsed">This dataset and AI model was produced as part of the Radiant Earth Spot the Crop Challenge (https://zindi.africa/hackathons/radiant-earth-spot-the-crop-hackathon). The objective of the competition was to create a machine learning model to classify fields by crop type from images collected during the growing season by the Sentinel-2 and Sentinel-1 satellites.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-sdg-13" data-filter="SDG 13" style="display:none;">SDG 13</span><span class="tag label-tabular" data-filter="Tabular" style="display:none;">Tabular</span></div>
@@ -2360,7 +2364,7 @@ Financed by: BMZ"          data-lacuna="false">
             
             <div class="card-description">
                 <div class="description-text collapsed">Unpredictable weather conditions and price fluctuations pose major challenges for coffee farmers in Uganda. The platform and app &#x27;Croppie&#x27; supports them with targeted cultivation recommendations and precise crop forecasts—using AI-supported image recognition of coffee plants. As a digital public good based on open-source technology, it can be adapted and further developed locally. The basic user interface is provided through a mobile application. Croppie’s core functionality is to allow for AI-supported coffee yield estimation. This is done by guiding a selective sampling for a statistical yield estimation service based on branch count and coffee branch picture taking, alongside the integration of additional data provided by the user.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-2" data-filter="SDG 2" style="display:none;">SDG 2</span><span class="tag label-sdg-13" data-filter="SDG 13" style="display:none;">SDG 13</span><span class="tag label-tabular" data-filter="Tabular" style="display:none;">Tabular</span></div>
@@ -2382,7 +2386,7 @@ Financed by: BMZ"          data-lacuna="false">
             
             <div class="card-description">
                 <div class="description-text collapsed">The Site Identification tool is an AI-driven tool to enhance renewable energy planning. This tool utilizes machine learning and satellite imagery to identify optimal sites for renewable energy deployment, particularly in remote regions. A successful pilot in Lamwo District demonstrated its potential to improve energy access by recommending suitable electrification strategies for villages. This initiative aligns with Uganda’s National Electrification Strategy, which seeks to connect 10 million households to the most optimal energy source by 2030.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-13" data-filter="SDG 13" style="display:none;">SDG 13</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span><span class="tag label-tabular" data-filter="Tabular" style="display:none;">Tabular</span></div>
@@ -2406,7 +2410,7 @@ Improved Solar Energy Planning in Sub-Saharan Africa</h3>
             
             <div class="card-description">
                 <div class="description-text collapsed">The &quot;Development of Unbiased AI Models for Solar Irradiance in Rural Africa&quot; project aims to improve the accuracy of solar irradiation estimates in Africa by combining ground-based measurements with satellite data and AI models. Led by Makerere University&#x27;s Marconi Lab, the project addresses the lack of reliable solar data—especially in rural areas—by collecting new data, correcting existing biases, and developing a tool to support better solar energy planning and deployment.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-13" data-filter="SDG 13" style="display:none;">SDG 13</span><span class="tag label-geospatialremote-sensing" data-filter="Geospatial/Remote Sensing" style="display:none;">Geospatial/Remote Sensing</span><span class="tag label-tabular" data-filter="Tabular" style="display:none;">Tabular</span><span class="tag label-meterological" data-filter="Meterological" style="display:none;">Meterological</span></div>
@@ -2428,7 +2432,7 @@ Financed by: BMZ"          data-lacuna="true">
             
             <div class="card-description">
                 <div class="description-text collapsed">The Lacuna PII Multilingual Text Dataset  contains annotated sentences with personally identifiable information (PII) in Luganda, Lumasaba, Hausa, and Kanuri. These four languages span Central and Eastern Uganda, Nigeria, Ghana, and Northern Cameroon. The dataset can help to anonymize and pseudonymize personally identifiable information in AI tasks. This can help organizations comply with legal requirements while still being able to analyze and use and share their data effectively. It can also be used to improve machine translation systems for low-resource languages,  improve the performance of NLP applications in these languages, and support the extraction of specific information from text, such as automated form filling and information retrieval systems. It comprises 4000 Luganda sentences, 5000 Lumasaba sentences, 3000 Kanuri sentences, and 3000 Hausa sentences. The team aimed to curate a dataset that is gender inclusive. It was created by Makerere Artificial Intelligence Lab in collaboration with Marconi Lab and Clear Global.</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         
             <div class="tags"><span class="tag label-sdg-13" data-filter="SDG 13" style="display:none;">SDG 13</span><span class="tag label-sdg-5" data-filter="SDG 5" style="display:none;">SDG 5</span><span class="tag label-sdg-10" data-filter="SDG 10" style="display:none;">SDG 10</span><span class="tag label-text" data-filter="Text" style="display:none;">Text</span></div>
@@ -2675,17 +2679,16 @@ Financed by: BMZ"          data-lacuna="true">
                 }
             });
             
-            // Make card-description and card-footer areas clickable
-            document.querySelectorAll('.card-description, .card-footer').forEach(element => {
-                element.addEventListener('click', function(e) {
-                    // Don't trigger if clicking on a link or button inside
-                    if (e.target.closest('a') || e.target.closest('button')) {
+            // Make entire card clickable
+            document.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // Don't trigger if clicking on a link, button, or interactive element inside
+                    if (e.target.closest('a') || e.target.closest('button') || e.target.closest('.details-link')) {
                         return;
                     }
                     
-                    const card = this.closest('.card');
-                    const title = card.getAttribute('data-title');
-                    const id = card.getAttribute('data-id');
+                    const title = this.getAttribute('data-title');
+                    const id = this.getAttribute('data-id');
                     selectedItemId = id;
                     openDetailPanel(title, id);
                     updateUrl(true); // Update URL with item ID

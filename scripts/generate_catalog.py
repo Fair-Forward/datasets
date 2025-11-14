@@ -528,7 +528,7 @@ def generate_card_html(row, idx):
         description_html = f'''
             <div class="card-description">
                 <div class="description-text collapsed">{html.escape(str(description))}</div>
-                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>See Details</span></div>
+                <div class="details-link"><i class="fas fa-arrow-right-long"></i><span>Click card to see details</span></div>
             </div>
         '''
     
@@ -1071,17 +1071,16 @@ def generate_js_code():
                 }
             });
             
-            // Make card-description and card-footer areas clickable
-            document.querySelectorAll('.card-description, .card-footer').forEach(element => {
-                element.addEventListener('click', function(e) {
-                    // Don't trigger if clicking on a link or button inside
-                    if (e.target.closest('a') || e.target.closest('button')) {
+            // Make entire card clickable
+            document.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // Don't trigger if clicking on a link, button, or interactive element inside
+                    if (e.target.closest('a') || e.target.closest('button') || e.target.closest('.details-link')) {
                         return;
                     }
                     
-                    const card = this.closest('.card');
-                    const title = card.getAttribute('data-title');
-                    const id = card.getAttribute('data-id');
+                    const title = this.getAttribute('data-title');
+                    const id = this.getAttribute('data-id');
                     selectedItemId = id;
                     openDetailPanel(title, id);
                     updateUrl(true); // Update URL with item ID
@@ -1734,8 +1733,12 @@ try:
             border-color: var(--primary-light);
         }
         
-        .card-description, .card-footer {
+        .card {
             cursor: pointer;
+        }
+        
+        .card a, .card button, .card .details-link {
+            cursor: default;
         }
         
         .card-image {
@@ -1907,7 +1910,7 @@ try:
         
         .details-link {
             color: var(--primary);
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             font-weight: 500;
             cursor: pointer;
             margin-top: 0.75rem;
