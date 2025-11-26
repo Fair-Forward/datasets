@@ -1,5 +1,13 @@
-Effective forest management and conservation require monitoring tree attributes such as height, crown diameter, and tree count to assess growth in reforested areas. These data enable the development of tools that can speed up the process to assess the success of reforestation efforts and other various ecological and forestry applications, including biomass estimation, forest health assessment, and carbon sequestration studies. Such tools could include the automated counting of trees, estimation of trees’ biophysical parameters from drone images such as tree crown diameter, and prediction of tree growth in relation to tree species and weather variables. In all these areas, AI can offer a cost-effective and scalable alternative to traditional methods of monitoring and counting.
+The Miti360 dataset is intended for training and assessing machine learning models in various forestry applications.
+- Use the orthophoto tiles and bounding box annotations to train models for individual tree detection, counting, and classification from aerial imagery.
+- Use the terrestrial stereoscopic images to develop and benchmark 3D computer vision models for automating forest inventory, such as estimating biophysical parameters.
+- Combine the ground-truth measurements (TH, CD, BD) and weather data to train models that determine quantitative relationships between tree growth and local weather conditions.
+- Leverage the multi-year data (2024-2025) to analyse changes in biophysical parameters and determine which tree species are growing well in the reforested area.
 
-Concretely the following areas of restoration can be improved:
-1) Planning - create baseline assessment: By automatically detecting existing tree crowns, tools based on this dataset can create a baseline assessment of the current forest cover. This information is valuable for planning and prioritizing reforestation areas.
-2) Monitor Progress: Repeated application of the tree crown detection model can track the success of reforestation initiatives. The model can quantify the increase in tree cover over time, allowing for informed adjustments to reforestation strategies.
+The dataset is designed to be integrated. By augmenting this dataset with others, one can
+- Combine Miti360 with other global forestry datasets mentioned in the report (like NEON Crowns or Auto Arborist) to train models with greater geographic diversity, addressing a key gap this dataset was built to fill.
+- Augment the dataset with socio-economic data on local farming to explore and validate the contribution of farmers to reforestation, an application suggested in the report.
+
+Cost & resources one can use:
+- Cost: Only associated compute costs
+- Resources: The source code used for data analysis as well as preliminary models trained on the dataset will be made available.
