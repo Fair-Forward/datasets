@@ -1,1 +1,0 @@
-COVERED WITH ENTRY ABOVE. This web application is a decision support tool. It is built as a prototype for a large-scale decision support tool for determining electrification strategies for different geographical areas. Currently implemented in Lamwo district electrification.

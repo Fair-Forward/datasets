@@ -11,7 +11,7 @@ import csv
 from urllib.parse import urlparse
 from oauth2client.service_account import ServiceAccountCredentials
 from thefuzz import process, fuzz
-from utils import normalize_for_directory, is_valid_http_url
+from utils import normalize_for_directory, is_valid_http_url, resolve_project_id
 
 # Parse command line arguments
 parser = argparse.ArgumentParser(description='Fetch data from Google Sheets and build the website.')
@@ -33,14 +33,65 @@ if args.backup and os.path.exists(args.output) and not args.skip_fetch:
         print(f"Error creating backup: {e}")
 
 
+# Helper function to find existing directory that matches a row
+def find_existing_directory_for_row(row, projects_dir, df):
+    """
+    Find existing directory that matches this row.
+    Tries multiple strategies:
+    1. Match by Project ID
+    2. Match by checking .txt title files in directories
+    Returns directory name if found, None otherwise.
+    """
+    project_id = row.get('Project ID', '')
+    
+    # Strategy 1: Match by Project ID
+    if project_id and not pd.isna(project_id):
+        normalized_id = normalize_for_directory(str(project_id))
+        dir_path = os.path.join(projects_dir, normalized_id)
+        if os.path.exists(dir_path) and os.path.isdir(dir_path):
+            return normalized_id
+    
+    # Strategy 2: Match by .txt title file
+    # Check all existing directories for matching title files
+    if os.path.exists(projects_dir):
+        for dir_name in os.listdir(projects_dir):
+            dir_path = os.path.join(projects_dir, dir_name)
+            if not os.path.isdir(dir_path):
+                continue
+            
+            # Check .txt files in directory
+            try:
+                txt_files = [f for f in os.listdir(dir_path) if f.endswith('.txt') and os.path.isfile(os.path.join(dir_path, f))]
+                for txt_file in txt_files:
+                    txt_name = normalize_for_directory(txt_file[:-4])
+                    
+                    # Check if this matches any title in the row
+                    dataset_title = row.get('Dataset Speaking Titles', '')
+                    usecase_title = row.get('Use Case Speaking Title', '')
+                    onsite_name = row.get('OnSite Name', '')
+                    
+                    for title_field in [dataset_title, usecase_title, onsite_name]:
+                        if title_field and not pd.isna(title_field):
+                            normalized_title = normalize_for_directory(str(title_field))
+                            # Match if txt file name matches title (exact or substring match)
+                            if txt_name == normalized_title or (txt_name and normalized_title and (txt_name in normalized_title or normalized_title in txt_name)):
+                                return dir_name
+            except OSError:
+                # Skip directories we can't read
+                continue
+    
+    return None
+
 # Function to create project directories
 def create_project_directories(df):
     print("Creating project directories...")
     public_projects_dir = "docs/public/projects"  # Only use public directory
     
-    # Check if Project ID column exists (it's critical)
-    if 'Project ID' not in df.columns:
-        print(f"Error: Critical column 'Project ID' is missing from the DataFrame. Cannot create directories.")
+    # Check if at least one title column exists (needed for directory creation)
+    title_columns = ['Dataset Speaking Titles', 'Use Case Speaking Title', 'OnSite Name', 'Project ID']
+    has_title_column = any(col in df.columns for col in title_columns)
+    if not has_title_column:
+        print(f"Error: At least one of these columns is required: {', '.join(title_columns)}")
         exit(1)
         
     # Check for content columns (optional, for warnings)
@@ -59,17 +110,38 @@ def create_project_directories(df):
     
     # Iterate through each row in the dataframe
     for index, row in df.iterrows():
-        # --- Get Project ID ---
-        project_id = row.get('Project ID', '')
-        if not project_id or pd.isna(project_id):
-            # print(f"Skipping row {index}: Missing 'Project ID'.") # Less verbose
+        # --- Find existing directory for this row (if any) ---
+        existing_dir = find_existing_directory_for_row(row, public_projects_dir, df)
+        
+        # --- Resolve Project ID with smart fallback logic ---
+        dir_name, id_source, error_msg = resolve_project_id(row, projects_dir=public_projects_dir, row_idx=index)
+        if error_msg:
+            print(f"ERROR: {error_msg}")
             continue
-            
-        # Normalize the Project ID for use as a directory name
-        dir_name = normalize_for_directory(str(project_id))
         if not dir_name:
-            print(f"Skipping row {index}: Could not normalize Project ID '{project_id}' to a valid directory name.")
+            print(f"ERROR: Row {index}: Could not resolve project ID. Skipping directory creation.")
             continue
+        
+        # --- Check if we need to rename an existing directory ---
+        if existing_dir and existing_dir != dir_name:
+            old_path = os.path.join(public_projects_dir, existing_dir)
+            new_path = os.path.join(public_projects_dir, dir_name)
+            
+            if os.path.exists(new_path):
+                # Target already exists - this is a collision, skip rename but warn
+                print(f"WARNING Row {index}: Directory '{existing_dir}' should be renamed to '{dir_name}' but target already exists. Using existing '{dir_name}' directory.")
+            else:
+                # Rename the directory
+                try:
+                    shutil.move(old_path, new_path)
+                    print(f"Renamed directory: '{existing_dir}' -> '{dir_name}' (title changed)")
+                except Exception as e:
+                    print(f"ERROR renaming '{existing_dir}' to '{dir_name}': {e}")
+                    # Continue anyway - will use existing directory name
+        
+        # Log which source was used (for debugging)
+        if id_source and id_source != "Project ID (existing directory)":
+            print(f"Row {index}: Using project ID '{dir_name}' from source: {id_source}")
 
         # --- Determine Display Title (and check if any exists) ---
         display_title = None
@@ -93,8 +165,8 @@ def create_project_directories(df):
                 display_title = onsite_name
                 has_real_title = True
 
-        # --- Create Directories and Files ONLY IF Project ID and a Real Title exist ---
-        if project_id and has_real_title:
+        # --- Create Directories and Files ONLY IF resolved ID and a Real Title exist ---
+        if dir_name and has_real_title:
             # Create main project directory (INDENTED)
             project_dir = os.path.join(public_projects_dir, dir_name)
             if not os.path.exists(project_dir):
@@ -164,10 +236,10 @@ def create_project_directories(df):
                     # print(f"Skipping file {filename} for row {index}: Column '{column}' not found.")
                     pass # Silently skip if column doesn't exist
         else:
-            # Skipped because no Project ID or no real title was found
-            if project_id:
-                print(f"Skipping directory creation for Project ID '{project_id}' (row {index}): No display title found.")
-            # No need to print if project_id was missing, already handled
+            # Skipped because no resolved ID or no real title was found
+            if dir_name:
+                print(f"Skipping directory creation for resolved ID '{dir_name}' (row {index}): No display title found.")
+            # Error messages for missing ID are already handled above
 
 # Fetch data from Google Sheets
 if not args.skip_fetch:
@@ -270,7 +342,7 @@ if not args.skip_fetch:
 
         # Identify which canonical columns are absolutely required
         CRITICAL_COLUMNS = [
-            "Project ID", # Added Project ID as critical for directory creation
+            # Project ID is now optional - can be generated from titles
             "Dataset Link", # Needed for generate_catalog.py
             "Description - What can be done with this? What is this about?", # Needed for create_project_dirs
             "Data - Key Characteristics", # Needed for create_project_dirs

@@ -7,7 +7,7 @@ import argparse
 import datetime
 from urllib.parse import urlparse
 import sys
-from utils import normalize_for_directory, is_valid_http_url
+from utils import normalize_for_directory, is_valid_http_url, resolve_project_id
 
 # Parse command line arguments
 parser = argparse.ArgumentParser(description='Generate HTML catalog from Excel file.')
@@ -351,7 +351,7 @@ def generate_color_palette(n):
 
 def generate_card_html(row, idx):
     # --- Extract card data ---
-    project_id = row.get('Project ID', '') # Get Project ID
+    project_id = row.get('Project ID', '') # Get Project ID (for reference, but may not be used)
     onsite_name = row.get('OnSite Name', '')
     dataset_speaking_title = row.get('Dataset Speaking Titles', '')
     usecase_speaking_title = row.get('Use Case Speaking Title', '')
@@ -369,17 +369,18 @@ def generate_card_html(row, idx):
     lacuna_dataset = row.get('Lacuna Dataset', '')
     # --- End Extract new columns ---
     
-    # --- Basic Checks ---
-    # Skip if Project ID is missing (shouldn't happen if build script requires it, but good check)
-    if not project_id or pd.isna(project_id):
-        print(f"Warning: Skipping card generation for row {idx} due to missing Project ID.")
+    # --- Resolve Project ID with smart fallback logic ---
+    normalized_project_id, id_source, error_msg = resolve_project_id(row, row_idx=idx)
+    if error_msg:
+        print(f"ERROR: {error_msg}")
         return "" # Return empty string to skip card
-        
-    # Normalize the Project ID once
-    normalized_project_id = normalize_for_directory(str(project_id))
     if not normalized_project_id:
-        print(f"Warning: Skipping card generation for row {idx} due to invalid Project ID '{project_id}'.")
+        print(f"ERROR: Row {idx}: Could not resolve project ID. Skipping card generation.")
         return ""
+    
+    # Log which source was used (for debugging)
+    if id_source and id_source != "Project ID (existing directory)":
+        print(f"Row {idx}: Using project ID '{normalized_project_id}' from source: {id_source}")
 
     # Determine if row has dataset and/or use case (check if string contains at least one valid URL)
     has_dataset = has_valid_url(dataset_link)

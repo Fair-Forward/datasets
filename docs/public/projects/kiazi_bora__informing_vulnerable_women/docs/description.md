@@ -1,0 +1,3 @@
+Kiazi Bora, “Quality Potatoes’’ in Swahili, uses a voice enabled application that informs vulnerable women living in rural areas and marginalized communities of Tanzania on the nutritional values of Orange Fleshed Sweet Potatoes (OFSP), farming skills for better yields, and detailed market availability for raw or processed OFSP food products, all through a voice data set app. 
+
+This was part of a Mozilla innovation challenge supporting people and projects across East Africa who leverage Common Voice’s open-source voice data set to unlock social and economic opportunities. These grants help to advance the use of open-source voice data for products that support community participation and engagement.
