@@ -1,1 +1,1 @@
-This project is only kicking off in July 2025. More information to follow.
+This project is only kicking off in July 2025. More information to follow. Is this attached to KenCorpus somehow?
