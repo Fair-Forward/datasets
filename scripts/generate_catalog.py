@@ -895,6 +895,9 @@ def generate_js_code():
             let selectedRegion = 'all';
             let selectedItemId = null;
             
+            // Track if this is the initial load
+            let isInitialLoad = true;
+            
             // === THEME TOGGLE FUNCTIONALITY ===
             // To add a new theme:
             // 1. Add theme variables to CSS :root section (e.g., --newtheme-primary: #color)
@@ -1111,6 +1114,87 @@ def generate_js_code():
                 });
             }
             
+            // Function to update statistics based on visible cards
+            function updateStats() {
+                const visibleCards = document.querySelectorAll('.card:not(.filtered-out)');
+                
+                // Count unique projects
+                const projectIds = new Set();
+                let datasetCount = 0;
+                let usecaseCount = 0;
+                const countriesSet = new Set();
+                
+                visibleCards.forEach(card => {
+                    // Count unique projects
+                    const projectId = card.getAttribute('data-project-id');
+                    if (projectId) {
+                        projectIds.add(projectId);
+                    }
+                    
+                    // Count datasets and use cases from hidden links
+                    const datasetLinks = card.querySelectorAll('.hidden-link[data-link-type="dataset"]');
+                    const usecaseLinks = card.querySelectorAll('.hidden-link[data-link-type="usecase"]');
+                    datasetCount += datasetLinks.length;
+                    usecaseCount += usecaseLinks.length;
+                    
+                    // Extract countries from region attribute
+                    const region = card.getAttribute('data-region');
+                    if (region) {
+                        // Split by common delimiters
+                        const countries = region.split(/[,;]|\s+and\s+/i).map(c => c.trim()).filter(c => c);
+                        countries.forEach(country => {
+                            if (country) {
+                                countriesSet.add(country);
+                            }
+                        });
+                    }
+                });
+                
+                // Update stat values with animation
+                const projectCounter = document.getElementById('stat-projects');
+                const datasetCounter = document.getElementById('stat-datasets');
+                const usecaseCounter = document.getElementById('stat-usecases');
+                const countryCounter = document.getElementById('stat-countries');
+                
+                if (projectCounter) {
+                    const currentValue = parseInt(projectCounter.textContent) || 0;
+                    const targetValue = projectIds.size;
+                    if (isInitialLoad) {
+                        // On initial load, just set the value (animation will happen later)
+                        projectCounter.textContent = targetValue;
+                    } else if (currentValue !== targetValue) {
+                        animateValue('stat-projects', currentValue, targetValue, 500);
+                    }
+                }
+                if (datasetCounter) {
+                    const currentValue = parseInt(datasetCounter.textContent) || 0;
+                    const targetValue = datasetCount;
+                    if (isInitialLoad) {
+                        datasetCounter.textContent = targetValue;
+                    } else if (currentValue !== targetValue) {
+                        animateValue('stat-datasets', currentValue, targetValue, 500);
+                    }
+                }
+                if (usecaseCounter) {
+                    const currentValue = parseInt(usecaseCounter.textContent) || 0;
+                    const targetValue = usecaseCount;
+                    if (isInitialLoad) {
+                        usecaseCounter.textContent = targetValue;
+                    } else if (currentValue !== targetValue) {
+                        animateValue('stat-usecases', currentValue, targetValue, 500);
+                    }
+                }
+                if (countryCounter) {
+                    const currentValue = parseInt(countryCounter.textContent) || 0;
+                    const targetValue = countriesSet.size;
+                    if (isInitialLoad) {
+                        countryCounter.textContent = targetValue;
+                    } else if (currentValue !== targetValue) {
+                        animateValue('stat-countries', currentValue, targetValue, 500);
+                    }
+                }
+            }
+            
             // Function to apply all filters
             function applyFilters() {
                 let visibleCards = 0;
@@ -1169,16 +1253,11 @@ def generate_js_code():
                 
                 // Toggle empty state message
                 emptyState.classList.toggle('visible', visibleCards === 0);
+                
+                // Update statistics based on visible cards
+                updateStats();
             }
             
-            // Apply URL parameters on page load
-            applyUrlParams();
-            
-            // Handle browser back/forward navigation
-            window.addEventListener('popstate', function() {
-                applyUrlParams();
-            });
-
             // --- Start: Count-up Animation --- 
             function animateValue(id, start, end, duration) {
                 const element = document.getElementById(id);
@@ -1196,20 +1275,55 @@ def generate_js_code():
                 window.requestAnimationFrame(step);
             }
 
-            // Animate the stat values
-            const datasetCounter = document.getElementById('stat-datasets');
-            const usecaseCounter = document.getElementById('stat-usecases');
-            const countryCounter = document.getElementById('stat-countries');
+            // Apply URL parameters on page load (this will call applyFilters which calls updateStats)
+            applyUrlParams();
+            
+            // Handle browser back/forward navigation
+            window.addEventListener('popstate', function() {
+                isInitialLoad = false;
+                applyUrlParams();
+            });
 
-            if (datasetCounter) {
-                animateValue('stat-datasets', 0, parseInt(datasetCounter.getAttribute('data-target') || '0', 10), 1500);
-            }
-            if (usecaseCounter) {
-                animateValue('stat-usecases', 0, parseInt(usecaseCounter.getAttribute('data-target') || '0', 10), 1500);
-            }
-            if (countryCounter) {
-                animateValue('stat-countries', 0, parseInt(countryCounter.getAttribute('data-target') || '0', 10), 1500);
-            }
+            // Initial animation for stat values (after filters are applied)
+            // Get the current values that were set by updateStats() and animate from 0
+            setTimeout(() => {
+                const projectCounter = document.getElementById('stat-projects');
+                const datasetCounter = document.getElementById('stat-datasets');
+                const usecaseCounter = document.getElementById('stat-usecases');
+                const countryCounter = document.getElementById('stat-countries');
+
+                if (projectCounter) {
+                    const targetValue = parseInt(projectCounter.textContent) || 0;
+                    projectCounter.textContent = '0';
+                    if (targetValue > 0) {
+                        animateValue('stat-projects', 0, targetValue, 1500);
+                    }
+                }
+                if (datasetCounter) {
+                    const targetValue = parseInt(datasetCounter.textContent) || 0;
+                    datasetCounter.textContent = '0';
+                    if (targetValue > 0) {
+                        animateValue('stat-datasets', 0, targetValue, 1500);
+                    }
+                }
+                if (usecaseCounter) {
+                    const targetValue = parseInt(usecaseCounter.textContent) || 0;
+                    usecaseCounter.textContent = '0';
+                    if (targetValue > 0) {
+                        animateValue('stat-usecases', 0, targetValue, 1500);
+                    }
+                }
+                if (countryCounter) {
+                    const targetValue = parseInt(countryCounter.textContent) || 0;
+                    countryCounter.textContent = '0';
+                    if (targetValue > 0) {
+                        animateValue('stat-countries', 0, targetValue, 1500);
+                    }
+                }
+                
+                // Mark initial load as complete
+                isInitialLoad = false;
+            }, 100);
             // --- End: Count-up Animation --- 
 
             // --- Start: Fair Sharing Modal --- 
@@ -2144,6 +2258,36 @@ try:
                 margin-top: 1.75rem;
                 width: 100%;
                 min-width: initial;
+                gap: 0.8rem;
+            }
+            
+            .stat-meta {
+                align-self: center;
+            }
+            
+            .stat-meta .stat-value {
+                font-size: 1.7rem;
+            }
+            
+            .stat-meta .stat-label {
+                font-size: 0.9rem;
+            }
+            
+            .stats-parallelogram {
+                margin-left: 0;
+                gap: 0.6rem 0.9rem;
+            }
+            
+            .stats-parallelogram::before {
+                display: none;
+            }
+            
+            .stats-parallelogram .stat-item {
+                transform: none !important;
+            }
+            
+            .stats-parallelogram .stat-item:nth-child(3) {
+                grid-column: 1 / -1;
             }
             
             .stats-row {
@@ -2269,6 +2413,81 @@ try:
             min-width: 180px;
             justify-content: center;
             align-self: center;
+            gap: 1rem;
+        }
+        
+        /* Meta stat (Projects) - prominent top left */
+        .stat-meta {
+            align-self: flex-start;
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding: 0.4rem 0.7rem;
+            border-radius: 6px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.03));
+            border-left: 3px solid var(--primary);
+        }
+        
+        [data-theme="solarized"] .stat-meta {
+            background: linear-gradient(135deg, rgba(38, 139, 210, 0.08), rgba(38, 139, 210, 0.03));
+        }
+        
+        .stat-meta .stat-value {
+            font-size: 1.95rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.1;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stat-meta .stat-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--title-color);
+            margin-top: 0.2rem;
+            letter-spacing: 0.02em;
+        }
+        
+        /* Parallelogram layout for other 3 stats */
+        .stats-parallelogram {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 0.8rem 1.2rem;
+            margin-left: 0.5rem;
+            position: relative;
+        }
+        
+        .stats-parallelogram::before {
+            content: '';
+            position: absolute;
+            top: -0.3rem;
+            left: -0.5rem;
+            right: -0.5rem;
+            bottom: -0.3rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            transform: skewY(-1deg);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        
+        .stats-parallelogram .stat-item:nth-child(1) {
+            grid-column: 1;
+            grid-row: 1;
+            transform: translateX(-0.2rem);
+        }
+        
+        .stats-parallelogram .stat-item:nth-child(2) {
+            grid-column: 2;
+            grid-row: 1;
+            transform: translateX(0.2rem);
+        }
+        
+        .stats-parallelogram .stat-item:nth-child(3) {
+            grid-column: 1 / -1;
+            grid-row: 2;
+            justify-self: center;
+            transform: translateY(0.1rem);
         }
         
         .stats-row {
