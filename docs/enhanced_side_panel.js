@@ -348,29 +348,42 @@ function loadItemDetails(itemId) {
         detailContent += `</div>`; // Close panel-title-section
         
         // Create a table of contents if we have multiple sections
-        let hasMultipleSections = Object.values(contentSections).filter(Boolean).length > 1;
+        // Filter out Model Characteristics if empty, but count all other sections
+        const sectionsForTOC = Object.entries(contentSections).filter(([section, content]) => {
+            // Skip Model Characteristics if empty or whitespace-only
+            if (section === 'Model Characteristics' && (!content || !content.trim())) {
+                return false;
+            }
+            // Include all other sections (even if empty, they'll have default text)
+            return true;
+        });
+        
+        let hasMultipleSections = sectionsForTOC.length > 1;
         
         if (hasMultipleSections) {
             let tocContent = '<div class="panel-toc">';
             tocContent += '<div class="panel-toc-title"><i class="fas fa-list"></i> Contents</div>';
             tocContent += '<ul class="panel-toc-list">';
             
-            // Add TOC items for each main documentation section with content
-            for (const [section, content] of Object.entries(contentSections)) {
-                if (content) {
-                    const sectionId = section.toLowerCase().replace(/\s+/g, '-');
-                    let icon = 'fa-file-lines';
-                    if (section.includes('Data')) icon = 'fa-database';
-                    else if (section.includes('Model')) icon = 'fa-robot';
-                    else if (section.includes('How to Use')) icon = 'fa-lightbulb';
-                    else if (section === 'What is this about?') icon = 'fa-circle-info';
-                    
-                    tocContent += `<li class="panel-toc-item">
-                        <a href="#${sectionId}" class="panel-toc-link">
-                            <i class="fas ${icon}"></i> ${section}
-                        </a>
-                    </li>`;
+            // Add TOC items for each main documentation section
+            for (const [section, content] of sectionsForTOC) {
+                // Skip Model Characteristics if empty or whitespace-only
+                if (section === 'Model Characteristics' && (!content || !content.trim())) {
+                    continue;
                 }
+                
+                const sectionId = section.toLowerCase().replace(/\s+/g, '-');
+                let icon = 'fa-file-lines';
+                if (section.includes('Data')) icon = 'fa-database';
+                else if (section.includes('Model')) icon = 'fa-robot';
+                else if (section.includes('How to Use')) icon = 'fa-lightbulb';
+                else if (section === 'What is this about?') icon = 'fa-circle-info';
+                
+                tocContent += `<li class="panel-toc-item">
+                    <a href="#${sectionId}" class="panel-toc-link">
+                        <i class="fas ${icon}"></i> ${section}
+                    </a>
+                </li>`;
             }
             
             // Add TOC item for Organizations if it exists
@@ -386,9 +399,16 @@ function loadItemDetails(itemId) {
             detailContent += tocContent;
         }
         
-        // Add each section that has content
+        // Add each section
         for (const [section, content] of Object.entries(contentSections)) {
-            if (content) {
+            // Skip Model Characteristics if empty or whitespace-only
+            if (section === 'Model Characteristics' && (!content || !content.trim())) {
+                continue;
+            }
+            
+            // Always show Data Characteristics and How to Use It (they have default text if empty)
+            // Only show other sections if they have content
+            if (section === 'Data Characteristics' || section === 'How to Use It' || (content && content.trim())) {
                 const sectionId = section.toLowerCase().replace(/\s+/g, '-');
                 
                 // Special handling for "What is this about?" section - add SDG icons
@@ -598,8 +618,15 @@ function loadItemDetails(itemId) {
     
     filesToLoad.forEach(async file => {
         const content = await tryLoadFile(file.fileName, file.section);
-        if (content) {
+        // Check if content exists and is not just whitespace
+        if (content && content.trim()) {
             contentSections[file.section] = content;
+        } else {
+            // Set default text for Data Characteristics and How to Use It if empty
+            if (file.section === 'Data Characteristics' || file.section === 'How to Use It') {
+                contentSections[file.section] = 'For more information please see under the dataset link. More detailed content will be added here soon.';
+            }
+            // Model Characteristics: leave empty (will be skipped entirely)
         }
         fetchesCompleted++;
         

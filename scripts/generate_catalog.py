@@ -1316,6 +1316,7 @@ try:
     dataset_count = 0
     usecase_count = 0
     valid_countries = set()
+    project_ids = set()
 
     for index, row in df.iterrows():
         # Count individual dataset links (extract all valid URLs)
@@ -1332,8 +1333,14 @@ try:
         if has_usecase_link:
             usecase_count += len(extracted_usecase_urls)
         
-        # Count unique countries ONLY from rows with at least one valid link
+        # Count unique countries and projects ONLY from rows with at least one valid link
         if has_dataset_link or has_usecase_link:
+            # Count unique project IDs
+            normalized_project_id, id_source, error_msg = resolve_project_id(row, row_idx=index)
+            if normalized_project_id and not error_msg:
+                project_ids.add(normalized_project_id)
+            
+            # Count unique countries
             country_text = row.get('Country Team')
             if isinstance(country_text, str) and not pd.isna(country_text):
                 parts = re.split(r',|\s+and\s+|;', country_text)
@@ -1342,7 +1349,8 @@ try:
                     if country:
                         valid_countries.add(country)
     
-    # The final count is the number of unique countries found in valid rows
+    # The final counts
+    project_count = len(project_ids)
     country_count = len(valid_countries)
     
     # Get unique categories for filter and CSS generation
@@ -2451,7 +2459,13 @@ try:
                     </a>
                 </div>
                 <div class="header-stats">
-                    <div class="stats-row">
+                    <div class="stat-item stat-meta">
+                        <div class="stat-text">
+                            <div class="stat-value" id="stat-projects" data-target="{project_count}">0</div>
+                            <div class="stat-label">Projects</div>
+                        </div>
+                    </div>
+                    <div class="stats-parallelogram">
                         <div class="stat-item">
                             <div class="stat-text">
                                 <div class="stat-value" id="stat-datasets" data-target="{dataset_count}">0</div>
@@ -2464,8 +2478,6 @@ try:
                                 <div class="stat-label">Use Cases</div>
                             </div>
                         </div>
-                    </div>
-                    <div class="stats-bottom">
                         <div class="stat-item">
                             <div class="stat-text">
                                 <div class="stat-value" id="stat-countries" data-target="{country_count}">0</div>
