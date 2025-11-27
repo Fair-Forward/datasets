@@ -2278,10 +2278,6 @@ try:
                 gap: 0.6rem 0.9rem;
             }
             
-            .stats-parallelogram::before {
-                display: none;
-            }
-            
             .stats-parallelogram .stat-item {
                 transform: none !important;
             }
@@ -2455,20 +2451,6 @@ try:
             gap: 0.8rem 1.2rem;
             margin-left: 0.5rem;
             position: relative;
-        }
-        
-        .stats-parallelogram::before {
-            content: '';
-            position: absolute;
-            top: -0.3rem;
-            left: -0.5rem;
-            right: -0.5rem;
-            bottom: -0.3rem;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            transform: skewY(-1deg);
-            opacity: 0.3;
-            pointer-events: none;
         }
         
         .stats-parallelogram .stat-item:nth-child(1) {
