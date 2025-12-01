@@ -2273,6 +2273,21 @@ try:
                 font-size: 0.9rem;
             }
             
+            .stat-meta-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .insights-link {
+                font-size: 0.8rem;
+                padding: 0.35rem 0.6rem;
+            }
+            
+            .insights-link i {
+                font-size: 0.85rem;
+            }
+            
             .stats-parallelogram {
                 margin-left: 0;
                 gap: 0.6rem 0.9rem;
@@ -2441,6 +2456,40 @@ try:
             color: var(--title-color);
             margin-top: 0.2rem;
             letter-spacing: 0.02em;
+        }
+        
+        /* Row container for project stat and insights link */
+        .stat-meta-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Insights link - minimalistic button next to project count */
+        .insights-link {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.7rem;
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            background: rgba(59, 89, 152, 0.08);
+            border: 1px solid rgba(59, 89, 152, 0.15);
+            font-size: 0.85rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        
+        .insights-link:hover {
+            background: rgba(59, 89, 152, 0.15);
+            transform: translateY(-1px);
+        }
+        
+        .insights-link i {
+            font-size: 0.9rem;
         }
         
         /* Parallelogram layout for other 3 stats */
@@ -2641,6 +2690,9 @@ try:
                     </a>
                 </div>
                 <div class="top-nav-links"> <!-- Add this wrapper div -->
+                    <a href="insights.html" class="about-link">
+                        <i class="fas fa-chart-line"></i> Insights
+                    </a>
                     <button id="theme-toggle" class="theme-toggle" title="Switch theme">
                         <i class="fas fa-moon"></i>
                         <span id="theme-name">Classic</span>
@@ -2660,11 +2712,17 @@ try:
                     </a>
                 </div>
                 <div class="header-stats">
-                    <div class="stat-item stat-meta">
-                        <div class="stat-text">
-                            <div class="stat-value" id="stat-projects" data-target="{project_count}">0</div>
-                            <div class="stat-label">Projects</div>
+                    <div class="stat-meta-row">
+                        <div class="stat-item stat-meta">
+                            <div class="stat-text">
+                                <div class="stat-value" id="stat-projects" data-target="{project_count}">0</div>
+                                <div class="stat-label">Projects</div>
+                            </div>
                         </div>
+                        <a href="insights.html" class="insights-link" title="View analytics">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Insights and Visualisations</span>
+                        </a>
                     </div>
                     <div class="stats-parallelogram">
                         <div class="stat-item">
@@ -2773,6 +2831,21 @@ try:
         f.write(html_template)
     
     print(f"Successfully generated {HTML_OUTPUT}")
+    
+    # Generate insights page with the project count
+    print("Generating insights page...")
+    try:
+        import subprocess
+        subprocess.run([
+            "python", "scripts/generate_insights.py",
+            "--input", DATA_CATALOG,
+            "--project-count", str(project_count)
+        ], check=True)
+        print("Successfully generated insights page")
+    except subprocess.CalledProcessError as e:
+        print(f"Warning: Failed to generate insights page: {e}")
+    except Exception as e:
+        print(f"Warning: Could not generate insights page: {e}")
 
 except Exception as e:
     print(f"Error generating catalog: {str(e)}")

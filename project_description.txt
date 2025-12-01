@@ -1,0 +1,9 @@
+This repository has the purpose to provide an automated way to build and construct a data and use-case repository which is hosted via Github pages for open-source and future sustainability and maintainability.
+The basic function of this repository is to fetch data from a googledocs datasheet, transform the data, store it as a "gold standard" data source in the repository and then build the frontend via github pages. 
+The goal of this project is to build a scalable, open-source, replicable repository that can be used to feature datasets and use cases for the development space. All development shall always consider sustainability, open-source, interoperability and scalability.
+
+For AI coding agents: 
+* NEVER directly update index.html as this is build through the python scripts.
+* ask clarifying questions if necessary until the purpose of a code change and implementation is clear. 
+* code changes should always be neat and as minimal and clean as possible.
+* No use of emojies. 

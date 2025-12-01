@@ -1,0 +1,111 @@
+{
+  "total_projects": 61,
+  "total_countries": 21,
+  "map_data": {
+    "AO": {
+      "name": "Angola",
+      "projects": 1,
+      "iso2": "AO"
+    },
+    "CD": {
+      "name": "DRC",
+      "projects": 1,
+      "iso2": "CD"
+    },
+    "KE": {
+      "name": "Kenya",
+      "projects": 9,
+      "iso2": "KE"
+    },
+    "MZ": {
+      "name": "Mozambique",
+      "projects": 1,
+      "iso2": "MZ"
+    },
+    "NG": {
+      "name": "Nigeria",
+      "projects": 4,
+      "iso2": "NG"
+    },
+    "ZA": {
+      "name": "South Africa",
+      "projects": 14,
+      "iso2": "ZA"
+    },
+    "TZ": {
+      "name": "Tanzania",
+      "projects": 1,
+      "iso2": "TZ"
+    },
+    "ZM": {
+      "name": "Zambia",
+      "projects": 1,
+      "iso2": "ZM"
+    },
+    "BJ": {
+      "name": "Benin",
+      "projects": 1,
+      "iso2": "BJ"
+    },
+    "GH": {
+      "name": "Ghana",
+      "projects": 9,
+      "iso2": "GH"
+    },
+    "NE": {
+      "name": "Niger",
+      "projects": 1,
+      "iso2": "NE"
+    },
+    "TG": {
+      "name": "Togo",
+      "projects": 1,
+      "iso2": "TG"
+    },
+    "CO": {
+      "name": "Colombia",
+      "projects": 2,
+      "iso2": "CO"
+    },
+    "CI": {
+      "name": "Cote d'Ivoire",
+      "projects": 2,
+      "iso2": "CI"
+    },
+    "EC": {
+      "name": "Ecuador",
+      "projects": 3,
+      "iso2": "EC"
+    },
+    "UG": {
+      "name": "Uganda",
+      "projects": 7,
+      "iso2": "UG"
+    },
+    "IN": {
+      "name": "India",
+      "projects": 11,
+      "iso2": "IN"
+    },
+    "ID": {
+      "name": "Indonesia",
+      "projects": 3,
+      "iso2": "ID"
+    },
+    "RW": {
+      "name": "Rwanda",
+      "projects": 5,
+      "iso2": "RW"
+    },
+    "MG": {
+      "name": "Madagascar",
+      "projects": 1,
+      "iso2": "MG"
+    },
+    "PK": {
+      "name": "Pakistan",
+      "projects": 1,
+      "iso2": "PK"
+    }
+  }
+}

@@ -1,15 +1,32 @@
-# Jupyter Notebook
-.ipynb_checkpoints
+# Node modules
+node_modules/
+package-lock.json
 
-# IPython
-profile_default/
-ipython_config.py
+# Build outputs
+dist/
 
-# Environments
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.log
+*.tmp
+
+# Environment
 .env
-
-# folders/files
-data_sources/google_sheets_api/service_account_JN.json
-.specstory/
-.cursorindexingignore
-project_description.txt
+.env.local

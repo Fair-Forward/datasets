@@ -453,7 +453,7 @@ else:
         print(f"Error reading Excel file: {e}")
         exit(1)
 
-# Build the website
+# Build the website (this also generates the insights page)
 print("Building the website...")
 build_cmd = [
     "python", "scripts/generate_catalog.py",
@@ -462,7 +462,7 @@ build_cmd = [
 
 try:
     subprocess.run(build_cmd, check=True)
-    print("Successfully built the website")
+    print("Successfully built the website and insights page")
 except subprocess.CalledProcessError as e:
     print(f"Error building the website: {e}")
     exit(1)
