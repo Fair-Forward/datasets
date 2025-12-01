@@ -21,7 +21,7 @@ const DetailPanel = ({ project, onClose }) => {
         
         for (const [key, filename] of Object.entries(files)) {
           try {
-            const response = await fetch(`./public/projects/${project.id}/docs/${filename}`)
+            const response = await fetch(`/public/projects/${project.id}/docs/${filename}`)
             if (response.ok) {
               content[key] = await response.text()
             }

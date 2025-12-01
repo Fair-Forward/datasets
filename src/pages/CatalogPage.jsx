@@ -19,7 +19,7 @@ const CatalogPage = () => {
 
   // Load catalog data
   useEffect(() => {
-    fetch('./data/catalog.json')
+    fetch('/data/catalog.json')
       .then(res => {
         if (!res.ok) throw new Error('Failed to load catalog data')
         return res.json()

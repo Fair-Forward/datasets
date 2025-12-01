@@ -1,5 +1,5 @@
 const ProjectCard = ({ project, onClick }) => {
-  const { title, description, sdgs, data_types, image, dataset_links, usecase_links, is_lacuna } = project
+  const { title, description, sdgs, data_types, image, dataset_links = [], usecase_links = [], is_lacuna } = project
 
   const cardClasses = [
     'card',

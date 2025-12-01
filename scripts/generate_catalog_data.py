@@ -50,7 +50,7 @@ def get_project_image(project_id):
         image_files = [f for f in os.listdir(images_dir) 
                       if f.lower().endswith(('.jpg', '.jpeg', '.png', '.gif', '.webp'))]
         if image_files:
-            return f"./public/projects/{project_id}/images/{image_files[0]}"
+            return f"/public/projects/{project_id}/images/{image_files[0]}"
     
     return None
 

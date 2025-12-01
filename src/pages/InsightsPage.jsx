@@ -10,7 +10,7 @@ const InsightsPage = () => {
 
   useEffect(() => {
     // Fetch insights data
-    fetch('./data/insights.json')
+    fetch('/data/insights.json')
       .then(res => {
         if (!res.ok) throw new Error('Failed to load insights data')
         return res.json()
