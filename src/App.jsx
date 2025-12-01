@@ -3,8 +3,11 @@ import CatalogPage from './pages/CatalogPage'
 import InsightsPage from './pages/InsightsPage'
 
 function App() {
+  // Use base path from vite config (empty in dev, relative in production)
+  const basename = import.meta.env.BASE_URL
+  
   return (
-    <Router basename="./">
+    <Router basename={basename}>
       <Routes>
         <Route path="/" element={<CatalogPage />} />
         <Route path="/insights" element={<InsightsPage />} />
