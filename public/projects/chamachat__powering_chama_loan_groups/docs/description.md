@@ -1,0 +1,3 @@
+A Chama management system with a chatbot that interacts with members and gives voice replies in Kiswahili via SMS and Whatsapp. It connects to the group Payment API, ie M-Pesa API. Members can interact with the Chama admin bot on a variety of functions, including instance check balance, loan requests and receiving transaction statements. 
+
+This was part of a Mozilla innovation challenge supporting people and projects across East Africa who leverage Common Voice’s open-source voice data set to unlock social and economic opportunities. These grants help to advance the use of open-source voice data for products that support community participation and engagement.

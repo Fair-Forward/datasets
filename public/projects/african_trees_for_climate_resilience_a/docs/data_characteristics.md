@@ -1,0 +1,1 @@
+An extensive relational floristic and plant functional database which, together with matching biogeoclimatic data sets and implementation of the distribution model, may describe the biogeoclimatic relationships and projects the growth and ecological success of all sufficiently recorded Southern African trees under current and future climatic conditions

@@ -2,6 +2,18 @@
    Insights Page - Modern & Clean
    =================================== */
 
+/* CSS Variables for insights page */
+:root {
+  --surface: var(--card-background);
+  --radius-lg: 0.75rem;
+  --radius-md: 0.5rem;
+  --shadow-sm: 0 2px 8px var(--shadow);
+  --border-light: var(--border);
+  --text-secondary: var(--text-light);
+  --text-tertiary: var(--text-light);
+  --gray-50: var(--background);
+}
+
 .insight-card {
   background: var(--surface);
   border-radius: var(--radius-lg);
@@ -65,32 +77,318 @@
   letter-spacing: -0.02em;
 }
 
-/* Map container */
-#map-container {
-  margin-top: 2rem;
-  min-height: 450px;
+/* Card header with compact stats */
+.insight-card-header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  gap: 2rem;
+}
+
+.insight-card-header h2 {
+  margin-bottom: 0.25rem;
+}
+
+.insight-card-header p {
+  margin-bottom: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* Compact stats row */
+.insight-stats-compact {
+  display: flex;
   align-items: center;
+  gap: 1.25rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--gray-50);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  flex-shrink: 0;
+}
+
+.stat-compact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.stat-value-compact {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.stat-label-compact {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 2.5rem;
+  background: var(--border-light);
+}
+
+/* Map container */
+.map-container {
+  position: relative;
+  margin-top: 1rem;
   border-radius: var(--radius-md);
   overflow: hidden;
+  background: var(--gray-50);
+  border: 1px solid var(--border-light);
 }
 
 /* Override Observable Plot styles */
-#map-container svg {
+.map-container svg {
   max-width: 100%;
   height: auto;
 }
 
+/* Country detail panel */
+.country-detail-panel {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 280px;
+  background: var(--card-background);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  border: 1px solid var(--border-light);
+  z-index: 10;
+  animation: slideIn 0.2s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.country-detail-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0.25rem;
+  font-size: 0.875rem;
+  transition: color 0.2s;
+}
+
+.country-detail-close:hover {
+  color: var(--text);
+}
+
+.country-detail-panel h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--title-color);
+  margin-bottom: 0.75rem;
+  padding-right: 1.5rem;
+}
+
+.country-stat {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text);
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.country-stat i {
+  color: var(--primary);
+}
+
+.country-detail-section {
+  margin-bottom: 1rem;
+}
+
+.country-detail-section h4 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.country-sdg-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.country-sdg-badge {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--primary);
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.country-data-types {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.country-data-type {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  background: rgba(139, 92, 246, 0.1);
+  color: #7c3aed;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.country-view-projects {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.625rem 0.875rem;
+  background: var(--primary);
+  color: white;
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s;
+  margin-top: 0.5rem;
+}
+
+.country-view-projects:hover {
+  background: var(--primary-light);
+  transform: translateY(-1px);
+}
+
+/* SDG Grid */
+.sdg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.sdg-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: var(--gray-50);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  transition: all 0.2s;
+}
+
+.sdg-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.sdg-icon-img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.sdg-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.sdg-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.sdg-count {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/* Back link styles */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--primary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  transition: all 0.2s;
+}
+
+.back-link:hover {
+  color: var(--primary-light);
+}
+
+.back-link i {
+  font-size: 0.8rem;
+}
+
+/* Page header */
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.page-header h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--title-color);
+}
+
 @media (max-width: 768px) {
-  .insight-summary {
+  .insight-card-header {
     flex-direction: column;
-    gap: 1.5rem;
-    padding: 1.5rem;
+    gap: 1rem;
   }
   
-  .insight-summary-item .value {
-    font-size: 2rem;
+  .insight-stats-compact {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .country-detail-panel {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+  
+  .sdg-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   }
   
   .insight-card {
@@ -99,5 +397,9 @@
   
   .insight-card h2 {
     font-size: 1.25rem;
+  }
+  
+  .page-header h1 {
+    font-size: 1.5rem;
   }
 }

@@ -29,6 +29,7 @@ import pandas as pd
 from tqdm import tqdm
 from dotenv import load_dotenv
 from urllib.parse import quote_plus
+from utils import PROJECTS_DIR
 
 # Configure logging
 logging.basicConfig(
@@ -57,16 +58,15 @@ def parse_arguments():
 
 def get_project_directories():
     """Get all project directories in the public projects folder."""
-    projects_dir = "docs/public/projects"
-    if not os.path.exists(projects_dir):
-        logger.error(f"Projects directory not found: {projects_dir}")
+    if not os.path.exists(PROJECTS_DIR):
+        logger.error(f"Projects directory not found: {PROJECTS_DIR}")
         return []
     
-    return [d for d in os.listdir(projects_dir) if os.path.isdir(os.path.join(projects_dir, d))]
+    return [d for d in os.listdir(PROJECTS_DIR) if os.path.isdir(os.path.join(PROJECTS_DIR, d))]
 
 def has_existing_images(project_dir):
     """Check if a project directory already has images."""
-    images_dir = os.path.join("docs/public/projects", project_dir, "images")
+    images_dir = os.path.join(PROJECTS_DIR, project_dir, "images")
     if not os.path.exists(images_dir):
         return False
     
@@ -309,7 +309,7 @@ def download_image(image_info, project_dir):
     if not image_info or not image_info.get('url'):
         return False
     
-    images_dir = os.path.join("docs/public/projects", project_dir, "images")
+    images_dir = os.path.join(PROJECTS_DIR, project_dir, "images")
     
     # Create images directory if it doesn't exist
     os.makedirs(images_dir, exist_ok=True)

@@ -1,0 +1,1 @@
+Currently, the voice bot is not publicly accessible.

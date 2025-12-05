@@ -8,10 +8,44 @@ import gspread
 import sys
 import re
 import csv
-from urllib.parse import urlparse
 from oauth2client.service_account import ServiceAccountCredentials
-from thefuzz import process, fuzz
-from utils import normalize_for_directory, is_valid_http_url, resolve_project_id
+from utils import normalize_for_directory, resolve_project_id, PROJECTS_DIR
+
+try:
+    from thefuzz import process, fuzz
+    _FUZZY_WARNING_PRINTED = False
+except ImportError:
+    from difflib import SequenceMatcher
+    _FUZZY_WARNING_PRINTED = True
+    print("Warning: 'thefuzz' module not found. Falling back to difflib for header matching.")
+
+    def _token_sort_ratio(a, b):
+        def normalize(val):
+            return ' '.join(sorted(val.lower().split()))
+        return int(SequenceMatcher(None, normalize(a), normalize(b)).ratio() * 100)
+
+    class _FallbackFuzz:
+        @staticmethod
+        def token_sort_ratio(a, b):
+            return _token_sort_ratio(a, b)
+
+    class _FallbackProcess:
+        @staticmethod
+        def extractOne(query, choices, scorer=None):
+            best_choice = None
+            best_score = -1
+            scorer_fn = scorer or _token_sort_ratio
+            for choice in choices:
+                score = scorer_fn(query, choice)
+                if score > best_score:
+                    best_score = score
+                    best_choice = choice
+            if best_choice is None:
+                return None
+            return (best_choice, best_score)
+
+    fuzz = _FallbackFuzz()
+    process = _FallbackProcess()
 
 # Parse command line arguments
 parser = argparse.ArgumentParser(description='Fetch data from Google Sheets and build the website.')
@@ -34,7 +68,7 @@ if args.backup and os.path.exists(args.output) and not args.skip_fetch:
 
 
 # Helper function to find existing directory that matches a row
-def find_existing_directory_for_row(row, projects_dir, df):
+def find_existing_directory_for_row(row, projects_dir):
     """
     Find existing directory that matches this row.
     Tries multiple strategies:
@@ -85,7 +119,7 @@ def find_existing_directory_for_row(row, projects_dir, df):
 # Function to create project directories
 def create_project_directories(df):
     print("Creating project directories...")
-    public_projects_dir = "docs/public/projects"  # Only use public directory
+    public_projects_dir = PROJECTS_DIR  # Only use public directory
     
     # Check if at least one title column exists (needed for directory creation)
     title_columns = ['Dataset Speaking Titles', 'Use Case Speaking Title', 'OnSite Name', 'Project ID']
@@ -111,7 +145,7 @@ def create_project_directories(df):
     # Iterate through each row in the dataframe
     for index, row in df.iterrows():
         # --- Find existing directory for this row (if any) ---
-        existing_dir = find_existing_directory_for_row(row, public_projects_dir, df)
+        existing_dir = find_existing_directory_for_row(row, public_projects_dir)
         
         # --- Resolve Project ID with smart fallback logic ---
         dir_name, id_source, error_msg = resolve_project_id(row, projects_dir=public_projects_dir, row_idx=index)
@@ -343,7 +377,7 @@ if not args.skip_fetch:
         # Identify which canonical columns are absolutely required
         CRITICAL_COLUMNS = [
             # Project ID is now optional - can be generated from titles
-            "Dataset Link", # Needed for generate_catalog.py
+            "Dataset Link", # Needed for downstream catalog generation
             "Description - What can be done with this? What is this about?", # Needed for create_project_dirs
             "Data - Key Characteristics", # Needed for create_project_dirs
             "Model/Use-Case - Key Characteristics", # Needed for create_project_dirs
@@ -428,7 +462,7 @@ if not args.skip_fetch:
         df = df[final_df_columns]
         print(f"Final DataFrame columns: {list(df.columns)}")
 
-        # Note: We don't validate/clear URLs here anymore - let generate_catalog.py handle it
+        # Note: We don't validate/clear URLs here anymore - let generate_catalog_data.py handle it
         # This preserves URLs that might be in formatted strings like "Name (URL)" or "[Name](URL)"
 
         # Save to Excel
@@ -453,18 +487,16 @@ else:
         print(f"Error reading Excel file: {e}")
         exit(1)
 
-# Build the website (this also generates the insights page)
-print("Building the website...")
+print("Running full build (data + React app)...")
 build_cmd = [
-    "python", "scripts/generate_catalog.py",
-    "--input", args.output
+    sys.executable, "scripts/build.py"
 ]
 
 try:
     subprocess.run(build_cmd, check=True)
-    print("Successfully built the website and insights page")
+    print("Successfully rebuilt data files and React app")
 except subprocess.CalledProcessError as e:
-    print(f"Error building the website: {e}")
+    print(f"Error running build.py: {e}")
     exit(1)
 
 print("Done!") 

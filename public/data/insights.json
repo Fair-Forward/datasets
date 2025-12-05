@@ -1,111 +1,328 @@
 {
-  "total_projects": 61,
-  "total_countries": 21,
+  "total_projects": 62,
+  "total_countries": 22,
   "map_data": {
     "AO": {
       "name": "Angola",
       "projects": 1,
-      "iso2": "AO"
+      "iso2": "AO",
+      "sdgs": [
+        "SDG 15"
+      ],
+      "data_types": [
+        "Geospatial/Remote Sensing",
+        "Images",
+        "Tabular"
+      ]
     },
     "CD": {
       "name": "DRC",
       "projects": 1,
-      "iso2": "CD"
+      "iso2": "CD",
+      "sdgs": [
+        "SDG 15"
+      ],
+      "data_types": [
+        "Geospatial/Remote Sensing",
+        "Images",
+        "Tabular"
+      ]
     },
     "KE": {
       "name": "Kenya",
       "projects": 9,
-      "iso2": "KE"
+      "iso2": "KE",
+      "sdgs": [
+        "SDG 2",
+        "SDG 5",
+        "SDG 10",
+        "SDG 13",
+        "SDG 15"
+      ],
+      "data_types": [
+        "Geospatial/Remote Sensing",
+        "Images",
+        "Tabular",
+        "Text",
+        "Voice"
+      ]
     },
     "MZ": {
       "name": "Mozambique",
       "projects": 1,
-      "iso2": "MZ"
+      "iso2": "MZ",
+      "sdgs": [
+        "SDG 15"
+      ],
+      "data_types": [
+        "Geospatial/Remote Sensing",
+        "Images",
+        "Tabular"
+      ]
     },
     "NG": {
       "name": "Nigeria",
       "projects": 4,
-      "iso2": "NG"
+      "iso2": "NG",
+      "sdgs": [
+        "SDG 5",
+        "SDG 7",
+        "SDG 10",
+        "SDG 13",
+        "SDG 15"
+      ],
+      "data_types": [
+        "Geospatial/Remote Sensing",
+        "Images",
+        "Tabular",
+        "Text"
+      ]
     },
     "ZA": {
       "name": "South Africa",
       "projects": 14,
-      "iso2": "ZA"
+      "iso2": "ZA",
+      "sdgs": [
+        "SDG 2",
+        "SDG 10",
+        "SDG 11",
+        "SDG 12",
+        "SDG 13",
+        "SDG 15"
+      ],
+      "data_types": [
+        "Drone Imagery",
+        "Geospatial/Remote Sensing",
+        "Images",
+        "Tabular",
+        "Text",
+        "Voice"
+      ]
     },
     "TZ": {
       "name": "Tanzania",
       "projects": 1,
-      "iso2": "TZ"
+      "iso2": "TZ",
+      "sdgs": [
+        "SDG 15"
+      ],
+      "data_types": [
+        "Geospatial/Remote Sensing",
+        "Images",
+        "Tabular"
+      ]
     },
     "ZM": {
       "name": "Zambia",
       "projects": 1,
-      "iso2": "ZM"
+      "iso2": "ZM",
+      "sdgs": [
+        "SDG 15"
+      ],
+      "data_types": [
+        "Geospatial/Remote Sensing",
+        "Images",
+        "Tabular"
+      ]
     },
     "BJ": {
       "name": "Benin",
       "projects": 1,
-      "iso2": "BJ"
+      "iso2": "BJ",
+      "sdgs": [
+        "SDG 7"
+      ],
+      "data_types": [
+        "Geospatial/Remote Sensing"
+      ]
     },
     "GH": {
       "name": "Ghana",
       "projects": 9,
-      "iso2": "GH"
+      "iso2": "GH",
+      "sdgs": [
+        "SDG 2",
+        "SDG 7",
+        "SDG 8",
+        "SDG 10",
+        "SDG 13",
+        "SDG 15"
+      ],
+      "data_types": [
+        "Drone Imagery",
+        "Geospatial/Remote Sensing",
+        "Images",
+        "Tabular",
+        "Voice"
+      ]
     },
     "NE": {
       "name": "Niger",
       "projects": 1,
-      "iso2": "NE"
+      "iso2": "NE",
+      "sdgs": [
+        "SDG 7"
+      ],
+      "data_types": [
+        "Geospatial/Remote Sensing"
+      ]
     },
     "TG": {
       "name": "Togo",
       "projects": 1,
-      "iso2": "TG"
+      "iso2": "TG",
+      "sdgs": [
+        "SDG 7"
+      ],
+      "data_types": [
+        "Geospatial/Remote Sensing"
+      ]
     },
     "CO": {
       "name": "Colombia",
       "projects": 2,
-      "iso2": "CO"
+      "iso2": "CO",
+      "sdgs": [
+        "SDG 2",
+        "SDG 10",
+        "SDG 15"
+      ],
+      "data_types": [
+        "Geospatial/Remote Sensing"
+      ]
     },
     "CI": {
       "name": "Cote d'Ivoire",
       "projects": 2,
-      "iso2": "CI"
+      "iso2": "CI",
+      "sdgs": [
+        "SDG 13",
+        "SDG 15"
+      ],
+      "data_types": [
+        "Geospatial/Remote Sensing",
+        "Images"
+      ]
     },
     "EC": {
       "name": "Ecuador",
       "projects": 3,
-      "iso2": "EC"
+      "iso2": "EC",
+      "sdgs": [
+        "SDG 7",
+        "SDG 11",
+        "SDG 13",
+        "SDG 15"
+      ],
+      "data_types": [
+        "Geospatial/Remote Sensing",
+        "Meterological",
+        "Text",
+        "Voice"
+      ]
     },
     "UG": {
       "name": "Uganda",
       "projects": 7,
-      "iso2": "UG"
+      "iso2": "UG",
+      "sdgs": [
+        "SDG 2",
+        "SDG 5",
+        "SDG 10",
+        "SDG 13"
+      ],
+      "data_types": [
+        "Geospatial/Remote Sensing",
+        "Images",
+        "Meterological",
+        "Tabular",
+        "Text",
+        "Voice"
+      ]
     },
     "IN": {
       "name": "India",
       "projects": 11,
-      "iso2": "IN"
+      "iso2": "IN",
+      "sdgs": [
+        "SDG 2",
+        "SDG 5",
+        "SDG 10",
+        "SDG 13",
+        "SDG 15"
+      ],
+      "data_types": [
+        "Geospatial/Remote Sensing",
+        "Images",
+        "Tabular",
+        "Text",
+        "Voice"
+      ]
     },
     "ID": {
       "name": "Indonesia",
       "projects": 3,
-      "iso2": "ID"
+      "iso2": "ID",
+      "sdgs": [
+        "SDG 2",
+        "SDG 10",
+        "SDG 13",
+        "SDG 15"
+      ],
+      "data_types": [
+        "Geospatial/Remote Sensing",
+        "Text"
+      ]
     },
     "RW": {
       "name": "Rwanda",
       "projects": 5,
-      "iso2": "RW"
+      "iso2": "RW",
+      "sdgs": [
+        "SDG 2",
+        "SDG 4",
+        "SDG 10"
+      ],
+      "data_types": [
+        "Geospatial/Remote Sensing",
+        "Text",
+        "Voice"
+      ]
     },
     "MG": {
       "name": "Madagascar",
       "projects": 1,
-      "iso2": "MG"
+      "iso2": "MG",
+      "sdgs": [
+        "SDG 13"
+      ],
+      "data_types": [
+        "Geospatial/Remote Sensing"
+      ]
     },
     "PK": {
       "name": "Pakistan",
       "projects": 1,
-      "iso2": "PK"
+      "iso2": "PK",
+      "sdgs": [
+        "SDG 7",
+        "SDG 13"
+      ],
+      "data_types": [
+        "Tabular"
+      ]
     }
+  },
+  "sdg_distribution": {
+    "SDG 2": 33,
+    "SDG 4": 1,
+    "SDG 5": 4,
+    "SDG 7": 3,
+    "SDG 8": 1,
+    "SDG 10": 19,
+    "SDG 11": 9,
+    "SDG 12": 1,
+    "SDG 13": 21,
+    "SDG 15": 10
   }
 }

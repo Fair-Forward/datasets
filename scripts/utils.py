@@ -1,6 +1,8 @@
+import os
 import re
 import pandas as pd
-import os
+
+PROJECTS_DIR = os.path.join("public", "projects")
 
 def normalize_for_directory(text, max_words=6, max_length=50):
     """
@@ -43,7 +45,7 @@ def is_valid_http_url(value):
             return True
     return False
 
-def resolve_project_id(row, projects_dir="docs/public/projects", row_idx=None):
+def resolve_project_id(row, projects_dir=PROJECTS_DIR, row_idx=None):
     """
     Resolve project ID with smart fallback logic:
     1. Try Project ID from column (if exists and directory exists)

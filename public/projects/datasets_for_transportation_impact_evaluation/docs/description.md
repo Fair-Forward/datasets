@@ -1,0 +1,1 @@
+The team developed a labeled training dataset, derived from 50cm or better satellite imagery, based on a novel, pre-defined road space classification taxonomy appropriate for training and deployment of large-scale deep-learning models

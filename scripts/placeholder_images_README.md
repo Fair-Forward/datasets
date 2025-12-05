@@ -61,7 +61,7 @@ python download_placeholder_images.py --data-file path/to/catalog.xlsx
 
 ## How It Works
 
-1. The script scans all project directories in `docs/public/projects`
+1. The script scans all project directories in `public/projects`
 2. For each project without images, it:
    - Finds the corresponding entry in the data catalog Excel file
    - Extracts keywords from the title, description, domain, and region

@@ -3,7 +3,7 @@ import json
 import os
 import re
 import argparse
-from utils import normalize_for_directory, is_valid_http_url, resolve_project_id
+from utils import normalize_for_directory, is_valid_http_url, resolve_project_id, PROJECTS_DIR
 
 # Parse command line arguments
 parser = argparse.ArgumentParser(description='Generate catalog JSON from Excel file.')
@@ -44,13 +44,13 @@ def has_valid_url(text):
 
 def get_project_image(project_id):
     """Find the first image in the project's images directory."""
-    images_dir = os.path.join("docs/public/projects", project_id, "images")
+    images_dir = os.path.join(PROJECTS_DIR, project_id, "images")
     
     if os.path.exists(images_dir) and os.path.isdir(images_dir):
         image_files = [f for f in os.listdir(images_dir) 
                       if f.lower().endswith(('.jpg', '.jpeg', '.png', '.gif', '.webp'))]
         if image_files:
-            return f"/public/projects/{project_id}/images/{image_files[0]}"
+            return f"/projects/{project_id}/images/{image_files[0]}"
     
     return None
 

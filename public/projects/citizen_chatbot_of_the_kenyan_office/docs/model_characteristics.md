@@ -1,0 +1,1 @@
+The first version of the chatbot used a RASA architecture with NLU for accessing the Q&A pairs corresponding to user inquiries. As of November 2025, the chatbot is being transitioned to an LLM-based, RAG infrastructure.

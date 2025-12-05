@@ -6,7 +6,7 @@ export default defineConfig({
   base: './', // Use relative paths for GitHub Pages
   build: {
     outDir: 'docs',
-    emptyOutDir: false, // Don't delete docs/public/projects folders
+    emptyOutDir: false, // Keep docs/data_catalog.xlsx and other generated assets between builds
     rollupOptions: {
       output: {
         // Ensure consistent file names for easier debugging

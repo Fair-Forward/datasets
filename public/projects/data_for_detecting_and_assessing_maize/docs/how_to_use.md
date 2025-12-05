@@ -1,0 +1,1 @@
+Requires high-quality imagery, better spectral resolution; GEE and drone access recommended

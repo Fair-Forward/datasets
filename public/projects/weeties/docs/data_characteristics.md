@@ -1,0 +1,1 @@
+Spatial mapping of weeds vs. crops using RGB/Multispectral data in addition to Drone imagery and Tabular obseravations.

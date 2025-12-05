@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
+import Header from './Header'
 
 const CatalogHeader = ({ stats }) => {
   const [animatedStats, setAnimatedStats] = useState({
@@ -8,25 +9,37 @@ const CatalogHeader = ({ stats }) => {
     usecases: 0,
     countries: 0
   })
+  const isInitialLoad = useRef(true)
+  const prevStats = useRef(null)
 
-  // Animate counters on mount
+  // Animate counters - fast on filter, slow on initial load
   useEffect(() => {
     if (!stats) return
 
-    const duration = 1500 // 1.5 seconds
-    const steps = 60
+    // Use fast animation for filter changes, slow for initial load
+    const duration = isInitialLoad.current ? 1500 : 300 // 1.5s initial, 300ms for filters
+    const steps = isInitialLoad.current ? 60 : 15
     const interval = duration / steps
+
+    // Get starting values (animate from previous values, not 0)
+    const startValues = prevStats.current || { 
+      total_projects: 0, 
+      total_datasets: 0, 
+      total_usecases: 0, 
+      total_countries: 0 
+    }
 
     let step = 0
     const timer = setInterval(() => {
       step++
       const progress = step / steps
 
+      // Interpolate from previous values to new values
       setAnimatedStats({
-        projects: Math.floor(stats.total_projects * progress),
-        datasets: Math.floor(stats.total_datasets * progress),
-        usecases: Math.floor(stats.total_usecases * progress),
-        countries: Math.floor(stats.total_countries * progress)
+        projects: Math.floor(startValues.total_projects + (stats.total_projects - startValues.total_projects) * progress),
+        datasets: Math.floor(startValues.total_datasets + (stats.total_datasets - startValues.total_datasets) * progress),
+        usecases: Math.floor(startValues.total_usecases + (stats.total_usecases - startValues.total_usecases) * progress),
+        countries: Math.floor(startValues.total_countries + (stats.total_countries - startValues.total_countries) * progress)
       })
 
       if (step >= steps) {
@@ -37,6 +50,9 @@ const CatalogHeader = ({ stats }) => {
           usecases: stats.total_usecases,
           countries: stats.total_countries
         })
+        // Store current stats for next animation
+        prevStats.current = stats
+        isInitialLoad.current = false
       }
     }, interval)
 
@@ -47,6 +63,7 @@ const CatalogHeader = ({ stats }) => {
 
   return (
     <header>
+      <Header />
       <div className="header-content">
         <div className="header-main">
           <div className="header-text">
@@ -61,7 +78,7 @@ const CatalogHeader = ({ stats }) => {
               rel="noopener noreferrer" 
               className="header-learn-more"
             >
-              [Learn more about Fair Forward]
+              Learn more about Fair Forward
             </a>
           </div>
           
@@ -75,7 +92,7 @@ const CatalogHeader = ({ stats }) => {
               </div>
               <Link to="/insights" className="insights-link" title="View analytics">
                 <i className="fas fa-chart-line"></i>
-                <span>Insights and Visualisations</span>
+                <span>Insights &amp; visualisations</span>
               </Link>
             </div>
             

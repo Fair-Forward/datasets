@@ -1,0 +1,1 @@
+Automation of a species distribution model that leverages a novel mechanistically based algorithm for 1) quantification of currently suitable planting-range conditions and 2) projection of climate risk for future planting-range suitability. This primary screening effort can be cross-referenced for adaptation and mitigation use-value sources to aid in tree species selection.

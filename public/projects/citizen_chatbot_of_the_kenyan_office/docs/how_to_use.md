@@ -1,0 +1,1 @@
+The initial RASA-based chatbot was built with a dataset created with ODPC officials. The new, RAG-based version of the chatbot will be linked to a document database to minimise the risk of hallucinations. It will be integrated with the Office of the Data Protection Officer, hence it is not directly re-usable - though entirely built on open-source tools.

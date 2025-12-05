@@ -1,9 +1,10 @@
 import { useState, useEffect, useMemo } from 'react'
-import Header from '../components/Header'
 import CatalogHeader from '../components/CatalogHeader'
 import FilterBar from '../components/FilterBar'
 import ProjectCard from '../components/ProjectCard'
 import DetailPanel from '../components/DetailPanel'
+import Header from '../components/Header'
+import { withBasePath } from '../utils/basePath'
 
 const CatalogPage = () => {
   const [catalogData, setCatalogData] = useState(null)
@@ -11,6 +12,7 @@ const CatalogPage = () => {
   const [error, setError] = useState(null)
   const [filters, setFilters] = useState({
     search: '',
+    view: 'all',
     sdg: '',
     dataType: '',
     country: ''
@@ -19,7 +21,7 @@ const CatalogPage = () => {
 
   // Load catalog data
   useEffect(() => {
-    fetch('/data/catalog.json')
+    fetch(withBasePath('data/catalog.json'))
       .then(res => {
         if (!res.ok) throw new Error('Failed to load catalog data')
         return res.json()
@@ -67,8 +69,37 @@ const CatalogPage = () => {
       projects = projects.filter(p => p.countries.includes(filters.country))
     }
 
+    // View filter (datasets, use cases, lacuna)
+    if (filters.view === 'datasets') {
+      projects = projects.filter(p => p.has_dataset)
+    } else if (filters.view === 'usecases') {
+      projects = projects.filter(p => p.has_usecase)
+    } else if (filters.view === 'lacuna') {
+      projects = projects.filter(p => p.is_lacuna)
+    }
+
     return projects
   }, [catalogData, filters])
+
+  // Calculate dynamic stats based on filtered results
+  const dynamicStats = useMemo(() => {
+    if (!catalogData?.stats) return null
+    
+    // Count datasets and usecases from filtered projects
+    let datasetCount = 0
+    let usecaseCount = 0
+    filteredProjects.forEach(p => {
+      if (p.dataset_links) datasetCount += p.dataset_links.length
+      if (p.usecase_links) usecaseCount += p.usecase_links.length
+    })
+    
+    return {
+      total_projects: filteredProjects.length,
+      total_datasets: datasetCount,
+      total_usecases: usecaseCount,
+      total_countries: new Set(filteredProjects.flatMap(p => p.countries || [])).size
+    }
+  }, [filteredProjects, catalogData])
 
   // Handle escape key to close panel
   useEffect(() => {
@@ -115,32 +146,39 @@ const CatalogPage = () => {
 
   return (
     <div>
-      <Header />
-      <CatalogHeader stats={catalogData.stats} />
+      <CatalogHeader stats={dynamicStats} />
       
       <FilterBar 
         filters={filters} 
         onFilterChange={setFilters}
-        availableFilters={catalogData.filters}
+        availableFilters={{
+          ...catalogData.filters,
+          views: [
+            { value: 'all', label: 'All items' },
+            { value: 'datasets', label: 'Datasets' },
+            { value: 'usecases', label: 'Use cases' },
+            { value: 'lacuna', label: 'Lacuna Fund' }
+          ]
+        }}
       />
       
       <div className="container">
         <div className="grid" id="dataGrid">
-          {filteredProjects.length > 0 ? (
-            filteredProjects.map((project, idx) => (
-              <ProjectCard 
-                key={project.id || idx} 
-                project={project}
-                onClick={setSelectedProject}
-              />
-            ))
-          ) : (
-            <div className="empty-state">
-              <h3>No matching items found</h3>
-              <p>Try adjusting your filters or search term to find what you're looking for.</p>
-            </div>
-          )}
+          {filteredProjects.map((project, idx) => (
+            <ProjectCard 
+              key={project.id || idx} 
+              project={project}
+              onClick={setSelectedProject}
+            />
+          ))}
         </div>
+        
+        {filteredProjects.length === 0 && (
+          <div className="empty-state visible">
+            <h3>No matching items found</h3>
+            <p>Try adjusting your filters or search term to find what you're looking for.</p>
+          </div>
+        )}
       </div>
 
       {selectedProject && (

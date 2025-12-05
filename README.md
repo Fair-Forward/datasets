@@ -23,9 +23,9 @@ There are two main ways to update the website:
 1.  **Local Update (for Developers):**
     *   Ensure you have the prerequisites installed (see Development section).
     *   Run the main build script locally: `python scripts/build_from_google_sheets.py`
-    *   This single script fetches the latest data, applies necessary processing (like fuzzy column matching), saves the intermediate `docs/data_catalog.xlsx`, creates/updates project markdown files in `docs/public/projects/`, generates the final `docs/index.html`, and saves a daily backup CSV to `data_sources/google_sheets_backup/`.
+    *   This single script fetches the latest data, applies necessary processing (like fuzzy column matching), saves the intermediate `docs/data_catalog.xlsx`, creates/updates project markdown files in `public/projects/`, triggers the React/Vite build (which outputs to `docs/`), and saves a daily backup CSV to `data_sources/google_sheets_backup/`.
     *   Optionally, run `python scripts/download_placeholder_images.py` if new projects need placeholder images (requires Pexels API key setup).
-    *   Commit and push all changed files (including `index.html`, `.xlsx`, backups, and any new/modified files in `docs/public/projects/`) to the `main` branch.
+    *   Commit and push all changed files (including the built `docs/` assets, `.xlsx`, backups, and any new/modified files in `public/projects/`) to the `main` branch.
 
 2.  **Update via GitHub Actions (for Non-Developers with Repo Access):**
     *   This method allows updating the website directly from GitHub without running code locally.
@@ -62,14 +62,14 @@ This script:
 1. Fetches data from the Google Spreadsheet.
 2. Performs fuzzy matching on column headers.
 3. Saves the processed data to `docs/data_catalog.xlsx`.
-4. Creates/updates markdown documentation files in `docs/public/projects/*/docs/`.
-5. Creates/updates project image folders in `docs/public/projects/*/images/`.
+4. Creates/updates markdown documentation files in `public/projects/*/docs/`.
+5. Creates/updates project image folders in `public/projects/*/images/`.
 6. Saves a daily raw backup to `data_sources/google_sheets_backup/`.
-7. Runs `scripts/generate_catalog.py` internally to build `docs/index.html`.
+7. Runs `scripts/build.py` internally (catalog JSON + insights JSON + Vite build to `docs/`).
 
-If you only want to regenerate the HTML from the existing `docs/data_catalog.xlsx` without fetching from Google Sheets, you can run:
+If you only want to regenerate the JSON + React site from the existing `docs/data_catalog.xlsx` without fetching from Google Sheets, you can run:
 ```bash
-python scripts/generate_catalog.py
+python scripts/build.py
 ```
 
 ### Placeholder Images
@@ -105,17 +105,15 @@ Needed for `scripts/download_placeholder_images.py`. Set via `.env` file or `--a
 │   │   └── service_account_JN.json   # Service account file (ignored by git)
 │   └── google_sheets_backup/         # Daily and monthly raw CSV backups
 ├── scripts/                          # Build and utility scripts
-│   ├── build_from_google_sheets.py   # Main build script
-│   ├── generate_catalog.py           # HTML catalog generator
+│   ├── build_from_google_sheets.py   # Main build script (fetch + build)
+│   ├── build.py                      # Generates JSON + runs Vite build
 │   ├── download_placeholder_images.py # Image download utility
 │   ├── backup_google_sheet.py        # Backup utility
 │   └── placeholder_images_README.md  # Image documentation
-├── docs/                             # Generated website files
+├── docs/                             # Generated website files (Vite dist)
 │   ├── data_catalog.xlsx             # Processed data from Google Sheets
 │   ├── index.html                    # Main website (GitHub Pages)
-│   ├── enhanced_side_panel.js         # Side panel functionality
-│   ├── enhanced_side_panel.css        # Side panel styles
-│   └── public/projects/              # Project-specific files
+│   └── assets/, data/, projects/     # Bundled static assets copied from `public/`
 ├── .github/workflows/                # GitHub Actions
 │   ├── update_from_google_sheets.yml # Manual website update
 │   ├── monthly_backup.yml            # Monthly backup automation

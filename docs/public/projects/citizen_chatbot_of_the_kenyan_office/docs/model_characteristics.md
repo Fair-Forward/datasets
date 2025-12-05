@@ -1,1 +1,0 @@
-The chatbot uses a Rasa architecture with NLU for accessing the Q&A pairs corresponding to user inquiries

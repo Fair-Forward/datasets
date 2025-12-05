@@ -1,0 +1,1 @@
+The tabular dataset for the RASA model can be requested from the startup Digital Umuganda or the implementing partner RBC (as this was specific to daily statistics, guidelines, and announcements for pandemic prevention published by the authority). The Common Voice datasets can be found under the dataset links: 

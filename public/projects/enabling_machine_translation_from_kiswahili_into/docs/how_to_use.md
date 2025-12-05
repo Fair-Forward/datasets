@@ -1,0 +1,3 @@
+> The datasets can help to build translation services from Kiswahili into three indigenous languages, namely, Kidaw'ida, Kalenjin, and Dholuo. 
+> The datasets can help to preserve these three low resource languages, promote linguistic diversity and empower local communities by enabling Natural Language Processing applications tailored to their needs.
+> the resulting voice recognition datasets can be used to build AI voice applications such as advisory systems in local languages for farmers, citizens etc that "understand" speech input (instead of written input).  

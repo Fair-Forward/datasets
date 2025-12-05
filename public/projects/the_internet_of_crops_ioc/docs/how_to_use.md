@@ -1,0 +1,1 @@
+Free Sentinel-2 + fieldwork required; ML code free (e.g., Python)

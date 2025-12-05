@@ -84,7 +84,7 @@ python3 download_placeholder_images.py $SCRIPT_ARGS
 # Check if the script ran successfully
 if [ $? -eq 0 ]; then
     echo "Placeholder image download completed successfully."
-    echo "Now run 'python generate_catalog.py' to update the catalog with the new images."
+    echo "Now run 'python3 ../build.py' to rebuild the catalog with the new images."
 else
     echo "Error: Placeholder image download failed."
     exit 1

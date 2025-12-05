@@ -1,0 +1,1 @@
+Evaluates the performance of machine learning algorithms for estimating chlorophyll content in tomatoes using Sentinel-2 satellite data. 

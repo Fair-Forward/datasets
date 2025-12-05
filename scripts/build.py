@@ -12,6 +12,8 @@ import subprocess
 import sys
 import os
 
+PYTHON = sys.executable
+
 def run_command(cmd, description):
     """Run a command and handle errors."""
     print(f"\n{'='*60}")
@@ -33,7 +35,7 @@ def main():
     
     # Step 1: Generate catalog JSON
     if not run_command(
-        ['python', 'scripts/generate_catalog_data.py'],
+        [PYTHON, 'scripts/generate_catalog_data.py'],
         "Generating catalog data (JSON)"
     ):
         sys.exit(1)
@@ -49,7 +51,7 @@ def main():
         project_count = 60  # Fallback
     
     if not run_command(
-        ['python', 'scripts/generate_insights_data.py', '--project-count', str(project_count)],
+        [PYTHON, 'scripts/generate_insights_data.py', '--project-count', str(project_count)],
         "Generating insights data (JSON)"
     ):
         sys.exit(1)

@@ -62,35 +62,11 @@
 # Remove any HTML tags that got included
 ```
 
-### Step 2: Create Catalog Data Generator
+### Step 2: Create Catalog Data Generator ✅ DONE
 
-**New file:** `scripts/generate_catalog_data.py`
+`scripts/generate_catalog_data.py` now reads `docs/data_catalog.xlsx`, writes the canonical `public/data/catalog.json`, normalizes image paths to `/projects/...`, builds filter metadata, and reuses `PROJECTS_DIR` from `utils`.
 
-```python
-def generate_catalog_json():
-    """
-    Read data_catalog.xlsx
-    Output: public/data/catalog.json
-    
-    Structure:
-    {
-      "projects": [...],
-      "filters": {
-        "sdgs": [...],
-        "countries": [...],
-        "data_types": [...]
-      },
-      "stats": {
-        "total_projects": 60,
-        "total_datasets": 80,
-        "total_usecases": 45,
-        "total_countries": 21
-      }
-    }
-    """
-```
-
-### Step 3: Build Catalog Components
+### Step 3: Build Catalog Components ✅ (continuously refined)
 
 **Components needed:**
 
@@ -140,7 +116,7 @@ def generate_catalog_json():
    }
    ```
 
-4. **DetailPanel.jsx** (Side panel)
+4. **DetailPanel.jsx** (Side panel, now wired up with the `open` class so the slide-in animation matches main)
    ```jsx
    function DetailPanel({ project, onClose }) {
      return (
@@ -246,7 +222,7 @@ def build_complete_site():
 **Important:** The existing project folder structure remains **exactly the same**:
 
 ```
-docs/public/projects/{project_id}/
+public/projects/{project_id}/
 ├── {title}.txt              # Marker file
 ├── docs/
 │   ├── description.md       # ← Searchable content (future RAG)
@@ -267,10 +243,10 @@ docs/public/projects/{project_id}/
 **How React accesses them:**
 ```jsx
 // In ProjectCard component
-<img src={`./public/projects/${project.id}/images/${project.image}`} />
+<img src={`/projects/${project.id}/images/${project.image}`} />
 
 // In DetailPanel component
-fetch(`./public/projects/${project.id}/docs/description.md`)
+fetch(`/projects/${project.id}/docs/description.md`)
   .then(r => r.text())
   .then(markdown => setContent(markdown))
 ```
@@ -299,7 +275,7 @@ model = SentenceTransformer('all-MiniLM-L6-v2')
 
 embeddings = {}
 for project_id in projects:
-    # Read all markdown from docs/public/projects/{id}/docs/
+    # Read all markdown from public/projects/{id}/docs/
     content = read_all_markdown(project_id)
     vector = model.encode(content)
     embeddings[project_id] = vector.tolist()
@@ -350,12 +326,14 @@ function SemanticSearch() {
 - [x] Create generate_insights_data.py (JSON output)
 - [x] Test build process (✅ builds successfully)
 - [x] Preserve project folders structure
+- [x] Create catalog data generator (JSON for cards/filters/stats)
+- [x] Build ProjectCard component (clickable, lacuna badge, background images)
+- [x] Build FilterBar component (search + selects)
+- [x] Wire up DetailPanel + markdown fetch
 
 ### In Progress 🟡
 - [ ] Clean up CSS extraction (remove HTML remnants)
-- [ ] Create catalog data generator
-- [ ] Build ProjectCard component
-- [ ] Build FilterBar component
+- [ ] Polish CatalogPage layout/hero integration
 
 ### Pending ⏳
 - [ ] Complete CatalogPage implementation
@@ -376,9 +354,9 @@ function SemanticSearch() {
 - ✅ Header with logos
 - ✅ Navigation styling
 - ✅ Responsive breakpoints
-- ⏳ Project cards (pending migration)
-- ⏳ Filters (pending migration)
-- ⏳ Side panel (pending migration)
+- ✅ Project cards (React + CSS parity, needs fine polish)
+- ✅ Filters (grid layout + search, mobile tweaks pending)
+- ✅ Side panel (slide-in + markdown fetch restored)
 - ⏳ Theme switcher (pending migration)
 
 ---
@@ -429,10 +407,12 @@ npm run preview
 - ✅ Responsive design
 - ✅ Matching visual design
 
-**Catalog Page:** 🟡 **PLACEHOLDER** 
-- ⚠️ Shows "coming soon" message
-- ⚠️ Needs full implementation
-- ⏳ Components to build: ProjectCard, FilterBar, DetailPanel
+**Catalog Page:** 🟡 **CORE EXPERIENCE FUNCTIONAL**
+- ✅ Data now flows from `catalog.json` into cards/filters
+- ✅ Card clicks open the side panel (markdown loads, animation restored)
+- ✅ Top nav is embedded in the hero like the legacy site
+- ✅ Side panel layout mirrors legacy (hero image, SDG badges, CTA buttons, metadata blocks)
+- ⚠️ Still need theme switcher + final responsive polish
 
 **Build Process:** 🟢 **WORKING**
 - ✅ Vite builds successfully
@@ -444,27 +424,24 @@ npm run preview
 
 ## 🎯 Next Immediate Steps
 
-1. **Extract catalog data** (highest priority)
-   - Create `generate_catalog_data.py`
-   - Output `public/data/catalog.json`
-   - Include all project metadata
+1. **Visual polish + CSS cleanup**
+   - Finish extracting legacy CSS (remove stray HTML remnants in `main.css`)
+   - Align hero spacing / typography with `main` for pixel-perfect parity
+   - Re-style the DetailPanel to match legacy (padding, borders, typography, section spacing)
+   - Double-check responsive breakpoints for the new React layout
 
-2. **Build ProjectCard component**
-   - Match exact current design
-   - Include SDG tags, data type chips
-   - Click handling for detail panel
+2. **Theme switcher + global state**
+   - Re-implement the classic ↔ solarized toggle (persist setting, update `data-theme`)
+   - Ensure Catalog + Insights share the same header toggle component
 
-3. **Build FilterBar**
-   - SDG filter
-   - Country filter
-   - Data type filter
-   - Search bar
+3. **Accessibility & filter QA**
+   - Keyboard focus states for cards, buttons, and filters
+   - Verify filter/search logic matches the legacy behavior (multi-filter combos, empty states)
+   - Mobile filter layout (stacked selects, sticky behavior)
 
-4. **Complete CatalogPage**
-   - Integrate all components
-   - Add filtering logic
-   - Add statistics animation
-   - Add detail panel
+4. **Docs & automation**
+   - Update README / workflow docs with the new React build flow
+   - Trim this plan once the above items ship (move remaining ideas into repo issues)
 
 ---
 
@@ -663,12 +640,12 @@ npm run test
 - ⏳ `scripts/generate_catalog_data.py` - TODO
 
 ### Modified Files
-- ✅ `scripts/generate_catalog.py` - Added insights link (still HTML generator)
+- ✅ `scripts/build.py` - Added insights link (consolidated data + React build)
 - ✅ `scripts/build_from_google_sheets.py` - Minor updates
 - ⏳ Will be replaced by new build script
 
 ### Preserved Files
-- ✅ `docs/public/projects/**` - All project folders intact
+- ✅ `public/projects/**` - All project folders intact
 - ✅ `scripts/utils.py` - Utility functions reused
 - ✅ `requirements.txt` - Python dependencies
 

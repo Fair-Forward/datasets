@@ -64,7 +64,10 @@ def analyze_data(excel_path):
         
         # Extract country distribution - ONLY from projects with valid links
         country_counts = Counter()
+        country_sdgs = {}  # Track SDGs per country
+        country_data_types = {}  # Track data types per country
         project_ids = set()
+        sdg_counts = Counter()  # Global SDG counts
         
         for index, row in df.iterrows():
             # Only count rows with valid dataset OR use case links
@@ -83,6 +86,25 @@ def analyze_data(excel_path):
             if normalized_project_id and not error_msg:
                 project_ids.add(normalized_project_id)
             
+            # Extract SDGs for this row
+            domain = row.get('Domain/SDG', '')
+            row_sdgs = []
+            if isinstance(domain, str):
+                sdg_matches = re.findall(r'SDG\s*(\d+)', domain, re.IGNORECASE)
+                for num in sdg_matches:
+                    sdg_num = int(num)
+                    if 1 <= sdg_num <= 17:
+                        sdg_label = f"SDG {sdg_num}"
+                        row_sdgs.append(sdg_label)
+                        sdg_counts[sdg_label] += 1
+            
+            # Extract data types for this row
+            data_type_text = row.get('Data Type', '')
+            row_data_types = []
+            if isinstance(data_type_text, str) and data_type_text:
+                types = re.split(r'[,;]', data_type_text)
+                row_data_types = [t.strip() for t in types if t.strip()]
+            
             # Extract countries
             country_text = row.get('Country Team', '')
             if isinstance(country_text, str) and not pd.isna(country_text):
@@ -98,26 +120,44 @@ def analyze_data(excel_path):
                     # Skip generic entries
                     if country and len(country) > 1 and country not in ['Global', 'Regional']:
                         country_counts[country] += 1
+                        # Track SDGs for this country
+                        if country not in country_sdgs:
+                            country_sdgs[country] = set()
+                        country_sdgs[country].update(row_sdgs)
+                        # Track data types for this country
+                        if country not in country_data_types:
+                            country_data_types[country] = set()
+                        country_data_types[country].update(row_data_types)
         
         # Prepare data for map visualization with ISO codes
         map_data = {}
         for country, count in country_counts.items():
             iso_code = country_iso_map.get(country)
             if iso_code:
+                sdgs = sorted(list(country_sdgs.get(country, [])), 
+                             key=lambda x: int(re.search(r'\d+', x).group()) if re.search(r'\d+', x) else 0)
+                data_types = sorted(list(country_data_types.get(country, [])))
                 map_data[iso_code] = {
                     'name': country,
                     'projects': count,
-                    'iso2': iso_code
+                    'iso2': iso_code,
+                    'sdgs': sdgs,
+                    'data_types': data_types
                 }
         
         # Calculate summary stats
         total_projects = len(project_ids)
         total_countries = len(country_counts)
         
+        # Sort SDG counts for display
+        sorted_sdgs = sorted(sdg_counts.items(), 
+                            key=lambda x: int(re.search(r'\d+', x[0]).group()) if re.search(r'\d+', x[0]) else 0)
+        
         return {
             'total_projects': total_projects,
             'total_countries': total_countries,
-            'map_data': map_data
+            'map_data': map_data,
+            'sdg_distribution': dict(sorted_sdgs)
         }
         
     except Exception as e:
