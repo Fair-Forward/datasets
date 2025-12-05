@@ -1,0 +1,1 @@
+Explores the use of Sentinel-1 and Sentinel-2 satellite data for crop type mapping in smallholder farming areas. The study focuses on improving classification accuracy by identifying optimal spectral bands and evaluating machine learning algorithms like decision tree and random forest classifiers

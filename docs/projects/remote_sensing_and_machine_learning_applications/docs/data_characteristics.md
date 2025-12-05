@@ -1,0 +1,1 @@
+Temporal NDVI and chlorophyll indices, vegetation change monitoring, Sentinel-2 based

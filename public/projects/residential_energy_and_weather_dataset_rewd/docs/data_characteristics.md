@@ -1,0 +1,4 @@
+This Dataset is available in the webpage of the Lahore University. The dataset consist oth three parallel corpora: 
+1. Electricity consumption datacollected over year through advanced smart meters. The dataset consists of 60 households belonging to six major urban centers in varying climatic zones across the country. It is recorded on a 1-minute granularity for entire household usage as well as for individual appliances.  
+2. Metadata encompassing building attributes and demographic information for each household. The households in the dataset represent a wide and mixed demographic, social structure, and financial background.
+3. Meteorological dataset created with infromation of 18 months for six urban centers. It comprises of up to 10 essential variables: temperature, atmospheric pressure, humidity, dew, precipitation, wind direction, wind speed, solar radiation, solar energy and UV index

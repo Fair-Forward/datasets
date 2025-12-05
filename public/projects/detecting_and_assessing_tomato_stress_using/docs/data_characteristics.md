@@ -1,0 +1,1 @@
+Field-level reflectance, chlorophyll-related vegetation indices (VIs). The data comes in various forms: Hyperspectral, UAV imagery, SPAD, Images, Tabular

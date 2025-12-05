@@ -1,0 +1,1 @@
+Access Sentinel-2 (free); field spectrometer needed for calibration

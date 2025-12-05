@@ -1,0 +1,1 @@
+Sentinel data free; GEE platform usable

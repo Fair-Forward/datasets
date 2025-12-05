@@ -1,0 +1,1 @@
+This dataset can help you to get an improved understanding of the impacts of oil palm cultivation on forests and climate change. It can also serve to support sustainable forest management practices and empower local communities in forest resource management.

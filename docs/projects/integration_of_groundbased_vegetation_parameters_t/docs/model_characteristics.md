@@ -1,0 +1,1 @@
+Regression model; canopy temperature estimation; Software/Application: Thermal camera + UAV + regression models

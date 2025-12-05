@@ -1,0 +1,1 @@
+Red-edge based chlorophyll estimates & Sentinel-2 data

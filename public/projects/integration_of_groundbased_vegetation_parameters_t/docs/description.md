@@ -1,0 +1,1 @@
+Explores the integration of ground-based vegetation parameters, thermal infrared data from handheld cameras, and UAV multispectral data to map crop canopy temperature at high resolution. The research, conducted at the Ha-Mphaila irrigation scheme in Limpopo, South Africa, focused on tomato crops.

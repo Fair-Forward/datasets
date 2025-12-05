@@ -1,0 +1,1 @@
+Red-edge bands, REIP indices, Sentinel-2, SPAD chlorophyll

@@ -1,0 +1,2 @@
+Development and implementation of a training program to enable practitioners in the field of Earth Observation in South Africa to use machine learning. 
+Field data collected on small holder agricultural farm land (crops) with raw datasets + applied use cases of classification of land use cover using ML (based on individual projects presented)

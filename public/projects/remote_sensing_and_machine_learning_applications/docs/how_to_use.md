@@ -1,0 +1,1 @@
+Integrate indices into insurance design; Sentinel-2 free; ML libraries (e.g., Scikit-learn)

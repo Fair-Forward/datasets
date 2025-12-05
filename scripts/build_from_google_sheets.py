@@ -328,7 +328,12 @@ if not args.skip_fetch:
             # Canonical Name: [List of potential aliases in Google Sheet]
             "Project ID": ["Project ID", "Stable ID", "Unique Project ID"], # Added Project ID
             "OnSite Name": ["OnSite Name", "Name in GIZ-internal database", "Project Title", "Title"],
-            "Dataset Speaking Titles": ["Dataset Speaking Titles", "Dataset Title", "Expressive Title [for dataset]"],
+            "Dataset Speaking Titles": [
+                "Dataset Speaking Titles",
+                "Dataset Title",
+                "Expressive Title [for dataset]",
+                "Catchy Title [for dataset]"
+            ],
             "Use Case Speaking Title": ["Use Case Speaking Title", "Use Case Title", "Expressive Title [for use case, application]"],
             "Description - What can be done with this? What is this about?": [
                 "Description - What can be done with this? What is this about?",

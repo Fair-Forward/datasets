@@ -1,0 +1,1 @@
+NaijaSenti can be used to advance sentiment analysis and other downstream NLP tasks in the languages involved and to work on hate speech detection. For such follow-up work on hate speech, see also: https://arxiv.org/abs/2501.08284 

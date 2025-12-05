@@ -30,3 +30,7 @@ Thumbs.db
 # Environment
 .env
 .env.local
+
+# Google service accounts / secrets
+data_sources/google_sheets_api/*.json
+data_sources/google_sheets_api/*.pem

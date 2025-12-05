@@ -1,0 +1,2 @@
+This dataset contains biomass and carbon stock records from mangroves in Côte d’Ivoire (sites of Sassandra and Fresco). It includes measurements of aboveground and belowground biomass and carbon stock, soil carbon stock, as well as bands derived from Sentinel-2 and Sentinel-1 satellite imagery.
+

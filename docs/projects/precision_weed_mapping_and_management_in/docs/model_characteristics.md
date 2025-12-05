@@ -1,0 +1,1 @@
+Random Forest; high training accuracy (89%); Software/Application: GEE + Random Forest
