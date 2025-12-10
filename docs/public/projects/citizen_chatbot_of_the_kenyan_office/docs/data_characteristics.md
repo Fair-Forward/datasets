@@ -1,1 +1,1 @@
-For the content database of the chatbot, Q&A pairs created and tested together with ODPC and citizens
+For the content database of the chatbot, Q&A pairs created and tested together with ODPC and citizens. In a second iteration, the chatbot is being transitioned from RASA to a RAG infrastructure (LLM-based). Status: November 2025
