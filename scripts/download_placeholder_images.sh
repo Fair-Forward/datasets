@@ -15,8 +15,8 @@ if [ ! -f "download_placeholder_images.py" ]; then
 fi
 
 # Check if requirements file exists
-if [ ! -f "placeholder_images_requirements.txt" ]; then
-    echo "Error: placeholder_images_requirements.txt not found in the current directory."
+if [ ! -f "requirements.txt" ]; then
+    echo "Error: requirements.txt not found in the current directory."
     exit 1
 fi
 
@@ -70,7 +70,7 @@ done
 # Install dependencies if requested
 if [ "$INSTALL_DEPS" = true ]; then
     echo "Installing dependencies..."
-    pip install -r placeholder_images_requirements.txt
+    pip install -r requirements.txt
     if [ $? -ne 0 ]; then
         echo "Error: Failed to install dependencies."
         exit 1
