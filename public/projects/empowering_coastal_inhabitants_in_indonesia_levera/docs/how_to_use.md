@@ -1,0 +1,1 @@
+This data and AI models built on the data can enable systems that provide accurate weather predictions which are critical for small-scale fishing, ecotourism, and coastal protection. By empowering fishermen and women with real-time insights, such systems can enhance safety, optimise livelihoods, and support sustainable local, blue economies.
