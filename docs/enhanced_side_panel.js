@@ -131,6 +131,8 @@ function loadItemDetails(itemId) {
     // --- START: Extract Authors and Orgs from Data Attributes ---
     const authorsContentHTML = card.getAttribute('data-authors');
     const organizationsContentHTML = card.getAttribute('data-organizations');
+    // Extract On Hold status
+    const isOnHold = card.getAttribute('data-on-hold') === 'true';
     console.log('Authors data:', authorsContentHTML);
     console.log('Organizations data:', organizationsContentHTML);
     // --- END: Extract Authors and Orgs from Data Attributes ---
@@ -324,25 +326,35 @@ function loadItemDetails(itemId) {
         
         // Add links section
         detailContent += `<div class="panel-links-section">`;
-        // --- START: Add multiple Dataset links/buttons ---
-        if (datasetLinks.length > 0) {
-            datasetLinks.forEach(link => {
-                detailContent += `<a href="${link.href}" target="_blank" class="panel-link-btn panel-dataset-link">
-                    <i class="fas fa-cloud-arrow-down"></i> ${link.name}
-                </a>`;
-            });
-        }
-        // --- END: Add multiple Dataset links/buttons ---
         
-        // --- START: Add multiple Use Case links/buttons ---
-        if (useCaseLinks.length > 0) {
-            useCaseLinks.forEach(link => {
-                detailContent += `<a href="${link.href}" target="_blank" class="panel-link-btn panel-usecase-link">
-                    <i class="fas fa-sparkles"></i> ${link.name}
-                </a>`;
-            });
+        if (isOnHold) {
+             detailContent += `
+                <div style="padding: 1rem; background: var(--background); border-radius: 8px; width: 100%; font-size: 0.9rem; border: 1px solid rgba(0,0,0,0.1);">
+                    <i class="fas fa-info-circle" style="margin-right: 0.5rem; color: var(--primary);"></i>
+                    Note: This project is currently active, but the link is temporarily unavailable (e.g., due to migration).
+                </div>
+            `;
+        } else {
+            // --- START: Add multiple Dataset links/buttons ---
+            if (datasetLinks.length > 0) {
+                datasetLinks.forEach(link => {
+                    detailContent += `<a href="${link.href}" target="_blank" class="panel-link-btn panel-dataset-link">
+                        <i class="fas fa-cloud-arrow-down"></i> ${link.name}
+                    </a>`;
+                });
+            }
+            // --- END: Add multiple Dataset links/buttons ---
+            
+            // --- START: Add multiple Use Case links/buttons ---
+            if (useCaseLinks.length > 0) {
+                useCaseLinks.forEach(link => {
+                    detailContent += `<a href="${link.href}" target="_blank" class="panel-link-btn panel-usecase-link">
+                        <i class="fas fa-sparkles"></i> ${link.name}
+                    </a>`;
+                });
+            }
+            // --- END: Add multiple Use Case links/buttons ---
         }
-        // --- END: Add multiple Use Case links/buttons ---
         detailContent += `</div>`; // Close panel-links-section
         
         detailContent += `</div>`; // Close panel-title-section

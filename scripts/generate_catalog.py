@@ -195,10 +195,15 @@ def get_unique_categories(df):
     
     # Iterate through DataFrame rows to check for valid links
     for index, row in df.iterrows():
+        # Check for On Hold status
+        on_hold_status = row.get('On Hold', '')
+        is_on_hold = isinstance(on_hold_status, str) and not pd.isna(on_hold_status) and \
+                     on_hold_status.strip().lower() in ['yes', 'y', 'true', '1']
+
         # Check for valid links (check if string contains at least one valid URL)
         has_dataset_link = has_valid_url(row.get('Dataset Link', ''))
         has_usecase_link = has_valid_url(row.get('Model/Use-Case Links', ''))
-        is_valid_row = has_dataset_link or has_usecase_link
+        is_valid_row = has_dataset_link or has_usecase_link or is_on_hold
 
         # Process Domains (only if row is valid and contains explicit SDG references)
         domain_col = 'Domain/SDG'
@@ -367,6 +372,7 @@ def generate_card_html(row, idx):
     organizations = row.get('Organizations Involved', '')
     authors = row.get('Authors', '')
     lacuna_dataset = row.get('Lacuna Dataset', '')
+    on_hold_status = row.get('On Hold', '')
     # --- End Extract new columns ---
     
     # --- Resolve Project ID with smart fallback logic ---
@@ -386,6 +392,14 @@ def generate_card_html(row, idx):
     has_dataset = has_valid_url(dataset_link)
     has_usecase = has_valid_url(model_links)
     
+    # Check for On Hold status
+    is_on_hold = isinstance(on_hold_status, str) and not pd.isna(on_hold_status) and \
+                 on_hold_status.strip().lower() in ['yes', 'y', 'true', '1']
+    
+    if is_on_hold:
+        has_dataset = True # Treat as having dataset for filtering/display
+        has_usecase = True # Treat as having usecase for filtering/display
+
     # --- Determine Display Title --- 
     # Select the appropriate title based on content type and speaking titles (for display)
     if has_usecase and usecase_speaking_title and not pd.isna(usecase_speaking_title):
@@ -789,12 +803,16 @@ def generate_card_html(row, idx):
     
     # --- Construct the complete card --- 
     # Add data-authors and data-organizations attributes
+    # Add data-on-hold attribute if applicable
+    data_on_hold_attr = 'data-on-hold="true"' if is_on_hold else ''
+
     card_html = f'''
     <div class="{card_class}" \
          data-title="{html.escape(str(title))}" \
          data-region="{html.escape(str(region))}" \
          data-id="{idx}" \
          data-project-id="{normalized_project_id}" \
+         {data_on_hold_attr} \
          data-authors="{authors_data_attr}" \
          data-organizations="{organizations_data_attr}" \
          data-lacuna="{str(has_lacuna).lower()}">
@@ -1131,11 +1149,19 @@ def generate_js_code():
                         projectIds.add(projectId);
                     }
                     
-                    // Count datasets and use cases from hidden links
+                    // Count datasets and use cases from hidden links OR On Hold status
                     const datasetLinks = card.querySelectorAll('.hidden-link[data-link-type="dataset"]');
                     const usecaseLinks = card.querySelectorAll('.hidden-link[data-link-type="usecase"]');
-                    datasetCount += datasetLinks.length;
-                    usecaseCount += usecaseLinks.length;
+                    
+                    const isOnHold = card.getAttribute('data-on-hold') === 'true';
+                    
+                    if (isOnHold) {
+                        datasetCount += 1;
+                        usecaseCount += 1;
+                    } else {
+                        datasetCount += datasetLinks.length;
+                        usecaseCount += usecaseLinks.length;
+                    }
                     
                     // Extract countries from region attribute
                     const region = card.getAttribute('data-region');
@@ -2699,13 +2725,17 @@ try:
     
     # Generate cards for each row in the dataframe
     for idx, row in df.iterrows():
-        # Skip rows without valid dataset or use case links
+        # Skip rows without valid dataset or use case links, unless on hold
         dataset_link = row.get('Dataset Link', '')
         model_links = row.get('Model/Use-Case Links', '')
         has_dataset = has_valid_url(dataset_link)
         has_usecase = has_valid_url(model_links)
         
-        if not has_dataset and not has_usecase:
+        on_hold_status = row.get('On Hold', '')
+        is_on_hold = isinstance(on_hold_status, str) and not pd.isna(on_hold_status) and \
+                     on_hold_status.strip().lower() in ['yes', 'y', 'true', '1']
+        
+        if not has_dataset and not has_usecase and not is_on_hold:
             continue
         
         html_template += generate_card_html(row, idx)

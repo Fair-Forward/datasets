@@ -336,6 +336,9 @@ if not args.skip_fetch:
             ],
             "Lacuna Dataset": [
                 "Lacuna Dataset (Yes/No)", "Lacuna Dataset", "Lacuna Fund Dataset", "Is Lacuna Dataset"
+            ],
+            "On Hold": [
+                "On Hold", "Is On Hold", "On Hold Status"
             ]
             # --- End of new columns ---
         }
