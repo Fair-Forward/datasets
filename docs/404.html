@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Redirecting...</title>
+    <script>
+      // GitHub Pages SPA redirect hack
+      // This script takes the current URL and converts the path to a query string
+      // so that the main index.html can restore the route
+      const path = window.location.pathname;
+      const search = window.location.search;
+      const hash = window.location.hash;
+      
+      // Store the path in sessionStorage so index.html can pick it up
+      sessionStorage.setItem('gh-pages-redirect', path + search + hash);
+      
+      // Redirect to the base URL (preserving the repo name path)
+      // Extract the base path (e.g., /datasets/)
+      const basePath = path.split('/').slice(0, 2).join('/') + '/';
+      window.location.replace(basePath);
+    </script>
+  </head>
+  <body>
+    <p>Redirecting...</p>
+  </body>
+</html>
+
