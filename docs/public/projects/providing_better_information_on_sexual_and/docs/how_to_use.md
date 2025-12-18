@@ -1,0 +1,5 @@
+There are two resources to build on and use:
+1) The dataset can be used as a resource to fine-tune Q&A capabilities of LLMs specifically for the Sexual and Reproductive Health domain. The dataset can be further used to quality check and/or improve Speech to Text models. 
+2) the fine-tuned model can be used for down-stream applications that need Hindi LLM capabilities in the Sexual and Reproductive Health domain.
+
+This use case also included the development of a business model and funding model for open source AI as a stepping stone towards financially viable operations. It was facilitated by Villgro Africa's and FAIR Forward's  six-month mentorship programme on "Creating sustainable business and funding models with open source AI". See: https://www.bmz-digital.global/en/news/open-source-ai-business-impact/

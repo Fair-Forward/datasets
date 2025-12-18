@@ -314,7 +314,8 @@ if not args.skip_fetch:
             "Country Team": ["Country Team", "Country", "Region", "Team", "Country / Region "],
             "Data - Key Characteristics": [
                 "Data - Key Characteristics", "Data Characteristics", "Data Details",
-                "Data: how to use it & key characteristics " # Added from log
+                "Data: how to use it & key characteristics ", # Added from log
+                "Data characteristics: how to use it & key characteristics  & Responsible AI Assessments" # Added from latest sheet variant
                 ],
             "Model/Use-Case - Key Characteristics": [
                 "Model/Use-Case - Key Characteristics", "Model Characteristics", "Model Details", "Use Case Characteristics",
