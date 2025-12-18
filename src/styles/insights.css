@@ -896,8 +896,15 @@
 
 /* Sankey stage boxes */
 .sankey-stage {
-  cursor: pointer;
   transition: all 0.3s ease;
+}
+
+.sankey-stage.clickable {
+  cursor: pointer;
+}
+
+.sankey-stage.empty {
+  cursor: default;
 }
 
 .sankey-stage-rect {

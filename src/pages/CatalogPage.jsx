@@ -99,13 +99,18 @@ const CatalogPage = () => {
       projects = projects.filter(p => p.countries.includes(filters.country))
     }
 
-    // View filter (datasets, use cases, lacuna)
+    // View filter (datasets, use cases, lacuna, or maturity stages from Sankey)
     if (filters.view === 'datasets') {
       projects = projects.filter(p => p.has_dataset)
     } else if (filters.view === 'usecases') {
       projects = projects.filter(p => p.has_usecase)
     } else if (filters.view === 'lacuna') {
       projects = projects.filter(p => p.is_lacuna)
+    } else if (filters.view && filters.view !== 'all') {
+      // Filter by maturity stage (from Sankey chart clicks)
+      projects = projects.filter(p => 
+        p.maturity_tags && p.maturity_tags.includes(filters.view)
+      )
     }
 
     return projects

@@ -12,6 +12,34 @@ parser.add_argument('--output', type=str, default="public/data/catalog.json", he
 args = parser.parse_args()
 
 
+# Define the maturity funnel stages in order of progression (matching MaturityChart.jsx)
+MATURITY_STAGES = [
+    {'key': 'dataset', 'label': 'Datasets', 'patterns': ['dataset']},
+    {'key': 'model', 'label': 'Models', 'patterns': ['model']},
+    {'key': 'pilot', 'label': 'Pilots', 'patterns': ['pilot']},
+    {'key': 'usecase', 'label': 'Use Cases', 'patterns': ['use-case', 'use case', 'usecase']},
+    {'key': 'business', 'label': 'Business Model', 'patterns': ['business model', 'business-model', 'scaled']}
+]
+
+
+def parse_maturity_tags(maturity_string):
+    """Parse maturity string and return list of maturity stage keys the project has reached."""
+    if not maturity_string or not isinstance(maturity_string, str):
+        return []
+    
+    normalized = maturity_string.lower().strip()
+    reached_stages = []
+    
+    # Check each stage - if any pattern matches, this project has reached that stage
+    for stage in MATURITY_STAGES:
+        for pattern in stage['patterns']:
+            if pattern in normalized:
+                reached_stages.append(stage['key'])
+                break  # Found this stage, move to next
+    
+    return reached_stages
+
+
 def extract_urls(text):
     """Extract URLs from text."""
     if pd.isna(text) or not isinstance(text, str):
@@ -170,6 +198,10 @@ def generate_catalog_json():
             is_lacuna = isinstance(lacuna_dataset, str) and not pd.isna(lacuna_dataset) and \
                        lacuna_dataset.strip().lower() in ['yes', 'y', 'true', '1']
             
+            # Parse maturity tags
+            maturity_string = str(row.get('Maturity / Readiness for replication or scaling [INTERNAL]', ''))
+            maturity_tags = parse_maturity_tags(maturity_string)
+            
             # Create project object
             project = {
                 'id': normalized_project_id,
@@ -192,7 +224,8 @@ def generate_catalog_json():
                 'data_characteristics': str(row.get('Data - Key Characteristics', '')),
                 'model_characteristics': str(row.get('Model/Use-Case - Key Characteristics', '')),
                 'how_to_use': str(row.get('Deep Dive - How can you concretely work with this and build on this?', '')),
-                'maturity': str(row.get('Maturity / Readiness for replication or scaling [INTERNAL]', ''))
+                'maturity': maturity_string,
+                'maturity_tags': maturity_tags
             }
             
             projects.append(project)
@@ -213,7 +246,8 @@ def generate_catalog_json():
             'filters': {
                 'sdgs': sorted(list(all_sdgs), key=lambda x: int(re.search(r'\d+', x).group())),
                 'data_types': sorted(list(all_data_types)),
-                'countries': sorted(list(all_countries))
+                'countries': sorted(list(all_countries)),
+                'maturity_stages': [stage['key'] for stage in MATURITY_STAGES]
             }
         }
         

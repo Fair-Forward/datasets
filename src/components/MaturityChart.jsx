@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { withBasePath } from '../utils/basePath'
 
 // Define the maturity funnel stages in order of progression
 const FUNNEL_STAGES = [
@@ -199,12 +200,20 @@ const MaturityChart = ({ maturityDistribution, catalogProjects }) => {
             const isHovered = hoveredStage === pos.stage.key
             const hasData = pos.stage.count > 0
             
+            const handleStageClick = () => {
+              if (hasData) {
+                window.location.href = withBasePath(`/?view=${pos.stage.key}`)
+              }
+            }
+            
             return (
               <g 
                 key={pos.stage.key}
-                className={`sankey-stage ${isHovered ? 'hovered' : ''} ${hasData ? 'has-data' : 'empty'}`}
+                className={`sankey-stage ${isHovered ? 'hovered' : ''} ${hasData ? 'has-data clickable' : 'empty'}`}
                 onMouseEnter={() => setHoveredStage(pos.stage.key)}
                 onMouseLeave={() => setHoveredStage(null)}
+                onClick={handleStageClick}
+                style={{ cursor: hasData ? 'pointer' : 'default' }}
               >
                 {/* Stage rectangle */}
                 <rect
