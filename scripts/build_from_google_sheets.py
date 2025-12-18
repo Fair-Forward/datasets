@@ -9,43 +9,8 @@ import sys
 import re
 import csv
 from oauth2client.service_account import ServiceAccountCredentials
+from thefuzz import process, fuzz
 from utils import normalize_for_directory, resolve_project_id, PROJECTS_DIR
-
-try:
-    from thefuzz import process, fuzz
-    _FUZZY_WARNING_PRINTED = False
-except ImportError:
-    from difflib import SequenceMatcher
-    _FUZZY_WARNING_PRINTED = True
-    print("Warning: 'thefuzz' module not found. Falling back to difflib for header matching.")
-
-    def _token_sort_ratio(a, b):
-        def normalize(val):
-            return ' '.join(sorted(val.lower().split()))
-        return int(SequenceMatcher(None, normalize(a), normalize(b)).ratio() * 100)
-
-    class _FallbackFuzz:
-        @staticmethod
-        def token_sort_ratio(a, b):
-            return _token_sort_ratio(a, b)
-
-    class _FallbackProcess:
-        @staticmethod
-        def extractOne(query, choices, scorer=None):
-            best_choice = None
-            best_score = -1
-            scorer_fn = scorer or _token_sort_ratio
-            for choice in choices:
-                score = scorer_fn(query, choice)
-                if score > best_score:
-                    best_score = score
-                    best_choice = choice
-            if best_choice is None:
-                return None
-            return (best_choice, best_score)
-
-    fuzz = _FallbackFuzz()
-    process = _FallbackProcess()
 
 # Parse command line arguments
 parser = argparse.ArgumentParser(description='Fetch data from Google Sheets and build the website.')
@@ -274,6 +239,30 @@ def create_project_directories(df):
             if dir_name:
                 print(f"Skipping directory creation for resolved ID '{dir_name}' (row {index}): No display title found.")
             # Error messages for missing ID are already handled above
+    
+    # --- Cleanup orphaned directories ---
+    # Get all directories that SHOULD exist based on current data
+    correct_dirs = set()
+    for idx, row in df.iterrows():
+        resolved_dir, _, _ = resolve_project_id(row, projects_dir=public_projects_dir, row_idx=idx)
+        if resolved_dir:
+            correct_dirs.add(resolved_dir)
+    
+    # Find and remove orphaned directories
+    if os.path.exists(public_projects_dir):
+        existing_dirs = set(d for d in os.listdir(public_projects_dir) 
+                          if os.path.isdir(os.path.join(public_projects_dir, d)))
+        orphaned_dirs = existing_dirs - correct_dirs
+        
+        if orphaned_dirs:
+            print(f"Cleaning up {len(orphaned_dirs)} orphaned directories...")
+            for orphan in orphaned_dirs:
+                orphan_path = os.path.join(public_projects_dir, orphan)
+                try:
+                    shutil.rmtree(orphan_path)
+                    print(f"  Removed orphaned directory: {orphan}")
+                except Exception as e:
+                    print(f"  Error removing {orphan}: {e}")
 
 # Fetch data from Google Sheets
 if not args.skip_fetch:
@@ -353,7 +342,8 @@ if not args.skip_fetch:
             "Country Team": ["Country Team", "Country", "Region", "Team", "Country / Region "],
             "Data - Key Characteristics": [
                 "Data - Key Characteristics", "Data Characteristics", "Data Details",
-                "Data: how to use it & key characteristics " # Added from log
+                "Data: how to use it & key characteristics ", # Added from log
+                "Data characteristics: how to use it & key characteristics  & Responsible AI Assessments" # New sheet variant
                 ],
             "Model/Use-Case - Key Characteristics": [
                 "Model/Use-Case - Key Characteristics", "Model Characteristics", "Model Details", "Use Case Characteristics",
@@ -375,6 +365,9 @@ if not args.skip_fetch:
             ],
             "Lacuna Dataset": [
                 "Lacuna Dataset (Yes/No)", "Lacuna Dataset", "Lacuna Fund Dataset", "Is Lacuna Dataset"
+            ],
+            "On Hold": [
+                "On Hold", "Is On Hold", "On Hold Status"
             ]
             # --- End of new columns ---
         }

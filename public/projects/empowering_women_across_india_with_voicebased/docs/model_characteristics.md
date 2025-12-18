@@ -1,1 +1,0 @@
-For the generation of audio messages, Audiopedia used openly accessible text-to-speech models from the Indian Institute of Science (IISc) and MeitY's Digital India Bhashini Division.

@@ -8,6 +8,12 @@ python -m venv .venv && source .venv/bin/activate    # Windows: .venv\Scripts\ac
 pip install -r requirements.txt
 ```
 
+Front-end dev server (Vite):
+```bash
+npm install      # one-time per clone (or after deleting node_modules)
+npm run dev      # starts Vite (uses node_modules/.bin/vite)
+```
+
 Create a local `.env` (gitignored):
 ```
 GOOGLE_APPLICATION_CREDENTIALS=./data_sources/google_sheets_api/service_account_JN.json

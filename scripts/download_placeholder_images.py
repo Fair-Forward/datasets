@@ -29,7 +29,7 @@ import pandas as pd
 from tqdm import tqdm
 from dotenv import load_dotenv
 from urllib.parse import quote_plus
-from utils import PROJECTS_DIR
+from utils import PROJECTS_DIR, normalize_for_directory
 
 # Configure logging
 logging.basicConfig(
@@ -74,73 +74,50 @@ def has_existing_images(project_dir):
     return len(image_files) > 0
 
 def get_project_info(project_dir, df):
-    """Get project title and description from the Excel file by matching the Project ID."""
-    # project_dir is the normalized Project ID (e.g., ui_0)
-    target_normalized_id = project_dir.lower()
+    """Get project title and description from the Excel file by matching directory name.
     
-    # Check if 'Project ID' column exists
-    if 'Project ID' not in df.columns:
-        logger.error("'Project ID' column not found in the DataFrame.")
-        return None
-
-    # Try to find a matching row in the dataframe based on Project ID
+    Directories are typically created from Dataset Speaking Titles, Use Case Speaking Title,
+    OnSite Name, or Project ID (in that priority order).
+    """
+    target_normalized = project_dir.lower()
+    
+    # Try to find a matching row by checking multiple columns
     for index, row in df.iterrows():
-        project_id = row.get('Project ID')
-        if project_id and not pd.isna(project_id):
-            # Normalize the Project ID from the current row
-            current_normalized_id = normalize_for_directory(str(project_id))
-            
-            # Compare with the target directory name (normalized ID)
-            if current_normalized_id == target_normalized_id:
-                # Found the matching row based on Project ID
-                
-                # Now, determine the best *display* title for keyword extraction
-                display_title = None
-                if 'Dataset Speaking Titles' in df.columns:
-                    dataset_title = row.get('Dataset Speaking Titles', '')
-                    if dataset_title and not pd.isna(dataset_title):
-                        display_title = dataset_title
-                
-                if not display_title and 'Use Case Speaking Title' in df.columns:
-                    usecase_title = row.get('Use Case Speaking Title', '')
-                    if usecase_title and not pd.isna(usecase_title):
-                        display_title = usecase_title
+        # Check each potential source column for a match
+        columns_to_check = ['Dataset Speaking Titles', 'Use Case Speaking Title', 'OnSite Name', 'Project ID']
+        
+        for col in columns_to_check:
+            if col in df.columns:
+                value = row.get(col)
+                if value and not pd.isna(value):
+                    normalized = normalize_for_directory(str(value))
+                    if normalized == target_normalized:
+                        # Found match - extract project info
+                        display_title = None
+                        for title_col in ['Dataset Speaking Titles', 'Use Case Speaking Title', 'OnSite Name']:
+                            if title_col in df.columns:
+                                title_val = row.get(title_col, '')
+                                if title_val and not pd.isna(title_val):
+                                    display_title = title_val
+                                    break
                         
-                if not display_title and 'OnSite Name' in df.columns:
-                    onsite_name = row.get('OnSite Name', '')
-                    if onsite_name and not pd.isna(onsite_name):
-                        display_title = onsite_name
-                
-                # Fallback display title if none found
-                if not display_title:
-                    display_title = f"Project {project_id}" # Use raw Project ID if no other title
+                        if not display_title:
+                            display_title = f"Project {row.get('Project ID', project_dir)}"
 
-                # Get other necessary info
-                description = row.get('Description - What can be done with this? What is this about?', '')
-                domain = row.get('Domain/SDG', '')
-                region = row.get('Country Team', '')
-                
-                # Return the collected info for keyword extraction
-                return {
-                    'title': display_title, # Use the best display title for keywords
-                    'description': description if isinstance(description, str) and not pd.isna(description) else '',
-                    'domain': domain if isinstance(domain, str) and not pd.isna(domain) else '',
-                    'region': region if isinstance(region, str) and not pd.isna(region) else ''
-                    # We could also return project_id if needed later
-                }
+                        description = row.get('Description - What can be done with this? What is this about?', '')
+                        domain = row.get('Domain/SDG', '')
+                        region = row.get('Country Team', '')
+                        
+                        return {
+                            'title': display_title,
+                            'description': description if isinstance(description, str) and not pd.isna(description) else '',
+                            'domain': domain if isinstance(domain, str) and not pd.isna(domain) else '',
+                            'region': region if isinstance(region, str) and not pd.isna(region) else ''
+                        }
     
-    # If no row matched the Project ID
-    logger.warning(f"No row found in Excel matching Project ID directory: {project_dir}")
+    logger.warning(f"No row found in Excel matching directory: {project_dir}")
     return None
 
-def normalize_for_directory(text):
-    """Normalize text for use as a directory name."""
-    if not isinstance(text, str) or pd.isna(text):
-        return ""
-    
-    # Convert to lowercase, replace spaces with underscores, remove special characters
-    normalized = re.sub(r'[^a-z0-9_]', '', text.lower().replace(' ', '_'))
-    return normalized
 
 # Define common stop words (expand as needed)
 STOP_WORDS = set([

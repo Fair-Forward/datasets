@@ -1,1 +1,0 @@
-Correlation of VIs to LAI, Sentinel-2 + LAI ground truth.

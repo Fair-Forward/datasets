@@ -71,7 +71,7 @@ const licenseLabel = (license = '') => {
 }
 
 const ProjectCard = ({ project, onClick }) => {
-  const { title, description, sdgs, data_types, image, has_dataset, has_usecase, is_lacuna, countries = [], contact, license } = project
+  const { title, description, sdgs, data_types, image, has_dataset, has_usecase, is_lacuna, is_on_hold, countries = [], contact, license } = project
 
   const cardClasses = [
     'card',
@@ -111,6 +111,7 @@ const ProjectCard = ({ project, onClick }) => {
   const licenseText = licenseLabel(licenseValue)
 
   const contactParsed = parseContact(contact)
+  const showOnHoldNote = is_on_hold && !has_dataset && !has_usecase
 
   return (
     <div className={cardClasses} onClick={() => onClick(project)}>
@@ -159,7 +160,7 @@ const ProjectCard = ({ project, onClick }) => {
           )}
         </div>
 
-        <div className="card-description">
+          <div className="card-description">
           <div className="description-text collapsed">
             {truncatedDesc}
           </div>

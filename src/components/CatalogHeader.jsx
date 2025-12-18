@@ -78,7 +78,7 @@ const CatalogHeader = ({ stats }) => {
               rel="noopener noreferrer" 
               className="header-learn-more"
             >
-              Learn more about Fair Forward
+              [Learn more about Fair Forward]
             </a>
           </div>
           

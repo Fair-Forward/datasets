@@ -1,1 +1,0 @@
-Low-res images, (hyper)spectral variability for phosphorus deficiency & MSV.

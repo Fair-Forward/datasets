@@ -1,1 +1,0 @@
-Sentinel free; drone + SPAD sensor may be costly unless shared

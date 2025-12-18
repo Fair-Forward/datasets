@@ -1,5 +1,5 @@
 {
-  "total_projects": 62,
+  "total_projects": 68,
   "total_countries": 22,
   "map_data": {
     "AO": {
@@ -30,7 +30,7 @@
     },
     "KE": {
       "name": "Kenya",
-      "projects": 9,
+      "projects": 10,
       "iso2": "KE",
       "sdgs": [
         "SDG 2",
@@ -42,6 +42,7 @@
       "data_types": [
         "Geospatial/Remote Sensing",
         "Images",
+        "Meterological",
         "Tabular",
         "Text",
         "Voice"
@@ -223,13 +224,14 @@
     },
     "UG": {
       "name": "Uganda",
-      "projects": 7,
+      "projects": 8,
       "iso2": "UG",
       "sdgs": [
         "SDG 2",
         "SDG 5",
         "SDG 10",
-        "SDG 13"
+        "SDG 13",
+        "SDG 15"
       ],
       "data_types": [
         "Geospatial/Remote Sensing",
@@ -261,16 +263,18 @@
     },
     "ID": {
       "name": "Indonesia",
-      "projects": 3,
+      "projects": 4,
       "iso2": "ID",
       "sdgs": [
         "SDG 2",
         "SDG 10",
         "SDG 13",
+        "SDG 14",
         "SDG 15"
       ],
       "data_types": [
         "Geospatial/Remote Sensing",
+        "Meterological",
         "Text"
       ]
     },
@@ -314,7 +318,7 @@
     }
   },
   "sdg_distribution": {
-    "SDG 2": 33,
+    "SDG 2": 34,
     "SDG 4": 1,
     "SDG 5": 4,
     "SDG 7": 3,
@@ -322,7 +326,8 @@
     "SDG 10": 19,
     "SDG 11": 9,
     "SDG 12": 1,
-    "SDG 13": 21,
-    "SDG 15": 10
+    "SDG 13": 23,
+    "SDG 14": 1,
+    "SDG 15": 12
   }
 }

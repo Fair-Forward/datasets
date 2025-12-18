@@ -1,1 +1,0 @@
-The model that was tested for the entire city of Bogotá to clasify urban roadspace with 98% reliability. 

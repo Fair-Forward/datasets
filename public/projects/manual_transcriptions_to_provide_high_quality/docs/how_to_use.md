@@ -1,3 +1,0 @@
-There are two resources to build on and use:
-1) The dataset can be used as a resource to fine-tune Q&A capabilities of LLMs specifically for the Sexual and Reproductive Health domain. The dataset can be further used to quality check and/or improve Speech to Text models. 
-2) the fine-tuned model can be used for down-stream applications that need Hindi LLM capabilities in the Sexual and Reproductive Health domain.

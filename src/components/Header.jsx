@@ -55,6 +55,11 @@ const Header = () => {
             a dataset or model, cite the project, respect the license and let local partners know how your
             work gives back.
           </p>
+          <p className="info-card-note">
+            All listed datasets and use-cases are shared as digital public goods from our partners. Please adhere to fair
+            contributing: “This is a global digital public good under open-source licenses as named under ‘licenses’—please
+            consider fair sharing and giving back to communities in an appropriate way.”
+          </p>
           <div className="info-card-note">
             <span>Re-share improvements or context via GitHub or the listed contacts.</span>
           </div>

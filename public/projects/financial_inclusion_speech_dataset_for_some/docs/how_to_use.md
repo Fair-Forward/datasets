@@ -1,1 +1,0 @@
-The dataset might be used to devise more inclusive banking platforms that better understand users in  in four Ghanaian dialects: Akuapem Twi, Ashante Twi, Fante and Ga. It can thereby help to achive more financial inclusion.

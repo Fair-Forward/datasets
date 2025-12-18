@@ -1,1 +1,0 @@
-Random Forest, SVM; Software/Application: Sentinel-2 + field spectral data

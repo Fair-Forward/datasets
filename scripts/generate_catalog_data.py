@@ -93,9 +93,14 @@ def generate_catalog_json():
             
             has_dataset_link = len(dataset_urls) > 0
             has_usecase_link = len(usecase_urls) > 0
+            is_on_hold = str(row.get('On Hold', '')).strip().lower() in ['yes', 'y', 'true', '1']
+            if is_on_hold:
+                # Keep on-hold entries visible in dataset/use-case views and stats
+                has_dataset_link = True
+                has_usecase_link = True
             
             # Skip rows without valid links
-            if not has_dataset_link and not has_usecase_link:
+            if not has_dataset_link and not has_usecase_link and not is_on_hold:
                 continue
             
             # Count links
@@ -172,6 +177,7 @@ def generate_catalog_json():
                 'description': str(row.get('Description - What can be done with this? What is this about?', '')),
                 'dataset_links': dataset_urls,
                 'usecase_links': usecase_urls,
+                'is_on_hold': is_on_hold,
                 'sdgs': sdgs,
                 'data_types': data_types,
                 'countries': [c.strip() for c in re.split(r',|\s+and\s+|;', country_text) if c.strip()] if country_text else [],

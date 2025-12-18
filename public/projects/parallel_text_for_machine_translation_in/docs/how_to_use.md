@@ -1,1 +1,0 @@
-Integrate preferred machine translation model with Moodle plugin: https://github.com/Digital-Umuganda/moodle-translate_courses . Need to update for compatibility with newer Moodle updates, this was implemented during Moodle version 3.0 

@@ -1,1 +1,0 @@
-Open source model NLLB-200, some variations quantized to minimize compute resource usage 

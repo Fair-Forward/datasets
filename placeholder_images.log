@@ -26,3 +26,478 @@
 2025-07-15 13:27:19,826 - INFO - Downloaded image for ui_52_1: docs/public/projects/ui_52_1/images/placeholder_image.jpeg
 2025-07-15 13:27:20,831 - INFO - Completed processing. Downloaded 10 placeholder images.
 2025-09-29 15:25:06,790 - ERROR - No Pexels API key provided. Use --api-key or set PEXELS_API_KEY environment variable.
+2025-12-18 11:53:38,811 - ERROR - No Pexels API key provided. Use --api-key or set PEXELS_API_KEY environment variable.
+2025-12-18 11:55:35,637 - ERROR - No Pexels API key provided. Use --api-key or set PEXELS_API_KEY environment variable.
+2025-12-18 11:56:54,489 - INFO - Loaded data catalog from docs/data_catalog.xlsx
+2025-12-18 11:56:54,490 - INFO - Found 146 project directories
+2025-12-18 11:56:54,490 - INFO - Limited to processing 2 projects
+2025-12-18 11:56:54,512 - INFO - Completed processing. Downloaded 0 placeholder images.
+2025-12-18 11:57:00,954 - INFO - Loaded data catalog from docs/data_catalog.xlsx
+2025-12-18 11:57:00,955 - INFO - Found 146 project directories
+2025-12-18 11:57:00,955 - INFO - Limited to processing 1 projects
+2025-12-18 11:57:00,977 - INFO - Searching for images for chatbot_for_public_service_delivery_in with keywords: sdg 10, chatbot, public, semantic
+2025-12-18 11:57:01,179 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+chatbot+public+semantic&per_page=15&size=medium
+2025-12-18 11:57:01,179 - WARNING - No suitable images found for chatbot_for_public_service_delivery_in
+2025-12-18 11:57:01,179 - INFO - Completed processing. Downloaded 0 placeholder images.
+2025-12-18 11:57:47,985 - INFO - Loaded data catalog from docs/data_catalog.xlsx
+2025-12-18 11:57:47,986 - INFO - Found 146 project directories
+2025-12-18 11:57:48,064 - INFO - Searching for images for nlp_grant_localising_common_voice_for with keywords: sdg 2, voice, mzansi, language
+2025-12-18 11:57:48,359 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+voice+mzansi+language&per_page=15&size=medium
+2025-12-18 11:57:48,359 - WARNING - No suitable images found for nlp_grant_localising_common_voice_for
+2025-12-18 11:57:48,360 - INFO - Searching for images for watchmytree with keywords: sdg 15, mangrove, carbon, satellite
+2025-12-18 11:57:48,607 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+15+mangrove+carbon+satellite&per_page=15&size=medium
+2025-12-18 11:57:48,607 - WARNING - No suitable images found for watchmytree
+2025-12-18 11:57:48,608 - INFO - Searching for images for supporting_food_security_and_climate_change with keywords: sdg 2, supporting, food, crop
+2025-12-18 11:57:49,017 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+supporting+food+crop&per_page=15&size=medium
+2025-12-18 11:57:49,018 - WARNING - No suitable images found for supporting_food_security_and_climate_change
+2025-12-18 11:57:49,021 - INFO - Searching for images for aipowered_monitoring_of_forest_degradation_and with keywords: sdg 15, powered, monitoring, satellite
+2025-12-18 11:57:49,197 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+15+powered+monitoring+satellite&per_page=15&size=medium
+2025-12-18 11:57:49,197 - WARNING - No suitable images found for aipowered_monitoring_of_forest_degradation_and
+2025-12-18 11:57:49,198 - INFO - Searching for images for financial_inclusion_speech_dataset_for_some with keywords: sdg 10, facilitating, acces, language
+2025-12-18 11:57:49,580 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+facilitating+acces+language&per_page=15&size=medium
+2025-12-18 11:57:49,581 - WARNING - No suitable images found for financial_inclusion_speech_dataset_for_some
+2025-12-18 11:57:49,587 - INFO - Searching for images for wezesha_na_kabambe__offline_swahili with keywords: sdg 10, wezesha, kabambe, power
+2025-12-18 11:57:49,772 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+wezesha+kabambe+power&per_page=15&size=medium
+2025-12-18 11:57:49,772 - WARNING - No suitable images found for wezesha_na_kabambe__offline_swahili
+2025-12-18 11:57:49,774 - INFO - Searching for images for finding_good_spots_for_decentralized_green with keywords: sdg 13, bridging, energy, satellite
+2025-12-18 11:57:50,133 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+13+bridging+energy+satellite&per_page=15&size=medium
+2025-12-18 11:57:50,133 - WARNING - No suitable images found for finding_good_spots_for_decentralized_green
+2025-12-18 11:57:50,134 - INFO - Searching for images for mapping_blue_carbon_quantifying_mangrove_carbon with keywords: sdg 15, quantifying, colombian, satellite
+2025-12-18 11:57:50,311 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+15+quantifying+colombian+satellite&per_page=15&size=medium
+2025-12-18 11:57:50,311 - WARNING - No suitable images found for mapping_blue_carbon_quantifying_mangrove_carbon
+2025-12-18 11:57:50,314 - WARNING - No row found in Excel matching directory: aipowered_crop_disease_identification_dataset_and
+2025-12-18 11:57:50,314 - WARNING - Could not find project info for aipowered_crop_disease_identification_dataset_and
+2025-12-18 11:57:50,315 - INFO - Searching for images for predicting_crop_health_using_opensource_geospatial with keywords: sdg 2, farm, boundarie, satellite
+2025-12-18 11:57:50,521 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+farm+boundarie+satellite&per_page=15&size=medium
+2025-12-18 11:57:50,522 - WARNING - No suitable images found for predicting_crop_health_using_opensource_geospatial
+2025-12-18 11:57:50,524 - INFO - Searching for images for estimation_of_chlorophyll_contents_of_crops with keywords: sdg 2, chlorophyll, buster, imagery
+2025-12-18 11:57:50,886 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+chlorophyll+buster+imagery&per_page=15&size=medium
+2025-12-18 11:57:50,887 - WARNING - No suitable images found for estimation_of_chlorophyll_contents_of_crops
+2025-12-18 11:57:50,895 - INFO - Searching for images for enhancing_business_registration_in_kenya_through with keywords: enhancing, busines, language, power
+2025-12-18 11:57:51,110 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=enhancing+busines+language+power&per_page=15&size=medium
+2025-12-18 11:57:51,111 - WARNING - No suitable images found for enhancing_business_registration_in_kenya_through
+2025-12-18 11:57:51,115 - INFO - Searching for images for better_language_translation_for_more_training with keywords: sdg 4, better, language, translation
+2025-12-18 11:57:51,484 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+4+better+language+translation&per_page=15&size=medium
+2025-12-18 11:57:51,485 - WARNING - No suitable images found for better_language_translation_for_more_training
+2025-12-18 11:57:51,491 - INFO - Searching for images for monitoring_crop_type_area_and_enabling with keywords: sdg 2, monitoring, crop, satellite
+2025-12-18 11:57:51,671 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+monitoring+crop+satellite&per_page=15&size=medium
+2025-12-18 11:57:51,672 - WARNING - No suitable images found for monitoring_crop_type_area_and_enabling
+2025-12-18 11:57:51,678 - INFO - Searching for images for imarika__helping_smallholder_farmers_to with keywords: sdg 10, imarika, helping, climate
+2025-12-18 11:57:51,845 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+imarika+helping+climate&per_page=15&size=medium
+2025-12-18 11:57:51,845 - WARNING - No suitable images found for imarika__helping_smallholder_farmers_to
+2025-12-18 11:57:51,852 - INFO - Searching for images for detecting_and_assessing_tomato_stress_using with keywords: sdg 2, detecting, assessing, investigate
+2025-12-18 11:57:52,263 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+detecting+assessing+investigate&per_page=15&size=medium
+2025-12-18 11:57:52,264 - WARNING - No suitable images found for detecting_and_assessing_tomato_stress_using
+2025-12-18 11:57:52,266 - INFO - Searching for images for using_locallanguage_ai_advise_women_in with keywords: sdg 5, lifting, women, economic
+2025-12-18 11:57:52,448 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+5+lifting+women+economic&per_page=15&size=medium
+2025-12-18 11:57:52,448 - WARNING - No suitable images found for using_locallanguage_ai_advise_women_in
+2025-12-18 11:57:52,450 - INFO - Searching for images for lifting_up_women_through_land_ownership with keywords: sdg 5, lifting, women, economic
+2025-12-18 11:57:52,836 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+5+lifting+women+economic&per_page=15&size=medium
+2025-12-18 11:57:52,837 - WARNING - No suitable images found for lifting_up_women_through_land_ownership
+2025-12-18 11:57:52,845 - INFO - Searching for images for datasets_marking_personal_identifiable_information with keywords: sdg 13, preserving, privacy, language
+2025-12-18 11:57:53,018 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+13+preserving+privacy+language&per_page=15&size=medium
+2025-12-18 11:57:53,019 - WARNING - No suitable images found for datasets_marking_personal_identifiable_information
+2025-12-18 11:57:53,026 - INFO - Searching for images for residential_energy_and_weather_dataset_rewd with keywords: sdg 13, promoting, energy, weather
+2025-12-18 11:57:53,400 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+13+promoting+energy+weather&per_page=15&size=medium
+2025-12-18 11:57:53,401 - WARNING - No suitable images found for residential_energy_and_weather_dataset_rewd
+2025-12-18 11:57:53,404 - INFO - Searching for images for miti360_a_machine_learning_ready_dataset with keywords: sdg 15, miti360, comprehensive, weather
+2025-12-18 11:57:53,819 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+15+miti360+comprehensive+weather&per_page=15&size=medium
+2025-12-18 11:57:53,820 - WARNING - No suitable images found for miti360_a_machine_learning_ready_dataset
+2025-12-18 11:57:53,827 - INFO - Searching for images for monitoring_zea_mays_maize_disease_stress with keywords: sdg 2, detecting, assessing, health
+2025-12-18 11:57:54,220 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+detecting+assessing+health&per_page=15&size=medium
+2025-12-18 11:57:54,221 - WARNING - No suitable images found for monitoring_zea_mays_maize_disease_stress
+2025-12-18 11:57:54,222 - INFO - Searching for images for ltomekatip_pioneering_indigenousled_biodiversity_d with keywords: sdg 15, indigenou, knowledge, climate
+2025-12-18 11:57:54,433 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+15+indigenou+knowledge+climate&per_page=15&size=medium
+2025-12-18 11:57:54,433 - WARNING - No suitable images found for ltomekatip_pioneering_indigenousled_biodiversity_d
+2025-12-18 11:57:54,440 - INFO - Searching for images for integration_of_groundbased_vegetation_parameters_t with keywords: sdg 2, agro, thermography, map
+2025-12-18 11:57:54,642 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+agro+thermography+map&per_page=15&size=medium
+2025-12-18 11:57:54,643 - WARNING - No suitable images found for integration_of_groundbased_vegetation_parameters_t
+2025-12-18 11:57:54,650 - INFO - Searching for images for ai_for_agricultural_advisory_and_financial with keywords: sdg 10, agricultural, advisory, crop
+2025-12-18 11:57:54,841 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+agricultural+advisory+crop&per_page=15&size=medium
+2025-12-18 11:57:54,841 - WARNING - No suitable images found for ai_for_agricultural_advisory_and_financial
+2025-12-18 11:57:54,844 - INFO - Searching for images for combatting_air_pollution_and_ghg_emissions with keywords: sdg 13, pollution, patna, tool
+2025-12-18 11:57:55,041 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+13+pollution+patna+tool&per_page=15&size=medium
+2025-12-18 11:57:55,041 - WARNING - No suitable images found for combatting_air_pollution_and_ghg_emissions
+2025-12-18 11:57:55,044 - INFO - Searching for images for crop_type_identification_from_satellite_imagery with keywords: sdg 2, spot, crop, satellite
+2025-12-18 11:57:55,238 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+spot+crop+satellite&per_page=15&size=medium
+2025-12-18 11:57:55,239 - WARNING - No suitable images found for crop_type_identification_from_satellite_imagery
+2025-12-18 11:57:55,243 - INFO - Searching for images for forest_forward_aipowered_high_carbon_stock with keywords: sdg 13, forest, forward, satellite
+2025-12-18 11:57:55,619 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+13+forest+forward+satellite&per_page=15&size=medium
+2025-12-18 11:57:55,619 - WARNING - No suitable images found for forest_forward_aipowered_high_carbon_stock
+2025-12-18 11:57:55,621 - INFO - Searching for images for urban_roadspace_classification_data_and_model with keywords: sdg 10, dataset, transportation, satellite
+2025-12-18 11:57:55,811 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+dataset+transportation+satellite&per_page=15&size=medium
+2025-12-18 11:57:55,812 - WARNING - No suitable images found for urban_roadspace_classification_data_and_model
+2025-12-18 11:57:55,820 - INFO - Searching for images for monitoring_deforestation_predicting_landuse_and_la with keywords: sdg 13, monitoring, deforestation, satellite
+2025-12-18 11:57:56,222 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+13+monitoring+deforestation+satellite&per_page=15&size=medium
+2025-12-18 11:57:56,223 - WARNING - No suitable images found for monitoring_deforestation_predicting_landuse_and_la
+2025-12-18 11:57:56,226 - INFO - Searching for images for making_ai_speak_mundari__opensource with keywords: sdg 10, making, speak, language
+2025-12-18 11:57:56,611 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+making+speak+language&per_page=15&size=medium
+2025-12-18 11:57:56,612 - WARNING - No suitable images found for making_ai_speak_mundari__opensource
+2025-12-18 11:57:56,620 - INFO - Searching for images for evaluating_the_performance_of_machine_learning with keywords: sdg 2, agro, innovator, satellite
+2025-12-18 11:57:56,826 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+agro+innovator+satellite&per_page=15&size=medium
+2025-12-18 11:57:56,827 - WARNING - No suitable images found for evaluating_the_performance_of_machine_learning
+2025-12-18 11:57:56,833 - INFO - Searching for images for characterizing_maize_stress_using_uav_remote with keywords: sdg 2, artificial, intelligence, remote sensing
+2025-12-18 11:57:57,218 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+artificial+intelligence+remote+sensing&per_page=15&size=medium
+2025-12-18 11:57:57,219 - WARNING - No suitable images found for characterizing_maize_stress_using_uav_remote
+2025-12-18 11:57:57,221 - WARNING - No row found in Excel matching directory: forest_forward_using_ai_to_protect
+2025-12-18 11:57:57,221 - WARNING - Could not find project info for forest_forward_using_ai_to_protect
+2025-12-18 11:57:57,224 - INFO - Searching for images for estimating_solar_irradiance_for_improved_solar with keywords: sdg 13, estimating, solar, satellite
+2025-12-18 11:57:57,619 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+13+estimating+solar+satellite&per_page=15&size=medium
+2025-12-18 11:57:57,620 - WARNING - No suitable images found for estimating_solar_irradiance_for_improved_solar
+2025-12-18 11:57:57,626 - INFO - Searching for images for labelled_open_solar_panel_data_for with keywords: sdg 13, helping, measure, satellite
+2025-12-18 11:57:57,830 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+13+helping+measure+satellite&per_page=15&size=medium
+2025-12-18 11:57:57,830 - WARNING - No suitable images found for labelled_open_solar_panel_data_for
+2025-12-18 11:57:57,834 - INFO - Searching for images for providing_better_information_on_sexual_and with keywords: sdg 10, providing, better, platform
+2025-12-18 11:57:58,260 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+providing+better+platform&per_page=15&size=medium
+2025-12-18 11:57:58,261 - WARNING - No suitable images found for providing_better_information_on_sexual_and
+2025-12-18 11:57:58,264 - INFO - Searching for images for aipowered_detection_of_diseases_for_cashew with keywords: sdg 2, drone, image, crop
+2025-12-18 11:57:58,465 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+drone+image+crop&per_page=15&size=medium
+2025-12-18 11:57:58,466 - WARNING - No suitable images found for aipowered_detection_of_diseases_for_cashew
+2025-12-18 11:57:58,473 - INFO - Searching for images for crop_type_mapping_in_mphaila_irrigation with keywords: sdg 2, buster, satellite, map
+2025-12-18 11:57:58,650 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+buster+satellite+map&per_page=15&size=medium
+2025-12-18 11:57:58,650 - WARNING - No suitable images found for crop_type_mapping_in_mphaila_irrigation
+2025-12-18 11:57:58,657 - INFO - Searching for images for chamachat__powering_chama_loan_groups with keywords: sdg 10, chamachat, powering, economic
+2025-12-18 11:57:58,826 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+chamachat+powering+economic&per_page=15&size=medium
+2025-12-18 11:57:58,827 - WARNING - No suitable images found for chamachat__powering_chama_loan_groups
+2025-12-18 11:57:58,835 - INFO - Searching for images for remote_sensing_and_machine_learning_applications with keywords: sdg 2, discovering, agriculture, remote sensing
+2025-12-18 11:57:59,216 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+discovering+agriculture+remote+sensing&per_page=15&size=medium
+2025-12-18 11:57:59,217 - WARNING - No suitable images found for remote_sensing_and_machine_learning_applications
+2025-12-18 11:57:59,224 - INFO - Searching for images for precision_weed_mapping_and_management_in with keywords: sdg 2, weetie, crop, south africa
+2025-12-18 11:57:59,388 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+weetie+crop+south+africa&per_page=15&size=medium
+2025-12-18 11:57:59,388 - WARNING - No suitable images found for precision_weed_mapping_and_management_in
+2025-12-18 11:57:59,395 - INFO - Searching for images for landslide_and_flood_disaster_hotspot_monitoring with keywords: sdg 13, site, image, rwanda
+2025-12-18 11:57:59,775 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+13+site+image+rwanda&per_page=15&size=medium
+2025-12-18 11:57:59,775 - WARNING - No suitable images found for landslide_and_flood_disaster_hotspot_monitoring
+2025-12-18 11:57:59,777 - INFO - Searching for images for ecuador_electricity_access__supply_data with keywords: sdg 7, ecuadorian, acces, satellite
+2025-12-18 11:58:00,146 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+7+ecuadorian+acces+satellite&per_page=15&size=medium
+2025-12-18 11:58:00,147 - WARNING - No suitable images found for ecuador_electricity_access__supply_data
+2025-12-18 11:58:00,153 - INFO - Searching for images for livhealth_kiswahili_corpus with keywords: sdg 10, livhealth, kiswahili, language
+2025-12-18 11:58:00,460 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+livhealth+kiswahili+language&per_page=15&size=medium
+2025-12-18 11:58:00,460 - WARNING - No suitable images found for livhealth_kiswahili_corpus
+2025-12-18 11:58:00,465 - INFO - Searching for images for building_parallel_corpora_for_kenyas_indigenous with keywords: sdg 10, enabling, machine, language
+2025-12-18 11:58:00,844 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+enabling+machine+language&per_page=15&size=medium
+2025-12-18 11:58:00,844 - WARNING - No suitable images found for building_parallel_corpora_for_kenyas_indigenous
+2025-12-18 11:58:00,847 - INFO - Searching for images for machine_learning_training_data_for_continental with keywords: sdg 13, monitoring, impact, learning
+2025-12-18 11:58:01,086 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+13+monitoring+impact+learning&per_page=15&size=medium
+2025-12-18 11:58:01,087 - WARNING - No suitable images found for machine_learning_training_data_for_continental
+2025-12-18 11:58:01,092 - INFO - Searching for images for leaf_area_index_estimation_of_tomato with keywords: sdg 2, internet, crop, satellite
+2025-12-18 11:58:01,465 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+internet+crop+satellite&per_page=15&size=medium
+2025-12-18 11:58:01,466 - WARNING - No suitable images found for leaf_area_index_estimation_of_tomato
+2025-12-18 11:58:01,472 - INFO - Searching for images for a_nigerian_twitter_sentiment_corpus_for with keywords: sdg 10, detecting, sentiment, language
+2025-12-18 11:58:01,670 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+detecting+sentiment+language&per_page=15&size=medium
+2025-12-18 11:58:01,671 - WARNING - No suitable images found for a_nigerian_twitter_sentiment_corpus_for
+2025-12-18 11:58:01,678 - INFO - Searching for images for carbonlens_high_carbon_stock_approach with keywords: sdg 13, carbonlen, high, senegal 
+2025-12-18 11:58:02,085 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+13+carbonlen+high+senegal+&per_page=15&size=medium
+2025-12-18 11:58:02,085 - WARNING - No suitable images found for carbonlens_high_carbon_stock_approach
+2025-12-18 11:58:02,086 - INFO - Searching for images for explore_how_to_make_ai_systems with keywords: sdg 10, discover, ghanaian, speech
+2025-12-18 11:58:02,279 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+discover+ghanaian+speech&per_page=15&size=medium
+2025-12-18 11:58:02,280 - WARNING - No suitable images found for explore_how_to_make_ai_systems
+2025-12-18 11:58:02,285 - INFO - Searching for images for advancing_oil_palm_mapping_with_social with keywords: sdg 13, mitigating, impact, satellite
+2025-12-18 11:58:02,664 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+13+mitigating+impact+satellite&per_page=15&size=medium
+2025-12-18 11:58:02,665 - WARNING - No suitable images found for advancing_oil_palm_mapping_with_social
+2025-12-18 11:58:02,668 - INFO - Searching for images for empowering_women_across_india_with_voicebased with keywords: sdg 2, generated, voice, language
+2025-12-18 11:58:02,877 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+generated+voice+language&per_page=15&size=medium
+2025-12-18 11:58:02,877 - WARNING - No suitable images found for empowering_women_across_india_with_voicebased
+2025-12-18 11:58:02,881 - INFO - Searching for images for measuring_soil_health_for_more_sustainable with keywords: sdg 2, soil, local, merged
+2025-12-18 11:58:03,262 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+soil+local+merged&per_page=15&size=medium
+2025-12-18 11:58:03,263 - WARNING - No suitable images found for measuring_soil_health_for_more_sustainable
+2025-12-18 11:58:03,268 - WARNING - No row found in Excel matching directory: parallel_text_for_machine_translation_in
+2025-12-18 11:58:03,268 - WARNING - Could not find project info for parallel_text_for_machine_translation_in
+2025-12-18 11:58:03,269 - INFO - Searching for images for datadriven_decisionmaking_for_farmers_to_increase with keywords: sdg 2, geospatial, wheat, power
+2025-12-18 11:58:03,453 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+geospatial+wheat+power&per_page=15&size=medium
+2025-12-18 11:58:03,454 - WARNING - No suitable images found for datadriven_decisionmaking_for_farmers_to_increase
+2025-12-18 11:58:03,457 - INFO - Searching for images for forecasting_availaibiltiy_of_tropical_forest_resou with keywords: sdg 15, phenological, ecological, satellite
+2025-12-18 11:58:03,841 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+15+phenological+ecological+satellite&per_page=15&size=medium
+2025-12-18 11:58:03,842 - WARNING - No suitable images found for forecasting_availaibiltiy_of_tropical_forest_resou
+2025-12-18 11:58:03,849 - INFO - Searching for images for the_ussd_gbv_information_chatbot_350 with keywords: sdg 10, sgbv, chatbot, tool
+2025-12-18 11:58:04,056 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+sgbv+chatbot+tool&per_page=15&size=medium
+2025-12-18 11:58:04,056 - WARNING - No suitable images found for the_ussd_gbv_information_chatbot_350
+2025-12-18 11:58:04,058 - INFO - Searching for images for aipowered_lifestock_health_system_enabling_local with keywords: sdg 10, livhealth, kiswahili, language
+2025-12-18 11:58:04,264 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+livhealth+kiswahili+language&per_page=15&size=medium
+2025-12-18 11:58:04,265 - WARNING - No suitable images found for aipowered_lifestock_health_system_enabling_local
+2025-12-18 11:58:04,267 - INFO - Searching for images for translating_weather_information_into_actionable_ad with keywords: sdg 2, translating, weather, climate
+2025-12-18 11:58:04,737 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+translating+weather+climate&per_page=15&size=medium
+2025-12-18 11:58:04,738 - WARNING - No suitable images found for translating_weather_information_into_actionable_ad
+2025-12-18 11:58:04,743 - INFO - Searching for images for climate_resilience_through_agroforestry with keywords: sdg 2, enabled, climate, geospatial
+2025-12-18 11:58:04,911 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+enabled+climate+geospatial&per_page=15&size=medium
+2025-12-18 11:58:04,911 - WARNING - No suitable images found for climate_resilience_through_agroforestry
+2025-12-18 11:58:04,912 - INFO - Searching for images for cotton_ace_aidriven_pest_management_for with keywords: sdg 2, pest, management, yield
+2025-12-18 11:58:05,321 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+pest+management+yield&per_page=15&size=medium
+2025-12-18 11:58:05,321 - WARNING - No suitable images found for cotton_ace_aidriven_pest_management_for
+2025-12-18 11:58:05,324 - INFO - Searching for images for dronebased_agricultural_dataset_for_crop_yield with keywords: sdg 2, enable, cashew, crop
+2025-12-18 11:58:05,527 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+enable+cashew+crop&per_page=15&size=medium
+2025-12-18 11:58:05,528 - WARNING - No suitable images found for dronebased_agricultural_dataset_for_crop_yield
+2025-12-18 11:58:05,531 - INFO - Searching for images for discover_the_effectiveness_of_the_energy with keywords: sdg 2, explore, agrivoltaic, crop
+2025-12-18 11:58:05,896 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+explore+agrivoltaic+crop&per_page=15&size=medium
+2025-12-18 11:58:05,896 - WARNING - No suitable images found for discover_the_effectiveness_of_the_energy
+2025-12-18 11:58:05,903 - INFO - Searching for images for enabling_geoscientists_to_use_machine_learning with keywords: sdg 2, map, meal, crop
+2025-12-18 11:58:06,082 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+map+meal+crop&per_page=15&size=medium
+2025-12-18 11:58:06,083 - WARNING - No suitable images found for enabling_geoscientists_to_use_machine_learning
+2025-12-18 11:58:06,091 - INFO - Searching for images for kiazi_bora__informing_vulnerable_women with keywords: sdg 10, kiazi, bora, farming
+2025-12-18 11:58:06,487 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+kiazi+bora+farming&per_page=15&size=medium
+2025-12-18 11:58:06,487 - WARNING - No suitable images found for kiazi_bora__informing_vulnerable_women
+2025-12-18 11:58:06,488 - INFO - Completed processing. Downloaded 0 placeholder images.
+2025-12-18 11:59:03,269 - INFO - Loaded data catalog from docs/data_catalog.xlsx
+2025-12-18 11:59:03,270 - INFO - Found 146 project directories
+2025-12-18 11:59:03,291 - INFO - Searching for images for nlp_grant_localising_common_voice_for with keywords: sdg 2, voice, mzansi, language
+2025-12-18 11:59:03,709 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+voice+mzansi+language&per_page=15&size=medium
+2025-12-18 11:59:03,709 - WARNING - No suitable images found for nlp_grant_localising_common_voice_for
+2025-12-18 11:59:03,710 - INFO - Searching for images for watchmytree with keywords: sdg 15, mangrove, carbon, satellite
+2025-12-18 11:59:04,071 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+15+mangrove+carbon+satellite&per_page=15&size=medium
+2025-12-18 11:59:04,071 - WARNING - No suitable images found for watchmytree
+2025-12-18 11:59:04,073 - INFO - Searching for images for supporting_food_security_and_climate_change with keywords: sdg 2, supporting, food, crop
+2025-12-18 11:59:04,525 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+supporting+food+crop&per_page=15&size=medium
+2025-12-18 11:59:04,526 - WARNING - No suitable images found for supporting_food_security_and_climate_change
+2025-12-18 11:59:04,529 - INFO - Searching for images for aipowered_monitoring_of_forest_degradation_and with keywords: sdg 15, powered, monitoring, satellite
+2025-12-18 11:59:04,704 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+15+powered+monitoring+satellite&per_page=15&size=medium
+2025-12-18 11:59:04,704 - WARNING - No suitable images found for aipowered_monitoring_of_forest_degradation_and
+2025-12-18 11:59:04,706 - INFO - Searching for images for financial_inclusion_speech_dataset_for_some with keywords: sdg 10, facilitating, acces, language
+2025-12-18 11:59:04,894 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+facilitating+acces+language&per_page=15&size=medium
+2025-12-18 11:59:04,895 - WARNING - No suitable images found for financial_inclusion_speech_dataset_for_some
+2025-12-18 11:59:04,900 - INFO - Searching for images for wezesha_na_kabambe__offline_swahili with keywords: sdg 10, wezesha, kabambe, power
+2025-12-18 11:59:05,294 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+wezesha+kabambe+power&per_page=15&size=medium
+2025-12-18 11:59:05,294 - WARNING - No suitable images found for wezesha_na_kabambe__offline_swahili
+2025-12-18 11:59:05,302 - INFO - Searching for images for finding_good_spots_for_decentralized_green with keywords: sdg 13, bridging, energy, satellite
+2025-12-18 11:59:05,507 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+13+bridging+energy+satellite&per_page=15&size=medium
+2025-12-18 11:59:05,507 - WARNING - No suitable images found for finding_good_spots_for_decentralized_green
+2025-12-18 11:59:05,508 - INFO - Searching for images for mapping_blue_carbon_quantifying_mangrove_carbon with keywords: sdg 15, quantifying, colombian, satellite
+2025-12-18 11:59:05,873 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+15+quantifying+colombian+satellite&per_page=15&size=medium
+2025-12-18 11:59:05,874 - WARNING - No suitable images found for mapping_blue_carbon_quantifying_mangrove_carbon
+2025-12-18 11:59:05,877 - WARNING - No row found in Excel matching directory: aipowered_crop_disease_identification_dataset_and
+2025-12-18 11:59:05,877 - WARNING - Could not find project info for aipowered_crop_disease_identification_dataset_and
+2025-12-18 11:59:05,878 - INFO - Searching for images for predicting_crop_health_using_opensource_geospatial with keywords: sdg 2, farm, boundarie, satellite
+2025-12-18 11:59:06,056 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+farm+boundarie+satellite&per_page=15&size=medium
+2025-12-18 11:59:06,056 - WARNING - No suitable images found for predicting_crop_health_using_opensource_geospatial
+2025-12-18 11:59:06,059 - INFO - Searching for images for estimation_of_chlorophyll_contents_of_crops with keywords: sdg 2, chlorophyll, buster, imagery
+2025-12-18 11:59:06,450 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+chlorophyll+buster+imagery&per_page=15&size=medium
+2025-12-18 11:59:06,451 - WARNING - No suitable images found for estimation_of_chlorophyll_contents_of_crops
+2025-12-18 11:59:06,459 - INFO - Searching for images for enhancing_business_registration_in_kenya_through with keywords: enhancing, busines, language, power
+2025-12-18 11:59:06,693 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=enhancing+busines+language+power&per_page=15&size=medium
+2025-12-18 11:59:06,693 - WARNING - No suitable images found for enhancing_business_registration_in_kenya_through
+2025-12-18 11:59:06,695 - INFO - Searching for images for better_language_translation_for_more_training with keywords: sdg 4, better, language, translation
+2025-12-18 11:59:06,868 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+4+better+language+translation&per_page=15&size=medium
+2025-12-18 11:59:06,870 - WARNING - No suitable images found for better_language_translation_for_more_training
+2025-12-18 11:59:06,873 - INFO - Searching for images for monitoring_crop_type_area_and_enabling with keywords: sdg 2, monitoring, crop, satellite
+2025-12-18 11:59:07,244 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+monitoring+crop+satellite&per_page=15&size=medium
+2025-12-18 11:59:07,244 - WARNING - No suitable images found for monitoring_crop_type_area_and_enabling
+2025-12-18 11:59:07,246 - INFO - Searching for images for imarika__helping_smallholder_farmers_to with keywords: sdg 10, imarika, helping, climate
+2025-12-18 11:59:07,423 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+imarika+helping+climate&per_page=15&size=medium
+2025-12-18 11:59:07,424 - WARNING - No suitable images found for imarika__helping_smallholder_farmers_to
+2025-12-18 11:59:07,426 - INFO - Searching for images for detecting_and_assessing_tomato_stress_using with keywords: sdg 2, detecting, assessing, investigate
+2025-12-18 11:59:07,618 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+detecting+assessing+investigate&per_page=15&size=medium
+2025-12-18 11:59:07,618 - WARNING - No suitable images found for detecting_and_assessing_tomato_stress_using
+2025-12-18 11:59:07,619 - INFO - Searching for images for using_locallanguage_ai_advise_women_in with keywords: sdg 5, lifting, women, economic
+2025-12-18 11:59:07,984 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+5+lifting+women+economic&per_page=15&size=medium
+2025-12-18 11:59:07,984 - WARNING - No suitable images found for using_locallanguage_ai_advise_women_in
+2025-12-18 11:59:07,985 - INFO - Searching for images for lifting_up_women_through_land_ownership with keywords: sdg 5, lifting, women, economic
+2025-12-18 11:59:08,171 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+5+lifting+women+economic&per_page=15&size=medium
+2025-12-18 11:59:08,171 - WARNING - No suitable images found for lifting_up_women_through_land_ownership
+2025-12-18 11:59:08,174 - INFO - Searching for images for datasets_marking_personal_identifiable_information with keywords: sdg 13, preserving, privacy, language
+2025-12-18 11:59:08,557 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+13+preserving+privacy+language&per_page=15&size=medium
+2025-12-18 11:59:08,558 - WARNING - No suitable images found for datasets_marking_personal_identifiable_information
+2025-12-18 11:59:08,563 - INFO - Searching for images for residential_energy_and_weather_dataset_rewd with keywords: sdg 13, promoting, energy, weather
+2025-12-18 11:59:08,744 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+13+promoting+energy+weather&per_page=15&size=medium
+2025-12-18 11:59:08,744 - WARNING - No suitable images found for residential_energy_and_weather_dataset_rewd
+2025-12-18 11:59:08,746 - INFO - Searching for images for miti360_a_machine_learning_ready_dataset with keywords: sdg 15, miti360, comprehensive, weather
+2025-12-18 11:59:08,911 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+15+miti360+comprehensive+weather&per_page=15&size=medium
+2025-12-18 11:59:08,911 - WARNING - No suitable images found for miti360_a_machine_learning_ready_dataset
+2025-12-18 11:59:08,913 - INFO - Searching for images for monitoring_zea_mays_maize_disease_stress with keywords: sdg 2, detecting, assessing, health
+2025-12-18 11:59:09,274 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+detecting+assessing+health&per_page=15&size=medium
+2025-12-18 11:59:09,275 - WARNING - No suitable images found for monitoring_zea_mays_maize_disease_stress
+2025-12-18 11:59:09,275 - INFO - Searching for images for ltomekatip_pioneering_indigenousled_biodiversity_d with keywords: sdg 15, indigenou, knowledge, climate
+2025-12-18 11:59:09,667 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+15+indigenou+knowledge+climate&per_page=15&size=medium
+2025-12-18 11:59:09,668 - WARNING - No suitable images found for ltomekatip_pioneering_indigenousled_biodiversity_d
+2025-12-18 11:59:09,675 - INFO - Searching for images for integration_of_groundbased_vegetation_parameters_t with keywords: sdg 2, agro, thermography, map
+2025-12-18 11:59:09,869 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+agro+thermography+map&per_page=15&size=medium
+2025-12-18 11:59:09,869 - WARNING - No suitable images found for integration_of_groundbased_vegetation_parameters_t
+2025-12-18 11:59:09,871 - INFO - Searching for images for ai_for_agricultural_advisory_and_financial with keywords: sdg 10, agricultural, advisory, crop
+2025-12-18 11:59:10,058 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+agricultural+advisory+crop&per_page=15&size=medium
+2025-12-18 11:59:10,059 - WARNING - No suitable images found for ai_for_agricultural_advisory_and_financial
+2025-12-18 11:59:10,060 - INFO - Searching for images for combatting_air_pollution_and_ghg_emissions with keywords: sdg 13, pollution, patna, tool
+2025-12-18 11:59:10,234 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+13+pollution+patna+tool&per_page=15&size=medium
+2025-12-18 11:59:10,235 - WARNING - No suitable images found for combatting_air_pollution_and_ghg_emissions
+2025-12-18 11:59:10,238 - INFO - Searching for images for crop_type_identification_from_satellite_imagery with keywords: sdg 2, spot, crop, satellite
+2025-12-18 11:59:10,784 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+spot+crop+satellite&per_page=15&size=medium
+2025-12-18 11:59:10,784 - WARNING - No suitable images found for crop_type_identification_from_satellite_imagery
+2025-12-18 11:59:10,786 - INFO - Searching for images for forest_forward_aipowered_high_carbon_stock with keywords: sdg 13, forest, forward, satellite
+2025-12-18 11:59:10,962 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+13+forest+forward+satellite&per_page=15&size=medium
+2025-12-18 11:59:10,963 - WARNING - No suitable images found for forest_forward_aipowered_high_carbon_stock
+2025-12-18 11:59:10,964 - INFO - Searching for images for urban_roadspace_classification_data_and_model with keywords: sdg 10, dataset, transportation, satellite
+2025-12-18 11:59:11,158 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+dataset+transportation+satellite&per_page=15&size=medium
+2025-12-18 11:59:11,159 - WARNING - No suitable images found for urban_roadspace_classification_data_and_model
+2025-12-18 11:59:11,162 - INFO - Searching for images for monitoring_deforestation_predicting_landuse_and_la with keywords: sdg 13, monitoring, deforestation, satellite
+2025-12-18 11:59:11,577 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+13+monitoring+deforestation+satellite&per_page=15&size=medium
+2025-12-18 11:59:11,577 - WARNING - No suitable images found for monitoring_deforestation_predicting_landuse_and_la
+2025-12-18 11:59:11,579 - INFO - Searching for images for making_ai_speak_mundari__opensource with keywords: sdg 10, making, speak, language
+2025-12-18 11:59:11,737 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+making+speak+language&per_page=15&size=medium
+2025-12-18 11:59:11,737 - WARNING - No suitable images found for making_ai_speak_mundari__opensource
+2025-12-18 11:59:11,739 - INFO - Searching for images for evaluating_the_performance_of_machine_learning with keywords: sdg 2, agro, innovator, satellite
+2025-12-18 11:59:11,921 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+agro+innovator+satellite&per_page=15&size=medium
+2025-12-18 11:59:11,922 - WARNING - No suitable images found for evaluating_the_performance_of_machine_learning
+2025-12-18 11:59:11,924 - INFO - Searching for images for characterizing_maize_stress_using_uav_remote with keywords: sdg 2, artificial, intelligence, remote sensing
+2025-12-18 11:59:12,306 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+artificial+intelligence+remote+sensing&per_page=15&size=medium
+2025-12-18 11:59:12,307 - WARNING - No suitable images found for characterizing_maize_stress_using_uav_remote
+2025-12-18 11:59:12,314 - WARNING - No row found in Excel matching directory: forest_forward_using_ai_to_protect
+2025-12-18 11:59:12,315 - WARNING - Could not find project info for forest_forward_using_ai_to_protect
+2025-12-18 11:59:12,320 - INFO - Searching for images for estimating_solar_irradiance_for_improved_solar with keywords: sdg 13, estimating, solar, satellite
+2025-12-18 11:59:12,771 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+13+estimating+solar+satellite&per_page=15&size=medium
+2025-12-18 11:59:12,771 - WARNING - No suitable images found for estimating_solar_irradiance_for_improved_solar
+2025-12-18 11:59:12,774 - INFO - Searching for images for labelled_open_solar_panel_data_for with keywords: sdg 13, helping, measure, satellite
+2025-12-18 11:59:12,974 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+13+helping+measure+satellite&per_page=15&size=medium
+2025-12-18 11:59:12,974 - WARNING - No suitable images found for labelled_open_solar_panel_data_for
+2025-12-18 11:59:12,976 - INFO - Searching for images for providing_better_information_on_sexual_and with keywords: sdg 10, providing, better, platform
+2025-12-18 11:59:13,167 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+providing+better+platform&per_page=15&size=medium
+2025-12-18 11:59:13,168 - WARNING - No suitable images found for providing_better_information_on_sexual_and
+2025-12-18 11:59:13,169 - INFO - Searching for images for aipowered_detection_of_diseases_for_cashew with keywords: sdg 2, drone, image, crop
+2025-12-18 11:59:13,350 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+drone+image+crop&per_page=15&size=medium
+2025-12-18 11:59:13,351 - WARNING - No suitable images found for aipowered_detection_of_diseases_for_cashew
+2025-12-18 11:59:13,357 - INFO - Searching for images for crop_type_mapping_in_mphaila_irrigation with keywords: sdg 2, buster, satellite, map
+2025-12-18 11:59:13,536 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+buster+satellite+map&per_page=15&size=medium
+2025-12-18 11:59:13,536 - WARNING - No suitable images found for crop_type_mapping_in_mphaila_irrigation
+2025-12-18 11:59:13,538 - INFO - Searching for images for chamachat__powering_chama_loan_groups with keywords: sdg 10, chamachat, powering, economic
+2025-12-18 11:59:13,729 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+chamachat+powering+economic&per_page=15&size=medium
+2025-12-18 11:59:13,730 - WARNING - No suitable images found for chamachat__powering_chama_loan_groups
+2025-12-18 11:59:13,732 - INFO - Searching for images for remote_sensing_and_machine_learning_applications with keywords: sdg 2, discovering, agriculture, remote sensing
+2025-12-18 11:59:14,097 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+discovering+agriculture+remote+sensing&per_page=15&size=medium
+2025-12-18 11:59:14,098 - WARNING - No suitable images found for remote_sensing_and_machine_learning_applications
+2025-12-18 11:59:14,101 - INFO - Searching for images for precision_weed_mapping_and_management_in with keywords: sdg 2, weetie, crop, south africa
+2025-12-18 11:59:14,465 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+weetie+crop+south+africa&per_page=15&size=medium
+2025-12-18 11:59:14,465 - WARNING - No suitable images found for precision_weed_mapping_and_management_in
+2025-12-18 11:59:14,467 - INFO - Searching for images for landslide_and_flood_disaster_hotspot_monitoring with keywords: sdg 13, site, image, rwanda
+2025-12-18 11:59:14,647 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+13+site+image+rwanda&per_page=15&size=medium
+2025-12-18 11:59:14,647 - WARNING - No suitable images found for landslide_and_flood_disaster_hotspot_monitoring
+2025-12-18 11:59:14,648 - INFO - Searching for images for ecuador_electricity_access__supply_data with keywords: sdg 7, ecuadorian, acces, satellite
+2025-12-18 11:59:15,080 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+7+ecuadorian+acces+satellite&per_page=15&size=medium
+2025-12-18 11:59:15,080 - WARNING - No suitable images found for ecuador_electricity_access__supply_data
+2025-12-18 11:59:15,082 - INFO - Searching for images for livhealth_kiswahili_corpus with keywords: sdg 10, livhealth, kiswahili, language
+2025-12-18 11:59:15,428 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+livhealth+kiswahili+language&per_page=15&size=medium
+2025-12-18 11:59:15,428 - WARNING - No suitable images found for livhealth_kiswahili_corpus
+2025-12-18 11:59:15,433 - INFO - Searching for images for building_parallel_corpora_for_kenyas_indigenous with keywords: sdg 10, enabling, machine, language
+2025-12-18 11:59:15,841 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+enabling+machine+language&per_page=15&size=medium
+2025-12-18 11:59:15,842 - WARNING - No suitable images found for building_parallel_corpora_for_kenyas_indigenous
+2025-12-18 11:59:15,844 - INFO - Searching for images for machine_learning_training_data_for_continental with keywords: sdg 13, monitoring, impact, learning
+2025-12-18 11:59:16,228 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+13+monitoring+impact+learning&per_page=15&size=medium
+2025-12-18 11:59:16,228 - WARNING - No suitable images found for machine_learning_training_data_for_continental
+2025-12-18 11:59:16,235 - INFO - Searching for images for leaf_area_index_estimation_of_tomato with keywords: sdg 2, internet, crop, satellite
+2025-12-18 11:59:16,592 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+internet+crop+satellite&per_page=15&size=medium
+2025-12-18 11:59:16,593 - WARNING - No suitable images found for leaf_area_index_estimation_of_tomato
+2025-12-18 11:59:16,599 - INFO - Searching for images for a_nigerian_twitter_sentiment_corpus_for with keywords: sdg 10, detecting, sentiment, language
+2025-12-18 11:59:16,959 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+detecting+sentiment+language&per_page=15&size=medium
+2025-12-18 11:59:16,960 - WARNING - No suitable images found for a_nigerian_twitter_sentiment_corpus_for
+2025-12-18 11:59:16,966 - INFO - Searching for images for carbonlens_high_carbon_stock_approach with keywords: sdg 13, carbonlen, high, senegal 
+2025-12-18 11:59:17,385 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+13+carbonlen+high+senegal+&per_page=15&size=medium
+2025-12-18 11:59:17,386 - WARNING - No suitable images found for carbonlens_high_carbon_stock_approach
+2025-12-18 11:59:17,388 - INFO - Searching for images for explore_how_to_make_ai_systems with keywords: sdg 10, discover, ghanaian, speech
+2025-12-18 11:59:17,592 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+discover+ghanaian+speech&per_page=15&size=medium
+2025-12-18 11:59:17,592 - WARNING - No suitable images found for explore_how_to_make_ai_systems
+2025-12-18 11:59:17,593 - INFO - Searching for images for advancing_oil_palm_mapping_with_social with keywords: sdg 13, mitigating, impact, satellite
+2025-12-18 11:59:17,772 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+13+mitigating+impact+satellite&per_page=15&size=medium
+2025-12-18 11:59:17,772 - WARNING - No suitable images found for advancing_oil_palm_mapping_with_social
+2025-12-18 11:59:17,773 - INFO - Searching for images for empowering_women_across_india_with_voicebased with keywords: sdg 2, generated, voice, language
+2025-12-18 11:59:18,170 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+generated+voice+language&per_page=15&size=medium
+2025-12-18 11:59:18,170 - WARNING - No suitable images found for empowering_women_across_india_with_voicebased
+2025-12-18 11:59:18,171 - INFO - Searching for images for measuring_soil_health_for_more_sustainable with keywords: sdg 2, soil, local, merged
+2025-12-18 11:59:18,763 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+soil+local+merged&per_page=15&size=medium
+2025-12-18 11:59:18,763 - WARNING - No suitable images found for measuring_soil_health_for_more_sustainable
+2025-12-18 11:59:18,772 - WARNING - No row found in Excel matching directory: parallel_text_for_machine_translation_in
+2025-12-18 11:59:18,773 - WARNING - Could not find project info for parallel_text_for_machine_translation_in
+2025-12-18 11:59:18,775 - INFO - Searching for images for datadriven_decisionmaking_for_farmers_to_increase with keywords: sdg 2, geospatial, wheat, power
+2025-12-18 11:59:18,977 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+geospatial+wheat+power&per_page=15&size=medium
+2025-12-18 11:59:18,978 - WARNING - No suitable images found for datadriven_decisionmaking_for_farmers_to_increase
+2025-12-18 11:59:18,981 - INFO - Searching for images for forecasting_availaibiltiy_of_tropical_forest_resou with keywords: sdg 15, phenological, ecological, satellite
+2025-12-18 11:59:19,169 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+15+phenological+ecological+satellite&per_page=15&size=medium
+2025-12-18 11:59:19,170 - WARNING - No suitable images found for forecasting_availaibiltiy_of_tropical_forest_resou
+2025-12-18 11:59:19,172 - INFO - Searching for images for the_ussd_gbv_information_chatbot_350 with keywords: sdg 10, sgbv, chatbot, tool
+2025-12-18 11:59:19,518 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+sgbv+chatbot+tool&per_page=15&size=medium
+2025-12-18 11:59:19,519 - WARNING - No suitable images found for the_ussd_gbv_information_chatbot_350
+2025-12-18 11:59:19,524 - INFO - Searching for images for aipowered_lifestock_health_system_enabling_local with keywords: sdg 10, livhealth, kiswahili, language
+2025-12-18 11:59:19,931 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+livhealth+kiswahili+language&per_page=15&size=medium
+2025-12-18 11:59:19,932 - WARNING - No suitable images found for aipowered_lifestock_health_system_enabling_local
+2025-12-18 11:59:19,935 - INFO - Searching for images for translating_weather_information_into_actionable_ad with keywords: sdg 2, translating, weather, climate
+2025-12-18 11:59:20,365 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+translating+weather+climate&per_page=15&size=medium
+2025-12-18 11:59:20,365 - WARNING - No suitable images found for translating_weather_information_into_actionable_ad
+2025-12-18 11:59:20,371 - INFO - Searching for images for climate_resilience_through_agroforestry with keywords: sdg 2, enabled, climate, geospatial
+2025-12-18 11:59:20,537 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+enabled+climate+geospatial&per_page=15&size=medium
+2025-12-18 11:59:20,538 - WARNING - No suitable images found for climate_resilience_through_agroforestry
+2025-12-18 11:59:20,541 - INFO - Searching for images for cotton_ace_aidriven_pest_management_for with keywords: sdg 2, pest, management, yield
+2025-12-18 11:59:20,742 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+pest+management+yield&per_page=15&size=medium
+2025-12-18 11:59:20,743 - WARNING - No suitable images found for cotton_ace_aidriven_pest_management_for
+2025-12-18 11:59:20,746 - INFO - Searching for images for dronebased_agricultural_dataset_for_crop_yield with keywords: sdg 2, enable, cashew, crop
+2025-12-18 11:59:21,134 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+enable+cashew+crop&per_page=15&size=medium
+2025-12-18 11:59:21,134 - WARNING - No suitable images found for dronebased_agricultural_dataset_for_crop_yield
+2025-12-18 11:59:21,135 - INFO - Searching for images for discover_the_effectiveness_of_the_energy with keywords: sdg 2, explore, agrivoltaic, crop
+2025-12-18 11:59:21,507 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+explore+agrivoltaic+crop&per_page=15&size=medium
+2025-12-18 11:59:21,508 - WARNING - No suitable images found for discover_the_effectiveness_of_the_energy
+2025-12-18 11:59:21,512 - INFO - Searching for images for enabling_geoscientists_to_use_machine_learning with keywords: sdg 2, map, meal, crop
+2025-12-18 11:59:21,899 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+2+map+meal+crop&per_page=15&size=medium
+2025-12-18 11:59:21,899 - WARNING - No suitable images found for enabling_geoscientists_to_use_machine_learning
+2025-12-18 11:59:21,902 - INFO - Searching for images for kiazi_bora__informing_vulnerable_women with keywords: sdg 10, kiazi, bora, farming
+2025-12-18 11:59:22,068 - ERROR - Error searching Pexels API: 401 Client Error: Unauthorized for url: https://api.pexels.com/v1/search?query=sdg+10+kiazi+bora+farming&per_page=15&size=medium
+2025-12-18 11:59:22,069 - WARNING - No suitable images found for kiazi_bora__informing_vulnerable_women
+2025-12-18 11:59:22,069 - INFO - Completed processing. Downloaded 0 placeholder images.
+2025-12-18 12:06:11,497 - INFO - Loaded data catalog from docs/data_catalog.xlsx
+2025-12-18 12:06:11,502 - INFO - Skipping 58 orphaned directories (not in current Excel data)
+2025-12-18 12:06:11,502 - INFO - Found 88 valid project directories
+2025-12-18 12:06:11,502 - INFO - Limited to processing 2 projects
+2025-12-18 12:06:11,531 - INFO - Searching for images for enhancing_business_registration_in_kenya_through with keywords: enhancing, busines, language, power
+2025-12-18 12:06:12,498 - INFO - Downloaded image for enhancing_business_registration_in_kenya_through: public/projects/enhancing_business_registration_in_kenya_through/images/placeholder_image.jpeg
+2025-12-18 12:06:13,505 - INFO - Completed processing. Downloaded 1 placeholder images.
+2025-12-18 12:08:04,037 - INFO - Loaded data catalog from docs/data_catalog.xlsx
+2025-12-18 12:08:04,041 - INFO - Skipping 58 orphaned directories (not in current Excel data)
+2025-12-18 12:08:04,042 - INFO - Found 88 valid project directories
+2025-12-18 12:08:04,066 - INFO - Searching for images for monitoring_deforestation_predicting_landuse_and_la with keywords: sdg 13, monitoring, deforestation, satellite
+2025-12-18 12:08:05,106 - INFO - Downloaded image for monitoring_deforestation_predicting_landuse_and_la: public/projects/monitoring_deforestation_predicting_landuse_and_la/images/placeholder_image.jpeg
+2025-12-18 12:08:06,110 - INFO - Searching for images for supporting_food_security_and_climate_change with keywords: sdg 2, supporting, food, crop
+2025-12-18 12:08:06,961 - INFO - Downloaded image for supporting_food_security_and_climate_change: public/projects/supporting_food_security_and_climate_change/images/placeholder_image.jpeg
+2025-12-18 12:08:07,969 - INFO - Searching for images for estimating_solar_irradiance_for_improved_solar with keywords: sdg 13, estimating, solar, satellite
+2025-12-18 12:08:10,168 - INFO - Downloaded image for estimating_solar_irradiance_for_improved_solar: public/projects/estimating_solar_irradiance_for_improved_solar/images/placeholder_image.jpeg
+2025-12-18 12:08:11,175 - INFO - Searching for images for carbonlens_high_carbon_stock_approach with keywords: sdg 13, carbonlen, high, senegal 
+2025-12-18 12:08:11,895 - INFO - Downloaded image for carbonlens_high_carbon_stock_approach: public/projects/carbonlens_high_carbon_stock_approach/images/placeholder_image.jpeg
+2025-12-18 12:08:12,902 - INFO - Searching for images for forest_forward_aipowered_high_carbon_stock with keywords: sdg 13, forest, forward, satellite
+2025-12-18 12:08:14,215 - INFO - Downloaded image for forest_forward_aipowered_high_carbon_stock: public/projects/forest_forward_aipowered_high_carbon_stock/images/placeholder_image.jpeg
+2025-12-18 12:08:15,222 - INFO - Searching for images for monitoring_crop_type_area_and_enabling with keywords: sdg 2, monitoring, crop, satellite
+2025-12-18 12:08:17,178 - INFO - Downloaded image for monitoring_crop_type_area_and_enabling: public/projects/monitoring_crop_type_area_and_enabling/images/placeholder_image.jpeg
+2025-12-18 12:08:18,183 - INFO - Searching for images for lifting_up_women_through_land_ownership with keywords: sdg 5, lifting, women, economic
+2025-12-18 12:08:19,111 - INFO - Downloaded image for lifting_up_women_through_land_ownership: public/projects/lifting_up_women_through_land_ownership/images/placeholder_image.jpeg
+2025-12-18 12:08:20,121 - INFO - Searching for images for livhealth_kiswahili_corpus with keywords: sdg 10, livhealth, kiswahili, language
+2025-12-18 12:08:21,326 - INFO - Downloaded image for livhealth_kiswahili_corpus: public/projects/livhealth_kiswahili_corpus/images/placeholder_image.jpeg
+2025-12-18 12:08:22,335 - INFO - Searching for images for ai_for_agricultural_advisory_and_financial with keywords: sdg 10, agricultural, advisory, crop
+2025-12-18 12:08:22,980 - INFO - Downloaded image for ai_for_agricultural_advisory_and_financial: public/projects/ai_for_agricultural_advisory_and_financial/images/placeholder_image.jpeg
+2025-12-18 12:08:23,988 - INFO - Searching for images for imarika__helping_smallholder_farmers_to with keywords: sdg 10, imarika, helping, climate
+2025-12-18 12:08:27,218 - INFO - Downloaded image for imarika__helping_smallholder_farmers_to: public/projects/imarika__helping_smallholder_farmers_to/images/placeholder_image.jpeg
+2025-12-18 12:08:28,223 - INFO - Searching for images for kiazi_bora__informing_vulnerable_women with keywords: sdg 10, kiazi, bora, farming
+2025-12-18 12:08:31,672 - INFO - Downloaded image for kiazi_bora__informing_vulnerable_women: public/projects/kiazi_bora__informing_vulnerable_women/images/placeholder_image.jpeg
+2025-12-18 12:08:32,680 - INFO - Searching for images for aipowered_monitoring_of_forest_degradation_and with keywords: sdg 15, powered, monitoring, satellite
+2025-12-18 12:08:33,530 - INFO - Downloaded image for aipowered_monitoring_of_forest_degradation_and: public/projects/aipowered_monitoring_of_forest_degradation_and/images/placeholder_image.jpeg
+2025-12-18 12:08:34,537 - INFO - Searching for images for making_ai_speak_mundari__opensource with keywords: sdg 10, making, speak, language
+2025-12-18 12:08:35,273 - INFO - Downloaded image for making_ai_speak_mundari__opensource: public/projects/making_ai_speak_mundari__opensource/images/placeholder_image.jpeg
+2025-12-18 12:08:36,281 - INFO - Searching for images for wezesha_na_kabambe__offline_swahili with keywords: sdg 10, wezesha, kabambe, power
+2025-12-18 12:08:38,381 - INFO - Downloaded image for wezesha_na_kabambe__offline_swahili: public/projects/wezesha_na_kabambe__offline_swahili/images/placeholder_image.jpeg
+2025-12-18 12:08:39,388 - INFO - Searching for images for providing_better_information_on_sexual_and with keywords: sdg 10, providing, better, platform
+2025-12-18 12:08:40,614 - INFO - Downloaded image for providing_better_information_on_sexual_and: public/projects/providing_better_information_on_sexual_and/images/placeholder_image.jpeg
+2025-12-18 12:08:41,620 - INFO - Searching for images for translating_weather_information_into_actionable_ad with keywords: sdg 2, translating, weather, climate
+2025-12-18 12:08:42,928 - INFO - Downloaded image for translating_weather_information_into_actionable_ad: public/projects/translating_weather_information_into_actionable_ad/images/placeholder_image.jpeg
+2025-12-18 12:08:43,935 - INFO - Searching for images for better_language_translation_for_more_training with keywords: sdg 4, better, language, translation
+2025-12-18 12:08:45,008 - INFO - Downloaded image for better_language_translation_for_more_training: public/projects/better_language_translation_for_more_training/images/placeholder_image.jpeg
+2025-12-18 12:08:46,042 - INFO - Searching for images for chamachat__powering_chama_loan_groups with keywords: sdg 10, chamachat, powering, economic
+2025-12-18 12:08:51,144 - INFO - Downloaded image for chamachat__powering_chama_loan_groups: public/projects/chamachat__powering_chama_loan_groups/images/placeholder_image.jpeg
+2025-12-18 12:08:52,148 - INFO - Completed processing. Downloaded 18 placeholder images.
+2025-12-18 12:09:17,749 - INFO - Loaded data catalog from docs/data_catalog.xlsx
+2025-12-18 12:09:17,750 - INFO - Found 88 project directories
+2025-12-18 12:09:17,750 - INFO - Limited to processing 2 projects
+2025-12-18 12:09:17,778 - INFO - Completed processing. Downloaded 0 placeholder images.
+2025-12-18 12:19:03,869 - INFO - Loaded data catalog from docs/data_catalog.xlsx
+2025-12-18 12:19:03,870 - INFO - Found 88 project directories
+2025-12-18 12:19:03,889 - INFO - Searching for images for ai_as_a_helping_hand_to with keywords: sdg 13, helping, hand, text
+2025-12-18 12:19:04,976 - INFO - Downloaded image for ai_as_a_helping_hand_to: public/projects/ai_as_a_helping_hand_to/images/placeholder_image.jpeg
+2025-12-18 12:19:05,987 - INFO - Searching for images for citizen_chatbot_of_the_kenyan_office with keywords: sdg 16, citizen, chatbot
+2025-12-18 12:19:08,242 - INFO - Downloaded image for citizen_chatbot_of_the_kenyan_office: public/projects/citizen_chatbot_of_the_kenyan_office/images/placeholder_image.jpeg
+2025-12-18 12:19:09,249 - INFO - Searching for images for monitoring_deforestation_predicting_landuse_and_la with keywords: sdg 13, monitoring, deforestation, satellite
+2025-12-18 12:19:10,854 - INFO - Downloaded image for monitoring_deforestation_predicting_landuse_and_la: public/projects/monitoring_deforestation_predicting_landuse_and_la/images/placeholder_image.jpeg
+2025-12-18 12:19:11,862 - INFO - Searching for images for onsite_image_and_weather_data_for with keywords: sdg 13, site, image, rwanda
+2025-12-18 12:19:16,402 - INFO - Downloaded image for onsite_image_and_weather_data_for: public/projects/onsite_image_and_weather_data_for/images/placeholder_image.jpeg
+2025-12-18 12:19:17,412 - INFO - Searching for images for mbaza_chatbot_rwanda_for_health_related with keywords: sdg 10, mbaza, chatbot, economic
+2025-12-18 12:19:18,904 - INFO - Downloaded image for mbaza_chatbot_rwanda_for_health_related: public/projects/mbaza_chatbot_rwanda_for_health_related/images/placeholder_image.jpeg
+2025-12-18 12:19:19,915 - INFO - Searching for images for data_for_detecting_and_assessing_tomato with keywords: sdg 2, detecting, assessing, investigate
+2025-12-18 12:19:20,953 - INFO - Downloaded image for data_for_detecting_and_assessing_tomato: public/projects/data_for_detecting_and_assessing_tomato/images/placeholder_image.jpeg
+2025-12-18 12:19:21,961 - INFO - Completed processing. Downloaded 6 placeholder images.

@@ -1,1 +1,0 @@
-Audiopedia has created useful content on various topics including health, education, financial literacy. This data is available in text and audio format in multiple languages incl. low-resource languages.
