@@ -190,8 +190,18 @@ const WorldMap = ({
 
   const handleClick = (geo) => {
     const countryData = getCountryData(geo)
-    if (countryData && onCountryClick) {
-      onCountryClick(countryData)
+    if (onCountryClick) {
+      // If country has data, select it. If not, deselect (pass null)
+      onCountryClick(countryData && countryData.projects > 0 ? countryData : null)
+    }
+  }
+
+  const handleBackgroundClick = (e) => {
+    // Only deselect if clicking directly on the SVG background (not a country)
+    if (e.target.tagName === 'svg' || e.target.tagName === 'rect') {
+      if (onCountryClick) {
+        onCountryClick(null)
+      }
     }
   }
 
@@ -242,6 +252,7 @@ const WorldMap = ({
           scale: 140,
           center: [20, 5]
         }}
+        onClick={handleBackgroundClick}
         style={{
           width: '100%',
           height: 'auto',

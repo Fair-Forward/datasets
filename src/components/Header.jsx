@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { withBasePath } from '../utils/basePath'
 
 const Header = () => {
@@ -98,12 +98,12 @@ const Header = () => {
           </button>
         </div>
         <div className="top-nav-links">
-          <Link to="/" className={`nav-link ${!isInsights ? 'active' : ''}`}>
+          <a href={withBasePath('/')} className={`nav-link ${!isInsights ? 'active' : ''}`}>
             Projects
-          </Link>
-          <Link to="/insights" className={`nav-link ${isInsights ? 'active' : ''}`}>
+          </a>
+          <a href={withBasePath('/insights')} className={`nav-link ${isInsights ? 'active' : ''}`}>
             <i className="fas fa-chart-line"></i> Insights
-          </Link>
+          </a>
         </div>
       </div>
 

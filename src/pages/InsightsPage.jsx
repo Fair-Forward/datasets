@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import Header from '../components/Header'
 import WorldMap from '../components/WorldMap'
 import SDGChart from '../components/SDGChart'
@@ -99,10 +98,10 @@ const InsightsPage = () => {
       <Header />
       
       <div className="container">
-        <Link to="/" className="back-link">
+        <a href={withBasePath('/')} className="back-link">
           <i className="fas fa-arrow-left"></i>
           Back to Catalog
-        </Link>
+        </a>
 
         <div className="page-header">
           <h1>Insights & Visualisations</h1>
