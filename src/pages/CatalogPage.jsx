@@ -1,4 +1,5 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import CatalogHeader from '../components/CatalogHeader'
 import FilterBar from '../components/FilterBar'
 import ProjectCard from '../components/ProjectCard'
@@ -7,17 +8,46 @@ import Header from '../components/Header'
 import { withBasePath } from '../utils/basePath'
 
 const CatalogPage = () => {
+  const [searchParams, setSearchParams] = useSearchParams()
   const [catalogData, setCatalogData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [filters, setFilters] = useState({
-    search: '',
-    view: 'all',
-    sdg: '',
-    dataType: '',
-    country: ''
-  })
   const [selectedProject, setSelectedProject] = useState(null)
+
+  // Initialize filters from URL params
+  const getInitialFilters = useCallback(() => {
+    return {
+      search: searchParams.get('search') || '',
+      view: searchParams.get('view') || 'all',
+      sdg: searchParams.get('sdg') || '',
+      dataType: searchParams.get('dataType') || '',
+      // Support both 'country' and 'region' params
+      country: searchParams.get('country') || searchParams.get('region') || ''
+    }
+  }, [searchParams])
+
+  const [filters, setFilters] = useState(getInitialFilters)
+
+  // Update filters when URL changes (e.g., from back/forward navigation)
+  useEffect(() => {
+    setFilters(getInitialFilters())
+  }, [searchParams, getInitialFilters])
+
+  // Update URL when filters change
+  const handleFilterChange = useCallback((newFilters) => {
+    setFilters(newFilters)
+    
+    // Build new search params
+    const params = new URLSearchParams()
+    if (newFilters.search) params.set('search', newFilters.search)
+    if (newFilters.view && newFilters.view !== 'all') params.set('view', newFilters.view)
+    if (newFilters.sdg) params.set('sdg', newFilters.sdg)
+    if (newFilters.dataType) params.set('dataType', newFilters.dataType)
+    if (newFilters.country) params.set('region', newFilters.country)
+    
+    // Update URL without triggering navigation
+    setSearchParams(params, { replace: true })
+  }, [setSearchParams])
 
   // Load catalog data
   useEffect(() => {
@@ -150,7 +180,7 @@ const CatalogPage = () => {
       
       <FilterBar 
         filters={filters} 
-        onFilterChange={setFilters}
+        onFilterChange={handleFilterChange}
         availableFilters={{
           ...catalogData.filters,
           views: [
