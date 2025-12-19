@@ -90,9 +90,46 @@ const CatalogHeader = ({ stats }) => {
                   <div className="stat-label">Projects</div>
                 </div>
               </div>
-              <Link to="/insights" className="insights-link" title="View analytics">
-                <i className="fas fa-chart-line"></i>
-                <span>Insights &amp; visualisations</span>
+              
+              {/* Insights Preview Card */}
+              <Link to="/insights" className="insights-preview-card" title="Explore Insights & Visualizations">
+              <div className="insights-preview-graphics">
+                {/* Mini World Map */}
+                {/* <div className="mini-viz mini-map">
+                  <svg viewBox="0 0 60 30" className="mini-map-svg">
+                    <ellipse cx="30" cy="15" rx="28" ry="13" fill="#e2e8f0" />
+                    <circle cx="20" cy="12" r="3" fill="#059669" opacity="0.8" />
+                    <circle cx="35" cy="10" r="2" fill="#059669" opacity="0.6" />
+                    <circle cx="28" cy="18" r="2.5" fill="#059669" opacity="0.7" />
+                    <circle cx="42" cy="14" r="1.5" fill="#059669" opacity="0.5" />
+                    <circle cx="15" cy="16" r="2" fill="#059669" opacity="0.6" />
+                  </svg>
+                </div> */}
+                
+                {/* Mini SDG Bars */}
+                <div className="mini-viz mini-bars">
+                  <div className="mini-bar" style={{ height: '80%', background: '#E5243B' }}></div>
+                  <div className="mini-bar" style={{ height: '60%', background: '#DDA63A' }}></div>
+                  <div className="mini-bar" style={{ height: '90%', background: '#4C9F38' }}></div>
+                  <div className="mini-bar" style={{ height: '45%', background: '#26BDE2' }}></div>
+                  <div className="mini-bar" style={{ height: '70%', background: '#FCC30B' }}></div>
+                </div>
+                
+                {/* Mini Network Bubbles*/}
+                <div className="mini-viz mini-network">
+                  <div className="mini-bubble" style={{ width: '18px', height: '18px', background: '#2563eb' }}></div>
+                  <div className="mini-bubble" style={{ width: '14px', height: '14px', background: '#6366f1' }}></div>
+                  <div className="mini-bubble" style={{ width: '10px', height: '10px', background: '#059669' }}></div>
+                  <div className="mini-bubble" style={{ width: '12px', height: '12px', background: '#059669' }}></div>
+                </div> 
+              </div>
+              <div className="insights-preview-text">
+                <span className="insights-preview-title">            
+                  Insights
+                </span>
+                <span className="insights-preview-desc">Explore maps, charts & partner networks</span>
+              </div>
+              <i className="fas fa-arrow-right insights-preview-arrow"></i>
               </Link>
             </div>
             
