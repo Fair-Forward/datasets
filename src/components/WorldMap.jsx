@@ -129,7 +129,7 @@ const WorldMap = ({
     if (isoA2 && dataByIso.has(isoA2)) {
       return dataByIso.get(isoA2)
     }
-    
+
     // Try name override
     const name = props.name || props.NAME
     if (name && NAME_OVERRIDES[name]) {
@@ -147,7 +147,7 @@ const WorldMap = ({
       }
       if (dataByName.has(name)) {
         return dataByName.get(name)
-      }
+    }
     }
     
     return null
@@ -181,7 +181,7 @@ const WorldMap = ({
           <div class="map-tooltip-empty">No projects yet</div>
         </div>
       `)
-    }
+      }
   }
 
   const handleMouseLeave = () => {
@@ -201,8 +201,8 @@ const WorldMap = ({
     if (e.target.tagName === 'svg' || e.target.tagName === 'rect') {
       if (onCountryClick) {
         onCountryClick(null)
-      }
-    }
+            }
+          }
   }
 
   const handleZoomIn = () => {
@@ -253,8 +253,8 @@ const WorldMap = ({
           center: [20, 5]
         }}
         onClick={handleBackgroundClick}
-        style={{
-          width: '100%',
+      style={{
+        width: '100%',
           height: 'auto',
           maxHeight: '500px',
           backgroundColor: COLOR_CONFIG.ocean
@@ -333,8 +333,8 @@ const WorldMap = ({
             className="map-legend-bar"
             style={{
               background: `linear-gradient(to right, ${COLOR_CONFIG.gradientStart}, ${COLOR_CONFIG.gradientMid}, ${COLOR_CONFIG.gradientEnd})`
-            }}
-          />
+      }}
+    />
           <div className="map-legend-labels">
             <span>1</span>
             <span>{Math.round(maxValue / 2)}</span>

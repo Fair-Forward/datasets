@@ -3,6 +3,8 @@ import Header from '../components/Header'
 import WorldMap from '../components/WorldMap'
 import SDGChart from '../components/SDGChart'
 import MaturityChart from '../components/MaturityChart'
+import SDGCountryHeatmap from '../components/SDGCountryHeatmap'
+import OrganizationNetwork from '../components/OrganizationNetwork'
 import { withBasePath } from '../utils/basePath'
 
 const InsightsPage = () => {
@@ -11,6 +13,7 @@ const InsightsPage = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [selectedCountry, setSelectedCountry] = useState(null)
+  const [sdgView, setSdgView] = useState('chart') // 'chart' | 'heatmap'
 
   useEffect(() => {
     // Fetch both insights and catalog data
@@ -42,6 +45,11 @@ const InsightsPage = () => {
 
   const handleSDGClick = (sdgData) => {
     window.location.href = withBasePath(`?sdg=${encodeURIComponent(sdgData.sdg)}`)
+  }
+
+  const handleHeatmapCellClick = ({ country, sdg }) => {
+    // Navigate to catalog filtered by both country and SDG
+    window.location.href = withBasePath(`?region=${encodeURIComponent(country)}&sdg=${encodeURIComponent(sdg)}`)
   }
 
   // Calculate maturity distribution from catalog data
@@ -248,23 +256,66 @@ const InsightsPage = () => {
           </div>
         )}
 
-        {/* SDG Distribution Section */}
-        {sdg_distribution && Object.keys(sdg_distribution).length > 0 && (
+        {/* SDG Section with Tabs */}
+        {sdg_distribution && Object.keys(sdg_distribution).length > 0 && catalogData?.projects && (
           <div className="insight-card insight-card-sdg">
             <div className="insight-card-header">
               <div>
                 <h2>
                   <i className="fas fa-bullseye"></i>
-                  SDG Alignment
+                  SDG Analysis
                 </h2>
-                <p>Distribution of projects across Sustainable Development Goals</p>
+                <p>Explore how projects align with Sustainable Development Goals</p>
+              </div>
+              <div className="insight-tabs">
+                <button 
+                  className={`insight-tab ${sdgView === 'chart' ? 'active' : ''}`}
+                  onClick={() => setSdgView('chart')}
+                >
+                  <i className="fas fa-chart-bar"></i>
+                  Distribution
+                </button>
+                <button 
+                  className={`insight-tab ${sdgView === 'heatmap' ? 'active' : ''}`}
+                  onClick={() => setSdgView('heatmap')}
+                >
+                  <i className="fas fa-th"></i>
+                  Country Matrix
+                </button>
               </div>
             </div>
             
-            <SDGChart 
-              sdgDistribution={sdg_distribution}
-              onSDGClick={handleSDGClick}
-            />
+            <div className="insight-tab-content">
+              {sdgView === 'chart' && (
+                <SDGChart 
+                  sdgDistribution={sdg_distribution}
+                  onSDGClick={handleSDGClick}
+                />
+              )}
+              {sdgView === 'heatmap' && (
+                <SDGCountryHeatmap 
+                  projects={catalogData.projects}
+                  onCellClick={handleHeatmapCellClick}
+                />
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Organization Network Section */}
+        {catalogData?.projects && (
+          <div className="insight-card insight-card-network">
+            <div className="insight-card-header">
+              <div>
+                <h2>
+                  <i className="fas fa-project-diagram"></i>
+                  Partner Ecosystem
+                </h2>
+                <p>Organizations powering, catalyzing, and financing the projects</p>
+              </div>
+            </div>
+            
+            <OrganizationNetwork projects={catalogData.projects} />
           </div>
         )}
       </div>
