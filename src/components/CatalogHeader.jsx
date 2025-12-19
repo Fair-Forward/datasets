@@ -115,13 +115,6 @@ const CatalogHeader = ({ stats }) => {
                   <div className="mini-bar" style={{ height: '70%', background: '#FCC30B' }}></div>
                 </div>
                 
-                {/* Mini Network Bubbles*/}
-                {/* <div className="mini-viz mini-network">
-                  <div className="mini-bubble" style={{ width: '18px', height: '18px', background: '#2563eb' }}></div>
-                  <div className="mini-bubble" style={{ width: '14px', height: '14px', background: '#6366f1' }}></div>
-                  <div className="mini-bubble" style={{ width: '10px', height: '10px', background: '#059669' }}></div>
-                  <div className="mini-bubble" style={{ width: '12px', height: '12px', background: '#059669' }}></div>
-                </div>  */}
               </div>
               <div className="insights-preview-text">
                 <span className="insights-preview-title">            
