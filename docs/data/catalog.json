@@ -737,9 +737,9 @@
       ]
     },
     {
-      "id": "translating_weather_information_into_actionable_ad",
-      "title": "Translating weather information into actionable advisory for farmers through AI in Kenya (Smart Africa Innovate Africa Challenge)",
-      "description": "IMARIKA by Strathmore University’s iLabAfrica is building low-cost automatic weather station networks to provide access to accurate, local weather information in rural Kenya. This granular data allows advisory services for small-holder farmers to shift from using generic information to location-specific guidance, delivered through farmer organizations and digital platforms. IMARIKA also works on translating weather data into actionable recommendations, addressing farmers’ difficulty in interpreting weather information.\n\nIMARIKA by Strathmore University’s iLabAfrica is also the winner of the \"Innovate Africa Challenge on Climate Action\",  - chosen for its potential to advance climate adaptation for small-holder farmer communities. Together with Smart Africa, FAIR Forward had supported seven startups through intensive technical and business support to develop their AI businesses focused on mitigating and adapting to climate change in four countries through the Innovate Africa Challenge format in its first iteration focusing on AI for Climate Action. ",
+      "id": "imarika__translating_weather_information_into",
+      "title": "Imarika - Translating weather information into actionable advisory for farmers through AI in Kenya",
+      "description": "IMARIKA by Strathmore University’s iLabAfrica is building low-cost automatic weather station networks to provide access to accurate, local weather information in rural Kenya. This granular data allows advisory services for small-holder farmers to shift from using generic information to location-specific guidance, delivered through farmer organizations and digital platforms. IMARIKA also works on translating weather data into actionable recommendations, addressing farmers’ difficulty in interpreting weather information.\n\nIMARIKA by Strathmore University’s iLabAfrica is also the winner of the \"Innovate Africa Challenge on Climate Action\",  - chosen for its potential to advance climate adaptation for small-holder farmer communities. Together with Smart Africa, FAIR Forward had supported seven startups through intensive technical and business support to develop their AI businesses focused on mitigating and adapting to climate change in four countries through the Innovate Africa Challenge format in its first iteration focusing on AI for Climate Action.\n\nIMARIKA was also part of a Mozilla innovation challenge supporting people and projects across East Africa who leverage Common Voice’s open-source voice data set to unlock social and economic opportunities. These grants help to advance the use of open-source voice data for products that support community participation and engagement.",
       "dataset_links": [],
       "usecase_links": [
         {
@@ -753,7 +753,9 @@
       ],
       "is_on_hold": false,
       "sdgs": [
-        "SDG 2"
+        "SDG 2",
+        "SDG 10",
+        "SDG 5"
       ],
       "data_types": [
         "Meterological",
@@ -765,12 +767,12 @@
       ],
       "license": "",
       "contact": "Betsy Muriithi <bmuriithi@strathmore.edu>,  Strathmore University’s iLabAfrica",
-      "organizations": "Powered by: Strathmore University’s iLabAfrica \nCatalyzed by: Smart Africa (https://smartafrica.org/), FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/), and the partners of the \"AI for Climate Innovate Africa Challenge\": Intellecap, intel.liftoff, Climate Change AI\nFinanced by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",
-      "authors": "nan",
+      "organizations": "Powered by: Strathmore University’s iLabAfrica \nCatalyzed by: Smart Africa (https://smartafrica.org/), FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/), and the partners of the \"AI for Climate Innovate Africa Challenge\": Intellecap, intel.liftoff, Climate Change AI; Mozilla\nFinanced by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/); Gates Foundation",
+      "authors": "Golo Rademacher; Balthas Seibold; Daniel Brumund",
       "is_lacuna": false,
       "has_dataset": false,
       "has_usecase": true,
-      "image": "/projects/translating_weather_information_into_actionable_ad/images/placeholder_image.jpeg",
+      "image": null,
       "data_characteristics": "",
       "model_characteristics": "",
       "how_to_use": "For anyone interested in translating weather information into actionable advisory for farming practices, Imarika's Agricultural AI Assistant which is an intelligent agricultural advisory system powered by LangGraph, Knowledge Graph, and Ollama models specialized in 6 East African crops with multilingual support (English/Swahili) is worth looking into. \nAnyone running several weather stations with a need to process the data may be interested in Imarika's real-time weather data processing pipeline built with Apache Spark, Kafka, and PostgreSQL. \n\nThis use case also included the development of a business model and funding model for open source AI as a stepping stone towards financially viable operations.",

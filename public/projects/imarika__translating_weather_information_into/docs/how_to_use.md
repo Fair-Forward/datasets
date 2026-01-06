@@ -1,0 +1,4 @@
+For anyone interested in translating weather information into actionable advisory for farming practices, Imarika's Agricultural AI Assistant which is an intelligent agricultural advisory system powered by LangGraph, Knowledge Graph, and Ollama models specialized in 6 East African crops with multilingual support (English/Swahili) is worth looking into. 
+Anyone running several weather stations with a need to process the data may be interested in Imarika's real-time weather data processing pipeline built with Apache Spark, Kafka, and PostgreSQL. 
+
+This use case also included the development of a business model and funding model for open source AI as a stepping stone towards financially viable operations.
