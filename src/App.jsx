@@ -2,24 +2,14 @@ import { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import CatalogPage from './pages/CatalogPage'
 import InsightsPage from './pages/InsightsPage'
+import { withBasePath } from './utils/basePath'
 
-// Derive a stable basename that works locally and on GitHub Pages.
-// Uses the script URL to determine the deployment base path, which remains
-// constant regardless of client-side navigation.
+// Get the basename for React Router by using the same base path utility.
+// Remove trailing slash for Router basename (it adds one automatically).
 const getBaseName = () => {
-  if (typeof document !== 'undefined') {
-    const scriptEl = document.querySelector?.('script[type="module"][src]')
-    const scriptSrc = scriptEl?.src
-    if (scriptSrc && scriptSrc.includes('/assets/')) {
-      const base = new URL(scriptSrc.split('/assets/')[0] + '/').pathname
-      return base.endsWith('/') && base !== '/' ? base.slice(0, -1) : (base === '/' ? '' : base)
-    }
-  }
-
-  // Fallback to Vite's BASE_URL (may be "/" or "./")
-  const envBase = import.meta.env.BASE_URL || '/'
-  if (envBase === './') return ''
-  return envBase.endsWith('/') && envBase !== '/' ? envBase.slice(0, -1) : envBase
+  const base = withBasePath('')
+  // withBasePath('') returns something like '/datasets/' - remove trailing slash
+  return base.endsWith('/') && base.length > 1 ? base.slice(0, -1) : (base === '/' ? '' : base)
 }
 
 // Component to handle GitHub Pages SPA redirect
