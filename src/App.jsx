@@ -3,17 +3,22 @@ import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from
 import CatalogPage from './pages/CatalogPage'
 import InsightsPage from './pages/InsightsPage'
 
-// Derive a basename that works locally and on GitHub Pages
+// Derive a stable basename that works locally and on GitHub Pages.
+// Uses the script URL to determine the deployment base path, which remains
+// constant regardless of client-side navigation.
 const getBaseName = () => {
-  // Prefer document.baseURI so we honor the actual deployed path (e.g. /datasets/)
-  const docBase = new URL(document.baseURI).pathname
-  if (docBase && docBase !== '/') {
-    return docBase.endsWith('/') ? docBase.slice(0, -1) : docBase
+  if (typeof document !== 'undefined') {
+    const scriptEl = document.querySelector?.('script[type="module"][src]')
+    const scriptSrc = scriptEl?.src
+    if (scriptSrc && scriptSrc.includes('/assets/')) {
+      const base = new URL(scriptSrc.split('/assets/')[0] + '/').pathname
+      return base.endsWith('/') && base !== '/' ? base.slice(0, -1) : (base === '/' ? '' : base)
+    }
   }
 
   // Fallback to Vite's BASE_URL (may be "/" or "./")
   const envBase = import.meta.env.BASE_URL || '/'
-  if (envBase === './') return '/'
+  if (envBase === './') return ''
   return envBase.endsWith('/') && envBase !== '/' ? envBase.slice(0, -1) : envBase
 }
 
