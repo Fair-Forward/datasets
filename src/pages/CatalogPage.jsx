@@ -14,6 +14,23 @@ const CatalogPage = () => {
   const [error, setError] = useState(null)
   const [selectedProject, setSelectedProject] = useState(null)
 
+  // Handle project selection and URL updates
+  const handleProjectSelect = useCallback((project) => {
+    setSelectedProject(project)
+    if (project) {
+      const params = new URLSearchParams(searchParams)
+      params.set('project', project.id)
+      setSearchParams(params, { replace: true })
+    }
+  }, [searchParams, setSearchParams])
+
+  const handleProjectClose = useCallback(() => {
+    setSelectedProject(null)
+    const params = new URLSearchParams(searchParams)
+    params.delete('project')
+    setSearchParams(params, { replace: true })
+  }, [searchParams, setSearchParams])
+
   // Initialize filters from URL params
   const getInitialFilters = useCallback(() => {
     return {
@@ -59,6 +76,15 @@ const CatalogPage = () => {
       .then(data => {
         setCatalogData(data)
         setLoading(false)
+        
+        // Check if URL has a project param and open it
+        const projectId = searchParams.get('project')
+        if (projectId && data.projects) {
+          const project = data.projects.find(p => p.id === projectId)
+          if (project) {
+            setSelectedProject(project)
+          }
+        }
       })
       .catch(err => {
         console.error('Error loading catalog:', err)
@@ -140,12 +166,12 @@ const CatalogPage = () => {
   useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === 'Escape' && selectedProject) {
-        setSelectedProject(null)
+        handleProjectClose()
       }
     }
     window.addEventListener('keydown', handleEsc)
     return () => window.removeEventListener('keydown', handleEsc)
-  }, [selectedProject])
+  }, [selectedProject, handleProjectClose])
 
   if (loading) {
     return (
@@ -203,7 +229,7 @@ const CatalogPage = () => {
             <ProjectCard 
               key={project.id || idx} 
               project={project}
-              onClick={setSelectedProject}
+              onClick={handleProjectSelect}
             />
           ))}
         </div>
@@ -219,7 +245,7 @@ const CatalogPage = () => {
       {selectedProject && (
         <DetailPanel 
           project={selectedProject} 
-          onClose={() => setSelectedProject(null)}
+          onClose={handleProjectClose}
         />
       )}
 

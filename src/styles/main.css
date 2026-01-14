@@ -1590,6 +1590,14 @@
     font-weight: 600;
     margin: 0;
     color: var(--title-color);
+    flex: 1;
+    order: -1;
+}
+
+.detail-panel-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
 }
 
 .close-panel-btn {

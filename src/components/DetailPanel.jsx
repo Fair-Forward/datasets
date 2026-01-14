@@ -1,6 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { withBasePath } from '../utils/basePath'
+
+// Build shareable URL for a project
+const getShareUrl = (projectId) => {
+  const url = new URL(window.location.href)
+  url.searchParams.set('project', projectId)
+  return url.toString()
+}
 
 const normalizeLabel = (value = '') =>
   value
@@ -88,6 +95,7 @@ const parseOrganizations = (orgText = '') => {
 const DetailPanel = ({ project, onClose }) => {
   const [markdownContent, setMarkdownContent] = useState({})
   const [loading, setLoading] = useState(true)
+  const [copied, setCopied] = useState(false)
   const datasetLinks = project?.dataset_links || []
   const usecaseLinks = project?.usecase_links || []
   const isOnHold = Boolean(project?.is_on_hold)
@@ -96,6 +104,18 @@ const DetailPanel = ({ project, onClose }) => {
   const dataTypes = project?.data_types || []
   const sdgNumbers = extractSdgNumbers(sdgs)
   const organizations = parseOrganizations(project?.organizations)
+
+  const handleShare = useCallback(async () => {
+    const url = getShareUrl(project.id)
+    try {
+      await navigator.clipboard.writeText(url)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch {
+      // Fallback for older browsers
+      window.prompt('Copy this link:', url)
+    }
+  }, [project?.id])
 
   useEffect(() => {
     if (!project) return
@@ -167,9 +187,18 @@ const DetailPanel = ({ project, onClose }) => {
       <div className="panel-overlay active" onClick={onClose}></div>
       <div className="detail-panel open">
         <div className="detail-panel-header">
-          <button className="close-panel-btn" onClick={onClose}>
-            <i className="fas fa-times"></i>
-          </button>
+          <div className="detail-panel-header-actions">
+            <button 
+              className="share-panel-btn" 
+              onClick={handleShare}
+              title={copied ? 'Link copied!' : 'Copy link to share'}
+            >
+              <i className={`fas ${copied ? 'fa-check' : 'fa-share-nodes'}`}></i>
+            </button>
+            <button className="close-panel-btn" onClick={onClose}>
+              <i className="fas fa-times"></i>
+            </button>
+          </div>
           <h2>{project.title}</h2>
         </div>
         
