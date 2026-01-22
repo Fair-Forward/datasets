@@ -66,6 +66,13 @@ const normalizeOrgName = (name) => {
     .trim()
 }
 
+// Distinctive color palette
+const COLORS = {
+  powered: '#10b981',    // Emerald green - Implementers
+  catalyzed: '#f59e0b',  // Amber/Orange - Catalysts  
+  financed: '#8b5cf6'    // Purple - Financers
+}
+
 const OrganizationNetwork = ({ projects = [] }) => {
   const svgRef = useRef(null)
   const containerRef = useRef(null)
@@ -76,6 +83,14 @@ const OrganizationNetwork = ({ projects = [] }) => {
   const [dimensions, setDimensions] = useState({ width: 800, height: 500 })
   const [simulatedNodes, setSimulatedNodes] = useState([])
   const [simulatedLinks, setSimulatedLinks] = useState([])
+  const [zoom, setZoom] = useState(1)
+  const [pan, setPan] = useState({ x: 0, y: 0 })
+  const [isPanning, setIsPanning] = useState(false)
+  const [panStart, setPanStart] = useState({ x: 0, y: 0 })
+
+  const MIN_ZOOM = 0.5
+  const MAX_ZOOM = 3
+  const ZOOM_STEP = 0.25
 
   // Get all unique countries from projects
   const allCountries = useMemo(() => {
@@ -92,8 +107,8 @@ const OrganizationNetwork = ({ projects = [] }) => {
     return projects.filter(p => (p.countries || []).includes(countryFilter))
   }, [projects, countryFilter])
 
-  // Build organization data
-  const { nodes, links, stats } = useMemo(() => {
+  // Build organization data (always from filteredProjects, filter applied separately for display)
+  const { allNodes, allLinks, stats } = useMemo(() => {
     const orgMap = new Map()
     const projectOrgs = []
 
@@ -138,18 +153,13 @@ const OrganizationNetwork = ({ projects = [] }) => {
     })
 
     // Convert to nodes array
-    let nodeArray = Array.from(orgMap.values()).map(org => ({
+    const nodeArray = Array.from(orgMap.values()).map(org => ({
       ...org,
       types: Array.from(org.types),
       primaryType: org.types.has('financed') ? 'financed' 
         : org.types.has('catalyzed') ? 'catalyzed' 
         : 'powered'
     }))
-
-    // Apply type filter
-    if (filter !== 'all') {
-      nodeArray = nodeArray.filter(n => n.types.includes(filter))
-    }
 
     // Sort by project count
     nodeArray.sort((a, b) => b.projectCount - a.projectCount)
@@ -175,7 +185,7 @@ const OrganizationNetwork = ({ projects = [] }) => {
       return { source, target, count }
     })
 
-    // Calculate stats
+    // Calculate stats (always from full filtered set, not type-filtered)
     const statsData = {
       totalOrgs: nodeArray.length,
       poweredBy: nodeArray.filter(n => n.types.includes('powered')).length,
@@ -185,11 +195,24 @@ const OrganizationNetwork = ({ projects = [] }) => {
     }
 
     return {
-      nodes: nodeArray,
-      links: linkArray,
+      allNodes: nodeArray,
+      allLinks: linkArray,
       stats: statsData
     }
-  }, [filteredProjects, filter])
+  }, [filteredProjects])
+
+  // Apply type filter for display
+  const { nodes, links } = useMemo(() => {
+    if (filter === 'all') {
+      return { nodes: allNodes, links: allLinks }
+    }
+    
+    const filteredNodes = allNodes.filter(n => n.types.includes(filter))
+    const nodeIds = new Set(filteredNodes.map(n => n.id))
+    const filteredLinks = allLinks.filter(l => nodeIds.has(l.source) && nodeIds.has(l.target))
+    
+    return { nodes: filteredNodes, links: filteredLinks }
+  }, [allNodes, allLinks, filter])
 
   // Update dimensions on resize
   useEffect(() => {
@@ -219,7 +242,7 @@ const OrganizationNetwork = ({ projects = [] }) => {
     // Create deep copies for simulation
     const simNodes = nodes.map(n => ({
       ...n,
-      radius: 12 + (n.projectCount / maxProjectCount) * 28
+      radius: 14 + (n.projectCount / maxProjectCount) * 30
     }))
     
     const simLinks = links.map(l => ({
@@ -231,25 +254,20 @@ const OrganizationNetwork = ({ projects = [] }) => {
     const simulation = forceSimulation(simNodes)
       .force('link', forceLink(simLinks)
         .id(d => d.id)
-        .distance(80)
-        .strength(0.3))
+        .distance(100)
+        .strength(0.4))
       .force('charge', forceManyBody()
-        .strength(-150))
+        .strength(-200))
       .force('center', forceCenter(width / 2, height / 2))
       .force('collision', forceCollide()
-        .radius(d => d.radius + 8))
+        .radius(d => d.radius + 12))
 
     simulation.on('tick', () => {
       // Constrain nodes within bounds
       simNodes.forEach(node => {
-        node.x = Math.max(node.radius, Math.min(width - node.radius, node.x))
-        node.y = Math.max(node.radius, Math.min(height - node.radius, node.y))
+        node.x = Math.max(node.radius + 20, Math.min(width - node.radius - 20, node.x))
+        node.y = Math.max(node.radius + 20, Math.min(height - node.radius - 20, node.y))
       })
-    })
-
-    simulation.on('end', () => {
-      setSimulatedNodes([...simNodes])
-      setSimulatedLinks([...simLinks])
     })
 
     // Run simulation faster
@@ -259,14 +277,18 @@ const OrganizationNetwork = ({ projects = [] }) => {
     setSimulatedNodes([...simNodes])
     setSimulatedLinks([...simLinks])
 
+    // Reset zoom and pan when data changes
+    setZoom(1)
+    setPan({ x: 0, y: 0 })
+
     return () => simulation.stop()
   }, [nodes, links, dimensions])
 
   // Get node color based on type
   const getNodeColor = (types) => {
-    if (types.includes('financed')) return '#2563eb'
-    if (types.includes('catalyzed')) return '#6366f1'
-    return '#059669'
+    if (types.includes('financed')) return COLORS.financed
+    if (types.includes('catalyzed')) return COLORS.catalyzed
+    return COLORS.powered
   }
 
   // Get connected nodes for highlighting
@@ -285,22 +307,79 @@ const OrganizationNetwork = ({ projects = [] }) => {
     setSelectedOrg(selectedOrg?.id === node.id ? null : node)
   }
 
-  const handleStatClick = (filterType) => {
-    setFilter(filterType)
-    setSelectedOrg(null)
+  // Zoom handlers
+  const handleZoomIn = () => {
+    setZoom(z => Math.min(MAX_ZOOM, z + ZOOM_STEP))
+  }
+
+  const handleZoomOut = () => {
+    setZoom(z => Math.max(MIN_ZOOM, z - ZOOM_STEP))
+  }
+
+  const handleZoomReset = () => {
+    setZoom(1)
+    setPan({ x: 0, y: 0 })
+  }
+
+  const handleWheel = (e) => {
+    e.preventDefault()
+    const delta = e.deltaY > 0 ? -ZOOM_STEP : ZOOM_STEP
+    setZoom(z => Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, z + delta)))
+  }
+
+  // Pan handlers
+  const handleMouseDown = (e) => {
+    if (e.target.closest('.org-network-node')) return
+    setIsPanning(true)
+    setPanStart({ x: e.clientX - pan.x, y: e.clientY - pan.y })
+  }
+
+  const handleMouseMove = (e) => {
+    if (!isPanning) return
+    setPan({
+      x: e.clientX - panStart.x,
+      y: e.clientY - panStart.y
+    })
+  }
+
+  const handleMouseUp = () => {
+    setIsPanning(false)
   }
 
   const highlightedNodes = hoveredOrg ? getConnectedNodes(hoveredOrg.id) : null
 
+  // Determine if names should show based on zoom level
+  const showNames = zoom >= 1.5
+
   return (
     <div className="org-network-wrapper">
+      {/* Stats Display (non-interactive) */}
+      <div className="org-network-stats">
+        <div className="org-stat">
+          <span className="org-stat-value">{stats.totalOrgs}</span>
+          <span className="org-stat-label">Organizations</span>
+        </div>
+        <div className="org-stat">
+          <span className="org-stat-value org-stat-powered">{stats.poweredBy}</span>
+          <span className="org-stat-label">Implementers</span>
+        </div>
+        <div className="org-stat">
+          <span className="org-stat-value org-stat-catalyzed">{stats.catalyzedBy}</span>
+          <span className="org-stat-label">Catalysts</span>
+        </div>
+        <div className="org-stat">
+          <span className="org-stat-value org-stat-financed">{stats.financedBy}</span>
+          <span className="org-stat-label">Financers</span>
+        </div>
+      </div>
+
       {/* Controls Row */}
       <div className="org-network-controls">
         {/* Country Filter */}
-        <div className="org-country-filter">
+        <div className="org-filter-group">
           <label htmlFor="country-select">
             <i className="fas fa-globe-africa"></i>
-            Filter by Country
+            Country
           </label>
           <select 
             id="country-select"
@@ -310,53 +389,79 @@ const OrganizationNetwork = ({ projects = [] }) => {
               setSelectedOrg(null)
             }}
           >
-            <option value="all">All Countries ({projects.length} projects)</option>
+            <option value="all">All Countries</option>
             {allCountries.map(country => {
               const count = projects.filter(p => (p.countries || []).includes(country)).length
               return (
                 <option key={country} value={country}>
-                  {country} ({count} project{count !== 1 ? 's' : ''})
+                  {country} ({count})
                 </option>
               )
             })}
           </select>
         </div>
-      </div>
 
-      {/* Stats Bar */}
-      <div className="org-network-stats">
-        <button 
-          className={`org-stat org-stat-clickable ${filter === 'all' ? 'active' : ''}`}
-          onClick={() => handleStatClick('all')}
-        >
-          <span className="org-stat-value">{stats.totalOrgs}</span>
-          <span className="org-stat-label">Organizations</span>
-        </button>
-        <button 
-          className={`org-stat org-stat-clickable ${filter === 'powered' ? 'active' : ''}`}
-          onClick={() => handleStatClick('powered')}
-        >
-          <span className="org-stat-value org-stat-powered">{stats.poweredBy}</span>
-          <span className="org-stat-label">Implementers</span>
-        </button>
-        <button 
-          className={`org-stat org-stat-clickable ${filter === 'catalyzed' ? 'active' : ''}`}
-          onClick={() => handleStatClick('catalyzed')}
-        >
-          <span className="org-stat-value org-stat-catalyzed">{stats.catalyzedBy}</span>
-          <span className="org-stat-label">Catalysts</span>
-        </button>
-        <button 
-          className={`org-stat org-stat-clickable ${filter === 'financed' ? 'active' : ''}`}
-          onClick={() => handleStatClick('financed')}
-        >
-          <span className="org-stat-value org-stat-financed">{stats.financedBy}</span>
-          <span className="org-stat-label">Financers</span>
-        </button>
+        {/* Type Filter */}
+        <div className="org-filter-group">
+          <label htmlFor="type-select">
+            <i className="fas fa-filter"></i>
+            Type
+          </label>
+          <select 
+            id="type-select"
+            value={filter} 
+            onChange={(e) => {
+              setFilter(e.target.value)
+              setSelectedOrg(null)
+            }}
+          >
+            <option value="all">All Types</option>
+            <option value="powered">Implementers</option>
+            <option value="catalyzed">Catalysts</option>
+            <option value="financed">Financers</option>
+          </select>
+        </div>
+
+        {/* Zoom Controls */}
+        <div className="org-zoom-controls">
+          <button 
+            className="org-zoom-btn" 
+            onClick={handleZoomOut}
+            disabled={zoom <= MIN_ZOOM}
+            title="Zoom out"
+          >
+            <i className="fas fa-minus"></i>
+          </button>
+          <span className="org-zoom-level">{Math.round(zoom * 100)}%</span>
+          <button 
+            className="org-zoom-btn" 
+            onClick={handleZoomIn}
+            disabled={zoom >= MAX_ZOOM}
+            title="Zoom in"
+          >
+            <i className="fas fa-plus"></i>
+          </button>
+          <button 
+            className="org-zoom-btn org-zoom-reset" 
+            onClick={handleZoomReset}
+            title="Reset view"
+          >
+            <i className="fas fa-compress-arrows-alt"></i>
+          </button>
+        </div>
       </div>
 
       {/* Network Graph */}
-      <div className="org-network-container" ref={containerRef}>
+      <div 
+        className="org-network-container" 
+        ref={containerRef}
+        onWheel={handleWheel}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+        style={{ cursor: isPanning ? 'grabbing' : 'grab' }}
+      >
         {simulatedNodes.length > 0 ? (
           <svg 
             ref={svgRef}
@@ -365,127 +470,114 @@ const OrganizationNetwork = ({ projects = [] }) => {
             height={dimensions.height}
             viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
           >
-            <defs>
-              {/* Gradient for links */}
-              <linearGradient id="linkGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#94a3b8" stopOpacity="0.4" />
-                <stop offset="50%" stopColor="#64748b" stopOpacity="0.6" />
-                <stop offset="100%" stopColor="#94a3b8" stopOpacity="0.4" />
-              </linearGradient>
-            </defs>
+            <g transform={`translate(${pan.x}, ${pan.y}) scale(${zoom})`} 
+               style={{ transformOrigin: `${dimensions.width/2}px ${dimensions.height/2}px` }}>
+              
+              {/* Links/Edges */}
+              <g className="org-network-links">
+                {simulatedLinks.map((link, i) => {
+                  const source = typeof link.source === 'object' ? link.source : 
+                    simulatedNodes.find(n => n.id === link.source)
+                  const target = typeof link.target === 'object' ? link.target : 
+                    simulatedNodes.find(n => n.id === link.target)
+                  
+                  if (!source || !target) return null
 
-            {/* Links/Edges */}
-            <g className="org-network-links">
-              {simulatedLinks.map((link, i) => {
-                const source = typeof link.source === 'object' ? link.source : 
-                  simulatedNodes.find(n => n.id === link.source)
-                const target = typeof link.target === 'object' ? link.target : 
-                  simulatedNodes.find(n => n.id === link.target)
-                
-                if (!source || !target) return null
-
-                const isHighlighted = highlightedNodes && 
-                  (highlightedNodes.has(source.id) && highlightedNodes.has(target.id))
-                const isSelected = selectedOrg && 
-                  (source.id === selectedOrg.id || target.id === selectedOrg.id)
-                
-                const opacity = highlightedNodes 
-                  ? (isHighlighted ? 0.8 : 0.08)
-                  : selectedOrg
-                    ? (isSelected ? 0.8 : 0.15)
-                    : 0.35
-                
-                return (
-                  <line
-                    key={`link-${i}`}
-                    className="org-network-link"
-                    x1={source.x}
-                    y1={source.y}
-                    x2={target.x}
-                    y2={target.y}
-                    stroke={isHighlighted || isSelected ? '#475569' : '#94a3b8'}
-                    strokeWidth={Math.min(1 + link.count * 0.8, 4)}
-                    strokeOpacity={opacity}
-                    strokeLinecap="round"
-                  />
-                )
-              })}
-            </g>
-
-            {/* Nodes */}
-            <g className="org-network-nodes">
-              {simulatedNodes.map((node) => {
-                const isSelected = selectedOrg?.id === node.id
-                const isHovered = hoveredOrg?.id === node.id
-                const isConnected = highlightedNodes?.has(node.id)
-                const dimmed = (highlightedNodes && !isConnected) || 
-                  (selectedOrg && !isSelected && !getConnectedNodes(selectedOrg.id).has(node.id))
-                
-                return (
-                  <g
-                    key={node.id}
-                    className={`org-network-node ${isSelected ? 'selected' : ''} ${isHovered ? 'hovered' : ''}`}
-                    transform={`translate(${node.x}, ${node.y})`}
-                    onClick={() => handleNodeClick(node)}
-                    onMouseEnter={() => setHoveredOrg(node)}
-                    onMouseLeave={() => setHoveredOrg(null)}
-                    style={{ cursor: 'pointer', opacity: dimmed ? 0.25 : 1 }}
-                  >
-                    {/* Node circle */}
-                    <circle
-                      r={node.radius}
-                      fill={getNodeColor(node.types)}
-                      stroke={isSelected || isHovered ? '#1e293b' : 'transparent'}
-                      strokeWidth={isSelected ? 3 : 2}
-                      className="org-node-circle"
+                  const isHighlighted = highlightedNodes && 
+                    (highlightedNodes.has(source.id) && highlightedNodes.has(target.id))
+                  const isSelected = selectedOrg && 
+                    (source.id === selectedOrg.id || target.id === selectedOrg.id)
+                  
+                  const opacity = highlightedNodes 
+                    ? (isHighlighted ? 0.7 : 0.06)
+                    : selectedOrg
+                      ? (isSelected ? 0.7 : 0.1)
+                      : 0.25
+                  
+                  return (
+                    <line
+                      key={`link-${i}`}
+                      className="org-network-link"
+                      x1={source.x}
+                      y1={source.y}
+                      x2={target.x}
+                      y2={target.y}
+                      stroke={isHighlighted || isSelected ? '#64748b' : '#cbd5e1'}
+                      strokeWidth={Math.min(1.5 + link.count * 0.8, 5)}
+                      strokeOpacity={opacity}
+                      strokeLinecap="round"
                     />
-                    
-                    {/* Project count */}
-                    <text
-                      className="org-node-count"
-                      textAnchor="middle"
-                      dy="-0.1em"
-                      fill="#fff"
-                      fontSize={node.radius > 25 ? 14 : 11}
-                      fontWeight="700"
-                    >
-                      {node.projectCount}
-                    </text>
-                    
-                    {/* Organization name (for larger nodes) */}
-                    {node.radius > 22 && (
-                      <text
-                        className="org-node-name"
-                        textAnchor="middle"
-                        dy="1em"
-                        fill="#fff"
-                        fontSize={8}
-                        opacity={0.9}
-                      >
-                        {node.name.length > 12 ? node.name.slice(0, 10) + '..' : node.name}
-                      </text>
-                    )}
+                  )
+                })}
+              </g>
 
-                    {/* Type indicators */}
-                    <g transform={`translate(0, ${node.radius + 6})`}>
-                      {node.types.map((type, i) => {
-                        const offset = (i - (node.types.length - 1) / 2) * 10
-                        return (
-                          <circle
-                            key={type}
-                            cx={offset}
-                            cy={0}
-                            r={4}
-                            fill={type === 'financed' ? '#2563eb' : type === 'catalyzed' ? '#6366f1' : '#059669'}
-                            stroke="#fff"
-                            strokeWidth={1.5}
-                          />
-                        )
-                      })}
+              {/* Nodes */}
+              <g className="org-network-nodes">
+                {simulatedNodes.map((node) => {
+                  const isSelected = selectedOrg?.id === node.id
+                  const isHovered = hoveredOrg?.id === node.id
+                  const isConnected = highlightedNodes?.has(node.id)
+                  const dimmed = (highlightedNodes && !isConnected) || 
+                    (selectedOrg && !isSelected && !getConnectedNodes(selectedOrg.id).has(node.id))
+                  
+                  return (
+                    <g
+                      key={node.id}
+                      className={`org-network-node ${isSelected ? 'selected' : ''} ${isHovered ? 'hovered' : ''}`}
+                      transform={`translate(${node.x}, ${node.y})`}
+                      onClick={() => handleNodeClick(node)}
+                      onMouseEnter={() => setHoveredOrg(node)}
+                      onMouseLeave={() => setHoveredOrg(null)}
+                      style={{ cursor: 'pointer', opacity: dimmed ? 0.2 : 1 }}
+                    >
+                      {/* Node circle */}
+                      <circle
+                        r={node.radius}
+                        fill={getNodeColor(node.types)}
+                        stroke={isSelected || isHovered ? '#1e293b' : 'rgba(255,255,255,0.5)'}
+                        strokeWidth={isSelected ? 3 : 2}
+                        className="org-node-circle"
+                      />
+                      
+                      {/* Project count */}
+                      <text
+                        className="org-node-count"
+                        textAnchor="middle"
+                        dy={showNames ? "-0.3em" : "0.35em"}
+                        fill="#fff"
+                        fontSize={node.radius > 25 ? 14 : 12}
+                        fontWeight="700"
+                      >
+                        {node.projectCount}
+                      </text>
+                      
+                      {/* Organization name - visible when zoomed in */}
+                      {showNames && (
+                        <text
+                          className="org-node-name"
+                          textAnchor="middle"
+                          dy="1em"
+                          fill="#fff"
+                          fontSize={9}
+                          fontWeight="500"
+                        >
+                          {node.name.length > 16 ? node.name.slice(0, 14) + '..' : node.name}
+                        </text>
+                      )}
+
+                      {/* Type indicator dot */}
+                      <circle
+                        cx={node.radius * 0.7}
+                        cy={-node.radius * 0.7}
+                        r={5}
+                        fill={getNodeColor(node.types)}
+                        stroke="#fff"
+                        strokeWidth={2}
+                      />
                     </g>
-                  </g>
-                )
-              })}
+                  )
+                })}
+              </g>
             </g>
           </svg>
         ) : (
@@ -560,9 +652,9 @@ const OrganizationNetwork = ({ projects = [] }) => {
           <div 
             className="org-hover-tooltip"
             style={{
-              left: simulatedNodes.find(n => n.id === hoveredOrg.id)?.x || 0,
-              top: (simulatedNodes.find(n => n.id === hoveredOrg.id)?.y || 0) - 
-                   (simulatedNodes.find(n => n.id === hoveredOrg.id)?.radius || 0) - 45
+              left: (simulatedNodes.find(n => n.id === hoveredOrg.id)?.x || 0) * zoom + pan.x,
+              top: ((simulatedNodes.find(n => n.id === hoveredOrg.id)?.y || 0) - 
+                   (simulatedNodes.find(n => n.id === hoveredOrg.id)?.radius || 0) - 12) * zoom + pan.y - 40
             }}
           >
             <div className="org-tooltip-name">{hoveredOrg.name}</div>
@@ -572,20 +664,28 @@ const OrganizationNetwork = ({ projects = [] }) => {
             </div>
           </div>
         )}
+
+        {/* Zoom hint */}
+        {zoom === 1 && simulatedNodes.length > 0 && (
+          <div className="org-zoom-hint">
+            <i className="fas fa-search-plus"></i>
+            Scroll to zoom, drag to pan
+          </div>
+        )}
       </div>
 
       {/* Legend */}
       <div className="org-network-legend">
         <div className="org-legend-item">
-          <span className="org-legend-dot" style={{ backgroundColor: '#059669' }}></span>
+          <span className="org-legend-dot" style={{ backgroundColor: COLORS.powered }}></span>
           <span>Implementers</span>
         </div>
         <div className="org-legend-item">
-          <span className="org-legend-dot" style={{ backgroundColor: '#6366f1' }}></span>
+          <span className="org-legend-dot" style={{ backgroundColor: COLORS.catalyzed }}></span>
           <span>Catalysts</span>
         </div>
         <div className="org-legend-item">
-          <span className="org-legend-dot" style={{ backgroundColor: '#2563eb' }}></span>
+          <span className="org-legend-dot" style={{ backgroundColor: COLORS.financed }}></span>
           <span>Financers</span>
         </div>
         <div className="org-legend-size">
@@ -602,10 +702,15 @@ const OrganizationNetwork = ({ projects = [] }) => {
       {/* Network stats summary */}
       {stats.totalLinks > 0 && (
         <div className="org-network-summary">
-          <span>{stats.totalLinks} collaboration{stats.totalLinks !== 1 ? 's' : ''} between organizations</span>
+          <span>{stats.totalLinks} collaboration{stats.totalLinks !== 1 ? 's' : ''} identified</span>
           {countryFilter !== 'all' && (
             <span className="org-network-filter-label">
-              Showing partnerships in {countryFilter}
+              Showing: {countryFilter}
+            </span>
+          )}
+          {filter !== 'all' && (
+            <span className="org-network-filter-label">
+              Type: {filter === 'powered' ? 'Implementers' : filter === 'catalyzed' ? 'Catalysts' : 'Financers'}
             </span>
           )}
         </div>
