@@ -44,7 +44,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "powering_rural_futures_in_west_africa",
@@ -89,7 +90,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "datasets_for_transportation_impact_evaluation",
@@ -128,7 +130,8 @@
       "maturity_tags": [
         "dataset",
         "model"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "quantifying_colombian_mangroves_aboveground_biomas",
@@ -165,7 +168,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "detectinging_forest_degradation_by_predicting_biom",
@@ -205,7 +209,8 @@
         "dataset",
         "model",
         "pilot"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "ai_for_mangrove_carbon_credits_turning",
@@ -242,7 +247,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "lifting_up_women_through_land_ownership",
@@ -285,6 +291,12 @@
         "model",
         "pilot",
         "usecase"
+      ],
+      "additional_resources": [
+        {
+          "name": "Lifting Up Women Through Land Ownership (mozillafoundation.org)",
+          "url": "https://www.mozillafoundation.org/de/blog/lifting-up-women-through-land-ownership/"
+        }
       ]
     },
     {
@@ -324,7 +336,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "monitoring_the_impact_of_palm_oil",
@@ -362,7 +375,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "indigenous_knowledge_meets_ai_monitoring_elephants",
@@ -407,6 +421,28 @@
         "model",
         "pilot",
         "usecase"
+      ],
+      "additional_resources": [
+        {
+          "name": "When Future Already Here Now Its Being Filmed Diana Mastracci Sanchez Y5Rue. (linkedin.com)",
+          "url": "https://www.linkedin.com/pulse/when-future-already-here-now-its-being-filmed-diana-mastracci-sanchez-y5rue."
+        },
+        {
+          "name": "Embracing Uncertainty Hidden Strength Science Diana Mastracci Sanchez Qdj5E. (linkedin.com)",
+          "url": "https://www.linkedin.com/pulse/embracing-uncertainty-hidden-strength-science-diana-mastracci-sanchez-qdj5e."
+        },
+        {
+          "name": "Bridging Worlds Indigenous Led Innovation Remote Mastracci Sanchez Yjqfe. (linkedin.com)",
+          "url": "https://www.linkedin.com/pulse/bridging-worlds-indigenous-led-innovation-remote-mastracci-sanchez-yjqfe."
+        },
+        {
+          "name": "Ltome Katip Indigenous Led Labelling Inclusive Ai Addressing Human Wildlife Conflict And. (rit.edu)",
+          "url": "https://www.rit.edu/dirs/research/ltome-katip-indigenous-led-labelling-inclusive-ai-addressing-human-wildlife-conflict-and."
+        },
+        {
+          "name": "Professor Helps Bring Machine Learning Indigenous Communities (rit.edu)",
+          "url": "https://www.rit.edu/news/professor-helps-bring-machine-learning-indigenous-communities"
+        }
       ]
     },
     {
@@ -453,7 +489,8 @@
         "model",
         "pilot",
         "usecase"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "supporting_food_security_and_climate_change",
@@ -496,7 +533,8 @@
       "maturity_tags": [
         "dataset",
         "model"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "facilitating_access_to_financial_applications_in",
@@ -534,7 +572,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "discover_ghanaian_voices_a_dataset_for",
@@ -571,7 +610,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "mapping_cocoa_landscapes_in_ghana_reference",
@@ -608,7 +648,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "explore_the_agrivoltaic_dataset_dive_into",
@@ -645,7 +686,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "phenological_dataset_for_ecological_forecasting_ph",
@@ -695,6 +737,16 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "Realistic Phenology Data Key To Predicting Crop Cycles Dr Ofosu Bamfo 2 (gna.org.gh)",
+          "url": "https://gna.org.gh/2025/07/realistic-phenology-data-key-to-predicting-crop-cycles-dr-ofosu-bamfo-2/"
+        },
+        {
+          "name": "5Byh6F7 (g.co)",
+          "url": "https://g.co/kgs/5byh6f7"
+        }
       ]
     },
     {
@@ -734,7 +786,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "imarika__translating_weather_information_into",
@@ -744,7 +797,7 @@
       "usecase_links": [
         {
           "name": "Link",
-          "url": "https://github.com/iLab-DSU/imarika-weather-pipeline;"
+          "url": "https://github.com/iLab-DSU/imarika-weather-pipeline"
         },
         {
           "name": "Link",
@@ -783,11 +836,25 @@
         "pilot",
         "usecase",
         "business"
+      ],
+      "additional_resources": [
+        {
+          "name": "Chatbots Local Weather Reports And A Boon For Kenyas Smallholder Farmers (foundation.mozilla.org)",
+          "url": "https://foundation.mozilla.org/blog/chatbots-local-weather-reports-and-a-boon-for-kenyas-smallholder-farmers/;"
+        },
+        {
+          "name": "Awards (mozillafoundation.org)",
+          "url": "https://www.mozillafoundation.org/en/what-we-fund/programs/common-voice-kiswahili-awards/awards/;"
+        },
+        {
+          "name": "Innovate Africa Challenge (smartafrica.org)",
+          "url": "https://smartafrica.org/innovate-africa-challenge/"
+        }
       ]
     },
     {
-      "id": "aigenerated_voice_content_in_indian_languages",
-      "title": "Empowering Women Across India with Voice-based Knowledge in Their Native Languages",
+      "id": "empowering_women_across_india_with_audio",
+      "title": "Empowering Women across India with audio messages in their native languages on Health, Sustainable Agriculture and Education",
       "description": "Empowering Women Across India with Voice-based Knowledge in Their Native Languages: By using openly accessible text-to-speech models from the Indian Institute of Science (IISc) and MeitY's Digital India Bhashini Division, Audiopedia created health-related 400+ audio messages that can be shared with civil society organizations for awareness raising and capacity building",
       "dataset_links": [
         {
@@ -821,7 +888,7 @@
       "is_lacuna": false,
       "has_dataset": true,
       "has_usecase": true,
-      "image": "/projects/aigenerated_voice_content_in_indian_languages/images/image.png",
+      "image": null,
       "data_characteristics": "Audiopedia has created useful content on various topics including health, education, financial literacy. This data is available in text and audio format in multiple languages incl. low-resource languages.",
       "model_characteristics": "For the generation of audio messages, Audiopedia used openly accessible text-to-speech models from the Indian Institute of Science (IISc) and MeitY's Digital India Bhashini Division.",
       "how_to_use": "Civil society organizations can use the existing voice content to generate tailored, AI-powered messages in various Indian languages across different topics including health, education, agriculture and other social topics. Civil society organizations can deploy these messages in rural and semi-urban areas using easy-to-use digital tools incl. WhatsApp messaging or feature phones.",
@@ -831,7 +898,8 @@
         "model",
         "pilot",
         "usecase"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "open_air_pollution_data_for_patna",
@@ -892,7 +960,8 @@
         "model",
         "pilot",
         "usecase"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "making_ai_speak_9_indian_languages",
@@ -942,11 +1011,17 @@
         "model",
         "pilot",
         "usecase"
+      ],
+      "additional_resources": [
+        {
+          "name": "Loud And Clear Open Source For Indias Linguistic Diversity (bmz-digital.global)",
+          "url": "https://www.bmz-digital.global/en/news/loud-and-clear-open-source-for-indias-linguistic-diversity/"
+        }
       ]
     },
     {
-      "id": "ai_pest_management_open_data_for",
-      "title": "Cotton Ace: AI-driven Pest Management for Cotton Farmers in India",
+      "id": "open_source_ai_pest_control_for",
+      "title": "Open source AI Pest Control for smallholder Cotton Farmers in India",
       "description": "Wadhwani AI has developed a mobile app to support cotton farmers combat pest infestations, a major threat to cotton productivity. For this, they have collaborated with FAIR Forward – AI for All, a project of German Development Cooperation. The app allows farmers to take photos of pheromone traps, which capture male bollworms, and uses an AI model to count the pests in the images. Based on the AI-generated counts, the app provides recommendations to farmers on how to respond. This technology empowers small-scale farmers to make informed decisions, reduce uncertainty in yield, and improve their livelihoods.\n \n As the codebase, dataset and research are openly available it can be used to build on, test and research similar applications in other contexts. This would esp. apply to problems of identification and counting of agricultural pests.",
       "dataset_links": [
         {
@@ -985,7 +1060,7 @@
       "is_lacuna": false,
       "has_dataset": true,
       "has_usecase": true,
-      "image": "/projects/ai_pest_management_open_data_for/images/cotton_ace.jpg",
+      "image": null,
       "data_characteristics": "Wadhwani AI with support from German Development Cooperation provided training data consisting of ca. 13,000 images:\n \n (a) These images were captured by farmers and farm extension workers since 2018\n (b) The dataset contains two types of images: those with pests and bounding boxes labelling either pink bollworm (PBW) or American bollworm (ABW), and those without pests, representing real-world user behavior.\n (c) License: Apache 2.0",
       "model_characteristics": "Wadhwani AI with support from German Development cooperation provided the codebase of the pest identification model:\n \n (a) At its core, this repository packages an object detection implementation. \n (b) While there are several object detection implementations, and even implementation aggregations, there are none that completely solve for the challenges faced here (e.g., highly diverse image quality, model size restrictions)\n (c) License: Apache 2.0",
       "how_to_use": "The resources can be used to build on, test and research similar applications in other contexts, esp. applying to problems of identification and counting of agricultural pests.\n\nThis use case also included the development of a business model and funding model for open source AI  as a stepping stone towards financially viable operations. It was facilitated by Villgro Africa's and FAIR Forward's  six-month mentorship programme on \"Creating sustainable business and funding models with open source AI\". See: https://www.bmz-digital.global/en/news/open-source-ai-business-impact/ \n",
@@ -996,11 +1071,21 @@
         "pilot",
         "usecase",
         "business"
+      ],
+      "additional_resources": [
+        {
+          "name": "Pest Management Ai Solution (wadhwaniai.org)",
+          "url": "https://www.wadhwaniai.org/programs/pest-management/pest-management-ai-solution/"
+        },
+        {
+          "name": "3394486.3403363 (dl.acm.org)",
+          "url": "https://dl.acm.org/doi/10.1145/3394486.3403363"
+        }
       ]
     },
     {
       "id": "providing_better_information_on_sexual_and",
-      "title": "Providing better information on sexual and reproductive health and rights of young people through the Kahi Ankahi Baatein infloline (Hindi LLM finetuning)",
+      "title": "Providing better information on sexual and reproductive health and rights of young people through the Kahi Ankahi Baatein infoline (Hindi LLM finetuning)",
       "description": "Improve the Kahi Ankahi Baatein (KAB) platform by fine-tuning Hindi LLMs for better user experience.",
       "dataset_links": [
         {
@@ -1042,6 +1127,12 @@
         "pilot",
         "usecase",
         "business"
+      ],
+      "additional_resources": [
+        {
+          "name": "Answering Questions On Sexuality Through Kahi Ankahi Baatein 2 (gramvaani.org)",
+          "url": "https://gramvaani.org/answering-questions-on-sexuality-through-kahi-ankahi-baatein-2/"
+        }
       ]
     },
     {
@@ -1089,7 +1180,8 @@
       "maturity_tags": [
         "dataset",
         "model"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "geospatial_dataset_of_wheat_and_rice",
@@ -1135,6 +1227,12 @@
         "pilot",
         "usecase",
         "business"
+      ],
+      "additional_resources": [
+        {
+          "name": "Giz Ff Dg Learning Report.Pdf (digitalgreen.org)",
+          "url": "https://digitalgreen.org/wp-content/uploads/2024/10/GIZ-FF_DG_Learning-Report.pdf"
+        }
       ]
     },
     {
@@ -1187,7 +1285,8 @@
         "dataset",
         "model",
         "pilot"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "ai_for_forest_conservation",
@@ -1235,7 +1334,8 @@
         "model",
         "pilot",
         "usecase"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "aipowered_monitoring_of_forest_degradation_and",
@@ -1285,11 +1385,17 @@
         "model",
         "pilot",
         "usecase"
+      ],
+      "additional_resources": [
+        {
+          "name": "Edit (docs.google.com)",
+          "url": "https://docs.google.com/spreadsheets/d/1WaunaB-HU-j9UDs-X5Fn1vJ15H4ENMe-lcEgWM9l3Eg/edit?usp=sharing"
+        }
       ]
     },
     {
-      "id": "climate_disinformation_in_local_indonesian_languag",
-      "title": "Climate Disinformation in Local Indonesian Languages",
+      "id": "combatting_climate_disinformation_in_indonesian_la",
+      "title": "Combatting Climate Disinformation in Indonesian languages with AI",
       "description": "This AI application is about developing an AI-based system to tackle climate misinformation in Indonesia, focusing on creating accurate and accessible information tools. The initiative aims to build a multilingual disinformation detection system, covering Bahasa Indonesia and over 10,6 million words and 21 million words translation from Minangkabau, Balinese, and Buginese to classify and verify climate-related content. The application supports stakeholders, including government agencies, NGOs, and communities, in countering false narratives, promoting awareness, and enabling evidence-based decision-making. The AI outcomes include open-access datasets, disinformation, and topic classification models, a user-friendly website, and a chatbot. These tools empower users to identify climate misinformation, enhance public literacy, and foster collaboration for sustainable climate actions. The project emphasizes inclusivity, accessibility, and long-term impact, providing resources for researchers, local businesses, and policy-makers to advance AI applications in combating misinformation. Prosa has developed an AI-powered chatbot to address climate misinformation. The platform's website is available at faktaiklim.prosa.ai, and the chatbot can be accessed via Telegram (Fakta Iklim Bot), with open-source code available on GitHub. User guides are provided in four languages: Indonesian, Minangkabau, Balinese, and Bugis.",
       "dataset_links": [
         {
@@ -1320,7 +1426,7 @@
       "is_lacuna": false,
       "has_dataset": true,
       "has_usecase": true,
-      "image": "/projects/climate_disinformation_in_local_indonesian_languag/images/climate_dissinformation.jpg",
+      "image": null,
       "data_characteristics": "The data for this project is fully open-sourced and can be accessed through Hugging Face.\n ● License: CC BY-SA 4.0\n ● Data Type: Tabular\n ● Key Variables: Climate disinformation classification, topic categorization, language distribution (Bahasa Indonesia and regional languages: Minangkabau, Balinese, Buginese)\n ● Format: CSV\n ● Data Collection Period: Over 3 months, covering diverse misinformation cases in climate-related domains\n \n Data collection involved web crawling and inputs from local communities and experts, using sources like government websites, news articles, and scientific literature. Annotations by trained linguists and marginalized community members followed strict guidelines for consistency. The datasets are formatted for easy integration with AI tools.",
       "model_characteristics": "Processed Data and Pretrained Models:\n Use the multilingual datasets and pre-trained models (IndoBERT, IndoBERTNusa) to detect climate misinformation. The processed dataset can be accessed here: Processed Data\n \n Code for AI Models:\n Access the GitHub repository containing scripts for preprocessing datasets, fine-tuning language models, and training disinformation classifiers. These can be customized for various applications.\n \n Application Deployment:\n The resulting models are integrated into platforms like Kominfo's Anti-Hoax portal and social media crawling APIs. Additionally, a chatbot leveraging these AI models is available to verify climate-related information in real-time. The chatbot and models are publicly accessible via APIs to support further innovation and integration by developers.",
       "how_to_use": "You can leverage AI models and datasets to develop or enhance applications to address climate misinformation and advance public education. These resources can be adapted to new languages, regions, or even other misinformation topics, such as health or political issues. Combining the datasets with additional sources, like satellite imagery or weather data, could lead to innovative AI applications, including real-time fact-checking tools or misinformation monitoring dashboards. Researchers and developers can also use the models to benchmark against other datasets or refine methodologies, unlocking opportunities for both academic and commercial advancements.\n \n These tools can be integrated into platforms like government portals or social media moderation systems to maximize impact. Interactive educational applications, such as gamified platforms or public learning modules, could further engage communities. Collaboration with stakeholders—including government agencies, NGOs, and private companies—can help scale the tools, secure funding, and drive wider adoption. Through partnerships and expanded deployment, this project can contribute to fostering critical awareness and combating misinformation effectively.",
@@ -1330,11 +1436,12 @@
         "model",
         "pilot",
         "usecase"
-      ]
+      ],
+      "additional_resources": []
     },
     {
-      "id": "forest_forward_aipowered_high_carbon_stock",
-      "title": "Forest Forward: AI-Powered \"High Carbon Stock Approach\" Mapping for Forest Protection and Fight the Climate Crisis in Indonesia",
+      "id": "high_carbon_stock_approach_mapping_forests",
+      "title": "High Carbon Stock Approach: Mapping Forests to Combat Climate Change and Protect Livelihoods in Indonesia",
       "description": "As the world's largest tropical rainforest, Indonesia’s forests are disappearing faster than decision-makers can respond—largely due to the lack of accessible and trusted data. Our project delivers validated, open-source High Carbon Stock forest maps, using AI and satellite imagery to identify high-carbon, high-biodiversity forests, regenerating forests, and low-carbon land suitable for sustainable development.\n\nThe data is public, transparent, and scalable, empowering NGOs, indigenous communities, and governments to prevent deforestation and reduce emissions into actionable classes:\n\nHigh, Medium, and Low-Density Forests (Conservation Priority):\nForests with closed or patchy canopies, high biodiversity value, and significant carbon storage that are essential for climate mitigation and ecosystem protection.\n\nYoung Regenerating Forests:\nTransitional forests with growing carbon sequestration potential, requiring forward-looking protection strategies to prevent future deforestation.\n\nScrub and Open Land:\nLow-carbon areas suitable for sustainable development, enabling economic growth without compromising forest integrity.\n\nImpact & Use Cases\n\nThe resulting maps empower:\n\n- Policymakers: to strengthen spatial planning and climate-aligned land-use policies\n\n- NGOs: to prioritize conservation efforts and monitor forest loss\n\n- Businesses: to meet “no deforestation” commitments, reduce supply-chain risk, and cut greenhouse gas emissions\n\nGlobal Recognition & Scalability\nThe approach aligns with the globally recognized HCS methodology and has been nominated for the UN SDG Game Changer award – Category 2: Planet – Innovation for our climate and environment “Artificial Intelligence Meets Jungle/ Forest Forward—a strong signal of technical credibility and market relevance. From Indonesia, the project adaptation scale on demand by Goa government, India and Senegal, West Africa. \n\n",
       "dataset_links": [
         {
@@ -1361,7 +1468,7 @@
       "is_lacuna": false,
       "has_dataset": true,
       "has_usecase": false,
-      "image": "/projects/forest_forward_aipowered_high_carbon_stock/images/placeholder_image.jpeg",
+      "image": null,
       "data_characteristics": "The finalized HCS dataset and maps are available on Hugging Face HCSA/Forest_Plot_Data_2023, and Global Forest Watch.\n \n • License: Open-source (CC BY 4.0) \n • Data Type: Geospatial and tabular \n • Key Variables: Vegetation classification, carbon stock levels, validation points, and FPIC (Free, Prior and Informed Consent) compliance\n • Appr. No of observations: Covers ~1.5 million hectares of tropical forests \n • Appr. No of dimensions: 60+ attributes, covering vegetation classifications, carbon stock levels, biomass measurements, land-use types, validation points, and FPIC (Free, Prior and Informed Consent) compliance data\n • Covering 150 field plot high-carbon stock areas across Sumatra, Kalimantan, and West Papua\n • Format: Geo TIFF, shapefile, CSV\n The data adheres to FAIR (Findable, Accessible, Interoperable, Reusable) principles and includes anonymization measures to protect sensitive information.\n\nAlso, for this dataset / use case, a responsible AI Assessment was undertaken to help AI developers and project managers to identify, assess and mitigate potential harms and biases in AI. For methodology, see https://www.bmz-digital.global/en/news/ethical-crash-test-for-ai-how-to-navigate-the-road-to-responsible-innovation/  ",
       "model_characteristics": "Processed Data:\n Field measurements (e.g., biomass and tree species) were combined with Sentinel-2 imagery and NASA GEDI lidar to enhance map accuracy. The resulting geospatial data includes classifications of High Carbon Stock forests and other land-use categories.\n Model Development:\n AI models, trained using Convolutional Neural Networks (CNNs) and calibrated with aerial LiDAR and ground-truth data, are hosted on the HCSA GitHub repository: HCS Mapping Code.\n Application:\n Validated HCS maps are deployed on Google Earth Engine and Global Forest Watch for conservation planning and policy support, with an ODK-based mobile app under development for offline data collection. The project integrates FPIC (Free, Prior, and Informed Consent) principles throughout, ensuring community involvement and respect for land rights in data collection and mapping.",
       "how_to_use": "Investment Opportunity\nInvestor support accelerates platform scaling, regional expansion, and integration with ESG reporting, carbon accounting, and supply-chain tools—unlocking long-term commercial and climate value.\n\nWhy Donor Support Matters\nFunding ensures continued data validation, open access, capacity building, and long-term sustainability—maximizing climate, biodiversity, and social returns. \n\nPath Forward\nGovernment collaboration enables institutionalization, national scaling, and integration into official planning and monitoring systems—supporting long-term, climate-aligned development.",
@@ -1370,6 +1477,12 @@
         "dataset",
         "model",
         "pilot"
+      ],
+      "additional_resources": [
+        {
+          "name": "Ai Meets Jungle How Artificial Intelligence Is Saving Indonesias Forests (bmz-digital.global)",
+          "url": "https://www.bmz-digital.global/en/news/ai-meets-jungle-how-artificial-intelligence-is-saving-indonesias-forests/"
+        }
       ]
     },
     {
@@ -1409,7 +1522,8 @@
       "maturity_tags": [
         "dataset",
         "model"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "empowering_coastal_inhabitants_in_indonesia_levera",
@@ -1449,7 +1563,8 @@
         "dataset",
         "model",
         "pilot"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "citizen_chatbot_of_the_kenyan_office",
@@ -1485,7 +1600,8 @@
         "pilot",
         "usecase",
         "business"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "hello_government__better_citizen_services",
@@ -1519,7 +1635,8 @@
         "dataset",
         "model",
         "pilot"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "enabling_machine_translation_from_kiswahili_into",
@@ -1559,6 +1676,20 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "2501.11003 (arxiv.org)",
+          "url": "https://arxiv.org/pdf/2501.11003"
+        },
+        {
+          "name": "Low Resource Language Data (github.com)",
+          "url": "https://github.com/waleghwa/low-resource-language-data"
+        },
+        {
+          "name": "Datasets (datacollective.mozillafoundation.org)",
+          "url": "https://datacollective.mozillafoundation.org/datasets?q=common+voice"
+        }
       ]
     },
     {
@@ -1597,6 +1728,24 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "Video 69618432 (dw.com)",
+          "url": "https://www.dw.com/en/artificial-intelligence-boosts-kenyas-forestry-conservation/video-69618432"
+        },
+        {
+          "name": "Treedetection.Html (dekut-dsail.github.io)",
+          "url": "https://dekut-dsail.github.io/projects/treedetection.html"
+        },
+        {
+          "name": "1728502 (agu.confex.com)",
+          "url": "https://agu.confex.com/agu/agu24/meetingapp.cgi/Paper/1728502"
+        },
+        {
+          "name": "11060524 (ieeexplore.ieee.org)",
+          "url": "https://ieeexplore.ieee.org/document/11060524"
+        }
       ]
     },
     {
@@ -1637,7 +1786,8 @@
         "model",
         "pilot",
         "usecase"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "livhealth_kiswahili_corpus",
@@ -1678,6 +1828,12 @@
         "dataset",
         "model",
         "pilot"
+      ],
+      "additional_resources": [
+        {
+          "name": "New App And Local Language Translations Improve Livestock Health In Kenya And Tanzania (foundation.mozilla.org)",
+          "url": "https://foundation.mozilla.org/blog/new-app-and-local-language-translations-improve-livestock-health-in-kenya-and-tanzania/"
+        }
       ]
     },
     {
@@ -1720,7 +1876,8 @@
         "model",
         "pilot",
         "usecase"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "making_ai_understand_3_east_african",
@@ -1761,6 +1918,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "Creating Community Driven Datasets Report 032023 Giz Mozilla.Pdf (bmz-digital.global)",
+          "url": "https://www.bmz-digital.global/wp-content/uploads/2023/03/Creating-Community-Driven-Datasets-Report-032023-GIZ-Mozilla.pdf"
+        }
       ]
     },
     {
@@ -1798,7 +1961,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "detecting_sentiments_and_combatting_hate_speech",
@@ -1842,6 +2006,12 @@
         "dataset",
         "model",
         "pilot"
+      ],
+      "additional_resources": [
+        {
+          "name": "2201.08277 (arxiv.org)",
+          "url": "https://arxiv.org/pdf/2201.08277"
+        }
       ]
     },
     {
@@ -1880,7 +2050,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "onsite_image_and_weather_data_for",
@@ -1917,6 +2088,12 @@
         "model",
         "pilot",
         "usecase"
+      ],
+      "additional_resources": [
+        {
+          "name": "Papers.Cfm (papers.ssrn.com)",
+          "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5087469"
+        }
       ]
     },
     {
@@ -1972,7 +2149,8 @@
         "pilot",
         "usecase",
         "business"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "a_large_scale_collection_of_voice",
@@ -2014,7 +2192,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "monitoring_crop_type_area_and_enabling",
@@ -2060,7 +2239,8 @@
         "pilot",
         "usecase",
         "business"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "better_language_translation_for_more_training",
@@ -2124,6 +2304,16 @@
         "dataset",
         "model",
         "pilot"
+      ],
+      "additional_resources": [
+        {
+          "name": "moodlemoot.org",
+          "url": "https://moodlemoot.org/2024/timetable/event/246/"
+        },
+        {
+          "name": "aiopeneducation.pubpub.org",
+          "url": "https://aiopeneducation.pubpub.org/pub/7npwm2su/release/5?readingCollection=06969c6d"
+        }
       ]
     },
     {
@@ -2164,6 +2354,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "1R7Iawhmentrju Kmor1Iz26Aii15Elit (drive.google.com)",
+          "url": "https://drive.google.com/drive/folders/1R7iawHmEnTRJu_kmoR1iz26aii15ELIT?usp=drive_link"
+        }
       ]
     },
     {
@@ -2203,6 +2399,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "View (drive.google.com)",
+          "url": "https://drive.google.com/file/d/1t3KiZiEQFprZMb8AYI01HrbSsSrfUwlb/view?usp=drive_link"
+        }
       ]
     },
     {
@@ -2242,6 +2444,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "View (drive.google.com)",
+          "url": "https://drive.google.com/file/d/1rqnCZTZ2b4MSp9C0nkFhU3A1Xhk4CwIe/view?usp=drive_link"
+        }
       ]
     },
     {
@@ -2281,6 +2489,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "View (drive.google.com)",
+          "url": "https://drive.google.com/file/d/1cMBiijRJUyz8MVAuudrDnK2kkxbnoT6J/view?usp=drive_link"
+        }
       ]
     },
     {
@@ -2321,6 +2535,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "View (drive.google.com)",
+          "url": "https://drive.google.com/file/d/13tu-8UnI1FYk7DLkI_Z1qmprWW3EWlfp/view?usp=drive_link"
+        }
       ]
     },
     {
@@ -2362,6 +2582,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "View (drive.google.com)",
+          "url": "https://drive.google.com/file/d/1uFKAZ9CCniykTKRSsh2-nxKW2f3Wkpbb/view?usp=drive_link"
+        }
       ]
     },
     {
@@ -2403,6 +2629,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "View (drive.google.com)",
+          "url": "https://drive.google.com/file/d/1dfgcycIgFy7SKUHJcZ2qFERbQTbehxVh/view?usp=drive_link"
+        }
       ]
     },
     {
@@ -2444,6 +2676,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "View (drive.google.com)",
+          "url": "https://drive.google.com/file/d/1QYB5PBhQVaDQ1J-YP0ZfOAsLXznla_Kr/view?usp=drive_link"
+        }
       ]
     },
     {
@@ -2485,6 +2723,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "View (drive.google.com)",
+          "url": "https://drive.google.com/file/d/1GMpDiMlY-wYXTB6T5woikRpFbgQ21hhp/view?usp=drive_link"
+        }
       ]
     },
     {
@@ -2525,6 +2769,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "View (drive.google.com)",
+          "url": "https://drive.google.com/file/d/1rGoapVNyVsVwMxDfBrRfdVoyRCpjwnIy/view?usp=drive_link"
+        }
       ]
     },
     {
@@ -2564,6 +2814,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "View (drive.google.com)",
+          "url": "https://drive.google.com/file/d/1c54f9Lh5IV8T_XLrlf_8ItAitrBEjTVZ/view?usp=drive_link"
+        }
       ]
     },
     {
@@ -2603,7 +2859,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "spot_the_crop",
@@ -2648,6 +2905,12 @@
         "dataset",
         "model",
         "pilot"
+      ],
+      "additional_resources": [
+        {
+          "name": "Radiant Earth Spot The Crop Challenge (zindi.africa)",
+          "url": "https://zindi.africa/competitions/radiant-earth-spot-the-crop-challenge"
+        }
       ]
     },
     {
@@ -2695,7 +2958,8 @@
         "pilot",
         "usecase",
         "business"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "bridging_the_energy_gap_machine_learning",
@@ -2741,7 +3005,8 @@
         "model",
         "pilot",
         "usecase"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "estimating_solar_irradiance_for_improved_solar",
@@ -2792,7 +3057,8 @@
         "model",
         "pilot",
         "usecase"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "ai_as_a_helping_hand_to",
@@ -2837,7 +3103,8 @@
         "model",
         "pilot",
         "usecase"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "monitoring_deforestation_predicting_landuse_and_la",
@@ -2878,7 +3145,8 @@
         "dataset",
         "model",
         "pilot"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "preserving_privacy_and_avoiding_gender_bias",
@@ -2919,6 +3187,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "File.Xhtml (dataverse.harvard.edu)",
+          "url": "https://dataverse.harvard.edu/file.xhtml?fileId=10577234&version=2.0"
+        }
       ]
     }
   ],

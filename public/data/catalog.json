@@ -797,7 +797,7 @@
       "usecase_links": [
         {
           "name": "Link",
-          "url": "https://github.com/iLab-DSU/imarika-weather-pipeline;"
+          "url": "https://github.com/iLab-DSU/imarika-weather-pipeline"
         },
         {
           "name": "Link",
@@ -853,8 +853,8 @@
       ]
     },
     {
-      "id": "aigenerated_voice_content_in_indian_languages",
-      "title": "Empowering Women Across India with Voice-based Knowledge in Their Native Languages",
+      "id": "empowering_women_across_india_with_audio",
+      "title": "Empowering Women across India with audio messages in their native languages on Health, Sustainable Agriculture and Education",
       "description": "Empowering Women Across India with Voice-based Knowledge in Their Native Languages: By using openly accessible text-to-speech models from the Indian Institute of Science (IISc) and MeitY's Digital India Bhashini Division, Audiopedia created health-related 400+ audio messages that can be shared with civil society organizations for awareness raising and capacity building",
       "dataset_links": [
         {
@@ -888,7 +888,7 @@
       "is_lacuna": false,
       "has_dataset": true,
       "has_usecase": true,
-      "image": "/projects/aigenerated_voice_content_in_indian_languages/images/image.png",
+      "image": null,
       "data_characteristics": "Audiopedia has created useful content on various topics including health, education, financial literacy. This data is available in text and audio format in multiple languages incl. low-resource languages.",
       "model_characteristics": "For the generation of audio messages, Audiopedia used openly accessible text-to-speech models from the Indian Institute of Science (IISc) and MeitY's Digital India Bhashini Division.",
       "how_to_use": "Civil society organizations can use the existing voice content to generate tailored, AI-powered messages in various Indian languages across different topics including health, education, agriculture and other social topics. Civil society organizations can deploy these messages in rural and semi-urban areas using easy-to-use digital tools incl. WhatsApp messaging or feature phones.",
@@ -1020,8 +1020,8 @@
       ]
     },
     {
-      "id": "ai_pest_management_open_data_for",
-      "title": "Cotton Ace: AI-driven Pest Management for Cotton Farmers in India",
+      "id": "open_source_ai_pest_control_for",
+      "title": "Open source AI Pest Control for smallholder Cotton Farmers in India",
       "description": "Wadhwani AI has developed a mobile app to support cotton farmers combat pest infestations, a major threat to cotton productivity. For this, they have collaborated with FAIR Forward – AI for All, a project of German Development Cooperation. The app allows farmers to take photos of pheromone traps, which capture male bollworms, and uses an AI model to count the pests in the images. Based on the AI-generated counts, the app provides recommendations to farmers on how to respond. This technology empowers small-scale farmers to make informed decisions, reduce uncertainty in yield, and improve their livelihoods.\n \n As the codebase, dataset and research are openly available it can be used to build on, test and research similar applications in other contexts. This would esp. apply to problems of identification and counting of agricultural pests.",
       "dataset_links": [
         {
@@ -1060,7 +1060,7 @@
       "is_lacuna": false,
       "has_dataset": true,
       "has_usecase": true,
-      "image": "/projects/ai_pest_management_open_data_for/images/cotton_ace.jpg",
+      "image": null,
       "data_characteristics": "Wadhwani AI with support from German Development Cooperation provided training data consisting of ca. 13,000 images:\n \n (a) These images were captured by farmers and farm extension workers since 2018\n (b) The dataset contains two types of images: those with pests and bounding boxes labelling either pink bollworm (PBW) or American bollworm (ABW), and those without pests, representing real-world user behavior.\n (c) License: Apache 2.0",
       "model_characteristics": "Wadhwani AI with support from German Development cooperation provided the codebase of the pest identification model:\n \n (a) At its core, this repository packages an object detection implementation. \n (b) While there are several object detection implementations, and even implementation aggregations, there are none that completely solve for the challenges faced here (e.g., highly diverse image quality, model size restrictions)\n (c) License: Apache 2.0",
       "how_to_use": "The resources can be used to build on, test and research similar applications in other contexts, esp. applying to problems of identification and counting of agricultural pests.\n\nThis use case also included the development of a business model and funding model for open source AI  as a stepping stone towards financially viable operations. It was facilitated by Villgro Africa's and FAIR Forward's  six-month mentorship programme on \"Creating sustainable business and funding models with open source AI\". See: https://www.bmz-digital.global/en/news/open-source-ai-business-impact/ \n",
@@ -1085,7 +1085,7 @@
     },
     {
       "id": "providing_better_information_on_sexual_and",
-      "title": "Providing better information on sexual and reproductive health and rights of young people through the Kahi Ankahi Baatein infloline (Hindi LLM finetuning)",
+      "title": "Providing better information on sexual and reproductive health and rights of young people through the Kahi Ankahi Baatein infoline (Hindi LLM finetuning)",
       "description": "Improve the Kahi Ankahi Baatein (KAB) platform by fine-tuning Hindi LLMs for better user experience.",
       "dataset_links": [
         {
@@ -1394,8 +1394,8 @@
       ]
     },
     {
-      "id": "climate_disinformation_in_local_indonesian_languag",
-      "title": "Climate Disinformation in Local Indonesian Languages",
+      "id": "combatting_climate_disinformation_in_indonesian_la",
+      "title": "Combatting Climate Disinformation in Indonesian languages with AI",
       "description": "This AI application is about developing an AI-based system to tackle climate misinformation in Indonesia, focusing on creating accurate and accessible information tools. The initiative aims to build a multilingual disinformation detection system, covering Bahasa Indonesia and over 10,6 million words and 21 million words translation from Minangkabau, Balinese, and Buginese to classify and verify climate-related content. The application supports stakeholders, including government agencies, NGOs, and communities, in countering false narratives, promoting awareness, and enabling evidence-based decision-making. The AI outcomes include open-access datasets, disinformation, and topic classification models, a user-friendly website, and a chatbot. These tools empower users to identify climate misinformation, enhance public literacy, and foster collaboration for sustainable climate actions. The project emphasizes inclusivity, accessibility, and long-term impact, providing resources for researchers, local businesses, and policy-makers to advance AI applications in combating misinformation. Prosa has developed an AI-powered chatbot to address climate misinformation. The platform's website is available at faktaiklim.prosa.ai, and the chatbot can be accessed via Telegram (Fakta Iklim Bot), with open-source code available on GitHub. User guides are provided in four languages: Indonesian, Minangkabau, Balinese, and Bugis.",
       "dataset_links": [
         {
@@ -1426,7 +1426,7 @@
       "is_lacuna": false,
       "has_dataset": true,
       "has_usecase": true,
-      "image": "/projects/climate_disinformation_in_local_indonesian_languag/images/climate_dissinformation.jpg",
+      "image": null,
       "data_characteristics": "The data for this project is fully open-sourced and can be accessed through Hugging Face.\n ● License: CC BY-SA 4.0\n ● Data Type: Tabular\n ● Key Variables: Climate disinformation classification, topic categorization, language distribution (Bahasa Indonesia and regional languages: Minangkabau, Balinese, Buginese)\n ● Format: CSV\n ● Data Collection Period: Over 3 months, covering diverse misinformation cases in climate-related domains\n \n Data collection involved web crawling and inputs from local communities and experts, using sources like government websites, news articles, and scientific literature. Annotations by trained linguists and marginalized community members followed strict guidelines for consistency. The datasets are formatted for easy integration with AI tools.",
       "model_characteristics": "Processed Data and Pretrained Models:\n Use the multilingual datasets and pre-trained models (IndoBERT, IndoBERTNusa) to detect climate misinformation. The processed dataset can be accessed here: Processed Data\n \n Code for AI Models:\n Access the GitHub repository containing scripts for preprocessing datasets, fine-tuning language models, and training disinformation classifiers. These can be customized for various applications.\n \n Application Deployment:\n The resulting models are integrated into platforms like Kominfo's Anti-Hoax portal and social media crawling APIs. Additionally, a chatbot leveraging these AI models is available to verify climate-related information in real-time. The chatbot and models are publicly accessible via APIs to support further innovation and integration by developers.",
       "how_to_use": "You can leverage AI models and datasets to develop or enhance applications to address climate misinformation and advance public education. These resources can be adapted to new languages, regions, or even other misinformation topics, such as health or political issues. Combining the datasets with additional sources, like satellite imagery or weather data, could lead to innovative AI applications, including real-time fact-checking tools or misinformation monitoring dashboards. Researchers and developers can also use the models to benchmark against other datasets or refine methodologies, unlocking opportunities for both academic and commercial advancements.\n \n These tools can be integrated into platforms like government portals or social media moderation systems to maximize impact. Interactive educational applications, such as gamified platforms or public learning modules, could further engage communities. Collaboration with stakeholders—including government agencies, NGOs, and private companies—can help scale the tools, secure funding, and drive wider adoption. Through partnerships and expanded deployment, this project can contribute to fostering critical awareness and combating misinformation effectively.",
@@ -1440,8 +1440,8 @@
       "additional_resources": []
     },
     {
-      "id": "forest_forward_aipowered_high_carbon_stock",
-      "title": "Forest Forward: AI-Powered \"High Carbon Stock Approach\" Mapping for Forest Protection and Fight the Climate Crisis in Indonesia",
+      "id": "high_carbon_stock_approach_mapping_forests",
+      "title": "High Carbon Stock Approach: Mapping Forests to Combat Climate Change and Protect Livelihoods in Indonesia",
       "description": "As the world's largest tropical rainforest, Indonesia’s forests are disappearing faster than decision-makers can respond—largely due to the lack of accessible and trusted data. Our project delivers validated, open-source High Carbon Stock forest maps, using AI and satellite imagery to identify high-carbon, high-biodiversity forests, regenerating forests, and low-carbon land suitable for sustainable development.\n\nThe data is public, transparent, and scalable, empowering NGOs, indigenous communities, and governments to prevent deforestation and reduce emissions into actionable classes:\n\nHigh, Medium, and Low-Density Forests (Conservation Priority):\nForests with closed or patchy canopies, high biodiversity value, and significant carbon storage that are essential for climate mitigation and ecosystem protection.\n\nYoung Regenerating Forests:\nTransitional forests with growing carbon sequestration potential, requiring forward-looking protection strategies to prevent future deforestation.\n\nScrub and Open Land:\nLow-carbon areas suitable for sustainable development, enabling economic growth without compromising forest integrity.\n\nImpact & Use Cases\n\nThe resulting maps empower:\n\n- Policymakers: to strengthen spatial planning and climate-aligned land-use policies\n\n- NGOs: to prioritize conservation efforts and monitor forest loss\n\n- Businesses: to meet “no deforestation” commitments, reduce supply-chain risk, and cut greenhouse gas emissions\n\nGlobal Recognition & Scalability\nThe approach aligns with the globally recognized HCS methodology and has been nominated for the UN SDG Game Changer award – Category 2: Planet – Innovation for our climate and environment “Artificial Intelligence Meets Jungle/ Forest Forward—a strong signal of technical credibility and market relevance. From Indonesia, the project adaptation scale on demand by Goa government, India and Senegal, West Africa. \n\n",
       "dataset_links": [
         {
@@ -1468,7 +1468,7 @@
       "is_lacuna": false,
       "has_dataset": true,
       "has_usecase": false,
-      "image": "/projects/forest_forward_aipowered_high_carbon_stock/images/placeholder_image.jpeg",
+      "image": null,
       "data_characteristics": "The finalized HCS dataset and maps are available on Hugging Face HCSA/Forest_Plot_Data_2023, and Global Forest Watch.\n \n • License: Open-source (CC BY 4.0) \n • Data Type: Geospatial and tabular \n • Key Variables: Vegetation classification, carbon stock levels, validation points, and FPIC (Free, Prior and Informed Consent) compliance\n • Appr. No of observations: Covers ~1.5 million hectares of tropical forests \n • Appr. No of dimensions: 60+ attributes, covering vegetation classifications, carbon stock levels, biomass measurements, land-use types, validation points, and FPIC (Free, Prior and Informed Consent) compliance data\n • Covering 150 field plot high-carbon stock areas across Sumatra, Kalimantan, and West Papua\n • Format: Geo TIFF, shapefile, CSV\n The data adheres to FAIR (Findable, Accessible, Interoperable, Reusable) principles and includes anonymization measures to protect sensitive information.\n\nAlso, for this dataset / use case, a responsible AI Assessment was undertaken to help AI developers and project managers to identify, assess and mitigate potential harms and biases in AI. For methodology, see https://www.bmz-digital.global/en/news/ethical-crash-test-for-ai-how-to-navigate-the-road-to-responsible-innovation/  ",
       "model_characteristics": "Processed Data:\n Field measurements (e.g., biomass and tree species) were combined with Sentinel-2 imagery and NASA GEDI lidar to enhance map accuracy. The resulting geospatial data includes classifications of High Carbon Stock forests and other land-use categories.\n Model Development:\n AI models, trained using Convolutional Neural Networks (CNNs) and calibrated with aerial LiDAR and ground-truth data, are hosted on the HCSA GitHub repository: HCS Mapping Code.\n Application:\n Validated HCS maps are deployed on Google Earth Engine and Global Forest Watch for conservation planning and policy support, with an ODK-based mobile app under development for offline data collection. The project integrates FPIC (Free, Prior, and Informed Consent) principles throughout, ensuring community involvement and respect for land rights in data collection and mapping.",
       "how_to_use": "Investment Opportunity\nInvestor support accelerates platform scaling, regional expansion, and integration with ESG reporting, carbon accounting, and supply-chain tools—unlocking long-term commercial and climate value.\n\nWhy Donor Support Matters\nFunding ensures continued data validation, open access, capacity building, and long-term sustainability—maximizing climate, biodiversity, and social returns. \n\nPath Forward\nGovernment collaboration enables institutionalization, national scaling, and integration into official planning and monitoring systems—supporting long-term, climate-aligned development.",
