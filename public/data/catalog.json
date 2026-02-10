@@ -44,7 +44,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "powering_rural_futures_in_west_africa",
@@ -89,7 +90,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "datasets_for_transportation_impact_evaluation",
@@ -128,7 +130,8 @@
       "maturity_tags": [
         "dataset",
         "model"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "quantifying_colombian_mangroves_aboveground_biomas",
@@ -165,7 +168,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "detectinging_forest_degradation_by_predicting_biom",
@@ -205,7 +209,8 @@
         "dataset",
         "model",
         "pilot"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "ai_for_mangrove_carbon_credits_turning",
@@ -242,7 +247,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "lifting_up_women_through_land_ownership",
@@ -285,6 +291,12 @@
         "model",
         "pilot",
         "usecase"
+      ],
+      "additional_resources": [
+        {
+          "name": "Lifting Up Women Through Land Ownership (mozillafoundation.org)",
+          "url": "https://www.mozillafoundation.org/de/blog/lifting-up-women-through-land-ownership/"
+        }
       ]
     },
     {
@@ -324,7 +336,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "monitoring_the_impact_of_palm_oil",
@@ -362,7 +375,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "indigenous_knowledge_meets_ai_monitoring_elephants",
@@ -407,6 +421,28 @@
         "model",
         "pilot",
         "usecase"
+      ],
+      "additional_resources": [
+        {
+          "name": "When Future Already Here Now Its Being Filmed Diana Mastracci Sanchez Y5Rue. (linkedin.com)",
+          "url": "https://www.linkedin.com/pulse/when-future-already-here-now-its-being-filmed-diana-mastracci-sanchez-y5rue."
+        },
+        {
+          "name": "Embracing Uncertainty Hidden Strength Science Diana Mastracci Sanchez Qdj5E. (linkedin.com)",
+          "url": "https://www.linkedin.com/pulse/embracing-uncertainty-hidden-strength-science-diana-mastracci-sanchez-qdj5e."
+        },
+        {
+          "name": "Bridging Worlds Indigenous Led Innovation Remote Mastracci Sanchez Yjqfe. (linkedin.com)",
+          "url": "https://www.linkedin.com/pulse/bridging-worlds-indigenous-led-innovation-remote-mastracci-sanchez-yjqfe."
+        },
+        {
+          "name": "Ltome Katip Indigenous Led Labelling Inclusive Ai Addressing Human Wildlife Conflict And. (rit.edu)",
+          "url": "https://www.rit.edu/dirs/research/ltome-katip-indigenous-led-labelling-inclusive-ai-addressing-human-wildlife-conflict-and."
+        },
+        {
+          "name": "Professor Helps Bring Machine Learning Indigenous Communities (rit.edu)",
+          "url": "https://www.rit.edu/news/professor-helps-bring-machine-learning-indigenous-communities"
+        }
       ]
     },
     {
@@ -453,7 +489,8 @@
         "model",
         "pilot",
         "usecase"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "supporting_food_security_and_climate_change",
@@ -496,7 +533,8 @@
       "maturity_tags": [
         "dataset",
         "model"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "facilitating_access_to_financial_applications_in",
@@ -534,7 +572,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "discover_ghanaian_voices_a_dataset_for",
@@ -571,7 +610,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "mapping_cocoa_landscapes_in_ghana_reference",
@@ -608,7 +648,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "explore_the_agrivoltaic_dataset_dive_into",
@@ -645,7 +686,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "phenological_dataset_for_ecological_forecasting_ph",
@@ -695,6 +737,16 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "Realistic Phenology Data Key To Predicting Crop Cycles Dr Ofosu Bamfo 2 (gna.org.gh)",
+          "url": "https://gna.org.gh/2025/07/realistic-phenology-data-key-to-predicting-crop-cycles-dr-ofosu-bamfo-2/"
+        },
+        {
+          "name": "5Byh6F7 (g.co)",
+          "url": "https://g.co/kgs/5byh6f7"
+        }
       ]
     },
     {
@@ -734,7 +786,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "imarika__translating_weather_information_into",
@@ -783,6 +836,20 @@
         "pilot",
         "usecase",
         "business"
+      ],
+      "additional_resources": [
+        {
+          "name": "Chatbots Local Weather Reports And A Boon For Kenyas Smallholder Farmers (foundation.mozilla.org)",
+          "url": "https://foundation.mozilla.org/blog/chatbots-local-weather-reports-and-a-boon-for-kenyas-smallholder-farmers/;"
+        },
+        {
+          "name": "Awards (mozillafoundation.org)",
+          "url": "https://www.mozillafoundation.org/en/what-we-fund/programs/common-voice-kiswahili-awards/awards/;"
+        },
+        {
+          "name": "Innovate Africa Challenge (smartafrica.org)",
+          "url": "https://smartafrica.org/innovate-africa-challenge/"
+        }
       ]
     },
     {
@@ -831,7 +898,8 @@
         "model",
         "pilot",
         "usecase"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "open_air_pollution_data_for_patna",
@@ -892,7 +960,8 @@
         "model",
         "pilot",
         "usecase"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "making_ai_speak_9_indian_languages",
@@ -942,6 +1011,12 @@
         "model",
         "pilot",
         "usecase"
+      ],
+      "additional_resources": [
+        {
+          "name": "Loud And Clear Open Source For Indias Linguistic Diversity (bmz-digital.global)",
+          "url": "https://www.bmz-digital.global/en/news/loud-and-clear-open-source-for-indias-linguistic-diversity/"
+        }
       ]
     },
     {
@@ -996,6 +1071,16 @@
         "pilot",
         "usecase",
         "business"
+      ],
+      "additional_resources": [
+        {
+          "name": "Pest Management Ai Solution (wadhwaniai.org)",
+          "url": "https://www.wadhwaniai.org/programs/pest-management/pest-management-ai-solution/"
+        },
+        {
+          "name": "3394486.3403363 (dl.acm.org)",
+          "url": "https://dl.acm.org/doi/10.1145/3394486.3403363"
+        }
       ]
     },
     {
@@ -1042,6 +1127,12 @@
         "pilot",
         "usecase",
         "business"
+      ],
+      "additional_resources": [
+        {
+          "name": "Answering Questions On Sexuality Through Kahi Ankahi Baatein 2 (gramvaani.org)",
+          "url": "https://gramvaani.org/answering-questions-on-sexuality-through-kahi-ankahi-baatein-2/"
+        }
       ]
     },
     {
@@ -1089,7 +1180,8 @@
       "maturity_tags": [
         "dataset",
         "model"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "geospatial_dataset_of_wheat_and_rice",
@@ -1135,6 +1227,12 @@
         "pilot",
         "usecase",
         "business"
+      ],
+      "additional_resources": [
+        {
+          "name": "Giz Ff Dg Learning Report.Pdf (digitalgreen.org)",
+          "url": "https://digitalgreen.org/wp-content/uploads/2024/10/GIZ-FF_DG_Learning-Report.pdf"
+        }
       ]
     },
     {
@@ -1187,7 +1285,8 @@
         "dataset",
         "model",
         "pilot"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "ai_for_forest_conservation",
@@ -1235,7 +1334,8 @@
         "model",
         "pilot",
         "usecase"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "aipowered_monitoring_of_forest_degradation_and",
@@ -1285,6 +1385,12 @@
         "model",
         "pilot",
         "usecase"
+      ],
+      "additional_resources": [
+        {
+          "name": "Edit (docs.google.com)",
+          "url": "https://docs.google.com/spreadsheets/d/1WaunaB-HU-j9UDs-X5Fn1vJ15H4ENMe-lcEgWM9l3Eg/edit?usp=sharing"
+        }
       ]
     },
     {
@@ -1330,7 +1436,8 @@
         "model",
         "pilot",
         "usecase"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "forest_forward_aipowered_high_carbon_stock",
@@ -1370,6 +1477,12 @@
         "dataset",
         "model",
         "pilot"
+      ],
+      "additional_resources": [
+        {
+          "name": "Ai Meets Jungle How Artificial Intelligence Is Saving Indonesias Forests (bmz-digital.global)",
+          "url": "https://www.bmz-digital.global/en/news/ai-meets-jungle-how-artificial-intelligence-is-saving-indonesias-forests/"
+        }
       ]
     },
     {
@@ -1409,7 +1522,8 @@
       "maturity_tags": [
         "dataset",
         "model"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "empowering_coastal_inhabitants_in_indonesia_levera",
@@ -1449,7 +1563,8 @@
         "dataset",
         "model",
         "pilot"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "citizen_chatbot_of_the_kenyan_office",
@@ -1485,7 +1600,8 @@
         "pilot",
         "usecase",
         "business"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "hello_government__better_citizen_services",
@@ -1519,7 +1635,8 @@
         "dataset",
         "model",
         "pilot"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "enabling_machine_translation_from_kiswahili_into",
@@ -1559,6 +1676,20 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "2501.11003 (arxiv.org)",
+          "url": "https://arxiv.org/pdf/2501.11003"
+        },
+        {
+          "name": "Low Resource Language Data (github.com)",
+          "url": "https://github.com/waleghwa/low-resource-language-data"
+        },
+        {
+          "name": "Datasets (datacollective.mozillafoundation.org)",
+          "url": "https://datacollective.mozillafoundation.org/datasets?q=common+voice"
+        }
       ]
     },
     {
@@ -1597,6 +1728,24 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "Video 69618432 (dw.com)",
+          "url": "https://www.dw.com/en/artificial-intelligence-boosts-kenyas-forestry-conservation/video-69618432"
+        },
+        {
+          "name": "Treedetection.Html (dekut-dsail.github.io)",
+          "url": "https://dekut-dsail.github.io/projects/treedetection.html"
+        },
+        {
+          "name": "1728502 (agu.confex.com)",
+          "url": "https://agu.confex.com/agu/agu24/meetingapp.cgi/Paper/1728502"
+        },
+        {
+          "name": "11060524 (ieeexplore.ieee.org)",
+          "url": "https://ieeexplore.ieee.org/document/11060524"
+        }
       ]
     },
     {
@@ -1637,7 +1786,8 @@
         "model",
         "pilot",
         "usecase"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "livhealth_kiswahili_corpus",
@@ -1678,6 +1828,12 @@
         "dataset",
         "model",
         "pilot"
+      ],
+      "additional_resources": [
+        {
+          "name": "New App And Local Language Translations Improve Livestock Health In Kenya And Tanzania (foundation.mozilla.org)",
+          "url": "https://foundation.mozilla.org/blog/new-app-and-local-language-translations-improve-livestock-health-in-kenya-and-tanzania/"
+        }
       ]
     },
     {
@@ -1720,7 +1876,8 @@
         "model",
         "pilot",
         "usecase"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "making_ai_understand_3_east_african",
@@ -1761,6 +1918,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "Creating Community Driven Datasets Report 032023 Giz Mozilla.Pdf (bmz-digital.global)",
+          "url": "https://www.bmz-digital.global/wp-content/uploads/2023/03/Creating-Community-Driven-Datasets-Report-032023-GIZ-Mozilla.pdf"
+        }
       ]
     },
     {
@@ -1798,7 +1961,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "detecting_sentiments_and_combatting_hate_speech",
@@ -1842,6 +2006,12 @@
         "dataset",
         "model",
         "pilot"
+      ],
+      "additional_resources": [
+        {
+          "name": "2201.08277 (arxiv.org)",
+          "url": "https://arxiv.org/pdf/2201.08277"
+        }
       ]
     },
     {
@@ -1880,7 +2050,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "onsite_image_and_weather_data_for",
@@ -1917,6 +2088,12 @@
         "model",
         "pilot",
         "usecase"
+      ],
+      "additional_resources": [
+        {
+          "name": "Papers.Cfm (papers.ssrn.com)",
+          "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5087469"
+        }
       ]
     },
     {
@@ -1972,7 +2149,8 @@
         "pilot",
         "usecase",
         "business"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "a_large_scale_collection_of_voice",
@@ -2014,7 +2192,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "monitoring_crop_type_area_and_enabling",
@@ -2060,7 +2239,8 @@
         "pilot",
         "usecase",
         "business"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "better_language_translation_for_more_training",
@@ -2124,6 +2304,16 @@
         "dataset",
         "model",
         "pilot"
+      ],
+      "additional_resources": [
+        {
+          "name": "moodlemoot.org",
+          "url": "https://moodlemoot.org/2024/timetable/event/246/"
+        },
+        {
+          "name": "aiopeneducation.pubpub.org",
+          "url": "https://aiopeneducation.pubpub.org/pub/7npwm2su/release/5?readingCollection=06969c6d"
+        }
       ]
     },
     {
@@ -2164,6 +2354,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "1R7Iawhmentrju Kmor1Iz26Aii15Elit (drive.google.com)",
+          "url": "https://drive.google.com/drive/folders/1R7iawHmEnTRJu_kmoR1iz26aii15ELIT?usp=drive_link"
+        }
       ]
     },
     {
@@ -2203,6 +2399,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "View (drive.google.com)",
+          "url": "https://drive.google.com/file/d/1t3KiZiEQFprZMb8AYI01HrbSsSrfUwlb/view?usp=drive_link"
+        }
       ]
     },
     {
@@ -2242,6 +2444,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "View (drive.google.com)",
+          "url": "https://drive.google.com/file/d/1rqnCZTZ2b4MSp9C0nkFhU3A1Xhk4CwIe/view?usp=drive_link"
+        }
       ]
     },
     {
@@ -2281,6 +2489,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "View (drive.google.com)",
+          "url": "https://drive.google.com/file/d/1cMBiijRJUyz8MVAuudrDnK2kkxbnoT6J/view?usp=drive_link"
+        }
       ]
     },
     {
@@ -2321,6 +2535,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "View (drive.google.com)",
+          "url": "https://drive.google.com/file/d/13tu-8UnI1FYk7DLkI_Z1qmprWW3EWlfp/view?usp=drive_link"
+        }
       ]
     },
     {
@@ -2362,6 +2582,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "View (drive.google.com)",
+          "url": "https://drive.google.com/file/d/1uFKAZ9CCniykTKRSsh2-nxKW2f3Wkpbb/view?usp=drive_link"
+        }
       ]
     },
     {
@@ -2403,6 +2629,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "View (drive.google.com)",
+          "url": "https://drive.google.com/file/d/1dfgcycIgFy7SKUHJcZ2qFERbQTbehxVh/view?usp=drive_link"
+        }
       ]
     },
     {
@@ -2444,6 +2676,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "View (drive.google.com)",
+          "url": "https://drive.google.com/file/d/1QYB5PBhQVaDQ1J-YP0ZfOAsLXznla_Kr/view?usp=drive_link"
+        }
       ]
     },
     {
@@ -2485,6 +2723,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "View (drive.google.com)",
+          "url": "https://drive.google.com/file/d/1GMpDiMlY-wYXTB6T5woikRpFbgQ21hhp/view?usp=drive_link"
+        }
       ]
     },
     {
@@ -2525,6 +2769,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "View (drive.google.com)",
+          "url": "https://drive.google.com/file/d/1rGoapVNyVsVwMxDfBrRfdVoyRCpjwnIy/view?usp=drive_link"
+        }
       ]
     },
     {
@@ -2564,6 +2814,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "View (drive.google.com)",
+          "url": "https://drive.google.com/file/d/1c54f9Lh5IV8T_XLrlf_8ItAitrBEjTVZ/view?usp=drive_link"
+        }
       ]
     },
     {
@@ -2603,7 +2859,8 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "spot_the_crop",
@@ -2648,6 +2905,12 @@
         "dataset",
         "model",
         "pilot"
+      ],
+      "additional_resources": [
+        {
+          "name": "Radiant Earth Spot The Crop Challenge (zindi.africa)",
+          "url": "https://zindi.africa/competitions/radiant-earth-spot-the-crop-challenge"
+        }
       ]
     },
     {
@@ -2695,7 +2958,8 @@
         "pilot",
         "usecase",
         "business"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "bridging_the_energy_gap_machine_learning",
@@ -2741,7 +3005,8 @@
         "model",
         "pilot",
         "usecase"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "estimating_solar_irradiance_for_improved_solar",
@@ -2792,7 +3057,8 @@
         "model",
         "pilot",
         "usecase"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "ai_as_a_helping_hand_to",
@@ -2837,7 +3103,8 @@
         "model",
         "pilot",
         "usecase"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "monitoring_deforestation_predicting_landuse_and_la",
@@ -2878,7 +3145,8 @@
         "dataset",
         "model",
         "pilot"
-      ]
+      ],
+      "additional_resources": []
     },
     {
       "id": "preserving_privacy_and_avoiding_gender_bias",
@@ -2919,6 +3187,12 @@
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
+      ],
+      "additional_resources": [
+        {
+          "name": "File.Xhtml (dataverse.harvard.edu)",
+          "url": "https://dataverse.harvard.edu/file.xhtml?fileId=10577234&version=2.0"
+        }
       ]
     }
   ],

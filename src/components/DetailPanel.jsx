@@ -98,6 +98,7 @@ const DetailPanel = ({ project, onClose }) => {
   const [copied, setCopied] = useState(false)
   const datasetLinks = project?.dataset_links || []
   const usecaseLinks = project?.usecase_links || []
+  const additionalResources = project?.additional_resources || []
   const isOnHold = Boolean(project?.is_on_hold)
   const hasLinks = datasetLinks.length > 0 || usecaseLinks.length > 0
   const sdgs = project?.sdgs || []
@@ -171,6 +172,10 @@ const DetailPanel = ({ project, onClose }) => {
   }
   if (markdownContent.how_to_use) {
     tocSections.push({ id: 'how-to-use', label: 'How to Use It', icon: 'fa-lightbulb' })
+  }
+  const additionalResourceLinks = additionalResources.filter(r => r.url)
+  if (additionalResourceLinks.length > 0) {
+    tocSections.push({ id: 'additional-resources', label: 'Additional Resources', icon: 'fa-book-open' })
   }
   if (organizations) {
     tocSections.push({ id: 'organizations', label: 'Organizations Involved', icon: 'fa-building' })
@@ -356,6 +361,27 @@ const DetailPanel = ({ project, onClose }) => {
                     <h3 data-section="How to Use It">How to Use It</h3>
                     <div className="detail-content documentation-content">
                       <ReactMarkdown>{markdownContent.how_to_use}</ReactMarkdown>
+                    </div>
+                  </section>
+                )}
+
+                {/* Additional Resources Section */}
+                {additionalResourceLinks.length > 0 && (
+                  <section className="detail-section" id="additional-resources">
+                    <h3 data-section="Additional Resources">Additional Resources</h3>
+                    <div className="additional-resources-list">
+                      {additionalResources.filter(r => r.url).map((resource, idx) => (
+                        <a
+                          key={idx}
+                          href={resource.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="additional-resource-item"
+                        >
+                          <i className="fas fa-arrow-up-right-from-square"></i>
+                          <span>{resource.name}</span>
+                        </a>
+                      ))}
                     </div>
                   </section>
                 )}

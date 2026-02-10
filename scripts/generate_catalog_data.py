@@ -202,6 +202,34 @@ def generate_catalog_json():
             maturity_string = str(row.get('Maturity / Readiness for replication or scaling [INTERNAL]', ''))
             maturity_tags = parse_maturity_tags(maturity_string)
             
+            # Parse additional resources column
+            additional_resources_raw = row.get('Link to additional Resources (Paper, Publications, etc)', '')
+            additional_resources = []
+            if isinstance(additional_resources_raw, str) and not pd.isna(additional_resources_raw) and additional_resources_raw.strip():
+                resource_text = additional_resources_raw.strip()
+                # Extract any URLs from the text
+                resource_urls = extract_urls(resource_text)
+                if resource_urls:
+                    for ru in resource_urls:
+                        label = ru['name']
+                        # If label is just "Link", derive a nicer one from the URL
+                        if label == 'Link' and ru['url']:
+                            try:
+                                from urllib.parse import urlparse
+                                domain = urlparse(ru['url']).netloc.replace('www.', '')
+                                # Extract meaningful path segment
+                                path = urlparse(ru['url']).path.strip('/').split('/')
+                                slug = path[-1] if path and path[-1] else ''
+                                slug = slug.replace('-', ' ').replace('_', ' ')
+                                if slug and len(slug) > 3:
+                                    label = f"{slug.title()} ({domain})"
+                                else:
+                                    label = domain
+                            except Exception:
+                                label = 'Link'
+                        additional_resources.append({'name': label, 'url': ru['url']})
+                # Only include entries that have a valid URL (skip plain text notes for now)
+            
             # Create project object
             project = {
                 'id': normalized_project_id,
@@ -225,7 +253,8 @@ def generate_catalog_json():
                 'model_characteristics': str(row.get('Model/Use-Case - Key Characteristics', '')),
                 'how_to_use': str(row.get('Deep Dive - How can you concretely work with this and build on this?', '')),
                 'maturity': maturity_string,
-                'maturity_tags': maturity_tags
+                'maturity_tags': maturity_tags,
+                'additional_resources': additional_resources
             }
             
             projects.append(project)

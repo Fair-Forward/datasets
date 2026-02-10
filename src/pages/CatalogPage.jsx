@@ -99,15 +99,29 @@ const CatalogPage = () => {
 
     let projects = catalogData.projects
 
-    // Search filter
+    // Search filter — searches across all meaningful text fields
     if (filters.search) {
       const searchLower = filters.search.toLowerCase()
-      projects = projects.filter(p =>
-        p.title.toLowerCase().includes(searchLower) ||
-        p.description.toLowerCase().includes(searchLower) ||
-        p.countries.some(c => c.toLowerCase().includes(searchLower)) ||
-        p.sdgs.some(s => s.toLowerCase().includes(searchLower))
-      )
+      projects = projects.filter(p => {
+        const textFields = [
+          p.title,
+          p.description,
+          p.organizations,
+          p.contact,
+          p.authors,
+          p.data_characteristics,
+          p.model_characteristics,
+          p.how_to_use,
+          p.license
+        ]
+        // Check plain text fields
+        if (textFields.some(f => f && f.toLowerCase().includes(searchLower))) return true
+        // Check array fields
+        if (p.countries.some(c => c.toLowerCase().includes(searchLower))) return true
+        if (p.sdgs.some(s => s.toLowerCase().includes(searchLower))) return true
+        if (p.data_types.some(d => d.toLowerCase().includes(searchLower))) return true
+        return false
+      })
     }
 
     // SDG filter
