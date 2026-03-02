@@ -1,1 +1,3 @@
+Smallholder farmers are crucial contributors to global food production, and in India often suffer most from poverty and malnutrition. These farmers face challenges such as limited access to modern agriculture, unpredictable weather, and resource constraints. To tackle this issue, Digital Green collected data via surveys, offering insights into farming practices, environmental conditions, and crop yields. 
+
 The project developed a scalable data collection model for JEEViKA’s frontline workers, integrating digital tools and geofencing, and empowered farmers with personalized climate-smart advice through Farmer Scorecards.

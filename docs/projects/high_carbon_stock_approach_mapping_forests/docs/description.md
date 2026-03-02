@@ -1,4 +1,4 @@
-As the world's largest tropical rainforest, Indonesia’s forests are disappearing faster than decision-makers can respond—largely due to the lack of accessible and trusted data. Our project delivers validated, open-source High Carbon Stock forest maps, using AI and satellite imagery to identify high-carbon, high-biodiversity forests, regenerating forests, and low-carbon land suitable for sustainable development.
+As the world's largest tropical rainforest, Indonesia’s forests are disappearing faster than decision-makers can respond - largely due to the lack of accessible and trusted data. Our project delivers validated, open-source High Carbon Stock forest maps, using AI and satellite imagery to identify high-carbon, high-biodiversity forests, regenerating forests, and low-carbon land suitable for sustainable development.
 
 The data is public, transparent, and scalable, empowering NGOs, indigenous communities, and governments to prevent deforestation and reduce emissions into actionable classes:
 

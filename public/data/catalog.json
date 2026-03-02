@@ -452,13 +452,13 @@
       "dataset_links": [
         {
           "name": "Link",
-          "url": "https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana/data"
+          "url": "https://huggingface.co/datasets/KaraAgroAI/CADI-AI"
         }
       ],
       "usecase_links": [
         {
           "name": "Link",
-          "url": "https://huggingface.co/datasets/KaraAgroAI/CADI-AI/tree/main"
+          "url": "https://huggingface.co/KaraAgroAI/CADI-AI"
         }
       ],
       "is_on_hold": false,
@@ -474,7 +474,7 @@
       ],
       "license": "\n\nhttps://www.gnu.org/licenses/agpl-3.0.html",
       "contact": "KaraAgro (https://karaagro.com/)",
-      "organizations": "Powered by: Kara Agro (https://karaagro.com/)\nCatalyzed by: FAIR Forward - AI for All \nFinanced by: BMZ ",
+      "organizations": "Powered by: Kara Agro (https://karaagro.com/)\nCatalyzed by: FAIR Forward - AI for All  and  Market-Oriented Value Chains for Jobs & Growth in the ECOWAS Region (MOVE) of of German Development Cooperation (GIZ)\nFinanced by: BMZ ",
       "authors": "Mary Seiwah Afram, Elikplim Sabblah",
       "is_lacuna": false,
       "has_dataset": true,
@@ -1186,7 +1186,7 @@
     {
       "id": "geospatial_dataset_of_wheat_and_rice",
       "title": "Data-driven decision-making for farmers to increase climate resilience in India",
-      "description": "The project developed a scalable data collection model for JEEViKA’s frontline workers, integrating digital tools and geofencing, and empowered farmers with personalized climate-smart advice through Farmer Scorecards.",
+      "description": "Smallholder farmers are crucial contributors to global food production, and in India often suffer most from poverty and malnutrition. These farmers face challenges such as limited access to modern agriculture, unpredictable weather, and resource constraints. To tackle this issue, Digital Green collected data via surveys, offering insights into farming practices, environmental conditions, and crop yields. \n\nThe project developed a scalable data collection model for JEEViKA’s frontline workers, integrating digital tools and geofencing, and empowered farmers with personalized climate-smart advice through Farmer Scorecards.",
       "dataset_links": [
         {
           "name": "Link",
@@ -1219,7 +1219,7 @@
       "image": "/projects/geospatial_dataset_of_wheat_and_rice/images/digital_green.png",
       "data_characteristics": "The data was collected through a survey conducted across multiple districts in India. It consists of a variety of factors that could potentially impact the yield of rice crops. These factors include things like the type and amount of fertilizers used, the quantity of seedlings planted, methods of preparing the land, different irrigation techniques employed, among other features. The dataset comprises more than 5000 data points, each having more than 40 features.\n\n",
       "model_characteristics": "Multiple models are available based on the shared data. Plesae refer to the GitHub repository.",
-      "how_to_use": "Smallholder farmers are crucial contributors to global food production, and in India often suffer most from poverty and malnutrition. These farmers face challenges such as limited access to modern agriculture, unpredictable weather, and resource constraints. To tackle this issue, Digital Green collected data via surveys, offering insights into farming practices, environmental conditions, and crop yields.\n\nThe possibilities include creating a machine learning solution to predict the crop yield per acre of rice or wheat crops in India. Our goal is to empower these farmers and break the cycle of poverty and malnutrition.\n\nThis use case also included the development of a business model and funding model for open source AI as a stepping stone towards financially viable operations. It was facilitated by Villgro Africa's and FAIR Forward's  six-month mentorship programme on \"Creating sustainable business and funding models with open source AI\". See: https://www.bmz-digital.global/en/news/open-source-ai-business-impact/",
+      "how_to_use": "The possibilities include creating a machine learning solution to predict the crop yield per acre of rice or wheat crops in India. Our goal is to empower these farmers and break the cycle of poverty and malnutrition.\n\nThis use case also included the development of a business model and funding model for open source AI as a stepping stone towards financially viable operations. It was facilitated by Villgro Africa's and FAIR Forward's  six-month mentorship programme on \"Creating sustainable business and funding models with open source AI\". See: https://www.bmz-digital.global/en/news/open-source-ai-business-impact/",
       "maturity": "Dataset  > Model > Pilot > Use-Case >  Use-Case with Business Model",
       "maturity_tags": [
         "dataset",
@@ -1442,7 +1442,7 @@
     {
       "id": "high_carbon_stock_approach_mapping_forests",
       "title": "High Carbon Stock Approach: Mapping Forests to Combat Climate Change and Protect Livelihoods in Indonesia",
-      "description": "As the world's largest tropical rainforest, Indonesia’s forests are disappearing faster than decision-makers can respond—largely due to the lack of accessible and trusted data. Our project delivers validated, open-source High Carbon Stock forest maps, using AI and satellite imagery to identify high-carbon, high-biodiversity forests, regenerating forests, and low-carbon land suitable for sustainable development.\n\nThe data is public, transparent, and scalable, empowering NGOs, indigenous communities, and governments to prevent deforestation and reduce emissions into actionable classes:\n\nHigh, Medium, and Low-Density Forests (Conservation Priority):\nForests with closed or patchy canopies, high biodiversity value, and significant carbon storage that are essential for climate mitigation and ecosystem protection.\n\nYoung Regenerating Forests:\nTransitional forests with growing carbon sequestration potential, requiring forward-looking protection strategies to prevent future deforestation.\n\nScrub and Open Land:\nLow-carbon areas suitable for sustainable development, enabling economic growth without compromising forest integrity.\n\nImpact & Use Cases\n\nThe resulting maps empower:\n\n- Policymakers: to strengthen spatial planning and climate-aligned land-use policies\n\n- NGOs: to prioritize conservation efforts and monitor forest loss\n\n- Businesses: to meet “no deforestation” commitments, reduce supply-chain risk, and cut greenhouse gas emissions\n\nGlobal Recognition & Scalability\nThe approach aligns with the globally recognized HCS methodology and has been nominated for the UN SDG Game Changer award – Category 2: Planet – Innovation for our climate and environment “Artificial Intelligence Meets Jungle/ Forest Forward—a strong signal of technical credibility and market relevance. From Indonesia, the project adaptation scale on demand by Goa government, India and Senegal, West Africa. \n\n",
+      "description": "As the world's largest tropical rainforest, Indonesia’s forests are disappearing faster than decision-makers can respond - largely due to the lack of accessible and trusted data. Our project delivers validated, open-source High Carbon Stock forest maps, using AI and satellite imagery to identify high-carbon, high-biodiversity forests, regenerating forests, and low-carbon land suitable for sustainable development.\n\nThe data is public, transparent, and scalable, empowering NGOs, indigenous communities, and governments to prevent deforestation and reduce emissions into actionable classes:\n\nHigh, Medium, and Low-Density Forests (Conservation Priority):\nForests with closed or patchy canopies, high biodiversity value, and significant carbon storage that are essential for climate mitigation and ecosystem protection.\n\nYoung Regenerating Forests:\nTransitional forests with growing carbon sequestration potential, requiring forward-looking protection strategies to prevent future deforestation.\n\nScrub and Open Land:\nLow-carbon areas suitable for sustainable development, enabling economic growth without compromising forest integrity.\n\nImpact & Use Cases\n\nThe resulting maps empower:\n\n- Policymakers: to strengthen spatial planning and climate-aligned land-use policies\n\n- NGOs: to prioritize conservation efforts and monitor forest loss\n\n- Businesses: to meet “no deforestation” commitments, reduce supply-chain risk, and cut greenhouse gas emissions\n\nGlobal Recognition & Scalability\nThe approach aligns with the globally recognized HCS methodology and has been nominated for the UN SDG Game Changer award – Category 2: Planet – Innovation for our climate and environment “Artificial Intelligence Meets Jungle/ Forest Forward—a strong signal of technical credibility and market relevance. From Indonesia, the project adaptation scale on demand by Goa government, India and Senegal, West Africa. \n\n",
       "dataset_links": [
         {
           "name": "Link",
@@ -1523,7 +1523,12 @@
         "dataset",
         "model"
       ],
-      "additional_resources": []
+      "additional_resources": [
+        {
+          "name": "Entdeckung Der Sprachlichen Vielfalt Indonesiens Fair Forward Und Prosa Ai Auf Dem Weg Zu Inklusiver Ki Sprachtechnologie (bmz-digital.global)",
+          "url": "https://www.bmz-digital.global/en/entdeckung-der-sprachlichen-vielfalt-indonesiens-fair-forward-und-prosa-ai-auf-dem-weg-zu-inklusiver-ki-sprachtechnologie/"
+        }
+      ]
     },
     {
       "id": "empowering_coastal_inhabitants_in_indonesia_levera",
@@ -1621,7 +1626,7 @@
       ],
       "license": "",
       "contact": "THiNK (https://think.ke/)",
-      "organizations": "Powered by:  \nCatalyzed by: FAIR Forward - AI for All\nFinanced by: BMZ",
+      "organizations": "Powered by:  THiNK - Tech Innovators Network\nCatalyzed by: FAIR Forward - AI for All & and Digital Transformation Center Kenya\n\nFinanced by: BMZ",
       "authors": "Daniel Brumund",
       "is_lacuna": false,
       "has_dataset": true,
@@ -2196,9 +2201,9 @@
       "additional_resources": []
     },
     {
-      "id": "monitoring_crop_type_area_and_enabling",
-      "title": "Monitoring crop type area and enabling crop yield forecasting through AI and Earth Observation in Rwanda: mapping crop type for rice, maize, Irish potatoes and beans ",
-      "description": "This prototype automated crop type mapping system for Rwanda leverages multi-sensor remote sensing data (Sentinel 1 & 2, dynamic world, SRTM). The crop mapping pipeline can be used to map the four most important staple foods in Rwanda (rice, maize, beans, Irish potatoes) in four Rwandan districts, and produce timely, 10-meter resolution crop type maps. Reference data from different sources including project field work, global research projects, and Rwandan authorities were used to fine-tune the geospatial foundational model Galileo for the downstream task of mapping what type of crop grows where. The reference data collected in the field was supported through the creation of polygon labels with PlanetScope imagery in collaboration with Rwandan academia. The crop mapping pipeline, the fine-tuned model, and the project's reference data are openly available for further usage. The overall good accuracy yielded by the approach under conditions with small field sizes, varying elevation and high cloud cover are promising for a successful application in all kinds of regions. Nevertheless, local reference data remains crucial for crop type mapping and an ideal approach should include all types of crops. You can follow the approach to create your own crop type mapping system, utilize the pipeline to fetch satellite imagery for various purposes, get inspired by the use and fine-tuning of the geospatial foundational model and apply it to a different task. You can also use the collected reference data for your own model. Accurate data on which crop grows were can be used in various applications e.g. improving agricultural policy and business decisions, integrating with yield estimation frameworks for spatially detailed predictions of seasonal production, crop health monitoring, crop insurance design, value chain assessments, supply and demand forecasting, and more. \n",
+      "id": "solutions_from_space_rwandas_smart_harvest",
+      "title": "Solutions from space: Rwanda’s smart harvest planning - mapping crop type with AI for rice, maize, Irish potatoes and beans ",
+      "description": "When weather and crop yields become unpredictable, reliable information is crucial. In Rwanda, digital maps are showing for the first time exactly where which crops grow, helping to better adapt agriculture to climate change. Around one third of all food worldwide is lost between the field and the plate, for example due to pest infestation, incorrect storage or long transport routes. Climate change is exacerbating these losses: irregular rainfall, dry seasons and extreme weather events are jeopardising harvests and making planning increasingly difficult for farmers. Rwanda’s agricultural sector also faces these challenges. \n\nThis automated crop type mapping system for Rwanda can be used in various applications e.g. improving agricultural policy and business decisions, integrating with yield estimation frameworks for spatially detailed predictions of seasonal production, crop health monitoring, crop insurance design, value chain assessments, supply and demand forecasting, and more.\n\nIt  leverages multi-sensor remote sensing data (Sentinel 1 & 2, dynamic world, SRTM). The crop mapping pipeline can be used to map the four most important staple foods in Rwanda (rice, maize, beans, Irish potatoes) in four Rwandan districts, and produce timely, 10-meter resolution crop type maps. \nReference data from different sources including project field work, global research projects, and Rwandan authorities were used to fine-tune the geospatial foundational model Galileo for the downstream task of mapping what type of crop grows where. The reference data collected in the field was supported through the creation of polygon labels with PlanetScope imagery in collaboration with Rwandan academia. The crop mapping pipeline, the fine-tuned model, and the project's reference data are openly available for further usage.\n",
       "dataset_links": [
         {
           "name": "Link",
@@ -2223,15 +2228,15 @@
       ],
       "license": "MIT License",
       "contact": "Benson Kenduiyvo (b.kenduiywo@cgiar.org)",
-      "organizations": "Powered by: Alliance Bioversity International & CIAT\nCatalyzed by: FAIR Forward - AI for All\nFinanced by: BMZ",
+      "organizations": "Powered by:\nRwanda Space Agency (RSA), the Rwandan Ministry of Agriculture, Alliance Bioversity International and CIAT\nCatalyzed by: \nFAIR Forward - AI for All  of German Development Cooperation (GIZ) and Digital Transformation Center Rwanda\nFinanced by: \nGerman Federal Ministry for Economic Cooperation and Development (BMZ)",
       "authors": "Golo Rademacher",
       "is_lacuna": false,
       "has_dataset": true,
       "has_usecase": true,
-      "image": "/projects/monitoring_crop_type_area_and_enabling/images/placeholder_image.jpeg",
-      "data_characteristics": "",
+      "image": null,
+      "data_characteristics": "The overall good accuracy yielded by the approach under conditions with small field sizes, varying elevation and high cloud cover are promising for a successful application in all kinds of regions. Nevertheless, local reference data remains crucial for crop type mapping and an ideal approach should include all types of crops. You can follow the approach to create your own crop type mapping system, utilize the pipeline to fetch satellite imagery for various purposes, get inspired by the use and fine-tuning of the geospatial foundational model and apply it to a different task. You can also use the collected reference data for your own model.",
       "model_characteristics": "",
-      "how_to_use": "",
+      "how_to_use": "The mapping method developed is freely accessible and fully documented. Training courses with the Rwandan Space Agency and the Office of Statistics ensure that local experts can continue to develop the system independently.\nThe digital maps do not replace observations and measurements in the field or local knowledge. They complement these to create an improved basis for data-driven decisions, more targeted use of resources and forward-looking risk management using digital tools – for agriculture that offers prospects for the future even under climate pressure.\n",
       "maturity": "Dataset  > Model > Pilot > Use-Case >  Use-Case with Business Model",
       "maturity_tags": [
         "dataset",
@@ -2240,7 +2245,12 @@
         "usecase",
         "business"
       ],
-      "additional_resources": []
+      "additional_resources": [
+        {
+          "name": "Digital Maps Agriculture Rwanda (bmz-digital.global)",
+          "url": "https://www.bmz-digital.global/en/digital-maps-agriculture-rwanda/"
+        }
+      ]
     },
     {
       "id": "better_language_translation_for_more_training",
@@ -2825,7 +2835,7 @@
     {
       "id": "voices_of_mzansi__making_all",
       "title": "Voices of Mzansi - Making all official languages of South Africa AI-ready: translating the Common-Voice interface & enabling Open-source text-to-speech dataset collection",
-      "description": "Univ of Stellenbosch Grant (Febe de Wet) - Voices of Mzansi project aimed to get South Africa's languages launched on the Mozilla Common Voice platform1. To achieve this aim the Common Voice website had to be translated from English into the other official languages and at least 5 000 sentences had to be collected for each language. The collected sentences have to be available in the open domain under CC-0 licensing. Once a languages is launched, the sentences are used as prompts for speech data collection through the Common Voice platform. This unlocks open-source text-to-speech dataset collection and thereby ultimately facilitates access to information in mother tongue, including by illiterate persons and in rural settings. ",
+      "description": "The \"Voices of Mzansi\" project aimed to get South Africa's languages launched on the Mozilla Common Voice platform. To achieve this aim the Common Voice website had to be translated from English into the other official languages and at least 5 000 sentences had to be collected for each language. The collected sentences have to be available in the open domain under CC-0 licensing. Once a languages is launched, the sentences are used as prompts for speech data collection through the Common Voice platform. This unlocks open-source text-to-speech dataset collection and thereby ultimately facilitates access to information in mother tongue, including by illiterate persons and in rural settings. ",
       "dataset_links": [
         {
           "name": "Link",
@@ -2916,7 +2926,7 @@
     {
       "id": "croppie_helping_smallholder_coffee_producers_to",
       "title": "Croppie- helping smallholder coffee producers to plan sales, estimate yields, get loans, and trace coffee - AI powered coffee yield prediction",
-      "description": "Unpredictable weather conditions and price fluctuations pose major challenges for coffee farmers in Uganda. The platform and app 'Croppie' supports them with targeted cultivation recommendations and precise crop forecasts—using AI-supported image recognition of coffee plants. As a digital public good based on open-source technology, it can be adapted and further developed locally. The basic user interface is provided through a mobile application. Croppie’s core functionality is to allow for AI-supported coffee yield estimation. This is done by guiding a selective sampling for a statistical yield estimation service based on branch count and coffee branch picture taking, alongside the integration of additional data provided by the user.",
+      "description": "Contributing almost a third of foreign export earnings, coffee is one of the main cash crops in Uganda. Nowadays, many small-holder farmers, who rely on coffee farming for their livelihood, are facing challenges such as unpredictable weather and volatile market prices. Traditionally, they have relied on manual yield estimates, but these are time-intensive to perform and not always reliable, leaving many farmers unable to safely plan their harvests or manage their resources effectively. On top, unpredictable weather conditions and price fluctuations pose major challenges for the coffee farmers. \n\nThe platform and app 'Croppie' supports them with targeted cultivation recommendations and precise crop forecasts—using AI-supported image recognition of coffee plants. As a digital public good based on open-source technology, it can be adapted and further developed locally. The basic user interface is provided through a mobile application. Croppie’s core functionality is to allow for AI-supported coffee yield estimation. This is done by guiding a selective sampling for a statistical yield estimation service based on branch count and coffee branch picture taking, alongside the integration of additional data provided by the user.\n",
       "dataset_links": [
         {
           "name": "Link",
@@ -2959,7 +2969,12 @@
         "usecase",
         "business"
       ],
-      "additional_resources": []
+      "additional_resources": [
+        {
+          "name": "Ai Coffee Intelligent Awake (bmz-digital.global)",
+          "url": "https://www.bmz-digital.global/en/ai-coffee-intelligent-awake/"
+        }
+      ]
     },
     {
       "id": "bridging_the_energy_gap_machine_learning",

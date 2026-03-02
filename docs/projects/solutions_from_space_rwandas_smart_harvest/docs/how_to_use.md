@@ -1,0 +1,2 @@
+The mapping method developed is freely accessible and fully documented. Training courses with the Rwandan Space Agency and the Office of Statistics ensure that local experts can continue to develop the system independently.
+The digital maps do not replace observations and measurements in the field or local knowledge. They complement these to create an improved basis for data-driven decisions, more targeted use of resources and forward-looking risk management using digital tools – for agriculture that offers prospects for the future even under climate pressure.
