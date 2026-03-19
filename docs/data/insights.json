@@ -1,6 +1,6 @@
 {
-  "total_projects": 68,
-  "total_countries": 22,
+  "total_projects": 69,
+  "total_countries": 23,
   "map_data": {
     "AO": {
       "name": "Angola",
@@ -128,13 +128,17 @@
     },
     "BJ": {
       "name": "Benin",
-      "projects": 1,
+      "projects": 2,
       "iso2": "BJ",
       "sdgs": [
-        "SDG 7"
+        "SDG 7",
+        "SDG 13"
       ],
       "data_types": [
-        "Geospatial/Remote Sensing"
+        "Drone Imagery",
+        "Geospatial/Remote Sensing",
+        "Other",
+        "Tabular"
       ]
     },
     "GH": {
@@ -326,7 +330,7 @@
     "SDG 10": 20,
     "SDG 11": 9,
     "SDG 12": 1,
-    "SDG 13": 23,
+    "SDG 13": 24,
     "SDG 14": 1,
     "SDG 15": 12
   }
