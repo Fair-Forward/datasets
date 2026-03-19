@@ -11,7 +11,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 15"
       ],
@@ -58,7 +61,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 13"
       ],
@@ -78,7 +84,7 @@
       "has_dataset": true,
       "has_usecase": false,
       "image": null,
-      "data_characteristics": "The dataset provides georeferenced, annotated drone imagery with clear landuse and landcover classes, groundtruth data, and standardized protocols. The datatset also provide field Carbon inventoried data paired with the drone imagery. As such, users can train AI models for carboj estimation is harsh mangroves ecosystems. Its high resolution, temporal coverage, and open accessibility enable accurate, scalable environmental monitoring and carbon estimation. Furthermore, the dataset include (1) Soil quality analyses, including soil organic carbon, Total Nitrogen, granulometry, CEC, phosphorus, and potassium;  (2) Water quality analyses, including soil nutrients (Nitrates, Nitrites, Sulfate, Ammonium, Orthophosphate) and pollution (Iron, Cadmium, Lead, and Zinc), and (3) Socio-economic survey data on community livelihoods, mangrove forests’ resources use, and climate change adaptation strategies; allowing to develop models aiming at understanding how local soil, water, and socio-économic profile affect carbon stock. \n",
+      "data_characteristics": "The dataset provides georeferenced, annotated drone imagery with clear landuse and landcover classes, groundtruth data, and standardized protocols. The datatset also provide field Carbon inventoried data paired with the drone imagery. As such, users can train AI models for carboj estimation is harsh mangroves ecosystems. Its high resolution, temporal coverage, and open accessibility enable accurate, scalable environmental monitoring and carbon estimation. Furthermore, the dataset include (1) Soil quality analyses, including soil organic carbon, Total Nitrogen, granulometry, CEC, phosphorus, and potassium;  (2) Water quality analyses, including soil nutrients (Nitrates, Nitrites, Sulfate, Ammonium, Orthophosphate) and pollution (Iron, Cadmium, Lead, and Zinc), and (3) Socio-economic survey data on community livelihoods, mangrove forests’ resources use, and climate change adaptation strategies; allowing to develop models aiming at understanding how local soil, water, and socio-économic profile affect carbon stock. \r\n",
       "model_characteristics": "",
       "how_to_use": "",
       "maturity": "Dataset",
@@ -102,7 +108,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 7"
       ],
@@ -134,6 +143,37 @@
       "additional_resources": []
     },
     {
+      "id": "forest_carbon_sequestration_in_the_congo",
+      "title": "Forest carbon sequestration in the Congo Basin: combining In Situ Data and Artificial Intelligence to unlock climate finance ",
+      "description": "",
+      "dataset_links": [],
+      "usecase_links": [],
+      "access_note_kind": "pending",
+      "access_note_markdown": "Dataset/Use-Case has not been published yet. Please contact the responsible authors for an update and access to the data: \"kkenmoe@wri.org\nmaxwel.manga@wri.org\n nancy.harris@wri.org\ndonald.spencer@wri.org\"",
+      "has_access_note": true,
+      "hosted_documents": [],
+      "sdgs": [],
+      "data_types": [],
+      "countries": [
+        "Cameroon",
+        "DRC"
+      ],
+      "license": "",
+      "contact": "World Resources Institute",
+      "organizations": "Powered by:  World Resource Institute\nCatalyzed by: Lacuna-Fund / Meridian (Climate-call) &  FAIR Forward - AI for All\nFinanced by: BMZ",
+      "authors": "nan",
+      "is_lacuna": true,
+      "has_dataset": false,
+      "has_usecase": false,
+      "image": "/projects/forest_carbon_sequestration_in_the_congo/images/placeholder_image.jpeg",
+      "data_characteristics": "",
+      "model_characteristics": "",
+      "how_to_use": "",
+      "maturity": "nan",
+      "maturity_tags": [],
+      "additional_resources": []
+    },
+    {
       "id": "datasets_for_transportation_impact_evaluation",
       "title": "Datasets for transportation impact evaluation",
       "description": "The team developed a labeled training dataset, derived from 50cm or better satellite imagery, based on a novel, pre-defined road space classification taxonomy appropriate for training and deployment of large-scale deep-learning models",
@@ -144,7 +184,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 10",
         "SDG 2"
@@ -184,7 +227,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 15"
       ],
@@ -222,7 +268,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 13",
         "SDG 15"
@@ -263,7 +312,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 15"
       ],
@@ -301,7 +353,10 @@
           "url": "https://play.google.com/store/apps/details?id=org.core23lab.hdf&pcampaignid=web_share&pli=1"
         }
       ],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 5",
         "SDG 2",
@@ -350,7 +405,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 7",
         "SDG 11"
@@ -390,7 +448,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 13",
         "SDG 15"
@@ -433,7 +494,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 15"
       ],
@@ -501,7 +565,10 @@
           "url": "https://huggingface.co/KaraAgroAI/CADI-AI"
         }
       ],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2",
         "SDG 13"
@@ -512,7 +579,7 @@
       "countries": [
         "Ghana"
       ],
-      "license": "\n\nhttps://www.gnu.org/licenses/agpl-3.0.html",
+      "license": "\r\n\r\nhttps://www.gnu.org/licenses/agpl-3.0.html",
       "contact": "KaraAgro (https://karaagro.com/)",
       "organizations": "Powered by: Kara Agro (https://karaagro.com/)\nCatalyzed by: FAIR Forward - AI for All  and  Market-Oriented Value Chains for Jobs & Growth in the ECOWAS Region (MOVE) of of German Development Cooperation (GIZ)\nFinanced by: BMZ ",
       "authors": "Mary Seiwah Afram, Elikplim Sabblah",
@@ -548,7 +615,10 @@
           "url": "https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana/code"
         }
       ],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2"
       ],
@@ -587,7 +657,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 10",
         "SDG 8"
@@ -626,7 +699,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 10"
       ],
@@ -664,7 +740,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 15"
       ],
@@ -702,7 +781,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2"
       ],
@@ -752,7 +834,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 15"
       ],
@@ -800,7 +885,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2",
         "SDG 13"
@@ -844,7 +932,10 @@
           "url": "https://github.com/iLab-DSU/Agricultural-Recommendations-Chat"
         }
       ],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2",
         "SDG 10",
@@ -908,7 +999,10 @@
           "url": "https://www.audiopedia.foundation/bharat"
         }
       ],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2",
         "SDG 10",
@@ -973,7 +1067,10 @@
           "url": "https://github.com/sherwaldeepesh/vayu_airnode"
         }
       ],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 13"
       ],
@@ -1023,7 +1120,10 @@
           "url": "https://bhashini.gov.in/ulca/model/explore-models"
         }
       ],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2",
         "SDG 10"
@@ -1083,7 +1183,10 @@
           "url": "https://github.com/WadhwaniAI/pest-monitoring"
         }
       ],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2"
       ],
@@ -1139,7 +1242,10 @@
           "url": "https://gitlab.com/gramvaani/giz_kab_bert_sourcecode"
         }
       ],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 10"
       ],
@@ -1195,7 +1301,10 @@
           "url": "https://github.com/microsoft/MunTTS-A-Text-to-Speech-System-For-Mundari"
         }
       ],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 10"
       ],
@@ -1213,9 +1322,9 @@
       "has_dataset": true,
       "has_usecase": true,
       "image": "/projects/making_ai_speak_mundari__opensource/images/placeholder_image.jpeg",
-      "data_characteristics": "Translation: This corpus contains a collection of sentence pairs that have been translated from Hindi to Mundari. The dataset was created as part of a collaboration between Microsoft Research India, Indian Institute of Technology Kharagpur, and Karya. This dataset is realeased under the non-commercial version of the Karya Public License. Please read the \"License\" section below for a high-level summary of what you are allowed and not allowed to do under this license. The dataset contains 17,826 sentence pairs of Hindi to Mundari translations. The translations are stored in a single TSV file translation-hi-unr.tsv with UTF-8 encoding. Each line in the TSV file contains two columns, separated by a tab character. The first column contains the Hindi sentence, and the second column contains the corresponding Mundari translation.\n\nText-to-speech:The Mundari TTS dataset corpus contains a total of 26,870 audio files, each containing a single utterance spoken by one of the two speakers. The audio is recorded in 32-bit PCM format with a sampling rate of 44.1 kHz. The dataset includes transcripts for each audio file in Mundari script. The recordings were collected in a sound-treated room using a high-quality microphone and preamp.\n\n",
+      "data_characteristics": "Translation: This corpus contains a collection of sentence pairs that have been translated from Hindi to Mundari. The dataset was created as part of a collaboration between Microsoft Research India, Indian Institute of Technology Kharagpur, and Karya. This dataset is realeased under the non-commercial version of the Karya Public License. Please read the \"License\" section below for a high-level summary of what you are allowed and not allowed to do under this license. The dataset contains 17,826 sentence pairs of Hindi to Mundari translations. The translations are stored in a single TSV file translation-hi-unr.tsv with UTF-8 encoding. Each line in the TSV file contains two columns, separated by a tab character. The first column contains the Hindi sentence, and the second column contains the corresponding Mundari translation.\n\nText-to-speech:The Mundari TTS dataset corpus contains a total of 26,870 audio files, each containing a single utterance spoken by one of the two speakers. The audio is recorded in 32-bit PCM format with a sampling rate of 44.1 kHz. The dataset includes transcripts for each audio file in Mundari script. The recordings were collected in a sound-treated room using a high-quality microphone and preamp.\r\n\r\n",
       "model_characteristics": "MunTTS, an end-to-end text-to-speech (TTS) system specifically for Mundari, a low-resource Indian language of the Austo-Asiatic family. Our work addresses the gap in linguistic technology for underrepresented languages by collecting and processing data to build a speech synthesis system. We begin our study by gathering a substantial dataset of Mundari text and speech and train end-to-end speech models. We also delve into the methods used for training our models, ensuring they are efficient and effective despite the data constraints. We evaluate our system with native speakers and objective metrics, demonstrating its potential as a tool for preserving and promoting the Mundari language in the digital age.",
-      "how_to_use": "The Mundari TTS dataset corpus includes recordings from two different speakers: a female speaker and a male speaker. The female speaker contributed 19,868 recordings, while the male speaker contributed 7,002 recordings.\n\nThe total size of the corpus is approximately 17 GB (7 GB compressed). Therefore, the full dataset is hosted in cloud storage (instead of this github repository). This repository contains a sample of 100 recordings from each speaker. Please email data@karya.in for a link to download the full dataset.",
+      "how_to_use": "The Mundari TTS dataset corpus includes recordings from two different speakers: a female speaker and a male speaker. The female speaker contributed 19,868 recordings, while the male speaker contributed 7,002 recordings.\r\n\r\nThe total size of the corpus is approximately 17 GB (7 GB compressed). Therefore, the full dataset is hosted in cloud storage (instead of this github repository). This repository contains a sample of 100 recordings from each speaker. Please email data@karya.in for a link to download the full dataset.",
       "maturity": "Dataset > Model",
       "maturity_tags": [
         "dataset",
@@ -1226,7 +1335,7 @@
     {
       "id": "geospatial_dataset_of_wheat_and_rice",
       "title": "Data-driven decision-making for farmers to increase climate resilience in India",
-      "description": "Smallholder farmers are crucial contributors to global food production, and in India often suffer most from poverty and malnutrition. These farmers face challenges such as limited access to modern agriculture, unpredictable weather, and resource constraints. To tackle this issue, Digital Green collected data via surveys, offering insights into farming practices, environmental conditions, and crop yields. \n\nThe project developed a scalable data collection model for JEEViKA’s frontline workers, integrating digital tools and geofencing, and empowered farmers with personalized climate-smart advice through Farmer Scorecards.",
+      "description": "Smallholder farmers are crucial contributors to global food production, and in India often suffer most from poverty and malnutrition. These farmers face challenges such as limited access to modern agriculture, unpredictable weather, and resource constraints. To tackle this issue, Digital Green collected data via surveys, offering insights into farming practices, environmental conditions, and crop yields. \r\n\r\nThe project developed a scalable data collection model for JEEViKA’s frontline workers, integrating digital tools and geofencing, and empowered farmers with personalized climate-smart advice through Farmer Scorecards.",
       "dataset_links": [
         {
           "name": "Link",
@@ -1239,7 +1348,10 @@
           "url": "https://github.com/digitalgreenorg/frame-templates"
         }
       ],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2"
       ],
@@ -1257,7 +1369,7 @@
       "has_dataset": true,
       "has_usecase": true,
       "image": "/projects/geospatial_dataset_of_wheat_and_rice/images/digital_green.png",
-      "data_characteristics": "The data was collected through a survey conducted across multiple districts in India. It consists of a variety of factors that could potentially impact the yield of rice crops. These factors include things like the type and amount of fertilizers used, the quantity of seedlings planted, methods of preparing the land, different irrigation techniques employed, among other features. The dataset comprises more than 5000 data points, each having more than 40 features.\n\n",
+      "data_characteristics": "The data was collected through a survey conducted across multiple districts in India. It consists of a variety of factors that could potentially impact the yield of rice crops. These factors include things like the type and amount of fertilizers used, the quantity of seedlings planted, methods of preparing the land, different irrigation techniques employed, among other features. The dataset comprises more than 5000 data points, each having more than 40 features.\r\n\r",
       "model_characteristics": "Multiple models are available based on the shared data. Plesae refer to the GitHub repository.",
       "how_to_use": "The possibilities include creating a machine learning solution to predict the crop yield per acre of rice or wheat crops in India. Our goal is to empower these farmers and break the cycle of poverty and malnutrition.\n\nThis use case also included the development of a business model and funding model for open source AI as a stepping stone towards financially viable operations. It was facilitated by Villgro Africa's and FAIR Forward's  six-month mentorship programme on \"Creating sustainable business and funding models with open source AI\". See: https://www.bmz-digital.global/en/news/open-source-ai-business-impact/",
       "maturity": "Dataset  > Model > Pilot > Use-Case >  Use-Case with Business Model",
@@ -1299,7 +1411,10 @@
           "url": "https://zindi.africa/competitions/telangana-crop-health-challenge"
         }
       ],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2"
       ],
@@ -1329,6 +1444,50 @@
       "additional_resources": []
     },
     {
+      "id": "microfinance_industry_network_india_use_of",
+      "title": "MicroFinance Industry Network India use of voice technology (Gramvaani)",
+      "description": "Contract name: Automation of components of the MFIN-CGRM CRM solution \n Follow-up project from former MFIN engagement to move from prototype to production and implement the remaining use-cases.",
+      "dataset_links": [],
+      "usecase_links": [],
+      "access_note_kind": "documents",
+      "access_note_markdown": "This project has been concluded as an internal review of MFINS workflows. There has been technical integration and scoping of AI based solutions for improved costumer  satisfaction and productivity but no novel dataset has been created and/or model trained.\nSee technical report for an overview and learnings from this activity.",
+      "has_access_note": true,
+      "hosted_documents": [
+        {
+          "name": "Project report",
+          "url": "/projects/microfinance_industry_network_india_use_of/documents/Project report.pdf"
+        }
+      ],
+      "sdgs": [
+        "SDG 10"
+      ],
+      "data_types": [
+        "Text"
+      ],
+      "countries": [
+        "India"
+      ],
+      "license": "",
+      "contact": "GramVaani (https://gramvaani.org/)",
+      "organizations": "Powered by:  GramVaani\nCatalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)\nFinanced by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",
+      "authors": "nan",
+      "is_lacuna": false,
+      "has_dataset": false,
+      "has_usecase": false,
+      "image": "/projects/microfinance_industry_network_india_use_of/images/placeholder_image.jpeg",
+      "data_characteristics": "",
+      "model_characteristics": "",
+      "how_to_use": "",
+      "maturity": "Dataset  > Model > Pilot > Use-Case",
+      "maturity_tags": [
+        "dataset",
+        "model",
+        "pilot",
+        "usecase"
+      ],
+      "additional_resources": []
+    },
+    {
       "id": "ai_for_forest_conservation",
       "title": "Forest Forward II: Using AI to map carbon in forests using High Carbon Stock Approach and assess fire vulnerability of forests to Combat Climate Change and Protect Livelihoods in India",
       "description": "Mapping carbon content in forests: This application leverages advanced geospatial technologies, such as remote sensing and AI, to support forest conservation efforts in India. The application will allow stakeholders to better monitor forest health, estimate biomass, and contribute to climate mitigation efforts.\n Fire Vulnerability Mapping: This application would help develop a fire vulnerability map which could help to identify areas that are prone to fires based on several forest degradation indicators.",
@@ -1347,7 +1506,10 @@
           "url": "https://huggingface.co/vertify/biomass-model"
         }
       ],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 13"
       ],
@@ -1366,8 +1528,8 @@
       "has_usecase": true,
       "image": "/projects/ai_for_forest_conservation/images/goa-forest.jpg",
       "data_characteristics": "The datasets used for this projects are all publicly available or accessible via common platforms such as Planet.com \nMore details to follow.",
-      "model_characteristics": "This model is trained to predict above-ground biomass (AGB) in tropical and subtropical forests using multi-source satellite imagery at the pixel level. Specifically:\n\nPrediction Unit: Estimates biomass at individual pixel level (typically 10-40m resolution depending on input data)\nOutput: Biomass density in Mg/ha (megagrams per hectare)\nInput Data: Processes multi-sensor data including Sentinel-1, Sentinel-2, Landsat-8, PALSAR, and DEM\nApplication Scope: Best suited for tropical and subtropical forest ecosystems in South/Southeast Asia\nBiomass Range: Validated for forests with biomass between ~40-460 Mg/ha",
-      "how_to_use": "The pipeline is designed to handle multi-source satellite imagery and corresponding biomass data with pixel-level precision. Key aspects include:\n\nEnd-to-End Workflow: From raw data ingestion to model training, evaluation, and deployment\nAdvanced Feature Engineering: Comprehensive spectral indices, texture features, spatial gradients, and PCA components\nStable Neural Architecture: Utilizes a custom StableResNet with residual connections and layer normalization for robust biomass regression\nMulti-Site Data Processing: Capable of processing and integrating data from multiple geographically distinct study sites\nFlexible Deployment: Includes HuggingFace deployment capabilities with Gradio interface\nMemory Efficient Processing: Chunk-based processing for handling large satellite images",
+      "model_characteristics": "This model is trained to predict above-ground biomass (AGB) in tropical and subtropical forests using multi-source satellite imagery at the pixel level. Specifically:\r\n\r\nPrediction Unit: Estimates biomass at individual pixel level (typically 10-40m resolution depending on input data)\r\nOutput: Biomass density in Mg/ha (megagrams per hectare)\r\nInput Data: Processes multi-sensor data including Sentinel-1, Sentinel-2, Landsat-8, PALSAR, and DEM\r\nApplication Scope: Best suited for tropical and subtropical forest ecosystems in South/Southeast Asia\r\nBiomass Range: Validated for forests with biomass between ~40-460 Mg/ha",
+      "how_to_use": "The pipeline is designed to handle multi-source satellite imagery and corresponding biomass data with pixel-level precision. Key aspects include:\r\n\r\nEnd-to-End Workflow: From raw data ingestion to model training, evaluation, and deployment\r\nAdvanced Feature Engineering: Comprehensive spectral indices, texture features, spatial gradients, and PCA components\r\nStable Neural Architecture: Utilizes a custom StableResNet with residual connections and layer normalization for robust biomass regression\r\nMulti-Site Data Processing: Capable of processing and integrating data from multiple geographically distinct study sites\r\nFlexible Deployment: Includes HuggingFace deployment capabilities with Gradio interface\r\nMemory Efficient Processing: Chunk-based processing for handling large satellite images",
       "maturity": "Dataset  > Model > Pilot > Use-Case",
       "maturity_tags": [
         "dataset",
@@ -1397,7 +1559,10 @@
           "url": "https://felt.com/embed/map/Nature-Audit-on-Agapi-Sourcing-Sites-JBeP3LpnTCmabCOFb9AVrAC?loc=27.317897%2C88.595673%2C15.25z"
         }
       ],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 15",
         "SDG 13"
@@ -1418,7 +1583,7 @@
       "image": "/projects/aipowered_monitoring_of_forest_degradation_and/images/placeholder_image.jpeg",
       "data_characteristics": "This dataset integrates geospatial and socio-economic information to monitor forest restoration and livelihoods in the Eastern Himalayas. It combines satellite data from Sentinel-1, Sentinel-2, Landsat-8, and PALSAR with 500+ ground truth points and nearly 300 household surveys collected in Assam, Sikkim, and Mizoram. The data support AI applications for biomass estimation, deforestation detection and nature positive impact assessment.\nA locally trained biomass model improves accuracy for South Asian forest types, addressing calibration bias in global datasets. All personal identifiers have been removed, and sensitive coordinates anonymized to protect community privacy. The dataset is published under a CC-BY 4.0 license and maintained by Vertify.earth GmbH and Earth Analytics India Pvt Ltd, ensuring its ongoing usability as an open and replicable foundation for environmental AI and digital MRV systems.",
       "model_characteristics": "The AI model estimates forest biomass and vegetation health in the Eastern Himalayas using multi-source satellite data combined with local ground measurements. It outputs Above-Ground Biomass (AGB) maps, enabling accurate tracking of forest carbon, degradation, and restoration progress.\nThe model accepts pre-processed satellite imagery as input and produces spatial biomass layers compatible with MRV dashboards. It runs on standard Python environments and can be adapted for other tropical regions with local calibration.\n\nCalibrated for South Asian forests; retraining is needed for other regions. Seasonal cloud cover can affect results. All training data are anonymized, and community consent was obtained. Users should validate outputs locally before application. Released under CC-BY 4.0 for open reuse and replication. Please credit Vertify.earth and Earth Analytics India and share improvements through the Vertify.earth GitHub\n",
-      "how_to_use": "This dataset and AI model can be used immediately for forest monitoring, restoration planning and impact measurement in mountain and forested regions. Users can map biomass, detect forest loss or assess community-level livelihood impacts by combining the open dataset with freely available satellite imagery. NGOs, research institutions, investors can directly apply the dataset to design or evaluate nature positive projects, while developers can integrate the AI model into their own MRV dashboards. Researchers and AI developers can extend this work by retraining the biomass model with local field data from other regions or adding new layers such as soil moisture or biodiversity indicators. Ethical replication should include community consent and data validation steps to ensure fair and context aware use.\n\nData access: Free (CC-BY 4.0) via Vertify.earth GitHub\n\nModel use: Free, standard cloud or local compute",
+      "how_to_use": "This dataset and AI model can be used immediately for forest monitoring, restoration planning and impact measurement in mountain and forested regions. Users can map biomass, detect forest loss or assess community-level livelihood impacts by combining the open dataset with freely available satellite imagery. NGOs, research institutions, investors can directly apply the dataset to design or evaluate nature positive projects, while developers can integrate the AI model into their own MRV dashboards. Researchers and AI developers can extend this work by retraining the biomass model with local field data from other regions or adding new layers such as soil moisture or biodiversity indicators. Ethical replication should include community consent and data validation steps to ensure fair and context aware use.\n\nData access: Free (CC-BY 4.0) via Vertify.earth GitHub\r\n\r\nModel use: Free, standard cloud or local compute",
       "maturity": "Dataset  > Model > Pilot > Use-Case",
       "maturity_tags": [
         "dataset",
@@ -1449,7 +1614,10 @@
           "url": "https://faktaiklim.prosa.ai/"
         }
       ],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 10"
       ],
@@ -1490,7 +1658,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 13",
         "SDG 15"
@@ -1536,7 +1707,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2",
         "SDG 10"
@@ -1581,7 +1755,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 13",
         "SDG 14"
@@ -1612,76 +1789,47 @@
       "additional_resources": []
     },
     {
-      "id": "citizen_chatbot_of_the_kenyan_office",
-      "title": "Citizen chatbot of the Kenyan Office of the Data Protection Commissioner",
-      "description": "The citizen chatbot enables the Kenyan public to access information about Kenya's data protection laws and regulation in an easily accessible conversation on the ODPC's website. The aim is to make legal information more understandable and facilitate access. The content database of the chatbot was developed jointly with expert from the ODPC and tested with citizens.",
+      "id": "mitigating_the_impacts_of_oil_palm",
+      "title": "Mitigating the impacts of oil palm cultivation on forests and climate change in Indonesia through AI and social forestry",
+      "description": "This dataset contributes to improved understanding and mitigation of the impacts of oil palm cultivation on forests and climate change. It can also serve to support sustainable forest management practices and empower local communities in forest resource management. \n\nThe project created open and accessible training and evaluation datasets for machine learning applications focused on forest cover and change in Indonesia. It contains collections of polygons of uniform land cover, with labels indicating land cover type and, possibly, information on land cover change over time. To label land cover patches, the team has reviewed high-resolution satellite imagery facilitated by Collect Earth Online (CEO) and augmented it with field visits to difficult-to-classify areas. It has prioritized areas with significant landcover diversity with a preference for areas with significant smallholder production of  oil palm, coconut, and other commodities - given the well-known difficulties of distinguishing oil palm \nfrom coconut palm with lower resolution imagery.\n\nPossible users of these outputs are local communities engaged in community forestry in Indonesia, as well as researchers, policymakers, and civil society organizations. The dataset also contributes to social forestry, which recognizes that people who depend on local forests are best placed to look after them, and that allowing communities to manage and use forest resources can have positive social, environmental and economic impacts. Social forestry is a broad term and has different names in different places. Some examples are community forestry, village forestry, participatory forestry, community-based forest management and people-centred forestry.",
       "dataset_links": [],
       "usecase_links": [],
-      "is_on_hold": true,
+      "access_note_kind": "pending",
+      "access_note_markdown": "Dataset/Use-Case has not been published yet. Please contact the responsible authors for an update and access to the data: Peter Cutter (peter.cutter@recoftc.org)",
+      "has_access_note": true,
+      "hosted_documents": [],
       "sdgs": [
-        "SDG 16"
+        "SDG 13",
+        "SDG 15"
       ],
       "data_types": [
-        "Text"
+        "Drone Imagery",
+        "Geospatial/Remote Sensing"
       ],
       "countries": [
-        "Kenya"
+        "Indonesia"
       ],
       "license": "",
-      "contact": "THiNK (https://think.ke/)",
-      "organizations": "Powered by: Tech Innovators Network Kenya (THiNK)\nCatalyzed by: FAIR Forward - AI for All\nFinanced by: BMZ",
-      "authors": "Daniel Brumund",
-      "is_lacuna": false,
-      "has_dataset": true,
-      "has_usecase": true,
-      "image": "/projects/citizen_chatbot_of_the_kenyan_office/images/placeholder_image.jpeg",
-      "data_characteristics": "For the content database of the chatbot, Q&A pairs created and tested together with ODPC and citizens. In a second iteration, the chatbot is being transitioned from RASA to a RAG infrastructure (LLM-based). Status: November 2025\n\nA responsible AI Assessment was undertaken for this dataset / use case to help AI developers and project managers to identify, assess and mitigate potential harms and biases in AI. For methodology, see https://www.bmz-digital.global/en/news/ethical-crash-test-for-ai-how-to-navigate-the-road-to-responsible-innovation/     ",
-      "model_characteristics": "The first version of the chatbot used a RASA architecture with NLU for accessing the Q&A pairs corresponding to user inquiries. As of November 2025, the chatbot is being transitioned to an LLM-based, RAG infrastructure.",
-      "how_to_use": "The initial RASA-based chatbot was built with a dataset created with ODPC officials. The new, RAG-based version of the chatbot will be linked to a document database to minimise the risk of hallucinations. It will be integrated with the Office of the Data Protection Officer, hence it is not directly re-usable - though entirely built on open-source tools.\n\nThis use case also included the development of a business model and funding model for open source AI as a stepping stone towards financially viable operations. It was facilitated by Villgro Africa's and FAIR Forward's  six-month mentorship programme on \"Creating sustainable business and funding models with open source AI\". See: https://www.bmz-digital.global/en/news/open-source-ai-business-impact/ ",
-      "maturity": "Dataset  > Model > Pilot > Use-Case >  Use-Case with Business Model",
-      "maturity_tags": [
-        "dataset",
-        "model",
-        "pilot",
-        "usecase",
-        "business"
-      ],
-      "additional_resources": []
-    },
-    {
-      "id": "hello_government__better_citizen_services",
-      "title": "Hello, government - better citizen services in Kenya through \"AI Chatbots\" as a replicable open-source building block",
-      "description": "There is a significant opportunity to make digitized government services in Kenya more easily discoverable and, by extension, enhance their accessibility and use by citizens through chatbot technology. Based on NLP technology, chatbots can help citizens access information on Kenya’s eGovernment services through text and voice inputs in Kiswahili and English. This project foresees the development of an AI Conversational Chatbot using the GovStack Building Block Approach - so as to create (a) a chatbot for easier service discoverability; and (b) a chatbot framework that can be reused as a digital public good. \n",
-      "dataset_links": [],
-      "usecase_links": [],
-      "is_on_hold": true,
-      "sdgs": [
-        "SDG 10"
-      ],
-      "data_types": [
-        "Text"
-      ],
-      "countries": [
-        "Kenya"
-      ],
-      "license": "",
-      "contact": "THiNK (https://think.ke/)",
-      "organizations": "Powered by:  THiNK - Tech Innovators Network\nCatalyzed by: FAIR Forward - AI for All & and Digital Transformation Center Kenya\n\nFinanced by: BMZ",
-      "authors": "Daniel Brumund",
-      "is_lacuna": false,
-      "has_dataset": true,
-      "has_usecase": true,
-      "image": "/projects/hello_government__better_citizen_services/images/placeholder_image.jpeg",
+      "contact": "RECOFTC, Peter Cutter (peter.cutter@recoftc.org)",
+      "organizations": "Powered by:  RECOFTC\nCatalyzed by: Lacuna-Fund / Meridian (Climate-call) &  FAIR Forward - AI for All\nFinanced by: BMZ",
+      "authors": "Balthas Seibold",
+      "is_lacuna": true,
+      "has_dataset": false,
+      "has_usecase": false,
+      "image": "/projects/mitigating_the_impacts_of_oil_palm/images/placeholder_image.jpeg",
       "data_characteristics": "",
       "model_characteristics": "",
-      "how_to_use": "",
-      "maturity": "Dataset > Model > Pilot",
+      "how_to_use": "This dataset can help you to get an improved understanding of the impacts of oil palm cultivation on forests and climate change. It can also serve to support sustainable forest management practices and empower local communities in forest resource management.",
+      "maturity": "Dataset",
       "maturity_tags": [
-        "dataset",
-        "model",
-        "pilot"
+        "dataset"
       ],
-      "additional_resources": []
+      "additional_resources": [
+        {
+          "name": "Advancing Oil Palm Mapping Social Forestry And Machine Learning (recoftc.org)",
+          "url": "https://www.recoftc.org/projects/advancing-oil-palm-mapping-social-forestry-and-machine-learning"
+        }
+      ]
     },
     {
       "id": "enabling_machine_translation_from_kiswahili_into",
@@ -1694,7 +1842,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 10",
         "SDG 5",
@@ -1748,7 +1899,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 15"
       ],
@@ -1769,7 +1923,7 @@
       "image": "/projects/miti360_a_comprehensive_dataset_for_aipowered/images/placeholder_image.jpeg",
       "data_characteristics": "Miti360 contains the following core components and formats (quantities as provided):\n- Orthophotos (GeoTIFF): high-resolution stitched orthomosaics (2 GeoTIFFs) and 844 orthophoto tiles exported for annotation. \n- Tree crown annotations (orthophoto): ~24,000 annotated crowns (bounding boxes) exported in JSON; 1,208 crowns have species labels and are also provided as a 1208-feature shapefile (SHP). \n- Ground measurements (numeric): 1,208 measurement records (600 individual trees sampled twice across two campaigns) in JSON — fields include tree height, crown diameter, basal diameter, and GPS coordinates. \n- Terrestrial single images: 1,208 JPEG images paired with semantic segmentation masks (mask files exported alongside images). \n- Terrestrial stereo images: 2,416 JPEG stereoscopic image pairs (left/right) with corresponding masks for 3D/photogrammetric workflows. \n- Weather time series: daily data spanning 8 years from 40 stations, accessible via an API endpoint for linking meteorological drivers to growth. \nAll annotations and metadata use common interchange formats (JSON, SHP, GeoTIFF, JPEG) to enable GIS analyses and ML training without format conversion\n",
       "model_characteristics": "",
-      "how_to_use": "The Miti360 dataset is intended for training and assessing machine learning models in various forestry applications.\n- Use the orthophoto tiles and bounding box annotations to train models for individual tree detection, counting, and classification from aerial imagery.\n- Use the terrestrial stereoscopic images to develop and benchmark 3D computer vision models for automating forest inventory, such as estimating biophysical parameters.\n- Combine the ground-truth measurements (TH, CD, BD) and weather data to train models that determine quantitative relationships between tree growth and local weather conditions.\n- Leverage the multi-year data (2024-2025) to analyse changes in biophysical parameters and determine which tree species are growing well in the reforested area.\n\nThe dataset is designed to be integrated. By augmenting this dataset with others, one can\n- Combine Miti360 with other global forestry datasets mentioned in the report (like NEON Crowns or Auto Arborist) to train models with greater geographic diversity, addressing a key gap this dataset was built to fill.\n- Augment the dataset with socio-economic data on local farming to explore and validate the contribution of farmers to reforestation, an application suggested in the report.\n\nCost & resources one can use:\n- Cost: Only associated compute costs\n- Resources: The source code used for data analysis as well as preliminary models trained on the dataset will be made available.\n",
+      "how_to_use": "The Miti360 dataset is intended for training and assessing machine learning models in various forestry applications.\n- Use the orthophoto tiles and bounding box annotations to train models for individual tree detection, counting, and classification from aerial imagery.\n- Use the terrestrial stereoscopic images to develop and benchmark 3D computer vision models for automating forest inventory, such as estimating biophysical parameters.\n- Combine the ground-truth measurements (TH, CD, BD) and weather data to train models that determine quantitative relationships between tree growth and local weather conditions.\n- Leverage the multi-year data (2024-2025) to analyse changes in biophysical parameters and determine which tree species are growing well in the reforested area.\r\n\nThe dataset is designed to be integrated. By augmenting this dataset with others, one can\n- Combine Miti360 with other global forestry datasets mentioned in the report (like NEON Crowns or Auto Arborist) to train models with greater geographic diversity, addressing a key gap this dataset was built to fill.\n- Augment the dataset with socio-economic data on local farming to explore and validate the contribution of farmers to reforestation, an application suggested in the report.\r\n\nCost & resources one can use:\n- Cost: Only associated compute costs\n- Resources: The source code used for data analysis as well as preliminary models trained on the dataset will be made available.\n",
       "maturity": "Dataset",
       "maturity_tags": [
         "dataset"
@@ -1804,7 +1958,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2"
       ],
@@ -1845,7 +2002,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 10",
         "SDG 2"
@@ -1892,7 +2052,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2",
         "SDG 10"
@@ -1935,7 +2098,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2",
         "SDG 10"
@@ -1982,7 +2148,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 13"
       ],
@@ -2025,7 +2194,10 @@
           "url": "https://huggingface.co/Davlan/naija-twitter-sentiment-afriberta-large"
         }
       ],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 10"
       ],
@@ -2070,7 +2242,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 13",
         "SDG 7"
@@ -2099,49 +2274,6 @@
       "additional_resources": []
     },
     {
-      "id": "onsite_image_and_weather_data_for",
-      "title": "Landslide and flood disaster hotspot monitoring using computer vision in Rwanda",
-      "description": "",
-      "dataset_links": [],
-      "usecase_links": [],
-      "is_on_hold": true,
-      "sdgs": [
-        "SDG 13",
-        "SDG 11"
-      ],
-      "data_types": [
-        "Images",
-        "Meterological"
-      ],
-      "countries": [
-        "Rwanda"
-      ],
-      "license": "",
-      "contact": "nan",
-      "organizations": "Powered by:  tbd & Hesotech GmbH\nCatalyzed by: FAIR Forward - AI for All & Digital and Green Innovation\nFinanced by: BMZ",
-      "authors": "Golo",
-      "is_lacuna": false,
-      "has_dataset": true,
-      "has_usecase": true,
-      "image": "/projects/onsite_image_and_weather_data_for/images/placeholder_image.jpeg",
-      "data_characteristics": "",
-      "model_characteristics": "",
-      "how_to_use": "",
-      "maturity": "Dataset  > Model > Pilot > Use-Case",
-      "maturity_tags": [
-        "dataset",
-        "model",
-        "pilot",
-        "usecase"
-      ],
-      "additional_resources": [
-        {
-          "name": "Papers.Cfm (papers.ssrn.com)",
-          "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5087469"
-        }
-      ]
-    },
-    {
       "id": "mbaza_chatbot_rwanda_for_health_related",
       "title": "Mbaza Chatbot Rwanda for health related inquiries by citizens",
       "description": "The Mbaza AI Chatbot was awarded as one of the winning projects of the #SmartDevelopmentHack, an international hackathon organized by the German Federal Ministry for Economic Cooperation and Development (BMZ). The hackathon called for innovative digital solutions to tackle the challenges caused by the coronavirus outbreak in low- and middle-income countries. The chatbot was developed iteratively, the USSD channel was the first to go production, while the web and IVR versions reached only staging phase. Important reported metrics for the Mbaza covid-19 ussd chatbot:                                                  4,165,037 users in total\n37,812,089 sessions in total\n7,254,441 sessions in January 2022\n1,337,614 users in January 2022\n4,347,713 session in December 2021\n914,530 users in December 2021 \n10,074 users in September 2024\n69,992 sessions in September 2024\n170,857 users in 2024\n1,073,451 sessions in 2024",
@@ -2165,7 +2297,10 @@
           "url": "https://github.com/Digital-Umuganda/Mbaza-chatbot"
         }
       ],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 10"
       ],
@@ -2212,7 +2347,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2",
         "SDG 10"
@@ -2256,7 +2394,10 @@
           "url": "https://github.com/crop-type-mapping"
         }
       ],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2"
       ],
@@ -2276,7 +2417,7 @@
       "image": "/projects/solutions_from_space_rwandas_smart_harvest/images/placeholder_image.jpeg",
       "data_characteristics": "The overall good accuracy yielded by the approach under conditions with small field sizes, varying elevation and high cloud cover are promising for a successful application in all kinds of regions. Nevertheless, local reference data remains crucial for crop type mapping and an ideal approach should include all types of crops. You can follow the approach to create your own crop type mapping system, utilize the pipeline to fetch satellite imagery for various purposes, get inspired by the use and fine-tuning of the geospatial foundational model and apply it to a different task. You can also use the collected reference data for your own model.",
       "model_characteristics": "",
-      "how_to_use": "The mapping method developed is freely accessible and fully documented. Training courses with the Rwandan Space Agency and the Office of Statistics ensure that local experts can continue to develop the system independently.\nThe digital maps do not replace observations and measurements in the field or local knowledge. They complement these to create an improved basis for data-driven decisions, more targeted use of resources and forward-looking risk management using digital tools – for agriculture that offers prospects for the future even under climate pressure.\n",
+      "how_to_use": "The mapping method developed is freely accessible and fully documented. Training courses with the Rwandan Space Agency and the Office of Statistics ensure that local experts can continue to develop the system independently.\r\nThe digital maps do not replace observations and measurements in the field or local knowledge. They complement these to create an improved basis for data-driven decisions, more targeted use of resources and forward-looking risk management using digital tools – for agriculture that offers prospects for the future even under climate pressure.\r",
       "maturity": "Dataset  > Model > Pilot > Use-Case >  Use-Case with Business Model",
       "maturity_tags": [
         "dataset",
@@ -2328,7 +2469,10 @@
           "url": "https://huggingface.co/DigitalUmuganda/Finetuned-NLLB"
         }
       ],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 4"
       ],
@@ -2377,7 +2521,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2",
         "SDG 13",
@@ -2423,7 +2570,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2",
         "SDG 11"
@@ -2468,7 +2618,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2"
       ],
@@ -2513,7 +2666,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2",
         "SDG 11"
@@ -2558,7 +2714,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2",
         "SDG 11"
@@ -2604,7 +2763,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2",
         "SDG 11",
@@ -2651,7 +2813,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2",
         "SDG 11",
@@ -2698,7 +2863,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2",
         "SDG 11",
@@ -2745,7 +2913,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2",
         "SDG 11",
@@ -2792,7 +2963,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2",
         "SDG 13"
@@ -2830,7 +3004,7 @@
     {
       "id": "sar_busters",
       "title": "SAR Busters",
-      "description": "Explores the use of Sentinel-1 and Sentinel-2 satellite data for crop type mapping in smallholder farming areas. The study focuses on improving classification accuracy by identifying optimal spectral bands and evaluating machine learning algorithms like decision tree and random forest classifiers\n",
+      "description": "Explores the use of Sentinel-1 and Sentinel-2 satellite data for crop type mapping in smallholder farming areas. The study focuses on improving classification accuracy by identifying optimal spectral bands and evaluating machine learning algorithms like decision tree and random forest classifiers\r\n",
       "dataset_links": [
         {
           "name": "Link",
@@ -2838,7 +3012,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2"
       ],
@@ -2883,7 +3060,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2",
         "SDG 10"
@@ -2928,7 +3108,10 @@
           "url": "https://github.com/radiantearth/spot-the-crop-challenge"
         }
       ],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2",
         "SDG 13"
@@ -2948,7 +3131,7 @@
       "has_usecase": true,
       "image": "/projects/spot_the_crop/images/crop.png",
       "data_characteristics": "The dataset contains a time-series of satellite imagery and labels for crop type that have been collected through aerial and ground survey. Labels are derived from the survey conducted by the Western Cape Department of Agriculture. Satellite data including multispectral Sentinel-2 are then matched with corresponding labels.",
-      "model_characteristics": "This repository contains the winning models from the Zindi data competition \"Spot the Crop\" in which participants used time series of Sentinel-2 multispectral imagery as input for crop type classification.\n\n",
+      "model_characteristics": "This repository contains the winning models from the Zindi data competition \"Spot the Crop\" in which participants used time series of Sentinel-2 multispectral imagery as input for crop type classification.\r\n\r\n",
       "how_to_use": "The agricultural sector makes a substantial contribution to GDP and livelihoods across the developing world. However, regular and reliable agricultural data remains difficult and expensive to collect on the ground. As a result, policy-makers usually don’t have access to updated data for implementing policies or supporting farmers. Earth observation satellites provide a wealth of multispectral image data that can be used for developing agricultural monitoring tools. These tools support farmers and policy-makers across Africa and the developing world. With this dataset and AI model you can use time-series of Sentinel-2 multi-spectral data to classify crops in the Western Cape of South Africa.",
       "maturity": "Dataset > Model > Pilot",
       "maturity_tags": [
@@ -2966,7 +3149,7 @@
     {
       "id": "croppie_helping_smallholder_coffee_producers_to",
       "title": "Croppie- helping smallholder coffee producers to plan sales, estimate yields, get loans, and trace coffee - AI powered coffee yield prediction",
-      "description": "Contributing almost a third of foreign export earnings, coffee is one of the main cash crops in Uganda. Nowadays, many small-holder farmers, who rely on coffee farming for their livelihood, are facing challenges such as unpredictable weather and volatile market prices. Traditionally, they have relied on manual yield estimates, but these are time-intensive to perform and not always reliable, leaving many farmers unable to safely plan their harvests or manage their resources effectively. On top, unpredictable weather conditions and price fluctuations pose major challenges for the coffee farmers. \n\nThe platform and app 'Croppie' supports them with targeted cultivation recommendations and precise crop forecasts—using AI-supported image recognition of coffee plants. As a digital public good based on open-source technology, it can be adapted and further developed locally. The basic user interface is provided through a mobile application. Croppie’s core functionality is to allow for AI-supported coffee yield estimation. This is done by guiding a selective sampling for a statistical yield estimation service based on branch count and coffee branch picture taking, alongside the integration of additional data provided by the user.\n",
+      "description": "Contributing almost a third of foreign export earnings, coffee is one of the main cash crops in Uganda. Nowadays, many small-holder farmers, who rely on coffee farming for their livelihood, are facing challenges such as unpredictable weather and volatile market prices. Traditionally, they have relied on manual yield estimates, but these are time-intensive to perform and not always reliable, leaving many farmers unable to safely plan their harvests or manage their resources effectively. On top, unpredictable weather conditions and price fluctuations pose major challenges for the coffee farmers. \r\n\r\nThe platform and app 'Croppie' supports them with targeted cultivation recommendations and precise crop forecasts—using AI-supported image recognition of coffee plants. As a digital public good based on open-source technology, it can be adapted and further developed locally. The basic user interface is provided through a mobile application. Croppie’s core functionality is to allow for AI-supported coffee yield estimation. This is done by guiding a selective sampling for a statistical yield estimation service based on branch count and coffee branch picture taking, alongside the integration of additional data provided by the user.\r\n",
       "dataset_links": [
         {
           "name": "Link",
@@ -2979,7 +3162,10 @@
           "url": "https://huggingface.co/rgautroncgiar/croppie_coffee_ug"
         }
       ],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 2",
         "SDG 13"
@@ -3032,7 +3218,10 @@
           "url": "https://lamwo.sunbird.ai/"
         }
       ],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 13"
       ],
@@ -3083,7 +3272,10 @@
           "url": "https://github.com/Marconi-Lab/Irradiation_Portal"
         }
       ],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 13"
       ],
@@ -3131,7 +3323,10 @@
           "url": "https://huggingface.co/spaces/GIZ/audit_assistant"
         }
       ],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 13"
       ],
@@ -3172,7 +3367,10 @@
           "url": "https://1drv.ms/f/c/BFFEF9896BFF8791/Es68F3WluONJjORAR_WvTloBdtisO9TGsGyWR8Se5xNYDA?e=q0Afso"
         }
       ],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 13",
         "SDG 15"
@@ -3214,7 +3412,10 @@
         }
       ],
       "usecase_links": [],
-      "is_on_hold": false,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
       "sdgs": [
         "SDG 13",
         "SDG 5",
@@ -3255,7 +3456,8 @@
     "total_projects": 69,
     "total_datasets": 77,
     "total_usecases": 38,
-    "total_countries": 23
+    "total_access_note_projects": 3,
+    "total_countries": 24
   },
   "filters": {
     "sdgs": [
@@ -3269,8 +3471,7 @@
       "SDG 12",
       "SDG 13",
       "SDG 14",
-      "SDG 15",
-      "SDG 16"
+      "SDG 15"
     ],
     "data_types": [
       "Drone Imagery",
@@ -3286,6 +3487,7 @@
       "Angola",
       "Benin",
       "Benin/West Africa",
+      "Cameroon",
       "Colombia",
       "Cote d'Ivoire",
       "DRC",

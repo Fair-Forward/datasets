@@ -3,7 +3,7 @@ import pandas as pd
 import json
 import re
 from collections import Counter
-from utils import resolve_project_id
+from utils import resolve_project_id, row_included_for_catalog_or_insights
 
 # Parse command line arguments
 parser = argparse.ArgumentParser(description='Generate insights data JSON from data catalog.')
@@ -11,31 +11,6 @@ parser.add_argument('--input', type=str, default="docs/data_catalog.xlsx", help=
 parser.add_argument('--output', type=str, default="public/data/insights.json", help='Path to the output JSON file')
 parser.add_argument('--project-count', type=int, help='Total project count from catalog page')
 args = parser.parse_args()
-
-
-def extract_urls(text):
-    """Extract URLs from text."""
-    if pd.isna(text) or not isinstance(text, str):
-        return []
-    
-    urls = []
-    # Pattern for markdown links [text](url)
-    markdown_pattern = r'\[([^\]]+)\]\(([^)]+)\)'
-    markdown_matches = re.findall(markdown_pattern, text)
-    for _, url in markdown_matches:
-        url = url.strip()
-        if url.startswith('http'):
-            urls.append(url)
-    
-    # Pattern for plain URLs
-    url_pattern = r'https?://[^\s,)\]>]+'
-    plain_matches = re.findall(url_pattern, text)
-    for url in plain_matches:
-        url = url.strip()
-        if url not in urls:
-            urls.append(url)
-    
-    return urls
 
 
 def analyze_data(excel_path):
@@ -70,17 +45,9 @@ def analyze_data(excel_path):
         sdg_counts = Counter()  # Global SDG counts
         
         for index, row in df.iterrows():
-            # Only count rows with valid dataset OR use case links
-            dataset_link_text = row.get('Dataset Link', '')
-            usecase_link_text = row.get('Model/Use-Case Links', '')
-            
-            has_dataset_link = len(extract_urls(dataset_link_text)) > 0
-            has_usecase_link = len(extract_urls(usecase_link_text)) > 0
-            
-            # Skip rows without valid links
-            if not has_dataset_link and not has_usecase_link:
+            if not row_included_for_catalog_or_insights(row, row_idx=index):
                 continue
-            
+
             # Count this project
             normalized_project_id, id_source, error_msg = resolve_project_id(row, row_idx=index)
             if normalized_project_id and not error_msg:

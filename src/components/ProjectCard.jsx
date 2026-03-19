@@ -71,13 +71,14 @@ const licenseLabel = (license = '') => {
 }
 
 const ProjectCard = ({ project, onClick }) => {
-  const { title, description, sdgs, data_types, image, has_dataset, has_usecase, is_lacuna, is_on_hold, countries = [], contact, license } = project
+  const { title, description, sdgs, data_types, image, has_dataset, has_usecase, is_lacuna, has_access_note, countries = [], contact, license } = project
 
   const cardClasses = [
     'card',
     has_dataset ? 'has-dataset' : '',
     has_usecase ? 'has-usecase' : '',
-    is_lacuna ? 'has-lacuna' : ''
+    is_lacuna ? 'has-lacuna' : '',
+    has_access_note ? 'has-access-note' : ''
   ].filter(Boolean).join(' ')
 
   // Truncate description
@@ -111,7 +112,6 @@ const ProjectCard = ({ project, onClick }) => {
   const licenseText = licenseLabel(licenseValue)
 
   const contactParsed = parseContact(contact)
-  const showOnHoldNote = is_on_hold && !has_dataset && !has_usecase
 
   return (
     <div className={cardClasses} onClick={() => onClick(project)}>
@@ -129,6 +129,11 @@ const ProjectCard = ({ project, onClick }) => {
               </span>
             ))}
           </div>
+        )}
+        {has_access_note && (
+          <span className="access-note-chip" title="No public dataset/use-case link in the sheet">
+            <i className="fas fa-circle-info"></i> Info
+          </span>
         )}
         <h3>{title}</h3>
       </div>

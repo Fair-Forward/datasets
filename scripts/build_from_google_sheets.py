@@ -81,6 +81,141 @@ def find_existing_directory_for_row(row, projects_dir):
     
     return None
 
+
+# --- Orphan directories with documents/: migrate before delete ---
+FUZZY_MIGRATE_MIN_SCORE = 90
+
+
+def _project_root_txt_stems(project_root):
+    """Normalized stems from *.txt title marker files in project root (not subdirs)."""
+    stems = set()
+    if not os.path.isdir(project_root):
+        return stems
+    try:
+        for name in os.listdir(project_root):
+            path = os.path.join(project_root, name)
+            if os.path.isfile(path) and name.lower().endswith('.txt'):
+                stem = normalize_for_directory(name[:-4])
+                if stem:
+                    stems.add(stem)
+    except OSError:
+        pass
+    return stems
+
+
+def _documents_dir_has_files(documents_path):
+    if not os.path.isdir(documents_path):
+        return False
+    try:
+        for _root, _dirs, files in os.walk(documents_path):
+            if files:
+                return True
+    except OSError:
+        pass
+    return False
+
+
+def _unique_filename_in_dir(dest_dir, filename):
+    """Avoid overwriting when merging migrated files."""
+    dest = os.path.join(dest_dir, filename)
+    if not os.path.exists(dest):
+        return filename
+    base, ext = os.path.splitext(filename)
+    n = 1
+    while True:
+        cand = f"{base}_migrated{n}{ext}"
+        if not os.path.exists(os.path.join(dest_dir, cand)):
+            return cand
+        n += 1
+
+
+def _merge_documents_tree(src_documents, dest_documents):
+    """
+    Move all files from src_documents into dest_documents (flat merge of top-level entries).
+    Subdirectories are moved as a whole if name does not collide; else merge recursively.
+    """
+    os.makedirs(dest_documents, exist_ok=True)
+    for name in os.listdir(src_documents):
+        src_path = os.path.join(src_documents, name)
+        if os.path.isfile(src_path):
+            final_name = _unique_filename_in_dir(dest_documents, name)
+            shutil.move(src_path, os.path.join(dest_documents, final_name))
+        elif os.path.isdir(src_path):
+            dest_sub = os.path.join(dest_documents, name)
+            if os.path.exists(dest_sub):
+                _merge_documents_tree(src_path, dest_sub)
+                shutil.rmtree(src_path, ignore_errors=True)
+            else:
+                shutil.move(src_path, dest_sub)
+
+
+def _find_migration_target_for_orphan(orphan_name, correct_dirs, public_projects_dir):
+    """
+    Conservative target resolution:
+    1) Title-file overlap: unique candidate whose root .txt stems overlap orphan's root .txt stems.
+    2) Fuzzy: best score max(fuzz(orphan vs dir), fuzz(orphan vs each stem)) >= 90, strict best (no tie at top).
+    """
+    candidates = sorted(correct_dirs)
+    if not candidates:
+        return None
+
+    orphan_path = os.path.join(public_projects_dir, orphan_name)
+    orphan_stems = _project_root_txt_stems(orphan_path)
+
+    # 1) Title-file stem overlap (unique match only)
+    if orphan_stems:
+        overlap_matches = []
+        for c in candidates:
+            c_path = os.path.join(public_projects_dir, c)
+            c_stems = _project_root_txt_stems(c_path)
+            if orphan_stems & c_stems:
+                overlap_matches.append(c)
+        if len(overlap_matches) == 1:
+            return overlap_matches[0]
+        if len(overlap_matches) > 1:
+            print(
+                f"  WARNING: Orphan '{orphan_name}' title-file overlap is ambiguous "
+                f"({overlap_matches}); skipping document migration."
+            )
+            return None
+
+    # 2) Fuzzy match on directory name and title stems (unique best, score >= FUZZY_MIGRATE_MIN_SCORE)
+    scores = []
+    for c in candidates:
+        c_path = os.path.join(public_projects_dir, c)
+        c_stems = _project_root_txt_stems(c_path)
+        s_dir = fuzz.ratio(orphan_name, c) if c else 0
+        s_stems = max((fuzz.ratio(orphan_name, s) for s in c_stems), default=0)
+        best = max(s_dir, s_stems)
+        scores.append((best, c))
+
+    scores.sort(key=lambda x: (-x[0], x[1]))
+    if not scores or scores[0][0] < FUZZY_MIGRATE_MIN_SCORE:
+        return None
+    top_score, top_c = scores[0]
+    if len(scores) > 1 and scores[1][0] == top_score:
+        print(
+            f"  WARNING: Orphan '{orphan_name}' fuzzy match tied at {top_score}; "
+            f"skipping document migration."
+        )
+        return None
+    return top_c
+
+
+def _migrate_orphan_documents_then_remove(orphan_name, target_name, public_projects_dir):
+    """Move orphan/documents/* into target/documents/, then remove orphan directory."""
+    orphan_path = os.path.join(public_projects_dir, orphan_name)
+    target_path = os.path.join(public_projects_dir, target_name)
+    src_docs = os.path.join(orphan_path, 'documents')
+    dest_docs = os.path.join(target_path, 'documents')
+    _merge_documents_tree(src_docs, dest_docs)
+    try:
+        shutil.rmtree(orphan_path)
+        print(f"  Migrated documents from orphan '{orphan_name}' -> '{target_name}', removed orphan.")
+    except Exception as e:
+        print(f"  ERROR removing orphan '{orphan_name}' after migration: {e}")
+
+
 # Function to create project directories
 def create_project_directories(df):
     print("Creating project directories...")
@@ -258,11 +393,26 @@ def create_project_directories(df):
             print(f"Cleaning up {len(orphaned_dirs)} orphaned directories...")
             for orphan in orphaned_dirs:
                 orphan_path = os.path.join(public_projects_dir, orphan)
+                docs_path = os.path.join(orphan_path, 'documents')
                 try:
-                    shutil.rmtree(orphan_path)
-                    print(f"  Removed orphaned directory: {orphan}")
+                    if _documents_dir_has_files(docs_path):
+                        target = _find_migration_target_for_orphan(
+                            orphan, correct_dirs, public_projects_dir
+                        )
+                        if target:
+                            _migrate_orphan_documents_then_remove(
+                                orphan, target, public_projects_dir
+                            )
+                        else:
+                            print(
+                                f"  WARNING: Orphan '{orphan}' has files in documents/ but no safe "
+                                f"migration target; keeping directory."
+                            )
+                    else:
+                        shutil.rmtree(orphan_path)
+                        print(f"  Removed orphaned directory: {orphan}")
                 except Exception as e:
-                    print(f"  Error removing {orphan}: {e}")
+                    print(f"  Error processing orphan {orphan}: {e}")
 
 # Fetch data from Google Sheets
 if not args.skip_fetch:
@@ -366,9 +516,6 @@ if not args.skip_fetch:
             "Lacuna Dataset": [
                 "Lacuna Dataset (Yes/No)", "Lacuna Dataset", "Lacuna Fund Dataset", "Is Lacuna Dataset"
             ],
-            "On Hold": [
-                "On Hold", "Is On Hold", "On Hold Status"
-            ]
             # --- End of new columns ---
         }
 

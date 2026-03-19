@@ -653,6 +653,25 @@
             background-color: #eff6ff; /* Light blue background on hover */
         }
 
+        .access-note-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #92400e;
+            background: #fffbeb;
+            border: 1px solid #f59e0b;
+            padding: 0.2rem 0.55rem;
+            border-radius: 1rem;
+            margin-bottom: 0.5rem;
+            width: fit-content;
+        }
+
+        .access-note-chip i {
+            font-size: 0.65rem;
+        }
+
         .data-type-chips {
             display: flex;
             flex-wrap: wrap;
@@ -1081,7 +1100,13 @@
             }
 
             .stats-parallelogram .stat-item:nth-child(3) {
-                grid-column: 1 / -1;
+                grid-column: 1;
+                grid-row: 2;
+            }
+
+            .stats-parallelogram .stat-item:nth-child(4) {
+                grid-column: 2;
+                grid-row: 2;
             }
 
             .stats-row {
@@ -1430,10 +1455,15 @@
         }
 
         .stats-parallelogram .stat-item:nth-child(3) {
-            grid-column: 1 / -1;
+            grid-column: 1;
             grid-row: 2;
-            justify-self: center;
-            transform: translateY(0.1rem);
+            transform: translateX(-0.15rem);
+        }
+
+        .stats-parallelogram .stat-item:nth-child(4) {
+            grid-column: 2;
+            grid-row: 2;
+            transform: translateX(0.15rem);
         }
 
         .stats-row {
@@ -2514,6 +2544,74 @@ a.additional-resource-item i {
 .panel-on-hold-note i {
     margin-right: 0.5rem;
     color: var(--primary);
+}
+
+/* Access note (no public dataset/use-case link yet) */
+.panel-access-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+    border-radius: 8px;
+    width: 100%;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.panel-access-note > i {
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+}
+
+.panel-access-note-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.panel-access-note-body p:last-child {
+    margin-bottom: 0;
+}
+
+.panel-access-note-pending {
+    background: #eff6ff;
+    color: #1e3a5f;
+    border-color: rgba(37, 99, 235, 0.25);
+}
+
+.panel-access-note-pending > i {
+    color: #2563eb;
+}
+
+.panel-access-note-unavailable {
+    background: #fffbeb;
+    color: #78350f;
+    border-color: rgba(217, 119, 6, 0.3);
+}
+
+.panel-access-note-unavailable > i {
+    color: #d97706;
+}
+
+.panel-access-note-documents {
+    background: #f1f5f9;
+    color: #334155;
+    border-color: rgba(100, 116, 139, 0.35);
+}
+
+.panel-access-note-documents > i {
+    color: #64748b;
+}
+
+.panel-hosted-document-link {
+    border-color: rgba(217, 119, 6, 0.45);
+    background: #fffbeb;
+    color: #78350f;
+}
+
+.panel-hosted-document-link:hover {
+    background: #fef3c7;
+    border-color: #d97706;
 }
 
 /* Tags section content styling */

@@ -34,6 +34,18 @@ python scripts/build.py
 1. Add or update rows in the source Google Sheet: https://docs.google.com/spreadsheets/d/18sgZgPGZuZjeBTHrmbr1Ra7mx8vSToUqnx8vCjhIp0c/edit?gid=561894456#gid=561894456  
 2. Run the build locally (above) or trigger the GitHub Action “Manually Update Website from Google Sheets” on branch `main`.
 
+### No public dataset/use-case link yet (Info)
+If both link columns have no `http(s)` URL, a row is listed only when **one** of these holds:
+
+- Either cell **starts with** `Dataset/Use-Case has not been published yet.` (coming soon), or  
+- Either cell **starts with** `There is no Dataset/Use-Case available.` (not public), or  
+- `public/projects/<project_id>/documents/` contains at least one file (then column text is optional; download buttons still appear).
+
+Other no-link notes without those prefixes are **omitted** from the catalog. If either column has a real `http(s)` URL, the project is a normal dataset/use-case entry.
+
+### PDFs per project
+Put files in `public/projects/<project_id>/documents/`. You can still link the same files from **Link to additional Resources**. Sheet builds try to move `documents/` when a project folder is renamed or merged.
+
 ## Secrets & safety
 - Service account keys stay local (ignored by git). Never commit JSON keys.
 - If a key was ever committed, rotate it in Google Cloud and update your local `.env` path.

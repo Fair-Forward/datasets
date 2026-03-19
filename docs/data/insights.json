@@ -1,6 +1,6 @@
 {
   "total_projects": 69,
-  "total_countries": 23,
+  "total_countries": 24,
   "map_data": {
     "AO": {
       "name": "Angola",
@@ -17,7 +17,7 @@
     },
     "CD": {
       "name": "DRC",
-      "projects": 1,
+      "projects": 2,
       "iso2": "CD",
       "sdgs": [
         "SDG 15"
@@ -183,6 +183,13 @@
         "Geospatial/Remote Sensing"
       ]
     },
+    "CM": {
+      "name": "Cameroon",
+      "projects": 1,
+      "iso2": "CM",
+      "sdgs": [],
+      "data_types": []
+    },
     "CO": {
       "name": "Colombia",
       "projects": 2,
@@ -248,7 +255,7 @@
     },
     "IN": {
       "name": "India",
-      "projects": 11,
+      "projects": 12,
       "iso2": "IN",
       "sdgs": [
         "SDG 2",
@@ -267,7 +274,7 @@
     },
     "ID": {
       "name": "Indonesia",
-      "projects": 4,
+      "projects": 5,
       "iso2": "ID",
       "sdgs": [
         "SDG 2",
@@ -277,6 +284,7 @@
         "SDG 15"
       ],
       "data_types": [
+        "Drone Imagery",
         "Geospatial/Remote Sensing",
         "Meterological",
         "Text"
@@ -327,11 +335,11 @@
     "SDG 5": 5,
     "SDG 7": 3,
     "SDG 8": 1,
-    "SDG 10": 20,
+    "SDG 10": 21,
     "SDG 11": 9,
     "SDG 12": 1,
-    "SDG 13": 24,
+    "SDG 13": 25,
     "SDG 14": 1,
-    "SDG 15": 12
+    "SDG 15": 13
   }
 }

@@ -25,5 +25,18 @@ export const withBasePath = (path = '') => {
   return `${BASE_PATH}${normalized}`
 }
 
+/**
+ * Resolve hrefs for links served from this site (e.g. /projects/.../documents/x.pdf on GitHub Pages).
+ * Leaves http(s), mailto, tel, and hash-only anchors unchanged.
+ */
+export const resolvePublicHref = (href) => {
+  if (!href) return href
+  if (href.startsWith('#')) return href
+  if (href.startsWith('mailto:') || href.startsWith('tel:')) return href
+  if (href.startsWith('http://') || href.startsWith('https://')) return href
+  if (href.startsWith('/')) return withBasePath(href)
+  return href
+}
+
 export default withBasePath
 

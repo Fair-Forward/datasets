@@ -112,7 +112,8 @@ const CatalogPage = () => {
           p.data_characteristics,
           p.model_characteristics,
           p.how_to_use,
-          p.license
+          p.license,
+          p.access_note_markdown
         ]
         // Check plain text fields
         if (textFields.some(f => f && f.toLowerCase().includes(searchLower))) return true
@@ -144,6 +145,8 @@ const CatalogPage = () => {
       projects = projects.filter(p => p.has_dataset)
     } else if (filters.view === 'usecases') {
       projects = projects.filter(p => p.has_usecase)
+    } else if (filters.view === 'info') {
+      projects = projects.filter(p => p.has_access_note)
     } else if (filters.view === 'lacuna') {
       projects = projects.filter(p => p.is_lacuna)
     } else if (filters.view && filters.view !== 'all') {
@@ -163,15 +166,18 @@ const CatalogPage = () => {
     // Count datasets and usecases from filtered projects
     let datasetCount = 0
     let usecaseCount = 0
+    let accessNoteCount = 0
     filteredProjects.forEach(p => {
       if (p.dataset_links) datasetCount += p.dataset_links.length
       if (p.usecase_links) usecaseCount += p.usecase_links.length
+      if (p.has_access_note) accessNoteCount += 1
     })
     
     return {
       total_projects: filteredProjects.length,
       total_datasets: datasetCount,
       total_usecases: usecaseCount,
+      total_access_note_projects: accessNoteCount,
       total_countries: new Set(filteredProjects.flatMap(p => p.countries || [])).size
     }
   }, [filteredProjects, catalogData])
@@ -232,6 +238,7 @@ const CatalogPage = () => {
             { value: 'all', label: 'All items' },
             { value: 'datasets', label: 'Datasets' },
             { value: 'usecases', label: 'Use cases' },
+            { value: 'info', label: 'Info (no public link)' },
             { value: 'lacuna', label: 'Lacuna Fund' }
           ]
         }}

@@ -7,6 +7,7 @@ const CatalogHeader = ({ stats }) => {
     projects: 0,
     datasets: 0,
     usecases: 0,
+    accessNote: 0,
     countries: 0
   })
   const isInitialLoad = useRef(true)
@@ -26,6 +27,7 @@ const CatalogHeader = ({ stats }) => {
       total_projects: 0, 
       total_datasets: 0, 
       total_usecases: 0, 
+      total_access_note_projects: 0,
       total_countries: 0 
     }
 
@@ -35,10 +37,13 @@ const CatalogHeader = ({ stats }) => {
       const progress = step / steps
 
       // Interpolate from previous values to new values
+      const prevAccess = startValues.total_access_note_projects ?? 0
+      const nextAccess = stats.total_access_note_projects ?? 0
       setAnimatedStats({
         projects: Math.floor(startValues.total_projects + (stats.total_projects - startValues.total_projects) * progress),
         datasets: Math.floor(startValues.total_datasets + (stats.total_datasets - startValues.total_datasets) * progress),
         usecases: Math.floor(startValues.total_usecases + (stats.total_usecases - startValues.total_usecases) * progress),
+        accessNote: Math.floor(prevAccess + (nextAccess - prevAccess) * progress),
         countries: Math.floor(startValues.total_countries + (stats.total_countries - startValues.total_countries) * progress)
       })
 
@@ -48,6 +53,7 @@ const CatalogHeader = ({ stats }) => {
           projects: stats.total_projects,
           datasets: stats.total_datasets,
           usecases: stats.total_usecases,
+          accessNote: stats.total_access_note_projects ?? 0,
           countries: stats.total_countries
         })
         // Store current stats for next animation
@@ -137,6 +143,12 @@ const CatalogHeader = ({ stats }) => {
                 <div className="stat-text">
                   <div className="stat-value">{animatedStats.usecases}</div>
                   <div className="stat-label">Use Cases</div>
+                </div>
+              </div>
+              <div className="stat-item">
+                <div className="stat-text">
+                  <div className="stat-value">{animatedStats.accessNote}</div>
+                  <div className="stat-label">Info</div>
                 </div>
               </div>
               <div className="stat-item">

@@ -3,7 +3,17 @@ import json
 import os
 import re
 import argparse
-from utils import normalize_for_directory, is_valid_http_url, resolve_project_id, PROJECTS_DIR
+from utils import (
+    normalize_for_directory,
+    resolve_project_id,
+    PROJECTS_DIR,
+    normalize_sheet_link_cell,
+    extract_http_links,
+    extract_links_allow_site_paths,
+    classify_access_note_prefix_kind,
+    merge_access_note_link_columns,
+    documents_dir_has_files,
+)
 
 # Parse command line arguments
 parser = argparse.ArgumentParser(description='Generate catalog JSON from Excel file.')
@@ -40,36 +50,6 @@ def parse_maturity_tags(maturity_string):
     return reached_stages
 
 
-def extract_urls(text):
-    """Extract URLs from text."""
-    if pd.isna(text) or not isinstance(text, str):
-        return []
-    
-    urls = []
-    # Pattern for markdown links [text](url)
-    markdown_pattern = r'\[([^\]]+)\]\(([^)]+)\)'
-    markdown_matches = re.findall(markdown_pattern, text)
-    for name, url in markdown_matches:
-        url = url.strip()
-        if url.startswith('http'):
-            urls.append({'name': name.strip(), 'url': url})
-    
-    # Pattern for plain URLs
-    url_pattern = r'https?://[^\s,)\]>]+'
-    plain_matches = re.findall(url_pattern, text)
-    for url in plain_matches:
-        url = url.strip()
-        if url not in [u['url'] for u in urls]:
-            urls.append({'name': 'Link', 'url': url})
-    
-    return urls
-
-
-def has_valid_url(text):
-    """Check if text contains at least one valid URL."""
-    return len(extract_urls(text)) > 0
-
-
 def get_project_image(project_id):
     """Find the first image in the project's images directory."""
     images_dir = os.path.join(PROJECTS_DIR, project_id, "images")
@@ -81,6 +61,32 @@ def get_project_image(project_id):
             return f"/projects/{project_id}/images/{image_files[0]}"
     
     return None
+
+
+def get_hosted_documents(project_id):
+    """
+    List files under public/projects/<id>/documents/ for access-note projects.
+    Returns [{'name': str, 'url': str}, ...] with site-relative URLs.
+    """
+    documents_dir = os.path.join(PROJECTS_DIR, project_id, "documents")
+    if not os.path.isdir(documents_dir):
+        return []
+
+    items = []
+    for root, _dirs, files in os.walk(documents_dir):
+        files = sorted(f for f in files if f and not f.startswith("."))
+        for filename in files:
+            full_path = os.path.join(root, filename)
+            if not os.path.isfile(full_path):
+                continue
+            rel = os.path.relpath(full_path, os.path.join(PROJECTS_DIR, project_id))
+            rel_posix = rel.replace(os.sep, "/")
+            url_path = f"/projects/{project_id}/{rel_posix}"
+            display = filename.rsplit(".", 1)[0].replace("_", " ").strip() or filename
+            items.append({"name": display, "url": url_path})
+
+    items.sort(key=lambda x: x["url"].lower())
+    return items
 
 
 def generate_catalog_json():
@@ -112,37 +118,43 @@ def generate_catalog_json():
         all_countries = set()
         
         for index, row in df.iterrows():
-            # Check for valid links
             dataset_link_text = row.get('Dataset Link', '')
             usecase_link_text = row.get('Model/Use-Case Links', '')
-            
-            dataset_urls = extract_urls(dataset_link_text)
-            usecase_urls = extract_urls(usecase_link_text)
-            
+
+            dataset_urls = extract_http_links(dataset_link_text)
+            usecase_urls = extract_http_links(usecase_link_text)
+
             has_dataset_link = len(dataset_urls) > 0
             has_usecase_link = len(usecase_urls) > 0
-            is_on_hold = str(row.get('On Hold', '')).strip().lower() in ['yes', 'y', 'true', '1']
-            if is_on_hold:
-                # Keep on-hold entries visible in dataset/use-case views and stats
-                has_dataset_link = True
-                has_usecase_link = True
-            
-            # Skip rows without valid links
-            if not has_dataset_link and not has_usecase_link and not is_on_hold:
-                continue
-            
-            # Count links
-            if has_dataset_link:
-                dataset_count += len(dataset_urls)
-            if has_usecase_link:
-                usecase_count += len(usecase_urls)
-            
-            # Resolve project ID
+
+            # Resolve project ID before access-note / exclusion rules
             normalized_project_id, id_source, error_msg = resolve_project_id(row, row_idx=index)
             if error_msg or not normalized_project_id:
                 print(f"Row {index}: Skipping - {error_msg}")
                 continue
-            
+
+            access_note_kind = None
+            access_note_markdown = None
+
+            if not has_dataset_link and not has_usecase_link:
+                prefix_kind = classify_access_note_prefix_kind(
+                    dataset_link_text, usecase_link_text
+                )
+                if prefix_kind is not None:
+                    access_note_kind = prefix_kind
+                elif documents_dir_has_files(normalized_project_id):
+                    access_note_kind = "documents"
+                else:
+                    continue
+                merged_note = merge_access_note_link_columns(
+                    dataset_link_text, usecase_link_text
+                ).strip()
+                access_note_markdown = merged_note if merged_note else None
+
+            # Count only real http(s) links
+            dataset_count += len(dataset_urls)
+            usecase_count += len(usecase_urls)
+
             project_ids.add(normalized_project_id)
             
             # Count countries
@@ -163,6 +175,10 @@ def generate_catalog_json():
             if has_usecase_link and usecase_title and not pd.isna(usecase_title):
                 title = usecase_title
             elif has_dataset_link and dataset_title and not pd.isna(dataset_title):
+                title = dataset_title
+            elif usecase_title and not pd.isna(usecase_title):
+                title = usecase_title
+            elif dataset_title and not pd.isna(dataset_title):
                 title = dataset_title
             elif onsite_name and not pd.isna(onsite_name):
                 title = onsite_name
@@ -208,7 +224,7 @@ def generate_catalog_json():
             if isinstance(additional_resources_raw, str) and not pd.isna(additional_resources_raw) and additional_resources_raw.strip():
                 resource_text = additional_resources_raw.strip()
                 # Extract any URLs from the text
-                resource_urls = extract_urls(resource_text)
+                resource_urls = extract_links_allow_site_paths(resource_text)
                 if resource_urls:
                     for ru in resource_urls:
                         label = ru['name']
@@ -216,20 +232,33 @@ def generate_catalog_json():
                         if label == 'Link' and ru['url']:
                             try:
                                 from urllib.parse import urlparse
-                                domain = urlparse(ru['url']).netloc.replace('www.', '')
-                                # Extract meaningful path segment
-                                path = urlparse(ru['url']).path.strip('/').split('/')
-                                slug = path[-1] if path and path[-1] else ''
-                                slug = slug.replace('-', ' ').replace('_', ' ')
-                                if slug and len(slug) > 3:
-                                    label = f"{slug.title()} ({domain})"
+                                parsed = urlparse(ru['url'])
+                                if parsed.scheme in ('http', 'https'):
+                                    domain = parsed.netloc.replace('www.', '')
+                                    path = parsed.path.strip('/').split('/')
+                                    slug = path[-1] if path and path[-1] else ''
+                                    slug = slug.replace('-', ' ').replace('_', ' ')
+                                    if slug and len(slug) > 3:
+                                        label = f"{slug.title()} ({domain})"
+                                    else:
+                                        label = domain or 'Link'
+                                elif ru['url'].startswith('/'):
+                                    path = ru['url'].strip('/').split('/')
+                                    slug = path[-1] if path and path[-1] else ''
+                                    slug = slug.replace('-', ' ').replace('_', ' ')
+                                    label = slug.title() if slug else 'Link'
                                 else:
-                                    label = domain
+                                    label = 'Link'
                             except Exception:
                                 label = 'Link'
                         additional_resources.append({'name': label, 'url': ru['url']})
                 # Only include entries that have a valid URL (skip plain text notes for now)
-            
+
+            has_access_note = access_note_kind is not None
+            hosted_documents = (
+                get_hosted_documents(normalized_project_id) if has_access_note else []
+            )
+
             # Create project object
             project = {
                 'id': normalized_project_id,
@@ -237,7 +266,10 @@ def generate_catalog_json():
                 'description': str(row.get('Description - What can be done with this? What is this about?', '')),
                 'dataset_links': dataset_urls,
                 'usecase_links': usecase_urls,
-                'is_on_hold': is_on_hold,
+                'access_note_kind': access_note_kind,
+                'access_note_markdown': access_note_markdown,
+                'has_access_note': has_access_note,
+                'hosted_documents': hosted_documents,
                 'sdgs': sdgs,
                 'data_types': data_types,
                 'countries': [c.strip() for c in re.split(r',|\s+and\s+|;', country_text) if c.strip()] if country_text else [],
@@ -262,7 +294,8 @@ def generate_catalog_json():
         # Calculate final counts
         project_count = len(project_ids)
         country_count = len(valid_countries)
-        
+        access_note_project_count = sum(1 for p in projects if p.get('has_access_note'))
+
         # Create catalog data structure
         catalog_data = {
             'projects': projects,
@@ -270,6 +303,7 @@ def generate_catalog_json():
                 'total_projects': project_count,
                 'total_datasets': dataset_count,
                 'total_usecases': usecase_count,
+                'total_access_note_projects': access_note_project_count,
                 'total_countries': country_count
             },
             'filters': {
@@ -289,6 +323,7 @@ def generate_catalog_json():
         print(f"  - {project_count} projects")
         print(f"  - {dataset_count} datasets")
         print(f"  - {usecase_count} use cases")
+        print(f"  - {access_note_project_count} info / no public link projects")
         print(f"  - {country_count} countries")
         print(f"  - {len(all_sdgs)} SDGs")
         print(f"  - {len(all_data_types)} data types")

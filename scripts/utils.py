@@ -4,6 +4,148 @@ import pandas as pd
 
 PROJECTS_DIR = os.path.join("public", "projects")
 
+# Access-note rows: only these openings in Dataset / Use-Case link cells (case-insensitive).
+ACCESS_NOTE_PREFIX_PENDING = "dataset/use-case has not been published yet."
+ACCESS_NOTE_PREFIX_UNAVAILABLE = "there is no dataset/use-case available."
+
+
+def normalize_sheet_link_cell(value):
+    """Strip and normalize Dataset Link / Model Use-Case cell values."""
+    if value is None or (isinstance(value, float) and pd.isna(value)):
+        return ""
+    if not isinstance(value, str):
+        return str(value).strip()
+    return value.strip()
+
+
+def extract_http_links(text):
+    """
+    Extract http(s) links only (for Dataset Link / Model/Use-Case columns).
+    Returns list of dicts: {'name': str, 'url': str}.
+    """
+    if not text or (isinstance(text, float) and pd.isna(text)) or not isinstance(text, str):
+        return []
+
+    urls = []
+    markdown_pattern = r"\[([^\]]+)\]\(([^)]+)\)"
+    for name, url in re.findall(markdown_pattern, text):
+        url = url.strip()
+        if url.startswith("http"):
+            urls.append({"name": name.strip(), "url": url})
+
+    url_pattern = r"https?://[^\s,)\]>]+"
+    for url in re.findall(url_pattern, text):
+        url = url.strip()
+        if url not in [u["url"] for u in urls]:
+            urls.append({"name": "Link", "url": url})
+
+    return urls
+
+
+def extract_links_allow_site_paths(text):
+    """
+    Extract http(s) links and markdown targets that are site-relative (start with /).
+    Used for additional resources and hosted PDFs under public/projects/...
+    """
+    if not text or (isinstance(text, float) and pd.isna(text)) or not isinstance(text, str):
+        return []
+
+    urls = []
+    markdown_pattern = r"\[([^\]]+)\]\(([^)]+)\)"
+    for name, url in re.findall(markdown_pattern, text):
+        url = url.strip()
+        if url.startswith("http") or url.startswith("/"):
+            urls.append({"name": name.strip(), "url": url})
+
+    url_pattern = r"https?://[^\s,)\]>]+"
+    for url in re.findall(url_pattern, text):
+        url = url.strip()
+        if url not in [u["url"] for u in urls]:
+            urls.append({"name": "Link", "url": url})
+
+    return urls
+
+
+def link_columns_match_access_prefixes(dataset_text, usecase_text):
+    """True if either link cell starts with the pending or unavailable prefix."""
+    d = normalize_sheet_link_cell(dataset_text).lower()
+    u = normalize_sheet_link_cell(usecase_text).lower()
+    p = ACCESS_NOTE_PREFIX_PENDING
+    q = ACCESS_NOTE_PREFIX_UNAVAILABLE
+    return (bool(d) and (d.startswith(p) or d.startswith(q))) or (
+        bool(u) and (u.startswith(p) or u.startswith(q))
+    )
+
+
+def classify_access_note_prefix_kind(dataset_text, usecase_text):
+    """
+    'pending' if either cell starts with pending prefix (wins over unavailable).
+    'unavailable' if either starts with unavailable prefix and neither pending.
+    None if neither prefix matches.
+    """
+    d = normalize_sheet_link_cell(dataset_text).lower()
+    u = normalize_sheet_link_cell(usecase_text).lower()
+    p = ACCESS_NOTE_PREFIX_PENDING
+    q = ACCESS_NOTE_PREFIX_UNAVAILABLE
+    if d.startswith(p) or u.startswith(p):
+        return "pending"
+    if d.startswith(q) or u.startswith(q):
+        return "unavailable"
+    return None
+
+
+def merge_access_note_link_columns(dataset_text, usecase_text):
+    """Join non-empty link-column text (dataset first, then use-case)."""
+    parts = []
+    d = normalize_sheet_link_cell(dataset_text)
+    u = normalize_sheet_link_cell(usecase_text)
+    if d:
+        parts.append(d)
+    if u:
+        parts.append(u)
+    return "\n\n".join(parts)
+
+
+def documents_dir_has_files(project_id):
+    """True if public/projects/<id>/documents/ exists and contains at least one non-hidden file."""
+    if not project_id:
+        return False
+    doc_dir = os.path.join(PROJECTS_DIR, project_id, "documents")
+    if not os.path.isdir(doc_dir):
+        return False
+    try:
+        for _root, _dirs, files in os.walk(doc_dir):
+            for f in files:
+                if f and not f.startswith("."):
+                    return True
+    except OSError:
+        pass
+    return False
+
+
+def row_included_for_catalog_or_insights(row, row_idx=None):
+    """
+    Match catalog inclusion: http link(s), or strict access prefixes, or documents/
+    with files (after resolve).
+    """
+    dataset_link_text = row.get("Dataset Link", "")
+    usecase_link_text = row.get("Model/Use-Case Links", "")
+
+    normalized_project_id, _src, error_msg = resolve_project_id(
+        row, row_idx=row_idx
+    )
+
+    if extract_http_links(dataset_link_text) or extract_http_links(usecase_link_text):
+        return True
+    if link_columns_match_access_prefixes(dataset_link_text, usecase_link_text):
+        return True
+    if not error_msg and normalized_project_id and documents_dir_has_files(
+        normalized_project_id
+    ):
+        return True
+    return False
+
+
 def normalize_for_directory(text, max_words=6, max_length=50):
     """
     Normalize text for use as a directory name.

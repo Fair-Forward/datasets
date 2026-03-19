@@ -1,6 +1,29 @@
 import { useState, useEffect, useCallback } from 'react'
 import ReactMarkdown from 'react-markdown'
-import { withBasePath } from '../utils/basePath'
+import { withBasePath, resolvePublicHref } from '../utils/basePath'
+
+const markdownLinkComponents = {
+  a: ({ href, children, ...props }) => {
+    const resolved = resolvePublicHref(href)
+    const external =
+      href &&
+      (href.startsWith('http://') || href.startsWith('https://'))
+    return (
+      <a
+        href={resolved}
+        {...props}
+        target={external ? '_blank' : undefined}
+        rel={external ? 'noopener noreferrer' : undefined}
+      >
+        {children}
+      </a>
+    )
+  }
+}
+
+const DocMarkdown = ({ children }) => (
+  <ReactMarkdown components={markdownLinkComponents}>{children}</ReactMarkdown>
+)
 
 // Build shareable URL for a project
 const getShareUrl = (projectId) => {
@@ -99,8 +122,20 @@ const DetailPanel = ({ project, onClose }) => {
   const datasetLinks = project?.dataset_links || []
   const usecaseLinks = project?.usecase_links || []
   const additionalResources = project?.additional_resources || []
-  const isOnHold = Boolean(project?.is_on_hold)
-  const hasLinks = datasetLinks.length > 0 || usecaseLinks.length > 0
+  const hasHttpDatasetOrUsecaseLinks =
+    datasetLinks.length > 0 || usecaseLinks.length > 0
+  const hasAccessNote =
+    Boolean(project?.has_access_note) && !hasHttpDatasetOrUsecaseLinks
+  const accessNoteMarkdownTrimmed = (project?.access_note_markdown || '').trim()
+  const showAccessCallout = hasAccessNote && accessNoteMarkdownTrimmed.length > 0
+  const hostedDocuments = project?.hosted_documents || []
+  const showHostedDocuments = hasAccessNote && hostedDocuments.length > 0
+  const accessNoteIconClass =
+    project?.access_note_kind === 'pending'
+      ? 'fa-clock'
+      : project?.access_note_kind === 'documents'
+        ? 'fa-folder-open'
+        : 'fa-circle-info'
   const sdgs = project?.sdgs || []
   const dataTypes = project?.data_types || []
   const sdgNumbers = extractSdgNumbers(sdgs)
@@ -237,39 +272,70 @@ const DetailPanel = ({ project, onClose }) => {
 
                 {/* Links Section */}
                 <div className="panel-links-section">
-                  {isOnHold ? (
-                    <div className="panel-on-hold-note">
-                      <i className="fas fa-info-circle"></i>
-                      Note: This project is active, but the link is temporarily unavailable (e.g., due to migration).
-                    </div>
-                  ) : (
-                    <>
-                      {datasetLinks.map((link, idx) => (
-                        <a
-                          key={`dataset-${idx}`}
-                          href={link.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="panel-link-btn panel-dataset-link"
+                  <>
+                      {showAccessCallout && (
+                        <div
+                          className={`panel-access-note panel-access-note-${project.access_note_kind || 'unavailable'}`}
                         >
-                          <i className="fas fa-cloud-arrow-down"></i>
-                          {link.name || `Dataset ${idx + 1}`}
-                        </a>
-                      ))}
-                      {usecaseLinks.map((link, idx) => (
-                        <a
-                          key={`usecase-${idx}`}
-                          href={link.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="panel-link-btn panel-usecase-link"
-                        >
-                          <i className="fas fa-sparkles"></i>
-                          {link.name || `Use Case ${idx + 1}`}
-                        </a>
-                      ))}
-                    </>
-                  )}
+                          <i className={`fas ${accessNoteIconClass}`}></i>
+                          <div className="panel-access-note-body documentation-content">
+                            <DocMarkdown>{project.access_note_markdown}</DocMarkdown>
+                          </div>
+                        </div>
+                      )}
+                      {showHostedDocuments &&
+                        hostedDocuments.map((doc, idx) => {
+                          const isPdf = doc.url?.toLowerCase().endsWith('.pdf')
+                          return (
+                            <a
+                              key={`hosted-doc-${idx}`}
+                              href={resolvePublicHref(doc.url)}
+                              className="panel-link-btn panel-hosted-document-link"
+                            >
+                              <i
+                                className={`fas ${isPdf ? 'fa-file-pdf' : 'fa-file-arrow-down'}`}
+                              ></i>
+                              {doc.name || 'Document'}
+                            </a>
+                          )
+                        })}
+                      {datasetLinks.map((link, idx) => {
+                        const external =
+                          link.url &&
+                          (link.url.startsWith('http://') ||
+                            link.url.startsWith('https://'))
+                        return (
+                          <a
+                            key={`dataset-${idx}`}
+                            href={resolvePublicHref(link.url)}
+                            target={external ? '_blank' : undefined}
+                            rel={external ? 'noopener noreferrer' : undefined}
+                            className="panel-link-btn panel-dataset-link"
+                          >
+                            <i className="fas fa-cloud-arrow-down"></i>
+                            {link.name || `Dataset ${idx + 1}`}
+                          </a>
+                        )
+                      })}
+                      {usecaseLinks.map((link, idx) => {
+                        const external =
+                          link.url &&
+                          (link.url.startsWith('http://') ||
+                            link.url.startsWith('https://'))
+                        return (
+                          <a
+                            key={`usecase-${idx}`}
+                            href={resolvePublicHref(link.url)}
+                            target={external ? '_blank' : undefined}
+                            rel={external ? 'noopener noreferrer' : undefined}
+                            className="panel-link-btn panel-usecase-link"
+                          >
+                            <i className="fas fa-sparkles"></i>
+                            {link.name || `Use Case ${idx + 1}`}
+                          </a>
+                        )
+                      })}
+                  </>
                 </div>
               </div>
 
@@ -297,9 +363,9 @@ const DetailPanel = ({ project, onClose }) => {
                   <section className="detail-section" id="description">
                     <h3 data-section="What is this about and how can I use this?">What is this about?</h3>
                     <div className="detail-content documentation-content">
-                      <ReactMarkdown>
+                      <DocMarkdown>
                         {markdownContent.description || project?.description}
-                      </ReactMarkdown>
+                      </DocMarkdown>
                     </div>
                     {sdgNumbers.length > 0 && (
                       <div className="sdg-icons-container">
@@ -339,7 +405,7 @@ const DetailPanel = ({ project, onClose }) => {
                     )}
                     {markdownContent.data_characteristics && (
                       <div className="detail-content documentation-content">
-                        <ReactMarkdown>{markdownContent.data_characteristics}</ReactMarkdown>
+                        <DocMarkdown>{markdownContent.data_characteristics}</DocMarkdown>
                       </div>
                     )}
                   </section>
@@ -350,7 +416,7 @@ const DetailPanel = ({ project, onClose }) => {
                   <section className="detail-section" id="model-characteristics">
                     <h3 data-section="Model Characteristics">Model / Use Case Characteristics</h3>
                     <div className="detail-content documentation-content">
-                      <ReactMarkdown>{markdownContent.model_characteristics}</ReactMarkdown>
+                      <DocMarkdown>{markdownContent.model_characteristics}</DocMarkdown>
                     </div>
                   </section>
                 )}
@@ -360,7 +426,7 @@ const DetailPanel = ({ project, onClose }) => {
                   <section className="detail-section" id="how-to-use">
                     <h3 data-section="How to Use It">How to Use It</h3>
                     <div className="detail-content documentation-content">
-                      <ReactMarkdown>{markdownContent.how_to_use}</ReactMarkdown>
+                      <DocMarkdown>{markdownContent.how_to_use}</DocMarkdown>
                     </div>
                   </section>
                 )}
@@ -370,18 +436,24 @@ const DetailPanel = ({ project, onClose }) => {
                   <section className="detail-section" id="additional-resources">
                     <h3 data-section="Additional Resources">Additional Resources</h3>
                     <div className="additional-resources-list">
-                      {additionalResources.filter(r => r.url).map((resource, idx) => (
-                        <a
-                          key={idx}
-                          href={resource.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="additional-resource-item"
-                        >
-                          <i className="fas fa-arrow-up-right-from-square"></i>
-                          <span>{resource.name}</span>
-                        </a>
-                      ))}
+                      {additionalResources.filter(r => r.url).map((resource, idx) => {
+                        const external =
+                          resource.url &&
+                          (resource.url.startsWith('http://') ||
+                            resource.url.startsWith('https://'))
+                        return (
+                          <a
+                            key={idx}
+                            href={resolvePublicHref(resource.url)}
+                            target={external ? '_blank' : undefined}
+                            rel={external ? 'noopener noreferrer' : undefined}
+                            className="additional-resource-item"
+                          >
+                            <i className="fas fa-arrow-up-right-from-square"></i>
+                            <span>{resource.name}</span>
+                          </a>
+                        )
+                      })}
                     </div>
                   </section>
                 )}
@@ -392,7 +464,7 @@ const DetailPanel = ({ project, onClose }) => {
                     <h3 data-section="Organizations Involved">Organizations Involved</h3>
                     {organizations.raw ? (
                       <div className="documentation-content">
-                        <ReactMarkdown>{organizations.raw}</ReactMarkdown>
+                        <DocMarkdown>{organizations.raw}</DocMarkdown>
                       </div>
                     ) : (
                       <div className="organizations-container">
@@ -403,7 +475,7 @@ const DetailPanel = ({ project, onClose }) => {
                               <span className="org-type-label">Powered by</span>
                             </div>
                             <div className="org-type-content">
-                              <ReactMarkdown>{organizations.powered}</ReactMarkdown>
+                              <DocMarkdown>{organizations.powered}</DocMarkdown>
                             </div>
                           </div>
                         )}
@@ -414,7 +486,7 @@ const DetailPanel = ({ project, onClose }) => {
                               <span className="org-type-label">Catalyzed by</span>
                             </div>
                             <div className="org-type-content">
-                              <ReactMarkdown>{organizations.catalyzed}</ReactMarkdown>
+                              <DocMarkdown>{organizations.catalyzed}</DocMarkdown>
                             </div>
                           </div>
                         )}
@@ -425,7 +497,7 @@ const DetailPanel = ({ project, onClose }) => {
                               <span className="org-type-label">Financed by</span>
                             </div>
                             <div className="org-type-content">
-                              <ReactMarkdown>{organizations.financed}</ReactMarkdown>
+                              <DocMarkdown>{organizations.financed}</DocMarkdown>
                             </div>
                           </div>
                         )}
@@ -449,7 +521,7 @@ const DetailPanel = ({ project, onClose }) => {
                   <section className="detail-section" id="authors">
                     <h3 data-section="Authors">Authors</h3>
                     <div className="documentation-content">
-                      <ReactMarkdown>{project.authors}</ReactMarkdown>
+                      <DocMarkdown>{project.authors}</DocMarkdown>
                     </div>
                   </section>
                 )}
