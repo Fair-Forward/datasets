@@ -10,48 +10,7 @@ import {
   LabelList
 } from 'recharts'
 import { withBasePath } from '../utils/basePath'
-
-// Official SDG colors
-const SDG_COLORS = {
-  1: '#E5243B',   // No Poverty - Red
-  2: '#DDA63A',   // Zero Hunger - Gold
-  3: '#4C9F38',   // Good Health - Green
-  4: '#C5192D',   // Quality Education - Dark Red
-  5: '#FF3A21',   // Gender Equality - Orange Red
-  6: '#26BDE2',   // Clean Water - Cyan
-  7: '#FCC30B',   // Affordable Energy - Yellow
-  8: '#A21942',   // Decent Work - Maroon
-  9: '#FD6925',   // Industry Innovation - Orange
-  10: '#DD1367',  // Reduced Inequalities - Magenta
-  11: '#FD9D24',  // Sustainable Cities - Orange
-  12: '#BF8B2E',  // Responsible Consumption - Brown Gold
-  13: '#3F7E44',  // Climate Action - Forest Green
-  14: '#0A97D9',  // Life Below Water - Blue
-  15: '#56C02B',  // Life on Land - Bright Green
-  16: '#00689D',  // Peace Justice - Dark Blue
-  17: '#19486A'   // Partnerships - Navy
-}
-
-// SDG full names
-const SDG_NAMES = {
-  1: 'No Poverty',
-  2: 'Zero Hunger',
-  3: 'Good Health & Well-being',
-  4: 'Quality Education',
-  5: 'Gender Equality',
-  6: 'Clean Water & Sanitation',
-  7: 'Affordable & Clean Energy',
-  8: 'Decent Work & Economic Growth',
-  9: 'Industry, Innovation & Infrastructure',
-  10: 'Reduced Inequalities',
-  11: 'Sustainable Cities & Communities',
-  12: 'Responsible Consumption & Production',
-  13: 'Climate Action',
-  14: 'Life Below Water',
-  15: 'Life on Land',
-  16: 'Peace, Justice & Strong Institutions',
-  17: 'Partnerships for the Goals'
-}
+import { SDG_COLORS, SDG_NAMES } from '../utils/sdgColors'
 
 const CustomTooltip = ({ active, payload }) => {
   if (!active || !payload?.length) return null

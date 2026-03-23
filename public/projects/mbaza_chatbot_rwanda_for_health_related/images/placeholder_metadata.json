@@ -1,9 +1,11 @@
 {
   "source": "Pexels",
-  "url": "https://www.pexels.com/photo/a-person-counting-money-6694965/",
-  "photographer": "Tima Miroshnichenko",
-  "photographer_url": "https://www.pexels.com/@tima-miroshnichenko",
-  "width": 5862,
-  "height": 3908,
-  "downloaded_at": "2025-12-18 12:19:18"
+  "provider": "pexels",
+  "search_query": "chatbot health language diversity communication",
+  "url": "https://www.pexels.com/photo/scrabble-tiles-spelling-gemini-and-ai-on-wooden-surface-30869085/",
+  "photographer": "Markus Winkler",
+  "photographer_url": "https://www.pexels.com/@markus-winkler-1430818",
+  "width": 3999,
+  "height": 2666,
+  "downloaded_at": "2026-03-23 14:06:33"
 }

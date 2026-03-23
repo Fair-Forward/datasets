@@ -198,7 +198,7 @@ const CatalogPage = () => {
       <div>
         <Header />
         <div className="container">
-          <div style={{ textAlign: 'center', padding: '4rem' }}>
+          <div className="catalog-loading">
             <p>Loading catalog...</p>
           </div>
         </div>
@@ -211,14 +211,10 @@ const CatalogPage = () => {
       <div>
         <Header />
         <div className="container">
-          <div style={{ textAlign: 'center', padding: '4rem', color: 'var(--text-light)' }}>
+          <div className="catalog-error">
             <p>Unable to load catalog data. Please run the build script.</p>
-            <p style={{ fontSize: '0.9rem', marginTop: '1rem' }}>
-              Error: {error || 'No data available'}
-            </p>
-            <code style={{ display: 'block', marginTop: '1rem', padding: '1rem', background: '#f5f5f5' }}>
-              python scripts/generate_catalog_data.py
-            </code>
+            <p>Error: {error || 'No data available'}</p>
+            <code>python scripts/generate_catalog_data.py</code>
           </div>
         </div>
       </div>
@@ -245,12 +241,16 @@ const CatalogPage = () => {
       />
       
       <div className="container">
+        <div className="results-count">
+          Showing {filteredProjects.length} of {catalogData.stats.total_projects} projects
+        </div>
         <div className="grid" id="dataGrid">
           {filteredProjects.map((project, idx) => (
-            <ProjectCard 
-              key={project.id || idx} 
+            <ProjectCard
+              key={project.id || idx}
               project={project}
               onClick={handleProjectSelect}
+              onFilterSDG={(sdg) => handleFilterChange({ ...filters, sdg })}
             />
           ))}
         </div>
@@ -273,20 +273,18 @@ const CatalogPage = () => {
       <footer>
         <div className="footer-content">
           <p>&copy; {new Date().getFullYear()} Fair Forward - Artificial Intelligence for All | A project by GIZ</p>
-          <p style={{ marginTop: '1rem', fontSize: '0.875rem' }}>
-            <a href="https://github.com/Fair-Forward/datasets" target="_blank" rel="noopener noreferrer" 
-               style={{ color: 'var(--primary)', textDecoration: 'none' }}>
+          <p className="footer-secondary">
+            <a href="https://github.com/Fair-Forward/datasets" target="_blank" rel="noopener noreferrer">
               Contribute to the Source Code on GitHub <i className="fab fa-github"></i>
             </a>
           </p>
-          <p style={{ marginTop: '0.5rem', fontSize: '0.875rem' }}>
+          <p className="footer-secondary">
             For technical questions/feedback{' '}
-            <a href="https://github.com/Fair-Forward/datasets/issues" target="_blank" rel="noopener noreferrer"
-               style={{ color: 'var(--primary)' }}>
+            <a href="https://github.com/Fair-Forward/datasets/issues" target="_blank" rel="noopener noreferrer">
               open an issue on Github
             </a>
             {' '}or contact{' '}
-            <a href="mailto:jonas.nothnagel@gmail.com" style={{ color: 'var(--primary)' }}>
+            <a href="mailto:jonas.nothnagel@gmail.com">
               Jonas Nothnagel
             </a>.
           </p>

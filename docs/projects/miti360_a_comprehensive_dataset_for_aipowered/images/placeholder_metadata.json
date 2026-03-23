@@ -1,9 +1,11 @@
 {
   "source": "Pexels",
-  "url": "https://www.pexels.com/photo/closeup-photo-of-brown-antelope-eating-leaves-789663/",
-  "photographer": "Magda Ehlers",
-  "photographer_url": "https://www.pexels.com/@magda-ehlers-pexels",
-  "width": 5472,
-  "height": 3648,
-  "downloaded_at": "2025-04-23 17:59:10"
+  "provider": "pexels",
+  "search_query": "forest satellite aerial view",
+  "url": "https://www.pexels.com/photo/aerial-photo-of-empty-meandering-road-in-between-forest-2876511/",
+  "photographer": "Kelly",
+  "photographer_url": "https://www.pexels.com/@kelly",
+  "width": 3992,
+  "height": 2242,
+  "downloaded_at": "2026-03-23 14:05:56"
 }

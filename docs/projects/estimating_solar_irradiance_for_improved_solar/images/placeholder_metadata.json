@@ -1,9 +1,11 @@
 {
   "source": "Pexels",
-  "url": "https://www.pexels.com/photo/half-of-the-moon-13514660/",
-  "photographer": "Juan Hernandez Jr",
-  "photographer_url": "https://www.pexels.com/@r7shutter",
-  "width": 5937,
-  "height": 3962,
-  "downloaded_at": "2025-12-18 12:08:10"
+  "provider": "pexels",
+  "search_query": "solar energy satellite aerial view",
+  "url": "https://www.pexels.com/photo/photograph-of-solar-panels-on-a-field-7527880/",
+  "photographer": "Kindel Media",
+  "photographer_url": "https://www.pexels.com/@kindelmedia",
+  "width": 4000,
+  "height": 2250,
+  "downloaded_at": "2026-03-23 14:06:31"
 }

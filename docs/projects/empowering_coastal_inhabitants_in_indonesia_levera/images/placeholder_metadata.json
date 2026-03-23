@@ -1,9 +1,11 @@
 {
   "source": "Pexels",
-  "url": "https://www.pexels.com/photo/majestic-lion-portrait-in-maasai-mara-at-sunrise-28888378/",
-  "photographer": "Bharath Kumar  Venkatesh",
-  "photographer_url": "https://www.pexels.com/@bharath-kumar-venkatesh-1417371218",
-  "width": 4727,
-  "height": 7087,
-  "downloaded_at": "2025-04-23 17:59:58"
+  "provider": "pexels",
+  "search_query": "deforestation aerial view weather climate data",
+  "url": "https://www.pexels.com/photo/drone-shot-of-a-dense-forest-9373927/",
+  "photographer": "Justin Wolfert",
+  "photographer_url": "https://www.pexels.com/@dephshot",
+  "width": 4000,
+  "height": 3000,
+  "downloaded_at": "2026-03-23 14:06:38"
 }

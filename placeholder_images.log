@@ -518,3 +518,144 @@
 2026-03-02 16:24:17,050 - INFO - Searching for images for empowering_women_across_india_with_audio with keywords: sdg 2, empowering, women, language
 2026-03-02 16:24:17,730 - INFO - Downloaded image for empowering_women_across_india_with_audio: public/projects/empowering_women_across_india_with_audio/images/placeholder_image.jpeg
 2026-03-02 16:24:18,735 - INFO - Completed processing. Downloaded 7 placeholder images.
+2026-03-23 14:04:47,195 - INFO - Loaded 69 projects from public/data/catalog.json
+2026-03-23 14:04:47,196 - INFO - Found 87 project directories
+2026-03-23 14:04:47,235 - INFO - Dry run complete. Would process 1 projects.
+2026-03-23 14:04:53,339 - INFO - Loaded 69 projects from public/data/catalog.json
+2026-03-23 14:04:53,340 - INFO - Found 87 project directories
+2026-03-23 14:04:53,352 - WARNING - No catalog entry for chatbot_for_public_service_delivery_in
+2026-03-23 14:04:53,353 - WARNING - No catalog entry for wezesha_na_kabambe__offline_swahili
+2026-03-23 14:04:53,353 - WARNING - No catalog entry for citizen_chatbot_of_the_kenyan_office
+2026-03-23 14:04:53,353 - WARNING - No catalog entry for enhancing_business_registration_in_kenya_through
+2026-03-23 14:04:53,353 - WARNING - No catalog entry for open_soil_data_to_impove_soil
+2026-03-23 14:04:53,354 - WARNING - No catalog entry for ai_for_agricultural_advisory_and_financial
+2026-03-23 14:04:53,354 - WARNING - No catalog entry for hack4tts_crafting_voice_for_indias_lowresource
+2026-03-23 14:04:53,355 - WARNING - No catalog entry for hello_government__better_citizen_services
+2026-03-23 14:04:53,355 - WARNING - No catalog entry for better_advise_to_farmers_in_rwanda
+2026-03-23 14:04:53,355 - WARNING - No catalog entry for onsite_image_and_weather_data_for
+2026-03-23 14:04:53,356 - WARNING - No catalog entry for sgbv_chatbot_
+2026-03-23 14:04:53,356 - WARNING - No catalog entry for chamachat__powering_chama_loan_groups
+2026-03-23 14:04:53,356 - WARNING - No catalog entry for our_language_our_data_cocreating_equitable
+2026-03-23 14:04:53,357 - WARNING - No catalog entry for carbonlens_high_carbon_stock_approach
+2026-03-23 14:04:53,357 - WARNING - No catalog entry for voicebased_advisory_for_farmers_female_kitchen
+2026-03-23 14:04:53,357 - WARNING - No catalog entry for early_warning_system_advisory_services_on
+2026-03-23 14:04:53,357 - WARNING - No catalog entry for paza_sauti__chatbot_and_ivr
+2026-03-23 14:04:53,358 - WARNING - No catalog entry for kiazi_bora__informing_vulnerable_women
+2026-03-23 14:04:53,358 - INFO - Dry run complete. Would process 66 projects.
+2026-03-23 14:05:31,854 - INFO - Loaded 69 projects from public/data/catalog.json
+2026-03-23 14:05:31,855 - INFO - Found 87 project directories
+2026-03-23 14:05:31,868 - WARNING - No catalog entry for chatbot_for_public_service_delivery_in
+2026-03-23 14:05:31,868 - INFO - [ai_as_a_helping_hand_to] Tier 1 query: 'chatbot forest conservation green'
+2026-03-23 14:05:32,443 - INFO - Downloaded image for ai_as_a_helping_hand_to: /Users/jonas/github/datasets/scripts/../public/projects/ai_as_a_helping_hand_to/images/placeholder_image.jpeg
+2026-03-23 14:05:33,949 - INFO - [microfinance_industry_network_india_use_of] Tier 1 query: 'voice digital inclusion technology Africa'
+2026-03-23 14:05:34,688 - INFO - Downloaded image for microfinance_industry_network_india_use_of: /Users/jonas/github/datasets/scripts/../public/projects/microfinance_industry_network_india_use_of/images/placeholder_image.jpeg
+2026-03-23 14:05:36,195 - INFO - [supporting_food_security_and_climate_change] Tier 1 query: 'crop disease smallholder farming Africa'
+2026-03-23 14:05:37,586 - INFO - Downloaded image for supporting_food_security_and_climate_change: /Users/jonas/github/datasets/scripts/../public/projects/supporting_food_security_and_climate_change/images/placeholder_image.jpeg
+2026-03-23 14:05:39,093 - INFO - [aipowered_monitoring_of_forest_degradation_and] Tier 1 query: 'forest degradation satellite aerial view'
+2026-03-23 14:05:39,784 - INFO - Downloaded image for aipowered_monitoring_of_forest_degradation_and: /Users/jonas/github/datasets/scripts/../public/projects/aipowered_monitoring_of_forest_degradation_and/images/placeholder_image.jpeg
+2026-03-23 14:05:41,286 - WARNING - No catalog entry for wezesha_na_kabambe__offline_swahili
+2026-03-23 14:05:41,288 - INFO - [combatting_climate_disinformation_in_indonesian_la] Tier 1 query: 'financial inclusion mobile banking'
+2026-03-23 14:05:42,283 - INFO - Downloaded image for combatting_climate_disinformation_in_indonesian_la: /Users/jonas/github/datasets/scripts/../public/projects/combatting_climate_disinformation_in_indonesian_la/images/placeholder_image.jpeg
+2026-03-23 14:05:43,789 - INFO - [african_trees_for_climate_resilience_a] Tier 1 query: 'national park forest landscape satellite aerial view'
+2026-03-23 14:05:44,384 - INFO - Downloaded image for african_trees_for_climate_resilience_a: /Users/jonas/github/datasets/scripts/../public/projects/african_trees_for_climate_resilience_a/images/placeholder_image.jpeg
+2026-03-23 14:05:45,887 - INFO - [the_agroinnovators] Tier 1 query: 'irrigation farming rural satellite aerial view'
+2026-03-23 14:05:46,503 - INFO - Downloaded image for the_agroinnovators: /Users/jonas/github/datasets/scripts/../public/projects/the_agroinnovators/images/placeholder_image.jpeg
+2026-03-23 14:05:48,010 - WARNING - No catalog entry for citizen_chatbot_of_the_kenyan_office
+2026-03-23 14:05:48,012 - WARNING - No catalog entry for enhancing_business_registration_in_kenya_through
+2026-03-23 14:05:48,012 - WARNING - No catalog entry for open_soil_data_to_impove_soil
+2026-03-23 14:05:48,013 - INFO - [better_language_translation_for_more_training] Tier 1 query: 'language translation classroom education Africa'
+2026-03-23 14:05:48,494 - INFO - Downloaded image for better_language_translation_for_more_training: /Users/jonas/github/datasets/scripts/../public/projects/better_language_translation_for_more_training/images/placeholder_image.jpeg
+2026-03-23 14:05:50,002 - INFO - [weeties] Tier 1 query: 'maize corn field green satellite aerial view'
+2026-03-23 14:05:52,192 - INFO - Downloaded image for weeties: /Users/jonas/github/datasets/scripts/../public/projects/weeties/images/placeholder_image.jpeg
+2026-03-23 14:05:53,696 - INFO - [preserving_privacy_and_avoiding_gender_bias] Tier 1 query: 'forest conservation green'
+2026-03-23 14:05:54,471 - INFO - Downloaded image for preserving_privacy_and_avoiding_gender_bias: /Users/jonas/github/datasets/scripts/../public/projects/preserving_privacy_and_avoiding_gender_bias/images/placeholder_image.jpeg
+2026-03-23 14:05:55,978 - INFO - [miti360_a_comprehensive_dataset_for_aipowered] Tier 1 query: 'forest satellite aerial view'
+2026-03-23 14:05:56,921 - INFO - Downloaded image for miti360_a_comprehensive_dataset_for_aipowered: /Users/jonas/github/datasets/scripts/../public/projects/miti360_a_comprehensive_dataset_for_aipowered/images/placeholder_image.jpeg
+2026-03-23 14:05:58,423 - INFO - [lifting_up_women_through_land_ownership] Tier 1 query: 'language women farmer market Africa'
+2026-03-23 14:05:59,367 - INFO - Downloaded image for lifting_up_women_through_land_ownership: /Users/jonas/github/datasets/scripts/../public/projects/lifting_up_women_through_land_ownership/images/placeholder_image.jpeg
+2026-03-23 14:06:00,874 - INFO - [benmangroves2425_multidimensional_open_datasets_fo] Tier 1 query: 'health carbon drone aerial photography'
+2026-03-23 14:06:01,452 - INFO - Downloaded image for benmangroves2425_multidimensional_open_datasets_fo: /Users/jonas/github/datasets/scripts/../public/projects/benmangroves2425_multidimensional_open_datasets_fo/images/placeholder_image.jpeg
+2026-03-23 14:06:02,958 - INFO - [imarika__translating_weather_information_into] Tier 1 query: 'maize corn field green weather climate data'
+2026-03-23 14:06:03,568 - INFO - Downloaded image for imarika__translating_weather_information_into: /Users/jonas/github/datasets/scripts/../public/projects/imarika__translating_weather_information_into/images/placeholder_image.jpeg
+2026-03-23 14:06:05,075 - WARNING - No catalog entry for ai_for_agricultural_advisory_and_financial
+2026-03-23 14:06:05,076 - INFO - [discovering_agriculture_insurance] Tier 1 query: 'insurance satellite aerial view'
+2026-03-23 14:06:05,611 - INFO - Downloaded image for discovering_agriculture_insurance: /Users/jonas/github/datasets/scripts/../public/projects/discovering_agriculture_insurance/images/placeholder_image.jpeg
+2026-03-23 14:06:07,119 - INFO - [solutions_from_space_rwandas_smart_harvest] Tier 1 query: 'crop rice satellite aerial view'
+2026-03-23 14:06:09,727 - INFO - Downloaded image for solutions_from_space_rwandas_smart_harvest: /Users/jonas/github/datasets/scripts/../public/projects/solutions_from_space_rwandas_smart_harvest/images/placeholder_image.jpeg
+2026-03-23 14:06:11,231 - WARNING - No catalog entry for hack4tts_crafting_voice_for_indias_lowresource
+2026-03-23 14:06:11,232 - INFO - [mapping_cocoa_landscapes_in_ghana_reference] Tier 1 query: 'cocoa satellite aerial view'
+2026-03-23 14:06:12,190 - INFO - Downloaded image for mapping_cocoa_landscapes_in_ghana_reference: /Users/jonas/github/datasets/scripts/../public/projects/mapping_cocoa_landscapes_in_ghana_reference/images/placeholder_image.jpeg
+2026-03-23 14:06:13,694 - INFO - [the_internet_of_crops_ioc] Tier 1 query: 'soil agriculture field closeup satellite aerial view'
+2026-03-23 14:06:14,331 - INFO - Downloaded image for the_internet_of_crops_ioc: /Users/jonas/github/datasets/scripts/../public/projects/the_internet_of_crops_ioc/images/placeholder_image.jpeg
+2026-03-23 14:06:15,836 - INFO - [powering_rural_futures_in_west_africa] Tier 1 query: 'solar energy developing country satellite aerial view'
+2026-03-23 14:06:16,443 - INFO - Downloaded image for powering_rural_futures_in_west_africa: /Users/jonas/github/datasets/scripts/../public/projects/powering_rural_futures_in_west_africa/images/placeholder_image.jpeg
+2026-03-23 14:06:17,950 - INFO - [monitoring_deforestation_predicting_landuse_and_la] Tier 1 query: 'deforestation forest satellite aerial view'
+2026-03-23 14:06:19,194 - INFO - Downloaded image for monitoring_deforestation_predicting_landuse_and_la: /Users/jonas/github/datasets/scripts/../public/projects/monitoring_deforestation_predicting_landuse_and_la/images/placeholder_image.jpeg
+2026-03-23 14:06:20,701 - WARNING - No catalog entry for hello_government__better_citizen_services
+2026-03-23 14:06:20,701 - INFO - [monitoring_the_impact_of_palm_oil] Tier 1 query: 'forest conservation green satellite aerial view'
+2026-03-23 14:06:21,518 - INFO - Downloaded image for monitoring_the_impact_of_palm_oil: /Users/jonas/github/datasets/scripts/../public/projects/monitoring_the_impact_of_palm_oil/images/placeholder_image.jpeg
+2026-03-23 14:06:23,023 - INFO - [making_ai_speak_mundari__opensource] Tier 1 query: 'speech voice technology microphone'
+2026-03-23 14:06:23,555 - INFO - Downloaded image for making_ai_speak_mundari__opensource: /Users/jonas/github/datasets/scripts/../public/projects/making_ai_speak_mundari__opensource/images/placeholder_image.jpeg
+2026-03-23 14:06:25,058 - WARNING - No catalog entry for better_advise_to_farmers_in_rwanda
+2026-03-23 14:06:25,059 - WARNING - No catalog entry for onsite_image_and_weather_data_for
+2026-03-23 14:06:25,059 - INFO - [artificial_intelligence_for_maize_aim] Tier 1 query: 'maize satellite aerial view'
+2026-03-23 14:06:27,655 - INFO - Downloaded image for artificial_intelligence_for_maize_aim: /Users/jonas/github/datasets/scripts/../public/projects/artificial_intelligence_for_maize_aim/images/placeholder_image.jpeg
+2026-03-23 14:06:29,161 - INFO - [discover_ghanaian_voices_a_dataset_for] Tier 1 query: 'language diversity communication'
+2026-03-23 14:06:29,660 - INFO - Downloaded image for discover_ghanaian_voices_a_dataset_for: /Users/jonas/github/datasets/scripts/../public/projects/discover_ghanaian_voices_a_dataset_for/images/placeholder_image.jpeg
+2026-03-23 14:06:31,164 - INFO - [estimating_solar_irradiance_for_improved_solar] Tier 1 query: 'solar energy satellite aerial view'
+2026-03-23 14:06:31,808 - INFO - Downloaded image for estimating_solar_irradiance_for_improved_solar: /Users/jonas/github/datasets/scripts/../public/projects/estimating_solar_irradiance_for_improved_solar/images/placeholder_image.jpeg
+2026-03-23 14:06:33,313 - INFO - [mbaza_chatbot_rwanda_for_health_related] Tier 1 query: 'chatbot health language diversity communication'
+2026-03-23 14:06:33,829 - INFO - Downloaded image for mbaza_chatbot_rwanda_for_health_related: /Users/jonas/github/datasets/scripts/../public/projects/mbaza_chatbot_rwanda_for_health_related/images/placeholder_image.jpeg
+2026-03-23 14:06:35,333 - INFO - [providing_better_information_on_sexual_and] Tier 1 query: 'health voice technology microphone'
+2026-03-23 14:06:35,982 - INFO - Downloaded image for providing_better_information_on_sexual_and: /Users/jonas/github/datasets/scripts/../public/projects/providing_better_information_on_sexual_and/images/placeholder_image.jpeg
+2026-03-23 14:06:37,490 - INFO - [empowering_coastal_inhabitants_in_indonesia_levera] Tier 1 query: 'deforestation aerial view weather climate data'
+2026-03-23 14:06:38,196 - INFO - Downloaded image for empowering_coastal_inhabitants_in_indonesia_levera: /Users/jonas/github/datasets/scripts/../public/projects/empowering_coastal_inhabitants_in_indonesia_levera/images/placeholder_image.jpeg
+2026-03-23 14:06:39,703 - WARNING - No catalog entry for sgbv_chatbot_
+2026-03-23 14:06:39,703 - INFO - [dataenabled_climate_shock_absorbance_through_agrof] Tier 1 query: 'farmer harvest Africa field satellite aerial view'
+2026-03-23 14:06:42,194 - INFO - Downloaded image for dataenabled_climate_shock_absorbance_through_agrof: /Users/jonas/github/datasets/scripts/../public/projects/dataenabled_climate_shock_absorbance_through_agrof/images/placeholder_image.jpeg
+2026-03-23 14:06:43,699 - WARNING - No catalog entry for chamachat__powering_chama_loan_groups
+2026-03-23 14:06:43,699 - INFO - [high_carbon_stock_approach_mapping_forests] Tier 1 query: 'carbon satellite aerial view'
+2026-03-23 14:06:44,187 - INFO - Downloaded image for high_carbon_stock_approach_mapping_forests: /Users/jonas/github/datasets/scripts/../public/projects/high_carbon_stock_approach_mapping_forests/images/placeholder_image.jpg
+2026-03-23 14:06:45,691 - INFO - [data_for_detecting_and_assessing_maize] Tier 1 query: 'maize satellite aerial view'
+2026-03-23 14:06:45,885 - INFO - Downloaded image for data_for_detecting_and_assessing_maize: /Users/jonas/github/datasets/scripts/../public/projects/data_for_detecting_and_assessing_maize/images/placeholder_image.jpeg
+2026-03-23 14:06:47,387 - INFO - [building_inclusive_voice_technologies_in_the] Tier 1 query: 'voice language vegetable market Africa'
+2026-03-23 14:06:48,478 - INFO - Downloaded image for building_inclusive_voice_technologies_in_the: /Users/jonas/github/datasets/scripts/../public/projects/building_inclusive_voice_technologies_in_the/images/placeholder_image.jpeg
+2026-03-23 14:06:49,981 - INFO - [open_dataset_of_farm_boundaries_and] Tier 1 query: 'crop health satellite aerial view'
+2026-03-23 14:06:50,654 - INFO - Downloaded image for open_dataset_of_farm_boundaries_and: /Users/jonas/github/datasets/scripts/../public/projects/open_dataset_of_farm_boundaries_and/images/placeholder_image.jpeg
+2026-03-23 14:06:52,160 - INFO - [mitigating_the_impacts_of_oil_palm] Tier 1 query: 'climate change landscape drone aerial photography'
+2026-03-23 14:06:53,783 - INFO - Downloaded image for mitigating_the_impacts_of_oil_palm: /Users/jonas/github/datasets/scripts/../public/projects/mitigating_the_impacts_of_oil_palm/images/placeholder_image.jpeg
+2026-03-23 14:06:55,289 - INFO - [ai_for_mangrove_carbon_credits_turning] Tier 1 query: 'mangrove carbon satellite aerial view'
+2026-03-23 14:06:55,801 - INFO - Downloaded image for ai_for_mangrove_carbon_credits_turning: /Users/jonas/github/datasets/scripts/../public/projects/ai_for_mangrove_carbon_credits_turning/images/placeholder_image.jpeg
+2026-03-23 14:06:57,308 - INFO - [phenological_dataset_for_ecological_forecasting_ph] Tier 1 query: 'tree species tropical satellite aerial view'
+2026-03-23 14:07:00,024 - INFO - Downloaded image for phenological_dataset_for_ecological_forecasting_ph: /Users/jonas/github/datasets/scripts/../public/projects/phenological_dataset_for_ecological_forecasting_ph/images/placeholder_image.jpeg
+2026-03-23 14:07:01,529 - INFO - [livhealth_kiswahili_corpus] Tier 1 query: 'language diversity communication'
+2026-03-23 14:07:01,709 - INFO - Downloaded image for livhealth_kiswahili_corpus: /Users/jonas/github/datasets/scripts/../public/projects/livhealth_kiswahili_corpus/images/placeholder_image.jpeg
+2026-03-23 14:07:03,216 - INFO - [promoting_energy_conservation_and_market_analysis] Tier 1 query: 'energy conservation climate change landscape'
+2026-03-23 14:07:03,793 - INFO - Downloaded image for promoting_energy_conservation_and_market_analysis: /Users/jonas/github/datasets/scripts/../public/projects/promoting_energy_conservation_and_market_analysis/images/placeholder_image.jpeg
+2026-03-23 14:07:05,296 - WARNING - No catalog entry for our_language_our_data_cocreating_equitable
+2026-03-23 14:07:05,298 - WARNING - No catalog entry for carbonlens_high_carbon_stock_approach
+2026-03-23 14:07:05,298 - INFO - [datasets_for_transportation_impact_evaluation] Tier 1 query: 'digital inclusion technology Africa satellite aerial view'
+2026-03-23 14:07:06,020 - INFO - Downloaded image for datasets_for_transportation_impact_evaluation: /Users/jonas/github/datasets/scripts/../public/projects/datasets_for_transportation_impact_evaluation/images/placeholder_image.jpeg
+2026-03-23 14:07:07,527 - WARNING - No catalog entry for voicebased_advisory_for_farmers_female_kitchen
+2026-03-23 14:07:07,528 - INFO - [ecuadorian_dataset_on_access_demand_] Tier 1 query: 'solar energy developing country weather climate data'
+2026-03-23 14:07:08,242 - INFO - Downloaded image for ecuadorian_dataset_on_access_demand_: /Users/jonas/github/datasets/scripts/../public/projects/ecuadorian_dataset_on_access_demand_/images/placeholder_image.jpeg
+2026-03-23 14:07:09,746 - INFO - [indigenous_knowledge_meets_ai_monitoring_elephants] Tier 1 query: 'biodiversity mangrove ecosystem roots'
+2026-03-23 14:07:11,150 - INFO - Downloaded image for indigenous_knowledge_meets_ai_monitoring_elephants: /Users/jonas/github/datasets/scripts/../public/projects/indigenous_knowledge_meets_ai_monitoring_elephants/images/placeholder_image.jpeg
+2026-03-23 14:07:12,658 - INFO - [data_for_detecting_and_assessing_tomato] Tier 1 query: 'rice paddy field aerial satellite aerial view'
+2026-03-23 14:07:13,282 - INFO - Downloaded image for data_for_detecting_and_assessing_tomato: /Users/jonas/github/datasets/scripts/../public/projects/data_for_detecting_and_assessing_tomato/images/placeholder_image.jpeg
+2026-03-23 14:07:14,791 - INFO - [forest_carbon_sequestration_in_the_congo] Tier 1 query: 'data technology Africa'
+2026-03-23 14:07:15,668 - INFO - Downloaded image for forest_carbon_sequestration_in_the_congo: /Users/jonas/github/datasets/scripts/../public/projects/forest_carbon_sequestration_in_the_congo/images/placeholder_image.jpeg
+2026-03-23 14:07:17,175 - INFO - [agrothermography] Tier 1 query: 'soil agriculture field closeup satellite aerial view'
+2026-03-23 14:07:17,392 - INFO - Downloaded image for agrothermography: /Users/jonas/github/datasets/scripts/../public/projects/agrothermography/images/placeholder_image.jpeg
+2026-03-23 14:07:18,898 - INFO - [open_source_ai_pest_control_for] Tier 1 query: 'agriculture crops developing country'
+2026-03-23 14:07:19,856 - INFO - Downloaded image for open_source_ai_pest_control_for: /Users/jonas/github/datasets/scripts/../public/projects/open_source_ai_pest_control_for/images/placeholder_image.jpeg
+2026-03-23 14:07:21,361 - INFO - [chlorophyllbusters] Tier 1 query: 'smallholder farming Africa satellite aerial view'
+2026-03-23 14:07:22,394 - INFO - Downloaded image for chlorophyllbusters: /Users/jonas/github/datasets/scripts/../public/projects/chlorophyllbusters/images/placeholder_image.jpeg
+2026-03-23 14:07:23,899 - WARNING - No catalog entry for early_warning_system_advisory_services_on
+2026-03-23 14:07:23,900 - INFO - [empowering_women_across_india_with_audio] Tier 1 query: 'health education smallholder farming Africa'
+2026-03-23 14:07:24,495 - INFO - Downloaded image for empowering_women_across_india_with_audio: /Users/jonas/github/datasets/scripts/../public/projects/empowering_women_across_india_with_audio/images/placeholder_image.jpeg
+2026-03-23 14:07:26,002 - WARNING - No catalog entry for paza_sauti__chatbot_and_ivr
+2026-03-23 14:07:26,003 - INFO - [sar_busters] Tier 1 query: 'smallholder farming Africa satellite aerial view'
+2026-03-23 14:07:26,177 - INFO - Downloaded image for sar_busters: /Users/jonas/github/datasets/scripts/../public/projects/sar_busters/images/placeholder_image.jpeg
+2026-03-23 14:07:27,684 - WARNING - No catalog entry for kiazi_bora__informing_vulnerable_women
+2026-03-23 14:07:27,686 - INFO - Done. Downloaded: 48, Skipped: 21, Failed: 18

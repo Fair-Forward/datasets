@@ -2,19 +2,20 @@
 """
 Placeholder Image Downloader for Data Catalog
 
-This script scans all project directories in the data catalog and downloads
-relevant placeholder images for projects that don't have images yet.
+Downloads relevant placeholder images for projects that don't have custom images.
+Uses curated SDG-based search queries for much better image relevance.
+
+Supports Pexels and Unsplash APIs (both free).
 
 Usage:
-    python download_placeholder_images.py [--api-key YOUR_API_KEY] [--limit 10]
+    python download_placeholder_images.py --dry-run                    # preview queries
+    python download_placeholder_images.py --force --provider both      # re-download all
+    python download_placeholder_images.py --provider unsplash           # unsplash only
 
 Requirements:
-    - requests
-    - pandas
-    - tqdm
-    - python-dotenv
+    - requests, tqdm, python-dotenv
 
-You'll need to set up a Pexels API key (free) at https://www.pexels.com/api/
+Set PEXELS_API_KEY and/or UNSPLASH_API_KEY in .env or environment.
 """
 
 import os
@@ -25,11 +26,9 @@ import logging
 import random
 import time
 import requests
-import pandas as pd
 from tqdm import tqdm
 from dotenv import load_dotenv
 from urllib.parse import quote_plus
-from utils import PROJECTS_DIR, normalize_for_directory
 
 # Configure logging
 logging.basicConfig(
@@ -42,365 +41,503 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Load environment variables from .env file if it exists
 load_dotenv()
 
+PROJECTS_DIR = os.path.join(os.path.dirname(__file__), '..', 'public', 'projects')
+
+# ---------------------------------------------------------------------------
+# Curated SDG-based search queries
+# Each SDG maps to a list of search queries known to produce relevant results.
+# The script picks one at random per project for visual variety.
+# ---------------------------------------------------------------------------
+SDG_SEARCH_TERMS = {
+    2: [
+        "smallholder farming Africa",
+        "rice paddy field aerial",
+        "agriculture crops developing country",
+        "farmer harvest Africa field",
+        "maize corn field green",
+        "vegetable market Africa",
+        "soil agriculture field closeup",
+        "irrigation farming rural",
+    ],
+    3: [
+        "health clinic Africa",
+        "medical technology stethoscope",
+        "rural healthcare developing country",
+        "disease prevention health worker",
+    ],
+    4: [
+        "classroom education Africa",
+        "students learning technology",
+        "school education developing country",
+    ],
+    5: [
+        "women empowerment community",
+        "women farmer market Africa",
+        "women technology developing country",
+        "women leadership Africa",
+    ],
+    7: [
+        "solar panel rural village",
+        "renewable energy Africa",
+        "solar energy developing country",
+        "wind turbine clean energy",
+    ],
+    8: [
+        "marketplace trade Africa",
+        "small business entrepreneur",
+        "economic growth developing country",
+    ],
+    9: [
+        "technology innovation Africa",
+        "infrastructure construction developing",
+        "digital technology network",
+    ],
+    10: [
+        "digital inclusion technology Africa",
+        "mobile phone rural Africa",
+        "language diversity communication",
+        "financial inclusion mobile banking",
+        "community technology access",
+        "voice technology microphone",
+    ],
+    11: [
+        "sustainable city developing country",
+        "urban planning Africa aerial",
+        "public transport city Africa",
+        "smart city infrastructure",
+    ],
+    12: [
+        "sustainable production agriculture",
+        "responsible consumption recycling",
+    ],
+    13: [
+        "tropical forest canopy aerial",
+        "climate change landscape",
+        "deforestation aerial view",
+        "mangrove forest coastline",
+        "forest conservation green",
+        "carbon sequestration trees",
+    ],
+    14: [
+        "ocean marine ecosystem",
+        "coastal mangrove water",
+        "marine biodiversity coral",
+    ],
+    15: [
+        "biodiversity tropical forest",
+        "forest canopy aerial green",
+        "tree species tropical",
+        "mangrove ecosystem roots",
+        "wildlife conservation Africa",
+        "national park forest landscape",
+    ],
+    16: [
+        "governance institution justice",
+        "peace justice community",
+    ],
+    17: [
+        "partnership collaboration global",
+        "international cooperation development",
+    ],
+}
+
+# Fallback queries when no SDG matches
+GENERIC_QUERIES = [
+    "data technology Africa",
+    "artificial intelligence technology",
+    "sustainable development Africa",
+    "digital technology developing country",
+    "open data technology",
+]
+
+# Domain-specific nouns to extract from titles for query refinement
+DOMAIN_NOUNS = {
+    "mangrove", "maize", "coffee", "rice", "wheat", "cassava", "sorghum",
+    "cocoa", "tea", "millet", "banana", "potato", "bean", "groundnut",
+    "forest", "tree", "soil", "crop", "livestock", "fishery", "fish",
+    "solar", "wind", "grid", "energy", "biogas",
+    "health", "medical", "disease", "malaria", "tuberculosis",
+    "chatbot", "voice", "language", "speech", "translation", "nlp",
+    "drone", "satellite", "sensor", "radar", "lidar",
+    "water", "irrigation", "flood", "drought", "rainfall",
+    "biodiversity", "species", "conservation", "wildlife", "coral",
+    "carbon", "emission", "deforestation", "degradation", "erosion",
+    "finance", "loan", "credit", "insurance", "banking",
+    "transport", "road", "traffic", "mobility",
+    "education", "school", "literacy", "learning",
+}
+
+# Data type modifiers appended to queries for specificity
+DATA_TYPE_MODIFIERS = {
+    "Geospatial/Remote Sensing": "satellite aerial view",
+    "Drone Imagery": "drone aerial photography",
+    "Meterological": "weather climate data",
+    "Meteorological": "weather climate data",
+}
+
+
 def parse_arguments():
-    """Parse command line arguments."""
     parser = argparse.ArgumentParser(description='Download placeholder images for data catalog projects.')
-    parser.add_argument('--api-key', type=str, help='Pexels API key (or set PEXELS_API_KEY env variable)')
-    parser.add_argument('--limit', type=int, default=None, help='Limit the number of projects to process')
-    parser.add_argument('--force', action='store_true', help='Force download even if images already exist')
-    parser.add_argument('--min-width', type=int, default=800, help='Minimum image width')
-    parser.add_argument('--min-height', type=int, default=600, help='Minimum image height')
-    parser.add_argument('--data-file', type=str, default='docs/data_catalog.xlsx', help='Path to the data catalog Excel file')
+    parser.add_argument('--provider', choices=['pexels', 'unsplash', 'both'], default='pexels',
+                        help='Image provider (default: pexels)')
+    parser.add_argument('--limit', type=int, default=None, help='Limit number of projects to process')
+    parser.add_argument('--force', action='store_true', help='Re-download placeholders (preserves custom images)')
+    parser.add_argument('--dry-run', action='store_true', help='Preview search queries without downloading')
+    parser.add_argument('--catalog-file', type=str, default='public/data/catalog.json',
+                        help='Path to catalog JSON (default: public/data/catalog.json)')
+    parser.add_argument('--pexels-key', type=str, help='Pexels API key (or set PEXELS_API_KEY)')
+    parser.add_argument('--unsplash-key', type=str, help='Unsplash API key (or set UNSPLASH_API_KEY)')
     return parser.parse_args()
 
+
+def load_catalog(catalog_file):
+    """Load project data from catalog.json."""
+    with open(catalog_file, 'r') as f:
+        data = json.load(f)
+    projects = data.get('projects', data) if isinstance(data, dict) else data
+    logger.info(f"Loaded {len(projects)} projects from {catalog_file}")
+    return projects
+
+
 def get_project_directories():
-    """Get all project directories in the public projects folder."""
+    """Get all project directories."""
     if not os.path.exists(PROJECTS_DIR):
         logger.error(f"Projects directory not found: {PROJECTS_DIR}")
         return []
-    
     return [d for d in os.listdir(PROJECTS_DIR) if os.path.isdir(os.path.join(PROJECTS_DIR, d))]
 
-def has_existing_images(project_dir):
-    """Check if a project directory already has images."""
+
+def has_custom_image(project_dir):
+    """Check if a project has a manually-placed (non-placeholder) image."""
     images_dir = os.path.join(PROJECTS_DIR, project_dir, "images")
     if not os.path.exists(images_dir):
         return False
-    
-    image_files = [f for f in os.listdir(images_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
-    return len(image_files) > 0
+    return any(
+        f for f in os.listdir(images_dir)
+        if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.webp'))
+        and not f.startswith('placeholder_')
+    )
 
-def get_project_info(project_dir, df):
-    """Get project title and description from the Excel file by matching directory name.
-    
-    Directories are typically created from Dataset Speaking Titles, Use Case Speaking Title,
-    OnSite Name, or Project ID (in that priority order).
+
+def has_any_image(project_dir):
+    """Check if a project has any image at all."""
+    images_dir = os.path.join(PROJECTS_DIR, project_dir, "images")
+    if not os.path.exists(images_dir):
+        return False
+    return any(
+        f for f in os.listdir(images_dir)
+        if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.webp'))
+    )
+
+
+def extract_sdg_number(sdg_label):
+    """Extract numeric SDG from label like 'SDG 2'."""
+    match = re.search(r'\d+', sdg_label)
+    return int(match.group()) if match else None
+
+
+def extract_domain_nouns(title):
+    """Extract unique domain-specific nouns from a project title."""
+    if not title:
+        return []
+    words = re.findall(r'\b\w+\b', title.lower())
+    seen = set()
+    result = []
+    for w in words:
+        if w in DOMAIN_NOUNS and w not in seen:
+            seen.add(w)
+            result.append(w)
+    return result
+
+
+def build_search_query(project_info):
+    """Build a search query using SDG-based mapping + title noun refinement.
+
+    Returns a list of queries to try in order (tiered fallback).
     """
-    target_normalized = project_dir.lower()
-    
-    # Try to find a matching row by checking multiple columns
-    for index, row in df.iterrows():
-        # Check each potential source column for a match
-        columns_to_check = ['Dataset Speaking Titles', 'Use Case Speaking Title', 'OnSite Name', 'Project ID']
-        
-        for col in columns_to_check:
-            if col in df.columns:
-                value = row.get(col)
-                if value and not pd.isna(value):
-                    normalized = normalize_for_directory(str(value))
-                    if normalized == target_normalized:
-                        # Found match - extract project info
-                        display_title = None
-                        for title_col in ['Dataset Speaking Titles', 'Use Case Speaking Title', 'OnSite Name']:
-                            if title_col in df.columns:
-                                title_val = row.get(title_col, '')
-                                if title_val and not pd.isna(title_val):
-                                    display_title = title_val
-                                    break
-                        
-                        if not display_title:
-                            display_title = f"Project {row.get('Project ID', project_dir)}"
+    sdgs = project_info.get('sdgs', [])
+    title = project_info.get('title', '')
+    data_types = project_info.get('data_types', [])
 
-                        description = row.get('Description - What can be done with this? What is this about?', '')
-                        domain = row.get('Domain/SDG', '')
-                        region = row.get('Country Team', '')
-                        
-                        return {
-                            'title': display_title,
-                            'description': description if isinstance(description, str) and not pd.isna(description) else '',
-                            'domain': domain if isinstance(domain, str) and not pd.isna(domain) else '',
-                            'region': region if isinstance(region, str) and not pd.isna(region) else ''
-                        }
-    
-    logger.warning(f"No row found in Excel matching directory: {project_dir}")
+    # Get primary SDG number
+    primary_sdg = None
+    for sdg_label in sdgs:
+        num = extract_sdg_number(sdg_label)
+        if num and num in SDG_SEARCH_TERMS:
+            primary_sdg = num
+            break
+
+    # Extract domain nouns from title
+    nouns = extract_domain_nouns(title)
+
+    # Data type modifier
+    modifier = ""
+    for dt in data_types:
+        if dt in DATA_TYPE_MODIFIERS:
+            modifier = DATA_TYPE_MODIFIERS[dt]
+            break
+
+    queries = []
+
+    if primary_sdg:
+        sdg_queries = SDG_SEARCH_TERMS[primary_sdg]
+
+        # Tier 1: SDG query + domain nouns + data type modifier
+        if nouns:
+            base = random.choice(sdg_queries)
+            noun_str = " ".join(nouns[:2])
+            tier1 = f"{noun_str} {base}"
+            if modifier:
+                tier1 = f"{noun_str} {modifier}"
+            queries.append(tier1)
+
+        # Tier 2: SDG query with modifier
+        tier2 = random.choice(sdg_queries)
+        if modifier and not nouns:
+            tier2 = f"{tier2} {modifier}"
+        queries.append(tier2)
+
+        # Tier 3: Different SDG query (no modifier)
+        remaining = [q for q in sdg_queries if q != tier2]
+        if remaining:
+            queries.append(random.choice(remaining))
+
+    # Tier 4: Generic fallback
+    queries.append(random.choice(GENERIC_QUERIES))
+
+    return queries
+
+
+def search_pexels(query, api_key):
+    """Search Pexels for landscape images. Returns image info dict or None."""
+    encoded = quote_plus(query)
+    url = f"https://api.pexels.com/v1/search?query={encoded}&per_page=15&orientation=landscape"
+    headers = {"Authorization": api_key}
+
+    try:
+        resp = requests.get(url, headers=headers, timeout=15)
+        resp.raise_for_status()
+        photos = resp.json().get('photos', [])
+
+        # Filter for reasonable dimensions
+        suitable = [p for p in photos if p['width'] >= 800 and p['height'] >= 400]
+        if not suitable:
+            return None
+
+        selected = random.choice(suitable)
+        return {
+            'download_url': selected['src']['large'],  # 940px wide
+            'page_url': selected['url'],
+            'photographer': selected['photographer'],
+            'photographer_url': selected['photographer_url'],
+            'width': selected['width'],
+            'height': selected['height'],
+            'provider': 'pexels',
+        }
+    except Exception as e:
+        logger.warning(f"Pexels search failed for '{query}': {e}")
+        return None
+
+
+def search_unsplash(query, api_key):
+    """Search Unsplash for landscape images. Returns image info dict or None."""
+    encoded = quote_plus(query)
+    url = f"https://api.unsplash.com/search/photos?query={encoded}&per_page=15&orientation=landscape"
+    headers = {"Authorization": f"Client-ID {api_key}"}
+
+    try:
+        resp = requests.get(url, headers=headers, timeout=15)
+        resp.raise_for_status()
+        results = resp.json().get('results', [])
+
+        # Filter for reasonable dimensions
+        suitable = [r for r in results if r['width'] >= 800 and r['height'] >= 400]
+        if not suitable:
+            return None
+
+        selected = random.choice(suitable)
+        return {
+            'download_url': selected['urls']['regular'],  # 1080px wide
+            'page_url': selected['links']['html'],
+            'photographer': selected['user']['name'],
+            'photographer_url': selected['user']['links']['html'],
+            'width': selected['width'],
+            'height': selected['height'],
+            'provider': 'unsplash',
+        }
+    except Exception as e:
+        logger.warning(f"Unsplash search failed for '{query}': {e}")
+        return None
+
+
+def search_images(query, provider, pexels_key, unsplash_key):
+    """Search for images using the specified provider(s)."""
+    if provider == 'pexels' and pexels_key:
+        return search_pexels(query, pexels_key)
+    elif provider == 'unsplash' and unsplash_key:
+        return search_unsplash(query, unsplash_key)
+    elif provider == 'both':
+        # Try Pexels first, fall back to Unsplash
+        if pexels_key:
+            result = search_pexels(query, pexels_key)
+            if result:
+                return result
+        if unsplash_key:
+            return search_unsplash(query, unsplash_key)
     return None
 
 
-# Define common stop words (expand as needed)
-STOP_WORDS = set([
-    "a", "an", "and", "are", "as", "at", "be", "but", "by", "for", "if", "in", 
-    "into", "is", "it", "no", "not", "of", "on", "or", "such", "that", "the", 
-    "their", "then", "there", "these", "they", "this", "to", "was", "will", "with",
-    "using", "based", "dataset", "use-case", "model", "about", "can", "done", 
-    "what", "how", "who", "which", "when", "where", "why", "also", "from", 
-    "get", "has", "have", "he", "her", "here", "him", "his", "i", "just", "like",
-    "make", "many", "me", "might", "more", "most", "my", "never", "now", "our",
-    "out", "over", "said", "same", "see", "should", "since", "so", "some", 
-    "still", "take", "than", "too", "under", "up", "use", "very", "want", "way",
-    "we", "well", "were", "what", "where", "which", "who", "why", "your", "ai",
-    "open", "data", "development", "application", "solution" # Added more context-specific words
-])
-
-# Define some common technical/domain terms to look for
-TECH_TERMS = [
-    'satellite', 'imagery', 'remote sensing', 'geospatial', 'map', 'mapping',
-    'crop', 'agriculture', 'farming', 'yield', 'harvest',
-    'language', 'nlp', 'text', 'speech', 'translation',
-    'health', 'medical', 'disease', 'patient', 'clinic',
-    'energy', 'power', 'solar', 'wind', 'grid',
-    'climate', 'weather', 'environment', 'carbon', 'emission',
-    'finance', 'economic', 'market', 'trade',
-    'education', 'learning', 'school',
-    'water', 'irrigation', 'resource',
-    'transport', 'mobility', 'traffic',
-    'identification', 'detection', 'classification', 'prediction', 'analysis',
-    'monitoring', 'optimization', 'automation', 'platform', 'tool', 'technology',
-    'computer vision', 'machine learning'
-]
-
-def extract_keywords(project_info, max_keywords=4):
-    """Extract relevant keywords from project info, prioritizing specificity."""
-    if not project_info:
-        return []
-
-    keywords = []
-    title = project_info.get('title', '')
-    description = project_info.get('description', '')
-    domain = project_info.get('domain', '')
-    region = project_info.get('region', '')
-
-    # 1. Extract primary domain
-    if domain:
-        primary_domain = re.split(r'[,;]', domain)[0].strip()
-        if primary_domain:
-            keywords.append(primary_domain.lower())
-
-    # 2. Extract keywords from title
-    if title:
-        title_words = re.findall(r'\b\w+\b', title.lower())
-        # Prioritize nouns/adjectives, longer words, remove stop words
-        potential_title_keywords = [
-            word for word in title_words 
-            if word not in STOP_WORDS and len(word) > 3
-        ]
-        # Add the first 1-2 most relevant title words
-        keywords.extend(potential_title_keywords[:2])
-
-    # 3. Extract specific terms from description
-    if description:
-        desc_lower = description.lower()
-        found_terms = []
-        # Find specific technical terms first
-        for term in TECH_TERMS:
-            if term in desc_lower:
-                found_terms.append(term)
-                if len(found_terms) >= 2: # Limit terms from description
-                    break
-        keywords.extend(found_terms)
-        
-        # If no tech terms found, try extracting nouns from the first sentence
-        if not found_terms:
-             first_sentence = description.split('.')[0]
-             desc_words = re.findall(r'\b\w+\b', first_sentence.lower())
-             potential_desc_keywords = [
-                 word for word in desc_words 
-                 if word not in STOP_WORDS and len(word) > 4 # Slightly longer words
-             ]
-             keywords.extend(potential_desc_keywords[:1]) # Add max 1 generic keyword
-
-    # 4. Add region as a fallback/supplement
-    if region and len(keywords) < max_keywords:
-        keywords.append(region.lower())
-
-    # 5. Refine and finalize
-    # Remove duplicates while preserving order (important for keyword priority)
-    seen = set()
-    unique_keywords = [k for k in keywords if not (k in seen or seen.add(k))]
-
-    # Ensure relevance - if only region/generic domain, add 'technology' or 'data'
-    meaningful_keywords = [k for k in unique_keywords if k not in [region.lower() if region else '', primary_domain.lower() if domain else '']]
-    if not meaningful_keywords and len(unique_keywords) < max_keywords:
-         # Prefer 'technology' if domain is present, else 'data'
-        if domain:
-            unique_keywords.append('technology')
-        else:
-            unique_keywords.append('data')
-
-    # Limit the total number of keywords
-    final_keywords = unique_keywords[:max_keywords]
-
-    # Basic cleaning (remove plurals for consistency if simple 's' suffix)
-    final_keywords = [re.sub(r's$', '', k) if len(k) > 3 else k for k in final_keywords]
-    
-    # Final duplicate check after cleaning
-    seen_final = set()
-    final_keywords = [k for k in final_keywords if not (k in seen_final or seen_final.add(k))]
-
-
-    logger.debug(f"Extracted keywords for '{title}': {final_keywords}")
-    return final_keywords
-
-def search_pexels_images(keywords, api_key, min_width=800, min_height=600):
-    """Search for images on Pexels API based on keywords."""
-    if not api_key:
-        logger.error("No Pexels API key provided")
-        return None
-    
-    # Join keywords with spaces for the search query
-    query = ' '.join(keywords)
-    encoded_query = quote_plus(query)
-    
-    url = f"https://api.pexels.com/v1/search?query={encoded_query}&per_page=15&size=medium"
-    headers = {
-        "Authorization": api_key
-    }
-    
-    try:
-        response = requests.get(url, headers=headers)
-        response.raise_for_status()
-        data = response.json()
-        
-        # Filter images by minimum dimensions
-        suitable_images = [
-            photo for photo in data.get('photos', [])
-            if photo['width'] >= min_width and photo['height'] >= min_height
-        ]
-        
-        if not suitable_images:
-            logger.warning(f"No suitable images found for query: {query}")
-            return None
-        
-        # Select a random image from the results
-        selected_image = random.choice(suitable_images)
-        return {
-            'url': selected_image['src']['original'],
-            'photographer': selected_image['photographer'],
-            'photographer_url': selected_image['photographer_url'],
-            'width': selected_image['width'],
-            'height': selected_image['height'],
-            'pexels_url': selected_image['url']
-        }
-    
-    except requests.exceptions.RequestException as e:
-        logger.error(f"Error searching Pexels API: {e}")
-        return None
-    except (KeyError, ValueError, json.JSONDecodeError) as e:
-        logger.error(f"Error parsing Pexels API response: {e}")
-        return None
-
-def download_image(image_info, project_dir):
-    """Download an image and save it to the project's images directory."""
-    if not image_info or not image_info.get('url'):
+def download_image(image_info, project_dir, query):
+    """Download an image and save it with metadata."""
+    if not image_info or not image_info.get('download_url'):
         return False
-    
+
     images_dir = os.path.join(PROJECTS_DIR, project_dir, "images")
-    
-    # Create images directory if it doesn't exist
     os.makedirs(images_dir, exist_ok=True)
-    
-    # Generate a filename with the placeholder prefix
-    image_url = image_info['url']
-    file_ext = os.path.splitext(image_url.split('?')[0])[1]
-    if not file_ext:
-        file_ext = '.jpg'  # Default to jpg if no extension found
-    
+
+    # Remove old placeholder if exists
+    for old in os.listdir(images_dir):
+        if old.startswith('placeholder_'):
+            os.remove(os.path.join(images_dir, old))
+
+    # Determine file extension from URL
+    download_url = image_info['download_url']
+    ext_match = re.search(r'\.(jpe?g|png|webp)', download_url.split('?')[0], re.IGNORECASE)
+    file_ext = f".{ext_match.group(1)}" if ext_match else '.jpg'
     filename = f"placeholder_image{file_ext}"
     filepath = os.path.join(images_dir, filename)
-    
-    # Download the image
+
     try:
-        response = requests.get(image_url, stream=True)
-        response.raise_for_status()
-        
+        resp = requests.get(download_url, stream=True, timeout=30)
+        resp.raise_for_status()
+
         with open(filepath, 'wb') as f:
-            for chunk in response.iter_content(chunk_size=8192):
+            for chunk in resp.iter_content(chunk_size=8192):
                 f.write(chunk)
-        
-        # Create a metadata file with attribution information
+
+        # Save metadata with attribution
+        metadata = {
+            'source': image_info['provider'].capitalize(),
+            'provider': image_info['provider'],
+            'search_query': query,
+            'url': image_info['page_url'],
+            'photographer': image_info['photographer'],
+            'photographer_url': image_info['photographer_url'],
+            'width': image_info['width'],
+            'height': image_info['height'],
+            'downloaded_at': time.strftime('%Y-%m-%d %H:%M:%S'),
+        }
         metadata_path = os.path.join(images_dir, "placeholder_metadata.json")
         with open(metadata_path, 'w') as f:
-            json.dump({
-                'source': 'Pexels',
-                'url': image_info['pexels_url'],
-                'photographer': image_info['photographer'],
-                'photographer_url': image_info['photographer_url'],
-                'width': image_info['width'],
-                'height': image_info['height'],
-                'downloaded_at': time.strftime('%Y-%m-%d %H:%M:%S')
-            }, f, indent=2)
-        
+            json.dump(metadata, f, indent=2)
+
         logger.info(f"Downloaded image for {project_dir}: {filepath}")
         return True
-    
-    except requests.exceptions.RequestException as e:
-        logger.error(f"Error downloading image: {e}")
+    except Exception as e:
+        logger.error(f"Error downloading image for {project_dir}: {e}")
         return False
-    except IOError as e:
-        logger.error(f"Error saving image: {e}")
-        return False
+
+
+def find_project_info(project_dir, catalog_projects):
+    """Find a project's catalog entry by matching its directory ID."""
+    for proj in catalog_projects:
+        if proj.get('id') == project_dir:
+            return proj
+    return None
+
 
 def main():
-    """Main function to download placeholder images for projects without images."""
     args = parse_arguments()
-    
-    # Get API key from arguments or environment variable
-    api_key = args.api_key or os.environ.get('PEXELS_API_KEY')
-    if not api_key:
-        logger.error("No Pexels API key provided. Use --api-key or set PEXELS_API_KEY environment variable.")
-        return
-    
-    # Load the data catalog Excel file
-    try:
-        df = pd.read_excel(args.data_file)
-        logger.info(f"Loaded data catalog from {args.data_file}")
-    except Exception as e:
-        logger.error(f"Error loading data catalog: {e}")
-        return
-    
-    # Get all project directories
+
+    pexels_key = args.pexels_key or os.environ.get('PEXELS_API_KEY')
+    unsplash_key = args.unsplash_key or os.environ.get('UNSPLASH_API_KEY')
+
+    if not args.dry_run:
+        if args.provider in ('pexels', 'both') and not pexels_key:
+            logger.error("No Pexels API key. Set PEXELS_API_KEY or use --pexels-key.")
+            if args.provider == 'pexels':
+                return
+        if args.provider in ('unsplash', 'both') and not unsplash_key:
+            logger.error("No Unsplash API key. Set UNSPLASH_API_KEY or use --unsplash-key.")
+            if args.provider == 'unsplash':
+                return
+
+    # Load catalog data
+    catalog_projects = load_catalog(args.catalog_file)
+
+    # Get project directories
     project_dirs = get_project_directories()
     logger.info(f"Found {len(project_dirs)} project directories")
-    
-    # Limit the number of projects to process if specified
+
     if args.limit and args.limit > 0:
         project_dirs = project_dirs[:args.limit]
-        logger.info(f"Limited to processing {args.limit} projects")
-    
-    # Process each project directory
+        logger.info(f"Limited to {args.limit} projects")
+
     success_count = 0
+    skip_count = 0
+    fail_count = 0
+
     for project_dir in tqdm(project_dirs, desc="Processing projects"):
-        # Skip if project already has images and not forcing download
-        if has_existing_images(project_dir) and not args.force:
-            logger.debug(f"Skipping {project_dir} - already has images")
+        # Skip projects with custom (non-placeholder) images
+        if has_custom_image(project_dir):
+            logger.debug(f"Skipping {project_dir} - has custom image")
+            skip_count += 1
             continue
-        
-        # Get project information
-        project_info = get_project_info(project_dir, df)
+
+        # Skip projects that already have images (unless --force)
+        if has_any_image(project_dir) and not args.force:
+            logger.debug(f"Skipping {project_dir} - already has image")
+            skip_count += 1
+            continue
+
+        # Find project info from catalog
+        project_info = find_project_info(project_dir, catalog_projects)
         if not project_info:
-            logger.warning(f"Could not find project info for {project_dir}")
+            logger.warning(f"No catalog entry for {project_dir}")
+            fail_count += 1
             continue
-        
-        # Extract keywords for image search
-        keywords = extract_keywords(project_info)
-        if not keywords:
-            logger.warning(f"Could not extract keywords for {project_dir}")
+
+        # Build tiered search queries
+        queries = build_search_query(project_info)
+
+        if args.dry_run:
+            print(f"\n{project_dir}")
+            print(f"  Title: {project_info.get('title', 'N/A')}")
+            print(f"  SDGs:  {', '.join(project_info.get('sdgs', []))}")
+            print(f"  Queries: {queries}")
             continue
-        
-        logger.info(f"Searching for images for {project_dir} with keywords: {', '.join(keywords)}")
-        
-        # Search for images
-        image_info = search_pexels_images(
-            keywords, 
-            api_key, 
-            min_width=args.min_width, 
-            min_height=args.min_height
-        )
-        
+
+        # Try each query tier until we get a result
+        image_info = None
+        used_query = None
+        for i, query in enumerate(queries):
+            logger.info(f"[{project_dir}] Tier {i+1} query: '{query}'")
+            image_info = search_images(query, args.provider, pexels_key, unsplash_key)
+            if image_info:
+                used_query = query
+                break
+            time.sleep(0.5)  # Brief pause between tiers
+
         if not image_info:
-            logger.warning(f"No suitable images found for {project_dir}")
+            logger.warning(f"No image found for {project_dir} after all tiers")
+            fail_count += 1
             continue
-        
-        # Download the image
-        if download_image(image_info, project_dir):
+
+        if download_image(image_info, project_dir, used_query):
             success_count += 1
-        
-        # Add a small delay to avoid hitting API rate limits
-        time.sleep(1)
-    
-    logger.info(f"Completed processing. Downloaded {success_count} placeholder images.")
+        else:
+            fail_count += 1
+
+        # Rate limit: ~1.5s between projects
+        time.sleep(1.5)
+
+    if not args.dry_run:
+        logger.info(f"Done. Downloaded: {success_count}, Skipped: {skip_count}, Failed: {fail_count}")
+    else:
+        logger.info(f"Dry run complete. Would process {len(project_dirs) - skip_count} projects.")
+
 
 if __name__ == "__main__":
-    main() 
+    main()

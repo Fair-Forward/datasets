@@ -1,9 +1,11 @@
 {
   "source": "Pexels",
-  "url": "https://www.pexels.com/photo/close-up-of-people-bumping-fists-6146704/",
-  "photographer": "Diva Plavalaguna",
-  "photographer_url": "https://www.pexels.com/@diva-plavalaguna",
-  "width": 3733,
-  "height": 5600,
-  "downloaded_at": "2025-04-23 17:59:49"
+  "provider": "pexels",
+  "search_query": "forest conservation green satellite aerial view",
+  "url": "https://www.pexels.com/photo/aerial-photo-of-empty-meandering-road-in-between-forest-2876511/",
+  "photographer": "Kelly",
+  "photographer_url": "https://www.pexels.com/@kelly",
+  "width": 3992,
+  "height": 2242,
+  "downloaded_at": "2026-03-23 14:06:21"
 }

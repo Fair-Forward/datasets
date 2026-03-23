@@ -31,7 +31,7 @@ Thumbs.db
 .env
 .env.local
 
-project_description.txt
+CLAUDE.md
 
 # Google service accounts / secrets
 data_sources/google_sheets_api/*.json

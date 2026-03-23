@@ -1,9 +1,11 @@
 {
   "source": "Pexels",
-  "url": "https://www.pexels.com/photo/close-up-photo-of-green-leaves-8852027/",
-  "photographer": "Yaroslav Shuraev",
-  "photographer_url": "https://www.pexels.com/@yaroslav-shuraev",
-  "width": 3866,
-  "height": 5799,
-  "downloaded_at": "2025-07-15 13:27:01"
+  "provider": "pexels",
+  "search_query": "smallholder farming Africa satellite aerial view",
+  "url": "https://www.pexels.com/photo/aerial-photography-of-plants-beside-body-of-water-3256376/",
+  "photographer": "Tom Fisk",
+  "photographer_url": "https://www.pexels.com/@tomfisk",
+  "width": 5418,
+  "height": 3607,
+  "downloaded_at": "2026-03-23 14:07:22"
 }

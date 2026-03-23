@@ -1,9 +1,11 @@
 {
   "source": "Pexels",
-  "url": "https://www.pexels.com/photo/vibrant-green-lettuce-farm-at-sunset-35252801/",
-  "photographer": "Sayeed Chowdhury",
-  "photographer_url": "https://www.pexels.com/@sayeedxchowdhury",
-  "width": 5184,
-  "height": 3456,
-  "downloaded_at": "2025-12-18 12:08:06"
+  "provider": "pexels",
+  "search_query": "crop disease smallholder farming Africa",
+  "url": "https://www.pexels.com/photo/view-of-a-woman-spreading-grains-with-rakes-26644940/",
+  "photographer": "Dibakar Roy",
+  "photographer_url": "https://www.pexels.com/@dibakar-roy-2432543",
+  "width": 3278,
+  "height": 2182,
+  "downloaded_at": "2026-03-23 14:05:37"
 }

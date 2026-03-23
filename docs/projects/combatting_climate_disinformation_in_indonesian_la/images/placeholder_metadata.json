@@ -1,9 +1,11 @@
 {
   "source": "Pexels",
-  "url": "https://www.pexels.com/photo/a-bald-man-wearing-boxing-gloves-7289918/",
-  "photographer": "www.kaboompics.com",
-  "photographer_url": "https://www.pexels.com/@karola-g",
-  "width": 4480,
-  "height": 6720,
-  "downloaded_at": "2026-03-02 16:24:05"
+  "provider": "pexels",
+  "search_query": "financial inclusion mobile banking",
+  "url": "https://www.pexels.com/photo/a-person-s-hands-holding-a-card-and-a-cell-phone-7545218/",
+  "photographer": "SHVETS production",
+  "photographer_url": "https://www.pexels.com/@shvets-production",
+  "width": 6240,
+  "height": 4160,
+  "downloaded_at": "2026-03-23 14:05:42"
 }

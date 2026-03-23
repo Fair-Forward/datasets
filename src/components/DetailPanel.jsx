@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { withBasePath, resolvePublicHref } from '../utils/basePath'
+import { SDG_COLORS } from '../utils/sdgColors'
 
 const markdownLinkComponents = {
   a: ({ href, children, ...props }) => {
@@ -141,6 +142,10 @@ const DetailPanel = ({ project, onClose }) => {
   const sdgNumbers = extractSdgNumbers(sdgs)
   const organizations = parseOrganizations(project?.organizations)
 
+  // Compute license value for metadata grid
+  const rawLicense = project?.license?.trim()
+  const licenseValue = rawLicense || null
+
   const handleShare = useCallback(async () => {
     const url = getShareUrl(project.id)
     try {
@@ -169,7 +174,7 @@ const DetailPanel = ({ project, onClose }) => {
         }
 
         const content = {}
-        
+
         for (const [key, filename] of Object.entries(files)) {
           try {
             const response = await fetch(withBasePath(`projects/${project.id}/docs/${filename}`))
@@ -194,33 +199,61 @@ const DetailPanel = ({ project, onClose }) => {
 
   if (!project) return null
 
-  // Build TOC entries
-  const tocSections = []
-  if (markdownContent.description || project?.description) {
-    tocSections.push({ id: 'description', label: 'What is this about?', icon: 'fa-circle-info' })
-  }
-  if (markdownContent.data_characteristics || dataTypes.length > 0) {
-    tocSections.push({ id: 'data-characteristics', label: 'Data Characteristics', icon: 'fa-database' })
-  }
-  if (markdownContent.model_characteristics?.trim()) {
-    tocSections.push({ id: 'model-characteristics', label: 'Model Characteristics', icon: 'fa-robot' })
-  }
-  if (markdownContent.how_to_use) {
-    tocSections.push({ id: 'how-to-use', label: 'How to Use It', icon: 'fa-lightbulb' })
-  }
+  // Determine primary CTA link
+  const primaryLink = datasetLinks[0] || usecaseLinks[0] || null
+  const isPrimaryDataset = Boolean(datasetLinks[0])
+  // Additional links beyond the primary
+  const additionalLinks = [
+    ...datasetLinks.slice(isPrimaryDataset ? 1 : 0).map((l, i) => ({ ...l, type: 'dataset', idx: isPrimaryDataset ? i + 1 : i })),
+    ...usecaseLinks.slice(isPrimaryDataset ? 0 : 1).map((l, i) => ({ ...l, type: 'usecase', idx: i }))
+  ]
+
   const additionalResourceLinks = additionalResources.filter(r => r.url)
-  if (additionalResourceLinks.length > 0) {
-    tocSections.push({ id: 'additional-resources', label: 'Additional Resources', icon: 'fa-book-open' })
+
+  // Helper to render contact value with link detection
+  const renderContact = (contact) => {
+    const cleanLabel = (label = '') =>
+      label.replace(/\([^)]*\)/g, ' ').replace(/\s{2,}/g, ' ').trim()
+
+    const emailMatch = contact.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i)
+    const urlMatch = contact.match(/https?:\/\/[^\s)]+/i)
+    const beforeComma = contact.split(',')[0].trim()
+    const beforeParen = contact.split('(')[0].trim()
+    const baseLabel = cleanLabel(beforeComma || beforeParen || contact)
+
+    if (emailMatch) {
+      const email = emailMatch[0]
+      const label = cleanLabel(baseLabel.replace(email, '').trim()) || baseLabel || email
+      return <a href={`mailto:${email}`}>{label}</a>
+    }
+    if (urlMatch) {
+      const url = urlMatch[0]
+      const label = cleanLabel(baseLabel.replace(url, '').trim()) || baseLabel || url
+      return <a href={url} target="_blank" rel="noopener noreferrer">{label}</a>
+    }
+    return baseLabel
   }
-  if (organizations) {
-    tocSections.push({ id: 'organizations', label: 'Organizations Involved', icon: 'fa-building' })
+
+  // Helper to render license value with link detection
+  const renderLicense = (raw) => {
+    const urlMatch = raw.match(/https?:\/\/[^\s)]+/i)
+    let label = raw
+    if (!urlMatch && /^\d+(\.\d+)?$/.test(raw)) {
+      label = `cc-by-${raw}`
+    }
+    if (urlMatch) {
+      const textLabel = raw.replace(urlMatch[0], '').trim()
+      if (textLabel) return <a href={urlMatch[0]} target="_blank" rel="noopener noreferrer">{textLabel.toLowerCase()}</a>
+      try {
+        const segments = new URL(urlMatch[0]).pathname.split('/').filter(Boolean)
+        const slug = segments[segments.length - 1] || ''
+        const cleanSlug = slug.replace(/-/g, ' ').replace(/_/g, ' ')
+        if (cleanSlug && cleanSlug.length > 2) return <a href={urlMatch[0]} target="_blank" rel="noopener noreferrer">{cleanSlug}</a>
+      } catch {}
+      return <a href={urlMatch[0]} target="_blank" rel="noopener noreferrer">License</a>
+    }
+    return label.toLowerCase()
   }
-  if (project?.countries?.length > 0) {
-    tocSections.push({ id: 'region', label: 'Region', icon: 'fa-location-dot' })
-  }
-  // if (project?.authors) {
-  //   tocSections.push({ id: 'authors', label: 'Authors', icon: 'fa-user-pen' })
-  // }
 
   return (
     <>
@@ -228,20 +261,13 @@ const DetailPanel = ({ project, onClose }) => {
       <div className="detail-panel open">
         <div className="detail-panel-header">
           <div className="detail-panel-header-actions">
-            <button 
-              className="share-panel-btn" 
-              onClick={handleShare}
-              title={copied ? 'Link copied!' : 'Copy link to share'}
-            >
-              <i className={`fas ${copied ? 'fa-check' : 'fa-share-nodes'}`}></i>
-            </button>
             <button className="close-panel-btn" onClick={onClose}>
               <i className="fas fa-times"></i>
             </button>
           </div>
           <h2>{project.title}</h2>
         </div>
-        
+
         <div className="detail-panel-content">
           {loading ? (
             <div className="panel-loader">
@@ -250,155 +276,154 @@ const DetailPanel = ({ project, onClose }) => {
             </div>
           ) : (
             <>
-              {/* Header Image */}
-              {project.image && (
-                <div
-                  className="panel-header-image"
-                  style={{ backgroundImage: `url("${withBasePath(project.image)}")` }}
-                />
-              )}
-
-              {/* Title Section with Badges and Links */}
-              <div className="panel-title-section">
-                {sdgs.length > 0 && (
-                  <div className="panel-domain-badges">
-                    {sdgs.map((sdg) => (
-                      <span key={sdg} className="panel-domain-badge">
-                        {sdg}
-                      </span>
-                    ))}
+              {/* A) Action Row */}
+              <div className="panel-actions">
+                {primaryLink ? (() => {
+                  const external =
+                    primaryLink.url &&
+                    (primaryLink.url.startsWith('http://') ||
+                      primaryLink.url.startsWith('https://'))
+                  return (
+                    <a
+                      className="panel-cta"
+                      href={resolvePublicHref(primaryLink.url)}
+                      target={external ? '_blank' : undefined}
+                      rel={external ? 'noopener noreferrer' : undefined}
+                    >
+                      <i className="fas fa-download"></i>
+                      {isPrimaryDataset ? 'Access Dataset' : 'Access Use Case'}
+                    </a>
+                  )
+                })() : showHostedDocuments ? (
+                  hostedDocuments.map((doc, idx) => {
+                    const isPdf = doc.url?.toLowerCase().endsWith('.pdf')
+                    return (
+                      <a
+                        key={`hosted-cta-${idx}`}
+                        className="panel-cta"
+                        href={resolvePublicHref(doc.url)}
+                      >
+                        <i className={`fas ${isPdf ? 'fa-file-pdf' : 'fa-file-arrow-down'}`}></i>
+                        {doc.name || 'Download Document'}
+                      </a>
+                    )
+                  })
+                ) : showAccessCallout ? (
+                  <div
+                    className={`panel-access-note panel-access-note-${project.access_note_kind || 'unavailable'}`}
+                  >
+                    <i className={`fas ${accessNoteIconClass}`}></i>
+                    <div className="panel-access-note-body documentation-content">
+                      <DocMarkdown>{project.access_note_markdown}</DocMarkdown>
+                    </div>
                   </div>
-                )}
-
-                {/* Links Section */}
-                <div className="panel-links-section">
-                  <>
-                      {showAccessCallout && (
-                        <div
-                          className={`panel-access-note panel-access-note-${project.access_note_kind || 'unavailable'}`}
-                        >
-                          <i className={`fas ${accessNoteIconClass}`}></i>
-                          <div className="panel-access-note-body documentation-content">
-                            <DocMarkdown>{project.access_note_markdown}</DocMarkdown>
-                          </div>
-                        </div>
-                      )}
-                      {showHostedDocuments &&
-                        hostedDocuments.map((doc, idx) => {
-                          const isPdf = doc.url?.toLowerCase().endsWith('.pdf')
-                          return (
-                            <a
-                              key={`hosted-doc-${idx}`}
-                              href={resolvePublicHref(doc.url)}
-                              className="panel-link-btn panel-hosted-document-link"
-                            >
-                              <i
-                                className={`fas ${isPdf ? 'fa-file-pdf' : 'fa-file-arrow-down'}`}
-                              ></i>
-                              {doc.name || 'Document'}
-                            </a>
-                          )
-                        })}
-                      {datasetLinks.map((link, idx) => {
-                        const external =
-                          link.url &&
-                          (link.url.startsWith('http://') ||
-                            link.url.startsWith('https://'))
-                        return (
-                          <a
-                            key={`dataset-${idx}`}
-                            href={resolvePublicHref(link.url)}
-                            target={external ? '_blank' : undefined}
-                            rel={external ? 'noopener noreferrer' : undefined}
-                            className="panel-link-btn panel-dataset-link"
-                          >
-                            <i className="fas fa-cloud-arrow-down"></i>
-                            {link.name || `Dataset ${idx + 1}`}
-                          </a>
-                        )
-                      })}
-                      {usecaseLinks.map((link, idx) => {
-                        const external =
-                          link.url &&
-                          (link.url.startsWith('http://') ||
-                            link.url.startsWith('https://'))
-                        return (
-                          <a
-                            key={`usecase-${idx}`}
-                            href={resolvePublicHref(link.url)}
-                            target={external ? '_blank' : undefined}
-                            rel={external ? 'noopener noreferrer' : undefined}
-                            className="panel-link-btn panel-usecase-link"
-                          >
-                            <i className="fas fa-sparkles"></i>
-                            {link.name || `Use Case ${idx + 1}`}
-                          </a>
-                        )
-                      })}
-                  </>
-                </div>
+                ) : null}
+                <button
+                  className="panel-action-secondary"
+                  onClick={handleShare}
+                  title={copied ? 'Link copied!' : 'Copy link to share'}
+                >
+                  <i className={`fas ${copied ? 'fa-check' : 'fa-arrow-up-right-from-square'}`}></i>
+                  {copied ? 'Copied!' : 'Share'}
+                </button>
               </div>
 
-              {/* Table of Contents */}
-              {tocSections.length > 1 && (
-                <div className="panel-toc">
-                  <div className="panel-toc-title">
-                    <i className="fas fa-list"></i> Contents
+              {/* Access note context (shown below documents CTA) */}
+              {showHostedDocuments && showAccessCallout && (
+                <div className={`panel-access-note panel-access-note-${project.access_note_kind || 'unavailable'}`}>
+                  <i className={`fas ${accessNoteIconClass}`}></i>
+                  <div className="panel-access-note-body documentation-content">
+                    <DocMarkdown>{project.access_note_markdown}</DocMarkdown>
                   </div>
-                  <ul className="panel-toc-list">
-                    {tocSections.map((section) => (
-                      <li key={section.id} className="panel-toc-item">
-                        <a href={`#${section.id}`} className="panel-toc-link">
-                          <i className={`fas ${section.icon}`}></i> {section.label}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
               )}
 
+              {/* B) Inline meta row: SDG badges + license */}
+              {(sdgs.length > 0 || licenseValue) && (
+                <div className="panel-inline-meta">
+                  {sdgs.map((sdg) => (
+                    <span key={sdg} className="panel-domain-badge">
+                      {sdg}
+                    </span>
+                  ))}
+                  {licenseValue && (
+                    <span className="license-inline">
+                      <i className="fas fa-copyright"></i> {(() => {
+                        const urlMatch = licenseValue.match(/https?:\/\/[^\s)]+/i)
+                        let label = licenseValue
+                        if (!urlMatch && /^\d+(\.\d+)?$/.test(licenseValue)) {
+                          label = `cc-by-${licenseValue}`
+                        }
+                        if (urlMatch) {
+                          const textLabel = licenseValue.replace(urlMatch[0], '').trim()
+                          // Show clean label, not raw URL
+                          if (textLabel) return <a href={urlMatch[0]} target="_blank" rel="noopener noreferrer">{textLabel.toLowerCase()}</a>
+                          // Extract license name from URL path
+                          try {
+                            const segments = new URL(urlMatch[0]).pathname.split('/').filter(Boolean)
+                            const slug = segments[segments.length - 1] || ''
+                            const cleanSlug = slug.replace(/-/g, ' ').replace(/_/g, ' ')
+                            if (cleanSlug && cleanSlug.length > 2) return <a href={urlMatch[0]} target="_blank" rel="noopener noreferrer">{cleanSlug}</a>
+                          } catch {}
+                          return <a href={urlMatch[0]} target="_blank" rel="noopener noreferrer">License</a>
+                        }
+                        return label.toLowerCase()
+                      })()}
+                    </span>
+                  )}
+                </div>
+              )}
+
+              {/* C) Hero Image */}
+              {(() => {
+                if (project.image) {
+                  return (
+                    <div
+                      className="panel-header-image"
+                      style={{ backgroundImage: `url("${withBasePath(project.image)}")` }}
+                    />
+                  )
+                }
+                const sdgMatch = sdgs.length > 0 && sdgs[0].match(/\d+/)
+                const sdgColor = sdgMatch ? SDG_COLORS[parseInt(sdgMatch[0], 10)] : null
+                if (sdgColor) {
+                  return (
+                    <div
+                      className="panel-header-image no-image"
+                      style={{ backgroundImage: `linear-gradient(135deg, ${sdgColor}18 0%, ${sdgColor}35 100%)` }}
+                    />
+                  )
+                }
+                return null
+              })()}
+
+              {/* D) Flat content sections */}
               <div className="panel-data active">
                 {/* Description Section with SDG Icons */}
                 {(markdownContent.description || project?.description) && (
                   <section className="detail-section" id="description">
-                    <h3 data-section="What is this about and how can I use this?">What is this about?</h3>
+                    <h3>What is this about?</h3>
                     <div className="detail-content documentation-content">
                       <DocMarkdown>
                         {markdownContent.description || project?.description}
                       </DocMarkdown>
                     </div>
-                    {sdgNumbers.length > 0 && (
-                      <div className="sdg-icons-container">
-                        {sdgNumbers.map((num) => (
-                          <img
-                            key={num}
-                            src={withBasePath(`img/sdg-${num}.png`)}
-                            alt={`SDG ${num}`}
-                            className="sdg-icon"
-                            onError={(e) => { e.target.style.display = 'none' }}
-                          />
-                        ))}
-                      </div>
-                    )}
                   </section>
                 )}
 
                 {/* Data Characteristics Section with Data Types at Top */}
                 {(markdownContent.data_characteristics || dataTypes.length > 0) && (
                   <section className="detail-section" id="data-characteristics">
-                    <h3 data-section="Data Characteristics">Data Characteristics</h3>
+                    <h3>Data Characteristics</h3>
                     {dataTypes.length > 0 && (
-                      <div className="data-types-container">
+                      <div className="data-type-chips">
                         {dataTypes.map((type) => {
                           const normalized = normalizeLabel(type)
                           const icon = getDataTypeIcon(normalized)
                           return (
-                            <div key={type} className={`data-type-item label-${normalized}`}>
-                              <div className="data-type-header">
-                                <i className={`fas ${icon}`} aria-hidden="true"></i>
-                                <span className="data-type-label">{type}</span>
-                              </div>
-                            </div>
+                            <span key={type} className="data-type-chip-inline">
+                              <i className={`fas ${icon}`} aria-hidden="true"></i> {type}
+                            </span>
                           )
                         })}
                       </div>
@@ -414,7 +439,7 @@ const DetailPanel = ({ project, onClose }) => {
                 {/* Model Characteristics Section */}
                 {markdownContent.model_characteristics?.trim() && (
                   <section className="detail-section" id="model-characteristics">
-                    <h3 data-section="Model Characteristics">Model / Use Case Characteristics</h3>
+                    <h3>Model / Use Case Characteristics</h3>
                     <div className="detail-content documentation-content">
                       <DocMarkdown>{markdownContent.model_characteristics}</DocMarkdown>
                     </div>
@@ -424,7 +449,7 @@ const DetailPanel = ({ project, onClose }) => {
                 {/* How to Use Section */}
                 {markdownContent.how_to_use && (
                   <section className="detail-section" id="how-to-use">
-                    <h3 data-section="How to Use It">How to Use It</h3>
+                    <h3>How to Use It</h3>
                     <div className="detail-content documentation-content">
                       <DocMarkdown>{markdownContent.how_to_use}</DocMarkdown>
                     </div>
@@ -434,7 +459,7 @@ const DetailPanel = ({ project, onClose }) => {
                 {/* Additional Resources Section */}
                 {additionalResourceLinks.length > 0 && (
                   <section className="detail-section" id="additional-resources">
-                    <h3 data-section="Additional Resources">Additional Resources</h3>
+                    <h3>Additional Resources</h3>
                     <div className="additional-resources-list">
                       {additionalResources.filter(r => r.url).map((resource, idx) => {
                         const external =
@@ -458,46 +483,50 @@ const DetailPanel = ({ project, onClose }) => {
                   </section>
                 )}
 
-                {/* Organizations Involved Section */}
+                {/* Region Section -- inline chips */}
+                {project?.countries?.length > 0 && (
+                  <section className="detail-section" id="region">
+                    <h3>Region</h3>
+                    <div className="region-chips">
+                      {project.countries.map(c => <span className="region-chip" key={c}>{c}</span>)}
+                    </div>
+                  </section>
+                )}
+
+                {/* Organizations Involved Section -- dot-list format */}
                 {organizations && (
                   <section className="detail-section" id="organizations">
-                    <h3 data-section="Organizations Involved">Organizations Involved</h3>
+                    <h3>Organizations Involved</h3>
                     {organizations.raw ? (
                       <div className="documentation-content">
                         <DocMarkdown>{organizations.raw}</DocMarkdown>
                       </div>
                     ) : (
-                      <div className="organizations-container">
+                      <div className="org-list">
                         {organizations.powered && (
-                          <div className="org-type org-powered">
-                            <div className="org-type-header">
-                              <i className="fas fa-rocket"></i>
-                              <span className="org-type-label">Powered by</span>
-                            </div>
-                            <div className="org-type-content">
-                              <DocMarkdown>{organizations.powered}</DocMarkdown>
+                          <div className="org-list-item">
+                            <span className="org-dot org-dot-powered"></span>
+                            <div>
+                              <span className="org-list-label">Powered by</span>
+                              <div className="org-list-content"><DocMarkdown>{organizations.powered}</DocMarkdown></div>
                             </div>
                           </div>
                         )}
                         {organizations.catalyzed && (
-                          <div className="org-type org-catalyzed">
-                            <div className="org-type-header">
-                              <i className="fas fa-seedling"></i>
-                              <span className="org-type-label">Catalyzed by</span>
-                            </div>
-                            <div className="org-type-content">
-                              <DocMarkdown>{organizations.catalyzed}</DocMarkdown>
+                          <div className="org-list-item">
+                            <span className="org-dot org-dot-catalyzed"></span>
+                            <div>
+                              <span className="org-list-label">Catalyzed by</span>
+                              <div className="org-list-content"><DocMarkdown>{organizations.catalyzed}</DocMarkdown></div>
                             </div>
                           </div>
                         )}
                         {organizations.financed && (
-                          <div className="org-type org-financed">
-                            <div className="org-type-header">
-                              <i className="fas fa-coins"></i>
-                              <span className="org-type-label">Financed by</span>
-                            </div>
-                            <div className="org-type-content">
-                              <DocMarkdown>{organizations.financed}</DocMarkdown>
+                          <div className="org-list-item">
+                            <span className="org-dot org-dot-financed"></span>
+                            <div>
+                              <span className="org-list-label">Financed by</span>
+                              <div className="org-list-content"><DocMarkdown>{organizations.financed}</DocMarkdown></div>
                             </div>
                           </div>
                         )}
@@ -506,104 +535,35 @@ const DetailPanel = ({ project, onClose }) => {
                   </section>
                 )}
 
-                {/* Region Section */}
-                {project?.countries?.length > 0 && (
-                  <section className="detail-section" id="region">
-                    <h3 data-section="Region">Region</h3>
-                    <div className="documentation-content">
-                      <p><i className="fas fa-location-dot"></i> {project.countries.join(', ')}</p>
-                    </div>
-                  </section>
-                )}
-
-                {/* Authors Section */}
-                {project?.authors && (
-                  <section className="detail-section" id="authors">
-                    <h3 data-section="Authors">Authors</h3>
-                    <div className="documentation-content">
-                      <DocMarkdown>{project.authors}</DocMarkdown>
-                    </div>
-                  </section>
-                )}
-
-                {/* Tags Section (License + Contact) */}
-                <section className="detail-section" id="tags">
-                  <h3 data-section="Tags">Tags</h3>
-                  <div className="documentation-content tags-content">
-                    {(() => {
-                      const rawLicense = project?.license?.trim() || 'cc-by-4.0'
-                      const urlMatch = rawLicense.match(/https?:\/\/[^\s)]+/i)
-                      let label = rawLicense
-                      if (!urlMatch && /^\d+(\.\d+)?$/.test(rawLicense)) {
-                        label = `cc-by-${rawLicense}`
-                      }
-                      return (
-                        <div className="tag-item">
-                          <i className="fas fa-copyright"></i>
-                          <strong>License:</strong>{' '}
-                          {urlMatch ? (
-                            <a href={urlMatch[0]} target="_blank" rel="noopener noreferrer">
-                              {rawLicense.replace(urlMatch[0], '').trim() || urlMatch[0]}
-                            </a>
-                          ) : (
-                            label.toLowerCase()
-                          )}
-                        </div>
-                      )
-                    })()}
-                    {project?.contact && (() => {
-                      const cleanLabel = (label = '') =>
-                        label.replace(/\([^)]*\)/g, ' ').replace(/\s{2,}/g, ' ').trim()
-
-                      const emailMatch = project.contact.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i)
-                      const urlMatch = project.contact.match(/https?:\/\/[^\s)]+/i)
-                      const beforeComma = project.contact.split(',')[0].trim()
-                      const beforeParen = project.contact.split('(')[0].trim()
-                      const baseLabel = cleanLabel(beforeComma || beforeParen || project.contact)
-
-                      if (emailMatch) {
-                        const email = emailMatch[0]
-                        const label = cleanLabel(baseLabel.replace(email, '').trim()) || baseLabel || email
-                        return (
-                          <div className="tag-item">
-                            <i className="fas fa-envelope"></i>
-                            <strong>Contact:</strong>{' '}
-                            <a href={`mailto:${email}`}>{label}</a>
-                          </div>
-                        )
-                      }
-                      if (urlMatch) {
-                        const url = urlMatch[0]
-                        const label = cleanLabel(baseLabel.replace(url, '').trim()) || baseLabel || url
-                        return (
-                          <div className="tag-item">
-                            <i className="fas fa-link"></i>
-                            <strong>Contact:</strong>{' '}
-                            <a href={url} target="_blank" rel="noopener noreferrer">{label}</a>
-                          </div>
-                        )
-                      }
-                      return (
-                        <div className="tag-item">
-                          <i className="fas fa-user"></i>
-                          <strong>Contact:</strong> {baseLabel}
-                        </div>
-                      )
-                    })()}
-                    {sdgs.length > 0 && (
-                      <div className="tag-item">
-                        <i className="fas fa-bullseye"></i>
-                        <strong>SDGs:</strong> {sdgs.join(', ')}
+                {/* E) Metadata grid at bottom */}
+                {(project?.authors || project?.contact || licenseValue || sdgs.length > 0) && (
+                  <div className="panel-metadata-grid">
+                    {project?.authors && (
+                      <div className="metadata-cell">
+                        <span className="metadata-label">Author</span>
+                        <span className="metadata-value">{project.authors}</span>
                       </div>
                     )}
-                    {dataTypes.length > 0 && (
-                      <div className="tag-item">
-                        <i className="fas fa-database"></i>
-                        <strong>Data Types:</strong> {dataTypes.join(', ')}
+                    {project?.contact && (
+                      <div className="metadata-cell">
+                        <span className="metadata-label">Contact</span>
+                        <span className="metadata-value">{renderContact(project.contact)}</span>
+                      </div>
+                    )}
+                    {licenseValue && (
+                      <div className="metadata-cell">
+                        <span className="metadata-label">License</span>
+                        <span className="metadata-value">{renderLicense(licenseValue)}</span>
+                      </div>
+                    )}
+                    {sdgs.length > 0 && (
+                      <div className="metadata-cell">
+                        <span className="metadata-label">SDG</span>
+                        <span className="metadata-value">{sdgs.join(', ')}</span>
                       </div>
                     )}
                   </div>
-                </section>
+                )}
               </div>
             </>
           )}

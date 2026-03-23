@@ -1,9 +1,11 @@
 {
   "source": "Pexels",
-  "url": "https://www.pexels.com/photo/healthy-man-people-woman-6944195/",
-  "photographer": "Mikhail Nilov",
-  "photographer_url": "https://www.pexels.com/@mikhail-nilov",
-  "width": 4748,
-  "height": 7118,
-  "downloaded_at": "2025-04-23 18:01:48"
+  "provider": "pexels",
+  "search_query": "cocoa satellite aerial view",
+  "url": "https://www.pexels.com/photo/white-outer-space-satellite-586056/",
+  "photographer": "SpaceX",
+  "photographer_url": "https://www.pexels.com/@spacex",
+  "width": 3494,
+  "height": 2330,
+  "downloaded_at": "2026-03-23 14:06:12"
 }

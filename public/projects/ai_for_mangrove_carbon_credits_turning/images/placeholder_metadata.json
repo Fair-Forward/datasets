@@ -1,9 +1,11 @@
 {
   "source": "Pexels",
-  "url": "https://www.pexels.com/photo/aerial-view-of-lush-green-mau-narok-farmland-30255138/",
-  "photographer": "Vince Pictures",
-  "photographer_url": "https://www.pexels.com/@vince-pictures-2148675359",
-  "width": 7937,
-  "height": 5669,
-  "downloaded_at": "2025-04-23 18:01:34"
+  "provider": "pexels",
+  "search_query": "mangrove carbon satellite aerial view",
+  "url": "https://www.pexels.com/photo/aerial-view-of-mangrove-island-in-fort-pierce-30018115/",
+  "photographer": "Kelly",
+  "photographer_url": "https://www.pexels.com/@kelly",
+  "width": 5272,
+  "height": 2962,
+  "downloaded_at": "2026-03-23 14:06:55"
 }

@@ -49,15 +49,15 @@ const normalizeName = (value = '') =>
 
 // Warm color palette - orange/amber that pops against light gray
 const COLOR_CONFIG = {
-  empty: '#f1f5f9',           // Light gray for empty countries
+  empty: '#f1f5f9',           // Warm light for empty countries
   emptyHover: '#e2e8f0',      // Slightly darker on hover
-  emptyStroke: '#e2e8f0',     // Very subtle border for empty
+  emptyStroke: '#e2e8f0',     // Subtle warm border for empty
   dataStroke: '#c2410c',      // Strong orange border for countries with data
   strokeHighlight: '#ea580c', // Bright orange for selected
   gradientStart: '#fed7aa',   // Light peach/orange
   gradientMid: '#fb923c',     // Medium orange
   gradientEnd: '#c2410c',     // Deep burnt orange for high values
-  ocean: '#f8fafc'            // Very light for ocean/background
+  ocean: '#f8fafc'            // Warm off-white for ocean/background
 }
 
 const WorldMap = ({

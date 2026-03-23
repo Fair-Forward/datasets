@@ -1,9 +1,11 @@
 {
   "source": "Pexels",
-  "url": "https://www.pexels.com/photo/brown-beans-on-palm-3401479/",
-  "photographer": "Nicholas  Githiri",
-  "photographer_url": "https://www.pexels.com/@githirinick",
-  "width": 6000,
-  "height": 4000,
-  "downloaded_at": "2025-07-15 13:26:51"
+  "provider": "pexels",
+  "search_query": "maize corn field green satellite aerial view",
+  "url": "https://www.pexels.com/photo/a-close-up-of-a-green-grass-field-28301255/",
+  "photographer": "Tom Fisk",
+  "photographer_url": "https://www.pexels.com/@tomfisk",
+  "width": 5332,
+  "height": 3531,
+  "downloaded_at": "2026-03-23 14:05:52"
 }

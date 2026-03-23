@@ -1,9 +1,11 @@
 {
   "source": "Pexels",
-  "url": "https://www.pexels.com/photo/old-industrial-equipment-wall-with-monitoring-systems-and-dials-25819964/",
-  "photographer": "Paul Lichtblau",
-  "photographer_url": "https://www.pexels.com/@laup",
-  "width": 6000,
-  "height": 4000,
-  "downloaded_at": "2025-12-18 12:08:33"
+  "provider": "pexels",
+  "search_query": "forest degradation satellite aerial view",
+  "url": "https://www.pexels.com/photo/white-outer-space-satellite-586056/",
+  "photographer": "SpaceX",
+  "photographer_url": "https://www.pexels.com/@spacex",
+  "width": 3494,
+  "height": 2330,
+  "downloaded_at": "2026-03-23 14:05:39"
 }

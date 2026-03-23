@@ -1,0 +1,108 @@
+/* ===================================
+   Design Tokens
+   Single source of truth for spacing,
+   sizing, color, and elevation values.
+   =================================== */
+
+:root {
+  /* --- Spacing scale --- */
+  --space-1:  0.25rem;   /* 4px */
+  --space-2:  0.5rem;    /* 8px */
+  --space-3:  0.75rem;   /* 12px */
+  --space-4:  1rem;      /* 16px */
+  --space-5:  1.25rem;   /* 20px */
+  --space-6:  1.5rem;    /* 24px */
+  --space-8:  2rem;      /* 32px */
+  --space-10: 2.5rem;    /* 40px */
+  --space-12: 3rem;      /* 48px */
+  --space-16: 4rem;      /* 64px */
+
+  /* --- Border-radius scale --- */
+  --radius-sm:   0.375rem;  /* 6px */
+  --radius-md:   0.625rem;  /* 10px */
+  --radius-lg:   1rem;      /* 16px - cards, panels */
+  --radius-xl:   1.25rem;   /* 20px - hero sections, detail panel */
+  --radius-pill: 999px;
+  --radius-full: 50%;
+
+  /* --- Font-size scale --- */
+  --text-xs:   0.8125rem;   /* ~11px */
+  --text-sm:   0.875rem;    /* ~12px */
+  --text-base: 0.9375rem;   /* ~13px */
+  --text-md:   1rem;         /* ~14px */
+  --text-lg:   1.0625rem;   /* ~15px */
+  --text-xl:   1.1875rem;   /* ~17px */
+  --text-2xl:  1.375rem;    /* ~19px */
+  --text-3xl:  1.625rem;    /* ~23px */
+  --text-4xl:  2.25rem;     /* ~32px */
+  --text-5xl:  2.75rem;     /* ~39px */
+
+  /* --- Theme colors (Classic Blue) --- */
+  --primary:       #3b5998;
+  --primary-light: #4c70ba;
+  --background:    #f8fafc;
+  --card-background: #ffffff;
+  --text:          #1e293b;
+  --text-light:    #64748b;
+  --border:        #e2e8f0;
+  --shadow:        rgba(0, 0, 0, 0.04);
+  --shadow-hover:  rgba(0, 0, 0, 0.08);
+  --title-color:   #2c4a7c;
+  --btn-text:      #ffffff;
+  --yellow:        #f59e0b;
+
+  /* --- Semantic colors --- */
+  --color-success:  #10b981;
+  --color-warning:  #f59e0b;
+  --color-danger:   #ef4444;
+  --color-info:     #3b82f6;
+  --color-purple:   #8b5cf6;
+  --color-cyan:     #06b6d4;
+  --color-surface:        #f8fafc;
+  --color-surface-hover:  #f1f5f9;
+
+  /* --- Elevation (box-shadow) scale --- */
+  --shadow-sm:    0 1px 3px var(--shadow), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-md:    0 4px 12px var(--shadow), 0 2px 4px rgba(0, 0, 0, 0.03);
+  --shadow-lg:    0 8px 24px var(--shadow-hover), 0 4px 8px rgba(0, 0, 0, 0.04);
+  --shadow-xl:    0 16px 32px var(--shadow-hover), 0 6px 12px rgba(0, 0, 0, 0.05);
+  --shadow-focus: 0 0 0 3px rgba(59, 89, 152, 0.15);
+  --shadow-panel: -12px 0 40px rgba(15, 23, 42, 0.12);
+
+  /* --- Transition durations --- */
+  --transition-fast: 150ms ease-out;
+  --transition-base: 200ms ease-out;
+  --transition-slow: 350ms ease-out;
+
+  /* --- Layout --- */
+  --content-max-width:  1140px;
+  --detail-panel-width: 820px;
+}
+
+/* --- Global focus-visible --- */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* --- Scrollbar styling for panels --- */
+.detail-panel-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.detail-panel-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.detail-panel-content::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: var(--radius-pill);
+}
+
+.detail-panel-content::-webkit-scrollbar-thumb:hover {
+  background: var(--text-light);
+}

@@ -1,9 +1,11 @@
 {
   "source": "Pexels",
-  "url": "https://www.pexels.com/photo/books-piled-up-on-the-table-3747502/",
-  "photographer": "Polina Zimmerman",
-  "photographer_url": "https://www.pexels.com/@polina-zimmerman",
-  "width": 3840,
-  "height": 5760,
-  "downloaded_at": "2025-04-23 18:01:58"
+  "provider": "pexels",
+  "search_query": "biodiversity mangrove ecosystem roots",
+  "url": "https://www.pexels.com/photo/mangrove-forest-by-river-17766152/",
+  "photographer": "Shayne Spencer",
+  "photographer_url": "https://www.pexels.com/@shayne-spencer-105105",
+  "width": 5310,
+  "height": 3540,
+  "downloaded_at": "2026-03-23 14:07:11"
 }

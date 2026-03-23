@@ -1,9 +1,11 @@
 {
   "source": "Pexels",
-  "url": "https://www.pexels.com/photo/antenna-in-countryside-13463173/",
-  "photographer": "medinegurbet",
-  "photographer_url": "https://www.pexels.com/@medinegurbet-21435626",
-  "width": 3744,
-  "height": 5616,
-  "downloaded_at": "2025-07-15 13:27:10"
+  "provider": "pexels",
+  "search_query": "smallholder farming Africa satellite aerial view",
+  "url": "https://www.pexels.com/photo/aerial-shot-of-a-farm-field-7312525/",
+  "photographer": "Altaf Shah",
+  "photographer_url": "https://www.pexels.com/@altaf-shah-3143825",
+  "width": 4000,
+  "height": 3000,
+  "downloaded_at": "2026-03-23 14:07:26"
 }

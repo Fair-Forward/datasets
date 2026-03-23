@@ -1,4 +1,5 @@
 import { withBasePath } from '../utils/basePath'
+import { SDG_COLORS } from '../utils/sdgColors'
 
 const urlRegex = /https?:\/\/[^\s)]+/i
 const firstUrl = (text = '') => {
@@ -70,8 +71,14 @@ const licenseLabel = (license = '') => {
   return normalized
 }
 
-const ProjectCard = ({ project, onClick }) => {
-  const { title, description, sdgs, data_types, image, has_dataset, has_usecase, is_lacuna, has_access_note, countries = [], contact, license } = project
+const getSdgFallbackColor = (sdgs) => {
+  if (!sdgs || sdgs.length === 0) return null
+  const match = sdgs[0].match(/\d+/)
+  return match ? SDG_COLORS[parseInt(match[0], 10)] : null
+}
+
+const ProjectCard = ({ project, onClick, onFilterSDG }) => {
+  const { title, description, sdgs, data_types, image, has_dataset, has_usecase, is_lacuna, has_access_note, countries = [], license } = project
 
   const cardClasses = [
     'card',
@@ -87,55 +94,45 @@ const ProjectCard = ({ project, onClick }) => {
     ? description.substring(0, maxLength) + '...'
     : description
 
-  const imageUrl = image ? withBasePath(image) : null
-
   const countryLabel = countries.length > 0
     ? (countries.length > 2 ? `${countries.slice(0, 2).join(', ')} +${countries.length - 2}` : countries.join(', '))
     : null
-
-  const truncateLabel = (text = '', max = 16) =>
-    text.length > max ? `${text.slice(0, max)}…` : text
-
-  const displayDataTypes = (() => {
-    if (data_types.length > 2) {
-      return [
-        { label: truncateLabel(data_types[0]), full: data_types[0] },
-        { label: truncateLabel(data_types[1]), full: data_types[1] },
-        { label: `+${data_types.length - 2} more`, full: data_types.join(', '), isMore: true }
-      ]
-    }
-    return data_types.map(dt => ({ label: truncateLabel(dt), full: dt }))
-  })()
 
   const licenseValue = license && license.trim() ? license : 'cc-by-4.0'
   const licenseUrl = firstUrl(licenseValue)
   const licenseText = licenseLabel(licenseValue)
 
-  const contactParsed = parseContact(contact)
+  const fallbackColor = !image ? getSdgFallbackColor(sdgs) : null
 
   return (
     <div className={cardClasses} onClick={() => onClick(project)}>
-      <div 
+      <div
         className={`card-image${image ? ' has-image' : ''}`}
-        style={imageUrl ? { backgroundImage: `url("${imageUrl}")` } : undefined}
+        style={
+          image
+            ? { backgroundImage: `url("${withBasePath(image)}")` }
+            : fallbackColor
+              ? { backgroundImage: `linear-gradient(135deg, ${fallbackColor}20 0%, ${fallbackColor}44 100%)` }
+              : undefined
+        }
       />
-      
+
       <div className="card-header">
+        <h3>{title}</h3>
         {sdgs.length > 0 && (
           <div className="domain-badges">
             {sdgs.slice(0, 3).map(sdg => (
-              <span key={sdg} className="domain-badge">
+              <span key={sdg} className="domain-badge" onClick={(e) => { e.stopPropagation(); onFilterSDG?.(sdg); }} title={`Filter by ${sdg}`}>
                 {sdg}
               </span>
             ))}
+            {has_access_note && (
+              <span className="access-note-chip" title="No public dataset/use-case link">
+                <i className="fas fa-circle-info"></i> Info
+              </span>
+            )}
           </div>
         )}
-        {has_access_note && (
-          <span className="access-note-chip" title="No public dataset/use-case link in the sheet">
-            <i className="fas fa-circle-info"></i> Info
-          </span>
-        )}
-        <h3>{title}</h3>
       </div>
       
       <div className="card-body">
@@ -146,49 +143,19 @@ const ProjectCard = ({ project, onClick }) => {
               <span>{countryLabel}</span>
             </div>
           )}
-          {contactParsed.label && (
-            <div className="meta-item">
-              <i className="fas fa-user"></i>
-              {contactParsed.href ? (
-                <a
-                  href={contactParsed.href}
-                  target={contactParsed.href.startsWith('http') ? '_blank' : undefined}
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {contactParsed.label}
-                </a>
-              ) : (
-                <span>{contactParsed.label}</span>
-              )}
-            </div>
-          )}
         </div>
 
           <div className="card-description">
           <div className="description-text collapsed">
             {truncatedDesc}
           </div>
-          <div className="details-link">
-            <i className="fas fa-arrow-right-long"></i>
-            <span>Click card to see details</span>
-          </div>
         </div>
       </div>
       
       <div className="card-footer">
-        <div className="data-type-chips footer-chips">
-          {displayDataTypes.map(dt => (
-            <span
-              key={dt.full || dt.label}
-              className={`data-type-chip ${dt.isMore ? 'more-chip' : ''}`}
-              data-filter={dt.full || dt.label}
-              title={dt.full}
-            >
-              {dt.label}
-            </span>
-          ))}
-        </div>
+        {data_types.length > 0 && (
+          <span className="footer-data-types">{data_types.join(', ')}</span>
+        )}
         {licenseValue && licenseText && (
           <div className="license-tag">
             <i className="fas fa-copyright"></i>

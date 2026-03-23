@@ -1,9 +1,11 @@
 {
   "source": "Pexels",
-  "url": "https://www.pexels.com/photo/flags-on-a-map-8828597/",
-  "photographer": "Lara Jameson",
-  "photographer_url": "https://www.pexels.com/@lara-jameson",
-  "width": 3360,
-  "height": 5040,
-  "downloaded_at": "2025-04-23 17:59:07"
+  "provider": "pexels",
+  "search_query": "language diversity communication",
+  "url": "https://www.pexels.com/photo/woman-in-black-long-sleeve-shirt-in-white-background-9017388/",
+  "photographer": "Kevin  Malik",
+  "photographer_url": "https://www.pexels.com/@kevin-malik",
+  "width": 6000,
+  "height": 4000,
+  "downloaded_at": "2026-03-23 14:06:29"
 }

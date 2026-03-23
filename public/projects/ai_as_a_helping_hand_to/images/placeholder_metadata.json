@@ -1,9 +1,11 @@
 {
   "source": "Pexels",
-  "url": "https://www.pexels.com/photo/vaccine-text-and-a-person-wearing-latex-glove-while-holding-a-syringe-on-pink-background-5862315/",
-  "photographer": "Thirdman",
-  "photographer_url": "https://www.pexels.com/@thirdman",
-  "width": 4386,
-  "height": 6579,
-  "downloaded_at": "2025-12-18 12:19:04"
+  "provider": "pexels",
+  "search_query": "chatbot forest conservation green",
+  "url": "https://www.pexels.com/photo/white-and-brown-trees-on-forest-during-daytime-47334/",
+  "photographer": "Pixabay",
+  "photographer_url": "https://www.pexels.com/@pixabay",
+  "width": 4000,
+  "height": 3000,
+  "downloaded_at": "2026-03-23 14:05:32"
 }

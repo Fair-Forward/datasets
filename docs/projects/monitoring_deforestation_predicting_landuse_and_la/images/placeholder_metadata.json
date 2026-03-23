@@ -1,9 +1,11 @@
 {
   "source": "Pexels",
-  "url": "https://www.pexels.com/photo/exhibition-with-spacecraft-display-11766170/",
-  "photographer": "David Yu",
-  "photographer_url": "https://www.pexels.com/@pppsdavid",
-  "width": 7360,
-  "height": 4912,
-  "downloaded_at": "2025-12-18 12:19:10"
+  "provider": "pexels",
+  "search_query": "deforestation forest satellite aerial view",
+  "url": "https://www.pexels.com/photo/aerial-shot-of-forest-3923722/",
+  "photographer": "Pok Rie",
+  "photographer_url": "https://www.pexels.com/@pok-rie-33563",
+  "width": 3968,
+  "height": 2645,
+  "downloaded_at": "2026-03-23 14:06:19"
 }

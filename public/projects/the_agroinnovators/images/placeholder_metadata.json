@@ -1,9 +1,11 @@
 {
   "source": "Pexels",
-  "url": "https://www.pexels.com/photo/brown-wheat-field-under-blue-cloudy-sky-907905/",
-  "photographer": "LilacDragonfly",
-  "photographer_url": "https://www.pexels.com/@lilacdragonfly-311682",
-  "width": 4068,
-  "height": 3036,
-  "downloaded_at": "2025-07-15 13:27:17"
+  "provider": "pexels",
+  "search_query": "irrigation farming rural satellite aerial view",
+  "url": "https://www.pexels.com/photo/watering-green-rural-field-20286963/",
+  "photographer": "\u0410\u0440\u0442\u0435\u043c \u0414\u0432\u043e\u0440\u0435\u0446\u043a\u0438\u0439",
+  "photographer_url": "https://www.pexels.com/@834934396",
+  "width": 6498,
+  "height": 4874,
+  "downloaded_at": "2026-03-23 14:05:46"
 }

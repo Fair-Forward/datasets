@@ -1,9 +1,11 @@
 {
   "source": "Pexels",
-  "url": "https://www.pexels.com/photo/telescope-overlooking-paris-from-the-eiffel-tower-35255481/",
-  "photographer": "Valentin Ivantsov",
-  "photographer_url": "https://www.pexels.com/@valentin-ivantsov-2154772556",
-  "width": 5287,
-  "height": 3525,
-  "downloaded_at": "2025-12-18 12:08:40"
+  "provider": "pexels",
+  "search_query": "health voice technology microphone",
+  "url": "https://www.pexels.com/photo/gray-blue-yeti-1080746/",
+  "photographer": "Brett Sayles",
+  "photographer_url": "https://www.pexels.com/@brett-sayles",
+  "width": 5568,
+  "height": 3712,
+  "downloaded_at": "2026-03-23 14:06:35"
 }

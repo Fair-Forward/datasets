@@ -1,9 +1,11 @@
 {
   "source": "Pexels",
-  "url": "https://www.pexels.com/photo/combine-harvester-in-wheat-field-geesthacht-32958956/",
-  "photographer": "Wolfgang Weiser",
-  "photographer_url": "https://www.pexels.com/@wolfgang-weiser-467045605",
-  "width": 6000,
-  "height": 3375,
-  "downloaded_at": "2025-07-15 13:27:07"
+  "provider": "pexels",
+  "search_query": "soil agriculture field closeup satellite aerial view",
+  "url": "https://www.pexels.com/photo/birds-eye-view-of-rural-field-7106972/",
+  "photographer": "oren beitan",
+  "photographer_url": "https://www.pexels.com/@oren-beitan-35449142",
+  "width": 4000,
+  "height": 3000,
+  "downloaded_at": "2026-03-23 14:07:17"
 }

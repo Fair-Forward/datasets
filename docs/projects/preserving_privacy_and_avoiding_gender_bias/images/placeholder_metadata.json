@@ -1,9 +1,11 @@
 {
   "source": "Pexels",
-  "url": "https://www.pexels.com/photo/an-artist-s-illustration-of-artificial-intelligence-ai-this-image-represents-ethics-research-understanding-human-involvement-in-data-labelling-it-was-created-by-ariel-lu-as-part-of-the-18068747/",
-  "photographer": "Google DeepMind",
-  "photographer_url": "https://www.pexels.com/@googledeepmind",
-  "width": 7110,
-  "height": 4000,
-  "downloaded_at": "2025-04-23 18:01:53"
+  "provider": "pexels",
+  "search_query": "forest conservation green",
+  "url": "https://www.pexels.com/photo/green-leafed-tree-338936/",
+  "photographer": "Nejc Ko\u0161ir",
+  "photographer_url": "https://www.pexels.com/@nejc-kosir-108379",
+  "width": 5248,
+  "height": 3048,
+  "downloaded_at": "2026-03-23 14:05:54"
 }

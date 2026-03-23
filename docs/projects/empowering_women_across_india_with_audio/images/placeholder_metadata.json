@@ -1,9 +1,11 @@
 {
   "source": "Pexels",
-  "url": "https://www.pexels.com/photo/women-lying-on-the-floor-7324572/",
-  "photographer": "KoolShooters",
-  "photographer_url": "https://www.pexels.com/@koolshooters",
-  "width": 6720,
-  "height": 4480,
-  "downloaded_at": "2026-03-02 16:24:17"
+  "provider": "pexels",
+  "search_query": "health education smallholder farming Africa",
+  "url": "https://www.pexels.com/photo/smiling-female-farmer-in-nigerian-field-with-cattle-34705723/",
+  "photographer": "Achor David",
+  "photographer_url": "https://www.pexels.com/@achor-david-926249768",
+  "width": 5472,
+  "height": 3648,
+  "downloaded_at": "2026-03-23 14:07:24"
 }

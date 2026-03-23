@@ -1,9 +1,11 @@
 {
   "source": "Pexels",
-  "url": "https://www.pexels.com/photo/woman-posing-in-elegant-yellow-outfit-13691405/",
-  "photographer": "Ali  Drabo",
-  "photographer_url": "https://www.pexels.com/@ali-drabo-10956272",
-  "width": 5689,
-  "height": 7111,
-  "downloaded_at": "2025-04-23 18:01:30"
+  "provider": "pexels",
+  "search_query": "data technology Africa",
+  "url": "https://www.pexels.com/photo/close-up-photo-of-matrix-background-1089438/",
+  "photographer": "Markus Spiske",
+  "photographer_url": "https://www.pexels.com/@markusspiske",
+  "width": 5760,
+  "height": 3840,
+  "downloaded_at": "2026-03-23 14:07:15"
 }

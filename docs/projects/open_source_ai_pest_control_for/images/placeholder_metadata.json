@@ -1,9 +1,11 @@
 {
   "source": "Pexels",
-  "url": "https://www.pexels.com/photo/rye-ear-grain-12981658/",
-  "photographer": "Mirko Fabian",
-  "photographer_url": "https://www.pexels.com/@mirkofabian",
-  "width": 6000,
-  "height": 4000,
-  "downloaded_at": "2026-03-02 16:24:16"
+  "provider": "pexels",
+  "search_query": "agriculture crops developing country",
+  "url": "https://www.pexels.com/photo/green-plantations-in-small-village-in-mountainous-valley-4946679/",
+  "photographer": "Maria Orlova",
+  "photographer_url": "https://www.pexels.com/@orlovamaria",
+  "width": 2784,
+  "height": 1856,
+  "downloaded_at": "2026-03-23 14:07:19"
 }
