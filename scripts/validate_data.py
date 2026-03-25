@@ -34,6 +34,32 @@ COL_DESCRIPTION = 'Description - What can be done with this? What is this about?
 COL_DATA_CHARS = 'Data - Key Characteristics'
 COL_HOW_TO_USE = 'Deep Dive - How can you concretely work with this and build on this?'
 
+# Aliases for each canonical column name (matching CANONICAL_COLUMN_MAP in build_and_sync.py).
+# The Google Sheet may use any of these as the actual header.
+COLUMN_ALIASES = {
+    COL_LICENSE: ["License", "Usage Rights"],
+    COL_ORGS: [
+        "Organizations involved - including logos, links and visual elements",
+        "Organizations Involved", "Contributing Organizations", "Partners"
+    ],
+    COL_DESCRIPTION: [
+        "Description - What can be done with this? What is this about?",
+        "Description - What can be done", "Description", "About",
+        "What this is about and how can I use this? ",
+        "What this is about/Description"
+    ],
+    COL_DATA_CHARS: [
+        "Data - Key Characteristics", "Data Characteristics", "Data Details",
+        "Data: how to use it & key characteristics ",
+        "Data characteristics: how to use it & key characteristics  & Responsible AI Assessments"
+    ],
+    COL_HOW_TO_USE: [
+        "Deep Dive - How can you concretely work with this and build on this?",
+        "Deep Dive - How can you concretely work", "Deep Dive", "How to Use",
+        "Deep dive: How can you concretely work with this and built on this? How much will this cost and which resources are available to help me? "
+    ],
+}
+
 
 def validate_catalog(catalog_path):
     """Run all validation checks and return structured issues."""
@@ -313,26 +339,23 @@ def write_notes_to_sheet(row_notes, credentials_path):
     sheet = spreadsheet.get_worksheet_by_id(gid)
     headers = sheet.row_values(1)
 
-    # Map column names to column indices (1-based for gspread)
-    col_indices = {}
+    # Build a lookup from actual sheet header -> 1-based column index
+    header_to_idx = {}
     for i, h in enumerate(headers):
-        col_indices[h] = i + 1  # gspread uses 1-based indexing
+        header_to_idx[h.strip()] = i + 1
 
-    # Also try fuzzy matching for column names that may differ slightly
-    from thefuzz import fuzz
-    target_cols = [COL_LICENSE, COL_ORGS, COL_DESCRIPTION, COL_DATA_CHARS, COL_HOW_TO_USE]
-    for target in target_cols:
-        if target not in col_indices:
-            best_score = 0
-            best_header = None
-            for h in headers:
-                score = fuzz.token_sort_ratio(target, h)
-                if score > best_score:
-                    best_score = score
-                    best_header = h
-            if best_score >= 70 and best_header:
-                col_indices[target] = col_indices[best_header]
-                print(f"  Fuzzy-matched column '{target}' -> '{best_header}' (score: {best_score})")
+    # Map canonical column names to sheet column indices using aliases
+    col_indices = {}
+    for canonical, aliases in COLUMN_ALIASES.items():
+        for alias in aliases:
+            stripped = alias.strip()
+            if stripped in header_to_idx:
+                col_indices[canonical] = header_to_idx[stripped]
+                if stripped != canonical:
+                    print(f"  Matched column '{canonical}' -> sheet header '{stripped}'")
+                break
+        if canonical not in col_indices:
+            print(f"  WARNING: Could not find sheet column for '{canonical}'")
 
     # First, batch-clear any previous auto-check notes so we start clean.
     # Then batch-write all new notes in one API call.
