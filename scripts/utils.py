@@ -4,6 +4,46 @@ import pandas as pd
 
 PROJECTS_DIR = os.path.join("public", "projects")
 
+# Google Sheet configuration (single source of truth)
+GOOGLE_SHEET_ID = "18sgZgPGZuZjeBTHrmbr1Ra7mx8vSToUqnx8vCjhIp0c"
+GOOGLE_SHEET_GID = 756053104
+DEFAULT_CREDENTIALS_PATH = "data_sources/google_sheets_api/service_account_JN.json"
+
+# Country name to ISO Alpha-2 code mapping (canonical list for all scripts)
+COUNTRY_ISO_MAP = {
+    'Kenya': 'KE', 'India': 'IN', 'South Africa': 'ZA', 'Ghana': 'GH',
+    'Rwanda': 'RW', 'Uganda': 'UG', 'Indonesia': 'ID', 'Nigeria': 'NG',
+    'Tanzania': 'TZ', 'Ecuador': 'EC', 'DRC': 'CD', 'Congo': 'CG',
+    'Democratic Republic of the Congo': 'CD', 'Democratic Republic of Congo': 'CD',
+    'Benin': 'BJ', 'Colombia': 'CO',
+    "Cote d'Ivoire": 'CI', 'Ivory Coast': 'CI', 'Angola': 'AO',
+    'Mozambique': 'MZ', 'Zambia': 'ZM', 'Niger': 'NE', 'Togo': 'TG',
+    'Cameroon': 'CM', 'Madagascar': 'MG', 'Pakistan': 'PK', 'Malawi': 'MW',
+    'Ethiopia': 'ET', 'Senegal': 'SN', 'Mali': 'ML', 'Burkina Faso': 'BF',
+    'Bangladesh': 'BD', 'Nepal': 'NP', 'Sri Lanka': 'LK', 'Myanmar': 'MM',
+    'Thailand': 'TH', 'Vietnam': 'VN', 'Cambodia': 'KH', 'Laos': 'LA',
+    'Philippines': 'PH', 'Malaysia': 'MY', 'Peru': 'PE', 'Bolivia': 'BO',
+    'Brazil': 'BR', 'Argentina': 'AR', 'Chile': 'CL', 'Mexico': 'MX',
+    'Guatemala': 'GT', 'Honduras': 'HN', 'Nicaragua': 'NI', 'Costa Rica': 'CR',
+    'Panama': 'PA',
+}
+KNOWN_COUNTRIES = set(COUNTRY_ISO_MAP.keys())
+
+
+def get_gsheet_client(credentials_path=None):
+    """Authenticate with Google Sheets and return (client, spreadsheet, sheet)."""
+    import gspread
+    from oauth2client.service_account import ServiceAccountCredentials
+
+    creds_path = credentials_path or DEFAULT_CREDENTIALS_PATH
+    scope = ['https://spreadsheets.google.com/feeds',
+             'https://www.googleapis.com/auth/drive']
+    credentials = ServiceAccountCredentials.from_json_keyfile_name(creds_path, scope)
+    client = gspread.authorize(credentials)
+    spreadsheet = client.open_by_key(GOOGLE_SHEET_ID)
+    sheet = spreadsheet.get_worksheet_by_id(GOOGLE_SHEET_GID)
+    return client, spreadsheet, sheet
+
 # Access-note rows: only these openings in Dataset / Use-Case link cells (case-insensitive).
 ACCESS_NOTE_PREFIX_PENDING = "dataset/use-case has not been published yet."
 ACCESS_NOTE_PREFIX_UNAVAILABLE = "there is no dataset/use-case available."
@@ -172,20 +212,6 @@ def normalize_for_directory(text, max_words=6, max_length=50):
         normalized = normalized[:max_length]
     
     return normalized
-
-def is_valid_http_url(value):
-    """Check if value is a valid http(s) URL. More permissive - just checks for http/https scheme and basic domain."""
-    if value is None or (isinstance(value, float) and pd.isna(value)):
-        return False
-    text = str(value).strip()
-    if not text:
-        return False
-    # Simple check: starts with http:// or https:// and has at least one dot after scheme
-    if text.startswith(('http://', 'https://')):
-        scheme_removed = text[text.find('://') + 3:]
-        if '.' in scheme_removed and len(scheme_removed.split('/')[0]) > 0:
-            return True
-    return False
 
 def resolve_project_id(row, projects_dir=PROJECTS_DIR, row_idx=None):
     """

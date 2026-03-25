@@ -1,1 +1,0 @@
-Random Forest Regression; Software/Application: Sentinel-2 + RF

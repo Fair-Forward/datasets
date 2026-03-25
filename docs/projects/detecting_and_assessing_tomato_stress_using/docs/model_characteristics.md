@@ -1,1 +1,0 @@
-Random Forest; used for stress classification; Software/Application: Random Forest + UAV analytics

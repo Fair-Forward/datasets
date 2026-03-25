@@ -1,1 +1,0 @@
-This dataset and AI model was produced as part of the Radiant Earth Spot the Crop Challenge (https://zindi.africa/hackathons/radiant-earth-spot-the-crop-hackathon). The objective of the competition was to create a machine learning model to classify fields by crop type from images collected during the growing season by the Sentinel-2 and Sentinel-1 satellites.

@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { withBasePath, resolvePublicHref } from '../utils/basePath'
 import { SDG_COLORS } from '../utils/sdgColors'
+import { parseContact, licenseLabel, firstUrl } from '../utils/parsing'
 
 const markdownLinkComponents = {
   a: ({ href, children, ...props }) => {
@@ -246,49 +247,26 @@ const DetailPanel = ({ project, onClose }) => {
 
   const additionalResourceLinks = additionalResources.filter(r => r.url)
 
-  // Helper to render contact value with link detection
+  // Render contact value as JSX using shared parsing
   const renderContact = (contact) => {
-    const cleanLabel = (label = '') =>
-      label.replace(/\([^)]*\)/g, ' ').replace(/\s{2,}/g, ' ').trim()
-
-    const emailMatch = contact.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i)
-    const urlMatch = contact.match(/https?:\/\/[^\s)]+/i)
-    const beforeComma = contact.split(',')[0].trim()
-    const beforeParen = contact.split('(')[0].trim()
-    const baseLabel = cleanLabel(beforeComma || beforeParen || contact)
-
-    if (emailMatch) {
-      const email = emailMatch[0]
-      const label = cleanLabel(baseLabel.replace(email, '').trim()) || baseLabel || email
-      return <a href={`mailto:${email}`}>{label}</a>
+    const { label, href } = parseContact(contact)
+    if (href && href.startsWith('mailto:')) {
+      return <a href={href}>{label}</a>
     }
-    if (urlMatch) {
-      const url = urlMatch[0]
-      const label = cleanLabel(baseLabel.replace(url, '').trim()) || baseLabel || url
-      return <a href={url} target="_blank" rel="noopener noreferrer">{label}</a>
+    if (href) {
+      return <a href={href} target="_blank" rel="noopener noreferrer">{label}</a>
     }
-    return baseLabel
+    return label
   }
 
-  // Helper to render license value with link detection
+  // Render license value as JSX using shared parsing
   const renderLicense = (raw) => {
-    const urlMatch = raw.match(/https?:\/\/[^\s)]+/i)
-    let label = raw
-    if (!urlMatch && /^\d+(\.\d+)?$/.test(raw)) {
-      label = `cc-by-${raw}`
+    const url = firstUrl(raw)
+    const label = licenseLabel(raw)
+    if (url) {
+      return <a href={url} target="_blank" rel="noopener noreferrer">{label}</a>
     }
-    if (urlMatch) {
-      const textLabel = raw.replace(urlMatch[0], '').trim()
-      if (textLabel) return <a href={urlMatch[0]} target="_blank" rel="noopener noreferrer">{textLabel.toLowerCase()}</a>
-      try {
-        const segments = new URL(urlMatch[0]).pathname.split('/').filter(Boolean)
-        const slug = segments[segments.length - 1] || ''
-        const cleanSlug = slug.replace(/-/g, ' ').replace(/_/g, ' ')
-        if (cleanSlug && cleanSlug.length > 2) return <a href={urlMatch[0]} target="_blank" rel="noopener noreferrer">{cleanSlug}</a>
-      } catch {}
-      return <a href={urlMatch[0]} target="_blank" rel="noopener noreferrer">License</a>
-    }
-    return label.toLowerCase()
+    return label
   }
 
   return (
@@ -384,27 +362,7 @@ const DetailPanel = ({ project, onClose }) => {
                   ))}
                   {licenseValue && (
                     <span className="license-inline">
-                      <i className="fas fa-copyright"></i> {(() => {
-                        const urlMatch = licenseValue.match(/https?:\/\/[^\s)]+/i)
-                        let label = licenseValue
-                        if (!urlMatch && /^\d+(\.\d+)?$/.test(licenseValue)) {
-                          label = `cc-by-${licenseValue}`
-                        }
-                        if (urlMatch) {
-                          const textLabel = licenseValue.replace(urlMatch[0], '').trim()
-                          // Show clean label, not raw URL
-                          if (textLabel) return <a href={urlMatch[0]} target="_blank" rel="noopener noreferrer">{textLabel.toLowerCase()}</a>
-                          // Extract license name from URL path
-                          try {
-                            const segments = new URL(urlMatch[0]).pathname.split('/').filter(Boolean)
-                            const slug = segments[segments.length - 1] || ''
-                            const cleanSlug = slug.replace(/-/g, ' ').replace(/_/g, ' ')
-                            if (cleanSlug && cleanSlug.length > 2) return <a href={urlMatch[0]} target="_blank" rel="noopener noreferrer">{cleanSlug}</a>
-                          } catch {}
-                          return <a href={urlMatch[0]} target="_blank" rel="noopener noreferrer">License</a>
-                        }
-                        return label.toLowerCase()
-                      })()}
+                      <i className="fas fa-copyright"></i> {renderLicense(licenseValue)}
                     </span>
                   )}
                 </div>

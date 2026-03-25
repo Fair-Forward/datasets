@@ -1,1 +1,0 @@
-This datasets can be used to build systems for faster, more regular monitoring of mangrove conditions. This is essential to provide evidence that supports timely decisions for mangrove management and mitigate the outcomes of climate change.

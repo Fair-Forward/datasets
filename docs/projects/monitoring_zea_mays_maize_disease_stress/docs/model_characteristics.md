@@ -1,1 +1,0 @@
-Random Forest, SVM; <80% accuracy; Software/Application: Drone + ML (RF, SVM)

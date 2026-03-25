@@ -3,29 +3,17 @@ import os
 import re
 import argparse
 from datetime import datetime
+from utils import KNOWN_COUNTRIES, DEFAULT_CREDENTIALS_PATH, get_gsheet_client
 
 parser = argparse.ArgumentParser(description='Validate catalog data and generate quality report.')
 parser.add_argument('--input', type=str, default="public/data/catalog.json", help='Path to catalog JSON')
 parser.add_argument('--output', type=str, default="docs/data_quality_report.md", help='Path to output report')
 parser.add_argument('--write-notes', action='store_true', help='Write quality notes to Google Sheet cells')
-parser.add_argument('--credentials', type=str, default="data_sources/google_sheets_api/service_account_JN.json",
+parser.add_argument('--credentials', type=str, default=DEFAULT_CREDENTIALS_PATH,
                     help='Path to Google Sheets credentials (only used with --write-notes)')
 parser.add_argument('--excel', type=str, default="docs/data_catalog.xlsx",
                     help='Path to Excel file (for row mapping with --write-notes)')
 args = parser.parse_args()
-
-# Known country names (from generate_insights_data.py ISO mapping)
-KNOWN_COUNTRIES = {
-    'Kenya', 'India', 'South Africa', 'Ghana', 'Rwanda', 'Uganda', 'Indonesia',
-    'Nigeria', 'Tanzania', 'Ecuador', 'DRC', 'Congo', 'Benin', 'Colombia',
-    "Cote d'Ivoire", 'Ivory Coast', 'Angola', 'Mozambique', 'Zambia', 'Niger',
-    'Togo', 'Cameroon', 'Madagascar', 'Pakistan', 'Malawi', 'Ethiopia',
-    'Senegal', 'Mali', 'Burkina Faso', 'Bangladesh', 'Nepal', 'Sri Lanka',
-    'Myanmar', 'Thailand', 'Vietnam', 'Cambodia', 'Laos', 'Philippines',
-    'Malaysia', 'Peru', 'Bolivia', 'Brazil', 'Argentina', 'Chile', 'Mexico',
-    'Guatemala', 'Honduras', 'Nicaragua', 'Costa Rica', 'Panama',
-    'Democratic Republic of Congo',
-}
 
 # Column names in the Google Sheet / Excel
 COL_LICENSE = 'License'
@@ -324,19 +312,7 @@ def build_row_notes(excel_path):
 
 def write_notes_to_sheet(row_notes, credentials_path):
     """Write quality feedback as cell notes to the Google Sheet using batch API."""
-    import gspread
-    from oauth2client.service_account import ServiceAccountCredentials
-
-    scope = ['https://spreadsheets.google.com/feeds',
-             'https://www.googleapis.com/auth/drive']
-    credentials = ServiceAccountCredentials.from_json_keyfile_name(credentials_path, scope)
-    client = gspread.authorize(credentials)
-
-    spreadsheet_id = "18sgZgPGZuZjeBTHrmbr1Ra7mx8vSToUqnx8vCjhIp0c"
-    gid = 756053104
-
-    spreadsheet = client.open_by_key(spreadsheet_id)
-    sheet = spreadsheet.get_worksheet_by_id(gid)
+    _client, _spreadsheet, sheet = get_gsheet_client(credentials_path)
     headers = sheet.row_values(1)
 
     # Build a lookup from actual sheet header -> 1-based column index

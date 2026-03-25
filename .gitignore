@@ -4,6 +4,7 @@ package-lock.json
 
 # Build outputs
 dist/
+.vite/
 
 # Python cache
 __pycache__/

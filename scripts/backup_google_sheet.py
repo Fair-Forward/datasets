@@ -1,36 +1,21 @@
 import argparse
 import os
 import datetime
-import gspread
 import csv
-from oauth2client.service_account import ServiceAccountCredentials
+import gspread
+from utils import get_gsheet_client, DEFAULT_CREDENTIALS_PATH
 
 def main():
     parser = argparse.ArgumentParser(description='Backup Google Sheet data to CSV.')
-    parser.add_argument('--credentials', type=str, required=True, help='Path to Google API credentials JSON file.')
+    parser.add_argument('--credentials', type=str, default=DEFAULT_CREDENTIALS_PATH, help='Path to Google API credentials JSON file.')
     parser.add_argument('--backup-dir', type=str, required=True, help='Directory to save the backup CSV file.')
-    parser.add_argument('--sheet-url', type=str, default="https://docs.google.com/spreadsheets/d/18sgZgPGZuZjeBTHrmbr1Ra7mx8vSToUqnx8vCjhIp0c/edit?gid=561894456#gid=561894456", help='Full URL of the Google Sheet.')
-    parser.add_argument('--gid', type=int, default=756053104, help='GID of the specific sheet tab.')
     args = parser.parse_args()
 
     print("Starting monthly Google Sheet backup...")
 
     try:
         # --- Connect to Google Sheet ---
-        scope = ['https://spreadsheets.google.com/feeds',
-                 'https://www.googleapis.com/auth/drive']
-        credentials = ServiceAccountCredentials.from_json_keyfile_name(args.credentials, scope)
-        client = gspread.authorize(credentials)
-
-        # Extract spreadsheet ID from URL
-        try:
-            spreadsheet_id = args.sheet_url.split('/d/')[1].split('/')[0]
-        except IndexError:
-            print(f"Error: Could not parse Spreadsheet ID from URL: {args.sheet_url}")
-            exit(1)
-            
-        spreadsheet = client.open_by_key(spreadsheet_id)
-        sheet = spreadsheet.get_worksheet_by_id(int(args.gid))
+        _client, _spreadsheet, sheet = get_gsheet_client(args.credentials)
         print(f"Successfully connected to sheet: {sheet.title}")
 
         # --- Fetch Data ---

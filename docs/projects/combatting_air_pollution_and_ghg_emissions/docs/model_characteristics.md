@@ -1,1 +1,0 @@
-Sensors data is continously shared with specific pollutoin boards, and us ecase dvelopeed under project combined AI and ML to detect pollution sources and provide early alerts, enabling rapid response and policy action.

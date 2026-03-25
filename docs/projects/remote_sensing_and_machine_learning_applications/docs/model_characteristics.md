@@ -1,1 +1,0 @@
-ML for index-insurance mapping; Software/Application: Dynamic World + ML
