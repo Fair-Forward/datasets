@@ -236,14 +236,7 @@ const DetailPanel = ({ project, onClose }) => {
 
   if (!project) return null
 
-  // Determine primary CTA link
-  const primaryLink = datasetLinks[0] || usecaseLinks[0] || null
-  const isPrimaryDataset = Boolean(datasetLinks[0])
-  // Additional links beyond the primary
-  const additionalLinks = [
-    ...datasetLinks.slice(isPrimaryDataset ? 1 : 0).map((l, i) => ({ ...l, type: 'dataset', idx: isPrimaryDataset ? i + 1 : i })),
-    ...usecaseLinks.slice(isPrimaryDataset ? 0 : 1).map((l, i) => ({ ...l, type: 'usecase', idx: i }))
-  ]
+  const hasAnyLinks = datasetLinks.length > 0 || usecaseLinks.length > 0
 
   const additionalResourceLinks = additionalResources.filter(r => r.url)
 
@@ -292,23 +285,40 @@ const DetailPanel = ({ project, onClose }) => {
             <>
               {/* A) Action Row */}
               <div className="panel-actions">
-                {primaryLink ? (() => {
-                  const external =
-                    primaryLink.url &&
-                    (primaryLink.url.startsWith('http://') ||
-                      primaryLink.url.startsWith('https://'))
-                  return (
-                    <a
-                      className="panel-cta"
-                      href={resolvePublicHref(primaryLink.url)}
-                      target={external ? '_blank' : undefined}
-                      rel={external ? 'noopener noreferrer' : undefined}
-                    >
-                      <i className="fas fa-download"></i>
-                      {isPrimaryDataset ? 'Access Dataset' : 'Access Use Case'}
-                    </a>
-                  )
-                })() : showHostedDocuments ? (
+                {hasAnyLinks ? (
+                  <>
+                    {datasetLinks.map((link, idx) => {
+                      const external = link.url && (link.url.startsWith('http://') || link.url.startsWith('https://'))
+                      return (
+                        <a
+                          key={`dataset-${idx}`}
+                          className="panel-cta"
+                          href={resolvePublicHref(link.url)}
+                          target={external ? '_blank' : undefined}
+                          rel={external ? 'noopener noreferrer' : undefined}
+                        >
+                          <i className="fas fa-database"></i>
+                          {datasetLinks.length > 1 ? `Access Dataset ${idx + 1}` : 'Access Dataset'}
+                        </a>
+                      )
+                    })}
+                    {usecaseLinks.map((link, idx) => {
+                      const external = link.url && (link.url.startsWith('http://') || link.url.startsWith('https://'))
+                      return (
+                        <a
+                          key={`usecase-${idx}`}
+                          className="panel-cta"
+                          href={resolvePublicHref(link.url)}
+                          target={external ? '_blank' : undefined}
+                          rel={external ? 'noopener noreferrer' : undefined}
+                        >
+                          <i className="fas fa-microscope"></i>
+                          {usecaseLinks.length > 1 ? `Access Use Case ${idx + 1}` : 'Access Use Case'}
+                        </a>
+                      )
+                    })}
+                  </>
+                ) : showHostedDocuments ? (
                   hostedDocuments.map((doc, idx) => {
                     const isPdf = doc.url?.toLowerCase().endsWith('.pdf')
                     return (
