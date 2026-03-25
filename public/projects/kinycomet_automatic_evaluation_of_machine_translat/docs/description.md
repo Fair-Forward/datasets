@@ -1,0 +1,1 @@
+Until now, the lack of automatic evaluation tools made Kinyarwanda-English machine translation development slow and expensive, as it required manual human review. We’ve bridged this gap by creating a new evaluation dataset and model. Both are now open-source to support the research community. Our methodology and results are detailed in our upcoming paper for LREC 2026.

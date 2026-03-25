@@ -1,9 +1,9 @@
 # Data Quality Report
-Generated: 2026-03-25 11:46
+Generated: 2026-03-25 12:13
 
 ## Summary
-- **69** projects evaluated
-- **Average score: 89/100** (range 40-100)
+- **71** projects evaluated
+- **Average score: 88/100** (range 40-100)
 - **1** projects below 50/100 (need attention)
 - **0** license values need review
 - **1** organization fields contain email addresses
@@ -26,7 +26,7 @@ These entries may contain person names instead of organization names.
 ## Score Distribution
 
 - **90-100**: 51 projects ###################################################
-- **70-89**: 17 projects #################
+- **70-89**: 19 projects ###################
 - **50-69**: 0 projects 
 - **30-49**: 1 projects #
 - **0-29**: 0 projects 
