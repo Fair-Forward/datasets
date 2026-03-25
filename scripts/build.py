@@ -40,7 +40,13 @@ def main():
     ):
         sys.exit(1)
     
-    # Step 2: Generate insights JSON  
+    # Step 1b: Run data quality validation (advisory, never blocks the build)
+    subprocess.run(
+        [PYTHON, 'scripts/validate_data.py'],
+        check=False
+    )
+
+    # Step 2: Generate insights JSON
     # Read project count from catalog.json
     import json
     try:

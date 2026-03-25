@@ -157,7 +157,8 @@ const CatalogPage = () => {
       )
     }
 
-    return projects
+    // Sort by quality score (best-documented first)
+    return projects.sort((a, b) => (b.quality_score || 0) - (a.quality_score || 0))
   }, [catalogData, filters])
 
   // Calculate dynamic stats based on filtered results
@@ -253,8 +254,16 @@ const CatalogPage = () => {
       />
       
       <div className="container">
-        <div className="results-count">
-          Showing {filteredProjects.length} of {catalogData.stats.total_projects} projects
+        <div className="results-bar">
+          <div className="results-count">
+            Showing {filteredProjects.length} of {catalogData.stats.total_projects} projects
+          </div>
+          <div className="completeness-legend">
+            <span className="completeness-legend-dots">
+              {[1,2,3,4,5].map(i => <span key={i} className={`completeness-dot${i <= 3 ? ' filled' : ''}`} />)}
+            </span>
+            <span>Dots indicate information depth &mdash; projects with more documentation appear first</span>
+          </div>
         </div>
         <div className="grid" id="dataGrid">
           {filteredProjects.map((project, idx) => (

@@ -78,7 +78,8 @@ const getSdgFallbackColor = (sdgs) => {
 }
 
 const ProjectCard = ({ project, onClick, onFilterSDG }) => {
-  const { title, description, sdgs, data_types, image, has_dataset, has_usecase, is_lacuna, has_access_note, countries = [], license } = project
+  const { title, description, sdgs, data_types, image, has_dataset, has_usecase, is_lacuna, has_access_note, countries = [], license, quality_score } = project
+  const completeness = Math.min(5, Math.max(1, Math.ceil((quality_score || 0) / 20)))
 
   const cardClasses = [
     'card',
@@ -167,6 +168,11 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
       </div>
       
       <div className="card-footer">
+        <div className="completeness-indicator" title={`Information depth: ${completeness}/5`}>
+          {[1, 2, 3, 4, 5].map(i => (
+            <span key={i} className={`completeness-dot${i <= completeness ? ' filled' : ''}`} />
+          ))}
+        </div>
         {data_types.length > 0 && (
           <span className="footer-data-types">{data_types.join(', ')}</span>
         )}

@@ -22,6 +22,125 @@ parser.add_argument('--output', type=str, default="public/data/catalog.json", he
 args = parser.parse_args()
 
 
+# License normalization: map inconsistent values to canonical short names
+LICENSE_NORMALIZATION = {
+    'https://creativecommons.org/licenses/by/4.0/': 'CC-BY 4.0',
+    'cc-by': 'CC-BY 4.0',
+    'cc-by 4.0': 'CC-BY 4.0',
+    'cc-by-sa': 'CC-BY-SA 4.0',
+    'cc-0': 'CC0 1.0',
+    'cc0': 'CC0 1.0',
+    'cc-o': 'CC0 1.0',
+    'apache 2.0': 'Apache 2.0',
+    'apache license 2.0': 'Apache 2.0',
+    'mit license': 'MIT',
+    'mit': 'MIT',
+    'https://www.gnu.org/licenses/agpl-3.0.html': 'AGPL 3.0',
+    'https://opendatacommons.org/licenses/dbcl/1-0/': 'ODbL 1.0',
+}
+
+
+def normalize_license(raw_license):
+    """Normalize license strings to canonical short names."""
+    if not raw_license or not isinstance(raw_license, str):
+        return ''
+    cleaned = raw_license.strip()
+    if not cleaned or cleaned == 'nan':
+        return ''
+    # Strip leading whitespace/newlines (some entries have "\n\nhttps://...")
+    cleaned = cleaned.strip()
+    lookup = cleaned.lower().strip()
+    return LICENSE_NORMALIZATION.get(lookup, cleaned)
+
+
+def clean_str(value):
+    """Clean a string value: strip whitespace, replace literal 'nan' with empty."""
+    if not isinstance(value, str):
+        return ''
+    s = value.strip()
+    if s == 'nan':
+        return ''
+    return s
+
+
+def clean_country_list(country_text):
+    """Split country text into clean list, handling slash-separated region qualifiers."""
+    if not country_text or not isinstance(country_text, str):
+        return []
+    parts = re.split(r',|\s+and\s+|;', country_text)
+    countries = []
+    for part in parts:
+        country = part.strip()
+        if not country:
+            continue
+        # Split "Benin/West Africa" -> take the country name (first part)
+        if '/' in country:
+            country = country.split('/')[0].strip()
+        if country:
+            countries.append(country)
+    return countries
+
+
+def compute_quality_score(project):
+    """Compute a 0-100 quality score based on field completeness."""
+    score = 0
+
+    # title: 10 points
+    if project.get('title') and project['title'].strip():
+        score += 10
+
+    # description: 15 points (minus 5 if under 50 chars)
+    desc = project.get('description', '')
+    if desc and desc.strip():
+        score += 15
+        if len(desc.strip()) < 50:
+            score -= 5
+
+    # links: 15 points (at least one dataset/usecase link, or has access note)
+    if project.get('dataset_links') or project.get('usecase_links'):
+        score += 15
+    elif project.get('has_access_note'):
+        score += 15
+
+    # data_characteristics: 10 points
+    if project.get('data_characteristics') and project['data_characteristics'].strip():
+        score += 10
+
+    # how_to_use: 10 points
+    if project.get('how_to_use') and project['how_to_use'].strip():
+        score += 10
+
+    # license: 10 points
+    if project.get('license') and project['license'].strip():
+        score += 10
+
+    # sdgs: 5 points
+    if project.get('sdgs'):
+        score += 5
+
+    # countries: 5 points
+    if project.get('countries'):
+        score += 5
+
+    # data_types: 5 points
+    if project.get('data_types'):
+        score += 5
+
+    # organizations: 5 points
+    if project.get('organizations') and project['organizations'].strip():
+        score += 5
+
+    # image: 5 points
+    if project.get('image'):
+        score += 5
+
+    # maturity_tags: 5 points
+    if project.get('maturity_tags'):
+        score += 5
+
+    return score
+
+
 # Define the maturity funnel stages in order of progression (matching MaturityChart.jsx)
 MATURITY_STAGES = [
     {'key': 'dataset', 'label': 'Datasets', 'patterns': ['dataset']},
@@ -259,11 +378,11 @@ def generate_catalog_json():
                 get_hosted_documents(normalized_project_id) if has_access_note else []
             )
 
-            # Create project object
+            # Create project object with normalized fields
             project = {
                 'id': normalized_project_id,
                 'title': str(title),
-                'description': str(row.get('Description - What can be done with this? What is this about?', '')),
+                'description': clean_str(str(row.get('Description - What can be done with this? What is this about?', ''))),
                 'dataset_links': dataset_urls,
                 'usecase_links': usecase_urls,
                 'access_note_kind': access_note_kind,
@@ -272,23 +391,26 @@ def generate_catalog_json():
                 'hosted_documents': hosted_documents,
                 'sdgs': sdgs,
                 'data_types': data_types,
-                'countries': [c.strip() for c in re.split(r',|\s+and\s+|;', country_text) if c.strip()] if country_text else [],
-                'license': str(row.get('License', '')),
-                'contact': str(row.get('Point of Contact/Communities', '')),
-                'organizations': str(row.get('Organizations Involved', '')),
-                'authors': str(row.get('Authors', '')),
+                'countries': clean_country_list(country_text),
+                'license': normalize_license(str(row.get('License', ''))),
+                'contact': clean_str(str(row.get('Point of Contact/Communities', ''))),
+                'organizations': clean_str(str(row.get('Organizations Involved', ''))),
+                'authors': clean_str(str(row.get('Authors', ''))),
                 'is_lacuna': is_lacuna,
                 'has_dataset': has_dataset_link,
                 'has_usecase': has_usecase_link,
                 'image': image,
-                'data_characteristics': str(row.get('Data - Key Characteristics', '')),
-                'model_characteristics': str(row.get('Model/Use-Case - Key Characteristics', '')),
-                'how_to_use': str(row.get('Deep Dive - How can you concretely work with this and build on this?', '')),
+                'data_characteristics': clean_str(str(row.get('Data - Key Characteristics', ''))),
+                'model_characteristics': clean_str(str(row.get('Model/Use-Case - Key Characteristics', ''))),
+                'how_to_use': clean_str(str(row.get('Deep Dive - How can you concretely work with this and build on this?', ''))),
                 'maturity': maturity_string,
                 'maturity_tags': maturity_tags,
                 'additional_resources': additional_resources
             }
-            
+
+            # Compute and attach quality score
+            project['quality_score'] = compute_quality_score(project)
+
             projects.append(project)
         
         # Calculate final counts

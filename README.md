@@ -23,7 +23,7 @@ Place your service account JSON at that path (do not commit it).
 
 Build end-to-end from Google Sheets:
 ```bash
-python scripts/build_from_google_sheets.py
+python scripts/build_and_sync.py
 ```
 Rebuild from existing `docs/data_catalog.xlsx` (no Sheets fetch):
 ```bash
@@ -52,7 +52,7 @@ Put files in `public/projects/<project_id>/documents/`. You can still link the s
 - Pexels API key is only needed for `scripts/download_placeholder_images.py`.
 
 ## Scripts
-- `scripts/build_from_google_sheets.py` — fetch Sheet, generate markdown/JSON, run Vite build to `docs/`.
+- `scripts/build_and_sync.py` — fetch Sheet, generate markdown/JSON, run Vite build to `docs/`.
 - `scripts/build.py` — regenerate JSON + Vite build from existing `docs/data_catalog.xlsx`.
 - `scripts/download_placeholder_images.py` — optional placeholders (needs `PEXELS_API_KEY`).
 

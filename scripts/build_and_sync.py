@@ -644,4 +644,16 @@ except subprocess.CalledProcessError as e:
     print(f"Error running build.py: {e}")
     exit(1)
 
+# Write quality notes back to Google Sheet (only when fetching from sheets)
+if not args.skip_fetch:
+    print("Writing quality notes to Google Sheet...")
+    try:
+        subprocess.run([
+            sys.executable, 'scripts/validate_data.py',
+            '--write-notes',
+            '--credentials', args.credentials
+        ], check=False)
+    except Exception as e:
+        print(f"Warning: Could not write quality notes: {e}")
+
 print("Done!") 
