@@ -3,11 +3,11 @@ import { withBasePath } from '../utils/basePath'
 
 // Define the maturity funnel stages in order of progression
 const FUNNEL_STAGES = [
-  { key: 'dataset', label: 'Datasets', icon: 'fa-database', color: '#dbe4f3', patterns: ['dataset'] },
-  { key: 'model', label: 'Models', icon: 'fa-cogs', color: '#a8bcd9', patterns: ['model'] },
-  { key: 'pilot', label: 'Pilots', icon: 'fa-play-circle', color: '#7594bf', patterns: ['pilot'] },
-  { key: 'usecase', label: 'Use Cases', icon: 'fa-check-circle', color: '#4c70ba', patterns: ['use-case', 'use case', 'usecase'] },
-  { key: 'business', label: 'Business Model', icon: 'fa-chart-line', color: '#3b5998', patterns: ['business model', 'business-model', 'scaled'] }
+  { key: 'dataset', label: 'Datasets', color: '#64748b', patterns: ['dataset'] },
+  { key: 'model', label: 'Models', color: '#3b82f6', patterns: ['model'] },
+  { key: 'pilot', label: 'Pilots', color: '#6366f1', patterns: ['pilot'] },
+  { key: 'usecase', label: 'Use Cases', color: '#8b5cf6', patterns: ['use-case', 'use case', 'usecase'] },
+  { key: 'business', label: 'Business Model', color: '#10b981', patterns: ['business model', 'business-model', 'scaled'] }
 ]
 
 // Parse maturity string and return which stages this project has reached
@@ -89,7 +89,7 @@ const MaturityChart = ({ maturityDistribution, catalogProjects }) => {
   const svgHeight = 420
   const stageWidth = 120
   const stageGap = (svgWidth - (stages.length * stageWidth)) / (stages.length + 1)
-  const maxFlowHeight = 260
+  const maxFlowHeight = 280
   const topPadding = 70
 
   // Calculate positions and heights for each stage - height based on count
@@ -143,16 +143,6 @@ const MaturityChart = ({ maturityDistribution, catalogProjects }) => {
           <span className="sankey-title-text">Project Maturity Pipeline</span>
           <span className="sankey-subtitle">How many projects have reached each stage</span>
         </div>
-        <div className="sankey-total">
-          <span className="sankey-total-value">{totalProjects}</span>
-          <span className="sankey-total-label">Total Projects</span>
-        </div>
-      </div>
-
-      {/* Progression indicator */}
-      <div className="sankey-progression-indicator">
-        <span>Maturity Progression</span>
-        <i className="fas fa-long-arrow-alt-right"></i>
       </div>
 
       {/* Sankey Diagram */}
@@ -189,7 +179,7 @@ const MaturityChart = ({ maturityDistribution, catalogProjects }) => {
                 key={`flow-${index}`}
                 d={path}
                 fill={`url(#gradient-${index})`}
-                opacity={hoveredStage && !isHighlighted ? 0.2 : 0.5}
+                opacity={hoveredStage && !isHighlighted ? 0.2 : 0.55}
                 className="sankey-flow"
               />
             )
@@ -238,7 +228,7 @@ const MaturityChart = ({ maturityDistribution, catalogProjects }) => {
                   textAnchor="middle"
                   dominantBaseline="middle"
                   className="sankey-stage-count"
-                  fill={index < 2 ? '#1e293b' : '#fff'}
+                  fill="#fff"
                   fontSize={pos.height > 60 ? 28 : pos.height > 40 ? 22 : 16}
                   fontWeight="700"
                 >
@@ -251,25 +241,10 @@ const MaturityChart = ({ maturityDistribution, catalogProjects }) => {
           {/* Labels below stages */}
           {stagePositions.map((pos) => (
             <g key={`label-${pos.stage.key}`}>
-              {/* Icon */}
-              <foreignObject
-                x={pos.x + pos.width / 2 - 16}
-                y={topPadding + maxFlowHeight + 25}
-                width={32}
-                height={32}
-              >
-                <div 
-                  className="sankey-label-icon"
-                  style={{ color: pos.stage.color }}
-                >
-                  <i className={`fas ${pos.stage.icon}`}></i>
-                </div>
-              </foreignObject>
-              
               {/* Label text */}
               <text
                 x={pos.x + pos.width / 2}
-                y={topPadding + maxFlowHeight + 70}
+                y={topPadding + maxFlowHeight + 35}
                 textAnchor="middle"
                 className="sankey-label-text"
                 fill="var(--text)"
@@ -278,11 +253,11 @@ const MaturityChart = ({ maturityDistribution, catalogProjects }) => {
               >
                 {pos.stage.label}
               </text>
-              
+
               {/* Percentage */}
               <text
                 x={pos.x + pos.width / 2}
-                y={topPadding + maxFlowHeight + 88}
+                y={topPadding + maxFlowHeight + 52}
                 textAnchor="middle"
                 className="sankey-label-percent"
                 fill="var(--text-light)"
@@ -334,81 +309,12 @@ const MaturityChart = ({ maturityDistribution, catalogProjects }) => {
         </svg>
       </div>
 
-      {/* Insight cards */}
-      <div className="sankey-insights">
-        <div className="sankey-insight-card">
-          <div className="insight-card-icon" style={{ backgroundColor: 'rgba(59, 89, 152, 0.08)', color: '#3b5998' }}>
-            <i className="fas fa-database"></i>
-          </div>
-          <div className="insight-card-content">
-            <span className="insight-card-value">{stages[0]?.count || 0}</span>
-            <span className="insight-card-label">Have datasets</span>
-          </div>
+      {/* Summary annotation */}
+      {stages[4]?.count > 0 && stages[0]?.count > 0 && (
+        <div className="sankey-annotation">
+          {((stages[4].count / stages[0].count) * 100).toFixed(0)}% of projects reach a sustainable business model
         </div>
-
-        <div className="sankey-insight-card">
-          <div className="insight-card-icon" style={{ backgroundColor: 'rgba(59, 89, 152, 0.08)', color: '#3b5998' }}>
-            <i className="fas fa-check-circle"></i>
-          </div>
-          <div className="insight-card-content">
-            <span className="insight-card-value">{stages[3]?.count || 0}</span>
-            <span className="insight-card-label">Reach use case stage</span>
-          </div>
-        </div>
-
-        <div className="sankey-insight-card">
-          <div className="insight-card-icon" style={{ backgroundColor: 'rgba(59, 89, 152, 0.08)', color: '#3b5998' }}>
-            <i className="fas fa-chart-line"></i>
-          </div>
-          <div className="insight-card-content">
-            <span className="insight-card-value">{stages[4]?.count || 0}</span>
-            <span className="insight-card-label">Have business model</span>
-          </div>
-        </div>
-
-        <div className="sankey-insight-card">
-          <div className="insight-card-icon" style={{ backgroundColor: 'rgba(59, 89, 152, 0.08)', color: '#3b5998' }}>
-            <i className="fas fa-percent"></i>
-          </div>
-          <div className="insight-card-content">
-            <span className="insight-card-value">
-              {stages[0]?.count > 0
-                ? ((stages[4]?.count / stages[0]?.count) * 100).toFixed(0)
-                : 0}%
-            </span>
-            <span className="insight-card-label">Full pipeline completion</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Conversion funnel stats */}
-      <div className="sankey-funnel-stats">
-        <div className="funnel-stat-header">Stage-to-stage progression</div>
-        <div className="funnel-stat-row">
-          {stages.slice(1).map((stage, index) => {
-            const prevStage = stages[index]
-            const conversionRate = prevStage.count > 0 
-              ? ((stage.count / prevStage.count) * 100).toFixed(0)
-              : 0
-            
-            return (
-              <div key={stage.key} className="funnel-stat">
-                <div className="funnel-stat-arrow" style={{ color: 'var(--primary)' }}>
-                  <i className="fas fa-arrow-right"></i>
-                </div>
-                <div className="funnel-stat-content">
-                  <span className="funnel-stat-value" style={{ color: 'var(--primary)' }}>
-                    {conversionRate}%
-                  </span>
-                  <span className="funnel-stat-label">
-                    {prevStage.label} → {stage.label}
-                  </span>
-                </div>
-              </div>
-            )
-          })}
-        </div>
-      </div>
+      )}
     </div>
   )
 }

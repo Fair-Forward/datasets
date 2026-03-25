@@ -58,6 +58,13 @@
   --viz-4: #4c70ba;
   --viz-5: #3b5998;   /* Darkest = primary */
 
+  /* --- Maturity pipeline stage colors --- */
+  --maturity-dataset:  #64748b;   /* slate -- starting point */
+  --maturity-model:    #3b82f6;   /* blue -- building */
+  --maturity-pilot:    #6366f1;   /* indigo -- testing */
+  --maturity-usecase:  #8b5cf6;   /* purple -- deploying */
+  --maturity-business: #10b981;   /* emerald -- sustainable */
+
   /* --- Semantic colors --- */
   --color-success:  #10b981;
   --color-warning:  #f59e0b;

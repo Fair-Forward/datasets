@@ -131,27 +131,18 @@ const InsightsPage = () => {
         {/* Summary Stats */}
         <div className="insights-hero-stats">
           <div className="hero-stat">
-            <div className="hero-stat-icon">
-              <i className="fas fa-database"></i>
-            </div>
             <div className="hero-stat-content">
               <span className="hero-stat-value">{total_projects}</span>
               <span className="hero-stat-label">Total Projects</span>
             </div>
           </div>
           <div className="hero-stat">
-            <div className="hero-stat-icon">
-              <i className="fas fa-globe-africa"></i>
-            </div>
             <div className="hero-stat-content">
               <span className="hero-stat-value">{total_countries}</span>
               <span className="hero-stat-label">Countries</span>
             </div>
           </div>
           <div className="hero-stat">
-            <div className="hero-stat-icon">
-              <i className="fas fa-bullseye"></i>
-            </div>
             <div className="hero-stat-content">
               <span className="hero-stat-value">{Object.keys(sdg_distribution || {}).length}</span>
               <span className="hero-stat-label">SDGs Covered</span>
@@ -163,10 +154,7 @@ const InsightsPage = () => {
         <div className="insight-card insight-card-map">
           <div className="insight-card-header">
             <div>
-              <h2>
-                <i className="fas fa-globe-africa"></i>
-                Geographic Distribution
-              </h2>
+              <h2>Geographic Distribution</h2>
               <p>Click on highlighted regions to explore projects</p>
             </div>
           </div>
@@ -251,10 +239,7 @@ const InsightsPage = () => {
           <div className="insight-card insight-card-maturity">
             <div className="insight-card-header">
               <div>
-                <h2>
-                  <i className="fas fa-layer-group"></i>
-                  Project Maturity
-                </h2>
+                <h2>Project Maturity</h2>
                 <p>How projects progress from data to deployment</p>
               </div>
             </div>
@@ -271,25 +256,20 @@ const InsightsPage = () => {
           <div className="insight-card insight-card-sdg">
             <div className="insight-card-header">
               <div>
-                <h2>
-                  <i className="fas fa-bullseye"></i>
-                  SDG Analysis
-                </h2>
+                <h2>SDG Analysis</h2>
                 <p>Explore how projects align with Sustainable Development Goals</p>
               </div>
               <div className="insight-tabs">
-                <button 
+                <button
                   className={`insight-tab ${sdgView === 'chart' ? 'active' : ''}`}
                   onClick={() => setSdgView('chart')}
                 >
-                  <i className="fas fa-chart-bar"></i>
                   Distribution
                 </button>
-                <button 
+                <button
                   className={`insight-tab ${sdgView === 'heatmap' ? 'active' : ''}`}
                   onClick={() => setSdgView('heatmap')}
                 >
-                  <i className="fas fa-th"></i>
                   Country Matrix
                 </button>
               </div>
