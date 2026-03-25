@@ -62,7 +62,21 @@ def main():
     ):
         sys.exit(1)
     
-    # Step 3: Build React application
+    # Step 3: Clean stale project directories from docs/
+    # Vite's emptyOutDir:false preserves old dirs; remove any not in public/projects/
+    docs_projects = os.path.join('docs', 'projects')
+    public_projects = os.path.join('public', 'projects')
+    if os.path.isdir(docs_projects) and os.path.isdir(public_projects):
+        source_dirs = set(os.listdir(public_projects))
+        stale = [d for d in os.listdir(docs_projects)
+                 if os.path.isdir(os.path.join(docs_projects, d)) and d not in source_dirs]
+        if stale:
+            import shutil
+            for d in stale:
+                shutil.rmtree(os.path.join(docs_projects, d))
+            print(f"Removed {len(stale)} stale project directories from docs/projects/")
+
+    # Step 4: Build React application
     if not run_command(
         ['npm', 'run', 'build'],
         "Building React application (Vite)"

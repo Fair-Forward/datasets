@@ -1,1 +1,0 @@
-The dataset contains a time-series of satellite imagery and labels for crop type that have been collected through aerial and ground survey. Labels are derived from the survey conducted by the Western Cape Department of Agriculture. Satellite data including multispectral Sentinel-2 are then matched with corresponding labels.

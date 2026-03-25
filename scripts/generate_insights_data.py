@@ -3,7 +3,7 @@ import pandas as pd
 import json
 import re
 from collections import Counter
-from utils import resolve_project_id, row_included_for_catalog_or_insights
+from utils import resolve_project_id, row_included_for_catalog_or_insights, COUNTRY_ISO_MAP
 
 # Parse command line arguments
 parser = argparse.ArgumentParser(description='Generate insights data JSON from data catalog.')
@@ -19,24 +19,8 @@ def analyze_data(excel_path):
         df = pd.read_excel(excel_path)
         print(f"Loaded {len(df)} rows from {excel_path}")
         
-        # Country name to ISO Alpha-2 code mapping
-        country_iso_map = {
-            'Kenya': 'KE', 'India': 'IN', 'South Africa': 'ZA', 'Ghana': 'GH',
-            'Rwanda': 'RW', 'Uganda': 'UG', 'Indonesia': 'ID', 'Nigeria': 'NG',
-            'Tanzania': 'TZ', 'Ecuador': 'EC', 'DRC': 'CD', 'Congo': 'CG',
-            'Democratic Republic of the Congo': 'CD', 'Benin': 'BJ', 'Colombia': 'CO',
-            "Cote d'Ivoire": 'CI', 'Ivory Coast': 'CI', 'Angola': 'AO',
-            'Mozambique': 'MZ', 'Zambia': 'ZM', 'Niger': 'NE', 'Togo': 'TG',
-            'Cameroon': 'CM', 'Madagascar': 'MG', 'Pakistan': 'PK', 'Malawi': 'MW',
-            'Ethiopia': 'ET', 'Senegal': 'SN', 'Mali': 'ML', 'Burkina Faso': 'BF',
-            'Bangladesh': 'BD', 'Nepal': 'NP', 'Sri Lanka': 'LK', 'Myanmar': 'MM',
-            'Thailand': 'TH', 'Vietnam': 'VN', 'Cambodia': 'KH', 'Laos': 'LA',
-            'Philippines': 'PH', 'Malaysia': 'MY', 'Peru': 'PE', 'Bolivia': 'BO',
-            'Brazil': 'BR', 'Argentina': 'AR', 'Chile': 'CL', 'Mexico': 'MX',
-            'Guatemala': 'GT', 'Honduras': 'HN', 'Nicaragua': 'NI', 'Costa Rica': 'CR',
-            'Panama': 'PA'
-        }
-        
+        country_iso_map = COUNTRY_ISO_MAP
+
         # Extract country distribution - ONLY from projects with valid links
         country_counts = Counter()
         country_sdgs = {}  # Track SDGs per country
