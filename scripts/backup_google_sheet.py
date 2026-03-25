@@ -2,6 +2,7 @@ import argparse
 import os
 import datetime
 import csv
+import gspread
 from utils import get_gsheet_client, DEFAULT_CREDENTIALS_PATH
 
 def main():
