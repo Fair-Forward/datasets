@@ -297,7 +297,7 @@ def build_row_notes(excel_path):
 
 
 def write_notes_to_sheet(row_notes, credentials_path):
-    """Write quality feedback as cell notes to the Google Sheet."""
+    """Write quality feedback as cell notes to the Google Sheet using batch API."""
     import gspread
     from oauth2client.service_account import ServiceAccountCredentials
 
@@ -334,32 +334,57 @@ def write_notes_to_sheet(row_notes, credentials_path):
                 col_indices[target] = col_indices[best_header]
                 print(f"  Fuzzy-matched column '{target}' -> '{best_header}' (score: {best_score})")
 
-    note_count = 0
+    # First, batch-clear any previous auto-check notes so we start clean.
+    # Then batch-write all new notes in one API call.
+    # This avoids per-cell get_note + update_note (which hits rate limits).
+
     note_prefix = "[Auto-check] "
+
+    # Read all existing notes in one call (returns list-of-lists)
+    existing_notes_grid = []
+    try:
+        existing_notes_grid = sheet.get_notes(default_empty_value='')
+    except Exception:
+        pass  # If get_notes fails, proceed without checking existing
+
+    def get_existing_note(sheet_row, col_idx):
+        """Look up an existing note from the grid (1-based row/col)."""
+        r = sheet_row - 1  # convert to 0-based
+        c = col_idx - 1
+        if r < len(existing_notes_grid) and c < len(existing_notes_grid[r]):
+            return existing_notes_grid[r][c]
+        return ''
+
+    # Build batch notes dict: {cell_A1_notation: note_text}
+    batch_notes = {}
     for row_idx, notes in row_notes.items():
-        # Sheet row: +1 for 1-indexing, +1 for header, +1 for explanation row
-        sheet_row = row_idx + 3
+        sheet_row = row_idx + 3  # +1 for 1-indexing, +1 for header, +1 for explanation row
         for col_name, note_text in notes.items():
             col_idx = col_indices.get(col_name)
             if col_idx is None:
                 continue
-            try:
-                cell = gspread.utils.rowcol_to_a1(sheet_row, col_idx)
-                # Check if there's already an auto-check note to avoid duplicating
-                existing = sheet.get_note(cell)
-                if existing and note_prefix in existing:
-                    # Update existing auto-check note
-                    sheet.update_note(cell, note_prefix + note_text)
-                elif existing:
-                    # Don't overwrite human notes — append
-                    sheet.update_note(cell, existing + "\n\n" + note_prefix + note_text)
-                else:
-                    sheet.update_note(cell, note_prefix + note_text)
-                note_count += 1
-            except Exception as e:
-                print(f"  Warning: Could not write note to row {sheet_row}, col '{col_name}': {e}")
+            cell = gspread.utils.rowcol_to_a1(sheet_row, col_idx)
+            full_note = note_prefix + note_text
 
-    print(f"  Wrote {note_count} quality notes to Google Sheet")
+            # If cell has an existing note that is NOT auto-check, preserve it
+            existing = get_existing_note(sheet_row, col_idx)
+            if existing and note_prefix not in existing:
+                full_note = existing + "\n\n" + full_note
+
+            batch_notes[cell] = full_note
+
+    if not batch_notes:
+        print("  No notes to write.")
+        return
+
+    # Write all notes in one batch API call
+    try:
+        sheet.update_notes(batch_notes)
+        print(f"  Wrote {len(batch_notes)} quality notes to Google Sheet (batch)")
+    except Exception as e:
+        print(f"  Error writing batch notes: {e}")
+        import traceback
+        traceback.print_exc()
 
 
 if __name__ == "__main__":
