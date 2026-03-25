@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 import WorldMap from '../components/WorldMap'
 import SDGChart from '../components/SDGChart'
 import MaturityChart from '../components/MaturityChart'
 import SDGCountryHeatmap from '../components/SDGCountryHeatmap'
-import OrganizationNetwork from '../components/OrganizationNetwork'
 import { withBasePath } from '../utils/basePath'
 
 const InsightsPage = () => {
@@ -73,12 +73,14 @@ const InsightsPage = () => {
     return (
       <div className="insights-page">
         <Header />
-        <div className="container">
-          <div className="insights-loading">
-            <div className="insights-loading-spinner"></div>
-            <p>Loading insights...</p>
+        <main>
+          <div className="container">
+            <div className="insights-loading">
+              <div className="insights-loading-spinner"></div>
+              <p>Loading insights...</p>
+            </div>
           </div>
-        </div>
+        </main>
       </div>
     )
   }
@@ -87,13 +89,20 @@ const InsightsPage = () => {
     return (
       <div className="insights-page">
         <Header />
-        <div className="container">
-          <div className="insights-error">
-            <i className="fas fa-exclamation-triangle"></i>
-            <p>Unable to load insights data. Please run the build script.</p>
-            <span>Error: {error || 'No data available'}</span>
+        <main>
+          <div className="container">
+            <div className="insights-error">
+              <i className="fas fa-exclamation-triangle"></i>
+              <p>We could not load the insights right now. Please try refreshing the page.</p>
+              <p className="catalog-error-detail">
+                If the problem persists, please{' '}
+                <a href="https://github.com/Fair-Forward/datasets/issues" target="_blank" rel="noopener noreferrer">
+                  report it on GitHub
+                </a>.
+              </p>
+            </div>
           </div>
-        </div>
+        </main>
       </div>
     )
   }
@@ -104,7 +113,8 @@ const InsightsPage = () => {
   return (
     <div className="insights-page">
       <Header />
-      
+
+      <main>
       <div className="container">
         <a href={withBasePath('/')} className="back-link">
           <i className="fas fa-arrow-left"></i>
@@ -302,23 +312,10 @@ const InsightsPage = () => {
           </div>
         )}
 
-        {/* Organization Network Section */}
-        {catalogData?.projects && (
-          <div className="insight-card insight-card-network">
-            <div className="insight-card-header">
-              <div>
-                <h2>
-                  <i className="fas fa-project-diagram"></i>
-                  Partner Ecosystem
-                </h2>
-                <p>Organizations powering, catalyzing, and financing the projects</p>
-              </div>
-            </div>
-            
-            <OrganizationNetwork projects={catalogData.projects} />
-          </div>
-        )}
       </div>
+      </main>
+
+      <Footer />
     </div>
   )
 }

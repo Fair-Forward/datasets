@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { withBasePath, resolvePublicHref } from '../utils/basePath'
 import { SDG_COLORS } from '../utils/sdgColors'
@@ -120,6 +120,8 @@ const DetailPanel = ({ project, onClose }) => {
   const [markdownContent, setMarkdownContent] = useState({})
   const [loading, setLoading] = useState(true)
   const [copied, setCopied] = useState(false)
+  const panelRef = useRef(null)
+  const previousFocusRef = useRef(null)
   const datasetLinks = project?.dataset_links || []
   const usecaseLinks = project?.usecase_links || []
   const additionalResources = project?.additional_resources || []
@@ -197,6 +199,40 @@ const DetailPanel = ({ project, onClose }) => {
     loadMarkdown()
   }, [project])
 
+  // Focus management and focus trap
+  useEffect(() => {
+    if (!project) return
+    previousFocusRef.current = document.activeElement
+    const timer = setTimeout(() => {
+      const closeBtn = panelRef.current?.querySelector('.close-panel-btn')
+      closeBtn?.focus()
+    }, 100)
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Tab' && panelRef.current) {
+        const focusable = panelRef.current.querySelectorAll(
+          'button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        )
+        if (focusable.length === 0) return
+        const first = focusable[0]
+        const last = focusable[focusable.length - 1]
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault()
+          last.focus()
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault()
+          first.focus()
+        }
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      clearTimeout(timer)
+      previousFocusRef.current?.focus()
+    }
+  }, [project])
+
   if (!project) return null
 
   // Determine primary CTA link
@@ -258,7 +294,7 @@ const DetailPanel = ({ project, onClose }) => {
   return (
     <>
       <div className="panel-overlay active" onClick={onClose}></div>
-      <div className="detail-panel open">
+      <div className="detail-panel open" ref={panelRef} role="dialog" aria-modal="true" aria-label={project.title}>
         <div className="detail-panel-header">
           <div className="detail-panel-header-actions">
             <button className="close-panel-btn" onClick={onClose}>

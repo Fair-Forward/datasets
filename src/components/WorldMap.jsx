@@ -169,8 +169,8 @@ const WorldMap = ({
             <span class="map-tooltip-value">${countryData.projects}</span>
             <span class="map-tooltip-label">project${countryData.projects !== 1 ? 's' : ''}</span>
           </div>
-          ${sdgList ? `<div class="map-tooltip-detail"><span class="map-tooltip-icon">🎯</span>${sdgList}${moreSDGs}</div>` : ''}
-          ${dataTypes ? `<div class="map-tooltip-detail"><span class="map-tooltip-icon">📊</span>${dataTypes}${moreTypes}</div>` : ''}
+          ${sdgList ? `<div class="map-tooltip-detail"><span class="map-tooltip-icon"><i class="fas fa-bullseye"></i></span>${sdgList}${moreSDGs}</div>` : ''}
+          ${dataTypes ? `<div class="map-tooltip-detail"><span class="map-tooltip-icon"><i class="fas fa-database"></i></span>${dataTypes}${moreTypes}</div>` : ''}
           <div class="map-tooltip-hint">Click for details</div>
         </div>
       `)

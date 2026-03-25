@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { withBasePath } from '../utils/basePath'
 
@@ -6,8 +6,48 @@ const Header = () => {
   const location = useLocation()
   const isInsights = location.pathname.includes('insights')
   const [infoType, setInfoType] = useState(null)
+  const modalRef = useRef(null)
+  const triggerRef = useRef(null)
 
-  const closeInfo = () => setInfoType(null)
+  const closeInfo = useCallback(() => {
+    setInfoType(null)
+    triggerRef.current?.focus()
+  }, [])
+
+  // Escape key and focus trap for info modal
+  useEffect(() => {
+    if (!infoType) return
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        closeInfo()
+        return
+      }
+      // Focus trap
+      if (e.key === 'Tab' && modalRef.current) {
+        const focusable = modalRef.current.querySelectorAll('button, a, [tabindex]:not([tabindex="-1"])')
+        if (focusable.length === 0) return
+        const first = focusable[0]
+        const last = focusable[focusable.length - 1]
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault()
+          last.focus()
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault()
+          first.focus()
+        }
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    // Move focus into modal
+    const timer = setTimeout(() => {
+      const firstFocusable = modalRef.current?.querySelector('button, a')
+      firstFocusable?.focus()
+    }, 50)
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      clearTimeout(timer)
+    }
+  }, [infoType, closeInfo])
 
   const renderInfoContent = () => {
     if (infoType === 'about') {
@@ -90,27 +130,27 @@ const Header = () => {
           </div>
         </div>
         <div className="header-info-links">
-          <button type="button" className="header-info-button" onClick={() => setInfoType('about')}>
+          <button type="button" className="header-info-button" onClick={() => { triggerRef.current = document.activeElement; setInfoType('about') }}>
             About this website
           </button>
-          <button type="button" className="header-info-button" onClick={() => setInfoType('fair')}>
+          <button type="button" className="header-info-button" onClick={() => { triggerRef.current = document.activeElement; setInfoType('fair') }}>
             Fair sharing
           </button>
         </div>
-        <div className="top-nav-links">
-          <Link to="/" className={`nav-link ${!isInsights ? 'active' : ''}`}>
+        <nav className="top-nav-links" aria-label="Main navigation">
+          <Link to="/" className={`nav-link ${!isInsights ? 'active' : ''}`} aria-current={!isInsights ? 'page' : undefined}>
             Projects
           </Link>
-          <Link to="/insights" className={`nav-link ${isInsights ? 'active' : ''}`}>
-            <i className="fas fa-chart-line"></i> Insights
+          <Link to="/insights" className={`nav-link ${isInsights ? 'active' : ''}`} aria-current={isInsights ? 'page' : undefined}>
+            <i className="fas fa-chart-line" aria-hidden="true"></i> Insights
           </Link>
-        </div>
+        </nav>
       </div>
 
       {infoType && (
         <>
           <div className="header-info-backdrop" onClick={closeInfo}></div>
-          <div className="header-info-modal" role="dialog" aria-modal="true">
+          <div className="header-info-modal" role="dialog" aria-modal="true" ref={modalRef} aria-label={infoType === 'about' ? 'About this website' : 'Fair sharing'}>
             <button className="header-info-close" onClick={closeInfo} aria-label="Close info panel">
               <i className="fas fa-times"></i>
             </button>

@@ -34,13 +34,15 @@ const FilterBar = ({ filters, onFilterChange, availableFilters }) => {
               placeholder="Search datasets and use-cases..."
               value={filters.search || ''}
               onChange={handleSearchChange}
+              aria-label="Search datasets and use-cases"
             />
           </div>
         </div>
 
         <div className="filter-group">
-          <span className="filter-label">View:</span>
+          <label className="filter-label" htmlFor="filter-view">View:</label>
           <select
+            id="filter-view"
             className="filter-select"
             value={filters.view || 'all'}
             onChange={(e) => onFilterChange({ ...filters, view: e.target.value })}
@@ -57,8 +59,9 @@ const FilterBar = ({ filters, onFilterChange, availableFilters }) => {
         </div>
 
         <div className="filter-group">
-          <span className="filter-label">SDG:</span>
+          <label className="filter-label" htmlFor="filter-sdg">SDG:</label>
           <select
+            id="filter-sdg"
             className="filter-select"
             value={filters.sdg || ''}
             onChange={handleSDGChange}
@@ -71,8 +74,9 @@ const FilterBar = ({ filters, onFilterChange, availableFilters }) => {
         </div>
 
         <div className="filter-group">
-          <span className="filter-label">Data Type:</span>
+          <label className="filter-label" htmlFor="filter-datatype">Data Type:</label>
           <select
+            id="filter-datatype"
             className="filter-select"
             value={filters.dataType || ''}
             onChange={handleDataTypeChange}
@@ -85,8 +89,9 @@ const FilterBar = ({ filters, onFilterChange, availableFilters }) => {
         </div>
 
         <div className="filter-group">
-          <span className="filter-label">Region:</span>
+          <label className="filter-label" htmlFor="filter-region">Region:</label>
           <select
+            id="filter-region"
             className="filter-select"
             value={filters.country || ''}
             onChange={handleCountryChange}
