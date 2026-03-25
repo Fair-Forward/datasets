@@ -5,6 +5,7 @@ import FilterBar from '../components/FilterBar'
 import ProjectCard from '../components/ProjectCard'
 import DetailPanel from '../components/DetailPanel'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 import { withBasePath } from '../utils/basePath'
 
 const CatalogPage = () => {
@@ -216,9 +217,9 @@ const CatalogPage = () => {
         <main>
           <div className="container">
             <div className="catalog-error">
-              <i className="fas fa-exclamation-triangle" style={{ fontSize: '2rem', color: 'var(--yellow)', marginBottom: '1rem' }}></i>
+              <i className="fas fa-exclamation-triangle"></i>
               <p>We could not load the catalog right now. Please try refreshing the page.</p>
-              <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-light)' }}>
+              <p className="catalog-error-detail">
                 If the problem persists, please{' '}
                 <a href="https://github.com/Fair-Forward/datasets/issues" target="_blank" rel="noopener noreferrer">
                   report it on GitHub
@@ -283,26 +284,7 @@ const CatalogPage = () => {
         />
       )}
 
-      <footer>
-        <div className="footer-content">
-          <p>&copy; {new Date().getFullYear()} Fair Forward - Artificial Intelligence for All | A project by GIZ</p>
-          <p className="footer-secondary">
-            <a href="https://github.com/Fair-Forward/datasets" target="_blank" rel="noopener noreferrer">
-              Contribute to the Source Code on GitHub <i className="fab fa-github"></i>
-            </a>
-          </p>
-          <p className="footer-secondary">
-            For technical questions/feedback{' '}
-            <a href="https://github.com/Fair-Forward/datasets/issues" target="_blank" rel="noopener noreferrer">
-              open an issue on Github
-            </a>
-            {' '}or contact{' '}
-            <a href="mailto:jonas.nothnagel@gmail.com">
-              Jonas Nothnagel
-            </a>.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

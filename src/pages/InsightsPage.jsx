@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 import WorldMap from '../components/WorldMap'
 import SDGChart from '../components/SDGChart'
 import MaturityChart from '../components/MaturityChart'
@@ -72,12 +73,14 @@ const InsightsPage = () => {
     return (
       <div className="insights-page">
         <Header />
-        <div className="container">
-          <div className="insights-loading">
-            <div className="insights-loading-spinner"></div>
-            <p>Loading insights...</p>
+        <main>
+          <div className="container">
+            <div className="insights-loading">
+              <div className="insights-loading-spinner"></div>
+              <p>Loading insights...</p>
+            </div>
           </div>
-        </div>
+        </main>
       </div>
     )
   }
@@ -86,13 +89,20 @@ const InsightsPage = () => {
     return (
       <div className="insights-page">
         <Header />
-        <div className="container">
-          <div className="insights-error">
-            <i className="fas fa-exclamation-triangle"></i>
-            <p>Unable to load insights data. Please run the build script.</p>
-            <span>Error: {error || 'No data available'}</span>
+        <main>
+          <div className="container">
+            <div className="insights-error">
+              <i className="fas fa-exclamation-triangle"></i>
+              <p>We could not load the insights right now. Please try refreshing the page.</p>
+              <p className="catalog-error-detail">
+                If the problem persists, please{' '}
+                <a href="https://github.com/Fair-Forward/datasets/issues" target="_blank" rel="noopener noreferrer">
+                  report it on GitHub
+                </a>.
+              </p>
+            </div>
           </div>
-        </div>
+        </main>
       </div>
     )
   }
@@ -305,26 +315,7 @@ const InsightsPage = () => {
       </div>
       </main>
 
-      <footer>
-        <div className="footer-content">
-          <p>&copy; {new Date().getFullYear()} Fair Forward - Artificial Intelligence for All | A project by GIZ</p>
-          <p className="footer-secondary">
-            <a href="https://github.com/Fair-Forward/datasets" target="_blank" rel="noopener noreferrer">
-              Contribute to the Source Code on GitHub <i className="fab fa-github"></i>
-            </a>
-          </p>
-          <p className="footer-secondary">
-            For technical questions/feedback{' '}
-            <a href="https://github.com/Fair-Forward/datasets/issues" target="_blank" rel="noopener noreferrer">
-              open an issue on Github
-            </a>
-            {' '}or contact{' '}
-            <a href="mailto:jonas.nothnagel@gmail.com">
-              Jonas Nothnagel
-            </a>.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

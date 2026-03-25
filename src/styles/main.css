@@ -1037,12 +1037,26 @@
             color: var(--text-light);
         }
 
-        .catalog-error a {
+        .catalog-error i,
+        .insights-error i {
+            font-size: 2rem;
+            color: var(--yellow);
+            margin-bottom: 1rem;
+        }
+
+        .catalog-error-detail {
+            font-size: var(--text-sm);
+            color: var(--text-light);
+        }
+
+        .catalog-error a,
+        .catalog-error-detail a {
             color: var(--primary);
             text-decoration: none;
         }
 
-        .catalog-error a:hover {
+        .catalog-error a:hover,
+        .catalog-error-detail a:hover {
             text-decoration: underline;
         }
 
