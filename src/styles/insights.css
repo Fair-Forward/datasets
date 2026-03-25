@@ -345,7 +345,7 @@
 .map-tooltip-value {
   font-size: var(--text-3xl);
   font-weight: 700;
-  color: #ea580c;
+  color: var(--primary);
 }
 
 .map-tooltip-label {
@@ -369,8 +369,8 @@
 .map-tooltip-hint {
   padding: 0.5rem 1rem;
   font-size: var(--text-xs);
-  color: #ea580c;
-  background: rgba(234, 88, 12, 0.08);
+  color: var(--primary);
+  background: rgba(59, 89, 152, 0.08);
   text-align: center;
 }
 
@@ -449,7 +449,7 @@
   flex-direction: column;
   align-items: center;
   padding: 0.5rem 0.75rem;
-  background: linear-gradient(135deg, #ea580c, #f97316);
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
   border-radius: var(--radius-md);
 }
 
@@ -536,7 +536,7 @@
   justify-content: space-between;
   gap: 0.5rem;
   padding: 0.75rem 1rem;
-  background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
   color: white;
   border-radius: var(--radius-md);
   font-size: var(--text-sm);
@@ -548,7 +548,7 @@
 
 .country-view-projects:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
+  box-shadow: 0 4px 12px rgba(59, 89, 152, 0.3);
 }
 
 /* ==================
@@ -1029,8 +1029,8 @@
 }
 
 .sankey-insight-card.highlight {
-  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-  border-color: var(--color-warning);
+  background: var(--color-surface);
+  border-color: var(--border);
 }
 
 .insight-card-icon {

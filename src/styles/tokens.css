@@ -51,6 +51,13 @@
   --btn-text:      #ffffff;
   --yellow:        #f59e0b;
 
+  /* --- Visualization palette (sequential blue ramp) --- */
+  --viz-1: #dbe4f3;   /* Lightest */
+  --viz-2: #a8bcd9;
+  --viz-3: #7594bf;
+  --viz-4: #4c70ba;
+  --viz-5: #3b5998;   /* Darkest = primary */
+
   /* --- Semantic colors --- */
   --color-success:  #10b981;
   --color-warning:  #f59e0b;

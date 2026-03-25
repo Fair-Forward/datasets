@@ -89,30 +89,24 @@ const CatalogHeader = ({ stats }) => {
           </div>
           
           <div className="header-stats">
-            <div className="header-stats-row">
-              <div className="stat-item">
-                <div className="stat-text">
-                  <div className="stat-value">{animatedStats.projects}</div>
-                  <div className="stat-label">Projects</div>
-                </div>
+            <div className="stat-hero">
+              <div className="stat-hero-value">{animatedStats.projects}</div>
+              <div className="stat-hero-label">Projects</div>
+            </div>
+            <div className="stat-secondary-row">
+              <div className="stat-secondary">
+                <div className="stat-secondary-value">{animatedStats.datasets}</div>
+                <div className="stat-secondary-label">Datasets</div>
               </div>
-              <div className="stat-item">
-                <div className="stat-text">
-                  <div className="stat-value">{animatedStats.datasets}</div>
-                  <div className="stat-label">Datasets</div>
-                </div>
+              <div className="stat-secondary-divider"></div>
+              <div className="stat-secondary">
+                <div className="stat-secondary-value">{animatedStats.usecases}</div>
+                <div className="stat-secondary-label">Use Cases</div>
               </div>
-              <div className="stat-item">
-                <div className="stat-text">
-                  <div className="stat-value">{animatedStats.usecases}</div>
-                  <div className="stat-label">Use Cases</div>
-                </div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-text">
-                  <div className="stat-value">{animatedStats.countries}</div>
-                  <div className="stat-label">Countries</div>
-                </div>
+              <div className="stat-secondary-divider"></div>
+              <div className="stat-secondary">
+                <div className="stat-secondary-value">{animatedStats.countries}</div>
+                <div className="stat-secondary-label">Countries</div>
               </div>
             </div>
             <Link to="/insights" className="insights-link">

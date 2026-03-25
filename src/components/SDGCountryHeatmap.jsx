@@ -181,7 +181,7 @@ const SDGCountryHeatmap = ({ projects = [], onCellClick }) => {
         <span className="heatmap-legend-label">Fewer projects</span>
         <div className="heatmap-legend-gradient">
           <div className="heatmap-legend-bar" style={{
-            background: `linear-gradient(to right, rgba(100, 100, 100, 0.2), rgba(100, 100, 100, 0.5), rgba(100, 100, 100, 1))`
+            background: `linear-gradient(to right, rgba(59, 89, 152, 0.15), rgba(59, 89, 152, 0.5), rgba(59, 89, 152, 0.9))`
           }}></div>
         </div>
         <span className="heatmap-legend-label">More projects</span>

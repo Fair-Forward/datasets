@@ -3,11 +3,11 @@ import { withBasePath } from '../utils/basePath'
 
 // Define the maturity funnel stages in order of progression
 const FUNNEL_STAGES = [
-  { key: 'dataset', label: 'Datasets', icon: 'fa-database', color: '#3b82f6', patterns: ['dataset'] },
-  { key: 'model', label: 'Models', icon: 'fa-brain', color: '#8b5cf6', patterns: ['model'] },
-  { key: 'pilot', label: 'Pilots', icon: 'fa-flask', color: '#f59e0b', patterns: ['pilot'] },
-  { key: 'usecase', label: 'Use Cases', icon: 'fa-lightbulb', color: '#06b6d4', patterns: ['use-case', 'use case', 'usecase'] },
-  { key: 'business', label: 'Business Model', icon: 'fa-rocket', color: '#22c55e', patterns: ['business model', 'business-model', 'scaled'] }
+  { key: 'dataset', label: 'Datasets', icon: 'fa-database', color: '#dbe4f3', patterns: ['dataset'] },
+  { key: 'model', label: 'Models', icon: 'fa-cogs', color: '#a8bcd9', patterns: ['model'] },
+  { key: 'pilot', label: 'Pilots', icon: 'fa-play-circle', color: '#7594bf', patterns: ['pilot'] },
+  { key: 'usecase', label: 'Use Cases', icon: 'fa-check-circle', color: '#4c70ba', patterns: ['use-case', 'use case', 'usecase'] },
+  { key: 'business', label: 'Business Model', icon: 'fa-chart-line', color: '#3b5998', patterns: ['business model', 'business-model', 'scaled'] }
 ]
 
 // Parse maturity string and return which stages this project has reached
@@ -238,7 +238,7 @@ const MaturityChart = ({ maturityDistribution, catalogProjects }) => {
                   textAnchor="middle"
                   dominantBaseline="middle"
                   className="sankey-stage-count"
-                  fill="#fff"
+                  fill={index < 2 ? '#1e293b' : '#fff'}
                   fontSize={pos.height > 60 ? 28 : pos.height > 40 ? 22 : 16}
                   fontWeight="700"
                 >
@@ -312,7 +312,7 @@ const MaturityChart = ({ maturityDistribution, catalogProjects }) => {
                   y={y}
                   textAnchor="middle"
                   className="sankey-dropoff-text"
-                  fill="#ef4444"
+                  fill="#64748b"
                   fontSize={11}
                   fontWeight="600"
                 >
@@ -337,7 +337,7 @@ const MaturityChart = ({ maturityDistribution, catalogProjects }) => {
       {/* Insight cards */}
       <div className="sankey-insights">
         <div className="sankey-insight-card">
-          <div className="insight-card-icon" style={{ backgroundColor: '#dbeafe', color: '#3b82f6' }}>
+          <div className="insight-card-icon" style={{ backgroundColor: 'rgba(59, 89, 152, 0.08)', color: '#3b5998' }}>
             <i className="fas fa-database"></i>
           </div>
           <div className="insight-card-content">
@@ -345,35 +345,35 @@ const MaturityChart = ({ maturityDistribution, catalogProjects }) => {
             <span className="insight-card-label">Have datasets</span>
           </div>
         </div>
-        
+
         <div className="sankey-insight-card">
-          <div className="insight-card-icon" style={{ backgroundColor: '#cffafe', color: '#06b6d4' }}>
-            <i className="fas fa-lightbulb"></i>
+          <div className="insight-card-icon" style={{ backgroundColor: 'rgba(59, 89, 152, 0.08)', color: '#3b5998' }}>
+            <i className="fas fa-check-circle"></i>
           </div>
           <div className="insight-card-content">
             <span className="insight-card-value">{stages[3]?.count || 0}</span>
             <span className="insight-card-label">Reach use case stage</span>
           </div>
         </div>
-        
+
         <div className="sankey-insight-card">
-          <div className="insight-card-icon" style={{ backgroundColor: '#dcfce7', color: '#22c55e' }}>
-            <i className="fas fa-rocket"></i>
+          <div className="insight-card-icon" style={{ backgroundColor: 'rgba(59, 89, 152, 0.08)', color: '#3b5998' }}>
+            <i className="fas fa-chart-line"></i>
           </div>
           <div className="insight-card-content">
             <span className="insight-card-value">{stages[4]?.count || 0}</span>
             <span className="insight-card-label">Have business model</span>
           </div>
         </div>
-        
-        <div className="sankey-insight-card highlight">
-          <div className="insight-card-icon" style={{ backgroundColor: '#fef3c7', color: '#f59e0b' }}>
-            <i className="fas fa-trophy"></i>
+
+        <div className="sankey-insight-card">
+          <div className="insight-card-icon" style={{ backgroundColor: 'rgba(59, 89, 152, 0.08)', color: '#3b5998' }}>
+            <i className="fas fa-percent"></i>
           </div>
           <div className="insight-card-content">
             <span className="insight-card-value">
-              {stages[0]?.count > 0 
-                ? ((stages[4]?.count / stages[0]?.count) * 100).toFixed(0) 
+              {stages[0]?.count > 0
+                ? ((stages[4]?.count / stages[0]?.count) * 100).toFixed(0)
                 : 0}%
             </span>
             <span className="insight-card-label">Full pipeline completion</span>
@@ -393,11 +393,11 @@ const MaturityChart = ({ maturityDistribution, catalogProjects }) => {
             
             return (
               <div key={stage.key} className="funnel-stat">
-                <div className="funnel-stat-arrow" style={{ color: stage.color }}>
+                <div className="funnel-stat-arrow" style={{ color: 'var(--primary)' }}>
                   <i className="fas fa-arrow-right"></i>
                 </div>
                 <div className="funnel-stat-content">
-                  <span className="funnel-stat-value" style={{ color: stage.color }}>
+                  <span className="funnel-stat-value" style={{ color: 'var(--primary)' }}>
                     {conversionRate}%
                   </span>
                   <span className="funnel-stat-label">

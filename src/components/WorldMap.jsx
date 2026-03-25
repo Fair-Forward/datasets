@@ -47,17 +47,17 @@ const normalizeName = (value = '') =>
     .replace(/[^a-z]/gi, '')
     .toLowerCase()
 
-// Warm color palette - orange/amber that pops against light gray
+// Blue sequential palette - aligned with primary theme
 const COLOR_CONFIG = {
-  empty: '#f1f5f9',           // Warm light for empty countries
+  empty: '#f1f5f9',           // Light for empty countries
   emptyHover: '#e2e8f0',      // Slightly darker on hover
-  emptyStroke: '#e2e8f0',     // Subtle warm border for empty
-  dataStroke: '#c2410c',      // Strong orange border for countries with data
-  strokeHighlight: '#ea580c', // Bright orange for selected
-  gradientStart: '#fed7aa',   // Light peach/orange
-  gradientMid: '#fb923c',     // Medium orange
-  gradientEnd: '#c2410c',     // Deep burnt orange for high values
-  ocean: '#f8fafc'            // Warm off-white for ocean/background
+  emptyStroke: '#e2e8f0',     // Subtle border for empty
+  dataStroke: '#2c4a7c',      // Strong blue border for countries with data
+  strokeHighlight: '#3b5998', // Primary blue for selected
+  gradientStart: '#dbe4f3',   // Lightest blue
+  gradientMid: '#7594bf',     // Mid blue
+  gradientEnd: '#3b5998',     // Deep blue for high values
+  ocean: '#f8fafc'            // Off-white for ocean/background
 }
 
 const WorldMap = ({
@@ -288,7 +288,7 @@ const WorldMap = ({
                         strokeWidth: hasData ? 1.2 : 0.3,
                         outline: 'none',
                         transition: 'all 0.2s ease-out',
-                        filter: isSelected ? 'drop-shadow(0 0 4px rgba(194, 65, 12, 0.5))' : 'none'
+                        filter: isSelected ? 'drop-shadow(0 0 4px rgba(59, 89, 152, 0.5))' : 'none'
                       },
                       hover: {
                         fill: hasData ? colorScale(countryData.projects) : COLOR_CONFIG.emptyHover,
@@ -296,7 +296,7 @@ const WorldMap = ({
                         strokeWidth: hasData ? 2 : 0.5,
                         outline: 'none',
                         cursor: hasData ? 'pointer' : 'default',
-                        filter: hasData ? 'brightness(1.05) drop-shadow(0 0 6px rgba(194, 65, 12, 0.4))' : 'none'
+                        filter: hasData ? 'brightness(1.05) drop-shadow(0 0 6px rgba(59, 89, 152, 0.4))' : 'none'
                       },
                       pressed: {
                         fill: hasData ? colorScale(countryData.projects) : COLOR_CONFIG.emptyHover,
