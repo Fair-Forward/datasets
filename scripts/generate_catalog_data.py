@@ -81,38 +81,53 @@ def clean_country_list(country_text):
     return countries
 
 
+def _content_length_score(text, thresholds):
+    """Graduated score based on content length.
+
+    thresholds: list of (min_chars, points) tuples, cumulative.
+    Returns sum of points for all thresholds where len(text) >= min_chars.
+    """
+    if not text or not isinstance(text, str):
+        return 0
+    length = len(text.strip())
+    if length == 0:
+        return 0
+    return sum(pts for min_chars, pts in thresholds if length >= min_chars)
+
+
 def compute_quality_score(project):
-    """Compute a 0-100 quality score based on field completeness."""
+    """Compute a 0-100 quality score based on field completeness and depth."""
     score = 0
 
-    # title: 10 points
+    # title: 5 points
     if project.get('title') and project['title'].strip():
-        score += 10
+        score += 5
 
-    # description: 15 points (minus 5 if under 50 chars)
-    desc = project.get('description', '')
-    if desc and desc.strip():
-        score += 15
-        if len(desc.strip()) < 50:
-            score -= 5
+    # description: 15 points (graduated by length)
+    score += _content_length_score(
+        project.get('description', ''), [(1, 5), (100, 5), (300, 5)])
 
-    # links: 15 points (at least one dataset/usecase link, or has access note)
+    # links: 10 points (at least one dataset/usecase link, or has access note)
     if project.get('dataset_links') or project.get('usecase_links'):
-        score += 15
+        score += 10
     elif project.get('has_access_note'):
-        score += 15
-
-    # data_characteristics: 10 points
-    if project.get('data_characteristics') and project['data_characteristics'].strip():
         score += 10
 
-    # how_to_use: 10 points
-    if project.get('how_to_use') and project['how_to_use'].strip():
-        score += 10
+    # data_characteristics: 15 points (graduated by length)
+    score += _content_length_score(
+        project.get('data_characteristics', ''), [(1, 3), (100, 5), (300, 7)])
 
-    # license: 10 points
+    # model_characteristics: 10 points (graduated by length)
+    score += _content_length_score(
+        project.get('model_characteristics', ''), [(1, 2), (100, 3), (300, 5)])
+
+    # how_to_use: 15 points (graduated by length)
+    score += _content_length_score(
+        project.get('how_to_use', ''), [(1, 3), (100, 5), (300, 7)])
+
+    # license: 8 points
     if project.get('license') and project['license'].strip():
-        score += 10
+        score += 8
 
     # sdgs: 5 points
     if project.get('sdgs'):
@@ -122,23 +137,19 @@ def compute_quality_score(project):
     if project.get('countries'):
         score += 5
 
-    # data_types: 5 points
+    # data_types: 4 points
     if project.get('data_types'):
-        score += 5
+        score += 4
 
-    # organizations: 5 points
+    # organizations: 4 points
     if project.get('organizations') and project['organizations'].strip():
-        score += 5
-
-    # image: 5 points
-    if project.get('image'):
-        score += 5
+        score += 4
 
     # maturity_tags: 5 points
     if project.get('maturity_tags'):
         score += 5
 
-    return score
+    return min(score, 100)
 
 
 # Define the maturity funnel stages in order of progression (matching MaturityChart.jsx)

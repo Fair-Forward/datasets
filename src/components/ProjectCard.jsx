@@ -10,7 +10,8 @@ const getSdgFallbackColor = (sdgs) => {
 
 const ProjectCard = ({ project, onClick, onFilterSDG }) => {
   const { title, description, sdgs, data_types, image, has_dataset, has_usecase, is_lacuna, has_access_note, countries = [], license, quality_score } = project
-  const completeness = Math.min(5, Math.max(1, Math.ceil((quality_score || 0) / 20)))
+  const qs = quality_score || 0
+  const completeness = qs >= 90 ? 5 : qs >= 75 ? 4 : qs >= 60 ? 3 : qs >= 40 ? 2 : 1
 
   const cardClasses = [
     'card',

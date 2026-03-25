@@ -21,6 +21,7 @@ COL_ORGS = 'Organizations Involved'
 COL_DESCRIPTION = 'Description - What can be done with this? What is this about?'
 COL_DATA_CHARS = 'Data - Key Characteristics'
 COL_HOW_TO_USE = 'Deep Dive - How can you concretely work with this and build on this?'
+COL_MODEL_CHARS = 'Model/Use-Case - Key Characteristics'
 
 # Aliases for each canonical column name (matching CANONICAL_COLUMN_MAP in build_and_sync.py).
 # The Google Sheet may use any of these as the actual header.
@@ -44,7 +45,14 @@ COLUMN_ALIASES = {
     COL_HOW_TO_USE: [
         "Deep Dive - How can you concretely work with this and build on this?",
         "Deep Dive - How can you concretely work", "Deep Dive", "How to Use",
-        "Deep dive: How can you concretely work with this and built on this? How much will this cost and which resources are available to help me? "
+        "Deep dive: How can you concretely work with this and built on this? How much will this cost and which resources are available to help me? ",
+        "How to use it: How can you concretely work with this and built on this? How much will this cost and which resources are available to help me?",
+    ],
+    COL_MODEL_CHARS: [
+        "Model/Use-Case - Key Characteristics", "Model Characteristics",
+        "Model Details", "Use Case Characteristics",
+        "How to use & key characteristics of the AI Model, Software, AI Application",
+        "Model characteristics: How to use & key characteristics of the AI Model, Software, AI Application (if applicable)",
     ],
 }
 
@@ -78,6 +86,8 @@ def validate_catalog(catalog_path):
                 missing.append('data_characteristics')
             if not p.get('how_to_use', '').strip():
                 missing.append('how_to_use')
+            if not p.get('model_characteristics', '').strip():
+                missing.append('model_characteristics')
             if not p.get('license', '').strip():
                 missing.append('license')
             if not p.get('sdgs'):
@@ -304,6 +314,14 @@ def build_row_notes(excel_path):
                 "Describe concrete steps for working with the data or model."
             )
 
+        # Model/use-case characteristics check
+        model_chars = row.get(COL_MODEL_CHARS, '')
+        if not isinstance(model_chars, str) or not model_chars.strip() or (isinstance(model_chars, float)):
+            notes[COL_MODEL_CHARS] = (
+                "Model/use-case characteristics help users understand the technical details.\n"
+                "Describe the model type, architecture, performance, or use-case specifics."
+            )
+
         if notes:
             row_notes[idx] = notes
 
@@ -312,6 +330,7 @@ def build_row_notes(excel_path):
 
 def write_notes_to_sheet(row_notes, credentials_path):
     """Write quality feedback as cell notes to the Google Sheet using batch API."""
+    import gspread
     _client, _spreadsheet, sheet = get_gsheet_client(credentials_path)
     headers = sheet.row_values(1)
 

@@ -49,7 +49,7 @@
         "dataset"
       ],
       "additional_resources": [],
-      "quality_score": 90
+      "quality_score": 93
     },
     {
       "id": "benmangroves2425_multidimensional_open_datasets_fo",
@@ -93,7 +93,7 @@
         "dataset"
       ],
       "additional_resources": [],
-      "quality_score": 90
+      "quality_score": 76
     },
     {
       "id": "powering_rural_futures_in_west_africa",
@@ -143,7 +143,7 @@
         "dataset"
       ],
       "additional_resources": [],
-      "quality_score": 90
+      "quality_score": 83
     },
     {
       "id": "forest_carbon_sequestration_in_the_congo",
@@ -175,7 +175,7 @@
       "maturity": "nan",
       "maturity_tags": [],
       "additional_resources": [],
-      "quality_score": 40
+      "quality_score": 24
     },
     {
       "id": "datasets_for_transportation_impact_evaluation",
@@ -219,7 +219,7 @@
         "model"
       ],
       "additional_resources": [],
-      "quality_score": 90
+      "quality_score": 69
     },
     {
       "id": "quantifying_colombian_mangroves_aboveground_biomas",
@@ -261,7 +261,7 @@
         "dataset"
       ],
       "additional_resources": [],
-      "quality_score": 100
+      "quality_score": 91
     },
     {
       "id": "detectinging_forest_degradation_by_predicting_biom",
@@ -306,7 +306,7 @@
         "pilot"
       ],
       "additional_resources": [],
-      "quality_score": 90
+      "quality_score": 76
     },
     {
       "id": "ai_for_mangrove_carbon_credits_turning",
@@ -348,7 +348,7 @@
         "dataset"
       ],
       "additional_resources": [],
-      "quality_score": 80
+      "quality_score": 56
     },
     {
       "id": "lifting_up_women_through_land_ownership",
@@ -401,7 +401,7 @@
           "url": "https://www.mozillafoundation.org/de/blog/lifting-up-women-through-land-ownership/"
         }
       ],
-      "quality_score": 70
+      "quality_score": 53
     },
     {
       "id": "ecuadorian_dataset_on_access_demand_",
@@ -445,7 +445,7 @@
         "dataset"
       ],
       "additional_resources": [],
-      "quality_score": 90
+      "quality_score": 93
     },
     {
       "id": "monitoring_the_impact_of_palm_oil",
@@ -488,7 +488,7 @@
         "dataset"
       ],
       "additional_resources": [],
-      "quality_score": 100
+      "quality_score": 91
     },
     {
       "id": "indigenous_knowledge_meets_ai_monitoring_elephants",
@@ -610,7 +610,7 @@
         "usecase"
       ],
       "additional_resources": [],
-      "quality_score": 90
+      "quality_score": 76
     },
     {
       "id": "supporting_food_security_and_climate_change",
@@ -658,7 +658,7 @@
         "model"
       ],
       "additional_resources": [],
-      "quality_score": 80
+      "quality_score": 61
     },
     {
       "id": "facilitating_access_to_financial_applications_in",
@@ -701,7 +701,7 @@
         "dataset"
       ],
       "additional_resources": [],
-      "quality_score": 100
+      "quality_score": 84
     },
     {
       "id": "discover_ghanaian_voices_a_dataset_for",
@@ -743,7 +743,7 @@
         "dataset"
       ],
       "additional_resources": [],
-      "quality_score": 80
+      "quality_score": 61
     },
     {
       "id": "mapping_cocoa_landscapes_in_ghana_reference",
@@ -785,7 +785,7 @@
         "dataset"
       ],
       "additional_resources": [],
-      "quality_score": 100
+      "quality_score": 91
     },
     {
       "id": "explore_the_agrivoltaic_dataset_dive_into",
@@ -827,7 +827,7 @@
         "dataset"
       ],
       "additional_resources": [],
-      "quality_score": 80
+      "quality_score": 56
     },
     {
       "id": "phenological_dataset_for_ecological_forecasting_ph",
@@ -891,7 +891,7 @@
           "url": "https://g.co/kgs/5byh6f7"
         }
       ],
-      "quality_score": 90
+      "quality_score": 76
     },
     {
       "id": "enable_cashew_cocoa_and_coffee_farmers",
@@ -935,7 +935,7 @@
         "dataset"
       ],
       "additional_resources": [],
-      "quality_score": 80
+      "quality_score": 61
     },
     {
       "id": "imarika__translating_weather_information_into",
@@ -1002,7 +1002,7 @@
           "url": "https://smartafrica.org/innovate-africa-challenge/"
         }
       ],
-      "quality_score": 80
+      "quality_score": 68
     },
     {
       "id": "empowering_women_across_india_with_audio",
@@ -1055,7 +1055,7 @@
         "usecase"
       ],
       "additional_resources": [],
-      "quality_score": 100
+      "quality_score": 89
     },
     {
       "id": "open_air_pollution_data_for_patna",
@@ -1121,7 +1121,7 @@
         "usecase"
       ],
       "additional_resources": [],
-      "quality_score": 90
+      "quality_score": 81
     },
     {
       "id": "making_ai_speak_9_indian_languages",
@@ -1305,7 +1305,7 @@
           "url": "https://gramvaani.org/answering-questions-on-sexuality-through-kahi-ankahi-baatein-2/"
         }
       ],
-      "quality_score": 90
+      "quality_score": 88
     },
     {
       "id": "making_ai_speak_mundari__opensource",
@@ -1357,7 +1357,7 @@
         "model"
       ],
       "additional_resources": [],
-      "quality_score": 100
+      "quality_score": 91
     },
     {
       "id": "geospatial_dataset_of_wheat_and_rice",
@@ -1413,7 +1413,7 @@
           "url": "https://digitalgreen.org/wp-content/uploads/2024/10/GIZ-FF_DG_Learning-Report.pdf"
         }
       ],
-      "quality_score": 100
+      "quality_score": 93
     },
     {
       "id": "open_dataset_of_farm_boundaries_and",
@@ -1470,7 +1470,7 @@
         "pilot"
       ],
       "additional_resources": [],
-      "quality_score": 90
+      "quality_score": 93
     },
     {
       "id": "microfinance_industry_network_india_use_of",
@@ -1515,7 +1515,7 @@
         "usecase"
       ],
       "additional_resources": [],
-      "quality_score": 70
+      "quality_score": 48
     },
     {
       "id": "ai_for_forest_conservation",
@@ -1568,7 +1568,7 @@
         "usecase"
       ],
       "additional_resources": [],
-      "quality_score": 100
+      "quality_score": 94
     },
     {
       "id": "aipowered_monitoring_of_forest_degradation_and",
@@ -1628,7 +1628,7 @@
           "url": "https://docs.google.com/spreadsheets/d/1WaunaB-HU-j9UDs-X5Fn1vJ15H4ENMe-lcEgWM9l3Eg/edit?usp=sharing"
         }
       ],
-      "quality_score": 90
+      "quality_score": 93
     },
     {
       "id": "combatting_climate_disinformation_in_indonesian_la",
@@ -1678,7 +1678,7 @@
         "usecase"
       ],
       "additional_resources": [],
-      "quality_score": 90
+      "quality_score": 93
     },
     {
       "id": "high_carbon_stock_approach_mapping_forests",
@@ -1728,7 +1728,7 @@
           "url": "https://www.bmz-digital.global/en/news/ai-meets-jungle-how-artificial-intelligence-is-saving-indonesias-forests/"
         }
       ],
-      "quality_score": 90
+      "quality_score": 93
     },
     {
       "id": "building_inclusive_voice_technologies_in_the",
@@ -1777,7 +1777,7 @@
           "url": "https://www.bmz-digital.global/en/entdeckung-der-sprachlichen-vielfalt-indonesiens-fair-forward-und-prosa-ai-auf-dem-weg-zu-inklusiver-ki-sprachtechnologie/"
         }
       ],
-      "quality_score": 90
+      "quality_score": 83
     },
     {
       "id": "empowering_coastal_inhabitants_in_indonesia_levera",
@@ -1822,7 +1822,7 @@
         "pilot"
       ],
       "additional_resources": [],
-      "quality_score": 80
+      "quality_score": 68
     },
     {
       "id": "mitigating_the_impacts_of_oil_palm",
@@ -1866,7 +1866,7 @@
           "url": "https://www.recoftc.org/projects/advancing-oil-palm-mapping-social-forestry-and-machine-learning"
         }
       ],
-      "quality_score": 80
+      "quality_score": 61
     },
     {
       "id": "enabling_machine_translation_from_kiswahili_into",
@@ -1924,7 +1924,7 @@
           "url": "https://datacollective.mozillafoundation.org/datasets?q=common+voice"
         }
       ],
-      "quality_score": 100
+      "quality_score": 91
     },
     {
       "id": "miti360_a_comprehensive_dataset_for_aipowered",
@@ -1984,7 +1984,7 @@
           "url": "https://ieeexplore.ieee.org/document/11060524"
         }
       ],
-      "quality_score": 100
+      "quality_score": 91
     },
     {
       "id": "dataenabled_climate_shock_absorbance_through_agrof",
@@ -2029,7 +2029,7 @@
         "usecase"
       ],
       "additional_resources": [],
-      "quality_score": 90
+      "quality_score": 83
     },
     {
       "id": "livhealth_kiswahili_corpus",
@@ -2080,7 +2080,7 @@
           "url": "https://foundation.mozilla.org/blog/new-app-and-local-language-translations-improve-livestock-health-in-kenya-and-tanzania/"
         }
       ],
-      "quality_score": 70
+      "quality_score": 53
     },
     {
       "id": "providing_farmers_in_kenya_and_bihar",
@@ -2127,7 +2127,7 @@
         "usecase"
       ],
       "additional_resources": [],
-      "quality_score": 80
+      "quality_score": 61
     },
     {
       "id": "making_ai_understand_3_east_african",
@@ -2178,7 +2178,7 @@
           "url": "https://www.bmz-digital.global/wp-content/uploads/2023/03/Creating-Community-Driven-Datasets-Report-032023-GIZ-Mozilla.pdf"
         }
       ],
-      "quality_score": 90
+      "quality_score": 76
     },
     {
       "id": "helping_to_measure_solar_energy_adoption",
@@ -2220,7 +2220,7 @@
         "dataset"
       ],
       "additional_resources": [],
-      "quality_score": 70
+      "quality_score": 53
     },
     {
       "id": "detecting_sentiments_and_combatting_hate_speech",
@@ -2274,7 +2274,7 @@
           "url": "https://arxiv.org/pdf/2201.08277"
         }
       ],
-      "quality_score": 100
+      "quality_score": 84
     },
     {
       "id": "promoting_energy_conservation_and_market_analysis",
@@ -2317,7 +2317,7 @@
         "dataset"
       ],
       "additional_resources": [],
-      "quality_score": 90
+      "quality_score": 83
     },
     {
       "id": "mbaza_chatbot_rwanda_for_health_related",
@@ -2377,7 +2377,7 @@
         "business"
       ],
       "additional_resources": [],
-      "quality_score": 100
+      "quality_score": 91
     },
     {
       "id": "a_large_scale_collection_of_voice",
@@ -2424,7 +2424,7 @@
         "dataset"
       ],
       "additional_resources": [],
-      "quality_score": 80
+      "quality_score": 61
     },
     {
       "id": "solutions_from_space_rwandas_smart_harvest",
@@ -2480,7 +2480,7 @@
           "url": "https://www.bmz-digital.global/en/digital-maps-agriculture-rwanda/"
         }
       ],
-      "quality_score": 100
+      "quality_score": 91
     },
     {
       "id": "better_language_translation_for_more_training",
@@ -2558,7 +2558,7 @@
           "url": "https://aiopeneducation.pubpub.org/pub/7npwm2su/release/5?readingCollection=06969c6d"
         }
       ],
-      "quality_score": 100
+      "quality_score": 79
     },
     {
       "id": "from_maps_to_meals_ml_for",
@@ -2608,7 +2608,7 @@
           "url": "https://drive.google.com/drive/folders/1R7iawHmEnTRJu_kmoR1iz26aii15ELIT?usp=drive_link"
         }
       ],
-      "quality_score": 90
+      "quality_score": 81
     },
     {
       "id": "data_for_detecting_and_assessing_tomato",
@@ -2657,7 +2657,7 @@
           "url": "https://drive.google.com/file/d/1t3KiZiEQFprZMb8AYI01HrbSsSrfUwlb/view?usp=drive_link"
         }
       ],
-      "quality_score": 90
+      "quality_score": 66
     },
     {
       "id": "the_internet_of_crops_ioc",
@@ -2706,7 +2706,7 @@
           "url": "https://drive.google.com/file/d/1rqnCZTZ2b4MSp9C0nkFhU3A1Xhk4CwIe/view?usp=drive_link"
         }
       ],
-      "quality_score": 90
+      "quality_score": 61
     },
     {
       "id": "artificial_intelligence_for_maize_aim",
@@ -2755,7 +2755,7 @@
           "url": "https://drive.google.com/file/d/1cMBiijRJUyz8MVAuudrDnK2kkxbnoT6J/view?usp=drive_link"
         }
       ],
-      "quality_score": 90
+      "quality_score": 61
     },
     {
       "id": "data_for_detecting_and_assessing_maize",
@@ -2805,7 +2805,7 @@
           "url": "https://drive.google.com/file/d/13tu-8UnI1FYk7DLkI_Z1qmprWW3EWlfp/view?usp=drive_link"
         }
       ],
-      "quality_score": 90
+      "quality_score": 61
     },
     {
       "id": "weeties",
@@ -2856,7 +2856,7 @@
           "url": "https://drive.google.com/file/d/1uFKAZ9CCniykTKRSsh2-nxKW2f3Wkpbb/view?usp=drive_link"
         }
       ],
-      "quality_score": 90
+      "quality_score": 66
     },
     {
       "id": "chlorophyllbusters",
@@ -2907,7 +2907,7 @@
           "url": "https://drive.google.com/file/d/1dfgcycIgFy7SKUHJcZ2qFERbQTbehxVh/view?usp=drive_link"
         }
       ],
-      "quality_score": 90
+      "quality_score": 61
     },
     {
       "id": "the_agroinnovators",
@@ -2958,7 +2958,7 @@
           "url": "https://drive.google.com/file/d/1QYB5PBhQVaDQ1J-YP0ZfOAsLXznla_Kr/view?usp=drive_link"
         }
       ],
-      "quality_score": 90
+      "quality_score": 56
     },
     {
       "id": "agrothermography",
@@ -3009,7 +3009,7 @@
           "url": "https://drive.google.com/file/d/1GMpDiMlY-wYXTB6T5woikRpFbgQ21hhp/view?usp=drive_link"
         }
       ],
-      "quality_score": 90
+      "quality_score": 59
     },
     {
       "id": "discovering_agriculture_insurance",
@@ -3059,7 +3059,7 @@
           "url": "https://drive.google.com/file/d/1rGoapVNyVsVwMxDfBrRfdVoyRCpjwnIy/view?usp=drive_link"
         }
       ],
-      "quality_score": 90
+      "quality_score": 61
     },
     {
       "id": "sar_busters",
@@ -3108,7 +3108,7 @@
           "url": "https://drive.google.com/file/d/1c54f9Lh5IV8T_XLrlf_8ItAitrBEjTVZ/view?usp=drive_link"
         }
       ],
-      "quality_score": 90
+      "quality_score": 56
     },
     {
       "id": "voices_of_mzansi__making_all",
@@ -3152,7 +3152,7 @@
         "dataset"
       ],
       "additional_resources": [],
-      "quality_score": 80
+      "quality_score": 61
     },
     {
       "id": "spot_the_crop",
@@ -3207,7 +3207,7 @@
           "url": "https://zindi.africa/competitions/radiant-earth-spot-the-crop-challenge"
         }
       ],
-      "quality_score": 100
+      "quality_score": 96
     },
     {
       "id": "croppie_helping_smallholder_coffee_producers_to",
@@ -3264,7 +3264,7 @@
           "url": "https://www.bmz-digital.global/en/ai-coffee-intelligent-awake/"
         }
       ],
-      "quality_score": 90
+      "quality_score": 93
     },
     {
       "id": "bridging_the_energy_gap_machine_learning",
@@ -3315,7 +3315,7 @@
         "usecase"
       ],
       "additional_resources": [],
-      "quality_score": 90
+      "quality_score": 88
     },
     {
       "id": "estimating_solar_irradiance_for_improved_solar",
@@ -3371,7 +3371,7 @@
         "usecase"
       ],
       "additional_resources": [],
-      "quality_score": 70
+      "quality_score": 53
     },
     {
       "id": "ai_as_a_helping_hand_to",
@@ -3421,7 +3421,7 @@
         "usecase"
       ],
       "additional_resources": [],
-      "quality_score": 80
+      "quality_score": 63
     },
     {
       "id": "monitoring_deforestation_predicting_landuse_and_la",
@@ -3467,7 +3467,7 @@
         "pilot"
       ],
       "additional_resources": [],
-      "quality_score": 90
+      "quality_score": 93
     },
     {
       "id": "preserving_privacy_and_avoiding_gender_bias",
@@ -3518,7 +3518,7 @@
           "url": "https://dataverse.harvard.edu/file.xhtml?fileId=10577234&version=2.0"
         }
       ],
-      "quality_score": 90
+      "quality_score": 83
     },
     {
       "id": "kinycomet_automatic_evaluation_of_machine_translat",
@@ -3567,7 +3567,7 @@
         "pilot"
       ],
       "additional_resources": [],
-      "quality_score": 85
+      "quality_score": 69
     },
     {
       "id": "tunga_agrichatbot_suite",
@@ -3618,7 +3618,7 @@
         "pilot"
       ],
       "additional_resources": [],
-      "quality_score": 75
+      "quality_score": 61
     }
   ],
   "stats": {
