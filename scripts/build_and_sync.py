@@ -8,6 +8,7 @@ import gspread
 import sys
 import re
 import csv
+import json
 from thefuzz import process, fuzz
 from utils import normalize_for_directory, resolve_project_id, PROJECTS_DIR, GOOGLE_SHEET_ID, GOOGLE_SHEET_GID, DEFAULT_CREDENTIALS_PATH
 
@@ -606,7 +607,15 @@ if not args.skip_fetch:
         create_project_directories(df)
     except gspread.exceptions.APIError as api_e:
         print(f"Google Sheets API Error: {api_e}")
-        # Handle specific API errors if needed
+        sys.exit(1)
+    except (json.JSONDecodeError, ValueError) as e:
+        print(f"Error reading credentials file: {e}")
+        print(f"Check that '{args.credentials}' contains valid JSON.")
+        print("If running in GitHub Actions, verify the GOOGLE_SHEETS_CREDENTIALS secret is set correctly.")
+        sys.exit(1)
+    except FileNotFoundError as e:
+        print(f"Credentials file not found: {e}")
+        print(f"Expected credentials at: {args.credentials}")
         sys.exit(1)
     except Exception as e:
         print(f"Error fetching data from Google Sheets: {e}")

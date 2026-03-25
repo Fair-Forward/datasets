@@ -9,19 +9,25 @@ jobs:
 
     steps:
     - name: Checkout main branch
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
-        ref: main # Checkout the main branch
+        ref: main
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: "3.x"
 
-    - name: Install dependencies
-      run: |
-        # Install all necessary dependencies for build and backup
-        pip install pandas openpyxl gspread oauth2client python-dotenv thefuzz[speedup]
+    - name: Install Python dependencies
+      run: pip install -r requirements.txt
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Install npm dependencies
+      run: npm install
 
     - name: Create service account credentials
       env:
@@ -30,23 +36,25 @@ jobs:
         echo "Creating credentials file..."
         CRED_DIR="data_sources/google_sheets_api"
         CRED_FILE="$CRED_DIR/service_account_JN.json"
-        mkdir -p $CRED_DIR
-        echo "${GOOGLE_SHEETS_CREDENTIALS}" > "$CRED_FILE"
-        if [ ! -f "$CRED_FILE" ] || [ ! -s "$CRED_FILE" ]; then
-          echo "Error: Failed to create credentials file."
+        mkdir -p "$CRED_DIR"
+
+        # Use printf to avoid echo's trailing newline and escape interpretation
+        printf '%s' "${GOOGLE_SHEETS_CREDENTIALS}" > "$CRED_FILE"
+
+        # Validate that the file is valid JSON
+        if ! python -m json.tool "$CRED_FILE" > /dev/null 2>&1; then
+          echo "::error::Invalid JSON in credentials file. Check the GOOGLE_SHEETS_CREDENTIALS secret."
           exit 1
         fi
-        echo "Credentials file created."
+
+        if [ ! -f "$CRED_FILE" ] || [ ! -s "$CRED_FILE" ]; then
+          echo "::error::Failed to create credentials file."
+          exit 1
+        fi
+        echo "Credentials file created and validated."
 
     - name: Build Website and Backup Data
-      run: |
-        echo "Running build script..."
-        python scripts/build_and_sync.py
-        if [ $? -ne 0 ]; then
-          echo "::error::Build script failed."
-          exit 1
-        fi
-        echo "Build script finished."
+      run: python scripts/build_and_sync.py
 
     - name: Commit and push changes to main
       run: |
