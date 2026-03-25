@@ -207,13 +207,17 @@ const MaturityChart = ({ maturityDistribution, catalogProjects }) => {
             }
             
             return (
-              <g 
+              <g
                 key={pos.stage.key}
                 className={`sankey-stage ${isHovered ? 'hovered' : ''} ${hasData ? 'has-data clickable' : 'empty'}`}
                 onMouseEnter={() => setHoveredStage(pos.stage.key)}
                 onMouseLeave={() => setHoveredStage(null)}
                 onClick={handleStageClick}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleStageClick() } }}
                 style={{ cursor: hasData ? 'pointer' : 'default' }}
+                tabIndex={hasData ? 0 : undefined}
+                role={hasData ? 'button' : undefined}
+                aria-label={hasData ? `${pos.stage.label}: ${pos.stage.count} projects. Click to filter catalog.` : `${pos.stage.label}: ${pos.stage.count} projects`}
               >
                 {/* Stage rectangle */}
                 <rect

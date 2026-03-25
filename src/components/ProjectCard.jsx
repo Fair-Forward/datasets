@@ -105,7 +105,14 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
   const fallbackColor = !image ? getSdgFallbackColor(sdgs) : null
 
   return (
-    <div className={cardClasses} onClick={() => onClick(project)}>
+    <div
+      className={cardClasses}
+      onClick={() => onClick(project)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(project) } }}
+      aria-label={`View details for ${title}`}
+    >
       <div
         className={`card-image${image ? ' has-image' : ''}`}
         style={
@@ -122,9 +129,16 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
         {sdgs.length > 0 && (
           <div className="domain-badges">
             {sdgs.slice(0, 3).map(sdg => (
-              <span key={sdg} className="domain-badge" onClick={(e) => { e.stopPropagation(); onFilterSDG?.(sdg); }} title={`Filter by ${sdg}`}>
+              <button
+                key={sdg}
+                className="domain-badge"
+                onClick={(e) => { e.stopPropagation(); onFilterSDG?.(sdg); }}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.stopPropagation() } }}
+                title={`Filter by ${sdg}`}
+                type="button"
+              >
                 {sdg}
-              </span>
+              </button>
             ))}
             {has_access_note && (
               <span className="access-note-chip" title="No public dataset/use-case link">

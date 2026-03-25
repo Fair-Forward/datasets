@@ -4,7 +4,6 @@ import WorldMap from '../components/WorldMap'
 import SDGChart from '../components/SDGChart'
 import MaturityChart from '../components/MaturityChart'
 import SDGCountryHeatmap from '../components/SDGCountryHeatmap'
-import OrganizationNetwork from '../components/OrganizationNetwork'
 import { withBasePath } from '../utils/basePath'
 
 const InsightsPage = () => {
@@ -104,7 +103,8 @@ const InsightsPage = () => {
   return (
     <div className="insights-page">
       <Header />
-      
+
+      <main>
       <div className="container">
         <a href={withBasePath('/')} className="back-link">
           <i className="fas fa-arrow-left"></i>
@@ -302,23 +302,29 @@ const InsightsPage = () => {
           </div>
         )}
 
-        {/* Organization Network Section */}
-        {catalogData?.projects && (
-          <div className="insight-card insight-card-network">
-            <div className="insight-card-header">
-              <div>
-                <h2>
-                  <i className="fas fa-project-diagram"></i>
-                  Partner Ecosystem
-                </h2>
-                <p>Organizations powering, catalyzing, and financing the projects</p>
-              </div>
-            </div>
-            
-            <OrganizationNetwork projects={catalogData.projects} />
-          </div>
-        )}
       </div>
+      </main>
+
+      <footer>
+        <div className="footer-content">
+          <p>&copy; {new Date().getFullYear()} Fair Forward - Artificial Intelligence for All | A project by GIZ</p>
+          <p className="footer-secondary">
+            <a href="https://github.com/Fair-Forward/datasets" target="_blank" rel="noopener noreferrer">
+              Contribute to the Source Code on GitHub <i className="fab fa-github"></i>
+            </a>
+          </p>
+          <p className="footer-secondary">
+            For technical questions/feedback{' '}
+            <a href="https://github.com/Fair-Forward/datasets/issues" target="_blank" rel="noopener noreferrer">
+              open an issue on Github
+            </a>
+            {' '}or contact{' '}
+            <a href="mailto:jonas.nothnagel@gmail.com">
+              Jonas Nothnagel
+            </a>.
+          </p>
+        </div>
+      </footer>
     </div>
   )
 }

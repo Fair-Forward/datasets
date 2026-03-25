@@ -197,11 +197,14 @@ const CatalogPage = () => {
     return (
       <div>
         <Header />
-        <div className="container">
-          <div className="catalog-loading">
-            <p>Loading catalog...</p>
+        <main>
+          <div className="container">
+            <div className="catalog-loading">
+              <div className="insights-loading-spinner"></div>
+              <p>Loading catalog...</p>
+            </div>
           </div>
-        </div>
+        </main>
       </div>
     )
   }
@@ -210,13 +213,20 @@ const CatalogPage = () => {
     return (
       <div>
         <Header />
-        <div className="container">
-          <div className="catalog-error">
-            <p>Unable to load catalog data. Please run the build script.</p>
-            <p>Error: {error || 'No data available'}</p>
-            <code>python scripts/generate_catalog_data.py</code>
+        <main>
+          <div className="container">
+            <div className="catalog-error">
+              <i className="fas fa-exclamation-triangle" style={{ fontSize: '2rem', color: 'var(--yellow)', marginBottom: '1rem' }}></i>
+              <p>We could not load the catalog right now. Please try refreshing the page.</p>
+              <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-light)' }}>
+                If the problem persists, please{' '}
+                <a href="https://github.com/Fair-Forward/datasets/issues" target="_blank" rel="noopener noreferrer">
+                  report it on GitHub
+                </a>.
+              </p>
+            </div>
           </div>
-        </div>
+        </main>
       </div>
     )
   }
@@ -224,7 +234,8 @@ const CatalogPage = () => {
   return (
     <div>
       <CatalogHeader stats={dynamicStats} />
-      
+
+      <main>
       <FilterBar 
         filters={filters} 
         onFilterChange={handleFilterChange}
@@ -263,9 +274,11 @@ const CatalogPage = () => {
         )}
       </div>
 
+      </main>
+
       {selectedProject && (
-        <DetailPanel 
-          project={selectedProject} 
+        <DetailPanel
+          project={selectedProject}
           onClose={handleProjectClose}
         />
       )}

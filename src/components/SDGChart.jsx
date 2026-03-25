@@ -123,12 +123,16 @@ const SDGChart = ({ sdgDistribution, onSDGClick }) => {
       {viewMode === 'bars' ? (
         <div className="sdg-bars-container">
           {chartData.map((item, index) => (
-            <div 
+            <div
               key={item.sdg}
               className={`sdg-bar-row ${hoveredSDG === item.number ? 'hovered' : ''}`}
               onMouseEnter={() => setHoveredSDG(item.number)}
               onMouseLeave={() => setHoveredSDG(null)}
               onClick={() => onSDGClick?.(item)}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSDGClick?.(item) } }}
+              role="button"
+              tabIndex={0}
+              aria-label={`${item.fullName}: ${item.count} projects. Click to filter catalog.`}
               style={{ '--delay': `${index * 50}ms` }}
             >
               <div className="sdg-bar-label">
@@ -164,14 +168,18 @@ const SDGChart = ({ sdgDistribution, onSDGClick }) => {
       ) : (
         <div className="sdg-grid-view">
           {chartData.map((item, index) => (
-            <div 
+            <div
               key={item.sdg}
               className="sdg-grid-card"
-              style={{ 
+              style={{
                 '--sdg-color': item.color,
                 '--delay': `${index * 30}ms`
               }}
               onClick={() => onSDGClick?.(item)}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSDGClick?.(item) } }}
+              role="button"
+              tabIndex={0}
+              aria-label={`SDG ${item.number} ${item.fullName}: ${item.count} projects`}
             >
               <div 
                 className="sdg-grid-card-bg"

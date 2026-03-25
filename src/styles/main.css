@@ -487,11 +487,11 @@
             height: 100%;
             background: linear-gradient(
                 to bottom,
-                rgba(254, 252, 245, 0) 0%,   /* --light-bg (card background) with alpha */
-                rgba(254, 252, 245, 0) 50%,  /* --light-bg (card background) with alpha */
-                rgba(254, 252, 245, 0.3) 75%,/* --light-bg (card background) with alpha */
-                rgba(254, 252, 245, 0.8) 90%,/* --light-bg (card background) with alpha */
-                rgba(254, 252, 245, 1) 100%  /* --light-bg (card background) full */
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0) 50%,
+                rgba(255, 255, 255, 0.3) 75%,
+                rgba(255, 255, 255, 0.8) 90%,
+                rgba(255, 255, 255, 1) 100%
             );
             z-index: 1;
         }
@@ -535,11 +535,13 @@
             border-radius: var(--radius-pill);
             font-size: var(--text-xs);
             font-weight: 500;
-            border: 1px solid var(--color-info); /* Blue border to distinguish from data type tags */
+            font-family: inherit;
+            border: 1px solid var(--color-info);
             white-space: nowrap;
             width: fit-content;
             max-width: 100%;
             box-sizing: border-box;
+            line-height: inherit;
         }
 
         .domain-badge:hover {
@@ -1022,6 +1024,26 @@
         .btn-view-details:hover {
             background-color: var(--background);  /* Use main background on hover */
             color: var(--primary);  /* Use primary color for text */
+        }
+
+        .catalog-loading,
+        .catalog-error {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem;
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        .catalog-error a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .catalog-error a:hover {
+            text-decoration: underline;
         }
 
         .empty-state {
