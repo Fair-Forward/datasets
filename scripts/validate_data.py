@@ -133,6 +133,24 @@ def validate_catalog(catalog_path):
     return projects, issues
 
 
+def _url_likely_cause(status):
+    """Map a status code or error name to a human-readable likely cause."""
+    if isinstance(status, int):
+        if status in (404, 410):
+            return "Likely removed or renamed"
+        if status in (403, 401):
+            return "Likely bot detection -- probably works in browser"
+        if status >= 500:
+            return "Temporary server error -- retry later"
+        return f"HTTP {status}"
+    # String error names from requests exceptions
+    if 'Timeout' in str(status):
+        return "Request timed out -- server may be slow"
+    if 'Connection' in str(status):
+        return "Server unreachable -- may be down"
+    return f"Network error ({status})"
+
+
 def validate_urls(projects):
     """Check all HTTP URLs in the catalog for accessibility."""
     import requests
@@ -150,10 +168,14 @@ def validate_urls(projects):
     if not url_map:
         return []
 
-    headers = {'User-Agent': 'FairForward-DataCatalog/1.0'}
+    quick_headers = {'User-Agent': 'FairForward-DataCatalog/1.0'}
+    browser_headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    }
     broken = []
 
-    def check_url(url):
+    def check_url(url, headers):
         try:
             resp = requests.head(url, timeout=10, allow_redirects=True, headers=headers)
             if resp.status_code in (403, 405):
@@ -162,17 +184,33 @@ def validate_urls(projects):
                 resp.close()
             return url, resp.status_code, None
         except requests.exceptions.RequestException as e:
-            return url, None, str(type(e).__name__)
+            return url, None, type(e).__name__
 
+    # Pass 1: quick check all URLs
     print(f"\n  Checking {len(url_map)} unique URLs...")
+    failed = {}
     with ThreadPoolExecutor(max_workers=10) as executor:
-        futures = {executor.submit(check_url, url): url for url in url_map}
+        futures = {executor.submit(check_url, url, quick_headers): url for url in url_map}
         for future in as_completed(futures):
             url, status, error = future.result()
             if error:
-                broken.append({'url': url, 'status': error, 'projects': url_map[url]})
+                failed[url] = error
             elif status and status >= 400:
-                broken.append({'url': url, 'status': status, 'projects': url_map[url]})
+                failed[url] = status
+
+    # Pass 2: retry failures with browser-like headers
+    if failed:
+        print(f"  Retrying {len(failed)} failed URLs with browser headers...")
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            futures = {executor.submit(check_url, url, browser_headers): url
+                       for url in failed}
+            for future in as_completed(futures):
+                url, status, error = future.result()
+                result_status = error if error else status
+                if error or (status and status >= 400):
+                    broken.append({'url': url, 'status': result_status,
+                                   'likely_cause': _url_likely_cause(result_status),
+                                   'projects': url_map[url]})
 
     return broken
 
@@ -214,11 +252,11 @@ def print_console_summary(projects, issues):
         print(f"\n  {len(issues['short_description'])} projects with very short descriptions (<50 chars)")
 
     if issues.get('broken_urls'):
-        print(f"\n  {len(issues['broken_urls'])} broken or unreachable URLs:")
+        print(f"\n  {len(issues['broken_urls'])} flagged URLs (note: some may be false positives from bot detection):")
         for item in issues['broken_urls']:
             projects_str = ', '.join(t[:40] for t in item['projects'][:2])
             print(f"    [{item['status']}] {item['url'][:80]}")
-            print(f"          used by: {projects_str}")
+            print(f"          {item['likely_cause']} | used by: {projects_str}")
     elif 'broken_urls' in issues:
         print(f"\n  All URLs verified OK")
 
@@ -245,7 +283,7 @@ def write_report(projects, issues, output_path):
     ]
 
     if 'broken_urls' in issues:
-        lines.append(f"- **{len(issues['broken_urls'])}** broken or unreachable URLs")
+        lines.append(f"- **{len(issues['broken_urls'])}** flagged URLs (see details below)")
 
     lines.append("")
 
@@ -302,16 +340,22 @@ def write_report(projects, issues, output_path):
         lines.append("")
 
     if issues.get('broken_urls'):
-        lines.append("## Broken or Unreachable URLs")
+        lines.append("## Flagged URLs")
         lines.append("")
-        lines.append("These URLs returned errors or could not be reached during the build.")
+        lines.append("The following URLs were flagged by automated checks during the build. "
+                      "**Important:** These checks use HTTP requests, not a real browser. "
+                      "Many websites block automated requests (returning 403 or 401) even though "
+                      "they work perfectly in a browser. Links flagged as \"bot detection\" almost "
+                      "certainly work fine -- please verify in a browser before removing them.")
         lines.append("")
-        lines.append("| URL | Status | Used By |")
-        lines.append("|---|---|---|")
+        lines.append("All flagged links are still shown on the website. This list is advisory only.")
+        lines.append("")
+        lines.append("| URL | Status | Likely Cause | Used By |")
+        lines.append("|---|---|---|---|")
         for item in issues['broken_urls']:
             url = item['url'].replace('|', '\\|')
             projects_str = ', '.join(t[:40] for t in item['projects'])
-            lines.append(f"| {url} | {item['status']} | {projects_str} |")
+            lines.append(f"| {url} | {item['status']} | {item['likely_cause']} | {projects_str} |")
         lines.append("")
 
     lines.append("## Score Distribution")
@@ -340,7 +384,7 @@ def build_row_notes(excel_path, broken_urls=None):
     from utils import resolve_project_id, extract_http_links
 
     broken_set = {item['url'] for item in (broken_urls or [])}
-    broken_status = {item['url']: item['status'] for item in (broken_urls or [])}
+    broken_info = {item['url']: item for item in (broken_urls or [])}
 
     df = pd.read_excel(excel_path)
     row_notes = {}
@@ -413,11 +457,13 @@ def build_row_notes(excel_path, broken_urls=None):
                 for link in extract_http_links(cell_text):
                     url = link['url']
                     if url in broken_set:
-                        bad.append(f"  {url} (status: {broken_status[url]})")
+                        info = broken_info[url]
+                        bad.append(f"  {url}\n    Status: {info['status']} -- {info['likely_cause']}")
                 if bad:
                     notes[col_name] = (
-                        "Broken link(s) detected:\n" + "\n".join(bad)
-                        + "\nPlease update or remove these URLs."
+                        "Flagged link(s) -- please verify in a browser:\n"
+                        + "\n".join(bad)
+                        + "\n(Automated checks can produce false positives from bot detection.)"
                     )
 
         if notes:
