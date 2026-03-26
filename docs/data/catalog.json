@@ -1432,10 +1432,6 @@
         },
         {
           "name": "Link",
-          "url": "https://drive.google.com/drive/folders/1TOuuCLtlNzTh7JS69B5OgT0wLrMzM4rv?usp=drive_link"
-        },
-        {
-          "name": "Link",
           "url": "https://zindi.africa/competitions/telangana-crop-health-challenge"
         }
       ],
@@ -3706,7 +3702,7 @@
   "stats": {
     "total_projects": 72,
     "total_datasets": 82,
-    "total_usecases": 47,
+    "total_usecases": 46,
     "total_access_note_projects": 3,
     "total_countries": 24
   },
