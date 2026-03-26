@@ -1454,7 +1454,7 @@
       ],
       "license": "",
       "contact": "WRMS (https://wrmsglobal.com/)",
-      "organizations": "Powered by:  WRMS for Data Collection (https://wrmsglobal.com/), ZINDI for the data challenge (https://zindi.africa/) and Vertify for Model Development (https://vertify.earth/)\nCatalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)\nFinanced by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",
+      "organizations": "Powered by:  WRMS - Weather Risk Management Services for Data Collection (https://wrmsglobal.com/), ZINDI for the data challenge (https://zindi.africa/) and Vertify for Model Development (https://vertify.earth/)\nCatalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)\nFinanced by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",
       "authors": "Jonas Nothnagel",
       "is_lacuna": false,
       "has_dataset": true,
@@ -1569,6 +1569,76 @@
       ],
       "additional_resources": [],
       "quality_score": 94
+    },
+    {
+      "id": "voice_tech_for_all_building_inclusive",
+      "title": "Voice Tech for All: Building Inclusive Speech AI for India",
+      "description": "This hackathon challenged teams to build an AI system that can turn written text into natural-sounding speech across multiple Indian languages, including less-represented ones. Participants created voices that can reflect different accents and speaking styles, making the technology more personal and inclusive. Using open data, they made voice technology more accessible for diverse communities. The solutions will be integrated into a voice assistant designed to support pregnant women in low-income communities.",
+      "dataset_links": [
+        {
+          "name": "Link",
+          "url": "https://spiredatasets.ee.iisc.ac.in/syspincorpus;"
+        },
+        {
+          "name": "Link",
+          "url": "https://spiredatasets.ee.iisc.ac.in/englishttscorpus;"
+        },
+        {
+          "name": "Link",
+          "url": "https://spiredatasets.ee.iisc.ac.in/gujaratittscorpus"
+        }
+      ],
+      "usecase_links": [
+        {
+          "name": "Link",
+          "url": "https://huggingface.co/somyalab/Spark_somya_TTS"
+        },
+        {
+          "name": "Link",
+          "url": "https://huggingface.co/roymukund/Voice-Tech-CDAC-Submission/tree/main"
+        },
+        {
+          "name": "Link",
+          "url": "https://huggingface.co/vinaybabu/voice-tech-for-all-v2"
+        },
+        {
+          "name": "Link",
+          "url": "https://huggingface.co/immverse-ai/voice-tech-for-all-challenge-v2"
+        }
+      ],
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
+      "sdgs": [
+        "SDG 10"
+      ],
+      "data_types": [
+        "Voice",
+        "Text"
+      ],
+      "countries": [
+        "India"
+      ],
+      "license": "CC-BY 4.0",
+      "contact": "Dr. Prasanta Ghosh (prasantag@iisc.ac.in), Dr. Philipp Olbrich (philipp.olbrich@giz.de)",
+      "organizations": "Powered by: Indian Institute of Science (IISc) and Artpark\nCatalyzed by: FAIR Forward - AI for All\nFinanced by: BMZ",
+      "authors": "Philipp Olbrich",
+      "is_lacuna": false,
+      "has_dataset": true,
+      "has_usecase": true,
+      "image": null,
+      "data_characteristics": "\"The Data is fully open-sourced and can be accessed at:\n • IISc website: <https://spiredatasets.ee.iisc.ac.in/syspincorpus>\n TTS Dataset:\n • License: CC-BY 4.0\n • Data Type: Audio recording\n • Sentence creation: Variety of domains covered in the sentences/text and phonetically rich sentence selection\n • Accounts for dialect variability\n • Voice artist selection and balanced duration per voice artist \n • Voice recording: 40 hours of recording by 1 male voice artist and 1 female voice artist for each of the 9 languages\n • Studio-quality audio with 48kHz, 24 bits per sample from every voice artist\n • Data was collected and created over 3 years from 2021-2024\"",
+      "model_characteristics": "The winning models can be accessed on their respective repositories here: \nSomya: https://huggingface.co/somyalab/Spark_somya_TTS\n\nCDAC_SVNIT: https://huggingface.co/roymukund/Voice-Tech-CDAC-Submission/tree/main\n\nLTRC-SPL: https://huggingface.co/vinaybabu/voice-tech-for-all-v2\n\nimmverse_ai: https://huggingface.co/immverse-ai/voice-tech-for-all-challenge-v2",
+      "how_to_use": "The TTS models can be used to develop innovative solutions and voice-based services for Indians in their native language. This would be especially beneficial for those who cannot read/write or have speech and visual disabilities but can access digital services through audio/voice-based mediums. The data and models are a crucial stepping stone for developing such assistive technologies. Including low-resource languages, some of which do not even have enough print/digital literature, would benefit vulnerable communities for whom language barriers make access to technological solutions even more difficult. Given the distribution of speakers. some of the languages are especially useful for programmes wishing to engage with rural communities and promote sustainable agriculture in rural settings.",
+      "maturity": "Dataset > Model > Pilot",
+      "maturity_tags": [
+        "dataset",
+        "model",
+        "pilot"
+      ],
+      "additional_resources": [],
+      "quality_score": 100
     },
     {
       "id": "aipowered_monitoring_of_forest_degradation_and",
@@ -3622,9 +3692,9 @@
     }
   ],
   "stats": {
-    "total_projects": 71,
-    "total_datasets": 79,
-    "total_usecases": 40,
+    "total_projects": 72,
+    "total_datasets": 82,
+    "total_usecases": 44,
     "total_access_note_projects": 3,
     "total_countries": 24
   },
