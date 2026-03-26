@@ -38,6 +38,7 @@ pr_body.md
 .env.local
 
 CLAUDE.md
+.claude/
 
 # Google service accounts / secrets
 data_sources/google_sheets_api/*.json
