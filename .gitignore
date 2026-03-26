@@ -37,3 +37,6 @@ CLAUDE.md
 # Google service accounts / secrets
 data_sources/google_sheets_api/*.json
 data_sources/google_sheets_api/*.pem
+
+# folders
+replication_kit/
