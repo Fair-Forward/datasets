@@ -1,0 +1,35 @@
+name: Revert Last Sheet Update
+
+on:
+  workflow_dispatch:
+
+jobs:
+  revert:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout main branch
+      uses: actions/checkout@v4
+      with:
+        ref: main
+        fetch-depth: 20
+
+    - name: Find and revert last sheet update
+      run: |
+        # Find the most recent sheet update commit (from PR squash merges or direct commits)
+        COMMIT=$(git log --oneline --grep="Sheet update" -1 --format="%H")
+        if [ -z "$COMMIT" ]; then
+          echo "::error::No sheet update commit found in the last 20 commits."
+          exit 1
+        fi
+
+        echo "Found commit to revert:"
+        git log -1 --format="  %h %s (%ci)" "$COMMIT"
+
+        git config --global user.name "GitHub Actions (Revert)"
+        git config --global user.email "actions@github.com"
+        git revert --no-edit "$COMMIT"
+        git push origin main
+
+        echo "Successfully reverted the last sheet update."
+        echo "The website will return to its previous state once GitHub Pages rebuilds."

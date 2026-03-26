@@ -61,6 +61,24 @@ def main():
         check=False
     )
 
+    # Step 1c: Diff catalog to detect suspicious changes
+    # At this point public/data/catalog.json is new, docs/data/catalog.json is still old
+    print(f"\n{'='*60}")
+    print(f"  Comparing catalog changes (security check)")
+    print(f"{'='*60}")
+    diff_result = subprocess.run(
+        [PYTHON, 'scripts/diff_catalog.py'],
+        capture_output=True, text=True
+    )
+    # Write summary for the workflow to pick up
+    with open('change_summary.md', 'w') as f:
+        f.write(diff_result.stdout)
+    with open('.diff_exit_code', 'w') as f:
+        f.write(str(diff_result.returncode))
+    print(diff_result.stdout)
+    if diff_result.returncode != 0:
+        print("Build will continue, but the deployment workflow will flag this for review.")
+
     # Step 2: Generate insights JSON
     # Read project count from catalog.json
     import json
