@@ -28,11 +28,17 @@ Thumbs.db
 *.log
 *.tmp
 
+# Build pipeline temp files (security diff output)
+.diff_exit_code
+change_summary.md
+pr_body.md
+
 # Environment
 .env
 .env.local
 
 CLAUDE.md
+.claude/
 
 # Google service accounts / secrets
 data_sources/google_sheets_api/*.json

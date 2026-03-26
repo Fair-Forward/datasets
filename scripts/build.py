@@ -61,6 +61,41 @@ def main():
         check=False
     )
 
+    # Step 1c: Diff catalog to detect suspicious changes
+    # At this point public/data/catalog.json is new, docs/data/catalog.json is still old
+    print(f"\n{'='*60}")
+    print(f"  Comparing catalog changes (security check)")
+    print(f"{'='*60}")
+    diff_result = subprocess.run(
+        [PYTHON, 'scripts/diff_catalog.py'],
+        capture_output=True, text=True
+    )
+    if diff_result.returncode == 1:
+        # Script detected suspicious changes
+        with open('change_summary.md', 'w') as f:
+            f.write(diff_result.stdout)
+        with open('.diff_exit_code', 'w') as f:
+            f.write('1')
+        print(diff_result.stdout)
+        print("Build will continue, but the deployment workflow will flag this for review.")
+    elif diff_result.returncode == 0:
+        # Normal changes
+        with open('change_summary.md', 'w') as f:
+            f.write(diff_result.stdout)
+        with open('.diff_exit_code', 'w') as f:
+            f.write('0')
+        print(diff_result.stdout)
+    else:
+        # Script crashed -- treat as safe to avoid blocking deploys, but warn
+        print(f"Warning: diff_catalog.py exited with code {diff_result.returncode}")
+        if diff_result.stderr:
+            print(f"  stderr: {diff_result.stderr.strip()}")
+        with open('change_summary.md', 'w') as f:
+            f.write("## Sheet Update Summary\n\nChange detection script encountered an error. "
+                    "Changes were not analyzed but the build proceeded.\n")
+        with open('.diff_exit_code', 'w') as f:
+            f.write('0')
+
     # Step 2: Generate insights JSON
     # Read project count from catalog.json
     import json

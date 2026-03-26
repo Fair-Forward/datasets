@@ -58,6 +58,15 @@ def normalize_sheet_link_cell(value):
     return value.strip()
 
 
+_DANGEROUS_SCHEMES = ('javascript:', 'data:', 'vbscript:', 'file:')
+
+
+def _is_safe_url(url):
+    """Reject URLs with dangerous schemes (XSS prevention)."""
+    lower = url.lower().strip()
+    return not any(lower.startswith(s) for s in _DANGEROUS_SCHEMES)
+
+
 def _clean_url(url):
     """Strip trailing punctuation that is sentence-ending, not part of the URL."""
     return url.rstrip('.;,')
@@ -75,7 +84,7 @@ def extract_http_links(text):
     markdown_pattern = r"\[([^\]]+)\]\(([^)]+)\)"
     for name, url in re.findall(markdown_pattern, text):
         url = _clean_url(url.strip())
-        if url.startswith("http"):
+        if url.startswith("http") and _is_safe_url(url):
             urls.append({"name": name.strip(), "url": url})
 
     url_pattern = r"https?://[^\s,;)\]>]+"
@@ -99,7 +108,7 @@ def extract_links_allow_site_paths(text):
     markdown_pattern = r"\[([^\]]+)\]\(([^)]+)\)"
     for name, url in re.findall(markdown_pattern, text):
         url = _clean_url(url.strip())
-        if url.startswith("http") or url.startswith("/"):
+        if (url.startswith("http") or url.startswith("/")) and _is_safe_url(url):
             urls.append({"name": name.strip(), "url": url})
 
     url_pattern = r"https?://[^\s,;)\]>]+"

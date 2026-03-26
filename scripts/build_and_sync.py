@@ -429,26 +429,22 @@ if not args.skip_fetch:
         # Skip the second row (index 1) which contains explanations
         data = all_values[2:]
 
-        # --- Start: Backup raw data --- 
+        # --- Start: Backup raw data ---
         if all_values:
             backup_dir = args.backup_dir
             os.makedirs(backup_dir, exist_ok=True)
-            # Use only date for the filename
-            current_date_str = datetime.datetime.now().strftime("%Y%m%d") 
+            # Use full timestamp so multiple builds per day each get a backup
+            current_date_str = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
             backup_filename = f"sheet_backup_{current_date_str}.csv"
             backup_filepath = os.path.join(backup_dir, backup_filename)
 
-            # Check if backup for today already exists
-            if not os.path.exists(backup_filepath):
-                try:
-                    with open(backup_filepath, 'w', newline='', encoding='utf-8') as csvfile:
-                        writer = csv.writer(csvfile)
-                        writer.writerows(all_values)
-                    print(f"Successfully backed up raw sheet data to {backup_filepath}")
-                except Exception as backup_e:
-                    print(f"Error writing backup CSV file: {backup_e}")
-            else:
-                print(f"Skipping backup: Backup file for today ({backup_filename}) already exists.")
+            try:
+                with open(backup_filepath, 'w', newline='', encoding='utf-8') as csvfile:
+                    writer = csv.writer(csvfile)
+                    writer.writerows(all_values)
+                print(f"Successfully backed up raw sheet data to {backup_filepath}")
+            except Exception as backup_e:
+                print(f"Error writing backup CSV file: {backup_e}")
         # --- End: Backup raw data ---
 
         # Define the canonical column names used by scripts and potential aliases in the sheet

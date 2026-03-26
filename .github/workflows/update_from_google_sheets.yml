@@ -3,6 +3,10 @@ name: Manually Update Website from Google Sheets
 on:
   workflow_dispatch:  # Allow manual triggering
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -59,23 +63,78 @@ jobs:
         UNSPLASH_API_KEY: ${{ secrets.UNSPLASH_API_KEY }}
       run: python scripts/build_and_sync.py
 
-    - name: Commit and push changes to main
+    - name: Check for changes
+      id: changes
       run: |
-        git config --global user.name "GitHub Actions (Manual Trigger)"
-        git config --global user.email "actions@github.com"
-        git add --all # Add all changes (index.html, excel, backups, etc.)
-        # Check if there are changes staged
-        if git diff --staged --quiet; then
-          echo "No changes to commit."
+        if git diff --quiet && [ -z "$(git ls-files --others --exclude-standard)" ]; then
+          echo "has_changes=false" >> $GITHUB_OUTPUT
+          echo "No changes detected."
         else
-          echo "Committing changes..."
-          # Commit with a timestamp
-          commit_msg="Manually triggered update from Google Sheets - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
-          git commit -m "$commit_msg"
-          echo "Pushing changes to main branch..."
-          # Ensure push goes to the correct branch (main)
-          git push origin main 
+          echo "has_changes=true" >> $GITHUB_OUTPUT
+          echo "Changes detected, will create PR."
         fi
 
-    # Removed the GitHub Pages status check as it might not be relevant
-    # depending on exact deployment setup. 
+    - name: Read diff results
+      if: steps.changes.outputs.has_changes == 'true'
+      id: diff
+      run: |
+        if [ -f .diff_exit_code ]; then
+          echo "exit_code=$(cat .diff_exit_code)" >> $GITHUB_OUTPUT
+        else
+          echo "exit_code=0" >> $GITHUB_OUTPUT
+        fi
+        if [ -f change_summary.md ]; then
+          # Use a random delimiter to prevent injection via project titles
+          DELIMITER="SUMMARY_$(openssl rand -hex 16)"
+          {
+            echo "summary<<$DELIMITER"
+            cat change_summary.md
+            echo "$DELIMITER"
+          } >> $GITHUB_OUTPUT
+        else
+          echo "summary=No change summary available." >> $GITHUB_OUTPUT
+        fi
+
+    - name: Create branch and open PR
+      if: steps.changes.outputs.has_changes == 'true'
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        BRANCH="auto/sheet-update-$(date -u +'%Y%m%d-%H%M%S')"
+        git config --global user.name "GitHub Actions (Sheet Update)"
+        git config --global user.email "actions@github.com"
+        git checkout -b "$BRANCH"
+        git add --all
+        git commit -m "Sheet update $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+        git push -u origin "$BRANCH"
+
+        # Close any older open auto-update PRs
+        OLD_PRS=$(gh pr list --json headRefName,number \
+          --jq '.[] | select(.headRefName | startswith("auto/sheet-update")) | .number' || true)
+        for pr in $OLD_PRS; do
+          gh pr close "$pr" --comment "Superseded by a newer sheet update." || true
+        done
+
+        # Read diff exit code
+        DIFF_EXIT_CODE="${{ steps.diff.outputs.exit_code }}"
+
+        # Build PR body file (avoids shell injection from Google Sheet content)
+        if [ "$DIFF_EXIT_CODE" != "0" ] && [ -n "$DIFF_EXIT_CODE" ]; then
+          {
+            echo "**This update was flagged for manual review.**"
+            echo ""
+            cat change_summary.md 2>/dev/null || echo "No change summary available."
+            echo ""
+            echo "Please review the changes and merge if they look correct, or close the PR to discard them."
+          } > pr_body.md
+          TITLE="[REVIEW NEEDED] Sheet update $(date -u +'%Y-%m-%d')"
+          gh pr create --title "$TITLE" --body-file pr_body.md --base main
+          echo "::warning::PR created but requires manual review -- suspicious changes detected."
+        else
+          TITLE="Sheet update $(date -u +'%Y-%m-%d') (auto-merge)"
+          gh pr create --title "$TITLE" --body-file change_summary.md --base main
+          PR_NUM=$(gh pr list --head "$BRANCH" --json number --jq '.[0].number')
+          # Auto-merge if branch protection is configured; skip gracefully if not
+          gh pr merge "$PR_NUM" --squash --auto || echo "::notice::Auto-merge not available. PR #$PR_NUM needs manual merge."
+          echo "PR #$PR_NUM created."
+        fi
