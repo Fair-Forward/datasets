@@ -58,6 +58,11 @@ def normalize_sheet_link_cell(value):
     return value.strip()
 
 
+def _clean_url(url):
+    """Strip trailing punctuation that is sentence-ending, not part of the URL."""
+    return url.rstrip('.;,')
+
+
 def extract_http_links(text):
     """
     Extract http(s) links only (for Dataset Link / Model/Use-Case columns).
@@ -69,13 +74,13 @@ def extract_http_links(text):
     urls = []
     markdown_pattern = r"\[([^\]]+)\]\(([^)]+)\)"
     for name, url in re.findall(markdown_pattern, text):
-        url = url.strip()
+        url = _clean_url(url.strip())
         if url.startswith("http"):
             urls.append({"name": name.strip(), "url": url})
 
-    url_pattern = r"https?://[^\s,)\]>]+"
+    url_pattern = r"https?://[^\s,;)\]>]+"
     for url in re.findall(url_pattern, text):
-        url = url.strip()
+        url = _clean_url(url.strip())
         if url not in [u["url"] for u in urls]:
             urls.append({"name": "Link", "url": url})
 
@@ -93,13 +98,13 @@ def extract_links_allow_site_paths(text):
     urls = []
     markdown_pattern = r"\[([^\]]+)\]\(([^)]+)\)"
     for name, url in re.findall(markdown_pattern, text):
-        url = url.strip()
+        url = _clean_url(url.strip())
         if url.startswith("http") or url.startswith("/"):
             urls.append({"name": name.strip(), "url": url})
 
-    url_pattern = r"https?://[^\s,)\]>]+"
+    url_pattern = r"https?://[^\s,;)\]>]+"
     for url in re.findall(url_pattern, text):
-        url = url.strip()
+        url = _clean_url(url.strip())
         if url not in [u["url"] for u in urls]:
             urls.append({"name": "Link", "url": url})
 

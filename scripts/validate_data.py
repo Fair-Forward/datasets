@@ -8,6 +8,7 @@ from utils import KNOWN_COUNTRIES, DEFAULT_CREDENTIALS_PATH, get_gsheet_client
 parser = argparse.ArgumentParser(description='Validate catalog data and generate quality report.')
 parser.add_argument('--input', type=str, default="public/data/catalog.json", help='Path to catalog JSON')
 parser.add_argument('--output', type=str, default="docs/data_quality_report.md", help='Path to output report')
+parser.add_argument('--check-urls', action='store_true', help='Validate that all HTTP URLs resolve (makes network requests)')
 parser.add_argument('--write-notes', action='store_true', help='Write quality notes to Google Sheet cells')
 parser.add_argument('--credentials', type=str, default=DEFAULT_CREDENTIALS_PATH,
                     help='Path to Google Sheets credentials (only used with --write-notes)')
@@ -22,6 +23,8 @@ COL_DESCRIPTION = 'Description - What can be done with this? What is this about?
 COL_DATA_CHARS = 'Data - Key Characteristics'
 COL_HOW_TO_USE = 'Deep Dive - How can you concretely work with this and build on this?'
 COL_MODEL_CHARS = 'Model/Use-Case - Key Characteristics'
+COL_DATASET_LINK = 'Dataset Link'
+COL_USECASE_LINKS = 'Model/Use-Case Links'
 
 # Aliases for each canonical column name (matching CANONICAL_COLUMN_MAP in build_and_sync.py).
 # The Google Sheet may use any of these as the actual header.
@@ -53,6 +56,11 @@ COLUMN_ALIASES = {
         "Model Details", "Use Case Characteristics",
         "How to use & key characteristics of the AI Model, Software, AI Application",
         "Model characteristics: How to use & key characteristics of the AI Model, Software, AI Application (if applicable)",
+    ],
+    COL_DATASET_LINK: ["Dataset Link", "Dataset URL", "Access to the dataset [link]"],
+    COL_USECASE_LINKS: [
+        "Model/Use-Case Links", "Use Case Link", "Model Link", "Model/Use Case URL",
+        "Access to AI Model, Software, AI Application [link]",
     ],
 }
 
@@ -125,6 +133,50 @@ def validate_catalog(catalog_path):
     return projects, issues
 
 
+def validate_urls(projects):
+    """Check all HTTP URLs in the catalog for accessibility."""
+    import requests
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+
+    url_map = {}  # url -> [project_titles]
+    for p in projects:
+        title = p.get('title', p.get('id', '?'))
+        for link in (p.get('dataset_links', []) + p.get('usecase_links', [])
+                     + p.get('additional_resources', [])):
+            url = link.get('url', '')
+            if url.startswith('http'):
+                url_map.setdefault(url, []).append(title)
+
+    if not url_map:
+        return []
+
+    headers = {'User-Agent': 'FairForward-DataCatalog/1.0'}
+    broken = []
+
+    def check_url(url):
+        try:
+            resp = requests.head(url, timeout=10, allow_redirects=True, headers=headers)
+            if resp.status_code in (403, 405):
+                resp = requests.get(url, timeout=10, allow_redirects=True,
+                                    stream=True, headers=headers)
+                resp.close()
+            return url, resp.status_code, None
+        except requests.exceptions.RequestException as e:
+            return url, None, str(type(e).__name__)
+
+    print(f"\n  Checking {len(url_map)} unique URLs...")
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        futures = {executor.submit(check_url, url): url for url in url_map}
+        for future in as_completed(futures):
+            url, status, error = future.result()
+            if error:
+                broken.append({'url': url, 'status': error, 'projects': url_map[url]})
+            elif status and status >= 400:
+                broken.append({'url': url, 'status': status, 'projects': url_map[url]})
+
+    return broken
+
+
 def print_console_summary(projects, issues):
     """Print a concise summary to console during build."""
     scores = [p.get('quality_score', 0) for p in projects]
@@ -161,6 +213,15 @@ def print_console_summary(projects, issues):
     if issues['short_description']:
         print(f"\n  {len(issues['short_description'])} projects with very short descriptions (<50 chars)")
 
+    if issues.get('broken_urls'):
+        print(f"\n  {len(issues['broken_urls'])} broken or unreachable URLs:")
+        for item in issues['broken_urls']:
+            projects_str = ', '.join(t[:40] for t in item['projects'][:2])
+            print(f"    [{item['status']}] {item['url'][:80]}")
+            print(f"          used by: {projects_str}")
+    elif 'broken_urls' in issues:
+        print(f"\n  All URLs verified OK")
+
     print(f"{'='*60}\n")
 
 
@@ -181,8 +242,12 @@ def write_report(projects, issues, output_path):
         f"- **{len(issues['license'])}** license values need review",
         f"- **{len(issues['org_person_names'])}** organization fields contain email addresses",
         f"- **{len(set(i['value'] for i in issues['country']))}** unrecognized country names",
-        "",
     ]
+
+    if 'broken_urls' in issues:
+        lines.append(f"- **{len(issues['broken_urls'])}** broken or unreachable URLs")
+
+    lines.append("")
 
     if issues['low_score']:
         lines.append("## Projects Needing Attention (score < 50)")
@@ -236,6 +301,19 @@ def write_report(projects, issues, output_path):
             lines.append(f"| {item['title'][:60]} | {item['length']} chars |")
         lines.append("")
 
+    if issues.get('broken_urls'):
+        lines.append("## Broken or Unreachable URLs")
+        lines.append("")
+        lines.append("These URLs returned errors or could not be reached during the build.")
+        lines.append("")
+        lines.append("| URL | Status | Used By |")
+        lines.append("|---|---|---|")
+        for item in issues['broken_urls']:
+            url = item['url'].replace('|', '\\|')
+            projects_str = ', '.join(t[:40] for t in item['projects'])
+            lines.append(f"| {url} | {item['status']} | {projects_str} |")
+        lines.append("")
+
     lines.append("## Score Distribution")
     lines.append("")
     brackets = [(90, 100), (70, 89), (50, 69), (30, 49), (0, 29)]
@@ -251,7 +329,7 @@ def write_report(projects, issues, output_path):
     print(f"Quality report written to {output_path}")
 
 
-def build_row_notes(excel_path):
+def build_row_notes(excel_path, broken_urls=None):
     """Read Excel and build per-row quality notes keyed by Excel row index.
 
     Returns dict: {row_index: {column_name: note_text}}
@@ -259,7 +337,10 @@ def build_row_notes(excel_path):
     (1-indexed + header row + explanation row).
     """
     import pandas as pd
-    from utils import resolve_project_id
+    from utils import resolve_project_id, extract_http_links
+
+    broken_set = {item['url'] for item in (broken_urls or [])}
+    broken_status = {item['url']: item['status'] for item in (broken_urls or [])}
 
     df = pd.read_excel(excel_path)
     row_notes = {}
@@ -321,6 +402,23 @@ def build_row_notes(excel_path):
                 "Model/use-case characteristics help users understand the technical details.\n"
                 "Describe the model type, architecture, performance, or use-case specifics."
             )
+
+        # Broken URL checks
+        if broken_set:
+            for col_name in (COL_DATASET_LINK, COL_USECASE_LINKS):
+                cell_text = row.get(col_name, '')
+                if not isinstance(cell_text, str) or not cell_text.strip():
+                    continue
+                bad = []
+                for link in extract_http_links(cell_text):
+                    url = link['url']
+                    if url in broken_set:
+                        bad.append(f"  {url} (status: {broken_status[url]})")
+                if bad:
+                    notes[col_name] = (
+                        "Broken link(s) detected:\n" + "\n".join(bad)
+                        + "\nPlease update or remove these URLs."
+                    )
 
         if notes:
             row_notes[idx] = notes
@@ -411,6 +509,14 @@ if __name__ == "__main__":
         exit(1)
 
     projects, issues = validate_catalog(args.input)
+
+    if args.check_urls:
+        try:
+            issues['broken_urls'] = validate_urls(projects)
+        except Exception as e:
+            print(f"  Warning: URL validation failed ({e}), skipping")
+            issues['broken_urls'] = []
+
     print_console_summary(projects, issues)
     write_report(projects, issues, args.output)
 
@@ -424,7 +530,7 @@ if __name__ == "__main__":
 
         print("Writing quality notes to Google Sheet...")
         try:
-            row_notes = build_row_notes(args.excel)
+            row_notes = build_row_notes(args.excel, issues.get('broken_urls'))
             if row_notes:
                 write_notes_to_sheet(row_notes, args.credentials)
             else:

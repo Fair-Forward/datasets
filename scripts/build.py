@@ -57,7 +57,7 @@ def main():
     
     # Step 1b: Run data quality validation (advisory, never blocks the build)
     subprocess.run(
-        [PYTHON, 'scripts/validate_data.py'],
+        [PYTHON, 'scripts/validate_data.py', '--check-urls'],
         check=False
     )
 
