@@ -252,11 +252,11 @@ def print_console_summary(projects, issues):
         print(f"\n  {len(issues['short_description'])} projects with very short descriptions (<50 chars)")
 
     if issues.get('broken_urls'):
-        print(f"\n  {len(issues['broken_urls'])} flagged URLs (note: some may be false positives from bot detection):")
+        print(f"\n  {len(issues['broken_urls'])} flagged URLs (please verify manually in a browser):")
         for item in issues['broken_urls']:
             projects_str = ', '.join(t[:40] for t in item['projects'][:2])
             print(f"    [{item['status']}] {item['url'][:80]}")
-            print(f"          {item['likely_cause']} | used by: {projects_str}")
+            print(f"          used by: {projects_str}")
     elif 'broken_urls' in issues:
         print(f"\n  All URLs verified OK")
 
@@ -350,12 +350,12 @@ def write_report(projects, issues, output_path):
         lines.append("")
         lines.append("All flagged links are still shown on the website. No links are removed automatically.")
         lines.append("")
-        lines.append("| URL | Status | Likely Cause | Used By |")
-        lines.append("|---|---|---|---|")
+        lines.append("| URL | Status | Used By |")
+        lines.append("|---|---|---|")
         for item in issues['broken_urls']:
             url = item['url'].replace('|', '\\|')
             projects_str = ', '.join(t[:40] for t in item['projects'])
-            lines.append(f"| {url} | {item['status']} | {item['likely_cause']} | {projects_str} |")
+            lines.append(f"| {url} | {item['status']} | {projects_str} |")
         lines.append("")
 
     lines.append("## Score Distribution")
@@ -458,7 +458,7 @@ def build_row_notes(excel_path, broken_urls=None):
                     url = link['url']
                     if url in broken_set:
                         info = broken_info[url]
-                        bad.append(f"  {url}\n    Status: {info['status']} -- {info['likely_cause']}")
+                        bad.append(f"  {url} (status: {info['status']})")
                 if bad:
                     notes[col_name] = (
                         "Flagged link(s) -- please verify in a browser:\n"
