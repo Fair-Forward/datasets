@@ -84,7 +84,7 @@ def extract_http_links(text):
     markdown_pattern = r"\[([^\]]+)\]\(([^)]+)\)"
     for name, url in re.findall(markdown_pattern, text):
         url = _clean_url(url.strip())
-        if url.startswith("http"):
+        if url.startswith("http") and _is_safe_url(url):
             urls.append({"name": name.strip(), "url": url})
 
     url_pattern = r"https?://[^\s,;)\]>]+"

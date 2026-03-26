@@ -3,6 +3,10 @@ name: Revert Last Sheet Update
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   revert:
     runs-on: ubuntu-latest
@@ -15,9 +19,11 @@ jobs:
         fetch-depth: 20
 
     - name: Find and revert last sheet update
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        # Find the most recent sheet update commit (from PR squash merges or direct commits)
-        COMMIT=$(git log --oneline --grep="Sheet update" -1 --format="%H")
+        # Find the most recent sheet update commit (anchored pattern to avoid false matches)
+        COMMIT=$(git log --oneline --grep="^Sheet update [0-9]" -1 --format="%H")
         if [ -z "$COMMIT" ]; then
           echo "::error::No sheet update commit found in the last 20 commits."
           exit 1
@@ -28,8 +34,27 @@ jobs:
 
         git config --global user.name "GitHub Actions (Revert)"
         git config --global user.email "actions@github.com"
-        git revert --no-edit "$COMMIT"
-        git push origin main
 
-        echo "Successfully reverted the last sheet update."
-        echo "The website will return to its previous state once GitHub Pages rebuilds."
+        BRANCH="auto/revert-sheet-update-$(date -u +'%Y%m%d-%H%M%S')"
+        git checkout -b "$BRANCH"
+
+        # Handle both regular and merge commits
+        if git cat-file -p "$COMMIT" | grep -c "^parent" | grep -q "^[2-9]"; then
+          git revert --no-edit -m 1 "$COMMIT"
+        else
+          git revert --no-edit "$COMMIT"
+        fi
+
+        git push -u origin "$BRANCH"
+
+        REVERTED_MSG=$(git log -1 --format="%s" "$COMMIT")
+        gh pr create \
+          --title "Revert: $REVERTED_MSG" \
+          --body "Emergency revert of commit \`$(git log -1 --format='%h' "$COMMIT")\`: $REVERTED_MSG" \
+          --base main
+
+        PR_NUM=$(gh pr list --head "$BRANCH" --json number --jq '.[0].number')
+        gh pr merge "$PR_NUM" --squash --auto || echo "::notice::Auto-merge not available. PR #$PR_NUM needs manual merge."
+
+        echo "Revert PR #$PR_NUM created."
+        echo "The website will return to its previous state once the PR is merged and GitHub Pages rebuilds."

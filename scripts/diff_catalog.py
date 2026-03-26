@@ -32,10 +32,10 @@ def load_catalog(path):
 
 def summarize_link_changes(old_project, new_project):
     """Return a short description of link changes, or None."""
-    old_ds = set(l['url'] for l in old_project.get('dataset_links', []))
-    new_ds = set(l['url'] for l in new_project.get('dataset_links', []))
-    old_uc = set(l['url'] for l in old_project.get('usecase_links', []))
-    new_uc = set(l['url'] for l in new_project.get('usecase_links', []))
+    old_ds = set(link['url'] for link in old_project.get('dataset_links', []))
+    new_ds = set(link['url'] for link in new_project.get('dataset_links', []))
+    old_uc = set(link['url'] for link in old_project.get('usecase_links', []))
+    new_uc = set(link['url'] for link in new_project.get('usecase_links', []))
 
     changes = []
     added_ds = new_ds - old_ds
