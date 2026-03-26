@@ -54,6 +54,9 @@ jobs:
         echo "Credentials file created and validated."
 
     - name: Build Website and Backup Data
+      env:
+        PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+        UNSPLASH_API_KEY: ${{ secrets.UNSPLASH_API_KEY }}
       run: python scripts/build_and_sync.py
 
     - name: Commit and push changes to main

@@ -14,6 +14,21 @@ import os
 
 PYTHON = sys.executable
 
+
+def snapshot_project_images():
+    """Return set of image file paths under public/projects/*/images/."""
+    images = set()
+    projects_dir = os.path.join('public', 'projects')
+    if not os.path.isdir(projects_dir):
+        return images
+    for project in os.listdir(projects_dir):
+        img_dir = os.path.join(projects_dir, project, 'images')
+        if os.path.isdir(img_dir):
+            for f in os.listdir(img_dir):
+                if f.lower().endswith(('.jpg', '.jpeg', '.png', '.gif', '.webp')):
+                    images.add(os.path.join(img_dir, f))
+    return images
+
 def run_command(cmd, description):
     """Run a command and handle errors."""
     print(f"\n{'='*60}")
@@ -62,7 +77,35 @@ def main():
     ):
         sys.exit(1)
     
-    # Step 3: Clean stale project directories from docs/
+    # Step 3: Download placeholder images for projects without images
+    # Runs only when API keys are available (via env vars or .env file)
+    images_before = snapshot_project_images()
+
+    print(f"\n{'='*60}")
+    print(f"  Downloading placeholder images (if API keys available)")
+    print(f"{'='*60}")
+    result = subprocess.run(
+        [PYTHON, 'scripts/download_placeholder_images.py', '--limit', '10'],
+        check=False  # Never fail the build due to image downloads
+    )
+    if result.returncode != 0:
+        print("Warning: Placeholder image download encountered an error (non-fatal)")
+
+    images_after = snapshot_project_images()
+    new_images = images_after - images_before
+
+    if new_images:
+        print(f"\n{len(new_images)} new placeholder image(s) downloaded.")
+        print("Regenerating catalog.json to include new image paths...")
+        if not run_command(
+            [PYTHON, 'scripts/generate_catalog_data.py'],
+            "Regenerating catalog data (with new images)"
+        ):
+            sys.exit(1)
+    else:
+        print("No new images downloaded; skipping catalog regeneration.")
+
+    # Step 4: Clean stale project directories from docs/
     # Vite's emptyOutDir:false preserves old dirs; remove any not in public/projects/
     docs_projects = os.path.join('docs', 'projects')
     public_projects = os.path.join('public', 'projects')
@@ -76,7 +119,7 @@ def main():
                 shutil.rmtree(os.path.join(docs_projects, d))
             print(f"Removed {len(stale)} stale project directories from docs/projects/")
 
-    # Step 4: Build React application
+    # Step 5: Build React application
     if not run_command(
         ['npm', 'run', 'build'],
         "Building React application (Vite)"

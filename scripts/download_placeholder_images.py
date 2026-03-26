@@ -456,13 +456,17 @@ def main():
 
     if not args.dry_run:
         if args.provider in ('pexels', 'both') and not pexels_key:
-            logger.error("No Pexels API key. Set PEXELS_API_KEY or use --pexels-key.")
+            logger.info("No Pexels API key available -- skipping Pexels downloads.")
             if args.provider == 'pexels':
                 return
         if args.provider in ('unsplash', 'both') and not unsplash_key:
-            logger.error("No Unsplash API key. Set UNSPLASH_API_KEY or use --unsplash-key.")
+            logger.info("No Unsplash API key available -- skipping Unsplash downloads.")
             if args.provider == 'unsplash':
                 return
+
+        if not pexels_key and not unsplash_key:
+            logger.info("No image API keys configured. Skipping placeholder image downloads.")
+            return
 
     # Load catalog data
     catalog_projects = load_catalog(args.catalog_file)
