@@ -343,12 +343,12 @@ def write_report(projects, issues, output_path):
         lines.append("## Flagged URLs")
         lines.append("")
         lines.append("The following URLs were flagged by automated checks during the build. "
-                      "**Important:** These checks use HTTP requests, not a real browser. "
-                      "Many websites block automated requests (returning 403 or 401) even though "
-                      "they work perfectly in a browser. Links flagged as \"bot detection\" almost "
-                      "certainly work fine -- please verify in a browser before removing them.")
+                      "These checks use HTTP requests, not a real browser, so false positives "
+                      "are common -- many websites block automated requests even though they work "
+                      "fine in a browser. Some links may genuinely be broken. "
+                      "**Please check each URL manually in a browser and confirm whether it works.**")
         lines.append("")
-        lines.append("All flagged links are still shown on the website. This list is advisory only.")
+        lines.append("All flagged links are still shown on the website. No links are removed automatically.")
         lines.append("")
         lines.append("| URL | Status | Likely Cause | Used By |")
         lines.append("|---|---|---|---|")
