@@ -647,6 +647,7 @@ if not args.skip_fetch:
     try:
         subprocess.run([
             sys.executable, 'scripts/validate_data.py',
+            '--check-urls',
             '--write-notes',
             '--credentials', args.credentials
         ], check=False)
