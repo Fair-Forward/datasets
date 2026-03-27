@@ -1,5 +1,13 @@
+const MATURITY_LABELS = {
+  dataset: 'Datasets',
+  model: 'Models',
+  pilot: 'Pilots',
+  usecase: 'Use Cases',
+  business: 'Business Model'
+}
+
 const FilterBar = ({ filters, onFilterChange, availableFilters }) => {
-  const { sdgs = [], data_types = [], countries = [], views = [] } = availableFilters || {}
+  const { sdgs = [], data_types = [], countries = [], views = [], maturity_stages = [] } = availableFilters || {}
 
   const handleSearchChange = (e) => {
     onFilterChange({ ...filters, search: e.target.value })
@@ -17,11 +25,15 @@ const FilterBar = ({ filters, onFilterChange, availableFilters }) => {
     onFilterChange({ ...filters, country: e.target.value })
   }
 
-  const clearFilters = () => {
-    onFilterChange({ search: '', view: 'all', sdg: '', dataType: '', country: '' })
+  const handleMaturityChange = (e) => {
+    onFilterChange({ ...filters, maturity: e.target.value })
   }
 
-  const hasActiveFilters = filters.search || filters.sdg || filters.dataType || filters.country || (filters.view && filters.view !== 'all')
+  const clearFilters = () => {
+    onFilterChange({ search: '', view: 'all', sdg: '', dataType: '', country: '', maturity: '' })
+  }
+
+  const hasActiveFilters = filters.search || filters.sdg || filters.dataType || filters.country || filters.maturity || (filters.view && filters.view !== 'all')
 
   return (
     <div className="filters">
@@ -54,6 +66,23 @@ const FilterBar = ({ filters, onFilterChange, availableFilters }) => {
               { value: 'lacuna', label: 'Lacuna Fund' }
             ]).map((view) => (
               <option key={view.value} value={view.value}>{view.label}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="filter-group">
+          <label className="filter-label" htmlFor="filter-maturity">Maturity:</label>
+          <select
+            id="filter-maturity"
+            className="filter-select"
+            value={filters.maturity || ''}
+            onChange={handleMaturityChange}
+          >
+            <option value="">All Stages</option>
+            {maturity_stages.map(stage => (
+              <option key={stage} value={stage}>
+                {MATURITY_LABELS[stage] || stage}
+              </option>
             ))}
           </select>
         </div>

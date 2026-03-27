@@ -40,7 +40,8 @@ const CatalogPage = () => {
       sdg: searchParams.get('sdg') || '',
       dataType: searchParams.get('dataType') || '',
       // Support both 'country' and 'region' params
-      country: searchParams.get('country') || searchParams.get('region') || ''
+      country: searchParams.get('country') || searchParams.get('region') || '',
+      maturity: searchParams.get('maturity') || ''
     }
   }, [searchParams])
 
@@ -62,7 +63,8 @@ const CatalogPage = () => {
     if (newFilters.sdg) params.set('sdg', newFilters.sdg)
     if (newFilters.dataType) params.set('dataType', newFilters.dataType)
     if (newFilters.country) params.set('region', newFilters.country)
-    
+    if (newFilters.maturity) params.set('maturity', newFilters.maturity)
+
     // Update URL without triggering navigation
     setSearchParams(params, { replace: true })
   }, [setSearchParams])
@@ -139,6 +141,13 @@ const CatalogPage = () => {
     // Country filter
     if (filters.country) {
       projects = projects.filter(p => p.countries.includes(filters.country))
+    }
+
+    // Maturity filter
+    if (filters.maturity) {
+      projects = projects.filter(p =>
+        p.maturity_tags && p.maturity_tags.includes(filters.maturity)
+      )
     }
 
     // View filter (datasets, use cases, lacuna, or maturity stages from Sankey)
