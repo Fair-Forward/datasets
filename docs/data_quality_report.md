@@ -1,5 +1,5 @@
 # Data Quality Report
-Generated: 2026-03-26 13:02
+Generated: 2026-03-27 12:32
 
 ## Summary
 - **72** projects evaluated
@@ -8,7 +8,7 @@ Generated: 2026-03-26 13:02
 - **0** license values need review
 - **1** organization fields contain email addresses
 - **0** unrecognized country names
-- **15** flagged URLs (see details below)
+- **14** flagged URLs (see details below)
 
 ## Projects Needing Attention (score < 50)
 
@@ -34,20 +34,19 @@ All flagged links are still shown on the website. No links are removed automatic
 | URL | Status | Used By |
 |---|---|---|
 | https://audiopedia.app.box.com/s/4wtqy4idpnilf3b3abisuuu2vdi0oi1q | 404 | Empowering Women across India with audio |
-| https://www.audiopedia.foundation/bharat | 403 | Empowering Women across India with audio |
-| https://www.gbif.org/ | 403 | African Trees for Climate Resilience: A  |
 | https://dl.acm.org/doi/10.1145/3394486.3403363 | 403 | Open source AI Pest Control for smallhol |
+| https://dataexplorer.ts.adex.org.in/dataset/583e8f01-160e-4f51-bde5-31dc7f2a5887 | 404 | Predicting Crop Health using open-source |
+| https://www.gbif.org/ | 403 | African Trees for Climate Resilience: A  |
+| https://www.kaggle.com/datasets/responsibleailab/agrivoltaic-dataset-ghana | 404 | Explore the Agrivoltaic Dataset: Dive in |
+| https://www.kaggle.com/datasets/responsibleailab/accent-classification-dataset-ghana | 404 | Discover Ghanaian Voices: A Dataset for  |
+| https://www.kaggle.com/datasets/mapbiomasecuador/lulc-training-data-for-ecuador-ml/data | 404 | Monitoring the impact of palm oil monocu |
+| https://github.com/Marconi-Lab/Irradiation_Portal | 404 | Estimating Solar Irradiance for Improved |
+| https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana/code | 404 | Supporting food security and climate cha |
 | https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana | 404 | Supporting food security and climate cha |
 | https://huggingface.co/immverse-ai/voice-tech-for-all-challenge-v2 | 401 | Voice Tech for All: Building Inclusive S |
-| https://www.kaggle.com/datasets/responsibleailab/agrivoltaic-dataset-ghana | 404 | Explore the Agrivoltaic Dataset: Dive in |
-| https://www.kaggle.com/datasets/mapbiomasecuador/lulc-training-data-for-ecuador-ml/data | 404 | Monitoring the impact of palm oil monocu |
-| https://www.kaggle.com/datasets/responsibleailab/accent-classification-dataset-ghana | 404 | Discover Ghanaian Voices: A Dataset for  |
-| https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana/code | 404 | Supporting food security and climate cha |
-| https://github.com/Marconi-Lab/Irradiation_Portal | 404 | Estimating Solar Irradiance for Improved |
-| https://www.recoftc.org/projects/advancing-oil-palm-mapping-social-forestry-and-machine-learning | 403 | Mitigating the impacts of oil palm culti |
-| https://dataexplorer.ts.adex.org.in/dataset/583e8f01-160e-4f51-bde5-31dc7f2a5887 | 404 | Predicting Crop Health using open-source |
-| https://agu.confex.com/agu/agu24/meetingapp.cgi/Paper/1728502 | 502 | Miti360: A Comprehensive Dataset for AI- |
 | https://www.wadhwaniai.org/programs/pest-management/pest-management-ai-solution/ | 404 | Open source AI Pest Control for smallhol |
+| https://agu.confex.com/agu/agu24/meetingapp.cgi/Paper/1728502 | 502 | Miti360: A Comprehensive Dataset for AI- |
+| https://huggingface.co/datasets/data354/Africa_Biomass_dataset | ReadTimeout | Detectinging forest degradation by predi |
 
 ## Score Distribution
 

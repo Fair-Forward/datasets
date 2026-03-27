@@ -2,6 +2,7 @@ import pandas as pd
 import json
 import os
 import re
+import shutil
 import argparse
 from utils import (
     normalize_for_directory,
@@ -219,8 +220,40 @@ def get_hosted_documents(project_id):
     return items
 
 
+def migrate_project_directories_if_needed():
+    """Rename title-based project dirs to stable ui_X names if needed."""
+    try:
+        df = pd.read_excel(args.input)
+    except Exception:
+        return
+    if not os.path.isdir(PROJECTS_DIR):
+        return
+    existing_dirs = set(os.listdir(PROJECTS_DIR))
+    for _, row in df.iterrows():
+        project_id = row.get('Project ID', '')
+        if pd.isna(project_id) or not str(project_id).strip():
+            continue
+        target = normalize_for_directory(str(project_id))
+        if not target or target in existing_dirs:
+            continue
+        for col in ['Dataset Speaking Titles', 'Use Case Speaking Title', 'OnSite Name']:
+            val = row.get(col, '')
+            if val and not pd.isna(val):
+                old = normalize_for_directory(str(val))
+                if old and old in existing_dirs:
+                    old_path = os.path.join(PROJECTS_DIR, old)
+                    new_path = os.path.join(PROJECTS_DIR, target)
+                    shutil.move(old_path, new_path)
+                    existing_dirs.discard(old)
+                    existing_dirs.add(target)
+                    print(f"Migrated directory: '{old}' -> '{target}'")
+                    break
+
+
 def generate_catalog_json():
     """Generate catalog JSON from Excel file."""
+    migrate_project_directories_if_needed()
+
     try:
         df = pd.read_excel(args.input)
         print(f"Successfully loaded data from {args.input}")
@@ -389,9 +422,24 @@ def generate_catalog_json():
                 get_hosted_documents(normalized_project_id) if has_access_note else []
             )
 
+            # Compute URL slug (stable ID + cosmetic title hint)
+            title_slug = normalize_for_directory(str(title))
+            slug = f"{normalized_project_id}-{title_slug}" if title_slug else normalized_project_id
+
+            # Compute aliases for backward-compatible URL resolution
+            aliases = set()
+            for alias_col in ['Dataset Speaking Titles', 'Use Case Speaking Title', 'OnSite Name']:
+                alias_val = row.get(alias_col, '')
+                if alias_val and not pd.isna(alias_val):
+                    candidate = normalize_for_directory(str(alias_val))
+                    if candidate and candidate != normalized_project_id:
+                        aliases.add(candidate)
+
             # Create project object with normalized fields
             project = {
                 'id': normalized_project_id,
+                'slug': slug,
+                'aliases': sorted(aliases),
                 'title': str(title),
                 'description': clean_str(str(row.get('Description - What can be done with this? What is this about?', ''))),
                 'dataset_links': dataset_urls,
@@ -429,9 +477,16 @@ def generate_catalog_json():
         country_count = len(valid_countries)
         access_note_project_count = sum(1 for p in projects if p.get('has_access_note'))
 
+        # Build alias lookup map: old_title_id -> stable_id
+        alias_map = {}
+        for p in projects:
+            for alias in p.get('aliases', []):
+                alias_map[alias] = p['id']
+
         # Create catalog data structure
         catalog_data = {
             'projects': projects,
+            'aliases': alias_map,
             'stats': {
                 'total_projects': project_count,
                 'total_datasets': dataset_count,

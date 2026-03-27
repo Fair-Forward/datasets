@@ -27,10 +27,10 @@ const DocMarkdown = ({ children }) => (
   <ReactMarkdown components={markdownLinkComponents}>{children}</ReactMarkdown>
 )
 
-// Build shareable URL for a project
-const getShareUrl = (projectId) => {
+// Build shareable URL for a project using its stable slug
+const getShareUrl = (slug) => {
   const url = new URL(window.location.href)
-  url.searchParams.set('project', projectId)
+  url.searchParams.set('project', slug)
   return url.toString()
 }
 
@@ -150,7 +150,7 @@ const DetailPanel = ({ project, onClose }) => {
   const licenseValue = rawLicense || null
 
   const handleShare = useCallback(async () => {
-    const url = getShareUrl(project.id)
+    const url = getShareUrl(project.slug || project.id)
     try {
       await navigator.clipboard.writeText(url)
       setCopied(true)
@@ -159,7 +159,7 @@ const DetailPanel = ({ project, onClose }) => {
       // Fallback for older browsers
       window.prompt('Copy this link:', url)
     }
-  }, [project?.id])
+  }, [project?.slug, project?.id])
 
   useEffect(() => {
     if (!project) return
