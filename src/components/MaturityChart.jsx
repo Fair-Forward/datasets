@@ -192,7 +192,7 @@ const MaturityChart = ({ maturityDistribution, catalogProjects }) => {
             
             const handleStageClick = () => {
               if (hasData) {
-                window.location.href = withBasePath(`/?view=${pos.stage.key}`)
+                window.location.href = withBasePath(`/?maturity=${pos.stage.key}`)
               }
             }
             
