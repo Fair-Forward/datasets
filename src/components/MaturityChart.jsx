@@ -3,10 +3,10 @@ import { withBasePath } from '../utils/basePath'
 
 // Define the maturity funnel stages in order of progression
 const FUNNEL_STAGES = [
-  { key: 'dataset', label: 'Datasets', color: '#64748b', patterns: ['dataset'] },
-  { key: 'model', label: 'Models', color: '#3b82f6', patterns: ['model'] },
-  { key: 'pilot', label: 'Pilots', color: '#6366f1', patterns: ['pilot'] },
-  { key: 'usecase', label: 'Use Cases', color: '#8b5cf6', patterns: ['use-case', 'use case', 'usecase'] },
+  { key: 'dataset', label: 'Datasets+', color: '#64748b', patterns: ['dataset'] },
+  { key: 'model', label: 'Models+', color: '#3b82f6', patterns: ['model'] },
+  { key: 'pilot', label: 'Pilots+', color: '#6366f1', patterns: ['pilot'] },
+  { key: 'usecase', label: 'Use Cases+', color: '#8b5cf6', patterns: ['use-case', 'use case', 'usecase'] },
   { key: 'business', label: 'Business Model', color: '#10b981', patterns: ['business model', 'business-model', 'scaled'] }
 ]
 
