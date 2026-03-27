@@ -1,8 +1,8 @@
 const MATURITY_LABELS = {
-  dataset: 'Datasets',
-  model: 'Models',
-  pilot: 'Pilots',
-  usecase: 'Use Cases',
+  dataset: 'Datasets+',
+  model: 'Models+',
+  pilot: 'Pilots+',
+  usecase: 'Use Cases+',
   business: 'Business Model'
 }
 
@@ -71,14 +71,14 @@ const FilterBar = ({ filters, onFilterChange, availableFilters }) => {
         </div>
 
         <div className="filter-group">
-          <label className="filter-label" htmlFor="filter-maturity">Maturity:</label>
+          <label className="filter-label" htmlFor="filter-maturity">Min. Stage:</label>
           <select
             id="filter-maturity"
             className="filter-select"
             value={filters.maturity || ''}
             onChange={handleMaturityChange}
           >
-            <option value="">All Stages</option>
+            <option value="">Any Stage</option>
             {maturity_stages.map(stage => (
               <option key={stage} value={stage}>
                 {MATURITY_LABELS[stage] || stage}
