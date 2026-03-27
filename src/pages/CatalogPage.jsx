@@ -86,6 +86,7 @@ const CatalogPage = () => {
           let project = null
 
           // Try 1: extract ui_X prefix (handles new slugs and plain IDs)
+          // Pattern matches the stable Project ID format from the Google Sheet
           const match = projectParam.match(/^(ui_\d+)/)
           if (match) {
             project = data.projects.find(p => p.id === match[1])

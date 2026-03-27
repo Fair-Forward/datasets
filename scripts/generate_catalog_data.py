@@ -481,6 +481,8 @@ def generate_catalog_json():
         alias_map = {}
         for p in projects:
             for alias in p.get('aliases', []):
+                if alias in alias_map and alias_map[alias] != p['id']:
+                    print(f"WARNING: Alias collision - '{alias}' maps to both '{alias_map[alias]}' and '{p['id']}'. Last one wins.")
                 alias_map[alias] = p['id']
 
         # Create catalog data structure
