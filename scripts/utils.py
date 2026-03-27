@@ -249,11 +249,11 @@ def resolve_project_id(row, projects_dir=PROJECTS_DIR, row_idx=None):
     
     existing_dirs = set(os.listdir(projects_dir)) if os.path.exists(projects_dir) else set()
     
-    # Priority 1: Project ID (if exists and directory exists)
+    # Priority 1: Project ID (always use if available - stable identifier)
     if project_id and not pd.isna(project_id):
         normalized_id = normalize_for_directory(str(project_id))
-        if normalized_id and normalized_id in existing_dirs:
-            return (normalized_id, "Project ID (existing directory)", None)
+        if normalized_id:
+            return (normalized_id, "Project ID", None)
     
     # Priority 2: Dataset Speaking Titles
     if dataset_speaking_title and not pd.isna(dataset_speaking_title):

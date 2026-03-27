@@ -20,7 +20,7 @@ const CatalogPage = () => {
     setSelectedProject(project)
     if (project) {
       const params = new URLSearchParams(searchParams)
-      params.set('project', project.id)
+      params.set('project', project.slug || project.id)
       setSearchParams(params, { replace: true })
     }
   }, [searchParams, setSearchParams])
@@ -81,11 +81,31 @@ const CatalogPage = () => {
         setLoading(false)
         
         // Check if URL has a project param and open it
-        const projectId = searchParams.get('project')
-        if (projectId && data.projects) {
-          const project = data.projects.find(p => p.id === projectId)
+        const projectParam = searchParams.get('project')
+        if (projectParam && data.projects) {
+          let project = null
+
+          // Try 1: extract ui_X prefix (handles new slugs and plain IDs)
+          // Pattern matches the stable Project ID format from the Google Sheet
+          const match = projectParam.match(/^(ui_\d+)/)
+          if (match) {
+            project = data.projects.find(p => p.id === match[1])
+          }
+
+          // Try 2: alias map (handles old title-based URLs)
+          if (!project && data.aliases?.[projectParam]) {
+            project = data.projects.find(p => p.id === data.aliases[projectParam])
+          }
+
           if (project) {
             setSelectedProject(project)
+            // Rewrite URL to canonical slug
+            const canonicalSlug = project.slug || project.id
+            if (projectParam !== canonicalSlug) {
+              const params = new URLSearchParams(searchParams)
+              params.set('project', canonicalSlug)
+              setSearchParams(params, { replace: true })
+            }
           }
         }
       })
