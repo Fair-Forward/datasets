@@ -101,7 +101,7 @@ const CatalogHeader = ({ stats }) => {
               <div className="stat-secondary-divider"></div>
               <div className="stat-secondary">
                 <div className="stat-secondary-value">{animatedStats.usecases}</div>
-                <div className="stat-secondary-label">Use Cases</div>
+                <div className="stat-secondary-label">Pilots/Use Cases</div>
               </div>
               <div className="stat-secondary-divider"></div>
               <div className="stat-secondary">

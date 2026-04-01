@@ -1,5 +1,5 @@
 {
-  "total_projects": 72,
+  "total_projects": 75,
   "total_countries": 24,
   "map_data": {
     "AO": {
@@ -30,7 +30,7 @@
     },
     "KE": {
       "name": "Kenya",
-      "projects": 10,
+      "projects": 11,
       "iso2": "KE",
       "sdgs": [
         "SDG 2",
@@ -255,7 +255,7 @@
     },
     "IN": {
       "name": "India",
-      "projects": 13,
+      "projects": 14,
       "iso2": "IN",
       "sdgs": [
         "SDG 2",
@@ -292,17 +292,21 @@
     },
     "RW": {
       "name": "Rwanda",
-      "projects": 7,
+      "projects": 8,
       "iso2": "RW",
       "sdgs": [
         "SDG 1",
         "SDG 2",
         "SDG 4",
         "SDG 9",
-        "SDG 10"
+        "SDG 10",
+        "SDG 11",
+        "SDG 13"
       ],
       "data_types": [
         "Geospatial/Remote Sensing",
+        "Images",
+        "Meterological",
         "Text",
         "Voice"
       ]
@@ -333,16 +337,16 @@
   },
   "sdg_distribution": {
     "SDG 1": 1,
-    "SDG 2": 35,
+    "SDG 2": 37,
     "SDG 4": 1,
     "SDG 5": 5,
     "SDG 7": 3,
     "SDG 8": 1,
     "SDG 9": 1,
-    "SDG 10": 22,
-    "SDG 11": 9,
+    "SDG 10": 23,
+    "SDG 11": 10,
     "SDG 12": 1,
-    "SDG 13": 25,
+    "SDG 13": 26,
     "SDG 14": 1,
     "SDG 15": 13
   }
