@@ -38,7 +38,11 @@ LICENSE_NORMALIZATION = {
     'mit': 'MIT',
     'https://www.gnu.org/licenses/agpl-3.0.html': 'AGPL 3.0',
     'https://opendatacommons.org/licenses/dbcl/1-0/': 'ODbL 1.0',
+    'permissive': 'Permissive',
+    'by-nc-sa-fs': 'BY-NC-SA-FS',
 }
+
+KNOWN_LICENSE_VALUES = set(LICENSE_NORMALIZATION.values())
 
 
 def normalize_license(raw_license):

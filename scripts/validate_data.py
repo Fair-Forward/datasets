@@ -4,6 +4,7 @@ import re
 import argparse
 from datetime import datetime
 from utils import KNOWN_COUNTRIES, DEFAULT_CREDENTIALS_PATH, get_gsheet_client
+from generate_catalog_data import KNOWN_LICENSE_VALUES
 
 parser = argparse.ArgumentParser(description='Validate catalog data and generate quality report.')
 parser.add_argument('--input', type=str, default="public/data/catalog.json", help='Path to catalog JSON')
@@ -108,9 +109,9 @@ def validate_catalog(catalog_path):
                 'title': title, 'id': pid, 'score': score, 'missing': missing
             })
 
-        # License: flag non-empty values that look like raw URLs or unusual strings
+        # License: flag raw URLs or values not in the known normalized set
         lic = p.get('license', '')
-        if lic and (lic.startswith('http') or lic.startswith('\n')):
+        if lic and (lic.startswith('http') or lic.startswith('\n') or lic not in KNOWN_LICENSE_VALUES):
             issues['license'].append({'title': title, 'id': pid, 'value': lic})
 
         # Organization field: flag entries with email addresses (likely person not org)
@@ -234,7 +235,7 @@ def print_console_summary(projects, issues):
             print(f"    [{item['score']:3d}] {item['title'][:60]} -- missing: {missing_str}")
 
     if issues['license']:
-        print(f"\n  {len(issues['license'])} license values still look like raw URLs:")
+        print(f"\n  {len(issues['license'])} license values need attention (raw URLs or non-standard):")
         for item in issues['license']:
             print(f"    {item['title'][:50]}: {item['value'][:60]}")
 
@@ -400,6 +401,11 @@ def build_row_notes(excel_path, broken_urls=None):
                 notes[COL_LICENSE] = (
                     "Consider using a short license name instead of a URL.\n"
                     "Standard formats: CC-BY 4.0, CC0 1.0, MIT, Apache 2.0"
+                )
+            elif lic.strip() not in KNOWN_LICENSE_VALUES:
+                notes[COL_LICENSE] = (
+                    f"Unrecognized license value: '{lic.strip()}'.\n"
+                    "Standard formats: CC-BY 4.0, CC0 1.0, MIT, Apache 2.0, AGPL 3.0, ODbL 1.0"
                 )
 
         # Organization check: email in org field

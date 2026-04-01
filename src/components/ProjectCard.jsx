@@ -31,7 +31,7 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
     ? (countries.length > 2 ? `${countries.slice(0, 2).join(', ')} +${countries.length - 2}` : countries.join(', '))
     : null
 
-  const licenseValue = license && license.trim() ? license : 'cc-by-4.0'
+  const licenseValue = license && license.trim() ? license : 'CC-BY 4.0'
   const licenseUrl = firstUrl(licenseValue)
   const licenseText = licenseLabel(licenseValue)
 

@@ -1654,6 +1654,16 @@ a.additional-resource-item i {
     color: var(--text-light);
 }
 
+.documentation-content a {
+    color: var(--primary);
+    text-decoration: none;
+    word-break: break-all;
+}
+
+.documentation-content a:hover {
+    text-decoration: underline;
+}
+
 /* Enhanced list styling */
 .panel-list {
     margin: 1rem 0;
@@ -2112,26 +2122,34 @@ a.additional-resource-item i {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.65rem 1.25rem;
+    padding: 0.6rem 1.1rem;
     background: var(--primary);
     color: var(--btn-text);
     border: none;
-    border-radius: var(--radius-lg);
-    font-size: var(--text-md);
-    font-weight: 600;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
     text-decoration: none;
-    box-shadow: var(--shadow-md);
-    transition: all var(--transition-base);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
     cursor: pointer;
 }
 
 .panel-cta:hover {
-    box-shadow: var(--shadow-lg);
-    opacity: 0.9;
+    background: color-mix(in srgb, var(--primary) 88%, black);
+    box-shadow: 0 2px 8px rgba(59,89,152,0.25);
+    transform: translateY(-1px);
+}
+
+.panel-cta:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 .panel-cta i {
-    font-size: var(--text-sm);
+    font-size: 0.78rem;
+    opacity: 0.85;
 }
 
 .panel-action-secondary {

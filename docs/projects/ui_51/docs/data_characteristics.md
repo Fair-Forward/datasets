@@ -1,3 +1,3 @@
-The datasets for the three languages consist of text data and the corresponding voice data. They are hosted on Mozilla's Common Voice Platform.
+The datasets for the three languages consist of text data and the corresponding voice data. They are hosted on Mozilla's Common Voice Platform. for more information on the Kinyarwanda dataset, also see https://fair-forward.github.io/datasets?search=kinya&project=ui_59-a_large_scale_collection_of_voice 
 
 A responsible AI Assessment was undertaken for the Kiswahili dataset case to help AI developers and project managers to identify, assess and mitigate potential harms and biases in AI. The assessment included a Gender Action Plan — a comprehensive strategy to ensure women and gender diverse communities are equitably represented.For more information, see: https://www.mozillafoundation.org/en/blog/a-gender-action-plan-to-make-voice-technology-more-inclusive/ 

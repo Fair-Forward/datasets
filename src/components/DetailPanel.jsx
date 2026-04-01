@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { withBasePath, resolvePublicHref } from '../utils/basePath'
 import { SDG_COLORS } from '../utils/sdgColors'
 import { parseContact, licenseLabel, firstUrl } from '../utils/parsing'
@@ -24,8 +25,20 @@ const markdownLinkComponents = {
 }
 
 const DocMarkdown = ({ children }) => (
-  <ReactMarkdown components={markdownLinkComponents}>{children}</ReactMarkdown>
+  <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownLinkComponents}>{children}</ReactMarkdown>
 )
+
+const inferLinkLabel = (url, fallback) => {
+  if (!url) return fallback
+  try {
+    const host = new URL(url).hostname.replace('www.', '')
+    if (host === 'huggingface.co') return 'View on HuggingFace'
+    if (host === 'github.com') return 'View on GitHub'
+    if (host === 'zenodo.org') return 'View on Zenodo'
+    if (host === 'kaggle.com') return 'View on Kaggle'
+  } catch { /* ignore */ }
+  return fallback
+}
 
 // Build shareable URL for a project using its stable slug
 const getShareUrl = (slug) => {
@@ -83,6 +96,46 @@ const extractSdgNumbers = (sdgs = []) => {
   return [...new Set(numbers)].sort((a, b) => a - b)
 }
 
+// Convert org text with inline URLs into proper markdown links
+// "Org Name (https://url.com/)" -> "[Org Name](https://url.com/)"
+// "(logo https://...)" -> stripped
+// "OrgA, OrgB (url)" -> "OrgA, [OrgB](url)" (links only the closest org)
+const linkifyOrgText = (text) => {
+  if (!text) return text
+  // Strip logo/image URLs: (logo https://...) or URLs ending in image extensions
+  let result = text.replace(/\(logo\s+https?:\/\/[^\s)]+\)/gi, '')
+  result = result.replace(/\(\s*https?:\/\/[^\s)]+\.(?:jpg|jpeg|png|gif|svg)\s*\)/gi, '')
+  // Convert "Name (https://url)" - link only the org closest to the URL
+  result = result.replace(/([^(\n]*?)\s*\(\s*(https?:\/\/[^\s)]+)\s*\)/g, (_match, name, url) => {
+    const trimmed = name.trimStart()
+    // Find split point after the last separator (comma, &, ;, " and ")
+    let splitAfter = -1
+    const commaIdx = trimmed.lastIndexOf(',')
+    if (commaIdx >= 0) splitAfter = Math.max(splitAfter, commaIdx + 1)
+    const ampIdx = trimmed.lastIndexOf('&')
+    if (ampIdx >= 0) splitAfter = Math.max(splitAfter, ampIdx + 1)
+    const semiIdx = trimmed.lastIndexOf(';')
+    if (semiIdx >= 0) splitAfter = Math.max(splitAfter, semiIdx + 1)
+    const andIdx = trimmed.lastIndexOf(' and ')
+    if (andIdx >= 0) splitAfter = Math.max(splitAfter, andIdx + 5)
+    if (splitAfter >= 0) {
+      const prefix = trimmed.substring(0, splitAfter)
+      const orgName = trimmed.substring(splitAfter).trim()
+      return `${prefix} [${orgName}](${url})`
+    }
+    // Handle leading connectors like "and "
+    const final = trimmed.trim()
+    const connector = final.match(/^(and\s+)(.+)/i)
+    if (connector) return `${connector[1]}[${connector[2].trim()}](${url})`
+    return `[${final}](${url})`
+  })
+  // Convert "Name https://url" (bare URL after name, at end of segment)
+  result = result.replace(/([^,&;\n[\]()]+?)\s+(https?:\/\/[^\s,&;)]+)(?=[,&;\n]|$)/g, (_match, name, url) => {
+    return `[${name.trim()}](${url})`
+  })
+  return result.trim()
+}
+
 // Parse organizations into Powered by / Catalyzed by / Financed by
 const parseOrganizations = (orgText = '') => {
   if (!orgText) return null
@@ -98,20 +151,19 @@ const parseOrganizations = (orgText = '') => {
     const nextLabels = [
       remaining.search(/Catalyzed by:/i),
       remaining.search(/Financed by:/i),
-      remaining.search(/Powered by:/i)
+      remaining.search(/Powered by\s*(?:\/\s*Provided by)?:/i)
     ].filter(i => i >= 0)
 
     const endIdx = nextLabels.length > 0 ? Math.min(...nextLabels) : remaining.length
-    return remaining.substring(0, endIdx).trim()
+    return linkifyOrgText(remaining.substring(0, endIdx))
   }
 
-  const powered = extractSection('Powered by')
+  const powered = extractSection('Powered by\\s*(?:\\/\\s*Provided by)?')
   const catalyzed = extractSection('Catalyzed by')
   const financed = extractSection('Financed by')
 
   if (!powered && !catalyzed && !financed) {
-    // No structured format - return raw text
-    return { raw: orgText }
+    return { raw: linkifyOrgText(orgText) }
   }
 
   return { powered, catalyzed, financed }
@@ -289,6 +341,9 @@ const DetailPanel = ({ project, onClose }) => {
                   <>
                     {datasetLinks.map((link, idx) => {
                       const external = link.url && (link.url.startsWith('http://') || link.url.startsWith('https://'))
+                      const hasCustomName = link.name && link.name !== 'Link'
+                      const genericLabel = datasetLinks.length > 1 ? `Access Dataset ${idx + 1}` : 'Access Dataset'
+                      const label = hasCustomName ? link.name : inferLinkLabel(link.url, genericLabel)
                       return (
                         <a
                           key={`dataset-${idx}`}
@@ -298,12 +353,15 @@ const DetailPanel = ({ project, onClose }) => {
                           rel={external ? 'noopener noreferrer' : undefined}
                         >
                           <i className="fas fa-database"></i>
-                          {datasetLinks.length > 1 ? `Access Dataset ${idx + 1}` : 'Access Dataset'}
+                          {label}
                         </a>
                       )
                     })}
                     {usecaseLinks.map((link, idx) => {
                       const external = link.url && (link.url.startsWith('http://') || link.url.startsWith('https://'))
+                      const hasCustomName = link.name && link.name !== 'Link'
+                      const genericLabel = usecaseLinks.length > 1 ? `Access Resource ${idx + 1}` : 'Access Resource'
+                      const label = hasCustomName ? link.name : inferLinkLabel(link.url, genericLabel)
                       return (
                         <a
                           key={`usecase-${idx}`}
@@ -313,7 +371,7 @@ const DetailPanel = ({ project, onClose }) => {
                           rel={external ? 'noopener noreferrer' : undefined}
                         >
                           <i className="fas fa-microscope"></i>
-                          {usecaseLinks.length > 1 ? `Access Use Case ${idx + 1}` : 'Access Use Case'}
+                          {label}
                         </a>
                       )
                     })}
@@ -511,7 +569,7 @@ const DetailPanel = ({ project, onClose }) => {
                           <div className="org-list-item">
                             <span className="org-dot org-dot-powered"></span>
                             <div>
-                              <span className="org-list-label">Powered by</span>
+                              <span className="org-list-label">Powered by / Provided by</span>
                               <div className="org-list-content"><DocMarkdown>{organizations.powered}</DocMarkdown></div>
                             </div>
                           </div>
