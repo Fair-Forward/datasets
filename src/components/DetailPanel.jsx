@@ -405,7 +405,7 @@ const DetailPanel = ({ project, onClose }) => {
                   onClick={handleShare}
                   title={copied ? 'Link copied!' : 'Copy link to share'}
                 >
-                  <i className={`fas ${copied ? 'fa-check' : 'fa-arrow-up-right-from-square'}`}></i>
+                  <i className={`fas ${copied ? 'fa-check' : 'fa-link'}`}></i>
                   {copied ? 'Copied!' : 'Share'}
                 </button>
               </div>

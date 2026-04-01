@@ -71,7 +71,7 @@ const FilterBar = ({ filters, onFilterChange, availableFilters }) => {
         </div>
 
         <div className="filter-group">
-          <label className="filter-label" htmlFor="filter-maturity">Min. Stage:</label>
+          <label className="filter-label" htmlFor="filter-maturity" title="Filter by project maturity stage">Maturity:</label>
           <select
             id="filter-maturity"
             className="filter-select"

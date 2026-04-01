@@ -69,8 +69,9 @@ const CatalogPage = () => {
     setSearchParams(params, { replace: true })
   }, [setSearchParams])
 
-  // Load catalog data
-  useEffect(() => {
+  const loadCatalog = useCallback(() => {
+    setLoading(true)
+    setError(null)
     fetch(withBasePath('data/catalog.json'))
       .then(res => {
         if (!res.ok) throw new Error('Failed to load catalog data')
@@ -115,6 +116,9 @@ const CatalogPage = () => {
         setLoading(false)
       })
   }, [])
+
+  // Load catalog data
+  useEffect(() => { loadCatalog() }, [])
 
   // Filter projects
   const filteredProjects = useMemo(() => {
@@ -248,7 +252,10 @@ const CatalogPage = () => {
           <div className="container">
             <div className="catalog-error">
               <i className="fas fa-exclamation-triangle"></i>
-              <p>We could not load the catalog right now. Please try refreshing the page.</p>
+              <p>We could not load the catalog right now.</p>
+              <button className="retry-btn" onClick={loadCatalog}>
+                <i className="fas fa-rotate-right"></i> Try again
+              </button>
               <p className="catalog-error-detail">
                 If the problem persists, please{' '}
                 <a href="https://github.com/Fair-Forward/datasets/issues" target="_blank" rel="noopener noreferrer">
@@ -266,7 +273,7 @@ const CatalogPage = () => {
     <div>
       <CatalogHeader stats={dynamicStats} />
 
-      <main>
+      <main id="main-content">
       <FilterBar 
         filters={filters} 
         onFilterChange={handleFilterChange}
@@ -283,7 +290,8 @@ const CatalogPage = () => {
       />
       
       <div className="container">
-        <div className="results-bar">
+        <h2 className="sr-only">Project catalog</h2>
+        <div className="results-bar" aria-live="polite">
           <div className="results-count">
             Showing {filteredProjects.length} of {catalogData.stats.total_projects} projects
           </div>
