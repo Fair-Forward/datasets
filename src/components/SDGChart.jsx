@@ -103,19 +103,19 @@ const SDGChart = ({ sdgDistribution, onSDGClick }) => {
           <span className="sdg-chart-summary-label">SDGs covered</span>
         </div>
         <div className="sdg-view-toggle">
-          <button 
+          <button
             className={`sdg-view-btn ${viewMode === 'bars' ? 'active' : ''}`}
             onClick={() => setViewMode('bars')}
-            title="Bar chart view"
+            aria-label="Bar chart view"
           >
-            <i className="fas fa-chart-bar"></i>
+            <i className="fas fa-chart-bar" aria-hidden="true"></i>
           </button>
-          <button 
+          <button
             className={`sdg-view-btn ${viewMode === 'grid' ? 'active' : ''}`}
             onClick={() => setViewMode('grid')}
-            title="Grid view"
+            aria-label="Grid view"
           >
-            <i className="fas fa-th-large"></i>
+            <i className="fas fa-th-large" aria-hidden="true"></i>
           </button>
         </div>
       </div>

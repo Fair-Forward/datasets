@@ -76,15 +76,15 @@ const CatalogHeader = ({ stats }) => {
             <h1>Fair Forward - Open Data & Use Cases</h1>
             <p className="subtitle">
               Exploring datasets and solutions for global challenges across agriculture,
-              language technology, climate action, energy, and more built by our partners.
+              language technology, climate action, energy, and more — built by our partners.
             </p>
-            <a 
-              href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="header-learn-more"
             >
-              [Learn more about Fair Forward]
+              Learn more about Fair Forward
             </a>
           </div>
           

@@ -405,7 +405,7 @@ const DetailPanel = ({ project, onClose }) => {
                   onClick={handleShare}
                   title={copied ? 'Link copied!' : 'Copy link to share'}
                 >
-                  <i className={`fas ${copied ? 'fa-check' : 'fa-arrow-up-right-from-square'}`}></i>
+                  <i className={`fas ${copied ? 'fa-check' : 'fa-link'}`}></i>
                   {copied ? 'Copied!' : 'Share'}
                 </button>
               </div>
@@ -602,7 +602,7 @@ const DetailPanel = ({ project, onClose }) => {
                   <div className="panel-metadata-grid">
                     {project?.contact && (
                       <div className="metadata-cell">
-                        <span className="metadata-label">Author</span>
+                        <span className="metadata-label">Contact</span>
                         <span className="metadata-value">{renderContact(project.contact)}</span>
                       </div>
                     )}

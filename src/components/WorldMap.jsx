@@ -233,14 +233,14 @@ const WorldMap = ({
   return (
     <div className="world-map-wrapper">
       <div className="map-controls">
-        <button onClick={handleZoomIn} className="map-control-btn" title="Zoom in">
-          <i className="fas fa-plus"></i>
+        <button onClick={handleZoomIn} className="map-control-btn" aria-label="Zoom in">
+          <i className="fas fa-plus" aria-hidden="true"></i>
         </button>
-        <button onClick={handleZoomOut} className="map-control-btn" title="Zoom out">
-          <i className="fas fa-minus"></i>
+        <button onClick={handleZoomOut} className="map-control-btn" aria-label="Zoom out">
+          <i className="fas fa-minus" aria-hidden="true"></i>
         </button>
-        <button onClick={handleReset} className="map-control-btn" title="Reset view">
-          <i className="fas fa-expand"></i>
+        <button onClick={handleReset} className="map-control-btn" aria-label="Reset view">
+          <i className="fas fa-expand" aria-hidden="true"></i>
         </button>
       </div>
 

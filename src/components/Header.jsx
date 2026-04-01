@@ -115,6 +115,7 @@ const Header = () => {
 
   return (
     <div className="top-nav-container">
+      <a href="#main-content" className="skip-link">Skip to content</a>
       <div className="top-nav-area">
         <div className="top-nav-left">
           <div className="header-logos">

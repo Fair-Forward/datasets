@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import WorldMap from '../components/WorldMap'
@@ -8,6 +9,7 @@ import SDGCountryHeatmap from '../components/SDGCountryHeatmap'
 import { withBasePath } from '../utils/basePath'
 
 const InsightsPage = () => {
+  const navigate = useNavigate()
   const [insightsData, setInsightsData] = useState(null)
   const [catalogData, setCatalogData] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -15,8 +17,9 @@ const InsightsPage = () => {
   const [selectedCountry, setSelectedCountry] = useState(null)
   const [sdgView, setSdgView] = useState('chart') // 'chart' | 'heatmap'
 
-  useEffect(() => {
-    // Fetch both insights and catalog data
+  const loadData = () => {
+    setLoading(true)
+    setError(null)
     Promise.all([
       fetch(withBasePath('data/insights.json')).then(res => {
         if (!res.ok) throw new Error('Failed to load insights data')
@@ -37,19 +40,30 @@ const InsightsPage = () => {
         setError(err.message)
         setLoading(false)
       })
-  }, [])
+  }
+
+  useEffect(() => { loadData() }, [])
+
+  // Escape key to close country detail panel
+  useEffect(() => {
+    if (!selectedCountry) return
+    const handleEsc = (e) => {
+      if (e.key === 'Escape') setSelectedCountry(null)
+    }
+    window.addEventListener('keydown', handleEsc)
+    return () => window.removeEventListener('keydown', handleEsc)
+  }, [selectedCountry])
 
   const handleCountryClick = (countryData) => {
     setSelectedCountry(countryData)
   }
 
   const handleSDGClick = (sdgData) => {
-    window.location.href = withBasePath(`?sdg=${encodeURIComponent(sdgData.sdg)}`)
+    navigate(`/?sdg=${encodeURIComponent(sdgData.sdg)}`)
   }
 
   const handleHeatmapCellClick = ({ country, sdg }) => {
-    // Navigate to catalog filtered by both country and SDG
-    window.location.href = withBasePath(`?region=${encodeURIComponent(country)}&sdg=${encodeURIComponent(sdg)}`)
+    navigate(`/?region=${encodeURIComponent(country)}&sdg=${encodeURIComponent(sdg)}`)
   }
 
   // Calculate maturity distribution from catalog data
@@ -93,7 +107,10 @@ const InsightsPage = () => {
           <div className="container">
             <div className="insights-error">
               <i className="fas fa-exclamation-triangle"></i>
-              <p>We could not load the insights right now. Please try refreshing the page.</p>
+              <p>We could not load the insights right now.</p>
+              <button className="retry-btn" onClick={loadData}>
+                <i className="fas fa-rotate-right"></i> Try again
+              </button>
               <p className="catalog-error-detail">
                 If the problem persists, please{' '}
                 <a href="https://github.com/Fair-Forward/datasets/issues" target="_blank" rel="noopener noreferrer">
@@ -114,12 +131,12 @@ const InsightsPage = () => {
     <div className="insights-page">
       <Header />
 
-      <main>
+      <main id="main-content">
       <div className="container">
-        <a href={withBasePath('/')} className="back-link">
+        <Link to="/" className="back-link">
           <i className="fas fa-arrow-left"></i>
           Back to Catalog
-        </a>
+        </Link>
 
         <div className="page-header">
           <h1>Insights & Visualisations</h1>
@@ -222,13 +239,13 @@ const InsightsPage = () => {
                   </div>
                 )}
                 
-                <a 
-                  href={withBasePath(`?region=${encodeURIComponent(selectedCountry.name)}`)}
+                <Link
+                  to={`/?region=${encodeURIComponent(selectedCountry.name)}`}
                   className="country-view-projects"
                 >
                   <span>View all projects</span>
                   <i className="fas fa-arrow-right"></i>
-                </a>
+                </Link>
               </div>
             )}
           </div>
