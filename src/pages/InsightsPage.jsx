@@ -239,13 +239,13 @@ const InsightsPage = () => {
                   </div>
                 )}
                 
-                <a 
-                  href={withBasePath(`?region=${encodeURIComponent(selectedCountry.name)}`)}
+                <Link
+                  to={`/?region=${encodeURIComponent(selectedCountry.name)}`}
                   className="country-view-projects"
                 >
                   <span>View all projects</span>
                   <i className="fas fa-arrow-right"></i>
-                </a>
+                </Link>
               </div>
             )}
           </div>
