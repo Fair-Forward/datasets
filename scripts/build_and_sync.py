@@ -496,7 +496,8 @@ if not args.skip_fetch:
                 "Organizations Involved", "Contributing Organizations", "Partners"
             ],
             "Authors": [
-                "Authors of this information.", "Authors", "Information Authors", "Data Curators"
+                "Authors of this information.", "Authors", "Information Authors", "Data Curators",
+                "Editor of this information:", "Editor of this information"
             ],
             "Lacuna Dataset": [
                 "Lacuna Dataset (Yes/No)", "Lacuna Dataset", "Lacuna Fund Dataset", "Is Lacuna Dataset"

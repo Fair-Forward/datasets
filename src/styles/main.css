@@ -212,6 +212,13 @@
             transform: translateX(2px);
         }
 
+        .info-card-disclaimer {
+            font-size: var(--text-sm);
+            color: var(--text-light);
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+
         .info-card-note {
             display: flex;
             align-items: center;
