@@ -1,0 +1,1 @@
+Machine Learning System for Predicting Soil Parameters from Sentinel-2 Satellite Data. Cooperation with the Government of Telangana (India).

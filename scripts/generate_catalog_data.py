@@ -458,7 +458,7 @@ def generate_catalog_json():
                 'license': normalize_license(str(row.get('License', ''))),
                 'contact': clean_str(str(row.get('Point of Contact/Communities', ''))),
                 'organizations': clean_str(str(row.get('Organizations Involved', ''))),
-                'authors': clean_str(str(row.get('Authors', ''))),
+                'editor': clean_str(str(row.get('Authors', ''))),
                 'is_lacuna': is_lacuna,
                 'has_dataset': has_dataset_link,
                 'has_usecase': has_usecase_link,

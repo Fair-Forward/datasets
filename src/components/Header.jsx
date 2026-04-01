@@ -63,6 +63,9 @@ const Header = () => {
             Data starts in the shared catalog spreadsheet, is transformed to JSON via our Python scripts, and is rendered here with a modern React frontend.
             All code and content remain open-source to keep collaboration lightweight and sustainable.
           </p>
+          <p className="info-card-disclaimer">
+            GIZ only displays use cases that it financed via this website. For more information on the providers, click on the respective use cases.
+          </p>
           <div className="info-card-links">
             <a
               href="https://github.com/Fair-Forward/datasets#readme"

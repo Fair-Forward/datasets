@@ -75,8 +75,8 @@ const CatalogHeader = ({ stats }) => {
           <div className="header-text">
             <h1>Fair Forward - Open Data & Use Cases</h1>
             <p className="subtitle">
-              Exploring datasets and solutions for global challenges across agriculture, 
-              language technology, climate action, energy, and more.
+              Exploring datasets and solutions for global challenges across agriculture,
+              language technology, climate action, energy, and more built by our partners.
             </p>
             <a 
               href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/" 
