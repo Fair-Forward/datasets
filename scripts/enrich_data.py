@@ -666,6 +666,8 @@ LLM_PROMPTS = {
     ),
     'how_to_use': (
         "Write a practical guide for someone wanting to use or build on this resource. "
+        "Start with a concrete, specific opening sentence about what someone can DO -- "
+        "never start with 'This is a valuable resource' or similar generic phrasing. "
         "Focus on these priorities: "
         "1) What specific use cases or applications can already be tackled NOW with "
         "the existing tools and resources? What can someone do immediately? "
