@@ -1,37 +1,11 @@
 [Auto-enriched from linked project resources]
 
-## Getting Started
+This resource is useful for anyone working on urban mobility analysis, road infrastructure planning, or land-use evaluation in cities of the Global South. The UrbanInfraDL repository provides a deep learning pipeline for segmenting road infrastructure -- roads, sidewalks, and bicycle lanes -- from satellite imagery, with a focus on Bogota, Colombia.
 
-The UrbanInfraDL repository provides a deep learning pipeline for analyzing urban road infrastructure from satellite imagery, with a focus on Bogota, Colombia. The repository includes a patch extraction tool and three model training scripts.
+You can use the provided patch extraction tool and training scripts for three segmentation architectures (DeepLabV3+, SegFormer, U-Net) to train models that classify urban road space from your own satellite imagery. This makes it possible to evaluate how road space is allocated across different transport modes and to support evidence-based advocacy for more equitable infrastructure distribution.
 
-## What is in the Repository
+Researchers and developers can extend this work by applying the pipeline to other cities with similar urban structures, or by incorporating additional annotation classes (e.g., bus lanes, green spaces) to broaden the analysis. The modular design -- separate patch extraction and model training steps -- makes it straightforward to experiment with different architectures or hyperparameters.
 
-- **patch_extractor.py** -- a command-line utility that generates image patches from large TIFF files. It supports two modes:
-  - `raw` mode: processes raw satellite images and saves patches to an `images/` folder
-  - `label` mode: processes reference label images (road, sidewalk, and bicycle lane annotations) and saves patches to a `labels/` folder
-
-- **Training scripts** for three segmentation architectures:
-  - `deeplabv3plus_trainer.py`
-  - `segformer_trainer.py`
-  - `unet_trainer.py`
-
-- A `data/` directory (contents not documented in the README)
-
-## How to Use the Patch Extractor
-
-Run the tool from the command line, specifying mode, input/output directories, patch size, and stride:
-
-```
-python patch_extractor.py --mode raw --input_dir /path/to/raw_images --output_dir /path/to/output --patch_size 256 256 --stride 128 128
-```
-
-You can adjust `--patch_size` and `--stride` to control the dimensions and overlap of extracted patches for your training data.
-
-## Limitations
-
-- The README does not list dependencies or installation instructions; you will need to inspect the code for required Python packages.
-- No pre-trained model weights are provided in the repository.
-- No dataset download links are included; you need your own TIFF satellite imagery and corresponding label files.
-- The repository is small (8 commits) and may be a research prototype rather than a production tool.
+Known limitations: No pre-trained model weights or sample datasets are included in the repository; you will need your own high-resolution TIFF satellite imagery and corresponding label files. The repository does not document its Python dependencies, so some setup effort is required. The codebase is a research prototype (8 commits) rather than a production-ready tool.
 
 Source: https://github.com/yangshao2/UrbanInfraDL

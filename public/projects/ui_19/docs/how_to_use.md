@@ -1,67 +1,13 @@
 [Auto-enriched from linked project resources]
 
-## Getting the Data
+This drone-based agricultural dataset is designed for anyone working on crop yield estimation, crop health monitoring, or object detection in smallholder farming contexts. It contains 14,870 high-resolution drone images of cashew, cocoa, and coffee crops from Ghana and Uganda, each paired with bounding box annotations that label individual fruits by maturity stage -- immature, mature, ripe, and spoilt.
 
-The dataset is hosted on HuggingFace and is openly accessible without a gated access request. The total size is approximately 45.6 GB.
+You can use these images to train models that count and classify fruits from aerial imagery, enabling plot-level yield estimation without manual field counts. The maturity-stage labels also support crop health monitoring, since spoilt fruit detection can flag disease or post-harvest loss issues early. Because the dataset covers three different cash crops across two countries, it lends itself to cross-crop and cross-region transfer learning experiments -- for example, testing whether a model trained on Ghanaian cashew generalises to Ugandan cashew, or adapting a cocoa detector for coffee.
 
-Browse and download: https://huggingface.co/datasets/KaraAgroAI/Drone-based-Agricultural-Dataset-for-Crop-Yield-Estimation
+Researchers and developers should note that the Ghana images (16,000 x 13,000 px, collected by KaraAgro AI) are significantly higher resolution than the Uganda images (4,000 x 3,000 px, collected by Makerere AI Lab, Uganda Marconi Lab, and NCRRI). This difference may require separate preprocessing pipelines or resolution-aware training strategies if combining both sources.
 
-DOI: 10.57967/hf/0959
+The annotations use the YOLO object detection format, so the data can be loaded directly into standard YOLO-based training pipelines. The dataset repository also includes PDF documentation covering collection methodology and variable definitions.
 
-## What You Get
-
-A total of 14,870 drone-captured images of cashew, cocoa, and coffee crops with YOLO-format bounding box annotations:
-
-**Ghana (KaraAgro AI) -- 8,784 images at 16000 x 13000 pixels:**
-- Cashew: 4,715 images
-- Cocoa: 4,069 images
-
-**Uganda (Makerere AI Lab, Uganda Marconi Lab, NCRRI) -- 6,086 images at 4000 x 3000 pixels:**
-- Cashew: 3,086 images
-- Coffee: 3,000 images
-
-**Folder structure:**
-```
-Data/
-  Ghana/
-    cashew.zip
-    cocoa.zip
-  Uganda/
-    cashew.zip
-    coffee.zip
-```
-
-## Annotation Details
-
-Each image has a corresponding `.txt` file in YOLO format containing class labels (integer index) and normalized bounding box coordinates (x_center, y_center, width, height).
-
-**Ghana -- Cashew classes and instance counts:**
-cashew_tree (1,107), flower (16,757), immature (11,766), mature (4,244), ripe (11,721), spoilt (518)
-
-**Ghana -- Cocoa classes and instance counts:**
-cocoa-pod-mature-unripe (10,786), cocoa-tree (2,831), cocoa-pod-immature (2,401), cocoa-pod-riped (4,193), cocoa-pod-spoilt (2,018)
-
-**Uganda -- Cashew classes:**
-cashew_tree, flower, immature, mature, ripe, spoilt
-
-**Uganda -- Coffee classes:**
-unripe, ripening, ripe, spoilt, coffee
-
-## How to Use It
-
-The annotations follow the YOLO object detection format, so the data can be loaded directly into YOLO-based training pipelines. Each ZIP file contains paired image and annotation files ready for model training.
-
-The class labels capture crop maturity stages (immature, mature, ripe, spoilt), which supports:
-- Crop yield estimation through fruit counting and maturity classification
-- Crop health monitoring via detection of spoilt fruits
-- Object detection model development for agricultural drone imagery
-
-Note that the Ghana images (16000 x 13000 px) are significantly higher resolution than the Uganda images (4000 x 3000 px), which may require different preprocessing approaches if combining both sources.
-
-The dataset repository also includes PDF documentation (a datasheet and full dataset description) with details on collection methodology and variable definitions.
-
-## License
-
-Creative Commons Attribution 4.0 International (CC BY 4.0).
+The full dataset (~45.6 GB) is openly available on HuggingFace under a CC BY 4.0 license: https://huggingface.co/datasets/KaraAgroAI/Drone-based-Agricultural-Dataset-for-Crop-Yield-Estimation
 
 Source: https://huggingface.co/datasets/KaraAgroAI/Drone-based-Agricultural-Dataset-for-Crop-Yield-Estimation

@@ -1,44 +1,14 @@
 [Auto-enriched from linked project resources]
 
-## Accessing the Data
+## How to Use This Resource
 
-The Kinyarwanda voice data is available through two channels:
+This resource provides Kinyarwanda voice and text data through two complementary channels, making it valuable for anyone working on speech technology, language preservation, or multilingual applications for Rwanda and the broader East African region.
 
-- **Mozilla Data Collective**: The "Common Voice Scripted Speech 25.0 - Kinyarwanda" dataset (57.18 GB of MP3 recordings) is available at the Mozilla Data Collective platform under a CC0-1.0 license, meaning it can be used without restrictions.
+The Mozilla Data Collective hosts the "Common Voice Scripted Speech 25.0 - Kinyarwanda" dataset, which contains 57.18 GB of MP3 audio recordings released under a CC0-1.0 license, meaning it can be used without any restrictions. This is the primary source for building or improving Automatic Speech Recognition (ASR) systems that handle Kinyarwanda. The dataset can be accessed directly through the [Mozilla Data Collective platform](https://datacollective.mozillafoundation.org/datasets?q=common+voice&locale=rw).
 
-- **Hugging Face**: The `mbazaNLP/common-voice-kinyarwanda-english-dataset` provides a bilingual compilation (Kinyarwanda and English) with 721,395 text transcription entries across train/validation/test splits, licensed under CC-BY-4.0. Note that this dataset currently contains text transcriptions only; audio files are planned for a future release.
+A complementary bilingual compilation is available on [Hugging Face as mbazaNLP/common-voice-kinyarwanda-english-dataset](https://huggingface.co/datasets/mbazaNLP/common-voice-kinyarwanda-english-dataset), providing 721,395 text transcription entries spanning both Kinyarwanda and English, with pre-defined train, validation, and test splits (approximately 619,000 / 61,600 / 41,200 entries respectively). This dataset is licensed under CC-BY-4.0. Note that this Hugging Face version currently contains text transcriptions only; audio files are planned for a future release.
 
-## Loading the Hugging Face Dataset
-
-```python
-from datasets import load_dataset
-
-# Load the full dataset
-dataset = load_dataset("mbazaNLP/common-voice-kinyarwanda-english-dataset")
-
-# Or load a specific split
-train_data = load_dataset("mbazaNLP/common-voice-kinyarwanda-english-dataset", split="train")
-```
-
-The dataset can also be loaded with pandas:
-
-```python
-import pandas as pd
-df = pd.read_parquet("default/train/*.parquet")
-```
-
-## What the Dataset Contains
-
-Each entry includes:
-- `audio_filepath` -- path to the audio file (e.g. `train_data/0.wav`)
-- `duration` -- audio duration in seconds
-- `text` -- the transcription text
-
-The Hugging Face dataset has three splits: train (619,000 rows), validation (61,600 rows), and test (41,200 rows).
-
-## Intended Use
-
-The dataset is designed for training multilingual Automatic Speech Recognition (ASR) systems that handle both Kinyarwanda and English. It can be used with the Hugging Face `datasets` library, pandas, or polars.
+Researchers and developers can use these resources to train multilingual ASR systems, build voice-enabled applications for Kinyarwanda speakers, or conduct linguistic research on this under-resourced language. The bilingual structure of the Hugging Face dataset also opens possibilities for cross-lingual transfer learning and translation tasks. Both datasets are accessible through standard data science tools and the Hugging Face datasets library.
 
 Sources:
 - https://datacollective.mozillafoundation.org/datasets?q=common+voice&locale=rw

@@ -1,49 +1,13 @@
 [Auto-enriched from linked project resources]
 
-## What is This Dataset
+This dataset is intended for building and improving crop disease detection systems for smallholder farming in Ghana and similar West African contexts. It covers four crops -- cashew, cassava, maize, and tomato -- with 22 disease and health classes in total, making it one of the more comprehensive Afrocentric crop disease image collections available.
 
-The Crop Disease (Ghana) dataset is an Afrocentric image collection of annotated crop leaf photos, designed for training crop disease detection models. It was created by the Responsible AI Lab and is hosted on Kaggle (version 16, last updated March 2025).
+You can use this dataset to train image classification models that identify specific diseases from leaf photos. With nearly 25,000 raw images captured from local farms in Ghana (October-December 2022), plus over 100,000 augmented images with a ready-made train/test split, the dataset is structured for direct use in standard image classification workflows. The raw images are also available separately if you prefer to apply your own augmentation or splitting strategy.
 
-## Crops and Disease Classes
+The dataset is particularly valuable because it captures disease symptoms as they actually appear on farms in Ghana -- subtle, at various stages, and under real field conditions. This makes models trained on this data more likely to perform well in practical agricultural advisory tools than models trained on laboratory images. Agricultural technology developers, extension services, and research institutions can use it to build mobile apps or decision-support tools that help farmers identify and respond to crop diseases early.
 
-The dataset covers four crops with 22 disease and health classes total:
+Researchers can extend this work by combining it with other crop disease datasets to improve cross-regional generalization, or by adding whole-plant and field-level imagery to complement the current leaf-level focus. The dataset is licensed under CC BY 4.0 and is available on Kaggle (approximately 20 GB). A free Kaggle account is required for download.
 
-- **Cashew** (5 classes): anthracnose, gummosis, healthy, leaf miner, red rust
-- **Cassava** (5 classes): bacterial blight, brown spot, green mite, healthy, mosaic
-- **Maize** (7 classes): fall armyworm, grasshopper, healthy, leaf beetle, leaf blight, leaf spot, streak virus
-- **Tomato** (5 classes): healthy, leaf blight, leaf curl, septoria leaf spot, verticillium wilt
+Known limitations: The images are from specific farming regions in Ghana, so models trained exclusively on this data may not generalize well to crops grown under different conditions elsewhere. The dataset focuses on leaf-level symptoms and does not include whole-plant or field-level imagery.
 
-## Dataset Size
-
-- **Raw images**: 24,881 total (6,549 cashew, 7,508 cassava, 5,389 maize, 5,435 tomato)
-- **Augmented images**: 102,976 total (25,811 cashew, 26,330 cassava, 23,657 maize, 27,178 tomato), split into train and test sets
-- Download size: approximately 20 GB (ZIP format)
-- Licensed under CC BY 4.0
-
-## Data Collection
-
-Images were captured daily during daytime from local farms in Ghana, from October 2022 to December 2022. The photos show leaves with subtle disease symptoms at various stages of crop development.
-
-## How to Access
-
-1. Create a free Kaggle account at kaggle.com
-2. Go to https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana
-3. Click "Download" to get the full ZIP archive
-4. Alternatively, use the Kaggle API:
-   ```bash
-   kaggle datasets download -d responsibleailab/crop-disease-ghana
-   ```
-
-## How to Use
-
-The dataset is organized as labeled image folders, making it ready for standard image classification workflows. You can load it directly with libraries such as TensorFlow (`tf.keras.utils.image_dataset_from_directory`) or PyTorch (`torchvision.datasets.ImageFolder`).
-
-The augmented train/test split is provided for direct use in model training. The raw images are also available if you prefer to apply your own augmentation or splitting strategy.
-
-## Limitations
-
-- The images are from specific farming regions in Ghana; models trained on this data may not generalize to crops grown under different conditions elsewhere.
-- The dataset focuses on leaf-level symptoms; it does not include whole-plant or field-level imagery.
-
-Sources:
-- https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana
+Source: https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana

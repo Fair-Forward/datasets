@@ -1,38 +1,16 @@
 [Auto-enriched from linked project resources]
 
-## Downloading the Common Voice Speech Datasets
+Mozilla Common Voice provides large, open speech datasets for three East African languages -- Kiswahili (20.87 GB), Kinyarwanda (57.18 GB), and Luganda (11.06 GB) -- intended for building Automatic Speech Recognition (ASR) systems. These are collections of read speech recordings in MP3 format, paired with TSV metadata containing transcriptions and speaker information.
 
-Mozilla Common Voice provides open speech datasets for three East African languages, hosted on the Mozilla Data Collective platform. All three are collections of read speech recordings in MP3 format, released under a CC0-1.0 (public domain) license. They are intended for Automatic Speech Recognition (ASR) tasks.
+This resource is valuable for anyone developing voice-based applications, virtual assistants, transcription tools, or accessibility services for East African language communities. You can use the recordings and transcriptions to train and evaluate ASR models, or to fine-tune existing multilingual speech models for better performance on these specific languages. The datasets are also suitable for linguistic research on phonetics, prosody, or speaker variation across the three languages.
 
-### Available Datasets (Common Voice Scripted Speech 25.0)
+Researchers and developers can extend this work by combining Common Voice data with other speech corpora to improve model robustness, or by using the trained models as a foundation for downstream tasks like keyword spotting, voice-controlled interfaces, or spoken-language understanding. Because the datasets are released under a CC0-1.0 license (public domain), they can be freely used, modified, and redistributed for any purpose without attribution requirements -- making them particularly suitable for commercial applications and integration into products.
 
-| Language | Locale code | Size | Download page |
-|---|---|---|---|
-| Kiswahili (Swahili) | sw | 20.87 GB | [datacollective.mozillafoundation.org/.../sw](https://datacollective.mozillafoundation.org/datasets?q=common+voice&locale=sw) |
-| Luganda | lg | 11.06 GB | [datacollective.mozillafoundation.org/.../lg](https://datacollective.mozillafoundation.org/datasets?q=common+voice&locale=lg) |
-| Kinyarwanda | rw | 57.18 GB | [datacollective.mozillafoundation.org/.../rw](https://datacollective.mozillafoundation.org/datasets?q=common+voice&locale=rw) |
+The datasets are hosted on the Mozilla Data Collective platform. To download, create a free account at datacollective.mozillafoundation.org, navigate to the dataset page for the language you need, accept the user agreement, and download the compressed archive. Programmatic access is also available through the platform's REST API for automated pipelines.
 
-### How to Download
-
-1. Go to the Mozilla Data Collective at [datacollective.mozillafoundation.org](https://datacollective.mozillafoundation.org/).
-2. Create an account (email and password required).
-3. Navigate to the dataset page for the language you need (links above).
-4. Accept the legally binding user agreement, which includes the CC0-1.0 license terms and any usage restrictions.
-5. Download the dataset. Files are provided as compressed archives (.tar.gz) containing MP3 audio files and TSV metadata.
-
-### Programmatic Access
-
-Authenticated users can also download datasets through the Mozilla Data Collective REST API using their account credentials, rather than the web interface.
-
-### Data Format
-
-Each dataset archive contains:
-- **MP3** audio files of individual speech recordings.
-- **TSV** metadata files with transcription and speaker information.
-
-### License
-
-All three datasets use the CC0-1.0 license (Creative Commons Zero -- public domain dedication), meaning they can be used freely for any purpose without attribution requirements.
+- Kiswahili: https://datacollective.mozillafoundation.org/datasets?q=common+voice&locale=sw
+- Kinyarwanda: https://datacollective.mozillafoundation.org/datasets?q=common+voice&locale=rw
+- Luganda: https://datacollective.mozillafoundation.org/datasets?q=common+voice&locale=lg
 
 Sources:
 - https://datacollective.mozillafoundation.org/datasets?q=common+voice&locale=sw

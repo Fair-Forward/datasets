@@ -1,50 +1,14 @@
 [Auto-enriched from linked project resources]
 
-## Using the Solar Irradiance Portal
+## How to Use This Resource
 
-The Irradiation Portal is a web application that provides corrected solar irradiance data for Uganda. It addresses systematic overestimation in standard satellite data sources (such as CAMS and NASA POWER) by applying a Random Forest machine learning model trained on ground-truth measurements from 56 validation sites across Uganda and 7 African countries. The model achieves an R-squared accuracy of 0.86.
+This resource addresses a critical problem for solar energy planning in Uganda: standard satellite data sources such as CAMS and NASA POWER systematically overestimate solar irradiance by roughly 20%, which reduces lifetime energy savings for consumers by 5-20% and creates financial risk through incorrect system sizing. The Irradiation Portal provides corrected Global Horizontal Irradiance (GHI) data by applying a machine learning model trained on ground-truth measurements from 56 validation sites across Uganda and 7 African countries, achieving an R-squared accuracy of 0.86.
 
-Access the portal at: https://irradiation-portal-55883164704.europe-west1.run.app/
+Anyone involved in solar project development, rural electrification planning, or energy policy in Uganda can access the corrected data through the [Irradiation Portal web application](https://irradiation-portal-55883164704.europe-west1.run.app/). The portal offers interactive data exploration with dynamic charts and maps, monthly irradiance measurements in kWh/m2/day, and historical data access -- all through a standard web browser. Technical documentation and user support are built into the portal.
 
-The portal offers three main access points:
-- `/portal` -- interactive data exploration with dynamic charts and maps
-- `/documentation` -- technical guidance on the data and methodology
-- `/help` -- user support
+For organisations that want to integrate the corrected solar data into their own planning tools or applications, a RESTful API is available through the portal. This enables automated data retrieval for feasibility studies, system design calculations, or monitoring dashboards.
 
-A RESTful API is available for integrating the corrected solar data into your own applications.
-
-## Using the SuSSE Python Package
-
-The underlying model code is available as the SuSSE (Sub-Saharan Solar Estimation) Python package on GitHub.
-
-**Installation:**
-
-```bash
-pip install .
-```
-
-Or for development (changes to source code are reflected immediately):
-
-```bash
-pip install -e .
-```
-
-The repository includes Jupyter Notebooks (87.9% of the codebase) and Python scripts (12.1%). Testing and code quality are managed through Tox:
-
-- `tox -e py312` -- run tests with coverage
-- `tox -e format-code` -- apply formatting
-- `tox -e static-analysis` -- run type checking
-
-## What the Portal Provides
-
-- Corrected Global Horizontal Irradiance (GHI) data that accounts for roughly 20% satellite overestimation
-- Monthly irradiance measurements (kWh/m2/day)
-- Interactive visualizations for analyzing solar patterns
-- Historical data access through the web interface
-
-## Why This Matters
-
-Standard satellite solar data can overestimate irradiance for Uganda, which reduces lifetime energy savings for consumers by 5-20% and creates financial risk through incorrect system sizing. The corrected data from this portal helps with more accurate solar potential assessment and system design.
+Researchers and developers looking to extend the underlying methodology can access the SuSSE (Sub-Saharan Solar Estimation) model code, which is openly available on [GitHub](https://github.com/Marconi-Lab/Solar_irradiation). The repository includes the full codebase with Jupyter Notebooks and Python scripts, along with testing and development tools. This opens possibilities for adapting the correction model to other Sub-Saharan African countries where similar satellite overestimation issues exist.
 
 Sources:
 - https://github.com/Marconi-Lab/Solar_irradiation

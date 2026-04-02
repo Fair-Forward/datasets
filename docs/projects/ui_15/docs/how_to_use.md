@@ -1,29 +1,11 @@
 [Auto-enriched from linked project resources]
 
-## Getting the Data
+This dataset is useful for anyone working on speech recognition, natural language processing, or voice technology that needs to handle Ghanaian English accents. It contains audio recordings from native and non-native English speakers across various regions of Ghana, with each participant reading the same three predefined scripts to ensure consistency.
 
-The Accent Classification Dataset (Ghana) is hosted on Kaggle. You will need a free Kaggle account to download it. The dataset is approximately 185 MB as a ZIP archive.
+You can use this data to train or fine-tune accent classification models, improve automatic speech recognition systems for Ghanaian English speakers, or conduct research on regional dialect variation within Ghana. Each audio file is paired with demographic metadata -- age, ethnicity, and region -- allowing you to segment and filter recordings by speaker background. With three recordings per participant, you can also study within-speaker consistency and across-region variation.
 
-Download link: https://www.kaggle.com/datasets/responsibleailab/accent-classification-dataset-ghana
+The dataset is particularly relevant for developers building voice-enabled applications intended for Ghanaian users, where standard English speech models often underperform due to accent variation. By training on this data, you can build systems that are more inclusive and accurate for this population.
 
-## What You Get
-
-The dataset contains audio recordings from native and non-native English speakers across various regions of Ghana. Each participant read the same three predefined scripts, ensuring consistency across recordings. Metadata for each submission includes the participant's age, ethnicity, and region.
-
-Participants were instructed to record in quiet environments. Data was collected via Telegram using custom bots and scripts, with identity verification and audio quality validation steps.
-
-## How to Use It
-
-This dataset supports tasks such as:
-- Accent classification and identification
-- Speech recognition research for Ghanaian English
-- Regional dialect analysis
-- Language processing studies
-
-Each audio file is paired with demographic metadata (age, ethnicity, region), allowing you to segment and filter recordings by speaker background. With three recordings per participant (one per script), you can compare consistency within speakers and variation across regions.
-
-## License
-
-Open Database License (ODbL) -- Database: Open Database, Contents: Database Contents.
+Data was collected via Telegram using custom bots and scripts, with identity verification and audio quality validation steps. Participants were instructed to record in quiet environments. The dataset is approximately 185 MB, licensed under the Open Database License (ODbL), and is available on Kaggle with a free account.
 
 Source: https://www.kaggle.com/datasets/responsibleailab/accent-classification-dataset-ghana
