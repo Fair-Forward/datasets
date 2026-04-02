@@ -1,12 +1,5 @@
 [Auto-enriched from linked project resources]
 
-This project has created a large collection of voice recordings in Kinyarwanda, which is the largest open-source dataset of its kind. The main goal is to help develop speech recognition technology that can understand and transcribe spoken Kinyarwanda into text. This technology can be particularly useful for people who speak Kinyarwanda, including those who may not be literate or who live in rural areas, allowing them to access information in their native language.
-
-The dataset includes over 2,380 hours of audio recordings, which are provided in MP3 format. Users can input spoken Kinyarwanda into AI systems, and the output will be the corresponding text transcription. This can be applied in various applications, such as voice assistants on cellphones or other devices.
-
-
-To use this dataset effectively, users should have access to software capable of processing audio files and running speech recognition algorithms. There are no specific hardware requirements mentioned, but a standard computer with audio processing capabilities should suffice.
-
-When using this dataset to build new products, it is important to credit the source, which is the Mozilla Foundation's Common Voice project. This acknowledgment helps support the ongoing efforts to create inclusive language technology.
+Provides speech-to-text training data for Kinyarwanda. The Common Voice dataset (57.18 GB, MP3, CC0-1.0) enables building ASR systems that transcribe spoken Kinyarwanda into text. The complementary Kinyarwanda-English dataset by Mbaza NLP (721,395 rows, CC-BY-4.0) supports multilingual ASR development. Both datasets can be used to build voice-enabled applications such as speech recognition on mobile devices.
 
 Source: https://datacollective.mozillafoundation.org/datasets?q=common+voice&locale=rw, https://huggingface.co/datasets/mbazaNLP/common-voice-kinyarwanda-english-dataset

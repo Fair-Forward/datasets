@@ -1,11 +1,5 @@
 [Auto-enriched from linked project resources]
 
-This dataset is designed to help farmers in Ghana and Uganda make informed decisions about cashew, cocoa, and coffee production. It contains 14,870 drone images with detailed annotations, which can be used for estimating crop yields, detecting crop types, counting fruits, and assessing fruit maturity stages (unripe, ripe, and spoiled).
-
-The dataset is divided into two main sections: one for Ghana and another for Uganda. The Ghana section includes 8,784 high-resolution images (16,000 by 13,000 pixels) of cashew and cocoa trees. The Uganda section contains 6,086 images (4,000 by 3,000 pixels) of cashew and coffee trees. Each image is paired with a YOLO format text file that includes class labels and bounding box coordinates for various crop features.
-
-The dataset has been created with input from agricultural scientists and is maintained by the KaraAgro AI Foundation and partners. It is published under a Creative Commons Attribution 4.0 International License (CC BY 4.0), allowing users to share and adapt the data as long as proper credit is given.
-
-While the dataset is comprehensive, users should be aware of potential limitations, such as the possibility of biases in the data collection process or imbalances in the number of images for different crop types and maturity stages. The dataset aims to adhere to responsible and ethical use principles, ensuring that it is accessible and usable for a wide range of applications in agricultural research and practice.
+14,870 drone images with YOLO-format annotations for crop yield estimation. License: CC BY 4.0. Data Type: Image + Text annotations. Ghana subset: 8,784 images (16,000 x 13,000 px) covering cashew (4,715 images) and cocoa (4,069 images). Uganda subset: 6,086 images (4,000 x 3,000 px) covering cashew (3,086 images) and coffee (3,000 images). Cashew labels: cashew_tree, flower, immature, mature, ripe, spoilt. Cocoa labels: cocoa-tree, cocoa-pod-immature, cocoa-pod-mature-unripe, cocoa-pod-riped, cocoa-pod-spoilt. Coffee labels: coffee, unripe, ripening, ripe, spoilt. DOI: 10.57967/hf/0959. Created by KaraAgro AI Foundation, funded by Lacuna Fund.
 
 Source: https://huggingface.co/datasets/KaraAgroAI/Drone-based-Agricultural-Dataset-for-Crop-Yield-Estimation
