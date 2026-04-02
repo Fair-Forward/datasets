@@ -2096,24 +2096,14 @@ a.additional-resource-item i {
     margin-bottom: 0;
 }
 
-.panel-access-note-pending {
+.panel-access-note-info {
     background: #eef2ff;
     color: #1e3a5f;
     border-color: rgba(37, 99, 235, 0.25);
 }
 
-.panel-access-note-pending > i {
+.panel-access-note-info > i {
     color: #2563eb;
-}
-
-.panel-access-note-unavailable {
-    background: #fffbeb;
-    color: #78350f;
-    border-color: rgba(217, 119, 6, 0.3);
-}
-
-.panel-access-note-unavailable > i {
-    color: var(--color-warning);
 }
 
 .panel-access-note-documents {

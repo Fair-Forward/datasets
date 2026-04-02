@@ -187,11 +187,9 @@ const DetailPanel = ({ project, onClose }) => {
   const hostedDocuments = project?.hosted_documents || []
   const showHostedDocuments = hasAccessNote && hostedDocuments.length > 0
   const accessNoteIconClass =
-    project?.access_note_kind === 'pending'
-      ? 'fa-clock'
-      : project?.access_note_kind === 'documents'
-        ? 'fa-folder-open'
-        : 'fa-circle-info'
+    project?.access_note_kind === 'documents'
+      ? 'fa-folder-open'
+      : 'fa-circle-info'
   const sdgs = project?.sdgs || []
   const dataTypes = project?.data_types || []
   const sdgNumbers = extractSdgNumbers(sdgs)
@@ -392,7 +390,7 @@ const DetailPanel = ({ project, onClose }) => {
                   })
                 ) : showAccessCallout ? (
                   <div
-                    className={`panel-access-note panel-access-note-${project.access_note_kind || 'unavailable'}`}
+                    className={`panel-access-note panel-access-note-${project.access_note_kind || 'info'}`}
                   >
                     <i className={`fas ${accessNoteIconClass}`}></i>
                     <div className="panel-access-note-body documentation-content">
@@ -412,7 +410,7 @@ const DetailPanel = ({ project, onClose }) => {
 
               {/* Access note context (shown below documents CTA) */}
               {showHostedDocuments && showAccessCallout && (
-                <div className={`panel-access-note panel-access-note-${project.access_note_kind || 'unavailable'}`}>
+                <div className={`panel-access-note panel-access-note-${project.access_note_kind || 'info'}`}>
                   <i className={`fas ${accessNoteIconClass}`}></i>
                   <div className="panel-access-note-body documentation-content">
                     <DocMarkdown>{project.access_note_markdown}</DocMarkdown>
