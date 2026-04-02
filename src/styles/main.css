@@ -212,6 +212,13 @@
             transform: translateX(2px);
         }
 
+        .info-card-disclaimer {
+            font-size: var(--text-sm);
+            color: var(--text-light);
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+
         .info-card-note {
             display: flex;
             align-items: center;
@@ -256,8 +263,8 @@
             background: var(--card-background);
             border: 1px solid var(--border);
             border-radius: var(--radius-pill);
-            width: 32px;
-            height: 32px;
+            width: 44px;
+            height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1076,6 +1083,26 @@
             color: var(--text-light);
         }
 
+        .retry-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--primary);
+            color: var(--btn-text);
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: var(--text-md);
+            font-weight: 500;
+            cursor: pointer;
+            margin: 1rem 0;
+            transition: all var(--transition-base);
+        }
+
+        .retry-btn:hover {
+            background: var(--primary-light);
+        }
+
         .catalog-error a,
         .catalog-error-detail a {
             color: var(--primary);
@@ -1281,11 +1308,12 @@
 
         /* Style for links within license tags */
         .license-tag a {
-            color: inherit; /* Inherit text color from parent */
-            text-decoration: none; /* Remove underline */
+            color: inherit;
+            text-decoration: none;
+            cursor: pointer;
         }
         .license-tag a:hover {
-            text-decoration: underline; /* Add underline on hover */
+            text-decoration: underline;
         }
 
 
@@ -1881,10 +1909,10 @@ a.additional-resource-item i {
     height: 100%;
     background: linear-gradient(
         to bottom,
-        rgba(245, 242, 234, 0) 0%,     /* --card-bg (main background) with alpha */
-        rgba(245, 242, 234, 0.5) 70%,  /* --card-bg (main background) with alpha */
-        rgba(245, 242, 234, 0.9) 90%,  /* --card-bg (main background) with alpha */
-        rgba(245, 242, 234, 1) 100%    /* --card-bg (main background) full */
+        rgba(248, 250, 252, 0) 0%,
+        rgba(248, 250, 252, 0.5) 70%,
+        rgba(248, 250, 252, 0.9) 90%,
+        rgba(248, 250, 252, 1) 100%
     );
     z-index: 1;
 }
@@ -1897,7 +1925,7 @@ a.additional-resource-item i {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #fefcf5 0%, #f5f2ea 100%); /* Use theme colors */
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
     z-index: -1;
 }
 

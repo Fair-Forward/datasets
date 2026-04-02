@@ -157,14 +157,18 @@ const SDGCountryHeatmap = ({ projects = [], onCellClick }) => {
                     key={`${country}-${sdg}`}
                     className={`heatmap-cell ${count > 0 ? 'has-data clickable' : ''} ${isHovered ? 'hovered' : ''}`}
                     style={{
-                      backgroundColor: count > 0 
-                        ? SDG_COLORS[num] 
+                      backgroundColor: count > 0
+                        ? SDG_COLORS[num]
                         : 'transparent',
                       opacity: count > 0 ? getCellOpacity(count) : 1
                     }}
                     onClick={() => handleCellClick(country, sdg, count)}
+                    onKeyDown={(e) => { if ((e.key === 'Enter' || e.key === ' ') && count > 0) { e.preventDefault(); handleCellClick(country, sdg, count) } }}
                     onMouseEnter={() => setHoveredCell({ country, sdg, count })}
                     onMouseLeave={() => setHoveredCell(null)}
+                    role={count > 0 ? 'button' : undefined}
+                    tabIndex={count > 0 ? 0 : undefined}
+                    aria-label={count > 0 ? `${country}: ${count} project${count !== 1 ? 's' : ''} for ${sdg}. Click to view.` : undefined}
                     title={count > 0 ? `${country}: ${count} project${count !== 1 ? 's' : ''} for ${sdg}` : ''}
                   >
                     {count > 0 && <span className="heatmap-cell-count">{count}</span>}

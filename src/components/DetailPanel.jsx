@@ -405,7 +405,7 @@ const DetailPanel = ({ project, onClose }) => {
                   onClick={handleShare}
                   title={copied ? 'Link copied!' : 'Copy link to share'}
                 >
-                  <i className={`fas ${copied ? 'fa-check' : 'fa-arrow-up-right-from-square'}`}></i>
+                  <i className={`fas ${copied ? 'fa-check' : 'fa-link'}`}></i>
                   {copied ? 'Copied!' : 'Share'}
                 </button>
               </div>
@@ -598,18 +598,18 @@ const DetailPanel = ({ project, onClose }) => {
                 )}
 
                 {/* E) Metadata grid at bottom */}
-                {(project?.authors || project?.contact || licenseValue || sdgs.length > 0) && (
+                {(project?.contact || project?.editor || licenseValue || sdgs.length > 0) && (
                   <div className="panel-metadata-grid">
-                    {project?.authors && (
-                      <div className="metadata-cell">
-                        <span className="metadata-label">Author</span>
-                        <span className="metadata-value">{project.authors}</span>
-                      </div>
-                    )}
                     {project?.contact && (
                       <div className="metadata-cell">
                         <span className="metadata-label">Contact</span>
                         <span className="metadata-value">{renderContact(project.contact)}</span>
+                      </div>
+                    )}
+                    {project?.editor && (
+                      <div className="metadata-cell">
+                        <span className="metadata-label">Editor</span>
+                        <span className="metadata-value">{project.editor}</span>
                       </div>
                     )}
                     {licenseValue && (
