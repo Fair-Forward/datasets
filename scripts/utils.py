@@ -44,10 +44,6 @@ def get_gsheet_client(credentials_path=None):
     sheet = spreadsheet.get_worksheet_by_id(GOOGLE_SHEET_GID)
     return client, spreadsheet, sheet
 
-# Access-note rows: only these openings in Dataset / Use-Case link cells (case-insensitive).
-ACCESS_NOTE_PREFIX_PENDING = "dataset/use-case has not been published yet."
-ACCESS_NOTE_PREFIX_UNAVAILABLE = "there is no dataset/use-case available."
-
 
 def normalize_sheet_link_cell(value):
     """Strip and normalize Dataset Link / Model Use-Case cell values."""
@@ -120,39 +116,14 @@ def extract_links_allow_site_paths(text):
     return urls
 
 
-def link_columns_match_access_prefixes(dataset_text, usecase_text):
-    """True if either link cell starts with the pending or unavailable prefix."""
-    d = normalize_sheet_link_cell(dataset_text).lower()
-    u = normalize_sheet_link_cell(usecase_text).lower()
-    p = ACCESS_NOTE_PREFIX_PENDING
-    q = ACCESS_NOTE_PREFIX_UNAVAILABLE
-    return (bool(d) and (d.startswith(p) or d.startswith(q))) or (
-        bool(u) and (u.startswith(p) or u.startswith(q))
-    )
-
-
-def classify_access_note_prefix_kind(dataset_text, usecase_text):
-    """
-    'pending' if either cell starts with pending prefix (wins over unavailable).
-    'unavailable' if either starts with unavailable prefix and neither pending.
-    None if neither prefix matches.
-    """
-    d = normalize_sheet_link_cell(dataset_text).lower()
-    u = normalize_sheet_link_cell(usecase_text).lower()
-    p = ACCESS_NOTE_PREFIX_PENDING
-    q = ACCESS_NOTE_PREFIX_UNAVAILABLE
-    if d.startswith(p) or u.startswith(p):
-        return "pending"
-    if d.startswith(q) or u.startswith(q):
-        return "unavailable"
-    return None
-
 
 def merge_access_note_link_columns(dataset_text, usecase_text):
-    """Join non-empty link-column text (dataset first, then use-case)."""
-    parts = []
+    """Join non-empty link-column text (dataset first, then use-case). Dedup if identical."""
     d = normalize_sheet_link_cell(dataset_text)
     u = normalize_sheet_link_cell(usecase_text)
+    if d and u and d == u:
+        return d
+    parts = []
     if d:
         parts.append(d)
     if u:
@@ -179,20 +150,20 @@ def documents_dir_has_files(project_id):
 
 def row_included_for_catalog_or_insights(row, row_idx=None):
     """
-    Match catalog inclusion: http link(s), or strict access prefixes, or documents/
-    with files (after resolve).
+    Match catalog inclusion: http link(s), any non-empty text in link columns,
+    or documents/ with files (after resolve).
     """
     dataset_link_text = row.get("Dataset Link", "")
     usecase_link_text = row.get("Model/Use-Case Links", "")
 
+    if extract_http_links(dataset_link_text) or extract_http_links(usecase_link_text):
+        return True
+    if normalize_sheet_link_cell(dataset_link_text) or normalize_sheet_link_cell(usecase_link_text):
+        return True
+
     normalized_project_id, _src, error_msg = resolve_project_id(
         row, row_idx=row_idx
     )
-
-    if extract_http_links(dataset_link_text) or extract_http_links(usecase_link_text):
-        return True
-    if link_columns_match_access_prefixes(dataset_link_text, usecase_link_text):
-        return True
     if not error_msg and normalized_project_id and documents_dir_has_files(
         normalized_project_id
     ):

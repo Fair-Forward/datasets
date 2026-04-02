@@ -59,7 +59,7 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
 
       <div className="card-header">
         <h3>{title}</h3>
-        {sdgs.length > 0 && (
+        {(sdgs.length > 0 || has_access_note) && (
           <div className="domain-badges">
             {sdgs.slice(0, 3).map(sdg => (
               <button

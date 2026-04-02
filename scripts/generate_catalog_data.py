@@ -11,7 +11,6 @@ from utils import (
     normalize_sheet_link_cell,
     extract_http_links,
     extract_links_allow_site_paths,
-    classify_access_note_prefix_kind,
     merge_access_note_link_columns,
     documents_dir_has_files,
 )
@@ -291,6 +290,15 @@ def generate_catalog_json():
             dataset_urls = extract_http_links(dataset_link_text)
             usecase_urls = extract_http_links(usecase_link_text)
 
+            # Cell starting with text (not a URL/markdown link) is a disclaimer,
+            # even if it embeds a contact URL — don't treat as a dataset link
+            ds_text = normalize_sheet_link_cell(dataset_link_text)
+            uc_text = normalize_sheet_link_cell(usecase_link_text)
+            if dataset_urls and ds_text and not ds_text.startswith(('http', '[')):
+                dataset_urls = []
+            if usecase_urls and uc_text and not uc_text.startswith(('http', '[')):
+                usecase_urls = []
+
             has_dataset_link = len(dataset_urls) > 0
             has_usecase_link = len(usecase_urls) > 0
 
@@ -304,19 +312,17 @@ def generate_catalog_json():
             access_note_markdown = None
 
             if not has_dataset_link and not has_usecase_link:
-                prefix_kind = classify_access_note_prefix_kind(
-                    dataset_link_text, usecase_link_text
-                )
-                if prefix_kind is not None:
-                    access_note_kind = prefix_kind
-                elif documents_dir_has_files(normalized_project_id):
-                    access_note_kind = "documents"
-                else:
-                    continue
                 merged_note = merge_access_note_link_columns(
                     dataset_link_text, usecase_link_text
                 ).strip()
-                access_note_markdown = merged_note if merged_note else None
+                has_documents = documents_dir_has_files(normalized_project_id)
+                if merged_note:
+                    access_note_kind = "documents" if has_documents else "info"
+                    access_note_markdown = merged_note
+                elif has_documents:
+                    access_note_kind = "documents"
+                else:
+                    continue
 
             # Count only real http(s) links
             dataset_count += len(dataset_urls)
