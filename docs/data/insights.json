@@ -1,5 +1,5 @@
 {
-  "total_projects": 75,
+  "total_projects": 86,
   "total_countries": 24,
   "map_data": {
     "AO": {
@@ -30,14 +30,16 @@
     },
     "KE": {
       "name": "Kenya",
-      "projects": 11,
+      "projects": 17,
       "iso2": "KE",
       "sdgs": [
         "SDG 2",
         "SDG 5",
+        "SDG 8",
         "SDG 10",
         "SDG 13",
-        "SDG 15"
+        "SDG 15",
+        "SDG 16"
       ],
       "data_types": [
         "Geospatial/Remote Sensing",
@@ -102,15 +104,20 @@
     },
     "TZ": {
       "name": "Tanzania",
-      "projects": 1,
+      "projects": 3,
       "iso2": "TZ",
       "sdgs": [
+        "SDG 2",
+        "SDG 5",
+        "SDG 10",
         "SDG 15"
       ],
       "data_types": [
         "Geospatial/Remote Sensing",
         "Images",
-        "Tabular"
+        "Tabular",
+        "Text",
+        "Voice"
       ]
     },
     "ZM": {
@@ -292,12 +299,12 @@
     },
     "RW": {
       "name": "Rwanda",
-      "projects": 8,
+      "projects": 11,
       "iso2": "RW",
       "sdgs": [
-        "SDG 1",
         "SDG 2",
         "SDG 4",
+        "SDG 5",
         "SDG 9",
         "SDG 10",
         "SDG 11",
@@ -336,18 +343,18 @@
     }
   },
   "sdg_distribution": {
-    "SDG 1": 1,
-    "SDG 2": 37,
+    "SDG 2": 42,
     "SDG 4": 1,
-    "SDG 5": 5,
+    "SDG 5": 10,
     "SDG 7": 3,
-    "SDG 8": 1,
+    "SDG 8": 2,
     "SDG 9": 1,
-    "SDG 10": 23,
+    "SDG 10": 34,
     "SDG 11": 10,
     "SDG 12": 1,
     "SDG 13": 26,
     "SDG 14": 1,
-    "SDG 15": 13
+    "SDG 15": 13,
+    "SDG 16": 1
   }
 }

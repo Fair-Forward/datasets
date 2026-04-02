@@ -602,13 +602,13 @@ const DetailPanel = ({ project, onClose }) => {
                   <div className="panel-metadata-grid">
                     {project?.contact && (
                       <div className="metadata-cell">
-                        <span className="metadata-label">Contact</span>
+                        <span className="metadata-label">Author/Contact</span>
                         <span className="metadata-value">{renderContact(project.contact)}</span>
                       </div>
                     )}
                     {project?.editor && (
                       <div className="metadata-cell">
-                        <span className="metadata-label">Editor</span>
+                        <span className="metadata-label">Editor of this information</span>
                         <span className="metadata-value">{project.editor}</span>
                       </div>
                     )}
