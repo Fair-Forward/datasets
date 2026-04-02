@@ -1,0 +1,11 @@
+[Auto-enriched from linked project resources]
+
+To improve livestock health management in your community, you can immediately use the LivHealth Kiswahili Corpus to access vital disease information in Kiswahili. This resource allows local farmers and livestock owners to identify livestock syndromes and seek timely interventions from qualified practitioners. You can start by integrating the text-to-speech models into your community outreach programs, ensuring that information is accessible to those who may have literacy challenges.
+
+Researchers and developers can extend this work by enhancing the existing AI models with additional local data, which could improve the accuracy of disease identification. Collaborating with local agricultural universities or veterinary schools could provide valuable insights and data for refining the models. Additionally, creating mobile applications that utilize the LivHealth system could broaden its reach and usability.
+
+When replicating or building upon this project, it is essential to consider potential biases in the AI models, particularly if they were trained on limited datasets. Conducting an ethical AI assessment is recommended to ensure that the system serves all community members equitably. 
+
+As for costs, building on this resource may involve expenses related to adaptation and training of the models, which could range from a few hundred to several thousand dollars depending on the scale of your project and the resources required. Compute costs will vary based on the infrastructure you choose to use, whether cloud-based or local servers.
+
+Opportunities for collaboration exist with organizations like One Health Center in Africa (OHRECA), which could provide support and expertise. While specific documentation or tutorials were not mentioned, reaching out to the LivHealth team could yield valuable guidance and success stories from their implementation in Kenya and Tanzania. Long-term maintenance and scaling plans should include regular updates to the dataset and models to keep the information relevant and accurate for the communities served.

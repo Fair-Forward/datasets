@@ -1,0 +1,11 @@
+[Auto-enriched from linked project resources]
+
+You can immediately use the Tunga Agri-Chatbot Suite to create a voice-based agricultural advisory service for farmers in Rwanda. By leveraging the Kinyarwanda Agricultural Text-to-Speech Dataset, you can develop a voicebot that provides critical information on pest and disease management, agro-climatic practices, and government support programs, all accessible via a simple telephone hotline. This is particularly beneficial for farmers who may not have internet access or who are not fluent in English.
+
+To build on this resource, researchers and developers can enhance the existing voicebot by incorporating additional agricultural topics, improving the naturalness of the voice output, or expanding the dataset with more diverse agricultural scenarios. Collaborating with local agricultural experts can help ensure that the information provided is relevant and up-to-date. Additionally, you can explore integrating feedback mechanisms to continuously improve the service based on user interactions.
+
+When replicating this project, it is essential to consider potential limitations, such as biases in the dataset or the need for ethical assessments to ensure that the voicebot serves all farmers equitably. The dataset includes recordings from only two voice actors, which may limit the diversity of voices and accents represented. 
+
+In terms of costs, building on this project may require investment in training and adaptation of the voicebot, which could range from a few hundred to several thousand dollars depending on the scale of the implementation and the resources needed for voice synthesis and infrastructure. You may also need to budget for ongoing maintenance and updates to the system.
+
+For further guidance, you can refer to the technical documentation provided with the dataset, which includes details on the audio files and their structure. Engaging with organizations like C4IR Rwanda and KiNLP can also provide valuable support and collaboration opportunities.
