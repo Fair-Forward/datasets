@@ -5,4 +5,5 @@ oauth2client
 requests
 python-dotenv
 thefuzz[speedup]
-tqdm 
+tqdm
+beautifulsoup4
