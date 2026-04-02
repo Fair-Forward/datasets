@@ -10,4 +10,4 @@ To ensure responsible AI use, the project has taken steps to validate the model 
 
 The platform is designed to be user-friendly, featuring interactive visualizations and an API for easy integration into other applications. Users can access historical datasets on demand, making it a practical tool for energy professionals.
 
-When building new products using this data, users should credit the source of the work to acknowledge the efforts behind this valuable resource.
+Source: https://github.com/Marconi-Lab/Solar_irradiation, https://irradiation-portal-55883164704.europe-west1.run.app/, https://github.com/Marconi-Lab/Irradiation_Portal

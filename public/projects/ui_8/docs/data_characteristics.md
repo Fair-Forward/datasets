@@ -14,4 +14,4 @@ The key characteristics of the dataset and application include:
 
 - **User Rights and Licensing**: Users have the right to access their data and request its deletion. The app is designed for all ages, and while specific licensing details are not provided, the focus on user privacy suggests a commitment to ethical data practices.
 
-Overall, Haki des femmes serves as a valuable resource for women in DRC, aiming to enhance their understanding of land rights and promote gender equity in land ownership.
+Source: https://play.google.com/store/apps/details?id=org.core23lab.hdf&pcampaignid=web_share&pli=1

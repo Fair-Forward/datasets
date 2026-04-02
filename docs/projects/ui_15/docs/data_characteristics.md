@@ -9,3 +9,5 @@ To promote responsible and ethical use, the dataset is maintained by the Respons
 The dataset is published under a specific license that outlines the rights users have when accessing and reusing the data. It is important for users to review this license to understand how they can utilize the dataset in their projects.
 
 Overall, this dataset offers a practical resource for those interested in studying linguistic diversity and developing applications that recognize and classify Ghanaian accents.
+
+Source: https://www.kaggle.com/datasets/responsibleailab/accent-classification-dataset-ghana

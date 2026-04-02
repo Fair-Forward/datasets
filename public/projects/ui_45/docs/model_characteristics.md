@@ -16,3 +16,5 @@ To ensure responsible use of AI, the creators of Miti360 have taken steps to ass
 To use the dataset, you will need access to software that can handle high-resolution images and process the data formats provided, such as GeoTIFF for aerial images and CSV for tree measurements. The dataset is hosted on Google Cloud Storage, and users can find detailed instructions for accessing it on the Miti360 website.
 
 For more information and to access the dataset, visit [Miti360's website](https://miti360.github.io/).
+
+Source: https://github.com/DeKUT-DSAIL/miti360

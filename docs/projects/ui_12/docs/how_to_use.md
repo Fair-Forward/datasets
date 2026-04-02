@@ -1,13 +1,80 @@
 [Auto-enriched from linked project resources]
 
-You can immediately start using the Cashew Disease Identification (CADI AI) dataset to develop an application that helps small-holder cashew farmers in Ghana detect diseases in their crops early. By analyzing drone-captured images of cashew plants, you can create a tool that alerts farmers to potential diseases, enabling them to take action that could increase their yields by up to 30%. 
+## What is CADI-AI
 
-To get started, download the dataset, which includes 4,736 high-resolution images annotated for object detection. The dataset is structured into training, validation, and test sets, making it ready for immediate use in machine learning applications. You can utilize the YOLO format annotations to train a model that identifies three categories: abiotic factors, insects, and diseases.
+The Cashew Disease Identification with Artificial Intelligence (CADI-AI) project provides both a labeled image dataset and a pre-trained object detection model for identifying cashew tree health issues from drone-captured images. It was created by the KaraAgro AI Foundation, funded by GIZ and BMZ through the FAIR Forward and MOVE programs.
 
-Researchers and developers can extend this work by improving the model's accuracy or adapting it for different crops or regions. Collaborating with local agricultural experts can enhance the dataset's relevance and effectiveness. Additionally, you might consider integrating the application with mobile platforms to ensure accessibility for farmers in remote areas.
+## Dataset
 
-When replicating this work, it's crucial to conduct a responsible AI assessment to identify and mitigate potential biases and harms associated with AI use in agriculture. The dataset creators have already undertaken such an assessment, which can serve as a guide for your project.
+- **4,736 high-resolution images** (1600x1300 pixels) captured by drone
+- Split into train (3,788), validation (710), and test (238) sets
+- **22,610 annotated instances** across three classes:
+  - Abiotic stress (13,960 instances) -- damage from environmental factors or nutrient deficiencies
+  - Disease (7,032 instances) -- damage from microorganisms
+  - Insect (1,618 instances) -- damage from pests
+- Annotations are in YOLO format (text files with class labels and bounding box coordinates)
+- Licensed under CC-BY-SA 4.0
+- Download size: approximately 3.78 GB
+- Access requires acknowledging the license on HuggingFace
 
-In terms of costs, you may need to budget for cloud computing resources for model training, which can vary widely based on the scale of your application. A rough estimate for cloud compute costs could range from $100 to $1,000, depending on the duration and intensity of the training process. 
+### Folder structure
+```
+Data/
+  train/
+    images/
+    labels/
+  val/
+    images/
+    labels/
+  test/
+    images/
+    labels/
+```
 
-For further guidance, you can refer to the accompanying datasheet linked in the dataset repository, which provides detailed information about the dataset's composition and methodologies. Engaging with the KaraAgro AI Foundation or GIZ could also open up opportunities for collaboration and support in scaling your application.
+## Pre-trained Model
+
+- Architecture: YOLOv5x
+- Model file: `yolov5_0.65map_exp7_best.pt` (approximately 173 MB)
+- Licensed under AGPL-3.0
+
+### Performance on test set
+
+| Class    | Precision | Recall | mAP@50 | mAP@50-95 |
+|----------|-----------|--------|--------|-----------|
+| All      | 0.663     | 0.632  | 0.648  | 0.291     |
+| Insect   | 0.794     | 0.811  | 0.815  | 0.390     |
+| Abiotic  | 0.682     | 0.514  | 0.542  | 0.237     |
+| Disease  | 0.594     | 0.571  | 0.588  | 0.248     |
+
+The model performs best on the insect class due to distinct visual features. Disease and abiotic classes are harder to distinguish because their symptoms can overlap in field conditions.
+
+## How to Run Inference
+
+Install the required library:
+```bash
+pip install -U ultralytics
+```
+
+Load the model and run predictions:
+```python
+import torch
+
+model = torch.hub.load('ultralytics/yolov5', 'custom',
+                       path='CADI-AI/yolov5_0.65map_exp7_best.pt',
+                       force_reload=True)
+model.conf = 0.20  # confidence threshold
+
+results = model(['/path/to/your/image.jpg'], size=640)
+results.show()
+results.save(save_dir='results/')
+```
+
+## Additional Resources
+
+- Live demo: https://huggingface.co/spaces/KaraAgroAI/CADI-AI
+- Desktop application source: https://github.com/karaagro/cadi-ai
+- Datasheet with detailed methodology: available via Google Drive link in the HuggingFace dataset card
+
+Sources:
+- https://huggingface.co/datasets/KaraAgroAI/CADI-AI
+- https://huggingface.co/KaraAgroAI/CADI-AI

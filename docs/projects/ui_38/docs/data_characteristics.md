@@ -9,3 +9,5 @@ For responsible and ethical use, users should be aware of these limitations and 
 The dataset is maintained by the project team and is updated as new data becomes available. It is published under the CC-BY-SA 4.0 license, allowing users to share and adapt the data, provided they give appropriate credit and share any derivative works under the same license. For commercial use, users must contact the project team for permission.
 
 For any questions or further information, users can reach out to the support team at infonesiainsan@gmail.com.
+
+Source: https://github.com/insaninfonesia/WeatherData, https://colabs.commonroom.info/login/?next=%2F

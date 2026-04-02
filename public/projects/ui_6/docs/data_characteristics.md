@@ -14,4 +14,4 @@ The Africa Biomass dataset is designed to help monitor forest biomass, particula
 
 - **Maintenance**: The dataset is maintained by the contributors who collected the data, ensuring that it is updated and accurate as new measurements are taken or as additional data becomes available.
 
-This dataset is particularly valuable for development practitioners, NGOs, and government agencies focused on sustainable forest management and climate change mitigation. By using this data, organizations can monitor forest health, assess the impact of cocoa farming on forest degradation, and support reforestation efforts without the need for extensive on-the-ground surveys.
+Source: https://huggingface.co/datasets/data354/Africa_Biomass_dataset

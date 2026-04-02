@@ -1,28 +1,41 @@
 [Auto-enriched from linked project resources]
 
-To leverage the Mozilla Common Voice datasets for Kiswahili, Kinyarwanda, and Luganda, here’s a practical guide for development practitioners and innovators:
+## Downloading the Common Voice Speech Datasets
 
-1) **Immediate Use Cases**: 
-   - **Speech Recognition Applications**: You can build applications that convert spoken language into text, which is particularly useful for creating voice-activated systems on mobile phones. This can enhance accessibility for users who may be illiterate or prefer to communicate in their native language.
-   - **Language Learning Tools**: Develop educational apps that help users learn these languages through interactive voice recognition features.
-   - **Transcription Services**: Create services that transcribe audio recordings into text, aiding in documentation and record-keeping for NGOs and community organizations.
+Mozilla Common Voice provides open speech datasets for three East African languages, hosted on the Mozilla Data Collective platform. All three are collections of read speech recordings in MP3 format, released under a CC0-1.0 (public domain) license. They are intended for Automatic Speech Recognition (ASR) tasks.
 
-2) **Extending the Work**: 
-   - **Data Collection**: Researchers and developers can contribute by collecting more diverse speech samples, especially from underrepresented dialects or regions, to improve the dataset's inclusivity.
-   - **Model Training**: You can build upon the existing datasets to train custom speech recognition models tailored to specific applications or user needs, enhancing accuracy and usability.
-   - **Collaboration**: Partner with local universities or tech hubs to engage students and researchers in improving the datasets and developing applications.
+### Available Datasets (Common Voice Scripted Speech 25.0)
 
-3) **Limitations and Ethical Considerations**: 
-   - **Bias in Data**: The datasets may not fully represent all dialects or accents within the languages, which could lead to biased outcomes in applications. It’s important to assess the dataset's diversity and consider conducting an ethical AI assessment before deploying any solutions.
-   - **Quality of Data**: Ensure that the quality of the recordings is sufficient for your intended application, as variations in recording conditions can affect performance.
+| Language | Locale code | Size | Download page |
+|---|---|---|---|
+| Kiswahili (Swahili) | sw | 20.87 GB | [datacollective.mozillafoundation.org/.../sw](https://datacollective.mozillafoundation.org/datasets?q=common+voice&locale=sw) |
+| Luganda | lg | 11.06 GB | [datacollective.mozillafoundation.org/.../lg](https://datacollective.mozillafoundation.org/datasets?q=common+voice&locale=lg) |
+| Kinyarwanda | rw | 57.18 GB | [datacollective.mozillafoundation.org/.../rw](https://datacollective.mozillafoundation.org/datasets?q=common+voice&locale=rw) |
 
-4) **Cost Estimates**: 
-   - **Adaptation and Training**: Depending on the complexity of your application, costs can vary. Basic adaptation of existing models may range from $1,000 to $5,000, while training a new model from scratch could exceed $10,000, especially if you require significant computational resources.
-   - **Compute Resources**: Cloud computing services for model training can cost anywhere from $0.50 to $3.00 per hour, depending on the required processing power.
+### How to Download
 
-**Additional Resources**:
-- **Documentation and Tutorials**: Mozilla provides documentation on how to access and use the Common Voice datasets. Check their website for guides on setting up your environment and using the datasets effectively.
-- **Success Stories**: Look for case studies or examples of organizations that have successfully implemented solutions using these datasets to inspire your projects.
-- **Long-term Maintenance**: Engage with the Mozilla community for ongoing support and updates to the datasets, ensuring your applications remain relevant and effective.
+1. Go to the Mozilla Data Collective at [datacollective.mozillafoundation.org](https://datacollective.mozillafoundation.org/).
+2. Create an account (email and password required).
+3. Navigate to the dataset page for the language you need (links above).
+4. Accept the legally binding user agreement, which includes the CC0-1.0 license terms and any usage restrictions.
+5. Download the dataset. Files are provided as compressed archives (.tar.gz) containing MP3 audio files and TSV metadata.
 
-By utilizing these resources, you can create impactful solutions that enhance communication and access to information in East African languages.
+### Programmatic Access
+
+Authenticated users can also download datasets through the Mozilla Data Collective REST API using their account credentials, rather than the web interface.
+
+### Data Format
+
+Each dataset archive contains:
+- **MP3** audio files of individual speech recordings.
+- **TSV** metadata files with transcription and speaker information.
+
+### License
+
+All three datasets use the CC0-1.0 license (Creative Commons Zero -- public domain dedication), meaning they can be used freely for any purpose without attribution requirements.
+
+Sources:
+- https://datacollective.mozillafoundation.org/datasets?q=common+voice&locale=sw
+- https://datacollective.mozillafoundation.org/datasets?q=common+voice&locale=lg
+- https://datacollective.mozillafoundation.org/datasets?q=common+voice&locale=rw
+- https://datacollective.mozillafoundation.org/

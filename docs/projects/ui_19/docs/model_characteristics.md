@@ -17,3 +17,5 @@ To promote responsible AI use, the dataset creators have followed ethical guidel
 For those interested in using this dataset, it is important to have access to appropriate software and hardware capable of processing high-resolution images and running AI models. The dataset is available under a Creative Commons license, allowing for broad use while requiring attribution to the original creators.
 
 This dataset was developed by the KaraAgro AI Foundation in collaboration with agricultural scientists and is supported by the Lacuna Fund. Users can access and download the dataset through the provided DOI link for further exploration and application in agricultural research and development.
+
+Source: https://huggingface.co/datasets/KaraAgroAI/Drone-based-Agricultural-Dataset-for-Crop-Yield-Estimation

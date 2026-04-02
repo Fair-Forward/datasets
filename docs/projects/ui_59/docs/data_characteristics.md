@@ -9,3 +9,5 @@ However, users should be aware of potential limitations or biases in the dataset
 The dataset is maintained by the Mozilla Foundation, which is committed to ensuring responsible and ethical use of the data. They have implemented measures to promote fair use and protect the rights of the speakers involved in the recordings.
 
 Users have the right to use this dataset under the CC0-1.0 license, which allows for free use without restrictions. This means you can use, modify, and distribute the data for any purpose, including commercial applications, as long as you comply with the ethical guidelines set forth by the maintainers.
+
+Source: https://datacollective.mozillafoundation.org/datasets?q=common+voice&locale=rw, https://huggingface.co/datasets/mbazaNLP/common-voice-kinyarwanda-english-dataset

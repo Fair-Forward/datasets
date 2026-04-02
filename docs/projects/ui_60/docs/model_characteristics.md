@@ -11,3 +11,5 @@ To ensure responsible use of AI, the project includes training for local experts
 The digital maps created by this initiative are open and freely accessible, allowing other organizations and innovators to use them in their own projects. Users are encouraged to credit the original work when developing new applications based on this data.
 
 Overall, this AI application aims to enhance agricultural productivity and resilience in Rwanda, providing farmers with better advice and support tailored to their specific conditions.
+
+Source: https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/O7IDTD, https://github.com/crop-type-mapping

@@ -1,38 +1,31 @@
 [Auto-enriched from linked project resources]
 
-Haki des femmes is an innovative application designed to empower women in the Democratic Republic of Congo (DRC) by providing them with essential legal information regarding land ownership and rights. Here’s a practical guide for development practitioners and innovators interested in utilizing or building upon this resource.
+## What is Haki des Femmes
 
-1) **Immediate Use Cases and Applications:**
-   - **Legal Information Access:** Users can immediately access simplified legal information about land rights in Kiswahili, helping women understand their rights to access, use, inherit, control, and own land.
-   - **Support for Women:** The app serves as a support tool for women who may be facing challenges in asserting their land rights, especially after the loss of a spouse.
-   - **Community Workshops:** NGOs and community organizations can use the app as a resource in workshops to educate women about their rights and provide guidance on legal processes.
+Haki des Femmes is a voice-enabled chatbot app that provides women in the Democratic Republic of Congo with legal information about land ownership rights. It operates in Congolese Swahili (Kiswahili) and serves as a digital repository of legal guidance on the right to access, use, inherit, control, and own land.
 
-2) **Extending or Improving the Work:**
-   - **Localization:** Developers can expand the app to include additional local languages or dialects to reach a broader audience.
-   - **Enhanced Features:** Adding features such as a chatbot for real-time legal advice or a forum for women to share experiences and advice could enhance user engagement.
-   - **Partnerships:** Collaborating with local legal experts or NGOs can help improve the accuracy of the information provided and ensure it is culturally relevant.
+## Who it is For
 
-3) **Critical Limitations and Biases:**
-   - **Data Privacy:** While the app claims to protect user data, it is crucial to conduct an ethical AI assessment to ensure that user privacy is maintained, especially given the sensitive nature of legal information.
-   - **Cultural Sensitivity:** The app must be sensitive to local customs and practices regarding land ownership and gender roles to avoid reinforcing biases or misunderstandings.
-   - **Access to Technology:** Consider the digital divide in rural areas where access to smartphones and the internet may be limited.
+The app targets women in the Katanga and Lualaba provinces of the DRC. Many women in these communities are unaware of existing laws that allow them to own land, face barriers to proper land documentation, or lack legal marriages that would confer inheritance rights.
 
-4) **Cost Estimates for Building On This Resource:**
-   - **Adaptation Costs:** Depending on the extent of localization and feature enhancements, costs could range from $5,000 to $20,000.
-   - **Training Costs:** If additional training data is needed for AI features, this could add another $2,000 to $10,000.
-   - **Compute Costs:** Ongoing server and maintenance costs could be approximately $100 to $500 per month, depending on user engagement and feature complexity.
+## How to Access
 
-**Opportunities for Collaboration:**
-- Engage with local NGOs, legal aid organizations, and women’s rights groups to enhance the app’s content and outreach.
-- Collaborate with tech developers who specialize in voice technology to improve accessibility.
+The app is available on the Google Play Store. Search for "Haki des femmes" or use the package name `org.core23lab.hdf`.
 
-**Available Documentation or Tutorials:**
-- While specific documentation is not mentioned, reaching out to the developer via the provided contact information could yield insights into available resources or guides.
+## How it Works
 
-**Success Stories:**
-- As the app is relatively new, gathering user testimonials and success stories will be crucial for demonstrating its impact and effectiveness.
+Users interact with a voice-enabled chatbot interface in Congolese Swahili. The chatbot provides simplified legal information about land rights, helping women understand the legal steps needed to secure land ownership -- including the process of legalizing marriages as a first step toward land rights.
 
-**Plans for Long-Term Maintenance or Scaling:**
-- Continuous updates and user feedback will be essential for maintaining the app’s relevance and effectiveness. Establishing a feedback loop with users can help guide future improvements.
+## Background
 
-By leveraging Haki des femmes, practitioners can make a significant impact on women's rights and land ownership in the DRC, fostering empowerment and legal awareness in local communities.
+Haki des Femmes was developed by Core23Lab, one of eight grantees in Mozilla's 2023-24 Common Voice Kiswahili program. The program funds projects that use Kiswahili language and voice technology to support marginalized groups in Kenya, Tanzania, and the DRC. Core23Lab conducted surveys of women in Katanga and Lualaba provinces to identify knowledge gaps about land ownership before building the chatbot.
+
+## Limitations
+
+- The app is specific to DRC land law and Congolese Swahili; it is not directly applicable to other countries or legal systems.
+- Voice-based interaction requires a smartphone with a microphone and internet access.
+- The Google Play Store listing could not be fully accessed for additional details such as current ratings, download counts, or version information.
+
+Sources:
+- https://play.google.com/store/apps/details?id=org.core23lab.hdf
+- https://www.mozillafoundation.org/en/blog/lifting-up-women-through-land-ownership/

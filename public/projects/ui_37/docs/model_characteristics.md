@@ -11,3 +11,5 @@ Ethical considerations are important in this project, especially given the under
 To run the models effectively, users may need access to certain software and hardware, but specific requirements are not mentioned. 
 
 When using this dataset or building new products based on it, users should credit the original source, which is available at Hugging Face: https://huggingface.co/datasets/prosa-text/nusa-dialogue.
+
+Source: https://huggingface.co/datasets/prosa-text/nusa-dialogue, https://huggingface.co/datasets/prosa-text/nusa-translation, https://huggingface.co/prosa-text/indobert-nusa

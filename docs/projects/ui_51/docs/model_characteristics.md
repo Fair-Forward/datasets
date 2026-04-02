@@ -8,4 +8,4 @@ One of the known limitations is that the datasets may not cover all dialects or 
 
 To promote responsible AI use, the project follows ethical guidelines and assessments to ensure that the datasets are used fairly and transparently. Users of these datasets should also credit the source, which is Mozilla's Common Voice Platform, when building new products or applications.
 
-The datasets are available in MP3 format and are quite large, with over 1064 hours of recorded speech in Kiswahili and 560 hours in Kinyarwanda and Luganda. This makes them a valuable resource for anyone looking to develop AI systems that can understand and process these languages.
+Source: https://datacollective.mozillafoundation.org/datasets?q=common+voice&locale=sw, https://datacollective.mozillafoundation.org/datasets?q=common+voice&locale=lg, https://datacollective.mozillafoundation.org/datasets?q=common+voice&locale=rw

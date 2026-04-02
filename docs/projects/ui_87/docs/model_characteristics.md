@@ -8,8 +8,9 @@ To use the voicebot, farmers simply call the hotline and interact with the syste
 
 While the voicebot aims to bridge the gap in agricultural information access, there are some limitations. The system relies on the quality of the voice recordings and may not cover every possible agricultural question. Additionally, as with any AI system, there may be biases in the information provided based on the data it was trained on.
 
-To ensure responsible AI use, the project has undergone ethical assessments, and the developers encourage users to credit the original creators, C4IR Rwanda and KiNLP, when building new products based on this work. 
 
 The voicebot requires basic telephone infrastructure to operate, making it suitable for rural areas where internet connectivity may be limited. 
 
 Overall, the Tunga Agri-Chatbot Suite represents a significant step towards making agricultural support more accessible and responsive to the needs of farmers in Rwanda.
+
+Source: https://huggingface.co/datasets/C4IR-RW/kinya-ag-tts, https://huggingface.co/datasets/C4IR-RW/kinya-ag-retrieval, https://huggingface.co/C4IR-RW/kinya-flex-tts, https://huggingface.co/C4IR-RW/kiny-colbert-free, https://huggingface.co/C4IR-RW/kinyabert, https://github.com/c4ir-rw/ac-ai-models

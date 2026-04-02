@@ -1,13 +1,51 @@
 [Auto-enriched from linked project resources]
 
-You can immediately access reliable solar irradiance data for Uganda to enhance your solar energy planning efforts. The Solar Irradiance Portal provides corrected Global Horizontal Irradiance (GHI) data that addresses the inaccuracies found in standard satellite-derived solar data. This means you can confidently assess solar potential, optimize system sizing, and reduce financial risks associated with solar projects.
+## Using the Solar Irradiance Portal
 
-To get started, you can explore the interactive visualizations available on the platform, which allow you to analyze solar patterns through dynamic charts and maps. Additionally, you can integrate the corrected solar data into your applications using the provided RESTful API, making it easier to incorporate accurate information into your energy planning tools.
+The Irradiation Portal is a web application that provides corrected solar irradiance data for Uganda. It addresses systematic overestimation in standard satellite data sources (such as CAMS and NASA POWER) by applying a Random Forest machine learning model trained on ground-truth measurements from 56 validation sites across Uganda and 7 African countries. The model achieves an R-squared accuracy of 0.86.
 
-Researchers and developers can build on this work by extending the model to other regions in Sub-Saharan Africa or by incorporating additional data sources to enhance the accuracy of predictions. Collaborating with local universities or NGOs could provide valuable ground-truth data and insights into regional climate variations, further improving the model's performance.
+Access the portal at: https://irradiation-portal-55883164704.europe-west1.run.app/
 
-It's important to consider that while the model has shown a high accuracy score (R² of 0.86), there may still be limitations related to the specific climate zones and topography of Uganda. Conducting an ethical AI assessment is recommended to ensure that the model's application does not inadvertently reinforce existing biases or overlook local knowledge.
+The portal offers three main access points:
+- `/portal` -- interactive data exploration with dynamic charts and maps
+- `/documentation` -- technical guidance on the data and methodology
+- `/help` -- user support
 
-As for costs, while specific figures are not provided, you should budget for potential expenses related to data integration, API usage, and any necessary computational resources for running analyses. Collaborating with local partners may help reduce costs and enhance the project's impact.
+A RESTful API is available for integrating the corrected solar data into your own applications.
 
-The platform is designed for long-term use, with ongoing updates and maintenance planned to ensure data accuracy and relevance. By leveraging this resource, you can contribute to the growing field of renewable energy in Uganda and help unlock its solar potential for sustainable development.
+## Using the SuSSE Python Package
+
+The underlying model code is available as the SuSSE (Sub-Saharan Solar Estimation) Python package on GitHub.
+
+**Installation:**
+
+```bash
+pip install .
+```
+
+Or for development (changes to source code are reflected immediately):
+
+```bash
+pip install -e .
+```
+
+The repository includes Jupyter Notebooks (87.9% of the codebase) and Python scripts (12.1%). Testing and code quality are managed through Tox:
+
+- `tox -e py312` -- run tests with coverage
+- `tox -e format-code` -- apply formatting
+- `tox -e static-analysis` -- run type checking
+
+## What the Portal Provides
+
+- Corrected Global Horizontal Irradiance (GHI) data that accounts for roughly 20% satellite overestimation
+- Monthly irradiance measurements (kWh/m2/day)
+- Interactive visualizations for analyzing solar patterns
+- Historical data access through the web interface
+
+## Why This Matters
+
+Standard satellite solar data can overestimate irradiance for Uganda, which reduces lifetime energy savings for consumers by 5-20% and creates financial risk through incorrect system sizing. The corrected data from this portal helps with more accurate solar potential assessment and system design.
+
+Sources:
+- https://github.com/Marconi-Lab/Solar_irradiation
+- https://irradiation-portal-55883164704.europe-west1.run.app/

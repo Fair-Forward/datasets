@@ -13,3 +13,5 @@ To promote responsible AI use, the developers have implemented ethical assessmen
 To run the platform, users need a device capable of accessing the internet, whether through a smartphone or a basic mobile phone that supports SMS.
 
 For more information and to credit the source when building new products, please refer to the original work at https://dev.platform.farmer.chat/login.
+
+Source: https://dev.platform.farmer.chat/login, https://dev.platform.farmer.chat/login

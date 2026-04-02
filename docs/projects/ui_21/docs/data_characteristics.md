@@ -15,3 +15,5 @@ To ensure responsible and ethical use, the project emphasizes data quality throu
 The dataset is maintained and updated by the iLabAfrica team at Strathmore University. Users interested in accessing the data will need to create an account with the weather API used in the project, which is a prerequisite for running the data processing pipeline.
 
 The dataset is published under a license that allows users to access and reuse the data, but specific rights and restrictions should be confirmed by reviewing the licensing terms provided in the project documentation.
+
+Source: https://github.com/iLab-DSU/imarika-weather-pipeline, https://github.com/iLab-DSU/Agricultural-Recommendations-Chat

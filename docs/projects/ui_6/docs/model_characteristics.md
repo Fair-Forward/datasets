@@ -6,8 +6,9 @@ The model takes input data from satellite imagery (like GEDI and Sentinel-2) and
 
 While this model is a valuable tool, there are some limitations to consider. The dataset is relatively small, with only 263 samples, which may affect the accuracy of predictions in areas not well represented in the data. Additionally, the model may not account for all local variations in forest structure and species diversity, which could introduce biases in the predictions.
 
-To ensure responsible AI use, it is important for users to conduct ethical assessments when applying the model. This includes considering the potential impacts on local communities and ecosystems. Users should also be aware of the need for ongoing validation of the model's predictions against real-world observations.
 
 For those looking to implement this model, it is essential to have access to the necessary software and hardware that can process satellite imagery and perform the required calculations. 
 
 This dataset and the models derived from it are licensed under CC BY 4.0, meaning users should credit the original work when building new products or applications based on this data.
+
+Source: https://huggingface.co/datasets/data354/Africa_Biomass_dataset

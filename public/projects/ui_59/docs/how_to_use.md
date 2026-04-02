@@ -1,13 +1,45 @@
 [Auto-enriched from linked project resources]
 
-You can immediately start building speech recognition applications that understand Kinyarwanda using the extensive voice dataset collected through the Common Voice project. With over 2,380 hours of audio recordings, this resource allows you to create systems that can transcribe spoken Kinyarwanda, making information more accessible to speakers, including those in rural areas and those who are illiterate.
+## Accessing the Data
 
-To get started, you can use existing tools for automatic speech recognition (ASR) that are compatible with the dataset. These tools can help you develop applications for mobile phones or other devices that provide information in Kinyarwanda, enhancing communication and access to services.
+The Kinyarwanda voice data is available through two channels:
 
-Researchers and developers can extend this work by contributing additional voice data or improving the existing models. For instance, you could focus on specific dialects or contexts that are underrepresented in the current dataset. Collaborating with local communities to gather more diverse speech samples can also enhance the dataset's effectiveness.
+- **Mozilla Data Collective**: The "Common Voice Scripted Speech 25.0 - Kinyarwanda" dataset (57.18 GB of MP3 recordings) is available at the Mozilla Data Collective platform under a CC0-1.0 license, meaning it can be used without restrictions.
 
-However, it’s important to consider potential limitations and biases. The dataset may not fully represent all dialects or accents of Kinyarwanda, which could affect the accuracy of speech recognition in certain contexts. We recommend conducting an ethical AI assessment before replicating or building upon this work to ensure that the technology is inclusive and respects the cultural nuances of the language.
+- **Hugging Face**: The `mbazaNLP/common-voice-kinyarwanda-english-dataset` provides a bilingual compilation (Kinyarwanda and English) with 721,395 text transcription entries across train/validation/test splits, licensed under CC-BY-4.0. Note that this dataset currently contains text transcriptions only; audio files are planned for a future release.
 
-In terms of costs, building on this dataset may involve expenses related to adaptation and training of models, as well as computing resources. Depending on the scale of your project, you might estimate costs in the range of a few hundred to several thousand dollars, particularly if you require cloud computing services for model training.
+## Loading the Hugging Face Dataset
 
-For further guidance, you can refer to the documentation available through the Common Voice project, which includes tutorials on how to use the dataset effectively. Engaging with the community around this project can also lead to collaboration opportunities, sharing insights, and learning from success stories of others who have implemented similar technologies. Long-term maintenance and scaling of your application will depend on ongoing community support and updates to the dataset as more voices are collected.
+```python
+from datasets import load_dataset
+
+# Load the full dataset
+dataset = load_dataset("mbazaNLP/common-voice-kinyarwanda-english-dataset")
+
+# Or load a specific split
+train_data = load_dataset("mbazaNLP/common-voice-kinyarwanda-english-dataset", split="train")
+```
+
+The dataset can also be loaded with pandas:
+
+```python
+import pandas as pd
+df = pd.read_parquet("default/train/*.parquet")
+```
+
+## What the Dataset Contains
+
+Each entry includes:
+- `audio_filepath` -- path to the audio file (e.g. `train_data/0.wav`)
+- `duration` -- audio duration in seconds
+- `text` -- the transcription text
+
+The Hugging Face dataset has three splits: train (619,000 rows), validation (61,600 rows), and test (41,200 rows).
+
+## Intended Use
+
+The dataset is designed for training multilingual Automatic Speech Recognition (ASR) systems that handle both Kinyarwanda and English. It can be used with the Hugging Face `datasets` library, pandas, or polars.
+
+Sources:
+- https://datacollective.mozillafoundation.org/datasets?q=common+voice&locale=rw
+- https://huggingface.co/datasets/mbazaNLP/common-voice-kinyarwanda-english-dataset

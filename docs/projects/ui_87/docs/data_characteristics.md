@@ -12,4 +12,4 @@ The Kinyarwanda Agricultural Text-to-Speech Dataset is designed to support the T
 
 - **User Rights and License**: The dataset is published under the Creative Commons Attribution 4.0 International License (CC-BY 4.0). Users are free to reuse the data, provided they give appropriate credit to C4IR Rwanda and KiNLP.
 
-This dataset is a valuable resource for organizations looking to enhance agricultural advisory services through voice technology, particularly in regions where traditional information channels are insufficient.
+Source: https://huggingface.co/datasets/C4IR-RW/kinya-ag-tts, https://huggingface.co/datasets/C4IR-RW/kinya-ag-retrieval, https://huggingface.co/C4IR-RW/kinya-flex-tts, https://huggingface.co/C4IR-RW/kiny-colbert-free, https://huggingface.co/C4IR-RW/kinyabert, https://github.com/c4ir-rw/ac-ai-models

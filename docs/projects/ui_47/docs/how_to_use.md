@@ -1,11 +1,28 @@
 [Auto-enriched from linked project resources]
 
-To improve livestock health management in your community, you can immediately use the LivHealth Kiswahili Corpus to access vital disease information in Kiswahili. This resource allows local farmers and livestock owners to identify livestock syndromes and seek timely interventions from qualified practitioners. You can start by integrating the text-to-speech models into your community outreach programs, ensuring that information is accessible to those who may have literacy challenges.
+## Accessing the LivHealth Kiswahili Corpus
 
-Researchers and developers can extend this work by enhancing the existing AI models with additional local data, which could improve the accuracy of disease identification. Collaborating with local agricultural universities or veterinary schools could provide valuable insights and data for refining the models. Additionally, creating mobile applications that utilize the LivHealth system could broaden its reach and usability.
+The LivHealth Kiswahili Corpus is a web-based knowledge platform for livestock health information in Kiswahili. It is developed by Badili Innovations -- a software house specialising in bespoke systems design, big data, and ICT4D -- in partnership with the International Livestock Research Institute (ILRI).
 
-When replicating or building upon this project, it is essential to consider potential biases in the AI models, particularly if they were trained on limited datasets. Conducting an ethical AI assessment is recommended to ensure that the system serves all community members equitably. 
+### How to Access
 
-As for costs, building on this resource may involve expenses related to adaptation and training of the models, which could range from a few hundred to several thousand dollars depending on the scale of your project and the resources required. Compute costs will vary based on the infrastructure you choose to use, whether cloud-based or local servers.
+The corpus is available as a web application at [livhealth-kc.badili.co.ke](https://livhealth-kc.badili.co.ke/). The application requires JavaScript to be enabled in your browser.
 
-Opportunities for collaboration exist with organizations like One Health Center in Africa (OHRECA), which could provide support and expertise. While specific documentation or tutorials were not mentioned, reaching out to the LivHealth team could yield valuable guidance and success stories from their implementation in Kenya and Tanzania. Long-term maintenance and scaling plans should include regular updates to the dataset and models to keep the information relevant and accurate for the communities served.
+### What the Platform Covers
+
+Badili Innovations categorises LivHealth under three service areas:
+
+- **Information Systems** -- structured livestock health knowledge accessible in Kiswahili.
+- **Data Management** -- covering data collection, synthesis, analytics, and visualisation.
+- **Monitoring, Evaluation and Learning (MEL)** -- supporting tracking and learning from livestock health interventions.
+
+### Who Built It
+
+- **Badili Innovations** (badili.co.ke) -- the development partner, based in East Africa, working across IoT, big data, and ICT for development.
+- **ILRI** (International Livestock Research Institute) -- the research partner providing the livestock health domain expertise.
+
+### Getting in Touch
+
+For questions about using the corpus or integrating it into livestock health programmes, contact the LivHealth team through Badili Innovations at [badili.co.ke](https://badili.co.ke).
+
+Source: https://livhealth-kc.badili.co.ke/, https://badili.co.ke

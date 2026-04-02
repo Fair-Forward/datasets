@@ -9,3 +9,5 @@ While the CADI AI application is a powerful tool, it does have limitations. The 
 For those interested in using the CADI AI application, it is important to acknowledge the dataset's license and credit the creators, the KaraAgro AI Foundation, and their collaborators. The dataset is openly accessible and can be utilized to develop new products or applications aimed at improving agricultural practices in Ghana and beyond. 
 
 For more detailed information about the dataset and its use, you can refer to the accompanying datasheet available through the provided links.
+
+Source: https://huggingface.co/datasets/KaraAgroAI/CADI-AI, https://huggingface.co/KaraAgroAI/CADI-AI

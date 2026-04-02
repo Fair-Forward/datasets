@@ -1,13 +1,34 @@
 [Auto-enriched from linked project resources]
 
-To start using the "Voices of Mzansi" project, you can immediately contribute by collecting sentences in any of South Africa's official languages and uploading them to the Mozilla Common Voice platform. This effort helps create a diverse dataset that can be used for developing text-to-speech applications, voice recognition systems, and other AI tools that support local languages.
+## Contributing Voice Data
 
-Researchers and developers can extend this work by creating applications that utilize the collected speech data for educational tools, accessibility features, or community engagement platforms. You can also improve upon the existing dataset by ensuring it includes a wide range of dialects and contexts, which will enhance the accuracy and usability of AI models trained on this data.
+The Voices of Mzansi project collects speech data for South Africa's official languages through the Mozilla Common Voice platform. You can contribute by recording your voice or validating other people's recordings at commonvoice.mozilla.org.
 
-When replicating this project, consider potential biases in the dataset, such as underrepresentation of certain dialects or socio-economic groups. It is advisable to conduct an ethical AI assessment to ensure that the applications developed are inclusive and do not perpetuate existing inequalities.
+## Current Status of South African Languages on Common Voice
 
-In terms of costs, building on this project may involve expenses related to data collection tools, community engagement efforts, and possibly cloud computing resources for training AI models. Depending on the scale, initial costs could range from a few hundred to several thousand dollars, particularly if you need to hire local language speakers or facilitators.
+As of the latest available data, progress across South Africa's 11 official languages varies significantly:
 
-Collaboration opportunities exist with local universities, NGOs, and tech communities interested in language preservation and AI. Documentation and tutorials for using the Common Voice platform are available on their website, which can guide you through the process of contributing and utilizing the datasets. Success stories from similar projects can inspire your efforts and provide insights into effective strategies for community involvement and data collection.
+| Language | Validated Hours | Total Hours | Speakers | Sentences Available |
+|----------|----------------|-------------|----------|---------------------|
+| Setswana | 4.3 | 4.9 | 18 | 1,765 |
+| Afrikaans | 0.6 | 1.7 | 67 | 4,805 |
+| isiZulu | 0 | 0.3 | 8 | 1,320 |
+| Sesotho | 0 | 0.2 | 2 | 2,339 |
+| siSwati | 0 | 0.2 | 2 | 1,614 |
+| isiXhosa | 0 | 0 | 4 | 1,476 |
+| Tshivenda | 0 | 0 | 3 | 1,735 |
+| Sepedi | 0 | 0 | 1 | 2,247 |
+| isiNdebele | 0 | 0 | 2 | 319 |
+| Xitsonga | 0 | 0 | 1 | 352 |
 
-Long-term maintenance and scaling of this project will depend on ongoing community engagement and the continuous collection of diverse language data to keep the datasets relevant and useful.
+Most languages have sentences ready for recording but need speakers to contribute audio. Setswana and Afrikaans are the furthest along; the remaining languages are at very early stages.
+
+## How to Use the Datasets
+
+Once enough validated audio has been collected, Common Voice datasets are released periodically and can be downloaded from commonvoice.mozilla.org/languages. Datasets are typically provided as MP3 audio files with corresponding text transcriptions, released under a CC0-1.0 license.
+
+## Where Help Is Most Needed
+
+The biggest gap is validated recordings. Even languages with thousands of sentences ready (like Sesotho with 2,339 or Sepedi with 2,247) have almost no audio yet. Recording and validating clips on the Common Voice platform is the most direct way to move these languages forward.
+
+Source: https://commonvoice.mozilla.org/en/languages (language statistics via Common Voice API)

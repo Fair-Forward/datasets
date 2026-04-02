@@ -13,3 +13,5 @@ To ensure responsible AI use, the project incorporates ethical assessments and f
 For those interested in using the IMARIKA system, it requires certain software and hardware. Users will need Docker and Docker Compose installed on their machines, along with at least 8GB of RAM for optimal performance. Additionally, a weather API account is necessary to access the data.
 
 When building new products based on this work, users should credit the original source, which is the IMARIKA weather pipeline available on GitHub.
+
+Source: https://github.com/iLab-DSU/imarika-weather-pipeline, https://github.com/iLab-DSU/Agricultural-Recommendations-Chat

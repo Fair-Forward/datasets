@@ -11,3 +11,5 @@ To ensure responsible and ethical use, the project has focused on community enga
 The dataset is maintained and updated by the LivHealth team in collaboration with their partner, One Health Center in Africa (OHRECA), based at the International Livestock Research Institute (ILRI). They are responsible for ongoing improvements and expansions of the dataset, including plans to extend services into Tanzania.
 
 Users have the right to access and utilize the data under the terms set by Mozilla’s Common Voice program, which aims to promote the use of local languages and voice technology. Specific licensing details may vary, so users should refer to the project's official resources for more information on usage rights.
+
+Source: https://livhealth-kc.badili.co.ke/, https://livhealth-kc.badili.co.ke/

@@ -13,3 +13,5 @@ There are no specific critical software or hardware requirements mentioned for r
 This dataset and model are open-source, meaning they can be freely used and adapted by researchers and developers. When building new products or applications based on KinyCOMET, users should credit the original work and dataset creators.
 
 For more information, you can access the dataset at Hugging Face: [KinyCOMET Dataset](https://huggingface.co/datasets/chrismazii/kinycomet_dataset).
+
+Source: https://huggingface.co/datasets/chrismazii/kinycomet_dataset, https://huggingface.co/chrismazii/kinycomet_unbabel

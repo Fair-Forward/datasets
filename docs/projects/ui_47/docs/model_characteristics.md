@@ -4,8 +4,9 @@ LivHealth is an AI-powered system designed to help local communities in Kenya ac
 
 The system uses Natural Language Processing (NLP) and Machine Learning (ML) to convert text into speech, making it easier for people who may not read well to understand the information. Users can input questions or symptoms related to their livestock, and the system provides spoken responses that guide them on what to do next.
 
-While the system is a valuable tool, there may be limitations, such as the accuracy of the information provided depending on the data it has been trained on. It's important to ensure that the AI is used responsibly, which includes conducting ethical assessments to avoid biases and ensure fair access to information.
 
 To run the LivHealth system, users will need a device that can access the internet and support audio playback, such as a smartphone or computer.
 
 When using or building upon this technology, it's essential to credit the source, LivHealth, and acknowledge their partnership with the One Health Center in Africa (OHRECA) at ILRI.
+
+Source: https://livhealth-kc.badili.co.ke/, https://livhealth-kc.badili.co.ke/

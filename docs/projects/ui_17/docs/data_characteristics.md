@@ -13,3 +13,5 @@ The dataset is maintained by the Responsible AI Lab, which is committed to updat
 The Agrivoltaic Dataset is published under a license that allows users to freely access and reuse the data, provided they give appropriate credit to the source. This openness encourages collaboration and innovation in the field of sustainable agriculture and renewable energy.
 
 Overall, this dataset is a practical resource for anyone looking to explore the benefits of agrivoltaic systems in enhancing food security and promoting clean energy in farming communities.
+
+Source: https://www.kaggle.com/datasets/responsibleailab/agrivoltaic-dataset-ghana

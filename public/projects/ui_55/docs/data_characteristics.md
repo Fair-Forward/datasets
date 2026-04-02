@@ -15,3 +15,5 @@ Key characteristics of the dataset include:
 - **User Rights and Licensing**: Specific licensing details are not provided in the source material. Users should inquire directly with Hesotech for information regarding data usage rights and any applicable licenses.
 
 This dataset is particularly useful for development practitioners, NGOs, and government agencies focused on disaster risk management and environmental monitoring in Rwanda.
+
+Source: https://www.hesotech.de/en/products-services/imaster-docucam-landslide-monitoring-system/

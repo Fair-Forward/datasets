@@ -13,3 +13,5 @@ The app is designed to be user-friendly and is suitable for all ages. It require
 For those looking to build new products or applications, it is important to credit the source of this work, Haki des femmes by Core23lab. 
 
 For more information, you can reach out to the developers at devs.core23lab@gmail.com.
+
+Source: https://play.google.com/store/apps/details?id=org.core23lab.hdf&pcampaignid=web_share&pli=1

@@ -12,4 +12,4 @@ The dataset from the Solar Irradiance Portal focuses on predicting daily Global 
 
 - **User Rights and License**: While specific licensing details are not provided in the source content, users can typically expect to have access to the data for analysis and integration into their applications, provided they adhere to any terms set by the dataset maintainers.
 
-This dataset is particularly valuable for development practitioners, NGOs, and government agencies looking to optimize solar energy projects in Uganda by using accurate and reliable solar irradiance data.
+Source: https://github.com/Marconi-Lab/Solar_irradiation, https://irradiation-portal-55883164704.europe-west1.run.app/, https://github.com/Marconi-Lab/Irradiation_Portal

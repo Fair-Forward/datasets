@@ -12,6 +12,7 @@ The dataset is open-source, meaning it is freely available for anyone to use. Ho
 
 While the dataset is comprehensive, it is important to consider potential limitations. The dataset is based on a limited number of households, which may not fully represent the diversity of energy consumption patterns across all of Pakistan. Additionally, the data is specific to urban centers and may not reflect rural energy usage.
 
-For responsible AI use, it is crucial to conduct ethical assessments when applying this data in projects. Users should be mindful of privacy concerns and ensure that any analysis respects the confidentiality of the households involved.
 
 To utilize the REWD dataset, users will need basic software tools for data analysis, such as spreadsheet software or programming languages like Python or R. No specialized hardware is required, making it accessible for a wide range of users interested in energy conservation and market analysis in Pakistan.
+
+Source: https://lei.lums.edu.pk/datasets/residential-energy-and-weather-data-pakistan.html

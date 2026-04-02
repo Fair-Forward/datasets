@@ -15,3 +15,5 @@ However, there are some limitations to consider. The cocoa farm geospatial data 
 To use this dataset effectively, users should have access to software capable of handling geospatial data, such as GIS tools. The dataset was developed with support from the Lacuna Fund, which aims to provide resources for creating labeled datasets that address urgent community problems. Users are encouraged to credit the source when building new products or applications based on this dataset.
 
 For more information or to report issues, users can contact the project team at the University of Ghana.
+
+Source: https://zenodo.org/records/15778396

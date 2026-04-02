@@ -6,8 +6,9 @@ The model expects input data that includes information on land use and land cove
 
 The output produced by the model can help in optimizing agroforestry systems, identifying suitable plant species, and evaluating carbon sequestration potential. This information is crucial for developing more resilient agro-ecological systems, particularly in areas affected by climate change.
 
-While the project aims to provide valuable insights, there are known limitations and ethical considerations. The data may not cover all regions or species comprehensively, which could lead to biases in the analysis. Responsible AI use is emphasized, and ethical assessments are likely conducted to ensure that the data is used appropriately and does not harm local communities or ecosystems.
 
 To run the model effectively, users may need specific software to handle geospatial data formats, such as shapefiles (SHP) and dBase files (DBF). 
 
 Users are encouraged to credit the Agrof4Resilience project when utilizing this data for their own initiatives. The project is supported by the Lacuna Fund and other international development agencies, highlighting its commitment to fostering sustainable development in East Africa.
+
+Source: https://dmmg.icipe.org/dataportal/dataset/data-enabled-climate-shock-absorbance-and-ecosystem-resilience

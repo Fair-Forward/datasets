@@ -9,3 +9,5 @@ While the dataset is valuable, it may have limitations such as potential imbalan
 To ensure responsible and ethical use, the dataset has been made available as an open-source resource, and it was part of a data challenge that encouraged collaboration and innovation in crop disease identification. The winning models from this challenge are also accessible, providing a solid foundation for further research.
 
 The dataset is maintained by the RAIL-KNUST team and the PPRSD, ensuring that it is updated and relevant for users. It is published under an open license, allowing users to freely access, use, and adapt the data for their projects, provided they adhere to the terms of the license. This openness supports the goal of enhancing agricultural practices and food security in Ghana and beyond.
+
+Source: https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana, https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana/code
