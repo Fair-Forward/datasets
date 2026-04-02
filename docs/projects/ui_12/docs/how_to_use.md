@@ -1,13 +1,15 @@
 [Auto-enriched from linked project resources]
 
-You can immediately start using the Cashew Disease Identification (CADI AI) dataset to develop an application that helps small-holder cashew farmers in Ghana detect diseases in their crops early. By analyzing drone-captured images of cashew plants, you can create a tool that alerts farmers to potential diseases, enabling them to take action that could increase their yields by up to 30%. 
+The CADI-AI project is useful for anyone working on cashew crop health monitoring, agricultural extension, or precision agriculture in West Africa. It provides both a labeled image dataset and a ready-to-use pre-trained model for detecting three types of cashew tree health issues -- abiotic stress, disease damage, and insect damage -- from drone-captured imagery.
 
-To get started, download the dataset, which includes 4,736 high-resolution images annotated for object detection. The dataset is structured into training, validation, and test sets, making it ready for immediate use in machine learning applications. You can utilize the YOLO format annotations to train a model that identifies three categories: abiotic factors, insects, and diseases.
+If you want to try the model immediately, a live demo is available on HuggingFace Spaces where you can upload your own cashew tree images and see detection results without any setup. For deployment in the field, a desktop application is also available on GitHub. These tools allow agricultural extension officers and agronomists to identify health issues across cashew plantations quickly, enabling targeted interventions rather than blanket treatments.
 
-Researchers and developers can extend this work by improving the model's accuracy or adapting it for different crops or regions. Collaborating with local agricultural experts can enhance the dataset's relevance and effectiveness. Additionally, you might consider integrating the application with mobile platforms to ensure accessibility for farmers in remote areas.
+The dataset itself contains 4,736 high-resolution drone images (1600x1300 pixels) with over 22,000 annotated instances across the three health-issue classes, licensed under CC-BY-SA 4.0. Researchers and developers can use this data to train improved detection models or to extend the approach to other tree crops. The annotations are in YOLO format, and the pre-trained YOLOv5x model achieves a mean average precision (mAP@50) of 0.65, with strongest performance on insect damage detection (0.82 mAP@50) due to its distinct visual features. Disease and abiotic stress classes are harder to distinguish because their symptoms can overlap in field conditions -- an area where further research could improve accuracy.
 
-When replicating this work, it's crucial to conduct a responsible AI assessment to identify and mitigate potential biases and harms associated with AI use in agriculture. The dataset creators have already undertaken such an assessment, which can serve as a guide for your project.
+A detailed datasheet documenting the data collection methodology is available via the HuggingFace dataset card. The dataset (approximately 3.78 GB) and model (approximately 173 MB) can be downloaded from HuggingFace after acknowledging the license terms.
 
-In terms of costs, you may need to budget for cloud computing resources for model training, which can vary widely based on the scale of your application. A rough estimate for cloud compute costs could range from $100 to $1,000, depending on the duration and intensity of the training process. 
+Cost and resources: The dataset and model are freely available. Deploying the model requires only standard compute resources. The CADI-AI project was created by the KaraAgro AI Foundation, funded by GIZ and BMZ through the FAIR Forward and MOVE programs.
 
-For further guidance, you can refer to the accompanying datasheet linked in the dataset repository, which provides detailed information about the dataset's composition and methodologies. Engaging with the KaraAgro AI Foundation or GIZ could also open up opportunities for collaboration and support in scaling your application.
+Sources:
+- https://huggingface.co/datasets/KaraAgroAI/CADI-AI
+- https://huggingface.co/KaraAgroAI/CADI-AI

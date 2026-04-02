@@ -1,34 +1,11 @@
 [Auto-enriched from linked project resources]
 
-This resource provides valuable datasets and tools for evaluating transportation impacts, particularly in urban settings like Bogotá. Here’s a practical guide for development practitioners and innovators looking to leverage this resource:
+This resource is useful for anyone working on urban mobility analysis, road infrastructure planning, or land-use evaluation in cities of the Global South. The UrbanInfraDL repository provides a deep learning pipeline for segmenting road infrastructure -- roads, sidewalks, and bicycle lanes -- from satellite imagery, with a focus on Bogota, Colombia.
 
-1. **Immediate Use Cases and Applications**:
-   - **Urban Planning**: Use the labeled dataset to analyze road space allocation in Bogotá. This can help city planners understand how different types of road spaces (like lanes for cars, bicycles, and sidewalks) are distributed and utilized.
-   - **Traffic Management**: The model can assist in identifying congestion points and optimizing traffic flow by analyzing road usage patterns.
-   - **Infrastructure Development**: NGOs and government agencies can use the data to advocate for better infrastructure by highlighting areas lacking adequate road space for pedestrians or cyclists.
-   - **Environmental Impact Studies**: Researchers can assess how road space impacts urban heat islands or air quality by correlating road space data with environmental metrics.
+You can use the provided patch extraction tool and training scripts for three segmentation architectures (DeepLabV3+, SegFormer, U-Net) to train models that classify urban road space from your own satellite imagery. This makes it possible to evaluate how road space is allocated across different transport modes and to support evidence-based advocacy for more equitable infrastructure distribution.
 
-2. **Extending or Improving the Work**:
-   - **Data Expansion**: Researchers can extend the dataset by incorporating additional areas or updating it with new satellite imagery to reflect changes in urban infrastructure.
-   - **Model Enhancement**: Developers can improve the classification model by experimenting with different machine learning techniques or integrating additional data sources, such as traffic volume or demographic data, to enhance predictive capabilities.
-   - **User-Friendly Tools**: Creating more accessible interfaces or applications that allow non-technical users to interact with the data and model outputs can broaden its usability.
+Researchers and developers can extend this work by applying the pipeline to other cities with similar urban structures, or by incorporating additional annotation classes (e.g., bus lanes, green spaces) to broaden the analysis. The modular design -- separate patch extraction and model training steps -- makes it straightforward to experiment with different architectures or hyperparameters.
 
-3. **Critical Limitations and Biases**:
-   - **Data Bias**: The dataset is specific to Bogotá, which may not generalize well to other cities with different urban layouts or transportation needs. Users should consider local context when applying findings elsewhere.
-   - **Ethical Considerations**: Before replicating or deploying models based on this data, it is advisable to conduct an ethical AI assessment to ensure that the use of the data does not inadvertently reinforce existing biases or inequalities in urban planning.
+Known limitations: No pre-trained model weights or sample datasets are included in the repository; you will need your own high-resolution TIFF satellite imagery and corresponding label files. The repository does not document its Python dependencies, so some setup effort is required. The codebase is a research prototype (8 commits) rather than a production-ready tool.
 
-4. **Cost Estimates**:
-   - **Adaptation and Training**: Depending on the scale of the project, costs can vary. Basic adaptation of the model may require minimal investment if using existing infrastructure, while extensive training on new datasets could range from a few hundred to several thousand dollars, depending on compute resources.
-   - **Compute Resources**: Utilizing cloud services for training deep learning models can incur costs based on usage. A rough estimate for moderate usage might be around $100 to $500 per month, depending on the scale of data processing and model training.
-
-**Opportunities for Collaboration**:
-- Engaging with local universities or tech hubs can foster partnerships that enhance data analysis and model development. Collaborative projects can also attract funding from international development agencies.
-
-**Available Documentation and Tutorials**:
-- The GitHub repository includes a data dictionary and a command-line utility (`patch_extractor.py`) for generating image patches, which is essential for preparing data for model training. Users can refer to the repository for guidance on how to utilize these tools effectively.
-
-**Success Stories**:
-- While specific success stories are not detailed in the source, the high reliability (98%) of the model in classifying urban road space suggests that similar applications could yield impactful results in urban planning and transportation management.
-
-**Long-term Maintenance and Scaling**:
-- The ongoing maintenance of the dataset and model will depend on community engagement and contributions. Encouraging users to share their findings and improvements can help keep the resource relevant and up-to-date.
+Source: https://github.com/yangshao2/UrbanInfraDL

@@ -1,29 +1,13 @@
 [Auto-enriched from linked project resources]
 
-The iMaster-DocuCam Landslide Monitoring System offers practical tools for monitoring landslides and flood disaster hotspots in Rwanda and similar regions. Here’s a guide for development practitioners and innovators looking to utilize or build upon this resource.
+## How to Use This Resource
 
-1) **Immediate Use Cases**:
-   - **Landslide Monitoring**: Use the iMaster-DocuCam to monitor areas prone to landslides. The system captures high-resolution images at regular intervals, allowing for the detection of changes in the landscape.
-   - **Flood Risk Assessment**: By integrating weather data (like rainfall), users can analyze potential flood risks and take preventive measures.
-   - **Data Collection**: The system automatically collects visual and environmental data, which can be accessed remotely via a web browser. This allows for continuous monitoring without the need for physical presence in hazardous areas.
+The iMaster-DocuCam system by Hesotech enables long-term, high-resolution visual monitoring of landslides, earthfalls, rockfalls, and earth movements across large areas. It is designed for deployment in environments like Rwanda where continuous observation of hazard-prone slopes is critical for disaster risk reduction.
 
-2) **Extending the Work**:
-   - **Custom Sensor Integration**: Developers can enhance the system by integrating additional sensors (e.g., for soil moisture or seismic activity) to provide a more comprehensive understanding of environmental changes.
-   - **Local Adaptation**: Innovators can adapt the hardware setup to local conditions, such as using solar panels for power in remote areas.
-   - **Collaboration Opportunities**: Partner with local universities or NGOs to conduct research on landslide patterns and develop predictive models based on the collected data.
+Practitioners working in disaster risk management, climate adaptation, or infrastructure protection can use this system to establish automated visual monitoring stations that capture images at predefined intervals (for example, every two hours), achieving a resolution of up to 1 cm per cell at 500 m distance. All captured data can be viewed remotely through a standard web browser (Chrome or Firefox) from any location -- no proprietary software is required. This makes the system practical for distributed teams and remote field sites.
 
-3) **Limitations and Considerations**:
-   - **Data Quality**: Ensure that the camera is positioned correctly to capture relevant areas. Poor positioning can lead to incomplete data.
-   - **Ethical Considerations**: Before deploying the system, consider conducting an ethical assessment, especially regarding data privacy and the potential impact on local communities.
-   - **Technical Support**: Users may need technical support for installation and maintenance, particularly in remote areas.
+The built-in analysis tools allow you to place virtual measurement points on images without physical markers in the field, measure surface changes over time, generate time-lapse videos to visualise movement patterns, and correlate camera data with complementary sensor readings for cause-effect analysis. The system can be extended with a local weather station, GPS data collection, custom sensor interfaces, and solar panel power supply for off-grid deployment, making it suitable for rural and infrastructure-limited contexts.
 
-4) **Cost Estimates**:
-   - **Initial Setup**: The cost will vary based on the specific hardware configuration and additional sensors. A basic setup may start at a few thousand dollars, but costs can increase with additional features.
-   - **Ongoing Costs**: Consider costs for data storage, internet connectivity, and maintenance. Using solar panels can reduce energy costs in off-grid locations.
+A comprehensive online manual with animated tutorials is available at [manual.docucam.hesotech.eu/en](https://manual.docucam.hesotech.eu/en), along with a demo version that allows you to explore the interface before committing to a deployment. Full product specifications and contact details can be found on the [Hesotech product page](https://www.hesotech.de/en/products-services/imaster-docucam-landslide-monitoring-system/).
 
-5) **Resources and Support**:
-   - **Documentation**: Access the online user manual and animated tutorials to help with setup and operation. This resource is crucial for users unfamiliar with technology.
-   - **Demo Version**: Try the demo version of the iMaster-DocuCam to familiarize yourself with its capabilities before making a purchase.
-   - **Success Stories**: Look for case studies or testimonials from other users who have successfully implemented the system in similar contexts.
-
-By leveraging the iMaster-DocuCam, practitioners can enhance their disaster monitoring efforts, improve community safety, and contribute to more resilient infrastructure in vulnerable regions.
+Source: https://www.hesotech.de/en/products-services/imaster-docucam-landslide-monitoring-system/

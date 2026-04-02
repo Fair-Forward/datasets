@@ -1,11 +1,23 @@
 [Auto-enriched from linked project resources]
 
-You can immediately use the Tunga Agri-Chatbot Suite to create a voice-based agricultural advisory service for farmers in Rwanda. By leveraging the Kinyarwanda Agricultural Text-to-Speech Dataset, you can develop a voicebot that provides critical information on pest and disease management, agro-climatic practices, and government support programs, all accessible via a simple telephone hotline. This is particularly beneficial for farmers who may not have internet access or who are not fluent in English.
+## How to Use This Resource
 
-To build on this resource, researchers and developers can enhance the existing voicebot by incorporating additional agricultural topics, improving the naturalness of the voice output, or expanding the dataset with more diverse agricultural scenarios. Collaborating with local agricultural experts can help ensure that the information provided is relevant and up-to-date. Additionally, you can explore integrating feedback mechanisms to continuously improve the service based on user interactions.
+The Tunga Agri-Chatbot Suite provides the building blocks for a Kinyarwanda-language agricultural advisory system delivered via Interactive Voice Response (IVR). It was built to address capacity gaps in Rwanda's agricultural extension services and is implemented by C4IR Rwanda and KiNLP, supported by GIZ and financed by BMZ.
 
-When replicating this project, it is essential to consider potential limitations, such as biases in the dataset or the need for ethical assessments to ensure that the voicebot serves all farmers equitably. The dataset includes recordings from only two voice actors, which may limit the diversity of voices and accents represented. 
+This suite is relevant for anyone working on agricultural extension, farmer advisory services, or voice-based information delivery in Rwanda or similar contexts. The core idea is that smallholder farmers can call a phone number and receive spoken agricultural guidance in Kinyarwanda -- covering topics such as pest and disease diagnosis, agro-climatic practices, and MINAGRI support programmes -- without needing internet access or literacy.
 
-In terms of costs, building on this project may require investment in training and adaptation of the voicebot, which could range from a few hundred to several thousand dollars depending on the scale of the implementation and the resources needed for voice synthesis and infrastructure. You may also need to budget for ongoing maintenance and updates to the system.
+The text-to-speech component (kinya-flex-tts) can generate natural-sounding Kinyarwanda speech with three voice options (two female, one male), outputting audio at broadcast quality (24 kHz). A live demo is available at [huggingface.co/spaces/Professor/c4ir-rw-kinyarwandatts](https://huggingface.co/spaces/Professor/c4ir-rw-kinyarwandatts), where you can hear sample outputs before deciding whether to integrate the model. The underlying TTS training dataset contains 10,482 audio clips recorded by two voice actors, all licensed under CC-BY-4.0.
 
-For further guidance, you can refer to the technical documentation provided with the dataset, which includes details on the audio files and their structure. Engaging with organizations like C4IR Rwanda and KiNLP can also provide valuable support and collaboration opportunities.
+The passage retrieval component (kiny-colbert-free) matches farmer questions in Kinyarwanda to relevant agricultural knowledge passages. This is the engine that allows the system to find the right answer from a knowledge base when a farmer asks a question. The accompanying retrieval dataset contains 984 agricultural passages, 19,537 related questions, and nearly 2 million training triplets, also under CC-BY-4.0.
+
+The suite also includes KinyaBERT, a morphology-aware language model for Kinyarwanda used for passage ranking, available in base (107M parameter) and large (365M parameter) variants. All model code, training scripts, and technical documentation are available in the [DeepKIN-AgAI package on GitHub](https://github.com/c4ir-rw/ac-ai-models/tree/main/DeepKIN-AgAI). All components require attribution to C4IR Rwanda and KiNLP.
+
+Developers and researchers can extend this work to other crops, regions, or languages, or integrate these components into existing agricultural advisory platforms. The individual models (TTS, retrieval, language understanding) can also be used independently for other Kinyarwanda language technology applications beyond agriculture. All datasets and models are hosted on Hugging Face under the [C4IR-RW organisation](https://huggingface.co/C4IR-RW).
+
+Sources:
+- https://huggingface.co/datasets/C4IR-RW/kinya-ag-tts
+- https://huggingface.co/datasets/C4IR-RW/kinya-ag-retrieval
+- https://huggingface.co/C4IR-RW/kinya-flex-tts
+- https://huggingface.co/C4IR-RW/kiny-colbert-free
+- https://huggingface.co/C4IR-RW/kinyabert
+- https://github.com/c4ir-rw/ac-ai-models

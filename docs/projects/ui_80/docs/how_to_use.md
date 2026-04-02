@@ -1,13 +1,15 @@
 [Auto-enriched from linked project resources]
 
-You can immediately access reliable solar irradiance data for Uganda to enhance your solar energy planning efforts. The Solar Irradiance Portal provides corrected Global Horizontal Irradiance (GHI) data that addresses the inaccuracies found in standard satellite-derived solar data. This means you can confidently assess solar potential, optimize system sizing, and reduce financial risks associated with solar projects.
+## How to Use This Resource
 
-To get started, you can explore the interactive visualizations available on the platform, which allow you to analyze solar patterns through dynamic charts and maps. Additionally, you can integrate the corrected solar data into your applications using the provided RESTful API, making it easier to incorporate accurate information into your energy planning tools.
+This resource addresses a critical problem for solar energy planning in Uganda: standard satellite data sources such as CAMS and NASA POWER systematically overestimate solar irradiance by roughly 20%, which reduces lifetime energy savings for consumers by 5-20% and creates financial risk through incorrect system sizing. The Irradiation Portal provides corrected Global Horizontal Irradiance (GHI) data by applying a machine learning model trained on ground-truth measurements from 56 validation sites across Uganda and 7 African countries, achieving an R-squared accuracy of 0.86.
 
-Researchers and developers can build on this work by extending the model to other regions in Sub-Saharan Africa or by incorporating additional data sources to enhance the accuracy of predictions. Collaborating with local universities or NGOs could provide valuable ground-truth data and insights into regional climate variations, further improving the model's performance.
+Anyone involved in solar project development, rural electrification planning, or energy policy in Uganda can access the corrected data through the [Irradiation Portal web application](https://irradiation-portal-55883164704.europe-west1.run.app/). The portal offers interactive data exploration with dynamic charts and maps, monthly irradiance measurements in kWh/m2/day, and historical data access -- all through a standard web browser. Technical documentation and user support are built into the portal.
 
-It's important to consider that while the model has shown a high accuracy score (R² of 0.86), there may still be limitations related to the specific climate zones and topography of Uganda. Conducting an ethical AI assessment is recommended to ensure that the model's application does not inadvertently reinforce existing biases or overlook local knowledge.
+For organisations that want to integrate the corrected solar data into their own planning tools or applications, a RESTful API is available through the portal. This enables automated data retrieval for feasibility studies, system design calculations, or monitoring dashboards.
 
-As for costs, while specific figures are not provided, you should budget for potential expenses related to data integration, API usage, and any necessary computational resources for running analyses. Collaborating with local partners may help reduce costs and enhance the project's impact.
+Researchers and developers looking to extend the underlying methodology can access the SuSSE (Sub-Saharan Solar Estimation) model code, which is openly available on [GitHub](https://github.com/Marconi-Lab/Solar_irradiation). The repository includes the full codebase with Jupyter Notebooks and Python scripts, along with testing and development tools. This opens possibilities for adapting the correction model to other Sub-Saharan African countries where similar satellite overestimation issues exist.
 
-The platform is designed for long-term use, with ongoing updates and maintenance planned to ensure data accuracy and relevance. By leveraging this resource, you can contribute to the growing field of renewable energy in Uganda and help unlock its solar potential for sustainable development.
+Sources:
+- https://github.com/Marconi-Lab/Solar_irradiation
+- https://irradiation-portal-55883164704.europe-west1.run.app/
