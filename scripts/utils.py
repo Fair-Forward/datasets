@@ -54,6 +54,20 @@ def normalize_sheet_link_cell(value):
     return value.strip()
 
 
+# Marker prefix used by scripts/enrich_data.py when auto-filling empty cells
+# with text extracted from linked project resources. Kept here as the single
+# source of truth so scripts/generate_catalog_data.py (scoring/detection) and
+# scripts/enrich_data.py (writing) cannot drift apart.
+AUTO_ENRICHED_PREFIX = "[Auto-enriched from linked project resources]"
+
+
+def is_auto_enriched(text):
+    """True if text begins with the AUTO_ENRICHED_PREFIX marker."""
+    if not isinstance(text, str):
+        return False
+    return text.lstrip().startswith(AUTO_ENRICHED_PREFIX)
+
+
 _DANGEROUS_SCHEMES = ('javascript:', 'data:', 'vbscript:', 'file:')
 
 

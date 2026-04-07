@@ -13,6 +13,7 @@ from utils import (
     extract_links_allow_site_paths,
     merge_access_note_link_columns,
     documents_dir_has_files,
+    is_auto_enriched,
 )
 
 # Parse command line arguments
@@ -85,31 +86,18 @@ def clean_country_list(country_text):
     return countries
 
 
-# Marker written by scripts/enrich_data.py (CELL_DISCLAIMER) for auto-filled
-# text fields. Values that begin with this prefix are treated as empty for
-# scoring purposes, so auto-enrichment never inflates a project's completeness
-# rank on the catalog page. Editing the cell to remove the prefix re-qualifies
-# the content as user-authored.
-AUTO_ENRICHED_PREFIX = "[Auto-enriched from linked project resources]"
-
-
-def _is_auto_enriched(text):
-    if not isinstance(text, str):
-        return False
-    return text.lstrip().startswith(AUTO_ENRICHED_PREFIX)
-
-
 def _content_length_score(text, thresholds):
-    """Graduated score based on content length.
+    """Graduated score based on length of human-authored content.
 
     thresholds: list of (min_chars, points) tuples, cumulative.
     Returns sum of points for all thresholds where len(text) >= min_chars.
     Auto-enriched content is treated as empty (returns 0) so it does not
-    inflate the project's completeness rank.
+    inflate the project's completeness rank. Editing the cell to remove
+    the auto-enrichment prefix re-qualifies the content as user-authored.
     """
     if not text or not isinstance(text, str):
         return 0
-    if _is_auto_enriched(text):
+    if is_auto_enriched(text):
         return 0
     length = len(text.strip())
     if length == 0:
