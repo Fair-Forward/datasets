@@ -42,6 +42,7 @@ from utils import (
     extract_http_links,
     resolve_project_id,
     DEFAULT_CREDENTIALS_PATH,
+    AUTO_ENRICHED_PREFIX,
 )
 
 # Inlined from generate_catalog_data.py to avoid its module-level argparse
@@ -1115,7 +1116,10 @@ def generate_enrichment_report(results, freshness_data, cross_ref_mismatches,
 # Sheet writing (direct cell writes with disclaimer)
 # ---------------------------------------------------------------------------
 
-CELL_DISCLAIMER = "[Auto-enriched from linked project resources]\n\n"
+# Disclaimer text written into auto-filled cells. Detection lives in
+# utils.is_auto_enriched(); both sides share AUTO_ENRICHED_PREFIX so the
+# write path and the read path cannot drift.
+CELL_DISCLAIMER = AUTO_ENRICHED_PREFIX + "\n\n"
 
 
 def write_enrichment_to_sheet(results, discovered_resources,
