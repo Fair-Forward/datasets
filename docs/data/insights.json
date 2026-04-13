@@ -1,6 +1,6 @@
 {
-  "total_projects": 86,
-  "total_countries": 24,
+  "total_projects": 88,
+  "total_countries": 25,
   "map_data": {
     "AO": {
       "name": "Angola",
@@ -45,6 +45,7 @@
         "Geospatial/Remote Sensing",
         "Images",
         "Meterological",
+        "Other",
         "Tabular",
         "Text",
         "Voice"
@@ -236,8 +237,8 @@
       "data_types": [
         "Geospatial/Remote Sensing",
         "Meterological",
-        "Text",
-        "Voice"
+        "Other",
+        "Text"
       ]
     },
     "UG": {
@@ -340,6 +341,17 @@
       "data_types": [
         "Tabular"
       ]
+    },
+    "SN": {
+      "name": "Senegal",
+      "projects": 1,
+      "iso2": "SN",
+      "sdgs": [
+        "SDG 13"
+      ],
+      "data_types": [
+        "Geospatial/Remote Sensing"
+      ]
     }
   },
   "sdg_distribution": {
@@ -349,10 +361,10 @@
     "SDG 7": 3,
     "SDG 8": 2,
     "SDG 9": 1,
-    "SDG 10": 34,
+    "SDG 10": 35,
     "SDG 11": 10,
     "SDG 12": 1,
-    "SDG 13": 26,
+    "SDG 13": 27,
     "SDG 14": 1,
     "SDG 15": 13,
     "SDG 16": 1

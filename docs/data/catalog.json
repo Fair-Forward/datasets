@@ -57,54 +57,6 @@
       "quality_score": 93
     },
     {
-      "id": "ui_1",
-      "slug": "ui_1-benmangroves2425_multidimensional_open_datasets_fo",
-      "aliases": [
-        "benmangroves2425_multidimensional_open_datasets_fo"
-      ],
-      "title": "BenMangroves2425: Multidimensional open datasets for developing AI-based models on mangroves health and carbon stock",
-      "description": "BenMangroves2425 integrates multi-source environmental, ecological, and socio-economic data for assessing mangrove health, degradation drivers, and restoration potential. The dataset includes:\n•        High-resolution drone imagery (multispectral and hyperspectral) for mangrove vegetation structure, canopy cover, and biomass estimation for 600 monitoring plots.\n•        In situ mangrove forest inventory measurements from 600 monitoring plots spanning the entire mangroves in Benin (which encompasses two RAMSAR sites). This covers tree diameter, height, species composition, regenerations, and health status.\n•        Soil quality analyses, including soil organic carbon, Total Nitrogen, granulometry, CEC, phosphorus, and potassium.\n•        Water quality analyses, including soil nutrients (Nitrates, Nitrites, Sulfate, Ammonium, Orthophosphate) and pollution (Iron, Cadmium, Lead, and Zinc).\n•        Socio-economic survey data on community livelihoods, mangrove forests’ resources use, and climate change adaptation strategies.\nThis dataset is unique in providing a multi-season, and multi-dimensional view of mangrove ecosystems in West Africa, enabling advanced AI/ML-based modelling for degradation prediction, restoration prioritization, carbon stock modelling, and climate resilience assessment.",
-      "dataset_links": [
-        {
-          "name": "Link",
-          "url": "https://plus.figshare.com/account/mycontent/items"
-        }
-      ],
-      "usecase_links": [],
-      "access_note_kind": null,
-      "access_note_markdown": null,
-      "has_access_note": false,
-      "hosted_documents": [],
-      "sdgs": [
-        "SDG 13"
-      ],
-      "data_types": [
-        "Drone Imagery",
-        "Tabular",
-        "Other"
-      ],
-      "countries": [
-        "Benin"
-      ],
-      "license": "CC-BY 4.0",
-      "contact": "Glèlè Kakai Romain (glele.romain@gmail.com) & Salako Valere (salakovalere@gmail.com)",
-      "organizations": "Powered by / Provided by: Laboratoire de Biomathématiques et d'Estimations Forestières\nCatalyzed by: Lacuna-Fund / Meridian (Climate-call) & FAIR Forward - AI for All, GIZ\nFinanced by: BMZ",
-      "editor": "Salako Kolawolé Valère",
-      "is_lacuna": true,
-      "has_dataset": true,
-      "has_usecase": false,
-      "image": "/projects/ui_1/images/placeholder_image.jpeg",
-      "data_characteristics": "The dataset provides georeferenced, annotated drone imagery with clear landuse and landcover classes, groundtruth data, and standardized protocols. The datatset also provide field Carbon inventoried data paired with the drone imagery. As such, users can train AI models for carboj estimation is harsh mangroves ecosystems. Its high resolution, temporal coverage, and open accessibility enable accurate, scalable environmental monitoring and carbon estimation. Furthermore, the dataset include (1) Soil quality analyses, including soil organic carbon, Total Nitrogen, granulometry, CEC, phosphorus, and potassium;  (2) Water quality analyses, including soil nutrients (Nitrates, Nitrites, Sulfate, Ammonium, Orthophosphate) and pollution (Iron, Cadmium, Lead, and Zinc), and (3) Socio-economic survey data on community livelihoods, mangrove forests’ resources use, and climate change adaptation strategies; allowing to develop models aiming at understanding how local soil, water, and socio-économic profile affect carbon stock.",
-      "model_characteristics": "",
-      "how_to_use": "",
-      "maturity": "Dataset",
-      "maturity_tags": [
-        "dataset"
-      ],
-      "additional_resources": [],
-      "quality_score": 76
-    },
-    {
       "id": "ui_2",
       "slug": "ui_2-powering_rural_futures_in_west_africa",
       "aliases": [
@@ -157,6 +109,54 @@
       ],
       "additional_resources": [],
       "quality_score": 83
+    },
+    {
+      "id": "ui_1",
+      "slug": "ui_1-benmangroves2425_multidimensional_open_datasets_fo",
+      "aliases": [
+        "benmangroves2425_multidimensional_open_datasets_fo"
+      ],
+      "title": "BenMangroves2425: Multidimensional open datasets for developing AI-based models on mangroves health and carbon stock",
+      "description": "BenMangroves2425 integrates multi-source environmental, ecological, and socio-economic data for assessing mangrove health, degradation drivers, and restoration potential. The dataset includes:\n•        High-resolution drone imagery (multispectral and hyperspectral) for mangrove vegetation structure, canopy cover, and biomass estimation for 600 monitoring plots.\n•        In situ mangrove forest inventory measurements from 600 monitoring plots spanning the entire mangroves in Benin (which encompasses two RAMSAR sites). This covers tree diameter, height, species composition, regenerations, and health status.\n•        Soil quality analyses, including soil organic carbon, Total Nitrogen, granulometry, CEC, phosphorus, and potassium.\n•        Water quality analyses, including soil nutrients (Nitrates, Nitrites, Sulfate, Ammonium, Orthophosphate) and pollution (Iron, Cadmium, Lead, and Zinc).\n•        Socio-economic survey data on community livelihoods, mangrove forests’ resources use, and climate change adaptation strategies.\nThis dataset is unique in providing a multi-season, and multi-dimensional view of mangrove ecosystems in West Africa, enabling advanced AI/ML-based modelling for degradation prediction, restoration prioritization, carbon stock modelling, and climate resilience assessment.",
+      "dataset_links": [
+        {
+          "name": "Link",
+          "url": "https://plus.figshare.com/account/mycontent/items"
+        }
+      ],
+      "usecase_links": [],
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
+      "sdgs": [
+        "SDG 13"
+      ],
+      "data_types": [
+        "Drone Imagery",
+        "Tabular",
+        "Other"
+      ],
+      "countries": [
+        "Benin"
+      ],
+      "license": "CC-BY 4.0",
+      "contact": "Glèlè Kakai Romain (glele.romain@gmail.com) & Salako Valere (salakovalere@gmail.com)",
+      "organizations": "Powered by / Provided by: Laboratoire de Biomathématiques et d'Estimations Forestières\nCatalyzed by: Lacuna-Fund / Meridian (Climate-call) & FAIR Forward - AI for All, GIZ\nFinanced by: BMZ",
+      "editor": "Salako Kolawolé Valère",
+      "is_lacuna": true,
+      "has_dataset": true,
+      "has_usecase": false,
+      "image": "/projects/ui_1/images/placeholder_image.jpeg",
+      "data_characteristics": "The dataset provides georeferenced, annotated drone imagery with clear landuse and landcover classes, groundtruth data, and standardized protocols. The datatset also provide field Carbon inventoried data paired with the drone imagery. As such, users can train AI models for carboj estimation is harsh mangroves ecosystems. Its high resolution, temporal coverage, and open accessibility enable accurate, scalable environmental monitoring and carbon estimation. Furthermore, the dataset include (1) Soil quality analyses, including soil organic carbon, Total Nitrogen, granulometry, CEC, phosphorus, and potassium;  (2) Water quality analyses, including soil nutrients (Nitrates, Nitrites, Sulfate, Ammonium, Orthophosphate) and pollution (Iron, Cadmium, Lead, and Zinc), and (3) Socio-economic survey data on community livelihoods, mangrove forests’ resources use, and climate change adaptation strategies; allowing to develop models aiming at understanding how local soil, water, and socio-économic profile affect carbon stock.",
+      "model_characteristics": "",
+      "how_to_use": "",
+      "maturity": "Dataset",
+      "maturity_tags": [
+        "dataset"
+      ],
+      "additional_resources": [],
+      "quality_score": 76
     },
     {
       "id": "ui_3",
@@ -577,8 +577,8 @@
         "SDG 15"
       ],
       "data_types": [
-        "Voice",
-        "Geospatial/Remote Sensing"
+        "Geospatial/Remote Sensing",
+        "Other"
       ],
       "countries": [
         "Ecuador",
@@ -718,8 +718,8 @@
         "Ghana"
       ],
       "license": "CC-BY 4.0",
-      "contact": "RAIL - KNUST (https://rail.knust.edu.gh/)",
-      "organizations": "Powered by / Provided by: Responsible AI Lab of KNUST (https://rail.knust.edu.gh/), Ghanaian Plant Protection and Regulatory Services Directorate\nCatalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/), Digital Transformation Centre Ghana, GIZ\nFinanced by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",
+      "contact": "Responsible AI Lab (RAIL) at Kwame Nkrumah University of Science and Technology (https://rail.knust.edu.gh/)",
+      "organizations": "Powered by / Provided by:  Responsible AI Lab at Kwame Nkrumah University of Science and Technology (https://rail.knust.edu.gh/), Ghanaian Plant Protection and Regulatory Services Directorate\nCatalyzed by: FAIR Forward - AI for All, GIZ (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/), Digital Transformation Centre Ghana, GIZ\nFinanced by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",
       "editor": "Elikplim Sabblah",
       "is_lacuna": false,
       "has_dataset": true,
@@ -1043,76 +1043,51 @@
       "quality_score": 61
     },
     {
-      "id": "ui_21",
-      "slug": "ui_21-imarika__translating_weather_information_into",
+      "id": "ui_20",
+      "slug": "ui_20-our_language_our_data_cocreating_equitable",
       "aliases": [
-        "imarika__translating_weather_information_into",
-        "innovate_africa_challenge_ai_for_climate"
+        "mozilla_community_licence_project",
+        "our_language_our_data_cocreating_equitable"
       ],
-      "title": "Imarika - Translating weather information into actionable advisory for farmers through AI in Kenya",
-      "description": "IMARIKA by Strathmore University’s iLabAfrica is building low-cost automatic weather station networks to provide access to accurate, local weather information in rural Kenya. This granular data allows advisory services for small-holder farmers to shift from using generic information to location-specific guidance, delivered through farmer organizations and digital platforms. IMARIKA also works on translating weather data into actionable recommendations, addressing farmers’ difficulty in interpreting weather information.\n\nIMARIKA by Strathmore University’s iLabAfrica is also the winner of the \"Innovate Africa Challenge on Climate Action\",  - chosen for its potential to advance climate adaptation for small-holder farmer communities. Together with Smart Africa, FAIR Forward had supported seven startups through intensive technical and business support to develop their AI businesses focused on mitigating and adapting to climate change in four countries through the Innovate Africa Challenge format in its first iteration focusing on AI for Climate Action.\n\nIMARIKA was also part of a Mozilla innovation challenge supporting people and projects across East Africa who leverage Common Voice’s open-source voice data set to unlock social and economic opportunities. These grants help to advance the use of open-source voice data for products that support community participation and engagement.",
-      "dataset_links": [],
-      "usecase_links": [
+      "title": "Our language, our data: Co-creating equitable governance models with African language communities - language dataset creatd: Dhuluo",
+      "description": "Mozilla Foundation seeks to select and support a community (group of language speakers who would like to collectively create or enhance a text and audio dataset for their  language), to experiment with a governance structure for this dataset that suits their particular needs. \nThis project will enable language communities to leverage governance tools (such as licenses) that center their needs and context, and have them be more accessible and widely used. Over the period of the project, the goal is to have a particular language community, or small group of them, piloting a novel, community-centered license on the Common Voice platform, as a proof of concept that can then be replicated and adapted\n- language dataset created: Dhuluo ?",
+      "dataset_links": [
         {
           "name": "Link",
-          "url": "https://github.com/iLab-DSU/imarika-weather-pipeline"
-        },
-        {
-          "name": "Link",
-          "url": "https://github.com/iLab-DSU/Agricultural-Recommendations-Chat"
+          "url": "https://datacollective.mozillafoundation.org/datasets/cmjepxo6t08nmmk07iauvua6v"
         }
       ],
+      "usecase_links": [],
       "access_note_kind": null,
       "access_note_markdown": null,
       "has_access_note": false,
       "hosted_documents": [],
       "sdgs": [
-        "SDG 2",
-        "SDG 10",
-        "SDG 5"
+        "SDG 10"
       ],
       "data_types": [
-        "Meterological",
-        "Text",
-        "Geospatial/Remote Sensing"
+        "Voice"
       ],
       "countries": [
-        "Kenya"
+        "Global"
       ],
       "license": "",
-      "contact": "Betsy Muriithi <bmuriithi@strathmore.edu>,  Strathmore University’s iLabAfrica",
-      "organizations": "Powered by / Provided by: Strathmore University’s iLabAfrica\nCatalyzed by: Smart Africa (https://smartafrica.org/), FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/), GIZ , Intellecap, intel.liftoff, Climate Change AI; Mozilla Foundation\nFinanced by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/), Gates Foundation",
-      "editor": "Golo Rademacher; Balthas Seibold; Daniel Brumund",
+      "contact": "",
+      "organizations": "Powered by / Provided by:\nCatalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/), GIZ \nFinanced by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",
+      "editor": "",
       "is_lacuna": false,
-      "has_dataset": false,
-      "has_usecase": true,
-      "image": "/projects/ui_21/images/placeholder_image.jpeg",
-      "data_characteristics": "[Auto-enriched from linked project resources]\n\nWeather data pipeline for rural Kenya. Fetches readings from the Wireless Planet API (api.wirelessplanet.co.ke) every 3 hours. License: MIT. Data Type: Time-series weather readings. Processing: Apache Spark 3.3.0 structured streaming with data cleaning, mean-based imputation, and Z-score anomaly detection (threshold: 10.0). Storage: PostgreSQL 14 (raw table: weather_raw; processed table: weather_clean with device_id, date, temperature, wind, precipitation, anomaly flags). Throughput: ~40-50 records/second, <30 seconds end-to-end latency. Daily aggregation compresses ~1,000 raw readings into ~35 daily summaries. Requires Docker, 8GB+ RAM, and a weather API account.\n\nSource: https://github.com/iLab-DSU/imarika-weather-pipeline",
-      "model_characteristics": "[Auto-enriched from linked project resources]\n\nTwo components: (1) Weather Pipeline -- Apache Spark streaming processor ingests weather API data via Kafka, cleans it, detects anomalies, and stores raw + processed data in PostgreSQL. Produces daily weather summaries per device. Stack: Docker Compose, Kafka, Spark 3.3.0, PostgreSQL 14, Python. (2) Agricultural AI Assistant -- LangGraph-based advisory chatbot for 6 East African crops (beans, cassava, finger millet, maize, sorghum, sweet potatoes). Uses QLoRA-fine-tuned Llama 3.2 3B Instruct model, a knowledge graph (30+ nodes, 95+ edges), Chroma vector database, and OpenWeather API integration. Supports English and Swahili. Runs locally via Ollama. Requires 4GB+ GPU VRAM for inference or CPU (slower).\n\nSource: https://github.com/iLab-DSU/imarika-weather-pipeline, https://github.com/iLab-DSU/Agricultural-Recommendations-Chat",
-      "how_to_use": "For anyone interested in translating weather information into actionable advisory for farming practices, Imarika's Agricultural AI Assistant which is an intelligent agricultural advisory system powered by LangGraph, Knowledge Graph, and Ollama models specialized in 6 East African crops with multilingual support (English/Swahili) is worth looking into. \nAnyone running several weather stations with a need to process the data may be interested in Imarika's real-time weather data processing pipeline built with Apache Spark, Kafka, and PostgreSQL. \n\nThis use case also included the development of a business model and funding model for open source AI as a stepping stone towards financially viable operations.",
-      "maturity": "Dataset  > Model > Pilot > Use-Case >  Use-Case with Business Model",
+      "has_dataset": true,
+      "has_usecase": false,
+      "image": "/projects/ui_20/images/placeholder_image.jpeg",
+      "data_characteristics": "",
+      "model_characteristics": "",
+      "how_to_use": "",
+      "maturity": "Dataset",
       "maturity_tags": [
-        "dataset",
-        "model",
-        "pilot",
-        "usecase",
-        "business"
+        "dataset"
       ],
-      "additional_resources": [
-        {
-          "name": "Chatbots Local Weather Reports And A Boon For Kenyas Smallholder Farmers (foundation.mozilla.org)",
-          "url": "https://foundation.mozilla.org/blog/chatbots-local-weather-reports-and-a-boon-for-kenyas-smallholder-farmers/"
-        },
-        {
-          "name": "Awards (mozillafoundation.org)",
-          "url": "https://www.mozillafoundation.org/en/what-we-fund/programs/common-voice-kiswahili-awards/awards/"
-        },
-        {
-          "name": "Innovate Africa Challenge (smartafrica.org)",
-          "url": "https://smartafrica.org/innovate-africa-challenge/"
-        }
-      ],
-      "quality_score": 68
+      "additional_resources": [],
+      "quality_score": 53
     },
     {
       "id": "ui_22",
@@ -2206,6 +2181,78 @@
       "quality_score": 61
     },
     {
+      "id": "ui_21",
+      "slug": "ui_21-imarika__translating_weather_information_into",
+      "aliases": [
+        "imarika__translating_weather_information_into",
+        "innovate_africa_challenge_ai_for_climate"
+      ],
+      "title": "Imarika - Translating weather information into actionable advisory for farmers through AI in Kenya",
+      "description": "IMARIKA by Strathmore University’s iLabAfrica is building low-cost automatic weather station networks to provide access to accurate, local weather information in rural Kenya. This granular data allows advisory services for small-holder farmers to shift from using generic information to location-specific guidance, delivered through farmer organizations and digital platforms. IMARIKA also works on translating weather data into actionable recommendations, addressing farmers’ difficulty in interpreting weather information.\n\nIMARIKA by Strathmore University’s iLabAfrica is also the winner of the \"Innovate Africa Challenge on Climate Action\",  - chosen for its potential to advance climate adaptation for small-holder farmer communities. Together with Smart Africa, FAIR Forward had supported seven startups through intensive technical and business support to develop their AI businesses focused on mitigating and adapting to climate change in four countries through the Innovate Africa Challenge format in its first iteration focusing on AI for Climate Action.\n\nIMARIKA was also part of a Mozilla innovation challenge supporting people and projects across East Africa who leverage Common Voice’s open-source voice data set to unlock social and economic opportunities. These grants help to advance the use of open-source voice data for products that support community participation and engagement.",
+      "dataset_links": [],
+      "usecase_links": [
+        {
+          "name": "Link",
+          "url": "https://github.com/iLab-DSU/imarika-weather-pipeline"
+        },
+        {
+          "name": "Link",
+          "url": "https://github.com/iLab-DSU/Agricultural-Recommendations-Chat"
+        }
+      ],
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
+      "sdgs": [
+        "SDG 2",
+        "SDG 10",
+        "SDG 5"
+      ],
+      "data_types": [
+        "Meterological",
+        "Text",
+        "Geospatial/Remote Sensing"
+      ],
+      "countries": [
+        "Kenya"
+      ],
+      "license": "",
+      "contact": "Betsy Muriithi <bmuriithi@strathmore.edu>,  Strathmore University’s iLabAfrica",
+      "organizations": "Powered by / Provided by: Strathmore University’s iLabAfrica\nCatalyzed by: Smart Africa (https://smartafrica.org/), FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/), GIZ , Intellecap, intel.liftoff, Climate Change AI; Mozilla Foundation\nFinanced by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/), Gates Foundation",
+      "editor": "Golo Rademacher; Balthas Seibold; Daniel Brumund",
+      "is_lacuna": false,
+      "has_dataset": false,
+      "has_usecase": true,
+      "image": "/projects/ui_21/images/placeholder_image.jpeg",
+      "data_characteristics": "[Auto-enriched from linked project resources]\n\nWeather data pipeline for rural Kenya. Fetches readings from the Wireless Planet API (api.wirelessplanet.co.ke) every 3 hours. License: MIT. Data Type: Time-series weather readings. Processing: Apache Spark 3.3.0 structured streaming with data cleaning, mean-based imputation, and Z-score anomaly detection (threshold: 10.0). Storage: PostgreSQL 14 (raw table: weather_raw; processed table: weather_clean with device_id, date, temperature, wind, precipitation, anomaly flags). Throughput: ~40-50 records/second, <30 seconds end-to-end latency. Daily aggregation compresses ~1,000 raw readings into ~35 daily summaries. Requires Docker, 8GB+ RAM, and a weather API account.\n\nSource: https://github.com/iLab-DSU/imarika-weather-pipeline",
+      "model_characteristics": "[Auto-enriched from linked project resources]\n\nTwo components: (1) Weather Pipeline -- Apache Spark streaming processor ingests weather API data via Kafka, cleans it, detects anomalies, and stores raw + processed data in PostgreSQL. Produces daily weather summaries per device. Stack: Docker Compose, Kafka, Spark 3.3.0, PostgreSQL 14, Python. (2) Agricultural AI Assistant -- LangGraph-based advisory chatbot for 6 East African crops (beans, cassava, finger millet, maize, sorghum, sweet potatoes). Uses QLoRA-fine-tuned Llama 3.2 3B Instruct model, a knowledge graph (30+ nodes, 95+ edges), Chroma vector database, and OpenWeather API integration. Supports English and Swahili. Runs locally via Ollama. Requires 4GB+ GPU VRAM for inference or CPU (slower).\n\nSource: https://github.com/iLab-DSU/imarika-weather-pipeline, https://github.com/iLab-DSU/Agricultural-Recommendations-Chat",
+      "how_to_use": "For anyone interested in translating weather information into actionable advisory for farming practices, Imarika's Agricultural AI Assistant which is an intelligent agricultural advisory system powered by LangGraph, Knowledge Graph, and Ollama models specialized in 6 East African crops with multilingual support (English/Swahili) is worth looking into. \nAnyone running several weather stations with a need to process the data may be interested in Imarika's real-time weather data processing pipeline built with Apache Spark, Kafka, and PostgreSQL. \n\nThis use case also included the development of a business model and funding model for open source AI as a stepping stone towards financially viable operations.",
+      "maturity": "Dataset  > Model > Pilot > Use-Case >  Use-Case with Business Model",
+      "maturity_tags": [
+        "dataset",
+        "model",
+        "pilot",
+        "usecase",
+        "business"
+      ],
+      "additional_resources": [
+        {
+          "name": "Chatbots Local Weather Reports And A Boon For Kenyas Smallholder Farmers (foundation.mozilla.org)",
+          "url": "https://foundation.mozilla.org/blog/chatbots-local-weather-reports-and-a-boon-for-kenyas-smallholder-farmers/"
+        },
+        {
+          "name": "Awards (mozillafoundation.org)",
+          "url": "https://www.mozillafoundation.org/en/what-we-fund/programs/common-voice-kiswahili-awards/awards/"
+        },
+        {
+          "name": "Innovate Africa Challenge (smartafrica.org)",
+          "url": "https://smartafrica.org/innovate-africa-challenge/"
+        }
+      ],
+      "quality_score": 68
+    },
+    {
       "id": "ui_40",
       "slug": "ui_40-early_warning_system_advisory_services_on",
       "aliases": [
@@ -2275,7 +2322,7 @@
       "dataset_links": [],
       "usecase_links": [],
       "access_note_kind": "info",
-      "access_note_markdown": "Chatbot is currently redeveloped. Please contact the responsible authors for updates and access to the data: support@think.ke",
+      "access_note_markdown": "GitHub - think-ke/sheng-dataset: A collection of various datasets for the Sheng Language · GitHub\n\nChatbot launched here: https://www.odpc.go.ke/",
       "has_access_note": true,
       "hosted_documents": [],
       "sdgs": [
@@ -2318,11 +2365,21 @@
       ],
       "title": "Paza Sauti - chatbot and IVR service in Swahili to raise awareness about the use of collateral (security) to access credit for women in Kenya",
       "description": "The project is developing a chatbot and an interactive voice response service that will provide voice-enabled services in the domain of business registration and raise awareness about the use of collateral (security) to access credit in Kenya. The main objective is to increase financial literacy around moveable properties as collateral, particularly for women in business, and in particular agriculture, for purposes of accessing credit. Although there has been an increase in the ease of getting credit, most members of the population are still unaware of their capability to access further credit as a result of using moveable properties as collateral. This was part of a Mozilla innovation challenge supporting people and projects across East Africa who leverage Common Voice’s open-source voice data set to unlock social and economic opportunities. These grants help to advance the use of open-source voice data for products that support community participation and engagement.",
-      "dataset_links": [],
-      "usecase_links": [],
-      "access_note_kind": "info",
-      "access_note_markdown": "Current publishing status unclear. Please contact the responsible authors for an update and access to the data: support@think.ke",
-      "has_access_note": true,
+      "dataset_links": [
+        {
+          "name": "Link",
+          "url": "https://github.com/think-ke/sheng-dataset/"
+        }
+      ],
+      "usecase_links": [
+        {
+          "name": "Link",
+          "url": "https://github.com/think-ke/mpsr"
+        }
+      ],
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
       "hosted_documents": [],
       "sdgs": [
         "SDG 10",
@@ -2341,8 +2398,8 @@
       "organizations": "Powered by / Provided by: Tech Innovators Network Kenya (THiNK)\nCatalyzed by: Mozilla Foundation & FAIR Forward - AI for All, GIZ\nFinanced by: Gates Foundation & BMZ",
       "editor": "Daniel Brumund, Balthas Seibold",
       "is_lacuna": false,
-      "has_dataset": false,
-      "has_usecase": false,
+      "has_dataset": true,
+      "has_usecase": true,
       "image": "/projects/ui_42/images/placeholder_image.jpeg",
       "data_characteristics": "",
       "model_characteristics": "",
@@ -2732,6 +2789,61 @@
       "quality_score": 53
     },
     {
+      "id": "ui_85",
+      "slug": "ui_85-enhancing_business_registration_in_kenya_through",
+      "aliases": [
+        "brschatbot",
+        "enhancing_business_registration_in_kenya_through"
+      ],
+      "title": "Enhancing business registration in Kenya through a chatbot",
+      "description": "The BRS-chatbot is an AI-powered chatbot that streamlines the business registration process in Kenya. It aimes to enhance access to information, simplify the registration process, improve user experience through Human-Centered Design principles, and promote compliance with post-registration requirements. The goal is to reduce reliance on intermediaries and make the registration process more user-friendly and efficient",
+      "dataset_links": [],
+      "usecase_links": [
+        {
+          "name": "Link",
+          "url": "https://brs.go.ke/"
+        }
+      ],
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
+      "sdgs": [
+        "SDG 8"
+      ],
+      "data_types": [
+        "Text"
+      ],
+      "countries": [
+        "Kenya"
+      ],
+      "license": "",
+      "contact": "Made by People, Kenya (hello@made.ke)",
+      "organizations": "Powered by / Provided by: Made by People, Kenya \nCatalyzed by: FAIR Forward - AI for All, Digital Transformation Centre Kenya, GIZ\n\nFinanced by: BMZ",
+      "editor": "Balthas Seibold",
+      "is_lacuna": false,
+      "has_dataset": false,
+      "has_usecase": true,
+      "image": "/projects/ui_85/images/placeholder_image.jpeg",
+      "data_characteristics": "",
+      "model_characteristics": "",
+      "how_to_use": "",
+      "maturity": "Dataset  > Model > Pilot > Use-Case",
+      "maturity_tags": [
+        "dataset",
+        "model",
+        "pilot",
+        "usecase"
+      ],
+      "additional_resources": [
+        {
+          "name": "Giz Kenya Fair Forward Ai Powered Chatbot (web.archive.org)",
+          "url": "https://web.archive.org/web/20251116031001/https://made.ke/case-studies/giz-kenya-fair-forward-ai-powered-chatbot/"
+        }
+      ],
+      "quality_score": 53
+    },
+    {
       "id": "ui_50",
       "slug": "ui_50-providing_farmers_in_kenya_and_bihar",
       "aliases": [
@@ -2746,12 +2858,7 @@
           "url": "https://dev.platform.farmer.chat/login"
         }
       ],
-      "usecase_links": [
-        {
-          "name": "Link",
-          "url": "https://dev.platform.farmer.chat/login"
-        }
-      ],
+      "usecase_links": [],
       "access_note_kind": null,
       "access_note_markdown": null,
       "has_access_note": false,
@@ -2773,7 +2880,7 @@
       "editor": "",
       "is_lacuna": false,
       "has_dataset": true,
-      "has_usecase": true,
+      "has_usecase": false,
       "image": "/projects/ui_50/images/AIEP.png",
       "data_characteristics": "The platform allows for uploading and downloading AI model training data for sharing with the community. The data owner can set up access rights for the shared datasets",
       "model_characteristics": "[Auto-enriched from linked project resources]\n\nFour AI-powered Agriculture Information Exchange Platform prototypes providing personalized advisory services to farmers in Kenya and Bihar, India. DynAG covers rice, wheat, and maize using a RAG pipeline powered by LLMs, accessible via chatbots, Android/Jio apps, IVR, and SMS in English and Hindi. Digital Green supports dairy, coffee, and wheat value chains via app, Telegram, and IVR with machine translation, speech technology, and image recognition in Hindi, Swahili, Gikuyu, and Marathi. Viamo targets beans and wheat farmers via IVR, SMS, and WhatsApp with LLM-based RAG in English, Hindi, and Swahili. Tech for Her focuses on women farmers growing tomatoes and raising cattle via IVR, WhatsApp, and mobile app with AI-based video generation in English, Hindi, and Swahili. The platform (FarmStack by Digital Green) allows uploading and sharing AI model training data with configurable access rights.\n\nSource: https://dev.platform.farmer.chat/login",
@@ -3152,7 +3259,10 @@
         "SDG 10",
         "SDG 2"
       ],
-      "data_types": [],
+      "data_types": [
+        "Text",
+        "Voice"
+      ],
       "countries": [
         "Rwanda"
       ],
@@ -3175,7 +3285,7 @@
         "usecase"
       ],
       "additional_resources": [],
-      "quality_score": 52
+      "quality_score": 56
     },
     {
       "id": "ui_58",
@@ -3385,7 +3495,7 @@
       ],
       "license": "Permissive",
       "contact": "Digital Umuganda (https://digitalumuganda.com/#contact), FAIR Forward Rwanda",
-      "organizations": "Powered by / Provided by: Atingi, Digital Umuganda, Clear Global\nCatalyzed by: FAIR Forward - AI for All, GIZ\nFinanced by: BMZ",
+      "organizations": "Powered by / Provided by: Atingi, Digital Umuganda, Clear Global\nCatalyzed by: GIZ\nFinanced by: BMZ",
       "editor": "Isaac",
       "is_lacuna": false,
       "has_dataset": true,
@@ -3456,6 +3566,176 @@
       ],
       "additional_resources": [],
       "quality_score": 61
+    },
+    {
+      "id": "ui_86",
+      "slug": "ui_86-kinycomet_automatic_evaluation_of_machine_translat",
+      "aliases": [
+        "kinycomet_automatic_evaluation_of_machine_translat"
+      ],
+      "title": "KinyCOMET: Automatic evaluation of machine translation for Kinyarwanda-English",
+      "description": "Until now, the lack of automatic evaluation tools made Kinyarwanda-English machine translation development slow and expensive, as it required manual human review. We’ve bridged this gap by creating a new evaluation dataset and model. Both are now open-source to support the research community. Our methodology and results are detailed in our upcoming paper for LREC 2026.",
+      "dataset_links": [
+        {
+          "name": "Link",
+          "url": "https://huggingface.co/datasets/chrismazii/kinycomet_dataset"
+        }
+      ],
+      "usecase_links": [
+        {
+          "name": "Link",
+          "url": "https://huggingface.co/chrismazii/kinycomet_unbabel"
+        }
+      ],
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
+      "sdgs": [
+        "SDG 9",
+        "SDG 10"
+      ],
+      "data_types": [
+        "Text"
+      ],
+      "countries": [
+        "Rwanda"
+      ],
+      "license": "Apache 2.0",
+      "contact": "",
+      "organizations": "Powered by / Provided by: Mbaza NLP community, German Research Center for Artificial Intelligence (DFKI), Regional AI Hub Rwanda\nCatalyzed by: FAIR Forward - AI for All, GIZ\nFinanced by: BMZ",
+      "editor": "Jan Nehring",
+      "is_lacuna": false,
+      "has_dataset": true,
+      "has_usecase": true,
+      "image": "/projects/ui_86/images/kinycomet.png",
+      "data_characteristics": "4000 rows of parallel sentences English - Kinyarwanda with annotated translation quality as Direct Assessment",
+      "model_characteristics": "[Auto-enriched from linked project resources]\n\nPretrained Model: KinyCOMET-Unbabel, a translation quality estimation model for Kinyarwanda-English (bidirectional). Fine-tuned on Unbabel/wmt22-comet-da using the COMET framework. Input: source text, machine translation, and human reference translation. Output: quality score from 0 to 1. Achieves 0.75 Pearson correlation with human judgments (vs. 0.30 for BLEU), Spearman 0.59, MAE 0.07. A second variant (KinyCOMET-XLM) based on XLM-RoBERTa-large achieves 0.73 Pearson. Trained on 4,323 human-annotated translation pairs scored by 15 annotators following WMT Direct Assessment standards. Install via pip install unbabel-comet; load with comet.load_from_checkpoint(\"chrismazii/kinycomet_unbabel\"). License: Apache 2.0.\n\nSource: https://huggingface.co/datasets/chrismazii/kinycomet_dataset, https://huggingface.co/chrismazii/kinycomet_unbabel",
+      "how_to_use": "",
+      "maturity": "Dataset > Model > Pilot",
+      "maturity_tags": [
+        "dataset",
+        "model",
+        "pilot"
+      ],
+      "additional_resources": [],
+      "quality_score": 69
+    },
+    {
+      "id": "ui_87",
+      "slug": "ui_87-tunga_agrichatbot_open_source_suite_",
+      "aliases": [
+        "tunga_agrichatbot_open_source_suite_",
+        "tunga_chatbot_open_source_suite_"
+      ],
+      "title": "Tunga Agri-Chatbot Open Source Suite -  A full system to build call center agent based voicebots in Kinyarwanda e.g. for Agriculture and other sectors",
+      "description": "Voicebots acting as call center agents—accessible via telephone and capable of speaking local languages—hold immense potential for development cooperation. They provide a vital link to users in rural areas who may lack internet access, have limited literacy, do not speak English or do not own digital devices. We believe voice-driven interfaces are the most intuitive way to bridge the digital divide for these communities.\n\nAs part of the Tunga project, we have developed such a voicebot. To support further innovation in this space, we are releasing a comprehensive suite of foundational AI models and datasets:\n\nText-to-speech model\nCurrently the highest-quality synthetic voice for Kinyarwanda.\nhttps://huggingface.co/C4IR-RW/kinya-flex-tts\n\nKinyaCOLBERT Free\nThe first Kinyarwanda embedding/information retrieval model, essential for building RAG chatbots such as Tunga.\nhttps://huggingface.co/C4IR-RW/kiny-colbert-free\n\nVoice Dataset\nA dataset for training TTS and Speech-to-Text (STT) models.\nhttps://huggingface.co/datasets/C4IR-RW/kinya-ag-tts\n\nInformation Retrieval Dataset\nThe data used to train the KinyaColBERT model.\nhttps://huggingface.co/datasets/C4IR-RW/kinya-ag-retrieval\n\nKinyaBERT\nA foundational BERT-style model serving as the backbone for various Kinyarwanda NLP tasks.\nhttps://huggingface.co/C4IR-RW/kinyabert \n\nSource Code\nAll relevant code for the models and datasets mentioned above.\nhttps://github.com/c4ir-rw/ac-ai-models",
+      "dataset_links": [
+        {
+          "name": "Link",
+          "url": "https://huggingface.co/datasets/C4IR-RW/kinya-ag-tts"
+        },
+        {
+          "name": "Link",
+          "url": "https://huggingface.co/datasets/C4IR-RW/kinya-ag-retrieval"
+        }
+      ],
+      "usecase_links": [
+        {
+          "name": "Link",
+          "url": "https://huggingface.co/C4IR-RW/kinya-flex-tts"
+        },
+        {
+          "name": "Link",
+          "url": "https://huggingface.co/C4IR-RW/kiny-colbert-free"
+        },
+        {
+          "name": "Link",
+          "url": "https://huggingface.co/C4IR-RW/kinyabert"
+        },
+        {
+          "name": "Link",
+          "url": "https://github.com/c4ir-rw/ac-ai-models"
+        }
+      ],
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
+      "sdgs": [
+        "SDG 10",
+        "SDG 2"
+      ],
+      "data_types": [
+        "Text",
+        "Voice"
+      ],
+      "countries": [
+        "Rwanda"
+      ],
+      "license": "Apache 2.0",
+      "contact": "https://c4ir.rw/",
+      "organizations": "Powered by / Provided by: C4IR, KiNLP\nCatalyzed by: FAIR Forward - AI for All, GIZ\nFinanced by: BMZ",
+      "editor": "Jan Nehring",
+      "is_lacuna": false,
+      "has_dataset": true,
+      "has_usecase": true,
+      "image": "/projects/ui_87/images/agribot.png",
+      "data_characteristics": "[Auto-enriched from linked project resources]\n\nTwo Kinyarwanda agricultural datasets. (1) TTS Dataset (kinya-ag-tts): 10,480 audio clips (5,242 female, 5,238 male) of voice actors reading agricultural content. Format: WAV mono at 24 kHz, with TSV metadata mapping clip IDs to text. Total size: 2.63 GB. (2) Retrieval Dataset (kinya-ag-retrieval): 984 agricultural passages in Kinyarwanda paired with 19,537 questions. Structured as query-positive-negative triplets for training retrieval models (1,901,200 training triplets, 19,600 dev, 32,900 test). Format: TSV. Includes morphologically parsed versions of passages and queries. Both datasets created by C4IR Rwanda and KiNLP. License: CC-BY 4.0.\n\nSource: https://huggingface.co/datasets/C4IR-RW/kinya-ag-tts, https://huggingface.co/datasets/C4IR-RW/kinya-ag-retrieval",
+      "model_characteristics": "[Auto-enriched from linked project resources]\n\nTwo pretrained models for a Kinyarwanda agricultural IVR system. (1) TTS Model (kinya-flex-tts): Multi-speaker text-to-speech based on MB-iSTFT-VITS2 architecture. Converts Kinyarwanda text to speech at 24 kHz with 3 speaker options (2 female, 1 male). Requires PyTorch; implementation via the DeepKIN-AgAI package. (2) Retrieval Model (kiny-colbert-free): Information retrieval model for RAG, fine-tuned from Davlan/bert-base-multilingual-cased-finetuned-kinyarwanda. 0.2B parameters, F32 safetensors format. Trained on agricultural question-passage pairs. Usable via ragatouille library. Both models by C4IR Rwanda and KiNLP. License: CC-BY 4.0.\n\nSource: https://huggingface.co/C4IR-RW/kinya-flex-tts, https://huggingface.co/C4IR-RW/kiny-colbert-free",
+      "how_to_use": "[Auto-enriched from linked project resources]\n\n## How to Use This Resource\n\nThe Tunga Agri-Chatbot Suite provides the building blocks for a Kinyarwanda-language agricultural advisory system delivered via Interactive Voice Response (IVR). It was built to address capacity gaps in Rwanda's agricultural extension services and is implemented by C4IR Rwanda and KiNLP, supported by GIZ and financed by BMZ.\n\nThis suite is relevant for anyone working on agricultural extension, farmer advisory services, or voice-based information delivery in Rwanda or similar contexts. The core idea is that smallholder farmers can call a phone number and receive spoken agricultural guidance in Kinyarwanda -- covering topics such as pest and disease diagnosis, agro-climatic practices, and MINAGRI support programmes -- without needing internet access or literacy.\n\nThe text-to-speech component (kinya-flex-tts) can generate natural-sounding Kinyarwanda speech with three voice options (two female, one male), outputting audio at broadcast quality (24 kHz). A live demo is available at [huggingface.co/spaces/Professor/c4ir-rw-kinyarwandatts](https://huggingface.co/spaces/Professor/c4ir-rw-kinyarwandatts), where you can hear sample outputs before deciding whether to integrate the model. The underlying TTS training dataset contains 10,482 audio clips recorded by two voice actors, all licensed under CC-BY-4.0.\n\nThe passage retrieval component (kiny-colbert-free) matches farmer questions in Kinyarwanda to relevant agricultural knowledge passages. This is the engine that allows the system to find the right answer from a knowledge base when a farmer asks a question. The accompanying retrieval dataset contains 984 agricultural passages, 19,537 related questions, and nearly 2 million training triplets, also under CC-BY-4.0.\n\nThe suite also includes KinyaBERT, a morphology-aware language model for Kinyarwanda used for passage ranking, available in base (107M parameter) and large (365M parameter) variants. All model code, training scripts, and technical documentation are available in the [DeepKIN-AgAI package on GitHub](https://github.com/c4ir-rw/ac-ai-models/tree/main/DeepKIN-AgAI). All components require attribution to C4IR Rwanda and KiNLP.\n\nDevelopers and researchers can extend this work to other crops, regions, or languages, or integrate these components into existing agricultural advisory platforms. The individual models (TTS, retrieval, language understanding) can also be used independently for other Kinyarwanda language technology applications beyond agriculture. All datasets and models are hosted on Hugging Face under the [C4IR-RW organisation](https://huggingface.co/C4IR-RW).\n\nSources:\n- https://huggingface.co/datasets/C4IR-RW/kinya-ag-tts\n- https://huggingface.co/datasets/C4IR-RW/kinya-ag-retrieval\n- https://huggingface.co/C4IR-RW/kinya-flex-tts\n- https://huggingface.co/C4IR-RW/kiny-colbert-free\n- https://huggingface.co/C4IR-RW/kinyabert\n- https://github.com/c4ir-rw/ac-ai-models",
+      "maturity": "Dataset > Model > Pilot",
+      "maturity_tags": [
+        "dataset",
+        "model",
+        "pilot"
+      ],
+      "additional_resources": [],
+      "quality_score": 61
+    },
+    {
+      "id": "ui_84",
+      "slug": "ui_84-forest_carbon_stock_monitoring_for_climate",
+      "aliases": [
+        "carbonlens",
+        "forest_carbon_stock_monitoring_for_climate"
+      ],
+      "title": "Forest Carbon Stock Monitoring for Climate Accountability in Senegal",
+      "description": "Senegal's forest monitoring agencies have long relied on costly, manual field surveys to estimate how much carbon its forests store — making it difficult to credibly track climate commitments or access carbon finance. This tool automates that process by combining satellite imagery (Sentinel-1, Sentinel-2, GEDI) with field data and machine learning to produce accurate, reproducible estimates of above-ground biomass at scale. The models, datasets and workflows are fully open-source, meaning environmental agencies, researchers and development partners in other countries can adapt and deploy them without starting from scratch. For national governments, it strengthens NDC reporting; for carbon finance bodies, it provides the verifiable data needed to unlock results-based funding; and for the broader AI and climate community, it is a replicable blueprint for low-cost, satellite-driven forest monitoring across the Global South.",
+      "dataset_links": [],
+      "usecase_links": [],
+      "access_note_kind": "info",
+      "access_note_markdown": "Not yet available\n\nNot yet available (still being worked on)",
+      "has_access_note": true,
+      "hosted_documents": [],
+      "sdgs": [
+        "SDG 13"
+      ],
+      "data_types": [
+        "Geospatial/Remote Sensing"
+      ],
+      "countries": [
+        "Senegal"
+      ],
+      "license": "",
+      "contact": "data354 (gabriel.fonlladosa@data354.co)",
+      "organizations": "GIZ: Data Economy and FAIR Forward\n\nMinistère de l'Environnement et de la Transition Écologique (METE)- Senegal, \nData 354\nThe Estonian Centre for International Development (ESTDEV)\nAfrican Union\nD4D Hub — Data for Development Hub",
+      "editor": "Elikplim Sabblah",
+      "is_lacuna": false,
+      "has_dataset": false,
+      "has_usecase": false,
+      "image": "/projects/ui_84/images/placeholder_image.jpeg",
+      "data_characteristics": "The dataset combines satellite imagery with forest field plot data collected across Senegal. Its main limitation is geographic scope, it reflects Senegalese conditions and should be validated against local ground truth before use elsewhere. It will be published as an open digital public good, free to reuse and adapt, provided the original source is credited and derivative work is linked back to the project repository. Users are encouraged to contribute improvements back to the community where possible.",
+      "model_characteristics": "The model takes satellite imagery and forest field measurements as input and produces estimates of above-ground biomass across forest landscapes. No specialised hardware is required. The key limitation is geographic bias, it was trained on Senegalese forest conditions and will need retraining with local field data before being applied elsewhere. The tool and datasets are openly licensed for replication and adaptation, but users are asked to credit the original work and link any derivative products back to the source, this helps the community track how the tool develops over time.",
+      "how_to_use": "The replication kit, including satellite data pipelines, field plot datasets, trained models and processing workflows, is openly available for use. Forest agencies can deploy the existing models immediately to generate biomass estimates for their own landscapes; carbon finance practitioners can use the outputs directly to support NDC reporting or funding applications; and researchers can fine-tune the models for different forest types or regions using local field data. Extending the work is straightforward, the modular architecture allows individual components to be upgraded independently.",
+      "maturity": "Dataset > Model > Pilot",
+      "maturity_tags": [
+        "dataset",
+        "model",
+        "pilot"
+      ],
+      "additional_resources": [],
+      "quality_score": 93
     },
     {
       "id": "ui_63",
@@ -4615,194 +4895,13 @@
         }
       ],
       "quality_score": 83
-    },
-    {
-      "id": "ui_85",
-      "slug": "ui_85-enhancing_business_registration_in_kenya_through",
-      "aliases": [
-        "brschatbot",
-        "enhancing_business_registration_in_kenya_through"
-      ],
-      "title": "Enhancing business registration in Kenya through a chatbot",
-      "description": "The BRS-chatbot is an AI-powered chatbot that streamlines the business registration process in Kenya. It aimes to enhance access to information, simplify the registration process, improve user experience through Human-Centered Design principles, and promote compliance with post-registration requirements. The goal is to reduce reliance on intermediaries and make the registration process more user-friendly and efficient",
-      "dataset_links": [],
-      "usecase_links": [
-        {
-          "name": "Link",
-          "url": "https://brs.go.ke/"
-        }
-      ],
-      "access_note_kind": null,
-      "access_note_markdown": null,
-      "has_access_note": false,
-      "hosted_documents": [],
-      "sdgs": [
-        "SDG 8"
-      ],
-      "data_types": [
-        "Text"
-      ],
-      "countries": [
-        "Kenya"
-      ],
-      "license": "",
-      "contact": "Made by People, Kenya (hello@made.ke)",
-      "organizations": "Powered by / Provided by: Made by People, Kenya \nCatalyzed by: FAIR Forward - AI for All, Digital Transformation Centre Kenya, GIZ\n\nFinanced by: BMZ",
-      "editor": "Balthas Seibold",
-      "is_lacuna": false,
-      "has_dataset": false,
-      "has_usecase": true,
-      "image": "/projects/ui_85/images/placeholder_image.jpeg",
-      "data_characteristics": "",
-      "model_characteristics": "",
-      "how_to_use": "",
-      "maturity": "Dataset  > Model > Pilot > Use-Case",
-      "maturity_tags": [
-        "dataset",
-        "model",
-        "pilot",
-        "usecase"
-      ],
-      "additional_resources": [
-        {
-          "name": "Giz Kenya Fair Forward Ai Powered Chatbot (web.archive.org)",
-          "url": "https://web.archive.org/web/20251116031001/https://made.ke/case-studies/giz-kenya-fair-forward-ai-powered-chatbot/"
-        }
-      ],
-      "quality_score": 53
-    },
-    {
-      "id": "ui_86",
-      "slug": "ui_86-kinycomet_automatic_evaluation_of_machine_translat",
-      "aliases": [
-        "kinycomet_automatic_evaluation_of_machine_translat"
-      ],
-      "title": "KinyCOMET: Automatic evaluation of machine translation for Kinyarwanda-English",
-      "description": "Until now, the lack of automatic evaluation tools made Kinyarwanda-English machine translation development slow and expensive, as it required manual human review. We’ve bridged this gap by creating a new evaluation dataset and model. Both are now open-source to support the research community. Our methodology and results are detailed in our upcoming paper for LREC 2026.",
-      "dataset_links": [
-        {
-          "name": "Link",
-          "url": "https://huggingface.co/datasets/chrismazii/kinycomet_dataset"
-        }
-      ],
-      "usecase_links": [
-        {
-          "name": "Link",
-          "url": "https://huggingface.co/chrismazii/kinycomet_unbabel"
-        }
-      ],
-      "access_note_kind": null,
-      "access_note_markdown": null,
-      "has_access_note": false,
-      "hosted_documents": [],
-      "sdgs": [
-        "SDG 9",
-        "SDG 10"
-      ],
-      "data_types": [
-        "Text"
-      ],
-      "countries": [
-        "Rwanda"
-      ],
-      "license": "Apache 2.0",
-      "contact": "",
-      "organizations": "Powered by / Provided by: Mbaza NLP community, German Research Center for Artificial Intelligence (DFKI), Regional AI Hub Rwanda\nCatalyzed by: FAIR Forward - AI for All, GIZ\nFinanced by: BMZ",
-      "editor": "Jan Nehring",
-      "is_lacuna": false,
-      "has_dataset": true,
-      "has_usecase": true,
-      "image": "/projects/ui_86/images/kinycomet.png",
-      "data_characteristics": "4000 rows of parallel sentences English - Kinyarwanda with annotated translation quality as Direct Assessment",
-      "model_characteristics": "[Auto-enriched from linked project resources]\n\nPretrained Model: KinyCOMET-Unbabel, a translation quality estimation model for Kinyarwanda-English (bidirectional). Fine-tuned on Unbabel/wmt22-comet-da using the COMET framework. Input: source text, machine translation, and human reference translation. Output: quality score from 0 to 1. Achieves 0.75 Pearson correlation with human judgments (vs. 0.30 for BLEU), Spearman 0.59, MAE 0.07. A second variant (KinyCOMET-XLM) based on XLM-RoBERTa-large achieves 0.73 Pearson. Trained on 4,323 human-annotated translation pairs scored by 15 annotators following WMT Direct Assessment standards. Install via pip install unbabel-comet; load with comet.load_from_checkpoint(\"chrismazii/kinycomet_unbabel\"). License: Apache 2.0.\n\nSource: https://huggingface.co/datasets/chrismazii/kinycomet_dataset, https://huggingface.co/chrismazii/kinycomet_unbabel",
-      "how_to_use": "[Auto-enriched from linked project resources]\n\n## How to Use This Resource\n\nKinyCOMET is a tool for automatically evaluating the quality of Kinyarwanda-English translations. It scores translations on a 0-to-1 scale, achieving a 0.75 Pearson correlation with human judgments -- roughly 2.5 times more accurate than traditional BLEU scores for this language pair. Scores above 0.8 indicate high-quality translations.\n\nThis resource is valuable for anyone developing or deploying machine translation systems involving Kinyarwanda, whether for development programmes, government communications, educational materials, or other contexts where translation quality matters. Rather than relying on expensive and time-consuming human evaluation for every translation, KinyCOMET provides a reliable automated quality check that can be integrated into translation workflows. The model is available on [Hugging Face as chrismazii/kinycomet_unbabel](https://huggingface.co/chrismazii/kinycomet_unbabel), with an alternative variant (KinyCOMET-XLM, built on XLM-RoBERTa-large) also available. Both can be used through the open-source COMET library.\n\nThe accompanying dataset, hosted on [Hugging Face as chrismazii/kinycomet_dataset](https://huggingface.co/datasets/chrismazii/kinycomet_dataset), contains 4,303 human-annotated translation pairs with quality scores. These were annotated by 15 linguistics students, with a minimum of 3 annotations per sample, covering both translation directions (Kinyarwanda-to-English and English-to-Kinyarwanda) across education, tourism, and general domains. The dataset is split into train (3,497 samples), validation (404), and test (422), and is licensed under Apache 2.0.\n\nResearchers can use this dataset to train improved evaluation models for Kinyarwanda or adapt the methodology to other low-resource African languages where automated translation quality assessment is similarly lacking. The human annotations provide a ground-truth benchmark that did not previously exist for this language pair.\n\nSources:\n- https://huggingface.co/datasets/chrismazii/kinycomet_dataset\n- https://huggingface.co/chrismazii/kinycomet_unbabel",
-      "maturity": "Dataset > Model > Pilot",
-      "maturity_tags": [
-        "dataset",
-        "model",
-        "pilot"
-      ],
-      "additional_resources": [],
-      "quality_score": 69
-    },
-    {
-      "id": "ui_87",
-      "slug": "ui_87-tunga_agrichatbot_open_source_suite_",
-      "aliases": [
-        "tunga_agrichatbot_open_source_suite_",
-        "tunga_chatbot_open_source_suite_"
-      ],
-      "title": "Tunga Agri-Chatbot Open Source Suite -  A full system to build call center agent based voicebots in Kinyarwanda e.g. for Agriculture and other sectors",
-      "description": "Voicebots acting as call center agents—accessible via telephone and capable of speaking local languages—hold immense potential for development cooperation. They provide a vital link to users in rural areas who may lack internet access, have limited literacy, do not speak English or do not own digital devices. We believe voice-driven interfaces are the most intuitive way to bridge the digital divide for these communities.\n\nAs part of the Tunga project, we have developed such a voicebot. To support further innovation in this space, we are releasing a comprehensive suite of foundational AI models and datasets:\n\nText-to-speech model\nCurrently the highest-quality synthetic voice for Kinyarwanda.\nhttps://huggingface.co/C4IR-RW/kinya-flex-tts\n\nKinyaCOLBERT Free\nThe first Kinyarwanda embedding/information retrieval model, essential for building RAG chatbots such as Tunga.\nhttps://huggingface.co/C4IR-RW/kiny-colbert-free\n\nVoice Dataset\nA dataset for training TTS and Speech-to-Text (STT) models.\nhttps://huggingface.co/datasets/C4IR-RW/kinya-ag-tts\n\nInformation Retrieval Dataset\nThe data used to train the KinyaColBERT model.\nhttps://huggingface.co/datasets/C4IR-RW/kinya-ag-retrieval\n\nKinyaBERT\nA foundational BERT-style model serving as the backbone for various Kinyarwanda NLP tasks.\nhttps://huggingface.co/C4IR-RW/kinyabert \n\nSource Code\nAll relevant code for the models and datasets mentioned above.\nhttps://github.com/c4ir-rw/ac-ai-models",
-      "dataset_links": [
-        {
-          "name": "Link",
-          "url": "https://huggingface.co/datasets/C4IR-RW/kinya-ag-tts"
-        },
-        {
-          "name": "Link",
-          "url": "https://huggingface.co/datasets/C4IR-RW/kinya-ag-retrieval"
-        }
-      ],
-      "usecase_links": [
-        {
-          "name": "Link",
-          "url": "https://huggingface.co/C4IR-RW/kinya-flex-tts"
-        },
-        {
-          "name": "Link",
-          "url": "https://huggingface.co/C4IR-RW/kiny-colbert-free"
-        },
-        {
-          "name": "Link",
-          "url": "https://huggingface.co/C4IR-RW/kinyabert"
-        },
-        {
-          "name": "Link",
-          "url": "https://github.com/c4ir-rw/ac-ai-models"
-        }
-      ],
-      "access_note_kind": null,
-      "access_note_markdown": null,
-      "has_access_note": false,
-      "hosted_documents": [],
-      "sdgs": [
-        "SDG 10",
-        "SDG 2"
-      ],
-      "data_types": [
-        "Text",
-        "Voice"
-      ],
-      "countries": [
-        "Rwanda"
-      ],
-      "license": "Apache 2.0",
-      "contact": "https://c4ir.rw/",
-      "organizations": "Powered by / Provided by: C4IR, KiNLP\nCatalyzed by: FAIR Forward - AI for All, GIZ\nFinanced by: BMZ",
-      "editor": "Jan Nehring",
-      "is_lacuna": false,
-      "has_dataset": true,
-      "has_usecase": true,
-      "image": "/projects/ui_87/images/agribot.png",
-      "data_characteristics": "[Auto-enriched from linked project resources]\n\nTwo Kinyarwanda agricultural datasets. (1) TTS Dataset (kinya-ag-tts): 10,480 audio clips (5,242 female, 5,238 male) of voice actors reading agricultural content. Format: WAV mono at 24 kHz, with TSV metadata mapping clip IDs to text. Total size: 2.63 GB. (2) Retrieval Dataset (kinya-ag-retrieval): 984 agricultural passages in Kinyarwanda paired with 19,537 questions. Structured as query-positive-negative triplets for training retrieval models (1,901,200 training triplets, 19,600 dev, 32,900 test). Format: TSV. Includes morphologically parsed versions of passages and queries. Both datasets created by C4IR Rwanda and KiNLP. License: CC-BY 4.0.\n\nSource: https://huggingface.co/datasets/C4IR-RW/kinya-ag-tts, https://huggingface.co/datasets/C4IR-RW/kinya-ag-retrieval",
-      "model_characteristics": "[Auto-enriched from linked project resources]\n\nTwo pretrained models for a Kinyarwanda agricultural IVR system. (1) TTS Model (kinya-flex-tts): Multi-speaker text-to-speech based on MB-iSTFT-VITS2 architecture. Converts Kinyarwanda text to speech at 24 kHz with 3 speaker options (2 female, 1 male). Requires PyTorch; implementation via the DeepKIN-AgAI package. (2) Retrieval Model (kiny-colbert-free): Information retrieval model for RAG, fine-tuned from Davlan/bert-base-multilingual-cased-finetuned-kinyarwanda. 0.2B parameters, F32 safetensors format. Trained on agricultural question-passage pairs. Usable via ragatouille library. Both models by C4IR Rwanda and KiNLP. License: CC-BY 4.0.\n\nSource: https://huggingface.co/C4IR-RW/kinya-flex-tts, https://huggingface.co/C4IR-RW/kiny-colbert-free",
-      "how_to_use": "[Auto-enriched from linked project resources]\n\n## How to Use This Resource\n\nThe Tunga Agri-Chatbot Suite provides the building blocks for a Kinyarwanda-language agricultural advisory system delivered via Interactive Voice Response (IVR). It was built to address capacity gaps in Rwanda's agricultural extension services and is implemented by C4IR Rwanda and KiNLP, supported by GIZ and financed by BMZ.\n\nThis suite is relevant for anyone working on agricultural extension, farmer advisory services, or voice-based information delivery in Rwanda or similar contexts. The core idea is that smallholder farmers can call a phone number and receive spoken agricultural guidance in Kinyarwanda -- covering topics such as pest and disease diagnosis, agro-climatic practices, and MINAGRI support programmes -- without needing internet access or literacy.\n\nThe text-to-speech component (kinya-flex-tts) can generate natural-sounding Kinyarwanda speech with three voice options (two female, one male), outputting audio at broadcast quality (24 kHz). A live demo is available at [huggingface.co/spaces/Professor/c4ir-rw-kinyarwandatts](https://huggingface.co/spaces/Professor/c4ir-rw-kinyarwandatts), where you can hear sample outputs before deciding whether to integrate the model. The underlying TTS training dataset contains 10,482 audio clips recorded by two voice actors, all licensed under CC-BY-4.0.\n\nThe passage retrieval component (kiny-colbert-free) matches farmer questions in Kinyarwanda to relevant agricultural knowledge passages. This is the engine that allows the system to find the right answer from a knowledge base when a farmer asks a question. The accompanying retrieval dataset contains 984 agricultural passages, 19,537 related questions, and nearly 2 million training triplets, also under CC-BY-4.0.\n\nThe suite also includes KinyaBERT, a morphology-aware language model for Kinyarwanda used for passage ranking, available in base (107M parameter) and large (365M parameter) variants. All model code, training scripts, and technical documentation are available in the [DeepKIN-AgAI package on GitHub](https://github.com/c4ir-rw/ac-ai-models/tree/main/DeepKIN-AgAI). All components require attribution to C4IR Rwanda and KiNLP.\n\nDevelopers and researchers can extend this work to other crops, regions, or languages, or integrate these components into existing agricultural advisory platforms. The individual models (TTS, retrieval, language understanding) can also be used independently for other Kinyarwanda language technology applications beyond agriculture. All datasets and models are hosted on Hugging Face under the [C4IR-RW organisation](https://huggingface.co/C4IR-RW).\n\nSources:\n- https://huggingface.co/datasets/C4IR-RW/kinya-ag-tts\n- https://huggingface.co/datasets/C4IR-RW/kinya-ag-retrieval\n- https://huggingface.co/C4IR-RW/kinya-flex-tts\n- https://huggingface.co/C4IR-RW/kiny-colbert-free\n- https://huggingface.co/C4IR-RW/kinyabert\n- https://github.com/c4ir-rw/ac-ai-models",
-      "maturity": "Dataset > Model > Pilot",
-      "maturity_tags": [
-        "dataset",
-        "model",
-        "pilot"
-      ],
-      "additional_resources": [],
-      "quality_score": 61
     }
   ],
   "aliases": {
     "african_trees_for_climate_resilience": "ui_0",
     "african_trees_for_climate_resilience_a": "ui_0",
-    "benmangroves2425_multidimensional_open_datasets_fo": "ui_1",
     "powering_rural_futures_in_west_africa": "ui_2",
+    "benmangroves2425_multidimensional_open_datasets_fo": "ui_1",
     "forest_carbon_sequestration_in_the_congo": "ui_3",
     "classification_data_and_model_for_transportation": "ui_4",
     "datasets_for_transportation_impact_evaluation_in": "ui_4",
@@ -4836,8 +4935,8 @@
     "phenological_dataset_for_ecological_forecasting_ph": "ui_18",
     "dronebased_agricultural_dataset_for_crop_yield": "ui_19",
     "enable_cashew_cocoa_and_coffee_farmers": "ui_19",
-    "imarika__translating_weather_information_into": "ui_21",
-    "innovate_africa_challenge_ai_for_climate": "ui_21",
+    "mozilla_community_licence_project": "ui_20",
+    "our_language_our_data_cocreating_equitable": "ui_20",
     "digital_audio_content_creation_for_womens": "ui_22",
     "empowering_women_across_india_with_audio": "ui_22",
     "combatting_air_pollution_and_ghg_emissions": "ui_23",
@@ -4878,6 +4977,8 @@
     "empowering_coastal_inhabitants_in_indonesia_levera": "ui_38",
     "advancing_oil_palm_mapping_with_social": "ui_39",
     "mitigating_the_impacts_of_oil_palm": "ui_39",
+    "imarika__translating_weather_information_into": "ui_21",
+    "innovate_africa_challenge_ai_for_climate": "ui_21",
     "early_warning_system_advisory_services_on": "ui_40",
     "early_warning_system_ldri": "ui_40",
     "citizen_chatbot_of_the_kenyan_office": "ui_41",
@@ -4896,6 +4997,8 @@
     "livhealth_kiswahili_corpus": "ui_47",
     "wezesha_na_kabambe__offline_swahili": "ui_48",
     "chamachat__powering_chama_loan_groups": "ui_49",
+    "brschatbot": "ui_85",
+    "enhancing_business_registration_in_kenya_through": "ui_85",
     "aiep_mvp_development": "ui_50",
     "providing_farmers_in_kenya_and_bihar": "ui_50",
     "making_ai_understand_3_east_african": "ui_51",
@@ -4919,6 +5022,11 @@
     "solutions_from_space_rwandas_smart_harvest": "ui_60",
     "better_language_translation_for_more_training": "ui_61",
     "preventing_sexual_and_genderbased_violence_": "ui_62",
+    "kinycomet_automatic_evaluation_of_machine_translat": "ui_86",
+    "tunga_agrichatbot_open_source_suite_": "ui_87",
+    "tunga_chatbot_open_source_suite_": "ui_87",
+    "carbonlens": "ui_84",
+    "forest_carbon_stock_monitoring_for_climate": "ui_84",
     "enabling_geoscientists_to_use_machine_learning": "ui_63",
     "from_maps_to_meals_ml_for": "ui_63",
     "ml4eo_for_precision_agriculture": "ui_63",
@@ -4961,19 +5069,14 @@
     "nlp_use_case_strengthening_relevance_of": "ui_81",
     "monitoring_deforestation_predicting_landuse_and_la": "ui_82",
     "datasets_marking_personal_identifiable_information": "ui_83",
-    "preserving_privacy_and_avoiding_gender_bias": "ui_83",
-    "brschatbot": "ui_85",
-    "enhancing_business_registration_in_kenya_through": "ui_85",
-    "kinycomet_automatic_evaluation_of_machine_translat": "ui_86",
-    "tunga_agrichatbot_open_source_suite_": "ui_87",
-    "tunga_chatbot_open_source_suite_": "ui_87"
+    "preserving_privacy_and_avoiding_gender_bias": "ui_83"
   },
   "stats": {
-    "total_projects": 86,
-    "total_datasets": 86,
+    "total_projects": 88,
+    "total_datasets": 88,
     "total_usecases": 56,
     "total_access_note_projects": 12,
-    "total_countries": 24
+    "total_countries": 26
   },
   "filters": {
     "sdgs": [
@@ -5012,6 +5115,7 @@
       "Democratic Republic of Congo",
       "Ecuador",
       "Ghana",
+      "Global / Regional",
       "India",
       "Indonesia",
       "Kenya",
@@ -5021,6 +5125,7 @@
       "Nigeria",
       "Pakistan",
       "Rwanda",
+      "Senegal",
       "South Africa",
       "Tanzania",
       "Togo",
