@@ -1,5 +1,5 @@
 {
-  "total_projects": 88,
+  "total_projects": 87,
   "total_countries": 25,
   "map_data": {
     "AO": {
@@ -300,7 +300,7 @@
     },
     "RW": {
       "name": "Rwanda",
-      "projects": 11,
+      "projects": 10,
       "iso2": "RW",
       "sdgs": [
         "SDG 2",
@@ -361,7 +361,7 @@
     "SDG 7": 3,
     "SDG 8": 2,
     "SDG 9": 1,
-    "SDG 10": 35,
+    "SDG 10": 34,
     "SDG 11": 10,
     "SDG 12": 1,
     "SDG 13": 27,
