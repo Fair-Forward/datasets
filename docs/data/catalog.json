@@ -3298,51 +3298,6 @@
       "quality_score": 56
     },
     {
-      "id": "ui_58",
-      "slug": "ui_58-chatbot_for_public_service_delivery_in",
-      "aliases": [
-        "bot_of_bots_activity__in",
-        "chatbot_for_public_service_delivery_in"
-      ],
-      "title": "Chatbot for Public Service Delivery in Rwanda",
-      "description": "Semantic Chatbot(s) & IVR for G2C services in Public Service Delivery and Good Governance \n in Collaboration with Konza Technopolis, ICTA",
-      "dataset_links": [],
-      "usecase_links": [],
-      "access_note_kind": "info",
-      "access_note_markdown": "Publishing status unclear. Please contact the responsible authors for an update and access to the data: konza@konza.go.ke",
-      "has_access_note": true,
-      "hosted_documents": [],
-      "sdgs": [
-        "SDG 10"
-      ],
-      "data_types": [
-        "Text",
-        "Voice"
-      ],
-      "countries": [
-        "Rwanda"
-      ],
-      "license": "",
-      "contact": "Konza Technopolis ( https://konza.go.ke/)",
-      "organizations": "Powered by / Provided by: Konza Technopolis, ICTA\nCatalyzed by: FAIR Forward - AI for All, GIZ\nFinanced by: BMZ",
-      "editor": "",
-      "is_lacuna": false,
-      "has_dataset": false,
-      "has_usecase": false,
-      "image": "/projects/ui_58/images/placeholder_image.jpeg",
-      "data_characteristics": "",
-      "model_characteristics": "",
-      "how_to_use": "",
-      "maturity": "Dataset > Model > Pilot",
-      "maturity_tags": [
-        "dataset",
-        "model",
-        "pilot"
-      ],
-      "additional_resources": [],
-      "quality_score": 48
-    },
-    {
       "id": "ui_59",
       "slug": "ui_59-a_large_scale_collection_of_voice",
       "aliases": [
@@ -5025,8 +4980,6 @@
     "mbaza_chatbot_rwanda_for_health_related": "ui_56",
     "tunga_agricultural_chatbot": "ui_57",
     "tunga_agricultural_voicebot__agricultural_advise": "ui_57",
-    "bot_of_bots_activity__in": "ui_58",
-    "chatbot_for_public_service_delivery_in": "ui_58",
     "a_large_scale_collection_of_voice": "ui_59",
     "ml4eo_crop_mapping_solution_rwanda": "ui_60",
     "solutions_from_space_rwandas_smart_harvest": "ui_60",
@@ -5082,10 +5035,10 @@
     "preserving_privacy_and_avoiding_gender_bias": "ui_83"
   },
   "stats": {
-    "total_projects": 88,
+    "total_projects": 87,
     "total_datasets": 88,
     "total_usecases": 56,
-    "total_access_note_projects": 12,
+    "total_access_note_projects": 11,
     "total_countries": 26
   },
   "filters": {
