@@ -1,0 +1,1 @@
+An AI-powered voice transcription and translation solution for Rwanda's film and media industry, focused on low-resource African languages. The initiative prioritises ethical AI development by upskilling local transcribers and annotators as active contributors to model improvement rather than replacing them, creating sustainable digital jobs in the creative economy.

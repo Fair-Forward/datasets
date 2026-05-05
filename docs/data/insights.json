@@ -1,5 +1,5 @@
 {
-  "total_projects": 87,
+  "total_projects": 88,
   "total_countries": 25,
   "map_data": {
     "AO": {
@@ -300,12 +300,13 @@
     },
     "RW": {
       "name": "Rwanda",
-      "projects": 10,
+      "projects": 11,
       "iso2": "RW",
       "sdgs": [
         "SDG 2",
         "SDG 4",
         "SDG 5",
+        "SDG 8",
         "SDG 9",
         "SDG 10",
         "SDG 11",
@@ -315,8 +316,10 @@
         "Geospatial/Remote Sensing",
         "Images",
         "Meterological",
+        "Paired voice recordings and text sentences. No personally identifiable information. Content is copyrighted material from the media industry",
         "Text",
-        "Voice"
+        "Voice",
+        "shared under data licensing agreements with studio partners."
       ]
     },
     "MG": {
@@ -359,9 +362,9 @@
     "SDG 4": 1,
     "SDG 5": 10,
     "SDG 7": 3,
-    "SDG 8": 2,
-    "SDG 9": 1,
-    "SDG 10": 34,
+    "SDG 8": 3,
+    "SDG 9": 2,
+    "SDG 10": 35,
     "SDG 11": 10,
     "SDG 12": 1,
     "SDG 13": 27,

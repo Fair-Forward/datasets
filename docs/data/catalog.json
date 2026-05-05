@@ -166,11 +166,20 @@
       ],
       "title": "Forest carbon sequestration in the Congo Basin: combining In Situ Data and Artificial Intelligence to unlock climate finance ",
       "description": "",
-      "dataset_links": [],
+      "dataset_links": [
+        {
+          "name": "Link",
+          "url": "https://data.cmr.forest-atlas.org/"
+        },
+        {
+          "name": "Link",
+          "url": "https://data.cod.forest-atlas.org/"
+        }
+      ],
       "usecase_links": [],
-      "access_note_kind": "info",
-      "access_note_markdown": "Dataset/Use-Case has not been published yet. Please contact the responsible authors for an update and access to the data: \"kkenmoe@wri.org\nmaxwel.manga@wri.org\n nancy.harris@wri.org\ndonald.spencer@wri.org\"",
-      "has_access_note": true,
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
       "hosted_documents": [],
       "sdgs": [],
       "data_types": [],
@@ -183,7 +192,7 @@
       "organizations": "Powered by / Provided by: World Resources Institute (WRI)\nCatalyzed by: Lacuna-Fund / Meridian (Climate-call) & FAIR Forward - AI for All, GIZ\nFinanced by: BMZ",
       "editor": "",
       "is_lacuna": true,
-      "has_dataset": false,
+      "has_dataset": true,
       "has_usecase": false,
       "image": "/projects/ui_3/images/placeholder_image.jpeg",
       "data_characteristics": "",
@@ -325,7 +334,7 @@
       "license": "CC-BY 4.0",
       "contact": "Data354 (https://data354.com/en/)",
       "organizations": "Powered by / Provided by: Data354\nCatalyzed by: FAIR Forward - AI for All, GIZ\nFinanced by: BMZ",
-      "editor": "Elikplim Sabblah",
+      "editor": "Elikplim Sabblah, Ruth Schmidt",
       "is_lacuna": false,
       "has_dataset": true,
       "has_usecase": false,
@@ -691,7 +700,7 @@
         "supporting_food_security_and_climate_change"
       ],
       "title": "Supporting food security and climate change adaptation: AI-powered crop disease identification for maize, tomatoes, pepper in Ghana",
-      "description": "The Crop Disease data set contains images of diseases data found in tomatoes, pepper and maize. The data was collected in 10 districts of the Ashanti Region of Ghana by the RAIL-KNUST team and the Plant Protection and Research Services Directorate (PPRSD) of the Ministry of Food and Agriculture. A 3-month long data challenge was hosted on Zindi based on this data set and the 3 winning models are also available as open source resources to serve as your base models in your research into crop diseases in Ghana.",
+      "description": "This dataset helps to build and improve crop disease detection systems for smallholder farming in Ghana and similar West African contexts. It covers three crops -- tomatoes, pepper and maize -- with 22 disease and health classes in total, making it one of the more comprehensive Afrocentric crop disease image collections available. The data was collected in 10 districts of the Ashanti Region of Ghana by the RAIL-KNUST team and the Plant Protection and Research Services Directorate (PPRSD) of the Ministry of Food and Agriculture. A 3-month long data challenge was hosted on Zindi based on this data set and the 3 winning models are also available as open source resources to serve as your base models in your research into crop diseases in Ghana.",
       "dataset_links": [
         {
           "name": "Link",
@@ -720,14 +729,14 @@
       "license": "CC-BY 4.0",
       "contact": "Responsible AI Lab (RAIL) at Kwame Nkrumah University of Science and Technology (https://rail.knust.edu.gh/)",
       "organizations": "Powered by / Provided by:  Responsible AI Lab at Kwame Nkrumah University of Science and Technology (https://rail.knust.edu.gh/), Ghanaian Plant Protection and Regulatory Services Directorate\nCatalyzed by: FAIR Forward - AI for All, GIZ (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/), Digital Transformation Centre Ghana, GIZ\nFinanced by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",
-      "editor": "Elikplim Sabblah",
+      "editor": "Elikplim Sabblah, Mary Seiwah Afram",
       "is_lacuna": false,
       "has_dataset": true,
       "has_usecase": true,
       "image": "/projects/ui_13/images/placeholder_image.jpeg",
       "data_characteristics": "[Auto-enriched from linked project resources]\n\nAfrocentric crop disease dataset by Responsible AI Lab. Contains annotated leaf images showing healthy specimens and disease-affected leaves at various crop development phases. Data Type: Image. Size: ~20 GB. License: CC BY 4.0. Version 16 (last modified March 2025). Created with a focus on African agricultural diversity.\n\nSource: https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana",
       "model_characteristics": "[Auto-enriched from linked project resources]\n\nCrop disease identification application using computer vision and deep learning on annotated leaf images from African crops. Input: leaf images. Output: disease detection and classification. Dataset created by Responsible AI Lab in collaboration with the Plant Protection and Research Services Directorate (PPRSD) of Ghana's Ministry of Food and Agriculture. Dataset openly available under CC BY 4.0.\n\nSource: https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana",
-      "how_to_use": "[Auto-enriched from linked project resources]\n\nThis dataset is intended for building and improving crop disease detection systems for smallholder farming in Ghana and similar West African contexts. It covers four crops -- cashew, cassava, maize, and tomato -- with 22 disease and health classes in total, making it one of the more comprehensive Afrocentric crop disease image collections available.\n\nYou can use this dataset to train image classification models that identify specific diseases from leaf photos. With nearly 25,000 raw images captured from local farms in Ghana (October-December 2022), plus over 100,000 augmented images with a ready-made train/test split, the dataset is structured for direct use in standard image classification workflows. The raw images are also available separately if you prefer to apply your own augmentation or splitting strategy.\n\nThe dataset is particularly valuable because it captures disease symptoms as they actually appear on farms in Ghana -- subtle, at various stages, and under real field conditions. This makes models trained on this data more likely to perform well in practical agricultural advisory tools than models trained on laboratory images. Agricultural technology developers, extension services, and research institutions can use it to build mobile apps or decision-support tools that help farmers identify and respond to crop diseases early.\n\nResearchers can extend this work by combining it with other crop disease datasets to improve cross-regional generalization, or by adding whole-plant and field-level imagery to complement the current leaf-level focus. The dataset is licensed under CC BY 4.0 and is available on Kaggle (approximately 20 GB). A free Kaggle account is required for download.\n\nKnown limitations: The images are from specific farming regions in Ghana, so models trained exclusively on this data may not generalize well to crops grown under different conditions elsewhere. The dataset focuses on leaf-level symptoms and does not include whole-plant or field-level imagery.\n\nSource: https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana",
+      "how_to_use": "[Auto-enriched from linked project resources]\n\nThis dataset is intended for building and improving crop disease detection systems for smallholder farming in Ghana and similar West African contexts. It covers four crops --tomatoes, pepper and maize -- with 22 disease and health classes in total, making it one of the more comprehensive Afrocentric crop disease image collections available.\n\nYou can use this dataset to train image classification models that identify specific diseases from leaf photos. With nearly 25,000 raw images captured from local farms in Ghana (October-December 2022), plus over 100,000 augmented images with a ready-made train/test split, the dataset is structured for direct use in standard image classification workflows. The raw images are also available separately if you prefer to apply your own augmentation or splitting strategy.\n\nThe dataset is particularly valuable because it captures disease symptoms as they actually appear on farms in Ghana -- subtle, at various stages, and under real field conditions. This makes models trained on this data more likely to perform well in practical agricultural advisory tools than models trained on laboratory images. Agricultural technology developers, extension services, and research institutions can use it to build mobile apps or decision-support tools that help farmers identify and respond to crop diseases early.\n\nResearchers can extend this work by combining it with other crop disease datasets to improve cross-regional generalization, or by adding whole-plant and field-level imagery to complement the current leaf-level focus. The dataset is licensed under CC BY 4.0 and is available on Kaggle (approximately 20 GB). A free Kaggle account is required for download.\n\nKnown limitations: The images are from specific farming regions in Ghana, so models trained exclusively on this data may not generalize well to crops grown under different conditions elsewhere. The dataset focuses on leaf-level symptoms and does not include whole-plant or field-level imagery.\n\nSource: https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana",
       "maturity": "Dataset > Model",
       "maturity_tags": [
         "dataset",
@@ -2715,7 +2724,7 @@
         "wezesha_na_kabambe__offline_swahili"
       ],
       "title": "Wezesha na Kabambe - offline  Swahili audio chatbot for women farmers in Kenya ",
-      "description": "A mobile enabled Swahili audio chatbot not reliant on internet connectivity. It is developed in collaboration with rural small-holder women farmers in Kenya as an alternative source for agricultural information. Using the Mozilla Swahili data sets, the mobile-enabled chatbot can be used on both feature phones (kabambes) and smartphones by rural smallholder farmers. The interactive Swahili chatbot is powered by a database of frequently asked questions from smallholder women farmers, a marginalized and digitally excluded group. It is inspired by existing familiarity, adoption, and acceptance of mobile technologies in rural areas in Kenya.\n\nThis was part of a Mozilla innovation challenge supporting people and projects across East Africa who leverage Common Voice’s open-source voice data set to unlock social and economic opportunities. These grants help to advance the use of open-source voice data for products that support community participation and engagement.",
+      "description": "This Swahili audio chatbot provides agricultural information for women farmers and does not need internet connectivity . It is developed in collaboration with rural small-holder women farmers in Kenya. Using the Mozilla Swahili data sets, the mobile-enabled chatbot can be used on both feature phones (kabambes) and smartphones by rural smallholder farmers. The interactive Swahili chatbot is powered by a database of frequently asked questions from smallholder women farmers, a marginalized and digitally excluded group. It is inspired by existing familiarity, adoption, and acceptance of mobile technologies in rural areas in Kenya.\n\nThis was part of a Mozilla innovation challenge supporting people and projects across East Africa who leverage Common Voice’s open-source voice data set to unlock social and economic opportunities. These grants help to advance the use of open-source voice data for products that support community participation and engagement.",
       "dataset_links": [],
       "usecase_links": [],
       "access_note_kind": "info",
@@ -2834,7 +2843,7 @@
       ],
       "license": "",
       "contact": "Made by People, Kenya (hello@made.ke)",
-      "organizations": "Powered by / Provided by: Made by People, Kenya \nCatalyzed by: FAIR Forward - AI for All, Digital Transformation Centre Kenya, GIZ\n\nFinanced by: BMZ",
+      "organizations": "Powered by / Provided by: Made by People / Tanasuk Technologies Africa, Kenya, CLEAR Global, Tech Innovators Network Kenya (THiNK)\nCatalyzed by: Smart Development Fund, FAIR Forward - AI for All, Digital Transformation Centre Kenya, GIZ\n\nFinanced by: BMZ",
       "editor": "Balthas Seibold",
       "is_lacuna": false,
       "has_dataset": false,
@@ -3258,7 +3267,7 @@
         "tunga_agricultural_voicebot__agricultural_advise"
       ],
       "title": "Tunga Agricultural Voicebot - Agricultural Advise for Farmers in Kinyarwanda ",
-      "description": "In Rwanda, many farmers struggle to access timely, personalized agricultural information. Traditional channels—like radio, TV, and online sources—offer limited reach and interactivity, while extension services and a national call center, staffed by only two agents for over two million farmers, face capacity constraints. To address these gaps, C4IR Rwanda, with support from GIZ Fair Forward (funder) and KiNLP (technology partner), developed a 24/7 AI-enabled Interactive Voice Response (IVR) tool for the Ministry of Agriculture and Animal Resources. Accessible via a Kinyarwanda-speaking hotline, this tool will provide critical support such as pest and disease diagnosis, agro-climatic advisories, and updates on MINAGRI’s programs, including crop insurance and climate-resilient practices. By utilizing AI and IVR technology, this project will make agricultural advisories more accessible, timely, and responsive to farmers’ needs.",
+      "description": "In Rwanda, many farmers struggle to access timely, personalized agricultural information. Traditional channels—like radio, TV, and online sources—offer limited reach and interactivity, while extension services and a national call center, staffed by only two agents for over two million farmers, face capacity constraints. To address these gaps, the Centre for the Fourth Industrial Revolution Rwanda (C4IR), with support from GIZ Fair Forward (catalyzer) and Kigali Natural Language Processing (KiNLP) (technology partner), developed a 24/7 AI-enabled Interactive Voice Response (IVR) tool for the Ministry of Agriculture and Animal Resources. Accessible via a Kinyarwanda-speaking hotline, this tool will provide critical support such as pest and disease diagnosis, agro-climatic advisories, and updates on programmes of the Ministry of Agriculture and Animal Resources (MINAGRI), including crop insurance and climate-resilient practices. By utilizing AI and IVR technology, this project will make agricultural advisories more accessible, timely, and responsive to farmers’ needs.",
       "dataset_links": [
         {
           "name": "Link",
@@ -3283,7 +3292,7 @@
       ],
       "license": "",
       "contact": "Center for the Fourth Industrial Revolution Rwanda (info@c4ir.rw)",
-      "organizations": "Powered by / Provided by: MINAGRI, C4IR, KiNLP\nCatalyzed by: FAIR Forward - AI for All, GIZ\nFinanced by: BMZ",
+      "organizations": "Powered by / Provided by: Ministry of Agriculture and Animal Resources (MINAGRI), Centre for the Fourth Industrial Revolution Rwanda (C4IR), Kigali Natural Language Processing (KiNLP)\nCatalyzed by: FAIR Forward - AI for All, GIZ\nFinanced by: BMZ",
       "editor": "Jan Nehring",
       "is_lacuna": false,
       "has_dataset": true,
@@ -3389,7 +3398,7 @@
       ],
       "license": "MIT",
       "contact": "Benson Kenduiyvo (b.kenduiywo@cgiar.org)",
-      "organizations": "Powered by / Provided by:\nRwanda Space Agency (RSA), the Rwandan Ministry of Agriculture, Alliance of Bioversity International and CIAT\nCatalyzed by:\nFAIR Forward - AI for All, GIZ, Digital Transformation Centre Rwanda\nFinanced by:\nBMZ",
+      "organizations": "Powered by / Provided by:\nRwanda Space Agency (RSA), the Rwandan Ministry of Agriculture, Alliance of Bioversity International and CIAT\nCatalyzed by:\nFAIR Forward - AI for All (GIZ), Digital Transformation Centre Rwanda\nFinanced by:\nBMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",
       "editor": "Golo Rademacher",
       "is_lacuna": false,
       "has_dataset": true,
@@ -3465,7 +3474,7 @@
       ],
       "license": "Permissive",
       "contact": "Digital Umuganda (https://digitalumuganda.com/#contact), FAIR Forward Rwanda",
-      "organizations": "Powered by / Provided by: Atingi, Digital Umuganda, Clear Global\nCatalyzed by: GIZ\nFinanced by: BMZ",
+      "organizations": "Powered by / Provided by: Digital Umuganda\nCatalyzed by: Atingi, \"FAIR Forward - AI for All\" (GIZ)\nFinanced by: BMZ",
       "editor": "Isaac",
       "is_lacuna": false,
       "has_dataset": true,
@@ -3482,8 +3491,8 @@
       ],
       "additional_resources": [
         {
-          "name": "moodlemoot.org",
-          "url": "https://moodlemoot.org/2024/timetable/event/246/"
+          "name": "Moodlemoot Global Day 3 (moodle.com)",
+          "url": "https://moodle.com/news/moodlemoot-global-day-3/"
         },
         {
           "name": "aiopeneducation.pubpub.org",
@@ -3518,7 +3527,7 @@
       ],
       "license": "CC0 1.0",
       "contact": "Digital Umuganda (Samuel), HDI-Rwanda (Louange Twahirwa Gutabarwa)",
-      "organizations": "Powered by / Provided by: Health Development Initiative (HDI) Rwanda\nCatalyzed by: GIZ (Sexualised and Gender-Based Violence (P-SGBV) Project), GIZ ZFD SIGA Refugee Programme, FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)\nFinanced by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",
+      "organizations": "Powered by / Provided by: Health Development Initiative (HDI) Rwanda\nCatalyzed by: GIZ (Sexualised and Gender-Based Violence (P-SGBV) Project), GIZ ZFD SIGA Refugee Programme, FAIR Forward - AI for All (GIZ) (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)\nFinanced by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",
       "editor": "Isaac Manzi, Christiane Adamczyk",
       "is_lacuna": false,
       "has_dataset": false,
@@ -3573,7 +3582,7 @@
       ],
       "license": "Apache 2.0",
       "contact": "Chris Prince Mazimpaka chrismazimpaka7@gmail.com",
-      "organizations": "Powered by / Provided by: Mbaza NLP community, German Research Center for Artificial Intelligence (DFKI), Regional AI Hub Rwanda\nCatalyzed by: FAIR Forward - AI for All, GIZ\nFinanced by: BMZ",
+      "organizations": "Powered by / Provided by: Mbaza NLP community, German Research Center for Artificial Intelligence (DFKI)\nCatalyzed by: Regional AI Hub Rwanda, FAIR Forward - AI for All, GIZ\nFinanced by: BMZ",
       "editor": "Jan Nehring",
       "is_lacuna": false,
       "has_dataset": true,
@@ -3645,7 +3654,7 @@
       ],
       "license": "Apache 2.0",
       "contact": "https://c4ir.rw/",
-      "organizations": "Powered by / Provided by: C4IR, KiNLP\nCatalyzed by: FAIR Forward - AI for All, GIZ\nFinanced by: BMZ",
+      "organizations": "Powered by / Provided by: Centre for the Fourth Industrial Revolution Rwanda (C4IR), Kigali Natural Language Processing (KiNLP)\nCatalyzed by: FAIR Forward - AI for All, GIZ\nFinanced by: BMZ",
       "editor": "Jan Nehring",
       "is_lacuna": false,
       "has_dataset": true,
@@ -3667,7 +3676,7 @@
       "id": "ui_84",
       "slug": "ui_84-forest_carbon_stock_monitoring_for_climate",
       "aliases": [
-        "carbonlens",
+        "carbonlens__forest_carbon_stock_monitoring",
         "forest_carbon_stock_monitoring_for_climate"
       ],
       "title": "Forest Carbon Stock Monitoring for Climate Accountability in Senegal",
@@ -3689,7 +3698,7 @@
       ],
       "license": "",
       "contact": "data354 (gabriel.fonlladosa@data354.co)",
-      "organizations": "GIZ: Data Economy and FAIR Forward\n\nMinistère de l'Environnement et de la Transition Écologique (METE)- Senegal, \nData 354\nThe Estonian Centre for International Development (ESTDEV)\nAfrican Union\nD4D Hub — Data for Development Hub",
+      "organizations": "Powered by / Provided by: Data 354, Ministère de l'Environnement et de la Transition Écologique (METE)- Senegal \nCatalyzed by: Data Economy, GIZ / FAIR Forward - AI for All, GIZ / The Estonian Centre for International Development (ESTDEV), African Union, D4D Hub — Data for Development HubFinanced by: BMZ",
       "editor": "Elikplim Sabblah",
       "is_lacuna": false,
       "has_dataset": false,
@@ -4741,7 +4750,7 @@
       ],
       "license": "",
       "contact": "CSBAG (https://www.csbag.org/)",
-      "organizations": "Powered by / Provided by: Civil Society and Budget Advocacy Group (CSBAG), GIZ\nCatalyzed by: FAIR Forward - AI for All, GIZ\nFinanced by: BMZ",
+      "organizations": "Powered by / Provided by: Civil Society and Budget Advocacy Group (CSBAG)\nCatalyzed by: GIZ Country Office Uganda, FAIR Forward - AI for All, GIZ\nFinanced by: BMZ",
       "editor": "",
       "is_lacuna": false,
       "has_dataset": false,
@@ -4865,6 +4874,50 @@
         }
       ],
       "quality_score": 83
+    },
+    {
+      "id": "ui_88",
+      "slug": "ui_88-rwanda_media_voice_bridge",
+      "aliases": [
+        "c4ir_grant_rwanda_media_voice_bridge",
+        "pending_",
+        "rwanda_media_voice_bridge"
+      ],
+      "title": "Rwanda Media Voice Bridge",
+      "description": "An AI-powered voice transcription and translation solution for Rwanda's film and media industry, focused on low-resource African languages. The initiative prioritises ethical AI development by upskilling local transcribers and annotators as active contributors to model improvement rather than replacing them, creating sustainable digital jobs in the creative economy.",
+      "dataset_links": [],
+      "usecase_links": [],
+      "access_note_kind": "info",
+      "access_note_markdown": "Dataset will include voice recordings from film and TV productions, paired with transcriptions in text format. Data sharing platform pending.\n\nModels used include off-the-shelf open-source Speech-to-Text (STT) and Machine Translation (MT) models, benchmarking report against the dataset to be shared. No training on copyright data.",
+      "has_access_note": true,
+      "hosted_documents": [],
+      "sdgs": [
+        "SDG 8",
+        "SDG 9",
+        "SDG 10"
+      ],
+      "data_types": [
+        "Paired voice recordings and text sentences. No personally identifiable information. Content is copyrighted material from the media industry",
+        "shared under data licensing agreements with studio partners."
+      ],
+      "countries": [
+        "Rwanda"
+      ],
+      "license": "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)",
+      "contact": "C4IR, juwizeye@c4ir.com",
+      "organizations": "GIZ Film Made in Africa, C4IR, Duka Labs",
+      "editor": "Isaac Manzi",
+      "is_lacuna": false,
+      "has_dataset": false,
+      "has_usecase": false,
+      "image": null,
+      "data_characteristics": "Parallel voice-text corpus in low-resource East and West African languages, sourced from professional film and TV productions. Data quality reflects studio-grade audio. Responsible AI considerations include informed consent from content owners, a no-commercial-use clause, right-to-retract provisions, and no third-party sharing. Bias assessments should account for genre diversity, speaker demographics, and dialect representation across the corpus.",
+      "model_characteristics": "No training, only testing for benchmarks. The pipeline combines Badrex's Wav2Vec-BERT 2.0 for Kinyarwanda ASR, Nvidia's SortFormer streaming model for speaker diarisation (current state-of-the-art), and MbazaNLP's fine-tuned NLLB model for open-source English-Kinyarwanda translation, with Gemini 3.1 Pro serving as the best-performing option for context-aware translation. All models accept audio or text input and output transcriptions, speaker segments, and translations optimised for media dialogue and subtitling workflows.",
+      "how_to_use": "Users can access transcription and translation services through a web-based platform integrated into post-production subtitling workflows. The solution operates on a usage-based pricing model agreed between the product owner and local studios. Resources include technical documentation, community-maintained model improvements, and training materials for onboarding production teams. Computing costs scale with usage and can be optimised through cloud hosting or shared infrastructure.",
+      "maturity": "Early stage, functional demo available.",
+      "maturity_tags": [],
+      "additional_resources": [],
+      "quality_score": 96
     }
   ],
   "aliases": {
@@ -4993,7 +5046,7 @@
     "kinycomet_automatic_evaluation_of_machine_translat": "ui_86",
     "tunga_agrichatbot_open_source_suite_": "ui_87",
     "tunga_chatbot_open_source_suite_": "ui_87",
-    "carbonlens": "ui_84",
+    "carbonlens__forest_carbon_stock_monitoring": "ui_84",
     "forest_carbon_stock_monitoring_for_climate": "ui_84",
     "enabling_geoscientists_to_use_machine_learning": "ui_63",
     "from_maps_to_meals_ml_for": "ui_63",
@@ -5037,11 +5090,14 @@
     "nlp_use_case_strengthening_relevance_of": "ui_81",
     "monitoring_deforestation_predicting_landuse_and_la": "ui_82",
     "datasets_marking_personal_identifiable_information": "ui_83",
-    "preserving_privacy_and_avoiding_gender_bias": "ui_83"
+    "preserving_privacy_and_avoiding_gender_bias": "ui_83",
+    "c4ir_grant_rwanda_media_voice_bridge": "ui_88",
+    "pending_": "ui_88",
+    "rwanda_media_voice_bridge": "ui_88"
   },
   "stats": {
-    "total_projects": 87,
-    "total_datasets": 89,
+    "total_projects": 88,
+    "total_datasets": 91,
     "total_usecases": 56,
     "total_access_note_projects": 10,
     "total_countries": 26
@@ -5068,9 +5124,11 @@
       "Images",
       "Meterological",
       "Other",
+      "Paired voice recordings and text sentences. No personally identifiable information. Content is copyrighted material from the media industry",
       "Tabular",
       "Text",
-      "Voice"
+      "Voice",
+      "shared under data licensing agreements with studio partners."
     ],
     "countries": [
       "Angola",
