@@ -1,5 +1,5 @@
 {
-  "total_projects": 88,
+  "total_projects": 87,
   "total_countries": 25,
   "map_data": {
     "AO": {
@@ -316,10 +316,8 @@
         "Geospatial/Remote Sensing",
         "Images",
         "Meterological",
-        "Paired voice recordings and text sentences. No personally identifiable information. Content is copyrighted material from the media industry",
         "Text",
-        "Voice",
-        "shared under data licensing agreements with studio partners."
+        "Voice"
       ]
     },
     "MG": {
