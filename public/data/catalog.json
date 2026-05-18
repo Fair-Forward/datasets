@@ -2,12 +2,12 @@
   "projects": [
     {
       "id": "ui_0",
-      "slug": "ui_0-african_trees_for_climate_resilience_",
+      "slug": "ui_0-african_trees_for_climate_resilience_a",
       "aliases": [
         "african_trees_for_climate_resilience",
-        "african_trees_for_climate_resilience_"
+        "african_trees_for_climate_resilience_a"
       ],
-      "title": "African Trees for Climate Resilience - A Comprehensive Database",
+      "title": "African Trees for Climate Resilience: A Comprehensive Database ",
       "description": "Extensive bioinformatics resource that leverages tree species’ distribution, medicinal, food provision, and other trait data, together with southern African trees’ climate relationships and growth characteristics for climate adaptation and mitigation planning.  The data can serve to promote the use of indigenous trees for reforestation, regenerative agriculture, ecological restoration, human health and livelihood support, and urban afforestation programs to adapt to and mitigate the impacts of climate change.",
       "dataset_links": [
         {
@@ -2244,7 +2244,7 @@
       "license": "",
       "contact": "Betsy Muriithi <bmuriithi@strathmore.edu>,  Strathmore University’s iLabAfrica",
       "organizations": "Powered by / Provided by: Strathmore University’s iLabAfrica\nCatalyzed by: Smart Africa (https://smartafrica.org/), FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/), GIZ , Intellecap, intel.liftoff, Climate Change AI; Mozilla Foundation\nFinanced by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/), Gates Foundation",
-      "editor": "Golo Rademacher; Balthas Seibold; Daniel Brumund",
+      "editor": "Golo Rademacher; Daniel Brumund",
       "is_lacuna": false,
       "has_dataset": false,
       "has_usecase": true,
@@ -4932,7 +4932,7 @@
   ],
   "aliases": {
     "african_trees_for_climate_resilience": "ui_0",
-    "african_trees_for_climate_resilience_": "ui_0",
+    "african_trees_for_climate_resilience_a": "ui_0",
     "powering_rural_futures_in_west_africa": "ui_2",
     "benmangroves2425_multidimensional_open_datasets_fo": "ui_1",
     "forest_carbon_sequestration_in_the_congo": "ui_3",
