@@ -1,6 +1,7 @@
 import { withBasePath } from '../utils/basePath'
 import { SDG_COLORS } from '../utils/sdgColors'
 import { parseContact, licenseLabel, firstUrl } from '../utils/parsing'
+import { hasHealthSignal, availabilityLabel, contextLabel } from '../utils/health'
 
 const getSdgFallbackColor = (sdgs) => {
   if (!sdgs || sdgs.length === 0) return null
@@ -9,7 +10,9 @@ const getSdgFallbackColor = (sdgs) => {
 }
 
 const ProjectCard = ({ project, onClick, onFilterSDG }) => {
-  const { title, description, sdgs, data_types, image, has_dataset, has_usecase, is_lacuna, has_access_note, countries = [], license, quality_score } = project
+  const { title, description, sdgs, data_types, image, has_dataset, has_usecase, is_lacuna, has_access_note, countries = [], license, quality_score, health } = project
+  const showHealth = hasHealthSignal(health)
+  const healthContext = showHealth ? contextLabel(health.context) : null
   const qs = quality_score || 0
   const completeness = qs >= 90 ? 5 : qs >= 75 ? 4 : qs >= 60 ? 3 : qs >= 40 ? 2 : 1
 
@@ -88,6 +91,15 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
             <div className="meta-item">
               <i className="fas fa-map-marker-alt"></i>
               <span>{countryLabel}</span>
+            </div>
+          )}
+          {showHealth && (
+            <div className={`health-badge health-${health.availability}`}>
+              <span className="health-dot" aria-hidden="true"></span>
+              <span>
+                {availabilityLabel(health.availability)}
+                {healthContext ? ` · ${healthContext}` : ''}
+              </span>
             </div>
           )}
         </div>

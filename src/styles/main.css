@@ -2352,3 +2352,82 @@ a.additional-resource-item i {
         flex: 1 1 auto;
     }
 }
+
+/* ===================================
+   Health / sustainability signal
+   =================================== */
+
+/* Shared availability dot: filled for available, hollow for unavailable. No red --
+   the signal is informative, not punitive. */
+.health-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: var(--radius-full);
+    flex-shrink: 0;
+}
+
+.health-available .health-dot {
+    background-color: var(--color-success);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-success) 22%, transparent);
+}
+
+.health-unavailable .health-dot {
+    background-color: transparent;
+    border: 1px solid var(--text-light);
+}
+
+/* Card badge */
+.health-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: var(--text-xs);
+    color: var(--text-light);
+}
+
+.health-badge.health-unavailable {
+    color: var(--text-light);
+}
+
+/* Detail panel status block */
+.panel-status {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.75rem 0.9rem;
+    margin: 0.75rem 0;
+    background: var(--color-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+}
+
+.panel-status .health-dot {
+    margin-top: 0.4rem;
+}
+
+.panel-status-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.panel-status-headline {
+    font-size: var(--text-md);
+    font-weight: 600;
+    color: var(--text);
+}
+
+.panel-status-context {
+    font-weight: 500;
+    color: var(--text-light);
+}
+
+.panel-status-detail {
+    font-size: var(--text-sm);
+    color: var(--text-light);
+}
+
+.panel-status-broken {
+    font-size: var(--text-sm);
+    color: var(--color-warning);
+}
