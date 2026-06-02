@@ -3,7 +3,7 @@ import os
 import re
 import argparse
 from datetime import datetime
-from utils import KNOWN_COUNTRIES, DEFAULT_CREDENTIALS_PATH, get_gsheet_client
+from utils import KNOWN_COUNTRIES, DEFAULT_CREDENTIALS_PATH, get_gsheet_client, check_urls
 from generate_catalog_data import KNOWN_LICENSE_VALUES
 
 parser = argparse.ArgumentParser(description='Validate catalog data and generate quality report.')
@@ -154,9 +154,6 @@ def _url_likely_cause(status):
 
 def validate_urls(projects):
     """Check all HTTP URLs in the catalog for accessibility."""
-    import requests
-    from concurrent.futures import ThreadPoolExecutor, as_completed
-
     url_map = {}  # url -> [project_titles]
     for p in projects:
         title = p.get('title', p.get('id', '?'))
@@ -169,50 +166,16 @@ def validate_urls(projects):
     if not url_map:
         return []
 
-    quick_headers = {'User-Agent': 'FairForward-DataCatalog/1.0'}
-    browser_headers = {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-    }
-    broken = []
-
-    def check_url(url, headers):
-        try:
-            resp = requests.head(url, timeout=10, allow_redirects=True, headers=headers)
-            if resp.status_code in (403, 405):
-                resp = requests.get(url, timeout=10, allow_redirects=True,
-                                    stream=True, headers=headers)
-                resp.close()
-            return url, resp.status_code, None
-        except requests.exceptions.RequestException as e:
-            return url, None, type(e).__name__
-
-    # Pass 1: quick check all URLs
     print(f"\n  Checking {len(url_map)} unique URLs...")
-    failed = {}
-    with ThreadPoolExecutor(max_workers=10) as executor:
-        futures = {executor.submit(check_url, url, quick_headers): url for url in url_map}
-        for future in as_completed(futures):
-            url, status, error = future.result()
-            if error:
-                failed[url] = error
-            elif status and status >= 400:
-                failed[url] = status
+    results = check_urls(url_map.keys())
 
-    # Pass 2: retry failures with browser-like headers
-    if failed:
-        print(f"  Retrying {len(failed)} failed URLs with browser headers...")
-        with ThreadPoolExecutor(max_workers=10) as executor:
-            futures = {executor.submit(check_url, url, browser_headers): url
-                       for url in failed}
-            for future in as_completed(futures):
-                url, status, error = future.result()
-                result_status = error if error else status
-                if error or (status and status >= 400):
-                    broken.append({'url': url, 'status': result_status,
-                                   'likely_cause': _url_likely_cause(result_status),
-                                   'projects': url_map[url]})
-
+    broken = []
+    for url, res in results.items():
+        if not res['ok']:
+            status = res['status'] if res['status'] is not None else res['error']
+            broken.append({'url': url, 'status': status,
+                           'likely_cause': _url_likely_cause(status),
+                           'projects': url_map[url]})
     return broken
 
 

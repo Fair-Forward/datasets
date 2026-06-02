@@ -4,6 +4,7 @@ import remarkGfm from 'remark-gfm'
 import { withBasePath, resolvePublicHref } from '../utils/basePath'
 import { SDG_COLORS } from '../utils/sdgColors'
 import { parseContact, licenseLabel, firstUrl } from '../utils/parsing'
+import { hasHealthSignal, availabilityLabel, contextLabel, healthDetailLines } from '../utils/health'
 
 const markdownLinkComponents = {
   a: ({ href, children, ...props }) => {
@@ -194,6 +195,11 @@ const DetailPanel = ({ project, onClose }) => {
   const dataTypes = project?.data_types || []
   const sdgNumbers = extractSdgNumbers(sdgs)
   const organizations = parseOrganizations(project?.organizations)
+  const health = project?.health
+  const showHealth = hasHealthSignal(health)
+  const healthContext = showHealth ? contextLabel(health.context) : null
+  const healthDetails = showHealth ? healthDetailLines(health) : []
+  const brokenLinkCount = showHealth ? (health.broken_links?.length || 0) : 0
 
   // Compute license value for metadata grid
   const rawLicense = project?.license?.trim()
@@ -431,6 +437,31 @@ const DetailPanel = ({ project, onClose }) => {
                       <i className="fas fa-copyright"></i> {renderLicense(licenseValue)}
                     </span>
                   )}
+                </div>
+              )}
+
+              {/* B2) Health / sustainability status */}
+              {showHealth && (
+                <div className={`panel-status health-${health.availability}`}>
+                  <span className="health-dot" aria-hidden="true"></span>
+                  <div className="panel-status-body">
+                    <span className="panel-status-headline">
+                      {availabilityLabel(health.availability)}
+                      {healthContext && (
+                        <span className="panel-status-context"> · {healthContext}</span>
+                      )}
+                    </span>
+                    {healthDetails.length > 0 && (
+                      <span className="panel-status-detail">{healthDetails.join(' · ')}</span>
+                    )}
+                    {brokenLinkCount > 0 && (
+                      <span className="panel-status-broken">
+                        {brokenLinkCount === 1
+                          ? '1 link did not respond at the last check'
+                          : `${brokenLinkCount} links did not respond at the last check`}
+                      </span>
+                    )}
+                  </div>
                 </div>
               )}
 

@@ -72,12 +72,22 @@ const CatalogPage = () => {
   const loadCatalog = useCallback(() => {
     setLoading(true)
     setError(null)
-    fetch(withBasePath('data/catalog.json'))
-      .then(res => {
+    // health.json is enriched separately (weekly) and merged here by id. A missing or
+    // failed fetch must never break the catalog -- the signal is purely additive.
+    const healthPromise = fetch(withBasePath('data/health.json'))
+      .then(res => (res.ok ? res.json() : null))
+      .catch(() => null)
+    Promise.all([
+      fetch(withBasePath('data/catalog.json')).then(res => {
         if (!res.ok) throw new Error('Failed to load catalog data')
         return res.json()
-      })
-      .then(data => {
+      }),
+      healthPromise
+    ])
+      .then(([data, health]) => {
+        if (health?.entries && Array.isArray(data.projects)) {
+          data.projects = data.projects.map(p => ({ ...p, health: health.entries[p.id] || null }))
+        }
         setCatalogData(data)
         setLoading(false)
         

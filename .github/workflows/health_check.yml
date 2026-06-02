@@ -1,0 +1,50 @@
+name: Weekly Health Check
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'   # 09:00 UTC every Monday
+  workflow_dispatch:        # Allow manual triggering
+
+permissions:
+  contents: write
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    # Avoid racing the Google Sheet sync, which regenerates catalog.json
+    concurrency:
+      group: health-check
+      cancel-in-progress: true
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        ref: main
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.x"
+
+    - name: Install dependencies
+      run: pip install requests
+
+    - name: Run health check
+      env:
+        # Authenticated GitHub API calls get 5000 req/hr instead of 60
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        RUN_TIMESTAMP=$(date -u +'%Y-%m-%d') python scripts/health_check.py
+
+    - name: Commit and push results
+      run: |
+        git config --global user.name "GitHub Actions (Health Check)"
+        git config --global user.email "actions@github.com"
+        git add public/data/health.json docs/data/health.json
+        if git diff --staged --quiet; then
+          echo "No health changes to commit."
+        else
+          git commit -m "Weekly health check $(date -u +'%Y-%m-%d')"
+          git push
+        fi
