@@ -82,6 +82,67 @@ def _clean_url(url):
     return url.rstrip('.;,')
 
 
+# Headers for URL reachability checks. The quick pass uses a plain agent; failures are
+# retried with browser-like headers because many hosts block non-browser requests.
+_QUICK_HEADERS = {'User-Agent': 'FairForward-DataCatalog/1.0'}
+_BROWSER_HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+}
+
+
+def _request_url(url, headers, timeout=10):
+    """HEAD a URL (GET fallback on 403/405). Returns (url, status_code, error_name)."""
+    import requests
+    try:
+        resp = requests.head(url, timeout=timeout, allow_redirects=True, headers=headers)
+        if resp.status_code in (403, 405):
+            resp = requests.get(url, timeout=timeout, allow_redirects=True,
+                                stream=True, headers=headers)
+            resp.close()
+        return url, resp.status_code, None
+    except requests.exceptions.RequestException as e:
+        return url, None, type(e).__name__
+
+
+def check_urls(urls, max_workers=10):
+    """Check a collection of http(s) URLs for reachability.
+
+    Two passes: a quick concurrent check, then a browser-header retry for anything that
+    failed (bot detection produces many false negatives on the first pass). Unsafe schemes
+    and non-http URLs are skipped.
+
+    Returns dict: {url: {'ok': bool, 'status': int|None, 'error': str|None}}.
+    """
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+
+    unique = [u for u in dict.fromkeys(urls)
+              if isinstance(u, str) and u.startswith('http') and _is_safe_url(u)]
+    results = {}
+    if not unique:
+        return results
+
+    failed = []
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = {executor.submit(_request_url, u, _QUICK_HEADERS): u for u in unique}
+        for future in as_completed(futures):
+            url, status, error = future.result()
+            if error or (status and status >= 400):
+                failed.append(url)
+            else:
+                results[url] = {'ok': True, 'status': status, 'error': None}
+
+    if failed:
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            futures = {executor.submit(_request_url, u, _BROWSER_HEADERS): u for u in failed}
+            for future in as_completed(futures):
+                url, status, error = future.result()
+                ok = not error and not (status and status >= 400)
+                results[url] = {'ok': ok, 'status': status, 'error': error}
+
+    return results
+
+
 def extract_http_links(text):
     """
     Extract http(s) links only (for Dataset Link / Model/Use-Case columns).
