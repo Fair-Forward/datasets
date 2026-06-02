@@ -20,6 +20,7 @@ Output: public/data/health.json and docs/data/health.json (the same dual-locatio
 catalog.json uses), so the live site picks up the signal without an app rebuild.
 """
 import json
+import math
 import os
 import re
 import argparse
@@ -40,6 +41,11 @@ args = parser.parse_args()
 # Thresholds (days). Kept in sync with docs/health-thresholds.md.
 RECENT_DAYS = 365        # < 12 months -> recently_updated
 STALE_DAYS = 547         # > 18 months -> no_recent_updates (12-18 month band stays untagged)
+
+# Activity scoring (feeds the catalog ranking). Documented in docs/health-thresholds.md.
+ACTIVITY_ZERO_DAYS = 730   # recency decays to 0 at ~2 years since the last activity
+ARCHIVE_RECENCY = 0.6      # stable archives: durable & citable -- positive, but not "fresh"
+POP_LOG_FULL = 4           # 10^4 (=10,000) downloads/stars saturates popularity at 1.0
 
 # Statuses that mean "the resource exists but blocks automated or unauthenticated requests".
 # A human reaches these fine in a browser, so we must NOT claim the link is unavailable --
@@ -179,6 +185,7 @@ def fetch_github(owner, repo, cache):
                 'pushed_at': pushed_at,
                 'archived': bool(data.get('archived')),
                 'days_since_commit': days_since(pushed_at),
+                'stars': data.get('stargazers_count'),
             }
     except (requests.exceptions.RequestException, ValueError):
         result = None
@@ -242,6 +249,53 @@ def compute_context(has_archive, github, hf):
     return None  # 12-18 month band: no nagging.
 
 
+def _recency_component(context, github, hf):
+    """0-1 recency signal, or None when no host exposes activity. Archives score a fixed mid value."""
+    if context == 'stable_archive':
+        return ARCHIVE_RECENCY
+    if github and github.get('archived'):
+        return 0.0
+    days = [d for d in (
+        github.get('days_since_commit') if github else None,
+        hf.get('days_since_modified') if hf else None,
+    ) if d is not None]
+    if not days:
+        return None
+    return max(0.0, min(1.0, 1 - min(days) / ACTIVITY_ZERO_DAYS))
+
+
+def _popularity_component(github, hf):
+    """0-1 popularity from HF downloads / GitHub stars (log-scaled), or None if neither exists."""
+    metrics = []
+    if hf and isinstance(hf.get('downloads'), int):
+        metrics.append(hf['downloads'])
+    if github and isinstance(github.get('stars'), int):
+        metrics.append(github['stars'])
+    if not metrics:
+        return None
+    return max(0.0, min(1.0, math.log10(max(metrics) + 1) / POP_LOG_FULL))
+
+
+def compute_activity(context, github, hf):
+    """0-100 activity score from recency + popularity, or None when the entry exposes no signal.
+
+    Recency is weighted above popularity because more hosts expose it. Returns None (not 0) when
+    there is nothing to measure, so the ranking stays neutral for non-GitHub/HF entries instead of
+    penalising them for their host. See docs/health-thresholds.md.
+    """
+    recency = _recency_component(context, github, hf)
+    popularity = _popularity_component(github, hf)
+    parts = []
+    if recency is not None:
+        parts.append((recency, 0.6))
+    if popularity is not None:
+        parts.append((popularity, 0.4))
+    if not parts:
+        return None
+    total_weight = sum(w for _, w in parts)
+    return round(100 * sum(value * w for value, w in parts) / total_weight)
+
+
 def build_entry_health(entry, link_results, checked_at, gh_cache, hf_cache):
     """Assemble the health record for one catalog entry, or None if it has no in-scope links."""
     urls = in_scope_urls(entry)
@@ -267,10 +321,13 @@ def build_entry_health(entry, link_results, checked_at, gh_cache, hf_cache):
             if parsed:
                 hf = fetch_hf(parsed[0], parsed[1], hf_cache)
 
+    context = compute_context(has_archive, github, hf)
+
     return {
         'availability': availability,
         'checked_at': checked_at,
-        'context': compute_context(has_archive, github, hf),
+        'context': context,
+        'activity_score': compute_activity(context, github, hf),
         'link_count': len(urls),
         'broken_links': broken_links,
         'github': github,

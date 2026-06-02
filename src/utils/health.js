@@ -21,6 +21,28 @@ export const availabilityLabel = (availability) => AVAILABILITY_LABELS[availabil
 
 export const contextLabel = (context) => CONTEXT_LABELS[context] || null
 
+// Status filter vocabulary: availability + context as one list, in display order.
+export const STATUS_OPTIONS = [
+  { value: 'available', label: AVAILABILITY_LABELS.available },
+  { value: 'unavailable', label: AVAILABILITY_LABELS.unavailable },
+  { value: 'recently_updated', label: CONTEXT_LABELS.recently_updated },
+  { value: 'stable_archive', label: CONTEXT_LABELS.stable_archive },
+  { value: 'no_recent_updates', label: CONTEXT_LABELS.no_recent_updates },
+]
+
+// The status keys an entry matches (its availability plus any context tag).
+export const entryStatusValues = (health) => {
+  if (!health) return []
+  const values = []
+  if (health.availability) values.push(health.availability)
+  if (health.context) values.push(health.context)
+  return values
+}
+
+// Filter predicate: an empty status matches everything.
+export const matchesStatus = (health, status) =>
+  !status || entryStatusValues(health).includes(status)
+
 const fmtDate = (iso) => {
   if (!iso) return null
   const d = new Date(iso)
@@ -49,6 +71,9 @@ export const healthDetailLines = (health) => {
     } else {
       const updated = fmtMonthYear(health.github.pushed_at)
       if (updated) lines.push(`Last commit ${updated}`)
+    }
+    if (typeof health.github.stars === 'number' && health.github.stars > 0) {
+      lines.push(`${health.github.stars.toLocaleString('en-GB')} stars on GitHub`)
     }
   }
 

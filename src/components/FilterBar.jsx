@@ -7,7 +7,7 @@ const MATURITY_LABELS = {
 }
 
 const FilterBar = ({ filters, onFilterChange, availableFilters }) => {
-  const { sdgs = [], data_types = [], countries = [], views = [], maturity_stages = [] } = availableFilters || {}
+  const { sdgs = [], data_types = [], countries = [], views = [], maturity_stages = [], statuses = [] } = availableFilters || {}
 
   const handleSearchChange = (e) => {
     onFilterChange({ ...filters, search: e.target.value })
@@ -29,11 +29,15 @@ const FilterBar = ({ filters, onFilterChange, availableFilters }) => {
     onFilterChange({ ...filters, maturity: e.target.value })
   }
 
-  const clearFilters = () => {
-    onFilterChange({ search: '', view: 'all', sdg: '', dataType: '', country: '', maturity: '' })
+  const handleStatusChange = (e) => {
+    onFilterChange({ ...filters, status: e.target.value })
   }
 
-  const hasActiveFilters = filters.search || filters.sdg || filters.dataType || filters.country || filters.maturity || (filters.view && filters.view !== 'all')
+  const clearFilters = () => {
+    onFilterChange({ search: '', view: 'all', sdg: '', dataType: '', country: '', maturity: '', status: '' })
+  }
+
+  const hasActiveFilters = filters.search || filters.sdg || filters.dataType || filters.country || filters.maturity || filters.status || (filters.view && filters.view !== 'all')
 
   return (
     <div className="filters">
@@ -86,6 +90,23 @@ const FilterBar = ({ filters, onFilterChange, availableFilters }) => {
             ))}
           </select>
         </div>
+
+        {statuses.length > 0 && (
+          <div className="filter-group">
+            <label className="filter-label" htmlFor="filter-status" title="Filter by link availability and recent activity">Status:</label>
+            <select
+              id="filter-status"
+              className="filter-select"
+              value={filters.status || ''}
+              onChange={handleStatusChange}
+            >
+              <option value="">Any status</option>
+              {statuses.map(s => (
+                <option key={s.value} value={s.value}>{s.label}</option>
+              ))}
+            </select>
+          </div>
+        )}
 
         <div className="filter-group">
           <label className="filter-label" htmlFor="filter-sdg">SDG:</label>

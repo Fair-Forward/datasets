@@ -7,6 +7,8 @@ import DetailPanel from '../components/DetailPanel'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { withBasePath } from '../utils/basePath'
+import { rankScore } from '../utils/ranking'
+import { matchesStatus, entryStatusValues, STATUS_OPTIONS } from '../utils/health'
 
 const CatalogPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -41,7 +43,8 @@ const CatalogPage = () => {
       dataType: searchParams.get('dataType') || '',
       // Support both 'country' and 'region' params
       country: searchParams.get('country') || searchParams.get('region') || '',
-      maturity: searchParams.get('maturity') || ''
+      maturity: searchParams.get('maturity') || '',
+      status: searchParams.get('status') || ''
     }
   }, [searchParams])
 
@@ -64,6 +67,7 @@ const CatalogPage = () => {
     if (newFilters.dataType) params.set('dataType', newFilters.dataType)
     if (newFilters.country) params.set('region', newFilters.country)
     if (newFilters.maturity) params.set('maturity', newFilters.maturity)
+    if (newFilters.status) params.set('status', newFilters.status)
 
     // Update URL without triggering navigation
     setSearchParams(params, { replace: true })
@@ -184,6 +188,11 @@ const CatalogPage = () => {
       )
     }
 
+    // Status filter (availability + activity, from the weekly health signal)
+    if (filters.status) {
+      projects = projects.filter(p => matchesStatus(p.health, filters.status))
+    }
+
     // View filter (datasets, use cases, lacuna, or maturity stages from Sankey)
     if (filters.view === 'datasets') {
       projects = projects.filter(p => p.has_dataset)
@@ -200,9 +209,18 @@ const CatalogPage = () => {
       )
     }
 
-    // Sort by quality score (best-documented first)
-    return projects.sort((a, b) => (b.quality_score || 0) - (a.quality_score || 0))
+    // Sort by combined rank: documentation depth, boosted by recent activity and link availability
+    return projects.sort((a, b) => rankScore(b) - rankScore(a))
   }, [catalogData, filters])
+
+  // Status filter options, derived from the merged (weekly) health data. Only statuses actually
+  // present are offered; if health.json failed to load there are none and the filter stays hidden.
+  const availableStatuses = useMemo(() => {
+    if (!catalogData?.projects) return []
+    const present = new Set()
+    catalogData.projects.forEach(p => entryStatusValues(p.health).forEach(v => present.add(v)))
+    return STATUS_OPTIONS.filter(o => present.has(o.value))
+  }, [catalogData])
 
   // Calculate dynamic stats based on filtered results
   const dynamicStats = useMemo(() => {
@@ -289,6 +307,7 @@ const CatalogPage = () => {
         onFilterChange={handleFilterChange}
         availableFilters={{
           ...catalogData.filters,
+          statuses: availableStatuses,
           views: [
             { value: 'all', label: 'All items' },
             { value: 'datasets', label: 'Datasets' },
@@ -309,7 +328,7 @@ const CatalogPage = () => {
             <span className="completeness-legend-dots">
               {[1,2,3,4,5].map(i => <span key={i} className={`completeness-dot${i <= 3 ? ' filled' : ''}`} />)}
             </span>
-            <span>Dots indicate information depth &mdash; projects with more documentation appear first</span>
+            <span>Dots show documentation depth &mdash; cards are ordered by documentation, then recent activity and link availability</span>
           </div>
         </div>
         <div className="grid" id="dataGrid">
