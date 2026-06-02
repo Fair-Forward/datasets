@@ -134,6 +134,15 @@ const CatalogPage = () => {
   // Load catalog data
   useEffect(() => { loadCatalog() }, [])
 
+  // Status filter options, derived from the merged (weekly) health data. Only statuses actually
+  // present are offered; if health.json failed to load there are none and the filter stays hidden.
+  const availableStatuses = useMemo(() => {
+    if (!catalogData?.projects) return []
+    const present = new Set()
+    catalogData.projects.forEach(p => entryStatusValues(p.health).forEach(v => present.add(v)))
+    return STATUS_OPTIONS.filter(o => present.has(o.value))
+  }, [catalogData])
+
   // Filter projects
   const filteredProjects = useMemo(() => {
     if (!catalogData?.projects) return []
@@ -188,8 +197,9 @@ const CatalogPage = () => {
       )
     }
 
-    // Status filter (availability + activity, from the weekly health signal)
-    if (filters.status) {
+    // Status filter (availability + activity). Only applied when the value is actually available,
+    // so a stale/bookmarked ?status= with no health data loaded does not silently empty the catalog.
+    if (filters.status && availableStatuses.some(o => o.value === filters.status)) {
       projects = projects.filter(p => matchesStatus(p.health, filters.status))
     }
 
@@ -209,18 +219,10 @@ const CatalogPage = () => {
       )
     }
 
-    // Sort by combined rank: documentation depth, boosted by recent activity and link availability
-    return projects.sort((a, b) => rankScore(b) - rankScore(a))
-  }, [catalogData, filters])
-
-  // Status filter options, derived from the merged (weekly) health data. Only statuses actually
-  // present are offered; if health.json failed to load there are none and the filter stays hidden.
-  const availableStatuses = useMemo(() => {
-    if (!catalogData?.projects) return []
-    const present = new Set()
-    catalogData.projects.forEach(p => entryStatusValues(p.health).forEach(v => present.add(v)))
-    return STATUS_OPTIONS.filter(o => present.has(o.value))
-  }, [catalogData])
+    // Sort by combined rank: documentation depth, boosted by recent activity and link availability.
+    // Copy first so we never sort catalogData.projects (state) in place.
+    return [...projects].sort((a, b) => rankScore(b) - rankScore(a))
+  }, [catalogData, filters, availableStatuses])
 
   // Calculate dynamic stats based on filtered results
   const dynamicStats = useMemo(() => {
