@@ -41,7 +41,7 @@ A row appears on the website when **any** of these are true:
 
 ### Data quality checks
 
-The build automatically scores each project (0-100) based on how complete its information is. Projects with richer documentation appear higher in the catalog. The scoring considers: title, description, links, data characteristics, how-to-use guidance, license, SDGs, countries, data types, and images.
+The build automatically scores each project (0-100) based on how complete its information is — title, description, links, data and model characteristics, how-to-use guidance, license, SDGs, countries, data types, and maturity. Cards are then ordered by this documentation score, nudged by the weekly health signal: projects with recent activity or many downloads/stars rank a little higher, and entries whose links no longer resolve rank lower. Documentation completeness stays the main driver, and projects without GitHub/Hugging Face activity data are never penalised for lacking it. See `docs/health-thresholds.md` for the exact methodology.
 
 Quality feedback is written back to the Google Sheet as cell notes (small black triangle in the cell corner, visible on hover). These notes suggest improvements like adding missing descriptions or using standard license formats.
 

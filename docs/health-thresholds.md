@@ -43,8 +43,51 @@ have no readable signal and get no tag — we make no recency claim we cannot ba
 - **(no tag)** — the 12–18 month band is intentionally left untagged (a normal gap, no nagging),
   as are entries whose hosts expose no activity signal.
 
+## Part 3 — Activity score & catalog ranking
+
+Cards are ordered by a combined rank that blends two independently-computed pieces:
+
+- **Documentation completeness** (`quality_score`, 0-100) — computed in
+  `scripts/generate_catalog_data.py` and shown as the 5-dot "information depth" indicator. This is
+  the primary driver and is unchanged by the health signal.
+- **Activity** (`activity_score`, 0-100 or `null`) — computed weekly here in `health_check.py` and
+  written into each `health.json` entry. It rewards projects that are actively maintained and used.
+
+### `activity_score`
+
+A weighted blend of two components, scaled to 0-100. It is `null` (not 0) when the entry exposes no
+activity signal, so the ranking can stay neutral for those entries rather than penalising them.
+
+- **Recency** (weight 0.6): `stable_archive` scores a fixed `0.6` (durable and citable, but not
+  "fresh"); an `archived` GitHub repo scores `0`; otherwise it decays linearly from `1.0` (updated
+  today) to `0` at `ACTIVITY_ZERO_DAYS` (730 days / ~2 years), using the freshest of GitHub last
+  commit and Hugging Face last-modified.
+- **Popularity** (weight 0.4): `log10(max(downloads, stars) + 1) / POP_LOG_FULL`, so ~10,000
+  Hugging Face downloads or GitHub stars saturates to `1.0`. GitHub `stars` is read from the same
+  API call as `pushed_at` / `archived`.
+
+When only one component is available (e.g. a GitHub repo with no stars, or an archive), the score
+uses just that component.
+
+### Combined rank (`src/utils/ranking.js`)
+
+```
+rank = quality_score
+       - UNAVAILABLE_PENALTY (20)                          if availability == "unavailable"
+       + (activity_score / 100) * ACTIVITY_WEIGHT (40)     if activity_score is not null
+```
+
+`ACTIVITY_WEIGHT = 40` lets activity contribute up to ~30% of the 0-140 range, so a very active
+project can rank above a better-documented but inactive one. Availability is the only signal that
+*demotes* an entry, because it is the one signal comparable across every host. **By design, activity
+only ever boosts entries where GitHub / Hugging Face expose the data; the absence of activity data
+is never a penalty**, so datasets on Zenodo, Dataverse, Kaggle, or plain servers are not pushed down
+merely for their host. The 5-dot indicator continues to reflect `quality_score` only.
+
 ## Tuning
 
-Thresholds live as constants at the top of `scripts/health_check.py` (`RECENT_DAYS`,
-`STALE_DAYS`, `_ACCESS_RESTRICTED`, `_UNRELIABLE_404_HOSTS`). Update both the code and this
-document together.
+Availability/context thresholds live as constants at the top of `scripts/health_check.py`
+(`RECENT_DAYS`, `STALE_DAYS`, `_ACCESS_RESTRICTED`, `_UNRELIABLE_404_HOSTS`). The activity-score
+shape lives alongside them (`ACTIVITY_ZERO_DAYS`, `ARCHIVE_RECENCY`, `POP_LOG_FULL`), and the
+ranking weights (`ACTIVITY_WEIGHT`, `UNAVAILABLE_PENALTY`) live in `src/utils/ranking.js`. Update
+the code and this document together.
