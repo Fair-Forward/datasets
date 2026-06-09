@@ -339,6 +339,29 @@ const DetailPanel = ({ project, onClose }) => {
             </div>
           ) : (
             <>
+              {/* Hero image -- leads the panel so the access button below reads as the main action */}
+              {(() => {
+                if (project.image) {
+                  return (
+                    <div
+                      className="panel-header-image"
+                      style={{ backgroundImage: `url("${withBasePath(project.image)}")` }}
+                    />
+                  )
+                }
+                const sdgMatch = sdgs.length > 0 && sdgs[0].match(/\d+/)
+                const sdgColor = sdgMatch ? SDG_COLORS[parseInt(sdgMatch[0], 10)] : null
+                if (sdgColor) {
+                  return (
+                    <div
+                      className="panel-header-image no-image"
+                      style={{ backgroundImage: `linear-gradient(135deg, ${sdgColor}18 0%, ${sdgColor}35 100%)` }}
+                    />
+                  )
+                }
+                return null
+              })()}
+
               {/* A) Action Row */}
               <div className="panel-actions">
                 {hasAnyLinks ? (
@@ -464,29 +487,6 @@ const DetailPanel = ({ project, onClose }) => {
                   </div>
                 </div>
               )}
-
-              {/* C) Hero Image */}
-              {(() => {
-                if (project.image) {
-                  return (
-                    <div
-                      className="panel-header-image"
-                      style={{ backgroundImage: `url("${withBasePath(project.image)}")` }}
-                    />
-                  )
-                }
-                const sdgMatch = sdgs.length > 0 && sdgs[0].match(/\d+/)
-                const sdgColor = sdgMatch ? SDG_COLORS[parseInt(sdgMatch[0], 10)] : null
-                if (sdgColor) {
-                  return (
-                    <div
-                      className="panel-header-image no-image"
-                      style={{ backgroundImage: `linear-gradient(135deg, ${sdgColor}18 0%, ${sdgColor}35 100%)` }}
-                    />
-                  )
-                }
-                return null
-              })()}
 
               {/* D) Flat content sections */}
               <div className="panel-data active">
