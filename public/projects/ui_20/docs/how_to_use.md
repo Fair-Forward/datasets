@@ -1,0 +1,1 @@
+DhoNam: Dholuo Speech dataset is a speech corpus designed to supercharge Automatic Speech Recognition (ASR) and other speech technologies for Dholuo, one of Kenya’s major indigenous languages. 
