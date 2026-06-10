@@ -8,19 +8,27 @@ An open catalog of datasets and AI use cases for international development, main
 
 ## Update the website (no coding required)
 
-If you've added or edited data in the [Google Sheet](https://docs.google.com/spreadsheets/d/18sgZgPGZuZjeBTHrmbr1Ra7mx8vSToUqnx8vCjhIp0c/edit?gid=756053104#gid=756053104), you can publish your changes to the live site in a few clicks:
+If you've added or edited data in the [Google Sheet](https://docs.google.com/spreadsheets/d/18sgZgPGZuZjeBTHrmbr1Ra7mx8vSToUqnx8vCjhIp0c/edit?gid=756053104#gid=756053104), you can publish your changes to the live site without any coding.
+
+### External partners (no GitHub account needed)
+
+Use the trigger page: **https://fair-forward.github.io/datasets/trigger.html**
+
+Click **"Update Website Now"** and wait 1-2 minutes. You can monitor progress via the link on that page.
+
+### Team members (GitHub account)
 
 1. Go to the repository on GitHub: [Fair-Forward/datasets](https://github.com/Fair-Forward/datasets)
 2. Click the **Actions** tab at the top
 3. In the left sidebar, click **"Manually Update Website from Google Sheets"**
 4. Click the **"Run workflow"** button (top right of the workflow list)
 5. Make sure the branch is set to **main**, then click the green **"Run workflow"** button
-6. Wait 1-2 minutes. The workflow will:
-   - Fetch the latest data from the Google Sheet
-   - Run data quality checks and write feedback notes into the sheet
-   - Rebuild the website
-   - Deploy to GitHub Pages
-7. Once the green checkmark appears, the live site is updated
+6. Wait 1-2 minutes for the build to complete
+
+Either way, the workflow will:
+- Fetch the latest data from the Google Sheet
+- Run data quality checks and write feedback notes into the sheet
+- Rebuild the website and deploy to GitHub Pages
 
 > **Tip:** After the build, check the Google Sheet for cells with small black triangles in the corner. Hover over them to see quality feedback (e.g., missing descriptions, license format suggestions).
 

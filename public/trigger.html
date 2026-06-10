@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Update Website - Fair Forward Data Catalog</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f7fa;
+      color: #1a2333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+      padding: 2.5rem 3rem;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #2563eb;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1a2333;
+      margin-bottom: 0.75rem;
+    }
+
+    p {
+      font-size: 0.95rem;
+      color: #4b5563;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    button {
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.75rem 2.25rem;
+      cursor: pointer;
+      transition: background 0.15s;
+      width: 100%;
+    }
+
+    button:hover:not(:disabled) { background: #1d4ed8; }
+    button:disabled { background: #93c5fd; cursor: not-allowed; }
+
+    .status {
+      margin-top: 1.5rem;
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: none;
+    }
+
+    .status.info    { background: #eff6ff; color: #1d4ed8; display: block; }
+    .status.success { background: #f0fdf4; color: #15803d; display: block; }
+    .status.error   { background: #fef2f2; color: #b91c1c; display: block; }
+
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid currentColor;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .link {
+      display: block;
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
+
+    .link a { color: #2563eb; text-decoration: none; }
+    .link a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">Fair Forward Data Catalog</div>
+    <h1>Update Website</h1>
+    <p>
+      Click the button below to pull the latest data from the Google Sheet and
+      rebuild the live site. The update takes about 1-2 minutes.
+    </p>
+    <button id="triggerBtn" onclick="triggerUpdate()">Update Website Now</button>
+    <div class="status" id="status"></div>
+    <div class="link">
+      <a href="https://fair-forward.github.io/datasets/" target="_blank">
+        View live site
+      </a>
+      &nbsp;&middot;&nbsp;
+      <a href="https://github.com/Fair-Forward/datasets/actions" target="_blank">
+        Monitor progress on GitHub
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // Fine-grained PAT with Actions: write on this repo only.
+    // Replace this value with a real token (see README for setup steps).
+    const TOKEN = "REPLACE_WITH_PAT";
+
+    const OWNER    = "Fair-Forward";
+    const REPO     = "datasets";
+    const WORKFLOW = "update_from_google_sheets.yml";
+    const REF      = "main";
+
+    async function triggerUpdate() {
+      const btn    = document.getElementById("triggerBtn");
+      const status = document.getElementById("status");
+
+      if (TOKEN === "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") {
+        showStatus("error", "Trigger page is not configured yet. Ask the site maintainer to set it up.");
+        return;
+      }
+
+      btn.disabled = true;
+      showStatus("info", '<span class="spinner"></span> Sending request...');
+
+      try {
+        const res = await fetch(
+          `https://api.github.com/repos/${OWNER}/${REPO}/actions/workflows/${WORKFLOW}/dispatches`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${TOKEN}`,
+              Accept: "application/vnd.github+json",
+              "Content-Type": "application/json",
+              "X-GitHub-Api-Version": "2022-11-28",
+            },
+            body: JSON.stringify({ ref: REF }),
+          }
+        );
+
+        if (res.status === 204) {
+          showStatus(
+            "success",
+            "Update triggered. The site will refresh in about 1-2 minutes. " +
+            "You can monitor progress on GitHub Actions."
+          );
+        } else {
+          const body = await res.json().catch(() => ({}));
+          const msg  = body.message || `Unexpected response (HTTP ${res.status}).`;
+          showStatus("error", "Failed to trigger update: " + msg);
+          btn.disabled = false;
+        }
+      } catch (err) {
+        showStatus("error", "Network error: " + err.message);
+        btn.disabled = false;
+      }
+    }
+
+    function showStatus(type, html) {
+      const el = document.getElementById("status");
+      el.className = "status " + type;
+      el.innerHTML = html;
+    }
+  </script>
+</body>
+</html>
