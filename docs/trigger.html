@@ -128,17 +128,10 @@
   </div>
 
   <script>
-    // URL of the Cloudflare Worker that proxies the GitHub workflow dispatch.
-    // Replace this with your deployed Worker URL (e.g. https://datasets-trigger.YOUR_NAME.workers.dev).
-    const WORKER_URL = "REPLACE_WITH_WORKER_URL";
+    const WORKER_URL = "https://datasets-trigger.jonas-nothnagel.workers.dev";
 
     async function triggerUpdate() {
       const btn = document.getElementById("triggerBtn");
-
-      if (WORKER_URL === "REPLACE_WITH_WORKER_URL") {
-        showStatus("error", "Trigger page is not configured yet. Ask the site maintainer to set it up.");
-        return;
-      }
 
       btn.disabled = true;
       showStatus("info", '<span class="spinner"></span> Sending request...');
