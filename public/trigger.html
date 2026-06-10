@@ -128,52 +128,26 @@
   </div>
 
   <script>
-    // Fine-grained PAT with Actions: write on this repo only.
-    // Replace this value with a real token (see README for setup steps).
-    const TOKEN = "REPLACE_WITH_PAT";
-
-    const OWNER    = "Fair-Forward";
-    const REPO     = "datasets";
-    const WORKFLOW = "update_from_google_sheets.yml";
-    const REF      = "main";
+    const WORKER_URL = "https://datasets-trigger.jonas-nothnagel.workers.dev";
 
     async function triggerUpdate() {
-      const btn    = document.getElementById("triggerBtn");
-      const status = document.getElementById("status");
-
-      if (TOKEN === "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") {
-        showStatus("error", "Trigger page is not configured yet. Ask the site maintainer to set it up.");
-        return;
-      }
+      const btn = document.getElementById("triggerBtn");
 
       btn.disabled = true;
       showStatus("info", '<span class="spinner"></span> Sending request...');
 
       try {
-        const res = await fetch(
-          `https://api.github.com/repos/${OWNER}/${REPO}/actions/workflows/${WORKFLOW}/dispatches`,
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${TOKEN}`,
-              Accept: "application/vnd.github+json",
-              "Content-Type": "application/json",
-              "X-GitHub-Api-Version": "2022-11-28",
-            },
-            body: JSON.stringify({ ref: REF }),
-          }
-        );
+        const res  = await fetch(WORKER_URL, { method: "POST" });
+        const body = await res.json().catch(() => ({}));
 
-        if (res.status === 204) {
+        if (body.ok) {
           showStatus(
             "success",
             "Update triggered. The site will refresh in about 1-2 minutes. " +
             "You can monitor progress on GitHub Actions."
           );
         } else {
-          const body = await res.json().catch(() => ({}));
-          const msg  = body.message || `Unexpected response (HTTP ${res.status}).`;
-          showStatus("error", "Failed to trigger update: " + msg);
+          showStatus("error", "Failed to trigger update: " + (body.message || `HTTP ${res.status}`));
           btn.disabled = false;
         }
       } catch (err) {
