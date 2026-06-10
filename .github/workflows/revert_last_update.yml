@@ -54,7 +54,12 @@ jobs:
           --base main
 
         PR_NUM=$(gh pr list --head "$BRANCH" --json number --jq '.[0].number')
-        gh pr merge "$PR_NUM" --squash --auto || echo "::notice::Auto-merge not available. PR #$PR_NUM needs manual merge."
+        # Enable auto-merge (queues behind required checks, if any are ever added). When the
+        # PR is already mergeable, GitHub rejects --auto with "clean status", so fall back to
+        # an immediate squash merge.
+        gh pr merge "$PR_NUM" --squash --auto \
+          || gh pr merge "$PR_NUM" --squash \
+          || echo "::notice::Merge failed. PR #$PR_NUM needs manual merge."
 
         echo "Revert PR #$PR_NUM created."
         echo "The website will return to its previous state once the PR is merged and GitHub Pages rebuilds."
