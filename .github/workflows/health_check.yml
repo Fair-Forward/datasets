@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   health-check:
@@ -38,13 +39,22 @@ jobs:
         RUN_TIMESTAMP=$(date -u +'%Y-%m-%d') python scripts/health_check.py
 
     - name: Commit and push results
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         git config --global user.name "GitHub Actions (Health Check)"
         git config --global user.email "actions@github.com"
         git add public/data/health.json docs/data/health.json
         if git diff --staged --quiet; then
           echo "No health changes to commit."
-        else
-          git commit -m "Weekly health check $(date -u +'%Y-%m-%d')"
-          git push
+          exit 0
         fi
+        BRANCH="auto/health-check-$(date -u +'%Y%m%d')"
+        git checkout -b "$BRANCH"
+        git commit -m "Weekly health check $(date -u +'%Y-%m-%d')"
+        git push -u origin "$BRANCH"
+        gh pr create --title "Weekly health check $(date -u +'%Y-%m-%d')" \
+          --body "Automated weekly link health check results." \
+          --base main
+        PR_NUM=$(gh pr list --head "$BRANCH" --json number --jq '.[0].number')
+        gh pr merge "$PR_NUM" --squash --auto || echo "::notice::Auto-merge not available. PR #$PR_NUM needs manual merge."
