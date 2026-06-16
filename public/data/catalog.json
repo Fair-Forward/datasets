@@ -560,12 +560,11 @@
     },
     {
       "id": "ui_11",
-      "slug": "ui_11-ltomekatip_pioneering_indigenousled_biodiversity_d",
+      "slug": "ui_11-indigenous_knowledge_meets_ai_ethical_monitoring",
       "aliases": [
-        "indigenous_knowledge_meets_ai_monitoring_elephants",
-        "ltomekatip_pioneering_indigenousled_biodiversity_d"
+        "indigenous_knowledge_meets_ai_ethical_monitoring"
       ],
-      "title": "Ltome-Katip: Pioneering Indigenous-Led Biodiversity Datasets for Ethical AI in Kenya and the Ecuadorian Amazon",
+      "title": "Indigenous Knowledge Meets AI: Ethical monitoring of climate stress and biodiversity: sounds of elephants and Katip (Ltome-Katip) in Kenya and the Ecuadorian Amazon",
       "description": "The Ltome-Katip datasets are the first Indigenous-labelled bioacoustic datasets designed specifically to support the development of ethical AI for biodiversity monitoring. Co-created by Indigenous data stewards from the Samburu tribe in northern Kenya and the Shuar Nation in the Ecuadorian Amazon, the recordings focus on two sentinel species: Ltome (elephant) and Katip (rodent), both of which signal ecological shifts under climate stress. All data were collected, annotated, and governed by the Indigenous communities, following locally defined protocols rooted in Indigenous data sovereignty. These datasets are not only scientifically valuable — they establish a precedent for how Indigenous communities can lead in setting standards for responsible, consent-based AI development.",
       "dataset_links": [
         {
@@ -1977,7 +1976,7 @@
         "India"
       ],
       "license": "CC-BY 4.0",
-      "contact": "Vertify.earth - Michael Anthony (michael@vertify.earth), \nAlsisar Impact - Saurabh Singhavi (saurabh@alsisarimpact.com)",
+      "contact": "Vertify.earth - Michael Anthony (michael@vertify.earth), \nAlsisar Impact (anuj@alsisarimpact.com )",
       "organizations": "Powered by / Provided by: Vertify Earth, Earth Analytics India Pvt Ltd, Balipara Foundation, Alsisar Impact\nCatalyzed by: Lacuna-Fund / Meridian (Climate-call) & FAIR Forward - AI for All, GIZ\nFinanced by: BMZ",
       "editor": "Arundhati Deshmukh",
       "is_lacuna": true,
@@ -2216,7 +2215,7 @@
         "Indonesia"
       ],
       "license": "",
-      "contact": "Common Room Networks Foundation https://commonroom.info/",
+      "contact": "Common Room Networks Foundation (email.commonroom@gmail.com)",
       "organizations": "Powered by / Provided by: Common Room Networks Foundation https://commonroom.info/\nCatalyzed by: FAIR Forward - AI for All, GIZ\nFinanced by: BMZ",
       "editor": "",
       "is_lacuna": false,
@@ -4967,8 +4966,7 @@
     "ecuadorian_dataset_on_access_demand_": "ui_9",
     "machine_learning_training_data_for_continental": "ui_10",
     "monitoring_the_impact_of_palm_oil": "ui_10",
-    "indigenous_knowledge_meets_ai_monitoring_elephants": "ui_11",
-    "ltomekatip_pioneering_indigenousled_biodiversity_d": "ui_11",
+    "indigenous_knowledge_meets_ai_ethical_monitoring": "ui_11",
     "aipowered_detection_of_diseases_for_cashew": "ui_12",
     "cadi_ai_project_ml4cashew": "ui_12",
     "drone_images_of_disease_manifestations_in": "ui_12",
