@@ -1620,14 +1620,14 @@
       ],
       "license": "CC-BY 4.0",
       "contact": "Digital Green (info@digitalgreentrust.org)",
-      "organizations": "Powered by / Provided by: Digital Green\nCatalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/), GIZ \nFinanced by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",
+      "organizations": "Powered by / Provided by: Digital Green\nCatalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/), GIZ \nFinanced by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/) and  Sequoia Climate Fund, CISCO Foundation",
       "editor": "Philipp Olbrich",
       "is_lacuna": false,
       "has_dataset": true,
       "has_usecase": true,
       "image": "/projects/ui_28/images/digital_green.png",
       "data_characteristics": "The data was collected through a survey conducted across multiple districts in India. It consists of a variety of factors that could potentially impact the yield of rice crops. These factors include things like the type and amount of fertilizers used, the quantity of seedlings planted, methods of preparing the land, different irrigation techniques employed, among other features. The dataset comprises more than 5000 data points, each having more than 40 features.",
-      "model_characteristics": "Multiple models are available based on the shared data. Plesae refer to the GitHub repository.",
+      "model_characteristics": "Multiple models are available based on the shared data. Please refer to the GitHub repository.",
       "how_to_use": "The possibilities include creating a machine learning solution to predict the crop yield per acre of rice or wheat crops in India. Our goal is to empower these farmers and break the cycle of poverty and malnutrition.\n\nThis use case also included the development of a business model and funding model for open source AI as a stepping stone towards financially viable operations. It was facilitated by Villgro Africa's and FAIR Forward's  six-month mentorship programme on \"Creating sustainable business and funding models with open source AI\". See: https://www.bmz-digital.global/en/news/open-source-ai-business-impact/",
       "maturity": "Dataset  > Model > Pilot > Use-Case >  Use-Case with Business Model",
       "maturity_tags": [
@@ -4904,12 +4904,12 @@
     },
     {
       "id": "ui_88",
-      "slug": "ui_88-rwanda_media_voice_bridge",
+      "slug": "ui_88-rwanda_media_voice_bridge__aipowered",
       "aliases": [
         "c4ir_grant_rwanda_media_voice_bridge",
-        "rwanda_media_voice_bridge"
+        "rwanda_media_voice_bridge__aipowered"
       ],
-      "title": "Rwanda Media Voice Bridge",
+      "title": "Rwanda Media Voice Bridge -  AI-powered voice transcription and translation solution for Rwanda's film and media industry",
       "description": "An AI-powered voice transcription and translation solution for Rwanda's film and media industry, focused on low-resource African languages. The initiative prioritises ethical AI development by upskilling local transcribers and annotators as active contributors to model improvement rather than replacing them, creating sustainable digital jobs in the creative economy.",
       "dataset_links": [],
       "usecase_links": [],
@@ -5117,7 +5117,7 @@
     "tunga_agrichatbot_open_source_suite_": "ui_87",
     "tunga_chatbot_open_source_suite_": "ui_87",
     "c4ir_grant_rwanda_media_voice_bridge": "ui_88",
-    "rwanda_media_voice_bridge": "ui_88"
+    "rwanda_media_voice_bridge__aipowered": "ui_88"
   },
   "stats": {
     "total_projects": 88,
