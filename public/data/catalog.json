@@ -2515,7 +2515,7 @@
         "building_parallel_corpora_for_kenyas_indigenous",
         "enabling_machine_translation_from_kiswahili_into"
       ],
-      "title": "Enabling machine translation from Kiswahili into the indigenous Kenyan languages Kidaw'ida, Kalenjin, and Dholuo, preserving these languages & supporting crowd-sourced voice recognition via Mozilla Common Voice for these languages",
+      "title": "Enabling machine translation from Kiswahili into the indigenous East African languages Kidaw'ida, Kalenjin, and Dholuo, preserving these languages & supporting crowd-sourced voice recognition via Mozilla Common Voice for these languages",
       "description": "The dataset was created to enable translation from Kiswahili, which is the national language in Kenya, into three indigenous languages, namely, Kidaw'ida, Kalenjin, and Dholuo. All three languages are low resource, especially Kidaw'ida, which has only around 400,000 speakers and is at immediate risk of loss. By collecting the text and speech data, the project has taken a step towards preservation of these languages . The dataset consists of three parallel corpora: Kidaw'ida-Kiswahili; Kalenjin-Kiswahili; Dholuo-Kiswahili. On average, each corpus has thirty thousand sentence pairs. \n\nIn addition, the dataset has helped to preserve, revitalise and elevate the languages Kidaw'ida, Kalenjin, and Dholuo by making them work on Mozillas Common Voice Platform. The text and speech datasets are thereby supporting crowd-sourced voice recognition, promoting linguistic diversity and empoweromg local communities by enabling Natural Language Processing applications tailored to their needs. Namely, the resulting voice recognition datasets can be used to build AI voice applications such as advisory systems in local languages for farmers, citizens etc that \"understand\" speech input (instead of written input). As of August 2025, 120 hours of speech data have been recorded on Common Voice in Dholuo (with 14692 sentences available), 92 hours have been recorded for Kalendjin (With 29900 sentences available) and 56 hours have been recorded for Kidaw'ida (with 11773 sentences available). To download the crowd-sourced speech datasets in Kidaw'ida, Kalenjin, and Dholuo, visit https://datacollective.mozillafoundation.org/datasets?q=common+voice",
       "dataset_links": [
         {
@@ -2538,7 +2538,8 @@
         "Text"
       ],
       "countries": [
-        "Kenya"
+        "Kenya",
+        "East Africa"
       ],
       "license": "Apache 2.0",
       "contact": "Audrey Mbogho (ambogho@usiu.ac.ke)",
@@ -5124,7 +5125,7 @@
     "total_datasets": 91,
     "total_usecases": 56,
     "total_access_note_projects": 10,
-    "total_countries": 26
+    "total_countries": 27
   },
   "filters": {
     "sdgs": [
@@ -5161,6 +5162,7 @@
       "Cote d'Ivoire",
       "DRC",
       "Democratic Republic of Congo",
+      "East Africa",
       "Ecuador",
       "Ghana",
       "Global / Regional",
