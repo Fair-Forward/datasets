@@ -1,2 +1,5 @@
-The data was collected through a survey conducted across multiple districts in India. It consists of a variety of factors that could potentially impact the yield of rice crops. These factors include things like the type and amount of fertilizers used, the quantity of seedlings planted, methods of preparing the land, different irrigation techniques employed, among other features. The dataset comprises more than 5000 data points, each having more than 40 features.
-
+The FarmerChat system draws from an agronomic content corpus that powers FarmerChat's advisory responses — curated from ICAR, national extension services, and field-validated crop guidance across India, Kenya, Ethiopia, Nigeria, and Brazil. This content is organized by crop, geography, and query type, enabling the system to return locally grounded answers rather than generic advice.
+
+Key characteristics: multilingual (15 languages), multi-country (5 geographies), low-bandwidth optimized, and continuously updated through fine-tuning and RLHF loops informed by farmer feedback and agronomist review. Query volume has reached 9 million across 1.6 million farmers, providing a rare at-scale signal on what smallholder farmers actually ask and what advice they act on.
+
+Responsible AI: FarmerChat's content pipeline includes human agronomist review before deployment in any new crop or geography. Outputs are grounded in verified extension material to reduce hallucination risk. Digital Green has invested in RLHF infrastructure to surface low-quality responses for expert correction.

@@ -1,6 +1,6 @@
 {
   "total_projects": 88,
-  "total_countries": 26,
+  "total_countries": 31,
   "map_data": {
     "AO": {
       "name": "Angola",
@@ -30,7 +30,7 @@
     },
     "KE": {
       "name": "Kenya",
-      "projects": 18,
+      "projects": 19,
       "iso2": "KE",
       "sdgs": [
         "SDG 2",
@@ -66,9 +66,10 @@
     },
     "NG": {
       "name": "Nigeria",
-      "projects": 4,
+      "projects": 5,
       "iso2": "NG",
       "sdgs": [
+        "SDG 2",
         "SDG 5",
         "SDG 7",
         "SDG 10",
@@ -78,6 +79,7 @@
       "data_types": [
         "Geospatial/Remote Sensing",
         "Images",
+        "Other",
         "Tabular",
         "Text"
       ]
@@ -263,7 +265,7 @@
     },
     "IN": {
       "name": "India",
-      "projects": 14,
+      "projects": 13,
       "iso2": "IN",
       "sdgs": [
         "SDG 2",
@@ -275,9 +277,30 @@
       "data_types": [
         "Geospatial/Remote Sensing",
         "Images",
-        "Tabular",
         "Text",
         "Voice"
+      ]
+    },
+    "ET": {
+      "name": "Ethiopia",
+      "projects": 1,
+      "iso2": "ET",
+      "sdgs": [
+        "SDG 2"
+      ],
+      "data_types": [
+        "Other"
+      ]
+    },
+    "BR": {
+      "name": "Brazil",
+      "projects": 1,
+      "iso2": "BR",
+      "sdgs": [
+        "SDG 2"
+      ],
+      "data_types": [
+        "Other"
       ]
     },
     "ID": {
