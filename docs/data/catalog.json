@@ -4183,7 +4183,12 @@
       "maturity_tags": [
         "dataset"
       ],
-      "additional_resources": [],
+      "additional_resources": [
+        {
+          "name": "4437 (upjournals.up.ac.za)",
+          "url": "https://upjournals.up.ac.za/index.php/dhasa/article/view/4437"
+        }
+      ],
       "quality_score": 61
     },
     {
