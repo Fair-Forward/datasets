@@ -1,6 +1,6 @@
 {
   "total_projects": 88,
-  "total_countries": 31,
+  "total_countries": 28,
   "map_data": {
     "AO": {
       "name": "Angola",
@@ -265,7 +265,7 @@
     },
     "IN": {
       "name": "India",
-      "projects": 13,
+      "projects": 14,
       "iso2": "IN",
       "sdgs": [
         "SDG 2",
@@ -277,6 +277,7 @@
       "data_types": [
         "Geospatial/Remote Sensing",
         "Images",
+        "Other",
         "Text",
         "Voice"
       ]

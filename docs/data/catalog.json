@@ -1620,9 +1620,7 @@
         "Other"
       ],
       "countries": [
-        "Worldwide",
-        "focusing on the global south",
-        "particularly India",
+        "India",
         "Kenya",
         "Nigeria",
         "Ethiopia",
@@ -5141,7 +5139,7 @@
     "total_datasets": 91,
     "total_usecases": 56,
     "total_access_note_projects": 10,
-    "total_countries": 32
+    "total_countries": 29
   },
   "filters": {
     "sdgs": [
@@ -5198,10 +5196,7 @@
       "Togo",
       "Uganda",
       "West Africa",
-      "Worldwide",
-      "Zambia",
-      "focusing on the global south",
-      "particularly India"
+      "Zambia"
     ],
     "maturity_stages": [
       "dataset",
