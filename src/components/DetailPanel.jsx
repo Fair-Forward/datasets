@@ -1,9 +1,9 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback, useRef, Fragment } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { withBasePath, resolvePublicHref } from '../utils/basePath'
 import { SDG_COLORS } from '../utils/sdgColors'
-import { parseContact, licenseLabel, firstUrl } from '../utils/parsing'
+import { parseContacts, licenseLabel, firstUrl } from '../utils/parsing'
 import { hasHealthSignal, availabilityLabel, contextLabel, healthDetailLines } from '../utils/health'
 
 const markdownLinkComponents = {
@@ -296,16 +296,22 @@ const DetailPanel = ({ project, onClose }) => {
 
   const additionalResourceLinks = additionalResources.filter(r => r.url)
 
-  // Render contact value as JSX using shared parsing
+  // Render contact value as JSX using shared parsing. A cell may list several
+  // contacts (separated by ';', ',' or '&'); render each name as its own link,
+  // joined inline by '; '.
   const renderContact = (contact) => {
-    const { label, href } = parseContact(contact)
-    if (href && href.startsWith('mailto:')) {
-      return <a href={href}>{label}</a>
-    }
-    if (href) {
-      return <a href={href} target="_blank" rel="noopener noreferrer">{label}</a>
-    }
-    return label
+    const contacts = parseContacts(contact)
+    if (!contacts.length) return null
+    return contacts.map(({ label, href }, i) => (
+      <Fragment key={`${label}-${i}`}>
+        {i > 0 && '; '}
+        {href
+          ? (href.startsWith('mailto:')
+              ? <a href={href}>{label}</a>
+              : <a href={href} target="_blank" rel="noopener noreferrer">{label}</a>)
+          : label}
+      </Fragment>
+    ))
   }
 
   // Render license value as JSX using shared parsing
