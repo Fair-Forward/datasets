@@ -1,20 +1,24 @@
 import { withBasePath } from '../utils/basePath'
-import { SDG_COLORS } from '../utils/sdgColors'
-import { parseContact, licenseLabel, firstUrl } from '../utils/parsing'
-import { hasHealthSignal, availabilityLabel, contextLabel } from '../utils/health'
+import { SDG_COLORS, SDG_NAMES } from '../utils/sdgColors'
+import { licenseLabel, firstUrl } from '../utils/parsing'
+import { completenessFromScore, depthLabel } from '../utils/depth'
 
-const getSdgFallbackColor = (sdgs) => {
+const getSdgNumber = (sdgs) => {
   if (!sdgs || sdgs.length === 0) return null
   const match = sdgs[0].match(/\d+/)
-  return match ? SDG_COLORS[parseInt(match[0], 10)] : null
+  return match ? parseInt(match[0], 10) : null
 }
 
 const ProjectCard = ({ project, onClick, onFilterSDG }) => {
-  const { title, description, sdgs, data_types, image, has_dataset, has_usecase, is_lacuna, has_access_note, countries = [], license, quality_score, health } = project
-  const showHealth = hasHealthSignal(health)
-  const healthContext = showHealth ? contextLabel(health.context) : null
+  const {
+    title, description, sdgs = [], data_types = [], image,
+    has_dataset, has_usecase, is_lacuna, has_access_note,
+    countries = [], license, quality_score
+  } = project
+
   const qs = quality_score || 0
-  const completeness = qs >= 90 ? 5 : qs >= 75 ? 4 : qs >= 60 ? 3 : qs >= 40 ? 2 : 1
+  const completeness = completenessFromScore(qs)
+  const depth = depthLabel(qs)
 
   const cardClasses = [
     'card',
@@ -24,10 +28,10 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
     has_access_note ? 'has-access-note' : ''
   ].filter(Boolean).join(' ')
 
-  // Truncate description
-  const maxLength = 200
-  const truncatedDesc = description.length > maxLength 
-    ? description.substring(0, maxLength) + '...'
+  // Short description -- two lines on the card, full text in the detail panel.
+  const maxLength = 160
+  const truncatedDesc = description && description.length > maxLength
+    ? description.substring(0, maxLength).trimEnd() + '…'
     : description
 
   const countryLabel = countries.length > 0
@@ -38,7 +42,14 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
   const licenseUrl = firstUrl(licenseValue)
   const licenseText = licenseLabel(licenseValue)
 
-  const fallbackColor = !image ? getSdgFallbackColor(sdgs) : null
+  const typeLabel = data_types.length > 0
+    ? (data_types.length > 1 ? `${data_types[0]} +${data_types.length - 1}` : data_types[0])
+    : null
+
+  const sdgNum = getSdgNumber(sdgs)
+  const sdgColor = sdgNum ? SDG_COLORS[sdgNum] : null
+  const sdgName = sdgNum ? SDG_NAMES[sdgNum] : null
+  const fallbackColor = !image ? sdgColor : null
 
   return (
     <div
@@ -58,85 +69,68 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
               ? { backgroundImage: `linear-gradient(135deg, ${fallbackColor}20 0%, ${fallbackColor}44 100%)` }
               : undefined
         }
-      />
+      >
+        {sdgNum && (
+          <button
+            className="card-sdg-badge"
+            onClick={(e) => { e.stopPropagation(); onFilterSDG?.(sdgs[0]) }}
+            title={`Filter by ${sdgs[0]}`}
+            type="button"
+          >
+            <span className="card-sdg-dot" style={{ background: sdgColor || 'var(--accent-teal)' }}></span>
+            {sdgs[0]}{sdgName ? ` · ${sdgName}` : ''}
+          </button>
+        )}
+      </div>
 
-      <div className="card-header">
+      <div className="card-body">
+        <div className="card-meta-top">
+          {countryLabel
+            ? <span className="card-country">{countryLabel}</span>
+            : <span className="card-country" />}
+          <span className="card-depth" title={`Documentation depth: ${completeness}/5`}>
+            <span className="completeness-indicator" aria-hidden="true">
+              {[1, 2, 3, 4, 5].map(i => (
+                <span key={i} className={`completeness-dot${i <= completeness ? ' filled' : ''}`} />
+              ))}
+            </span>
+            <span className="depth-label">{depth}</span>
+          </span>
+        </div>
+
         <h3>{title}</h3>
-        {(sdgs.length > 0 || has_access_note) && (
-          <div className="domain-badges">
-            {sdgs.slice(0, 3).map(sdg => (
-              <button
-                key={sdg}
-                className="domain-badge"
-                onClick={(e) => { e.stopPropagation(); onFilterSDG?.(sdg); }}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.stopPropagation() } }}
-                title={`Filter by ${sdg}`}
-                type="button"
-              >
-                {sdg}
-              </button>
-            ))}
+        {truncatedDesc && <p className="card-desc">{truncatedDesc}</p>}
+
+        {(typeLabel || has_access_note) && (
+          <div className="card-tags">
+            {typeLabel && <span className="card-type-tag">{typeLabel}</span>}
             {has_access_note && (
-              <span className="access-note-chip" title="No public dataset/use-case link">
-                <i className="fas fa-circle-info"></i> Info
+              <span className="card-access-badge" title="No public dataset/use-case link">
+                <i className="fas fa-circle-info" aria-hidden="true"></i> Info
               </span>
             )}
           </div>
         )}
       </div>
-      
-      <div className="card-body">
-        <div className="card-meta-top">
-          {countryLabel && (
-            <div className="meta-item">
-              <i className="fas fa-map-marker-alt"></i>
-              <span>{countryLabel}</span>
-            </div>
-          )}
-          {showHealth && (
-            <div className={`health-badge health-${health.availability}`}>
-              <span className="health-dot" aria-hidden="true"></span>
-              <span>
-                {availabilityLabel(health.availability)}
-                {healthContext ? ` · ${healthContext}` : ''}
-              </span>
-            </div>
-          )}
-        </div>
 
-          <div className="card-description">
-          <div className="description-text collapsed">
-            {truncatedDesc}
-          </div>
-        </div>
-      </div>
-      
       <div className="card-footer">
-        <div className="completeness-indicator" title={`Information depth: ${completeness}/5`}>
-          {[1, 2, 3, 4, 5].map(i => (
-            <span key={i} className={`completeness-dot${i <= completeness ? ' filled' : ''}`} />
-          ))}
-        </div>
-        {data_types.length > 0 && (
-          <span className="footer-data-types">{data_types.join(', ')}</span>
-        )}
-        {licenseValue && licenseText && (
-          <div className="license-tag">
-            <i className="fas fa-copyright"></i>
-            {' '}
+        {licenseText && (
+          <span className="card-license">
             {licenseUrl ? (
               <a href={licenseUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
-                {licenseText || licenseUrl}
+                {licenseText}
               </a>
             ) : (
               licenseText
             )}
-          </div>
+          </span>
         )}
+        <span className="card-cta">
+          View details <i className="fas fa-arrow-right" aria-hidden="true"></i>
+        </span>
       </div>
     </div>
   )
 }
 
 export default ProjectCard
-

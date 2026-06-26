@@ -301,7 +301,11 @@ const CatalogPage = () => {
 
   return (
     <div>
-      <CatalogHeader stats={dynamicStats} />
+      <CatalogHeader
+        stats={dynamicStats}
+        search={filters.search}
+        onSearchChange={(value) => handleFilterChange({ ...filters, search: value })}
+      />
 
       <main id="main-content">
       <FilterBar 
@@ -324,13 +328,13 @@ const CatalogPage = () => {
         <h2 className="sr-only">Project catalog</h2>
         <div className="results-bar" aria-live="polite">
           <div className="results-count">
-            Showing {filteredProjects.length} of {catalogData.stats.total_projects} projects
+            {filteredProjects.length} of {catalogData.stats.total_projects} results &middot; sorted by documentation depth
           </div>
           <div className="completeness-legend">
             <span className="completeness-legend-dots">
-              {[1,2,3,4,5].map(i => <span key={i} className={`completeness-dot${i <= 3 ? ' filled' : ''}`} />)}
+              {[1,2,3,4,5].map(i => <span key={i} className={`completeness-dot${i <= 4 ? ' filled' : ''}`} />)}
             </span>
-            <span>Dots show documentation depth &mdash; cards are ordered by documentation, then recent activity and link availability</span>
+            <span>= documentation depth</span>
           </div>
         </div>
         <div className="grid" id="dataGrid">

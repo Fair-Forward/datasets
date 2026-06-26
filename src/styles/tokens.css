@@ -20,6 +20,7 @@
   /* --- Border-radius scale --- */
   --radius-sm:   0.375rem;  /* 6px */
   --radius-md:   0.625rem;  /* 10px */
+  --radius-card: 0.875rem;  /* 14px - cards (Catalogue v2) */
   --radius-lg:   1rem;      /* 16px - cards, panels */
   --radius-xl:   1.25rem;   /* 20px - hero sections, detail panel */
   --radius-pill: 999px;
@@ -37,36 +38,47 @@
   --text-4xl:  2.25rem;     /* ~32px */
   --text-5xl:  2.75rem;     /* ~39px */
 
-  /* --- Theme colors (Classic Blue) --- */
-  --primary:       #3b5998;
-  --primary-light: #4c70ba;
-  --background:    #f8fafc;
+  /* --- Typography families --- */
+  --font-sans: 'Public Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* --- Theme colors (Catalogue v2 -- cool indigo) --- */
+  --primary:       #2b337a;
+  --primary-light: #3a4499;
+  --background:    #edf0f5;
   --card-background: #ffffff;
-  --text:          #1e293b;
-  --text-light:    #64748b;
-  --border:        #e2e8f0;
+  --text:          #1e2230;
+  --text-light:    #5b6478;
+  --text-muted:    #7a8294;
+  --text-faint:    #8a91a3;
+  --border:        #e3e7ee;
+  --border-soft:   #e7eaf0;
+  --border-light:  #eef1f6;
+  --surface-cool:  #f6f8fb;
+  --accent-teal:   #0f9e8e;
+  --accent-gold:   #c79a3e;
   --shadow:        rgba(0, 0, 0, 0.04);
   --shadow-hover:  rgba(0, 0, 0, 0.08);
-  --title-color:   #2c4a7c;
+  --title-color:   #1e2230;
   --btn-text:      #ffffff;
-  --yellow:        #f59e0b;
+  --yellow:        #c79a3e;
 
-  /* --- Visualization palette (sequential blue ramp) --- */
-  --viz-1: #dbe4f3;   /* Lightest */
-  --viz-2: #a8bcd9;
-  --viz-3: #7594bf;
-  --viz-4: #4c70ba;
-  --viz-5: #3b5998;   /* Darkest = primary */
+  /* --- Visualization palette (sequential indigo ramp) --- */
+  --viz-1: #dfe3f1;   /* Lightest */
+  --viz-2: #aab2dc;
+  --viz-3: #6f7bc0;
+  --viz-4: #454f9e;
+  --viz-5: #2b337a;   /* Darkest = primary */
 
-  /* --- Maturity pipeline stage colors --- */
-  --maturity-dataset:  #64748b;   /* slate -- starting point */
-  --maturity-model:    #3b82f6;   /* blue -- building */
-  --maturity-pilot:    #6366f1;   /* indigo -- testing */
-  --maturity-usecase:  #8b5cf6;   /* purple -- deploying */
-  --maturity-business: #10b981;   /* emerald -- sustainable */
+  /* --- Maturity pipeline stage colors (indigo -> teal ramp) --- */
+  --maturity-dataset:  #8a91a3;   /* slate -- starting point */
+  --maturity-model:    #6f7bc0;   /* light indigo -- building */
+  --maturity-pilot:    #454f9e;   /* indigo -- testing */
+  --maturity-usecase:  #2b337a;   /* primary -- deploying */
+  --maturity-business: #0f9e8e;   /* teal -- sustainable endpoint */
 
   /* --- Semantic colors --- */
-  --color-success:  #10b981;
+  --color-success:  #1f9d57;
   --color-warning:  #f59e0b;
   --color-danger:   #ef4444;
   --color-info:     #3b82f6;
@@ -80,7 +92,7 @@
   --shadow-md:    0 4px 12px var(--shadow), 0 2px 4px rgba(0, 0, 0, 0.03);
   --shadow-lg:    0 8px 24px var(--shadow-hover), 0 4px 8px rgba(0, 0, 0, 0.04);
   --shadow-xl:    0 16px 32px var(--shadow-hover), 0 6px 12px rgba(0, 0, 0, 0.05);
-  --shadow-focus: 0 0 0 3px rgba(59, 89, 152, 0.15);
+  --shadow-focus: 0 0 0 3px rgba(43, 51, 122, 0.15);
   --shadow-panel: -12px 0 40px rgba(15, 23, 42, 0.12);
 
   /* --- Transition durations --- */
@@ -88,9 +100,9 @@
   --transition-base: 200ms ease-out;
   --transition-slow: 350ms ease-out;
 
-  /* --- Layout --- */
-  --content-max-width:  1140px;
-  --detail-panel-width: 820px;
+  /* --- Layout (rem so they scale with the root font-size) --- */
+  --content-max-width:  76rem;     /* 1140px at 15px base */
+  --detail-panel-width: 54.6667rem; /* 820px at 15px base */
 }
 
 /* --- Global focus-visible --- */

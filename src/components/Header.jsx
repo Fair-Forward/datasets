@@ -122,6 +122,7 @@ const Header = () => {
             <a href="https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/" target="_blank" rel="noopener noreferrer" title="Fair Forward Initiative">
               <img src={withBasePath('img/ff_official.png')} alt="Fair Forward Logo" className="header-logo" />
             </a>
+            <span className="header-logo-divider" aria-hidden="true"></span>
             <a href="https://www.bmz-digital.global/en/" target="_blank" rel="noopener noreferrer" title="Digital Global">
               <img src={withBasePath('img/digital_global_official.png')} alt="Digital Global Logo" className="header-logo" />
             </a>
