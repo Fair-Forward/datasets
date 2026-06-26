@@ -304,12 +304,12 @@
     },
     {
       "id": "ui_6",
-      "slug": "ui_6-detectinging_forest_degradation_by_predicting_biom",
+      "slug": "ui_6-detecting_forest_degradation_by_predicting_biomass",
       "aliases": [
         "african_biomass_challenge_with_open_cocoa",
-        "detectinging_forest_degradation_by_predicting_biom"
+        "detecting_forest_degradation_by_predicting_biomass"
       ],
-      "title": "Detectinging forest degradation by predicting biomass in cocoa plantations in Cote d'Ivoire\n",
+      "title": "Detecting forest degradation by predicting biomass in cocoa plantations in Cote d'Ivoire\n",
       "description": "The AI model based on this dataset enables efficient and cost-effective remote monitoring of biomass changes. This is crucial for assessing reforestation success and detecting forest degradation due to cocoa farming. Also it reduces the need for extensive and expensive on-the-ground surveys. The dataset and the models developed from it aim to predict biomass levels in shaded regions of Côte d'Ivoire using a combination of GEDI, Sentinel-2 satellite imagery, and ground truth biomass measurements.",
       "dataset_links": [
         {
@@ -1601,6 +1601,10 @@
         {
           "name": "Link",
           "url": "https://github.com/digitalgreenorg/DG_Open"
+        },
+        {
+          "name": "Link",
+          "url": "https://huggingface.co/datasets/DigiGreen/farmerchat-queries-large"
         }
       ],
       "usecase_links": [
@@ -1628,8 +1632,8 @@
       ],
       "license": "CC-BY 4.0",
       "contact": "Digital Green (contact@digitalgreen.org)",
-      "organizations": "Powered by / Provided by: Digital Green\nCatalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/), GIZ \nFinanced by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/) and  Sequoia Climate Fund, CISCO Foundation",
-      "editor": "Philipp Olbrich",
+      "organizations": "Powered by / Provided by: Digital Green\nCatalyzed by: Digital Green, in parts by FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/), GIZ \nFinanced by: Multiple Funders, among them: The Rockefeller Foundation, Gates Foundation, BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/) and  Sequoia Climate Fund, CISCO Foundation",
+      "editor": "Philipp Olbrich, Balthas Seibold",
       "is_lacuna": false,
       "has_dataset": true,
       "has_usecase": true,
@@ -2694,12 +2698,11 @@
     },
     {
       "id": "ui_47",
-      "slug": "ui_47-aipowered_lifestock_health_system_enabling_local",
+      "slug": "ui_47-aipowered_livestock_health_system_enabling_local",
       "aliases": [
-        "aipowered_lifestock_health_system_enabling_local",
-        "livhealth_kiswahili_corpus"
+        "aipowered_livestock_health_system_enabling_local"
       ],
-      "title": "AI-powered lifestock health system enabling local communities easy access to disease information on demand and in Kiswahili. ",
+      "title": "AI-powered livestock health system enabling local communities easy access to disease information on demand and in Kiswahili. ",
       "description": "LivHealth Kiswahili Corpus aims to empower local communities to correctly identify livestock syndromes and get timely interventions from qualified livestock practitioners. Using Natural Language Processing (NLP), Machine Learning (ML), and Artificial Intelligence (AI), the project has built Kiswahili text-to-speech models for disseminating disease information to marginalized communities. Working closely with their partner, One Health Center in Africa (OHRECA) based at ILRI, they have enhanced the functionality of the LivHealth system to enable local communities easy access to disease information on demand and in Kiswahili. This was part of a Mozilla innovation challenge supporting people and projects across East Africa who leverage Common Voice’s open-source voice data set to unlock social and economic opportunities. These grants help to advance the use of open-source voice data for products that support community participation and engagement.",
       "dataset_links": [
         {
@@ -2857,7 +2860,7 @@
         "providing_farmers_in_kenya_and_bihar"
       ],
       "title": "Providing farmers in Kenya and Bihar, India with high-quality, personalized information through AI and developing blueprints for AI-powered Agriculture Information Exchange Platforms",
-      "description": "Four prototypes of an AI-powered Agriculture Information Exchange Platforms were developed through four initiatives: \n1. DynAG: \nFocused on rice, wheat, and maize, DynAG's platform uses a RAG pipeline powered by LLMs like the GPT suite to provide farmers with advisory services. Accessible via chatbots, Android and Jio-based mobile apps, IVR, and SMS, it ensures wide reach. With machine translation and speech recognition, the platform supports communication in English and Hindi while utilizing CGIAR's data backbone for accurate, data-driven insights. \n  \n 2. Digital Green: \nDigital Green's platform supports agricultural value chains like dairy, coffee, and wheat in Bihar and Kenya. It integrates a RAG pipeline, using LLMs under evaluation, and offers services through an app, Telegram, and IVR. Features like machine translation, speech technology, image recognition, and weather data enable localized insights. The platform supports multiple languages, including Hindi, Swahili, Gikuyu, and Marathi, ensuring flexibility across regions. \n  \n 3. Viamo and Partners: \n This platform targets farmers in Kenya and Bihar, focusing on beans and wheat, respectively. Using IVR, SMS, and WhatsApp, the platform is built on a RAG pipeline powered by LLMs, with potential for intent and entity recognition. Machine translation and speech-enabled IVR support English, Hindi, and Swahili, making it accessible across regions. The initiative is part of a broader plan to enhance voice technology for agricultural advisory. \n \n 4. Tech for Her: \n Tech for Her empowers women farmers in Bihar and Kenya, focusing on tomatoes and cattle. Accessible via IVR, WhatsApp, and a mobile app, the platform uses LLM-powered intent and entity recognition for personalized chatbot interactions and speech-enabled IVR for voice support. AI-based video generation further enhances engagement. Available in English, Hindi, and Swahili, it caters to the specific needs of women in agriculture.",
+      "description": "Four prototypes of an AI-powered Agriculture Information Exchange Platforms were developed through four initiatives: \n1. DynAG: \nFocused on rice, wheat, and maize, DynAG's platform uses a RAG pipeline powered by LLMs like the GPT suite to provide farmers with advisory services. Accessible via chatbots, Android and Jio-based mobile apps, IVR, and SMS, it ensures wide reach. With machine translation and speech recognition, the platform supports communication in English and Hindi while utilizing CGIAR's data backbone for accurate, data-driven insights. \n  \n 2. Digital Green: \nDigital Green's platform supports agricultural value chains like dairy, coffee, and wheat in Bihar and Kenya. It integrates a RAG pipeline, using LLMs under evaluation, and offers services through an app, Telegram, and IVR. Features like machine translation, speech technology, image recognition, and weather data enable localized insights. The platform supports multiple languages, including Hindi, Swahili, Gikuyu, and Marathi, ensuring flexibility across regions. The project has contributed to Digital Greens current FarmerChat.\n  \n 3. Viamo and Partners: \n This platform targets farmers in Kenya and Bihar, focusing on beans and wheat, respectively. Using IVR, SMS, and WhatsApp, the platform is built on a RAG pipeline powered by LLMs, with potential for intent and entity recognition. Machine translation and speech-enabled IVR support English, Hindi, and Swahili, making it accessible across regions. The initiative is part of a broader plan to enhance voice technology for agricultural advisory. \n \n 4. Tech for Her: \n Tech for Her empowers women farmers in Bihar and Kenya, focusing on tomatoes and cattle. Accessible via IVR, WhatsApp, and a mobile app, the platform uses LLM-powered intent and entity recognition for personalized chatbot interactions and speech-enabled IVR for voice support. AI-based video generation further enhances engagement. Available in English, Hindi, and Swahili, it caters to the specific needs of women in agriculture.",
       "dataset_links": [
         {
           "name": "Link",
@@ -4593,7 +4596,7 @@
       "aliases": [
         "monitoring_deforestation_predicting_landuse_and_la"
       ],
-      "title": "Monitoring Deforestation, predicting Landuse and Landcover changes and plannin forest restoration in Uganda through AI-powered Remote Sensing",
+      "title": "Monitoring Deforestation, predicting Landuse and Landcover changes and planning forest restoration in Uganda through AI-powered Remote Sensing",
       "description": "This project provides Uganda’s first openly accessible AI-ready satellite imagery dataset designed to predict land-use and land-cover change. It was created to address persistent deforestation and the lack of reliable, context-specific data needed to detect, forecast, and manage ecosystem degradation. Through an open-source replication kit including annotated Sentinel-2 and Hansen datasets, protocols, and inventory data, this products enables local innovators, forest agencies, and policymakers to build AI tools for monitoring forests, planning restoration, and supporting NDC and SDG15 actions. Its goal is to improve early detection of land-cover change, strengthen climate-smart decision-making, and empower local institutions with high-quality geospatial data.",
       "dataset_links": [],
       "usecase_links": [
@@ -4934,9 +4937,9 @@
       "has_access_note": true,
       "hosted_documents": [],
       "sdgs": [
-        "SDG 8",
+        "SDG 10",
         "SDG 9",
-        "SDG 10"
+        "SDG 8"
       ],
       "data_types": [
         "Text",
@@ -4956,10 +4959,76 @@
       "data_characteristics": "Parallel voice-text corpus in low-resource East and West African languages, sourced from professional film and TV productions. Data quality reflects studio-grade audio. Responsible AI considerations include informed consent from content owners, a no-commercial-use clause, right-to-retract provisions, and no third-party sharing. Bias assessments should account for genre diversity, speaker demographics, and dialect representation across the corpus.",
       "model_characteristics": "No training, only testing for benchmarks. The pipeline combines Badrex's Wav2Vec-BERT 2.0 for Kinyarwanda ASR, Nvidia's SortFormer streaming model for speaker diarisation (current state-of-the-art), and MbazaNLP's fine-tuned NLLB model for open-source English-Kinyarwanda translation, with Gemini 3.1 Pro serving as the best-performing option for context-aware translation. All models accept audio or text input and output transcriptions, speaker segments, and translations optimised for media dialogue and subtitling workflows.",
       "how_to_use": "Users can access transcription and translation services through a web-based platform integrated into post-production subtitling workflows. The solution operates on a usage-based pricing model agreed between the product owner and local studios. Resources include technical documentation, community-maintained model improvements, and training materials for onboarding production teams. Computing costs scale with usage and can be optimised through cloud hosting or shared infrastructure.",
-      "maturity": "Early stage, functional demo available.",
-      "maturity_tags": [],
+      "maturity": "Dataset > Model > Pilot",
+      "maturity_tags": [
+        "dataset",
+        "model",
+        "pilot"
+      ],
       "additional_resources": [],
-      "quality_score": 96
+      "quality_score": 100
+    },
+    {
+      "id": "ui_89",
+      "slug": "ui_89-datadriven_decisionmaking_for_farmers_to_increase",
+      "aliases": [
+        "datadriven_decisionmaking_for_farmers_to_increase",
+        "digital_green__local_dataset_collection",
+        "geospatial_dataset_of_wheat_and_rice"
+      ],
+      "title": "Data-driven decision-making for farmers to increase climate resilience in India",
+      "description": "Smallholder farmers are crucial contributors to global food production, and in India often suffer most from poverty and malnutrition. These farmers face challenges such as limited access to modern agriculture, unpredictable weather, and resource constraints. To tackle this issue, Digital Green collected data via surveys, offering insights into farming practices, environmental conditions, and crop yields.\n\nThe project developed a scalable data collection model for JEEViKA’s frontline workers, integrating digital tools and geofencing, and empowered farmers with personalized climate-smart advice through Farmer Scorecards.\n\nThe project has contributed to Digital Greens current FarmerChat.",
+      "dataset_links": [
+        {
+          "name": "Link",
+          "url": "https://github.com/digitalgreenorg/frame-templates"
+        }
+      ],
+      "usecase_links": [
+        {
+          "name": "Link",
+          "url": "https://github.com/digitalgreenorg/frame-templates"
+        }
+      ],
+      "access_note_kind": null,
+      "access_note_markdown": null,
+      "has_access_note": false,
+      "hosted_documents": [],
+      "sdgs": [
+        "SDG 2"
+      ],
+      "data_types": [
+        "Tabular"
+      ],
+      "countries": [
+        "India"
+      ],
+      "license": "CC-BY 4.0",
+      "contact": "Digital Green (info@digitalgreentrust.org), Viamo and Partners, Tech for Her, DynAg, Digifarm, Opportunity International",
+      "organizations": "Powered by / Provided by: Digital Green\nCatalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/), GIZ\nFinanced by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/) and Sequoia Climate Fund, CISCO Foundation",
+      "editor": "Philipp Olbrich",
+      "is_lacuna": false,
+      "has_dataset": true,
+      "has_usecase": true,
+      "image": null,
+      "data_characteristics": "The data was collected through a survey conducted across multiple districts in India. It consists of a variety of factors that could potentially impact the yield of rice crops. These factors include things like the type and amount of fertilizers used, the quantity of seedlings planted, methods of preparing the land, different irrigation techniques employed, among other features. The dataset comprises more than 5000 data points, each having more than 40 features.",
+      "model_characteristics": "Multiple models are available based on the shared data. Please refer to the GitHub repository.",
+      "how_to_use": "The possibilities include creating a machine learning solution to predict the crop yield per acre of rice or wheat crops in India. Our goal is to empower these farmers and break the cycle of poverty and malnutrition.\n\nThis use case also included the development of a business model and funding model for open source AI as a stepping stone towards financially viable operations. It was facilitated by Villgro Africa's and FAIR Forward's six-month mentorship programme on \"Creating sustainable business and funding models with open source AI\". See: https://www.bmz-digital.global/en/news/open-source-ai-business-impact/",
+      "maturity": "Dataset  > Model > Pilot > Use-Case >  Use-Case with Business Model",
+      "maturity_tags": [
+        "dataset",
+        "model",
+        "pilot",
+        "usecase",
+        "business"
+      ],
+      "additional_resources": [
+        {
+          "name": "Giz Ff Dg Learning Report.Pdf (digitalgreen.org)",
+          "url": "https://digitalgreen.org/wp-content/uploads/2024/10/GIZ-FF_DG_Learning-Report.pdf"
+        }
+      ],
+      "quality_score": 93
     }
   ],
   "aliases": {
@@ -4973,7 +5042,7 @@
     "mapping_blue_carbon_quantifying_mangrove_carbon": "ui_5",
     "quantifying_colombian_mangroves_aboveground_biomas": "ui_5",
     "african_biomass_challenge_with_open_cocoa": "ui_6",
-    "detectinging_forest_degradation_by_predicting_biom": "ui_6",
+    "detecting_forest_degradation_by_predicting_biomass": "ui_6",
     "ai_for_mangrove_carbon_credits_turning": "ui_7",
     "watchmytree": "ui_7",
     "lifting_up_women_through_land_ownership": "ui_8",
@@ -5056,8 +5125,7 @@
     "miti360_a_machine_learning_ready_dataset": "ui_45",
     "climate_resilience_through_agroforestry": "ui_46",
     "dataenabled_climate_shock_absorbance_through_agrof": "ui_46",
-    "aipowered_lifestock_health_system_enabling_local": "ui_47",
-    "livhealth_kiswahili_corpus": "ui_47",
+    "aipowered_livestock_health_system_enabling_local": "ui_47",
     "wezesha_na_kabambe__offline_swahili": "ui_48",
     "chamachat__powering_chama_loan_groups": "ui_49",
     "aiep_mvp_development": "ui_50",
@@ -5132,12 +5200,15 @@
     "tunga_agrichatbot_open_source_suite_": "ui_87",
     "tunga_chatbot_open_source_suite_": "ui_87",
     "c4ir_grant_rwanda_media_voice_bridge": "ui_88",
-    "rwanda_media_voice_bridge__aipowered": "ui_88"
+    "rwanda_media_voice_bridge__aipowered": "ui_88",
+    "datadriven_decisionmaking_for_farmers_to_increase": "ui_89",
+    "digital_green__local_dataset_collection": "ui_89",
+    "geospatial_dataset_of_wheat_and_rice": "ui_89"
   },
   "stats": {
-    "total_projects": 88,
-    "total_datasets": 91,
-    "total_usecases": 56,
+    "total_projects": 89,
+    "total_datasets": 93,
+    "total_usecases": 57,
     "total_access_note_projects": 10,
     "total_countries": 29
   },
