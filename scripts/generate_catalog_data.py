@@ -20,7 +20,14 @@ from utils import (
 parser = argparse.ArgumentParser(description='Generate catalog JSON from Excel file.')
 parser.add_argument('--input', type=str, default="docs/data_catalog.xlsx", help='Path to the input Excel file')
 parser.add_argument('--output', type=str, default="public/data/catalog.json", help='Path to the output JSON file')
-args = parser.parse_args()
+# Parse CLI args only when run directly. When this module is imported (e.g. by
+# validate_data.py), use defaults instead of consuming the importer's argv --
+# otherwise unrelated flags like --check-urls would abort the import with an
+# "unrecognized arguments" error.
+if __name__ == "__main__":
+    args = parser.parse_args()
+else:
+    args = parser.parse_args([])
 
 
 # License normalization: map inconsistent values to canonical short names
