@@ -296,13 +296,11 @@ const DetailPanel = ({ project, onClose }) => {
 
   const additionalResourceLinks = additionalResources.filter(r => r.url)
 
-  // Render contact value as JSX using shared parsing. A cell may list several
-  // contacts (separated by ';', ',' or '&'); render each name as its own link,
-  // joined inline by '; '.
-  const renderContact = (contact) => {
-    const contacts = parseContacts(contact)
-    if (!contacts.length) return null
-    return contacts.map(({ label, href }, i) => (
+  // A contact cell may list several people (separated by ';', ',' or '&'); parse
+  // it into individual contacts so each name links to its own email, joined by '; '.
+  const contacts = parseContacts(project?.contact || '')
+  const renderContacts = () =>
+    contacts.map(({ label, href }, i) => (
       <Fragment key={`${label}-${i}`}>
         {i > 0 && '; '}
         {href
@@ -312,7 +310,6 @@ const DetailPanel = ({ project, onClose }) => {
           : label}
       </Fragment>
     ))
-  }
 
   // Render license value as JSX using shared parsing
   const renderLicense = (raw) => {
@@ -633,12 +630,12 @@ const DetailPanel = ({ project, onClose }) => {
                 )}
 
                 {/* E) Metadata grid at bottom */}
-                {(project?.contact || project?.editor || licenseValue || sdgs.length > 0) && (
+                {(contacts.length > 0 || project?.editor || licenseValue || sdgs.length > 0) && (
                   <div className="panel-metadata-grid">
-                    {project?.contact && (
+                    {contacts.length > 0 && (
                       <div className="metadata-cell">
                         <span className="metadata-label">Author/Contact</span>
-                        <span className="metadata-value">{renderContact(project.contact)}</span>
+                        <span className="metadata-value">{renderContacts()}</span>
                       </div>
                     )}
                     {project?.editor && (

@@ -37,8 +37,9 @@ export const parseContact = (contact = '') => {
   }
 
   if (urlMatch) {
-    const url = urlMatch[0]
-    const label = stripContactPunctuation(cleanLabel(contact.replace(url, ' '))) || url
+    const rawUrl = urlMatch[0]
+    const url = rawUrl.replace(/[.,;:]+$/, '')
+    const label = stripContactPunctuation(cleanLabel(contact.replace(rawUrl, ' '))) || url
     return { label, href: url }
   }
 
@@ -50,9 +51,20 @@ export const parseContact = (contact = '') => {
 export const parseContacts = (raw = '') => {
   if (!raw || typeof raw !== 'string') return []
 
-  // ';', newlines and a whitespace-padded '&' always separate distinct contacts
-  // (the padding keeps org names like "A&B" intact).
-  const groups = raw.split(/\s*;\s*|\s+&\s+|\n+/)
+  // ';', newlines and runs of 3+ spaces always separate distinct contacts.
+  const pieces = raw.split(/\s*;\s*|\n+|\s{3,}/)
+
+  // ' & ' separates contacts only when it joins two email-bearing parts, so joint
+  // organisation names like "Health & Welfare" are left intact.
+  const groups = []
+  for (const piece of pieces) {
+    const ampParts = piece.split(/\s+&\s+/)
+    if (ampParts.length > 1 && ampParts.every(p => emailRegex.test(p))) {
+      groups.push(...ampParts)
+    } else {
+      groups.push(piece)
+    }
+  }
 
   const segments = []
   for (const group of groups) {
