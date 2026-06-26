@@ -210,16 +210,20 @@ const DetailPanel = ({ project, onClose }) => {
 
         const content = {}
 
-        for (const [key, filename] of Object.entries(files)) {
-          try {
-            const response = await fetch(withBasePath(`projects/${project.id}/docs/${filename}`))
-            if (response.ok) {
-              content[key] = await response.text()
+        // Fetch the doc files in parallel so the panel opens without waiting on a
+        // chain of sequential round-trips.
+        await Promise.all(
+          Object.entries(files).map(async ([key, filename]) => {
+            try {
+              const response = await fetch(withBasePath(`projects/${project.id}/docs/${filename}`))
+              if (response.ok) {
+                content[key] = await response.text()
+              }
+            } catch (err) {
+              console.log(`Could not load ${filename}:`, err)
             }
-          } catch (err) {
-            console.log(`Could not load ${filename}:`, err)
-          }
-        }
+          })
+        )
 
         setMarkdownContent(content)
         setLoading(false)
@@ -669,8 +673,14 @@ const DetailPanel = ({ project, onClose }) => {
                 )}
 
                 {/* Footer meta: Author / Contact + Editor */}
-                {(contacts.length > 0 || project?.editor) && (
+                {(sdgs.length > 0 || contacts.length > 0 || project?.editor) && (
                   <div className="panel-metadata-grid">
+                    {sdgs.length > 0 && (
+                      <div className="metadata-cell">
+                        <span className="metadata-label">SDGs</span>
+                        <span className="metadata-value">{sdgs.join(', ')}</span>
+                      </div>
+                    )}
                     {contacts.length > 0 && (
                       <div className="metadata-cell">
                         <span className="metadata-label">Author / Contact</span>

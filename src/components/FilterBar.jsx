@@ -6,20 +6,6 @@ const MATURITY_LABELS = {
   business: 'Business Model'
 }
 
-// Short labels for the segmented view control; the long descriptions ride along as titles.
-const VIEW_LABELS = {
-  all: 'All items',
-  datasets: 'Datasets',
-  usecases: 'Use cases',
-  info: 'Info',
-  lacuna: 'Lacuna'
-}
-
-const VIEW_TITLES = {
-  info: 'Projects with no public dataset/use-case link',
-  lacuna: 'Lacuna Fund projects'
-}
-
 const DEFAULT_VIEWS = [
   { value: 'all', label: 'All items' },
   { value: 'datasets', label: 'Datasets' },
@@ -27,7 +13,7 @@ const DEFAULT_VIEWS = [
 ]
 
 const FilterBar = ({ filters, onFilterChange, availableFilters }) => {
-  const { sdgs = [], data_types = [], countries = [], maturity_stages = [] } = availableFilters || {}
+  const { sdgs = [], data_types = [], countries = [], maturity_stages = [], statuses = [] } = availableFilters || {}
 
   const handleSDGChange = (e) => {
     onFilterChange({ ...filters, sdg: e.target.value })
@@ -43,6 +29,10 @@ const FilterBar = ({ filters, onFilterChange, availableFilters }) => {
 
   const handleMaturityChange = (e) => {
     onFilterChange({ ...filters, maturity: e.target.value })
+  }
+
+  const handleStatusChange = (e) => {
+    onFilterChange({ ...filters, status: e.target.value })
   }
 
   const clearFilters = () => {
@@ -64,9 +54,8 @@ const FilterBar = ({ filters, onFilterChange, availableFilters }) => {
               className={`segment${activeView === view.value ? ' active' : ''}`}
               onClick={() => onFilterChange({ ...filters, view: view.value })}
               aria-pressed={activeView === view.value}
-              title={VIEW_TITLES[view.value] || undefined}
             >
-              {VIEW_LABELS[view.value] || view.label}
+              {view.label}
             </button>
           ))}
         </div>
@@ -121,6 +110,20 @@ const FilterBar = ({ filters, onFilterChange, availableFilters }) => {
               </option>
             ))}
           </select>
+
+          {statuses.length > 0 && (
+            <select
+              className="filter-chip"
+              value={filters.status || ''}
+              onChange={handleStatusChange}
+              aria-label="Filter by link status"
+            >
+              <option value="">status: any</option>
+              {statuses.map(s => (
+                <option key={s.value} value={s.value}>{s.label}</option>
+              ))}
+            </select>
+          )}
 
           {hasActiveFilters && (
             <button className="clear-filters-btn" onClick={clearFilters}>

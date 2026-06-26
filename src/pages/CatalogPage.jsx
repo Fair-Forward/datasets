@@ -203,20 +203,19 @@ const CatalogPage = () => {
       projects = projects.filter(p => matchesStatus(p.health, filters.status))
     }
 
-    // View filter (datasets, use cases, lacuna, or maturity stages from Sankey)
+    // View filter: datasets / use cases, or a maturity stage deep-linked from the
+    // Insights Sankey. Unknown views (e.g. a stale ?view=lacuna bookmark) match no
+    // stage here, so they fall through and leave the full catalog rather than
+    // emptying it.
     if (filters.view === 'datasets') {
       projects = projects.filter(p => p.has_dataset)
     } else if (filters.view === 'usecases') {
       projects = projects.filter(p => p.has_usecase)
-    } else if (filters.view === 'info') {
-      projects = projects.filter(p => p.has_access_note)
-    } else if (filters.view === 'lacuna') {
-      projects = projects.filter(p => p.is_lacuna)
     } else if (filters.view && filters.view !== 'all') {
-      // Filter by maturity stage (from Sankey chart clicks)
-      projects = projects.filter(p => 
-        p.maturity_tags && p.maturity_tags.includes(filters.view)
-      )
+      const maturityStages = catalogData.filters?.maturity_stages || []
+      if (maturityStages.includes(filters.view)) {
+        projects = projects.filter(p => p.maturity_tags && p.maturity_tags.includes(filters.view))
+      }
     }
 
     // Sort by combined rank: documentation depth, boosted by recent activity and link availability.
@@ -313,14 +312,7 @@ const CatalogPage = () => {
         onFilterChange={handleFilterChange}
         availableFilters={{
           ...catalogData.filters,
-          statuses: availableStatuses,
-          views: [
-            { value: 'all', label: 'All items' },
-            { value: 'datasets', label: 'Datasets' },
-            { value: 'usecases', label: 'Use cases' },
-            { value: 'info', label: 'Info (no public link)' },
-            { value: 'lacuna', label: 'Lacuna Fund' }
-          ]
+          statuses: availableStatuses
         }}
       />
       
