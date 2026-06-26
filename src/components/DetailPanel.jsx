@@ -1,9 +1,9 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback, useRef, Fragment } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { withBasePath, resolvePublicHref } from '../utils/basePath'
 import { SDG_COLORS } from '../utils/sdgColors'
-import { parseContact, licenseLabel, firstUrl } from '../utils/parsing'
+import { parseContacts, licenseLabel, firstUrl } from '../utils/parsing'
 import { hasHealthSignal, availabilityLabel, contextLabel, healthDetailLines } from '../utils/health'
 
 const markdownLinkComponents = {
@@ -296,17 +296,20 @@ const DetailPanel = ({ project, onClose }) => {
 
   const additionalResourceLinks = additionalResources.filter(r => r.url)
 
-  // Render contact value as JSX using shared parsing
-  const renderContact = (contact) => {
-    const { label, href } = parseContact(contact)
-    if (href && href.startsWith('mailto:')) {
-      return <a href={href}>{label}</a>
-    }
-    if (href) {
-      return <a href={href} target="_blank" rel="noopener noreferrer">{label}</a>
-    }
-    return label
-  }
+  // A contact cell may list several people (separated by ';', ',' or '&'); parse
+  // it into individual contacts so each name links to its own email, joined by '; '.
+  const contacts = parseContacts(project?.contact || '')
+  const renderContacts = () =>
+    contacts.map(({ label, href }, i) => (
+      <Fragment key={`${label}-${i}`}>
+        {i > 0 && '; '}
+        {href
+          ? (href.startsWith('mailto:')
+              ? <a href={href}>{label}</a>
+              : <a href={href} target="_blank" rel="noopener noreferrer">{label}</a>)
+          : label}
+      </Fragment>
+    ))
 
   // Render license value as JSX using shared parsing
   const renderLicense = (raw) => {
@@ -627,12 +630,12 @@ const DetailPanel = ({ project, onClose }) => {
                 )}
 
                 {/* E) Metadata grid at bottom */}
-                {(project?.contact || project?.editor || licenseValue || sdgs.length > 0) && (
+                {(contacts.length > 0 || project?.editor || licenseValue || sdgs.length > 0) && (
                   <div className="panel-metadata-grid">
-                    {project?.contact && (
+                    {contacts.length > 0 && (
                       <div className="metadata-cell">
                         <span className="metadata-label">Author/Contact</span>
-                        <span className="metadata-value">{renderContact(project.contact)}</span>
+                        <span className="metadata-value">{renderContacts()}</span>
                       </div>
                     )}
                     {project?.editor && (

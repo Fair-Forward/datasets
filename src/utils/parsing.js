@@ -12,28 +12,79 @@ export const cleanLabel = (label = '') =>
     .replace(/\s{2,}/g, ' ')
     .trim()
 
-export const parseContact = (contact = '') => {
-  if (!contact) return { label: '', href: null }
-  const emailMatch = contact.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i)
-  const urlMatch = contact.match(urlRegex)
+const emailRegex = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i
 
-  const beforeComma = contact.split(',')[0].trim()
-  const beforeParen = contact.split('(')[0].trim()
-  const baseLabel = cleanLabel(beforeComma || beforeParen || contact)
+// Drop angle-bracket wrappers (e.g. <email>) and trim stray separators left
+// behind after an email/URL is removed from a label.
+const stripContactPunctuation = (label = '') =>
+  label
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/[<>]/g, ' ')
+    .replace(/\s{2,}/g, ' ')
+    .replace(/^[\s,;:&-]+|[\s,;:&-]+$/g, '')
+    .trim()
+
+// Parse a single contact segment into a display label and an optional link.
+export const parseContact = (contact = '') => {
+  if (!contact || typeof contact !== 'string') return { label: '', href: null }
+  const emailMatch = contact.match(emailRegex)
+  const urlMatch = contact.match(urlRegex)
 
   if (emailMatch) {
     const email = emailMatch[0]
-    const label = cleanLabel(baseLabel.replace(email, '').trim()) || baseLabel || email
+    const label = stripContactPunctuation(cleanLabel(contact.replace(email, ' '))) || email
     return { label, href: `mailto:${email}` }
   }
 
   if (urlMatch) {
-    const url = urlMatch[0]
-    const label = cleanLabel(baseLabel.replace(url, '').trim()) || baseLabel || url
+    const rawUrl = urlMatch[0]
+    const url = rawUrl.replace(/[.,;:]+$/, '')
+    const label = stripContactPunctuation(cleanLabel(contact.replace(rawUrl, ' '))) || url
     return { label, href: url }
   }
 
-  return { label: cleanLabel(contact), href: null }
+  return { label: stripContactPunctuation(cleanLabel(contact)), href: null }
+}
+
+// Split a raw contact cell into individual contacts, binding each email/URL to
+// the name text that precedes it. Returns an array of { label, href }.
+export const parseContacts = (raw = '') => {
+  if (!raw || typeof raw !== 'string') return []
+
+  // ';', newlines and runs of 3+ spaces always separate distinct contacts.
+  const pieces = raw.split(/\s*;\s*|\n+|\s{3,}/)
+
+  // ' & ' separates contacts only when it joins two email-bearing parts, so joint
+  // organisation names like "Health & Welfare" are left intact.
+  const groups = []
+  for (const piece of pieces) {
+    const ampParts = piece.split(/\s+&\s+/)
+    if (ampParts.length > 1 && ampParts.every(p => emailRegex.test(p))) {
+      groups.push(...ampParts)
+    } else {
+      groups.push(piece)
+    }
+  }
+
+  const segments = []
+  for (const group of groups) {
+    if (!group || !group.trim()) continue
+    // Within a group a comma may separate contacts or just affiliation parts, so
+    // accumulate comma pieces until one carries an email/URL, then close a contact.
+    let buffer = []
+    for (const rawPart of group.split(',')) {
+      const part = rawPart.trim()
+      if (!part) continue
+      buffer.push(part)
+      if (emailRegex.test(part) || urlRegex.test(part)) {
+        segments.push(buffer.join(', '))
+        buffer = []
+      }
+    }
+    if (buffer.length) segments.push(buffer.join(', '))
+  }
+
+  return segments.map(parseContact).filter(c => c.label || c.href)
 }
 
 export const licenseLabel = (license = '') => {
