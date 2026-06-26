@@ -1,5 +1,5 @@
 {
-  "total_projects": 88,
+  "total_projects": 89,
   "total_countries": 28,
   "map_data": {
     "AO": {
@@ -265,7 +265,7 @@
     },
     "IN": {
       "name": "India",
-      "projects": 14,
+      "projects": 15,
       "iso2": "IN",
       "sdgs": [
         "SDG 2",
@@ -278,6 +278,7 @@
         "Geospatial/Remote Sensing",
         "Images",
         "Other",
+        "Tabular",
         "Text",
         "Voice"
       ]
@@ -380,7 +381,7 @@
     }
   },
   "sdg_distribution": {
-    "SDG 2": 42,
+    "SDG 2": 43,
     "SDG 4": 1,
     "SDG 5": 10,
     "SDG 7": 3,

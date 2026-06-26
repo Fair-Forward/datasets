@@ -1,0 +1,3 @@
+The possibilities include creating a machine learning solution to predict the crop yield per acre of rice or wheat crops in India. Our goal is to empower these farmers and break the cycle of poverty and malnutrition.
+
+This use case also included the development of a business model and funding model for open source AI as a stepping stone towards financially viable operations. It was facilitated by Villgro Africa's and FAIR Forward's six-month mentorship programme on "Creating sustainable business and funding models with open source AI". See: https://www.bmz-digital.global/en/news/open-source-ai-business-impact/ 
