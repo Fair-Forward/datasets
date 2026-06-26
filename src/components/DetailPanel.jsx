@@ -2,9 +2,19 @@ import { useState, useEffect, useCallback, useRef, Fragment } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { withBasePath, resolvePublicHref } from '../utils/basePath'
-import { SDG_COLORS } from '../utils/sdgColors'
+import { SDG_COLORS, SDG_NAMES } from '../utils/sdgColors'
+import { completenessFromScore, depthLabel } from '../utils/depth'
 import { parseContacts, licenseLabel, firstUrl } from '../utils/parsing'
 import { hasHealthSignal, availabilityLabel, contextLabel, healthDetailLines } from '../utils/health'
+
+// Cumulative maturity pipeline rendered as a stepper in the detail panel.
+const MATURITY_STEPS = [
+  { key: 'dataset', label: 'Dataset' },
+  { key: 'model', label: 'Model' },
+  { key: 'pilot', label: 'Pilot' },
+  { key: 'usecase', label: 'Use case' },
+  { key: 'business', label: 'Business' }
+]
 
 const markdownLinkComponents = {
   a: ({ href, children, ...props }) => {
@@ -46,40 +56,6 @@ const getShareUrl = (slug) => {
   const url = new URL(window.location.href)
   url.searchParams.set('project', slug)
   return url.toString()
-}
-
-const normalizeLabel = (value = '') =>
-  value
-    .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^a-z0-9-]/g, '')
-
-const getDataTypeIcon = (normalized) => {
-  if (!normalized) return 'fa-database'
-
-  const iconMap = {
-    images: 'fa-images',
-    image: 'fa-images',
-    'drone-imagery': 'fa-satellite',
-    audio: 'fa-microphone',
-    voice: 'fa-microphone-lines',
-    text: 'fa-file-lines',
-    tabular: 'fa-table-cells',
-    video: 'fa-film',
-    geospatial: 'fa-earth-americas',
-    'geospatialremote-sensing': 'fa-earth-americas',
-    'geospatial-remote-sensing': 'fa-earth-americas',
-    meterological: 'fa-cloud-sun',
-    meteorological: 'fa-cloud-sun'
-  }
-
-  for (const [key, icon] of Object.entries(iconMap)) {
-    if (normalized === key || normalized.startsWith(key)) {
-      return icon
-    }
-  }
-
-  return 'fa-database'
 }
 
 // Extract SDG numbers from SDG labels like "SDG 1", "SDG 15"
@@ -234,16 +210,20 @@ const DetailPanel = ({ project, onClose }) => {
 
         const content = {}
 
-        for (const [key, filename] of Object.entries(files)) {
-          try {
-            const response = await fetch(withBasePath(`projects/${project.id}/docs/${filename}`))
-            if (response.ok) {
-              content[key] = await response.text()
+        // Fetch the doc files in parallel so the panel opens without waiting on a
+        // chain of sequential round-trips.
+        await Promise.all(
+          Object.entries(files).map(async ([key, filename]) => {
+            try {
+              const response = await fetch(withBasePath(`projects/${project.id}/docs/${filename}`))
+              if (response.ok) {
+                content[key] = await response.text()
+              }
+            } catch (err) {
+              console.log(`Could not load ${filename}:`, err)
             }
-          } catch (err) {
-            console.log(`Could not load ${filename}:`, err)
-          }
-        }
+          })
+        )
 
         setMarkdownContent(content)
         setLoading(false)
@@ -321,17 +301,55 @@ const DetailPanel = ({ project, onClose }) => {
     return label
   }
 
+  // --- Detail panel v2 derived values ---
+  const sdgPrimary = sdgNumbers[0] || null
+  const sdgDotColor = sdgPrimary ? SDG_COLORS[sdgPrimary] : null
+  const eyebrowParts = []
+  if (sdgPrimary) {
+    eyebrowParts.push(`SDG ${sdgPrimary}${SDG_NAMES[sdgPrimary] ? ` · ${SDG_NAMES[sdgPrimary]}` : ''}`)
+  }
+  if (project?.countries?.length) eyebrowParts.push(project.countries[0])
+
+  const qualityScore = project?.quality_score || 0
+  const depthText = depthLabel(qualityScore)
+  const depthDots = completenessFromScore(qualityScore)
+  const dataTypeText = dataTypes.length ? dataTypes.join(', ') : null
+  const maturityTags = project?.maturity_tags || []
+
+  // Link-health status for the meta strip -- only assert health we actually have.
+  let statusText = 'Not checked'
+  let statusState = 'unknown'
+  if (showHealth) {
+    if (health.availability === 'available') {
+      statusText = 'Links healthy'
+      statusState = 'available'
+    } else {
+      statusText = 'Links may be down'
+      statusState = 'unavailable'
+    }
+  }
+
   return (
     <>
       <div className="panel-overlay active" onClick={onClose}></div>
       <div className="detail-panel open" ref={panelRef} role="dialog" aria-modal="true" aria-label={project.title}>
         <div className="detail-panel-header">
+          <button className="panel-back-btn" onClick={onClose}>
+            <i className="fas fa-arrow-left" aria-hidden="true"></i> Back to catalogue
+          </button>
           <div className="detail-panel-header-actions">
-            <button className="close-panel-btn" onClick={onClose}>
+            <button
+              className="panel-share-btn"
+              onClick={handleShare}
+              title={copied ? 'Link copied!' : 'Copy link to share'}
+            >
+              <i className={`fas ${copied ? 'fa-check' : 'fa-arrow-up-from-bracket'}`} aria-hidden="true"></i>
+              {copied ? 'Copied!' : 'Share'}
+            </button>
+            <button className="close-panel-btn" onClick={onClose} aria-label="Close panel">
               <i className="fas fa-times"></i>
             </button>
           </div>
-          <h2>{project.title}</h2>
         </div>
 
         <div className="detail-panel-content">
@@ -365,7 +383,21 @@ const DetailPanel = ({ project, onClose }) => {
                 return null
               })()}
 
-              {/* A) Action Row */}
+              {/* Eyebrow + title + lede */}
+              {eyebrowParts.length > 0 && (
+                <div className="panel-eyebrow">
+                  {sdgDotColor && <span className="panel-eyebrow-dot" style={{ background: sdgDotColor }}></span>}
+                  {eyebrowParts.join(' · ')}
+                </div>
+              )}
+              <h1 className="panel-title">{project.title}</h1>
+              {project?.description && (
+                <div className="panel-lede">
+                  <DocMarkdown>{project.description}</DocMarkdown>
+                </div>
+              )}
+
+              {/* Primary actions */}
               <div className="panel-actions">
                 {hasAnyLinks ? (
                   <>
@@ -430,14 +462,6 @@ const DetailPanel = ({ project, onClose }) => {
                     </div>
                   </div>
                 ) : null}
-                <button
-                  className="panel-action-secondary"
-                  onClick={handleShare}
-                  title={copied ? 'Link copied!' : 'Copy link to share'}
-                >
-                  <i className={`fas ${copied ? 'fa-check' : 'fa-link'}`}></i>
-                  {copied ? 'Copied!' : 'Share'}
-                </button>
               </div>
 
               {/* Access note context (shown below documents CTA) */}
@@ -450,23 +474,36 @@ const DetailPanel = ({ project, onClose }) => {
                 </div>
               )}
 
-              {/* B) Inline meta row: SDG badges + license */}
-              {(sdgs.length > 0 || licenseValue) && (
-                <div className="panel-inline-meta">
-                  {sdgs.map((sdg) => (
-                    <span key={sdg} className="panel-domain-badge">
-                      {sdg}
-                    </span>
-                  ))}
-                  {licenseValue && (
-                    <span className="license-inline">
-                      <i className="fas fa-copyright"></i> {renderLicense(licenseValue)}
-                    </span>
-                  )}
+              {/* Meta strip: Data type | License | Documentation | Status */}
+              <div className="panel-meta-strip">
+                <div className="panel-meta-cell">
+                  <div className="panel-meta-label">Data type</div>
+                  <div className="panel-meta-value">{dataTypeText || '—'}</div>
                 </div>
-              )}
+                <div className="panel-meta-cell">
+                  <div className="panel-meta-label">License</div>
+                  <div className="panel-meta-value">{licenseValue ? renderLicense(licenseValue) : 'Not specified'}</div>
+                </div>
+                <div className="panel-meta-cell">
+                  <div className="panel-meta-label">Documentation</div>
+                  <div className="panel-meta-value panel-meta-depth">
+                    {depthText}
+                    <span className="completeness-indicator" aria-hidden="true">
+                      {[1, 2, 3, 4, 5].map(i => (
+                        <span key={i} className={`completeness-dot${i <= depthDots ? ' filled' : ''}`} />
+                      ))}
+                    </span>
+                  </div>
+                </div>
+                <div className="panel-meta-cell">
+                  <div className="panel-meta-label">Status</div>
+                  <div className={`panel-meta-value panel-status-value status-${statusState}`}>
+                    <span className="status-dot" aria-hidden="true"></span>{statusText}
+                  </div>
+                </div>
+              </div>
 
-              {/* B2) Health / sustainability status */}
+              {/* Link health -- availability, when it was last checked, and what was found */}
               {showHealth && (
                 <div className={`panel-status health-${health.availability}`}>
                   <span className="health-dot" aria-hidden="true"></span>
@@ -491,42 +528,48 @@ const DetailPanel = ({ project, onClose }) => {
                 </div>
               )}
 
+              {/* Maturity stepper */}
+              {maturityTags.length > 0 && (
+                <div className="panel-maturity">
+                  <div className="panel-section-eyebrow">Maturity</div>
+                  <div className="maturity-stepper">
+                    {MATURITY_STEPS.map((step, i) => {
+                      const reached = maturityTags.includes(step.key)
+                      const prevReached = i > 0 && maturityTags.includes(MATURITY_STEPS[i - 1].key)
+                      return (
+                        <Fragment key={step.key}>
+                          {i > 0 && <span className={`maturity-line${prevReached && reached ? ' filled' : ''}`}></span>}
+                          <div className={`maturity-node${reached ? ' reached' : ''}`}>
+                            <span className="maturity-dot"></span>
+                            <span className="maturity-label">{step.label}</span>
+                          </div>
+                        </Fragment>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
+
               {/* D) Flat content sections */}
               <div className="panel-data active">
-                {/* Description Section with SDG Icons */}
-                {(markdownContent.description || project?.description) && (
+                {/* About -- only when the markdown adds detail beyond the lede shown up top */}
+                {markdownContent.description &&
+                  markdownContent.description.trim() !== (project?.description || '').trim() && (
                   <section className="detail-section" id="description">
-                    <h3>What is this about?</h3>
+                    <h3>About</h3>
                     <div className="detail-content documentation-content">
-                      <DocMarkdown>
-                        {markdownContent.description || project?.description}
-                      </DocMarkdown>
+                      <DocMarkdown>{markdownContent.description}</DocMarkdown>
                     </div>
                   </section>
                 )}
 
-                {/* Data Characteristics Section with Data Types at Top */}
-                {(markdownContent.data_characteristics || dataTypes.length > 0) && (
+                {/* Data Characteristics -- data types already live in the meta strip above */}
+                {markdownContent.data_characteristics?.trim() && (
                   <section className="detail-section" id="data-characteristics">
                     <h3>Data Characteristics</h3>
-                    {dataTypes.length > 0 && (
-                      <div className="data-type-chips">
-                        {dataTypes.map((type) => {
-                          const normalized = normalizeLabel(type)
-                          const icon = getDataTypeIcon(normalized)
-                          return (
-                            <span key={type} className="data-type-chip-inline">
-                              <i className={`fas ${icon}`} aria-hidden="true"></i> {type}
-                            </span>
-                          )
-                        })}
-                      </div>
-                    )}
-                    {markdownContent.data_characteristics && (
-                      <div className="detail-content documentation-content">
-                        <DocMarkdown>{markdownContent.data_characteristics}</DocMarkdown>
-                      </div>
-                    )}
+                    <div className="detail-content documentation-content">
+                      <DocMarkdown>{markdownContent.data_characteristics}</DocMarkdown>
+                    </div>
                   </section>
                 )}
 
@@ -629,12 +672,18 @@ const DetailPanel = ({ project, onClose }) => {
                   </section>
                 )}
 
-                {/* E) Metadata grid at bottom */}
-                {(contacts.length > 0 || project?.editor || licenseValue || sdgs.length > 0) && (
+                {/* Footer meta: Author / Contact + Editor */}
+                {(sdgs.length > 0 || contacts.length > 0 || project?.editor) && (
                   <div className="panel-metadata-grid">
+                    {sdgs.length > 0 && (
+                      <div className="metadata-cell">
+                        <span className="metadata-label">SDGs</span>
+                        <span className="metadata-value">{sdgs.join(', ')}</span>
+                      </div>
+                    )}
                     {contacts.length > 0 && (
                       <div className="metadata-cell">
-                        <span className="metadata-label">Author/Contact</span>
+                        <span className="metadata-label">Author / Contact</span>
                         <span className="metadata-value">{renderContacts()}</span>
                       </div>
                     )}
@@ -642,18 +691,6 @@ const DetailPanel = ({ project, onClose }) => {
                       <div className="metadata-cell">
                         <span className="metadata-label">Editor of this information</span>
                         <span className="metadata-value">{project.editor}</span>
-                      </div>
-                    )}
-                    {licenseValue && (
-                      <div className="metadata-cell">
-                        <span className="metadata-label">License</span>
-                        <span className="metadata-value">{renderLicense(licenseValue)}</span>
-                      </div>
-                    )}
-                    {sdgs.length > 0 && (
-                      <div className="metadata-cell">
-                        <span className="metadata-label">SDG</span>
-                        <span className="metadata-value">{sdgs.join(', ')}</span>
                       </div>
                     )}
                   </div>
