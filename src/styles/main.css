@@ -2475,10 +2475,18 @@ a.additional-resource-item i {
 }
 
 .panel-lede {
+    margin: 0.75rem 0 0;
+}
+
+.panel-lede p {
     font-size: var(--text-xl);
     line-height: 1.55;
     color: var(--text-light);
-    margin: 0.75rem 0 0;
+    margin: 0;
+}
+
+.panel-lede p + p {
+    margin-top: 0.6rem;
 }
 
 .panel-actions {

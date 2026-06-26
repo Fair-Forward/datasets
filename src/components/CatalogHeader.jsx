@@ -17,9 +17,23 @@ const CatalogHeader = ({ stats, search, onSearchChange }) => {
   useEffect(() => {
     if (!stats) return
 
-    // Use fast animation for filter changes, slow for initial load
-    const duration = isInitialLoad.current ? 1500 : 300 // 1.5s initial, 300ms for filters
-    const steps = isInitialLoad.current ? 60 : 15
+    // On filter/search changes, snap the counters straight to the new values so they
+    // don't re-animate (and flicker) under the search box on every keystroke.
+    if (!isInitialLoad.current) {
+      setAnimatedStats({
+        projects: stats.total_projects,
+        datasets: stats.total_datasets,
+        usecases: stats.total_usecases,
+        accessNote: stats.total_access_note_projects ?? 0,
+        countries: stats.total_countries
+      })
+      prevStats.current = stats
+      return
+    }
+
+    // First load animates the counters up from zero.
+    const duration = 1500
+    const steps = 60
     const interval = duration / steps
 
     // Get starting values (animate from previous values, not 0)
@@ -65,8 +79,6 @@ const CatalogHeader = ({ stats, search, onSearchChange }) => {
     return () => clearInterval(timer)
   }, [stats])
 
-  if (!stats) return null
-
   return (
     <header>
       <Header />
@@ -91,6 +103,7 @@ const CatalogHeader = ({ stats, search, onSearchChange }) => {
           </div>
         </div>
 
+        {stats && (
         <div className="stats-strip">
           <div className="stat-strip-item">
             <span className="stat-strip-value is-primary">{animatedStats.projects}</span>
@@ -115,6 +128,7 @@ const CatalogHeader = ({ stats, search, onSearchChange }) => {
             Explore insights &amp; visualizations <i className="fas fa-arrow-right" aria-hidden="true"></i>
           </Link>
         </div>
+        )}
       </div>
     </header>
   )
