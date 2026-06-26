@@ -304,12 +304,12 @@
     },
     {
       "id": "ui_6",
-      "slug": "ui_6-detectinging_forest_degradation_by_predicting_biom",
+      "slug": "ui_6-detecting_forest_degradation_by_predicting_biomass",
       "aliases": [
         "african_biomass_challenge_with_open_cocoa",
-        "detectinging_forest_degradation_by_predicting_biom"
+        "detecting_forest_degradation_by_predicting_biomass"
       ],
-      "title": "Detectinging forest degradation by predicting biomass in cocoa plantations in Cote d'Ivoire\n",
+      "title": "Detecting forest degradation by predicting biomass in cocoa plantations in Cote d'Ivoire\n",
       "description": "The AI model based on this dataset enables efficient and cost-effective remote monitoring of biomass changes. This is crucial for assessing reforestation success and detecting forest degradation due to cocoa farming. Also it reduces the need for extensive and expensive on-the-ground surveys. The dataset and the models developed from it aim to predict biomass levels in shaded regions of Côte d'Ivoire using a combination of GEDI, Sentinel-2 satellite imagery, and ground truth biomass measurements.",
       "dataset_links": [
         {
@@ -2698,12 +2698,11 @@
     },
     {
       "id": "ui_47",
-      "slug": "ui_47-aipowered_lifestock_health_system_enabling_local",
+      "slug": "ui_47-aipowered_livestock_health_system_enabling_local",
       "aliases": [
-        "aipowered_lifestock_health_system_enabling_local",
-        "livhealth_kiswahili_corpus"
+        "aipowered_livestock_health_system_enabling_local"
       ],
-      "title": "AI-powered lifestock health system enabling local communities easy access to disease information on demand and in Kiswahili. ",
+      "title": "AI-powered livestock health system enabling local communities easy access to disease information on demand and in Kiswahili. ",
       "description": "LivHealth Kiswahili Corpus aims to empower local communities to correctly identify livestock syndromes and get timely interventions from qualified livestock practitioners. Using Natural Language Processing (NLP), Machine Learning (ML), and Artificial Intelligence (AI), the project has built Kiswahili text-to-speech models for disseminating disease information to marginalized communities. Working closely with their partner, One Health Center in Africa (OHRECA) based at ILRI, they have enhanced the functionality of the LivHealth system to enable local communities easy access to disease information on demand and in Kiswahili. This was part of a Mozilla innovation challenge supporting people and projects across East Africa who leverage Common Voice’s open-source voice data set to unlock social and economic opportunities. These grants help to advance the use of open-source voice data for products that support community participation and engagement.",
       "dataset_links": [
         {
@@ -5043,7 +5042,7 @@
     "mapping_blue_carbon_quantifying_mangrove_carbon": "ui_5",
     "quantifying_colombian_mangroves_aboveground_biomas": "ui_5",
     "african_biomass_challenge_with_open_cocoa": "ui_6",
-    "detectinging_forest_degradation_by_predicting_biom": "ui_6",
+    "detecting_forest_degradation_by_predicting_biomass": "ui_6",
     "ai_for_mangrove_carbon_credits_turning": "ui_7",
     "watchmytree": "ui_7",
     "lifting_up_women_through_land_ownership": "ui_8",
@@ -5126,8 +5125,7 @@
     "miti360_a_machine_learning_ready_dataset": "ui_45",
     "climate_resilience_through_agroforestry": "ui_46",
     "dataenabled_climate_shock_absorbance_through_agrof": "ui_46",
-    "aipowered_lifestock_health_system_enabling_local": "ui_47",
-    "livhealth_kiswahili_corpus": "ui_47",
+    "aipowered_livestock_health_system_enabling_local": "ui_47",
     "wezesha_na_kabambe__offline_swahili": "ui_48",
     "chamachat__powering_chama_loan_groups": "ui_49",
     "aiep_mvp_development": "ui_50",
