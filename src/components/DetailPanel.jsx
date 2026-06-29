@@ -2,10 +2,11 @@ import { useState, useEffect, useCallback, useRef, Fragment } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { withBasePath, resolvePublicHref } from '../utils/basePath'
-import { SDG_COLORS, SDG_NAMES } from '../utils/sdgColors'
+import { parseSdgList } from '../utils/sdgColors'
 import { completenessFromScore, depthLabel } from '../utils/depth'
 import { parseContacts, licenseLabel, firstUrl } from '../utils/parsing'
 import { hasHealthSignal, availabilityLabel, contextLabel, healthDetailLines } from '../utils/health'
+import { SITE_NAME } from '../utils/site'
 
 // Cumulative maturity pipeline rendered as a stepper in the detail panel.
 const MATURITY_STEPS = [
@@ -39,38 +40,11 @@ const DocMarkdown = ({ children }) => (
   <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownLinkComponents}>{children}</ReactMarkdown>
 )
 
-const inferLinkLabel = (url, fallback) => {
-  if (!url) return fallback
-  try {
-    const host = new URL(url).hostname.replace('www.', '')
-    if (host === 'huggingface.co') return 'View on HuggingFace'
-    if (host === 'github.com') return 'View on GitHub'
-    if (host === 'zenodo.org') return 'View on Zenodo'
-    if (host === 'kaggle.com') return 'View on Kaggle'
-  } catch { /* ignore */ }
-  return fallback
-}
-
 // Build shareable URL for a project using its stable slug
 const getShareUrl = (slug) => {
   const url = new URL(window.location.href)
   url.searchParams.set('project', slug)
   return url.toString()
-}
-
-// Extract SDG numbers from SDG labels like "SDG 1", "SDG 15"
-const extractSdgNumbers = (sdgs = []) => {
-  const numbers = []
-  for (const sdg of sdgs) {
-    const match = sdg.match(/SDG\s*(\d+)/i)
-    if (match) {
-      const num = parseInt(match[1], 10)
-      if (num >= 1 && num <= 17) {
-        numbers.push(num)
-      }
-    }
-  }
-  return [...new Set(numbers)].sort((a, b) => a - b)
 }
 
 // Convert org text with inline URLs into proper markdown links
@@ -169,7 +143,7 @@ const DetailPanel = ({ project, onClose }) => {
       : 'fa-circle-info'
   const sdgs = project?.sdgs || []
   const dataTypes = project?.data_types || []
-  const sdgNumbers = extractSdgNumbers(sdgs)
+  const sdgList = parseSdgList(sdgs)
   const organizations = parseOrganizations(project?.organizations)
   const health = project?.health
   const showHealth = hasHealthSignal(health)
@@ -270,6 +244,31 @@ const DetailPanel = ({ project, onClose }) => {
     }
   }, [project])
 
+  // Reflect the open project in the document title and social-preview tags so the
+  // browser tab, bookmarks and screen readers show the project (not the generic
+  // site title). Restored on close/unmount and when switching projects.
+  useEffect(() => {
+    if (!project) return
+    const setMeta = (selector, value) => {
+      const el = document.querySelector(selector)
+      if (el) el.setAttribute('content', value)
+    }
+    const previousTitle = document.title
+    const previousOgTitle = document.querySelector('meta[property="og:title"]')?.getAttribute('content')
+    const previousTwTitle = document.querySelector('meta[name="twitter:title"]')?.getAttribute('content')
+
+    const heading = `${project.title} - ${SITE_NAME}`
+    document.title = heading
+    setMeta('meta[property="og:title"]', heading)
+    setMeta('meta[name="twitter:title"]', heading)
+
+    return () => {
+      document.title = previousTitle
+      if (previousOgTitle != null) setMeta('meta[property="og:title"]', previousOgTitle)
+      if (previousTwTitle != null) setMeta('meta[name="twitter:title"]', previousTwTitle)
+    }
+  }, [project])
+
   if (!project) return null
 
   const hasAnyLinks = datasetLinks.length > 0 || usecaseLinks.length > 0
@@ -302,12 +301,8 @@ const DetailPanel = ({ project, onClose }) => {
   }
 
   // --- Detail panel v2 derived values ---
-  const sdgPrimary = sdgNumbers[0] || null
-  const sdgDotColor = sdgPrimary ? SDG_COLORS[sdgPrimary] : null
+  const sdgPrimary = sdgList[0] || null
   const eyebrowParts = []
-  if (sdgPrimary) {
-    eyebrowParts.push(`SDG ${sdgPrimary}${SDG_NAMES[sdgPrimary] ? ` · ${SDG_NAMES[sdgPrimary]}` : ''}`)
-  }
   if (project?.countries?.length) eyebrowParts.push(project.countries[0])
 
   const qualityScore = project?.quality_score || 0
@@ -370,8 +365,7 @@ const DetailPanel = ({ project, onClose }) => {
                     />
                   )
                 }
-                const sdgMatch = sdgs.length > 0 && sdgs[0].match(/\d+/)
-                const sdgColor = sdgMatch ? SDG_COLORS[parseInt(sdgMatch[0], 10)] : null
+                const sdgColor = sdgPrimary?.color || null
                 if (sdgColor) {
                   return (
                     <div
@@ -386,14 +380,30 @@ const DetailPanel = ({ project, onClose }) => {
               {/* Eyebrow + title + lede */}
               {eyebrowParts.length > 0 && (
                 <div className="panel-eyebrow">
-                  {sdgDotColor && <span className="panel-eyebrow-dot" style={{ background: sdgDotColor }}></span>}
                   {eyebrowParts.join(' · ')}
+                </div>
+              )}
+              {sdgList.length > 0 && (
+                <div className="panel-sdg-chips">
+                  {sdgList.map((s) => (
+                    <span className="panel-sdg-chip" key={s.num}>
+                      <span className="panel-sdg-chip-dot" style={{ background: s.color || 'var(--accent-teal)' }} />
+                      {s.label}{s.name ? ` · ${s.name}` : ''}
+                    </span>
+                  ))}
                 </div>
               )}
               <h1 className="panel-title">{project.title}</h1>
               {project?.description && (
                 <div className="panel-lede">
                   <DocMarkdown>{project.description}</DocMarkdown>
+                </div>
+              )}
+
+              {contacts.length > 0 && (
+                <div className="panel-contact-callout">
+                  <span className="panel-contact-label">Contact / Authors</span>
+                  <span className="panel-contact-value">{renderContacts()}</span>
                 </div>
               )}
 
@@ -404,8 +414,8 @@ const DetailPanel = ({ project, onClose }) => {
                     {datasetLinks.map((link, idx) => {
                       const external = link.url && (link.url.startsWith('http://') || link.url.startsWith('https://'))
                       const hasCustomName = link.name && link.name !== 'Link'
-                      const genericLabel = datasetLinks.length > 1 ? `Access Dataset ${idx + 1}` : 'Access Dataset'
-                      const label = hasCustomName ? link.name : inferLinkLabel(link.url, genericLabel)
+                      const genericLabel = idx === 0 ? 'Access Dataset' : `Access Dataset ${idx + 1}`
+                      const label = hasCustomName ? link.name : genericLabel
                       return (
                         <a
                           key={`dataset-${idx}`}
@@ -422,8 +432,8 @@ const DetailPanel = ({ project, onClose }) => {
                     {usecaseLinks.map((link, idx) => {
                       const external = link.url && (link.url.startsWith('http://') || link.url.startsWith('https://'))
                       const hasCustomName = link.name && link.name !== 'Link'
-                      const genericLabel = usecaseLinks.length > 1 ? `Access Resource ${idx + 1}` : 'Access Resource'
-                      const label = hasCustomName ? link.name : inferLinkLabel(link.url, genericLabel)
+                      const genericLabel = idx === 0 ? 'Access Model/System' : `Access Model/System ${idx + 1}`
+                      const label = hasCustomName ? link.name : genericLabel
                       return (
                         <a
                           key={`usecase-${idx}`}
@@ -432,7 +442,7 @@ const DetailPanel = ({ project, onClose }) => {
                           target={external ? '_blank' : undefined}
                           rel={external ? 'noopener noreferrer' : undefined}
                         >
-                          <i className="fas fa-microscope"></i>
+                          <i className="fas fa-robot"></i>
                           {label}
                         </a>
                       )
@@ -672,27 +682,13 @@ const DetailPanel = ({ project, onClose }) => {
                   </section>
                 )}
 
-                {/* Footer meta: Author / Contact + Editor */}
-                {(sdgs.length > 0 || contacts.length > 0 || project?.editor) && (
+                {/* Footer meta: Editor */}
+                {project?.editor && (
                   <div className="panel-metadata-grid">
-                    {sdgs.length > 0 && (
-                      <div className="metadata-cell">
-                        <span className="metadata-label">SDGs</span>
-                        <span className="metadata-value">{sdgs.join(', ')}</span>
-                      </div>
-                    )}
-                    {contacts.length > 0 && (
-                      <div className="metadata-cell">
-                        <span className="metadata-label">Author / Contact</span>
-                        <span className="metadata-value">{renderContacts()}</span>
-                      </div>
-                    )}
-                    {project?.editor && (
-                      <div className="metadata-cell">
-                        <span className="metadata-label">Editor of this information</span>
-                        <span className="metadata-value">{project.editor}</span>
-                      </div>
-                    )}
+                    <div className="metadata-cell">
+                      <span className="metadata-label">Editor of this information</span>
+                      <span className="metadata-value">{project.editor}</span>
+                    </div>
                   </div>
                 )}
               </div>

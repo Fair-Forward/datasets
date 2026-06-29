@@ -1,14 +1,8 @@
 import { withBasePath } from '../utils/basePath'
-import { SDG_COLORS, SDG_NAMES } from '../utils/sdgColors'
+import { parseSdgList } from '../utils/sdgColors'
 import { licenseLabel, firstUrl } from '../utils/parsing'
 import { completenessFromScore, depthLabel } from '../utils/depth'
 import { hasHealthSignal, availabilityLabel, contextLabel } from '../utils/health'
-
-const getSdgNumber = (sdgs) => {
-  if (!sdgs || sdgs.length === 0) return null
-  const match = sdgs[0].match(/\d+/)
-  return match ? parseInt(match[0], 10) : null
-}
 
 const ProjectCard = ({ project, onClick, onFilterSDG }) => {
   const {
@@ -53,10 +47,9 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
     ? (data_types.length > 1 ? `${data_types[0]} +${data_types.length - 1}` : data_types[0])
     : null
 
-  const sdgNum = getSdgNumber(sdgs)
-  const sdgColor = sdgNum ? SDG_COLORS[sdgNum] : null
-  const sdgName = sdgNum ? SDG_NAMES[sdgNum] : null
-  const fallbackColor = !image ? sdgColor : null
+  const sdgList = parseSdgList(sdgs)
+  const primarySdg = sdgList[0] || null
+  const fallbackColor = !image ? (primarySdg?.color || null) : null
 
   return (
     <div
@@ -77,15 +70,15 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
               : undefined
         }
       >
-        {sdgNum && (
+        {primarySdg && (
           <button
             className="card-sdg-badge"
             onClick={(e) => { e.stopPropagation(); onFilterSDG?.(sdgs[0]) }}
-            title={`Filter by ${sdgs[0]}`}
+            title={`Filter by ${primarySdg.label}`}
             type="button"
           >
-            <span className="card-sdg-dot" style={{ background: sdgColor || 'var(--accent-teal)' }}></span>
-            {sdgs[0]}{sdgName ? ` · ${sdgName}` : ''}
+            <span className="card-sdg-dot" style={{ background: primarySdg.color || 'var(--accent-teal)' }}></span>
+            {primarySdg.label}{primarySdg.name ? ` · ${primarySdg.name}` : ''}
           </button>
         )}
       </div>

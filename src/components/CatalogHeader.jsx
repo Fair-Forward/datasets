@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import Header from './Header'
+import { SITE_TITLE } from '../utils/site'
 
 const CatalogHeader = ({ stats, search, onSearchChange }) => {
   const [animatedStats, setAnimatedStats] = useState({
@@ -84,10 +85,10 @@ const CatalogHeader = ({ stats, search, onSearchChange }) => {
       <Header />
       <div className="header-content">
         <div className="hero">
-          <h1>Fair Forward - Open Data &amp; Use Cases</h1>
+          <h1>{SITE_TITLE}</h1>
           <p className="subtitle">
-            Exploring datasets and solutions for global challenges across agriculture,
-            language technology, climate action, energy, and more — built by our partners.
+            Reusable AI building blocks for global challenges across agriculture,
+            language technology, climate action, energy, and more – built by our partners.
           </p>
 
           <div className="hero-search">
