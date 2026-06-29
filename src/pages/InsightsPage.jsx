@@ -149,7 +149,7 @@ const InsightsPage = () => {
         </div>
 
         {/* Summary Stats */}
-        <div className="insights-hero-stats">
+        <div className="insights-hero-stats" style={{ '--stat-count': totalDatasets != null ? 4 : 3 }}>
           {totalDatasets != null && (
             <div className="hero-stat">
               <div className="hero-stat-content">

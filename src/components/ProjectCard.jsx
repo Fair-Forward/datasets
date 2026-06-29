@@ -1,5 +1,5 @@
 import { withBasePath } from '../utils/basePath'
-import { parseSdgList } from '../utils/sdgColors'
+import { parseFirstSdg } from '../utils/sdgColors'
 import { licenseLabel, firstUrl } from '../utils/parsing'
 import { completenessFromScore, depthLabel } from '../utils/depth'
 import { hasHealthSignal, availabilityLabel, contextLabel } from '../utils/health'
@@ -47,8 +47,7 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
     ? (data_types.length > 1 ? `${data_types[0]} +${data_types.length - 1}` : data_types[0])
     : null
 
-  const sdgList = parseSdgList(sdgs)
-  const primarySdg = sdgList[0] || null
+  const primarySdg = parseFirstSdg(sdgs)
   const fallbackColor = !image ? (primarySdg?.color || null) : null
 
   return (
