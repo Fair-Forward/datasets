@@ -10,3 +10,6 @@ Digital Green's platform supports agricultural value chains like dairy, coffee, 
  
  4. Tech for Her: 
  Tech for Her empowers women farmers in Bihar and Kenya, focusing on tomatoes and cattle. Accessible via IVR, WhatsApp, and a mobile app, the platform uses LLM-powered intent and entity recognition for personalized chatbot interactions and speech-enabled IVR for voice support. AI-based video generation further enhances engagement. Available in English, Hindi, and Swahili, it caters to the specific needs of women in agriculture.
+
+5. Opportunity International/Digifarm:
+WhatsApp based bot in Kenya that emerged out of a custom-built solution tested in Malawi.
