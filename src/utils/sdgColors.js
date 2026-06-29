@@ -38,3 +38,34 @@ export const SDG_NAMES = {
   16: 'Peace, Justice & Strong Institutions',
   17: 'Partnerships for the Goals'
 }
+
+// Normalize a raw SDG list (e.g. ["SDG 15", "SDG 13"]) into structured entries,
+// preserving first-seen order, deduped, valid numbers only (1-17). Used by both
+// the catalog tile (first entry) and the detail panel (all entries) so the two
+// always agree on which SDG is "first".
+export const parseSdgList = (sdgs = []) => {
+  const seen = new Set()
+  const out = []
+  for (const raw of sdgs) {
+    const match = String(raw).match(/SDG\s*(\d+)/i)
+    if (!match) continue
+    const num = parseInt(match[1], 10)
+    if (num < 1 || num > 17 || seen.has(num)) continue
+    seen.add(num)
+    out.push({ num, label: `SDG ${num}`, name: SDG_NAMES[num] || null, color: SDG_COLORS[num] || null })
+  }
+  return out
+}
+
+// Return only the first valid SDG entry without building the whole list. Used by
+// the catalog tile, which renders many cards and needs just the primary SDG.
+export const parseFirstSdg = (sdgs = []) => {
+  for (const raw of sdgs || []) {
+    const match = String(raw).match(/SDG\s*(\d+)/i)
+    if (!match) continue
+    const num = parseInt(match[1], 10)
+    if (num < 1 || num > 17) continue
+    return { num, label: `SDG ${num}`, name: SDG_NAMES[num] || null, color: SDG_COLORS[num] || null }
+  }
+  return null
+}

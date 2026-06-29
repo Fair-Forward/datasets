@@ -125,6 +125,9 @@ const InsightsPage = () => {
   }
 
   const { total_projects, total_countries, map_data, sdg_distribution } = insightsData
+  // Dataset count comes from the catalog stats (individual dataset links), the same
+  // authoritative figure the catalog header shows -- not the project-row count.
+  const totalDatasets = catalogData?.stats?.total_datasets
   const maturityDistribution = getMaturityDistribution()
 
   return (
@@ -146,7 +149,15 @@ const InsightsPage = () => {
         </div>
 
         {/* Summary Stats */}
-        <div className="insights-hero-stats">
+        <div className="insights-hero-stats" style={{ '--stat-count': totalDatasets != null ? 4 : 3 }}>
+          {totalDatasets != null && (
+            <div className="hero-stat">
+              <div className="hero-stat-content">
+                <span className="hero-stat-value">{totalDatasets}</span>
+                <span className="hero-stat-label">Total Datasets</span>
+              </div>
+            </div>
+          )}
           <div className="hero-stat">
             <div className="hero-stat-content">
               <span className="hero-stat-value">{total_projects}</span>
