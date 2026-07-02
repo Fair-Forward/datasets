@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://fair-forward.github.io/datasets/sitemap.xml

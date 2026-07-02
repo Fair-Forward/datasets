@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="When weather and crop yields become unpredictable, reliable information is crucial. In Rwanda, digital maps are showing for the first time exactly where whic...">
+    <meta property="og:title" content="Solutions from space: Rwanda’s smart harvest planning - mapping crop type with AI for rice, maize, Irish potatoes and beans  - FAIR Forward">
+    <meta property="og:description" content="When weather and crop yields become unpredictable, reliable information is crucial. In Rwanda, digital maps are showing for the first time exactly where whic...">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://fair-forward.github.io/datasets/projects/ui_60-solutions_from_space_rwandas_smart_harvest/">
+    <meta property="og:image" content="https://fair-forward.github.io/datasets/projects/ui_60/images/placeholder_image.jpeg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Solutions from space: Rwanda’s smart harvest planning - mapping crop type with AI for rice, maize, Irish potatoes and beans  - FAIR Forward">
+    <meta name="twitter:description" content="When weather and crop yields become unpredictable, reliable information is crucial. In Rwanda, digital maps are showing for the first time exactly where whic...">
+    <meta name="twitter:image" content="https://fair-forward.github.io/datasets/projects/ui_60/images/placeholder_image.jpeg">
+    <meta http-equiv="Content-Security-Policy" content="default-src &#x27;self&#x27;; script-src &#x27;self&#x27;; style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src &#x27;self&#x27; https: data:; connect-src &#x27;self&#x27; https://cdn.jsdelivr.net; font-src &#x27;self&#x27; https://cdnjs.cloudflare.com https://fonts.gstatic.com; frame-src &#x27;none&#x27;;">
+    <link rel="canonical" href="https://fair-forward.github.io/datasets/projects/ui_60-solutions_from_space_rwandas_smart_harvest/">
+    <title>Solutions from space: Rwanda’s smart harvest planning - mapping crop type with AI for rice, maize, Irish potatoes and beans  - FAIR Forward</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" crossorigin href="../../assets/index.css">
+    <style>
+      .seo-fallback{max-width:820px;margin:0 auto;padding:2rem 1.25rem;font-family:'Public Sans',system-ui,-apple-system,sans-serif;color:#1a2b3c;line-height:1.6}
+      .seo-fallback a{color:#1565c0}
+      .seo-fallback .seo-home{font-size:.9rem;font-weight:600;text-decoration:none}
+      .seo-fallback h1{font-size:1.9rem;line-height:1.25;margin:1rem 0 .75rem}
+      .seo-fallback h2{font-size:1.15rem;margin:2rem 0 .5rem}
+      .seo-fallback .seo-meta{color:#5a6b7c;font-size:.95rem;margin:0 0 1.5rem}
+      .seo-fallback img{max-width:100%;height:auto;border-radius:8px;margin:1rem 0}
+      .seo-fallback ul{padding-left:1.2rem;margin:.25rem 0}
+    </style>
+</head>
+<body>
+    <div id="root">
+      <main class="seo-fallback">
+        <a class="seo-home" href="../../">FAIR Forward - Open Data &amp; AI Use Cases</a>
+        <h1>Solutions from space: Rwanda’s smart harvest planning - mapping crop type with AI for rice, maize, Irish potatoes and beans </h1>
+        <p class="seo-meta">Country: Rwanda | SDG 2 | Data: Geospatial/Remote Sensing | License: MIT | Maturity: Dataset &gt; Model &gt; Pilot &gt; Use case &gt; Business</p>
+        <img src="../../projects/ui_60/images/placeholder_image.jpeg" alt="Solutions from space: Rwanda’s smart harvest planning - mapping crop type with AI for rice, maize, Irish potatoes and beans ">
+<p>When weather and crop yields become unpredictable, reliable information is crucial. In Rwanda, digital maps are showing for the first time exactly where which crops grow, helping to better adapt agriculture to climate change. Around one third of all food worldwide is lost between the field and the plate, for example due to pest infestation, incorrect storage or long transport routes. Climate change is exacerbating these losses: irregular rainfall, dry seasons and extreme weather events are jeopardising harvests and making planning increasingly difficult for farmers. Rwanda’s agricultural sector also faces these challenges.</p>
+<p>This automated crop type mapping system for Rwanda can be used in various applications e.g. improving agricultural policy and business decisions, integrating with yield estimation frameworks for spatially detailed predictions of seasonal production, crop health monitoring, crop insurance design, value chain assessments, supply and demand forecasting, and more.</p>
+<p>It  leverages multi-sensor remote sensing data (Sentinel 1 &amp; 2, dynamic world, SRTM). The crop mapping pipeline can be used to map the four most important staple foods in Rwanda (rice, maize, beans, Irish potatoes) in four Rwandan districts, and produce timely, 10-meter resolution crop type maps. <br>Reference data from different sources including project field work, global research projects, and Rwandan authorities were used to fine-tune the geospatial foundational model Galileo for the downstream task of mapping what type of crop grows where. The reference data collected in the field was supported through the creation of polygon labels with PlanetScope imagery in collaboration with Rwandan academia. The crop mapping pipeline, the fine-tuned model, and the project&#x27;s reference data are openly available for further usage.</p>
+<section><h2>Data characteristics</h2><p>The overall good accuracy yielded by the approach under conditions with small field sizes, varying elevation and high cloud cover are promising for a successful application in all kinds of regions. Nevertheless, local reference data remains crucial for crop type mapping and an ideal approach should include all types of crops. You can follow the approach to create your own crop type mapping system, utilize the pipeline to fetch satellite imagery for various purposes, get inspired by the use and fine-tuning of the geospatial foundational model and apply it to a different task. You can also use the collected reference data for your own model.</p></section>
+<section><h2>Model characteristics</h2><p>[Auto-enriched from linked project resources]</p>
+<p>Machine learning pipeline for crop type classification in Rwanda using Sentinel-1 and Sentinel-2 satellite imagery. Training scripts include Random Forest and climate-corrected models. Ground reference data covers four districts (Nyagatare, Musanze, Nyabihu, Ruhango) with field observations of maize, beans, rice, and Irish potato collected May-June 2025. The ground truth dataset contains GPS-located farm plots with crop attributes, management practices, and directional photographs. Code: Python scripts for satellite data preparation, image download, and model training at github.com/crop-type-mapping/ML. License: MIT (code), CC-BY 4.0 (ground reference data).</p>
+<p>Source: https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/O7IDTD, https://github.com/crop-type-mapping</p></section>
+<section><h2>How to use</h2><p>The mapping method developed is freely accessible and fully documented. Training courses with the Rwandan Space Agency and the Office of Statistics ensure that local experts can continue to develop the system independently.<br>The digital maps do not replace observations and measurements in the field or local knowledge. They complement these to create an improved basis for data-driven decisions, more targeted use of resources and forward-looking risk management using digital tools – for agriculture that offers prospects for the future even under climate pressure.</p></section>
+<section><h2>Datasets</h2><ul><li><a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/O7IDTD" rel="noopener noreferrer">Link</a></li></ul></section>
+<section><h2>Use cases</h2><ul><li><a href="https://github.com/crop-type-mapping" rel="noopener noreferrer">Link</a></li></ul></section>
+<section><h2>Additional resources</h2><ul><li><a href="https://www.bmz-digital.global/en/digital-maps-agriculture-rwanda/" rel="noopener noreferrer">Digital Maps Agriculture Rwanda (bmz-digital.global)</a></li></ul></section>
+<section><h2>About</h2><p>Powered by / Provided by:<br>Rwanda Space Agency (RSA), the Rwandan Ministry of Agriculture, Alliance of Bioversity International and CIAT<br>Catalyzed by:<br>FAIR Forward - AI for All (GIZ), Digital Transformation Centre Rwanda<br>Financed by:<br>BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)</p><p>Authors: Golo Rademacher</p><p>Contact: Benson Kenduiyvo (b.kenduiywo@cgiar.org)</p></section>
+        <p><a href="../../">Browse the full FAIR Forward catalogue</a></p>
+      </main>
+    </div>
+    <script type="module" crossorigin src="../../assets/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="This AI application and replication-kit is about an AI-based crop type map for Telangana. This should be of use to anyone wishing to support sustainable farm...">
+    <meta property="og:title" content="Predicting Crop Health using open-source geospatial data and ground truth data collected in Telangana State  - FAIR Forward">
+    <meta property="og:description" content="This AI application and replication-kit is about an AI-based crop type map for Telangana. This should be of use to anyone wishing to support sustainable farm...">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://fair-forward.github.io/datasets/projects/ui_29-predicting_crop_health_using_opensource_geospatial/">
+    <meta property="og:image" content="https://fair-forward.github.io/datasets/projects/ui_29/images/placeholder_image.jpeg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Predicting Crop Health using open-source geospatial data and ground truth data collected in Telangana State  - FAIR Forward">
+    <meta name="twitter:description" content="This AI application and replication-kit is about an AI-based crop type map for Telangana. This should be of use to anyone wishing to support sustainable farm...">
+    <meta name="twitter:image" content="https://fair-forward.github.io/datasets/projects/ui_29/images/placeholder_image.jpeg">
+    <meta http-equiv="Content-Security-Policy" content="default-src &#x27;self&#x27;; script-src &#x27;self&#x27;; style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src &#x27;self&#x27; https: data:; connect-src &#x27;self&#x27; https://cdn.jsdelivr.net; font-src &#x27;self&#x27; https://cdnjs.cloudflare.com https://fonts.gstatic.com; frame-src &#x27;none&#x27;;">
+    <link rel="canonical" href="https://fair-forward.github.io/datasets/projects/ui_29-predicting_crop_health_using_opensource_geospatial/">
+    <title>Predicting Crop Health using open-source geospatial data and ground truth data collected in Telangana State  - FAIR Forward</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" crossorigin href="../../assets/index.css">
+    <style>
+      .seo-fallback{max-width:820px;margin:0 auto;padding:2rem 1.25rem;font-family:'Public Sans',system-ui,-apple-system,sans-serif;color:#1a2b3c;line-height:1.6}
+      .seo-fallback a{color:#1565c0}
+      .seo-fallback .seo-home{font-size:.9rem;font-weight:600;text-decoration:none}
+      .seo-fallback h1{font-size:1.9rem;line-height:1.25;margin:1rem 0 .75rem}
+      .seo-fallback h2{font-size:1.15rem;margin:2rem 0 .5rem}
+      .seo-fallback .seo-meta{color:#5a6b7c;font-size:.95rem;margin:0 0 1.5rem}
+      .seo-fallback img{max-width:100%;height:auto;border-radius:8px;margin:1rem 0}
+      .seo-fallback ul{padding-left:1.2rem;margin:.25rem 0}
+    </style>
+</head>
+<body>
+    <div id="root">
+      <main class="seo-fallback">
+        <a class="seo-home" href="../../">FAIR Forward - Open Data &amp; AI Use Cases</a>
+        <h1>Predicting Crop Health using open-source geospatial data and ground truth data collected in Telangana State </h1>
+        <p class="seo-meta">Country: India | SDG 2 | Data: Geospatial/Remote Sensing | Maturity: Dataset &gt; Model &gt; Pilot</p>
+        <img src="../../projects/ui_29/images/placeholder_image.jpeg" alt="Predicting Crop Health using open-source geospatial data and ground truth data collected in Telangana State ">
+<p>This AI application and replication-kit is about an AI-based crop type map for Telangana. This should be of use to anyone wishing to support sustainable farming practices and evidence-based decision-making for agricultural. Also, this can be used to empower you, as a local business, and NGOs, or a government agency to develop digital agricultural applications. The application focuses on creating localized ground-truth data on several different crop related variables to train AI models tailored to Telangana&#x27;s diverse agricultural landscape. This includes an open-access ground-truth dataset, a data challenge with openly available models for yield prediction, a crop classification model using satellite imagery applied to map the whole state of Telangana, and a roadmap for AI implementation in agriculture. Datasets, AI models, and crop maps are all openly available as an open-source replication kit and digital public good.</p>
+<section><h2>Data characteristics</h2><p>The Data is fully open-sourced and can be accessed at the Telangana Data Exchange Platform: ADEX<br> • License: CC BY 4.0<br> • Data Type: Tabular<br> • Key Variables: Crop type (6), Crop Health, Crop Yield, Irrigation Methods.<br> • Appr. No of observations: &gt; 12000 <br> • Appr. No of dimensions: 45 <br> • Covering 6 Mandals in Telangana<br> • Format: dbf, csv<br> <br> The data was collected over the span of 1.5 years covering different crop cycles between 2022 and 2024. The Data Collection was conducted by WRMS via on-the-ground visits of the fields and by surveying farmers in Telangana State.</p>
+<p>A responsible AI Assessment was undertaken for this dataset / use case to help AI developers and project managers to identify, assess and mitigate potential harms and biases in AI. For methodology, see https://www.bmz-digital.global/en/news/ethical-crash-test-for-ai-how-to-navigate-the-road-to-responsible-innovation/</p></section>
+<section><h2>Model characteristics</h2><p>Processed Data:<br> The ground truth data was combined with open-source Sentinel-2 data to create a geospatial dataset with crop type as labels.<br> The processed dataset can be accessed here: Processed Data<br> Code for Crop Classification Model:<br> Code to create the training data and for training the models for crop mapping can be accessed here: Code<br> Application:<br> The resulting shapefiles that predict crop type for the state of Telangana are deployed on DICRA – a digital public good ran by the Indian Development Bank NABARD and UNDP: DICRA<br> Based on the collected data, GIZ organised a data challenged together with Zindi to build state-of-the-art crop mapping models. The outcomes of the challenge can be accessed here: Zindi</p></section>
+<section><h2>How to use</h2><p>You can make use of the existing models on yield prediction and crop type mapping to infer other similar datapoints – for example neighbouring states of Telangana. Additionally, you can try to combine the dataset with other existing open-source datasets from the ADEX platform and conduct research/commercial scoping on these. <br> The present dataset is quite unique in the fact that it includes observations such as irrigation methods, crop health and expected yield. You may combine these with other data sources, i.e. satellite/remote sensing data (open-source or commercial) to build high-quality crop monitoring/recommendation systems to support various agricultural entities, farmers and decision makers in India. This could also inform commercial products. <br> As crop mapping is a prominent use-case, the data can be used for benchmarking different available crop datasets and models or inform foundational geospatial models as well as constitute to a region-wide crop mapping. Potential partners on the ground for collaboration, commercial involvement or funding are the Telangana Government, specifically the IT and Agricultural department and Nabard Dicra.</p></section>
+<section><h2>Datasets</h2><ul><li><a href="https://dataexplorer.ts.adex.org.in/dataset/583e8f01-160e-4f51-bde5-31dc7f2a5887" rel="noopener noreferrer">Link</a></li></ul></section>
+<section><h2>Use cases</h2><ul><li><a href="https://github.com/pranavmyname/zindi_crop_health" rel="noopener noreferrer">Link</a></li><li><a href="https://zindi.africa/competitions/telangana-crop-health-challenge" rel="noopener noreferrer">Link</a></li></ul></section>
+<section><h2>About</h2><p>Powered by / Provided by: WRMS - Weather Risk Management Services (https://wrmsglobal.com/), ZINDI (https://zindi.africa/), Vertify Earth (https://vertify.earth/)<br>Catalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/), GIZ <br>Financed by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)</p><p>Authors: Jonas Nothnagel</p><p>Contact: WRMS (connect@wrmsglobal.com)</p></section>
+        <p><a href="../../">Browse the full FAIR Forward catalogue</a></p>
+      </main>
+    </div>
+    <script type="module" crossorigin src="../../assets/index.js"></script>
+</body>
+</html>

@@ -6,7 +6,7 @@ import { parseSdgList } from '../utils/sdgColors'
 import { completenessFromScore, depthLabel } from '../utils/depth'
 import { parseContacts, licenseLabel, firstUrl } from '../utils/parsing'
 import { hasHealthSignal, availabilityLabel, contextLabel, healthDetailLines } from '../utils/health'
-import { SITE_NAME } from '../utils/site'
+import { SITE_NAME, SITE_TITLE, SITE_DESCRIPTION, SITE_URL, SITE_OG_IMAGE } from '../utils/site'
 
 // Cumulative maturity pipeline rendered as a stepper in the detail panel.
 const MATURITY_STEPS = [
@@ -251,21 +251,56 @@ const DetailPanel = ({ project, onClose }) => {
     if (!project) return
     const setMeta = (selector, value) => {
       const el = document.querySelector(selector)
-      if (el) el.setAttribute('content', value)
+      if (el && value != null) el.setAttribute('content', value)
     }
-    const previousTitle = document.title
-    const previousOgTitle = document.querySelector('meta[property="og:title"]')?.getAttribute('content')
-    const previousTwTitle = document.querySelector('meta[name="twitter:title"]')?.getAttribute('content')
+    const ensureCanonical = () => {
+      let el = document.querySelector('link[rel="canonical"]')
+      if (!el) {
+        el = document.createElement('link')
+        el.setAttribute('rel', 'canonical')
+        document.head.appendChild(el)
+      }
+      return el
+    }
 
     const heading = `${project.title} - ${SITE_NAME}`
+    const raw = (project.description || '').replace(/\s+/g, ' ').trim()
+    // Keep this truncation in sync with meta_description() in scripts/generate_seo_pages.py
+    // so the runtime and prerendered descriptions match.
+    const description = raw.length > 160 ? raw.slice(0, 157).trimEnd() + '...' : raw
+    const slug = project.slug || project.id
+    // Absolute URL of the content-rich prerendered page for this project.
+    const canonicalUrl = `${window.location.origin}${withBasePath('projects/' + slug + '/')}`
+    const imageUrl = project.image ? `${window.location.origin}${withBasePath(project.image)}` : SITE_OG_IMAGE
+
     document.title = heading
     setMeta('meta[property="og:title"]', heading)
     setMeta('meta[name="twitter:title"]', heading)
+    if (description) {
+      setMeta('meta[name="description"]', description)
+      setMeta('meta[property="og:description"]', description)
+      setMeta('meta[name="twitter:description"]', description)
+    }
+    setMeta('meta[property="og:url"]', canonicalUrl)
+    setMeta('meta[property="og:image"]', imageUrl)
+    setMeta('meta[name="twitter:image"]', imageUrl)
+    ensureCanonical().setAttribute('href', canonicalUrl)
 
+    // Restore the generic site tags on close/unmount/switch. We restore to the known site
+    // defaults (not values captured from the DOM) because entering via a prerendered
+    // /projects/<slug>/ page means the DOM already holds project-specific tags -- a
+    // capture-and-restore would leave those stale on the catalog view.
     return () => {
-      document.title = previousTitle
-      if (previousOgTitle != null) setMeta('meta[property="og:title"]', previousOgTitle)
-      if (previousTwTitle != null) setMeta('meta[name="twitter:title"]', previousTwTitle)
+      document.title = SITE_TITLE
+      setMeta('meta[property="og:title"]', SITE_TITLE)
+      setMeta('meta[name="twitter:title"]', SITE_TITLE)
+      setMeta('meta[name="description"]', SITE_DESCRIPTION)
+      setMeta('meta[property="og:description"]', SITE_DESCRIPTION)
+      setMeta('meta[name="twitter:description"]', SITE_DESCRIPTION)
+      setMeta('meta[property="og:url"]', SITE_URL)
+      setMeta('meta[property="og:image"]', SITE_OG_IMAGE)
+      setMeta('meta[name="twitter:image"]', SITE_OG_IMAGE)
+      ensureCanonical().setAttribute('href', SITE_URL)
     }
   }, [project])
 

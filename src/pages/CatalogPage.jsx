@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, useParams, useNavigate } from 'react-router-dom'
 import CatalogHeader from '../components/CatalogHeader'
 import FilterBar from '../components/FilterBar'
 import ProjectCard from '../components/ProjectCard'
@@ -12,6 +12,8 @@ import { matchesStatus, entryStatusValues, STATUS_OPTIONS } from '../utils/healt
 
 const CatalogPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
+  const routeParams = useParams()
+  const navigate = useNavigate()
   const [catalogData, setCatalogData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -95,8 +97,10 @@ const CatalogPage = () => {
         setCatalogData(data)
         setLoading(false)
         
-        // Check if URL has a project param and open it
-        const projectParam = searchParams.get('project')
+        // Open a project from either the ?project= query or the /projects/:slug path
+        // (the prerendered SEO pages boot at the path form).
+        const fromPath = routeParams.slug
+        const projectParam = searchParams.get('project') || fromPath
         if (projectParam && data.projects) {
           let project = null
 
@@ -114,9 +118,16 @@ const CatalogPage = () => {
 
           if (project) {
             setSelectedProject(project)
-            // Rewrite URL to canonical slug
             const canonicalSlug = project.slug || project.id
-            if (projectParam !== canonicalSlug) {
+            if (fromPath) {
+              // Entered via the prerendered /projects/<slug>/ page. Hand off to the
+              // app's single in-app URL form (?project=) so everything a person sees or
+              // shares uses one shape -- the same one as older shared/report links.
+              // Search engines still index the /projects/<slug>/ page itself (its static
+              // <link rel="canonical"> points there); this is only the post-load handoff.
+              navigate(`/?project=${canonicalSlug}`, { replace: true })
+            } else if (projectParam !== canonicalSlug) {
+              // Entered via ?project= -- rewrite to the canonical slug as before.
               const params = new URLSearchParams(searchParams)
               params.set('project', canonicalSlug)
               setSearchParams(params, { replace: true })

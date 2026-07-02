@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The project provides two openly accessible datasets that were developed through a complete, reproducible data pipeline combining machine learning with stocha...">
+    <meta property="og:title" content="Powering Rural Futures in West Africa: AI-Driven Demand Data for Smarter Electrification - FAIR Forward">
+    <meta property="og:description" content="The project provides two openly accessible datasets that were developed through a complete, reproducible data pipeline combining machine learning with stocha...">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://fair-forward.github.io/datasets/projects/ui_2-powering_rural_futures_in_west_africa/">
+    <meta property="og:image" content="https://fair-forward.github.io/datasets/projects/ui_2/images/placeholder_image.jpeg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Powering Rural Futures in West Africa: AI-Driven Demand Data for Smarter Electrification - FAIR Forward">
+    <meta name="twitter:description" content="The project provides two openly accessible datasets that were developed through a complete, reproducible data pipeline combining machine learning with stocha...">
+    <meta name="twitter:image" content="https://fair-forward.github.io/datasets/projects/ui_2/images/placeholder_image.jpeg">
+    <meta http-equiv="Content-Security-Policy" content="default-src &#x27;self&#x27;; script-src &#x27;self&#x27;; style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src &#x27;self&#x27; https: data:; connect-src &#x27;self&#x27; https://cdn.jsdelivr.net; font-src &#x27;self&#x27; https://cdnjs.cloudflare.com https://fonts.gstatic.com; frame-src &#x27;none&#x27;;">
+    <link rel="canonical" href="https://fair-forward.github.io/datasets/projects/ui_2-powering_rural_futures_in_west_africa/">
+    <title>Powering Rural Futures in West Africa: AI-Driven Demand Data for Smarter Electrification - FAIR Forward</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" crossorigin href="../../assets/index.css">
+    <style>
+      .seo-fallback{max-width:820px;margin:0 auto;padding:2rem 1.25rem;font-family:'Public Sans',system-ui,-apple-system,sans-serif;color:#1a2b3c;line-height:1.6}
+      .seo-fallback a{color:#1565c0}
+      .seo-fallback .seo-home{font-size:.9rem;font-weight:600;text-decoration:none}
+      .seo-fallback h1{font-size:1.9rem;line-height:1.25;margin:1rem 0 .75rem}
+      .seo-fallback h2{font-size:1.15rem;margin:2rem 0 .5rem}
+      .seo-fallback .seo-meta{color:#5a6b7c;font-size:.95rem;margin:0 0 1.5rem}
+      .seo-fallback img{max-width:100%;height:auto;border-radius:8px;margin:1rem 0}
+      .seo-fallback ul{padding-left:1.2rem;margin:.25rem 0}
+    </style>
+</head>
+<body>
+    <div id="root">
+      <main class="seo-fallback">
+        <a class="seo-home" href="../../">FAIR Forward - Open Data &amp; AI Use Cases</a>
+        <h1>Powering Rural Futures in West Africa: AI-Driven Demand Data for Smarter Electrification</h1>
+        <p class="seo-meta">Countries: Benin, Ghana, Niger, Togo, Nigeria | SDG 7 | Data: Geospatial/Remote Sensing | Maturity: Dataset</p>
+        <img src="../../projects/ui_2/images/placeholder_image.jpeg" alt="Powering Rural Futures in West Africa: AI-Driven Demand Data for Smarter Electrification">
+<p>The project provides two openly accessible datasets that were developed through a complete, reproducible data pipeline combining machine learning with stochastic energy-system simulation. The first dataset contains predicted appliance ownership and household counts for all 1,209 administrative level 2 regions (adm2) across Nigeria, Ghana, Togo, Benin, and Niger, derived from satellite-based features and socio-economic indicators using models trained on more than 3,500 household surveys. The second dataset consists of high-resolution synthetic electricity demand profiles generated with the RAMP tool, offering minute-by-minute load curves for an entire year for each adm2 region. Together, these datasets provide a unique, representative, and scalable foundation for understanding residential electricity demand in regions where measured data is scarce or entirely unavailable.</p>
+<section><h2>Data characteristics</h2><p>The two datasets provide complementary, high-resolution information on household electricity demand across 1,209 administrative level 2 regions in West Africa. The ML dataset contains per-region estimates of household numbers, appliance ownership across 17 categories, and cluster identifiers reflecting typical appliance-use behaviour. The demand dataset includes both full-year, minute-resolution load profiles (527,040 time steps per region) and aggregated daily curves, along with summary statistics such as minimum, maximum, mean, and total annual demand. Files are structured as standardized CSVs, organized by country, and kept in manageable sizes. Users can easily import the data into analytical workflows for energy planning, electrification modelling, scenario design, or spatial analysis. Because the pipeline is fully open source, users may also retrain models, adjust appliance usage parameters, or generate new simulations tailored to local contexts. Together, the datasets offer granular, scalable, and customizable inputs for researchers, utilities, developers, and policymakers working on electricity access and energy-system planning.</p></section>
+<section><h2>How to use</h2><p>The datasets can be used directly for energy planning, electrification modelling, mini-grid prefeasibility assessments, academic research, or scenario analysis. Users may download the ML dataset to analyse expected appliance adoption patterns or to integrate the predicted household numbers into broader socio-economic models. The synthetic demand profiles can be imported into any energy modelling environment (e.g., Python, R, Excel, PowerFactory, PyPSA, OSeMOSYS) to simulate grid expansion, evaluate supply adequacy, or study temporal consumption behaviour. Because the full codebase is open source, users can also adapt individual steps of the pipeline—such as updating input features, retraining the ML model with local survey data, or running customized RAMP simulations—to generate new or localized demand profiles. Access to both datasets is free under a CC-BY 4.0 license, and additional resources such as documentation, example scripts, and workshop materials are available via GitHub and Harvard Dataverse. This ensures that researchers, planners, and practitioners can build on the existing workflow at no cost and with minimal technical barriers.</p></section>
+<section><h2>Datasets</h2><ul><li><a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/3S7KPQ" rel="noopener noreferrer">Link</a></li><li><a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/9WT7FJ" rel="noopener noreferrer">Link</a></li></ul></section>
+<section><h2>About</h2><p>Powered by / Provided by: Reiner Lemoine Institut gGmbH (RLI)<br>Catalyzed by: Lacuna-Fund / Meridian (Climate-call) &amp; FAIR Forward - AI for All, GIZ<br>Financed by: BMZ</p><p>Authors: Clara Neyrand</p><p>Contact: Reiner Lemoine Institut, Catherina Cader (catherina.cader@rl-institut.de)</p></section>
+        <p><a href="../../">Browse the full FAIR Forward catalogue</a></p>
+      </main>
+    </div>
+    <script type="module" crossorigin src="../../assets/index.js"></script>
+</body>
+</html>

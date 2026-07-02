@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The team developed a labeled training dataset, derived from 50cm or better satellite imagery, based on a novel, pre-defined road space classification taxonom...">
+    <meta property="og:title" content="Datasets for transportation impact evaluation in urban settings in Colombia - FAIR Forward">
+    <meta property="og:description" content="The team developed a labeled training dataset, derived from 50cm or better satellite imagery, based on a novel, pre-defined road space classification taxonom...">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://fair-forward.github.io/datasets/projects/ui_4-datasets_for_transportation_impact_evaluation_in/">
+    <meta property="og:image" content="https://fair-forward.github.io/datasets/projects/ui_4/images/placeholder_image.jpeg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Datasets for transportation impact evaluation in urban settings in Colombia - FAIR Forward">
+    <meta name="twitter:description" content="The team developed a labeled training dataset, derived from 50cm or better satellite imagery, based on a novel, pre-defined road space classification taxonom...">
+    <meta name="twitter:image" content="https://fair-forward.github.io/datasets/projects/ui_4/images/placeholder_image.jpeg">
+    <meta http-equiv="Content-Security-Policy" content="default-src &#x27;self&#x27;; script-src &#x27;self&#x27;; style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src &#x27;self&#x27; https: data:; connect-src &#x27;self&#x27; https://cdn.jsdelivr.net; font-src &#x27;self&#x27; https://cdnjs.cloudflare.com https://fonts.gstatic.com; frame-src &#x27;none&#x27;;">
+    <link rel="canonical" href="https://fair-forward.github.io/datasets/projects/ui_4-datasets_for_transportation_impact_evaluation_in/">
+    <title>Datasets for transportation impact evaluation in urban settings in Colombia - FAIR Forward</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" crossorigin href="../../assets/index.css">
+    <style>
+      .seo-fallback{max-width:820px;margin:0 auto;padding:2rem 1.25rem;font-family:'Public Sans',system-ui,-apple-system,sans-serif;color:#1a2b3c;line-height:1.6}
+      .seo-fallback a{color:#1565c0}
+      .seo-fallback .seo-home{font-size:.9rem;font-weight:600;text-decoration:none}
+      .seo-fallback h1{font-size:1.9rem;line-height:1.25;margin:1rem 0 .75rem}
+      .seo-fallback h2{font-size:1.15rem;margin:2rem 0 .5rem}
+      .seo-fallback .seo-meta{color:#5a6b7c;font-size:.95rem;margin:0 0 1.5rem}
+      .seo-fallback img{max-width:100%;height:auto;border-radius:8px;margin:1rem 0}
+      .seo-fallback ul{padding-left:1.2rem;margin:.25rem 0}
+    </style>
+</head>
+<body>
+    <div id="root">
+      <main class="seo-fallback">
+        <a class="seo-home" href="../../">FAIR Forward - Open Data &amp; AI Use Cases</a>
+        <h1>Datasets for transportation impact evaluation in urban settings in Colombia</h1>
+        <p class="seo-meta">Country: Colombia | SDG 10, SDG 2 | Data: Geospatial/Remote Sensing | License: CC-BY 4.0 | Maturity: Dataset &gt; Model</p>
+        <img src="../../projects/ui_4/images/placeholder_image.jpeg" alt="Datasets for transportation impact evaluation in urban settings in Colombia">
+<p>The team developed a labeled training dataset, derived from 50cm or better satellite imagery, based on a novel, pre-defined road space classification taxonomy appropriate for training and deployment of large-scale deep-learning models</p>
+<section><h2>Data characteristics</h2><p>Dataset and model available in Github. Dataset of  roadspace from 15 areas of Bogota each 1Km. <br>Bogotá’s orthophoto and GIS layers. <br>Data Dictionary</p></section>
+<section><h2>Model characteristics</h2><p>The model that was tested for the entire city of Bogotá to clasify urban roadspace with 98% reliability.</p></section>
+<section><h2>How to use</h2><p>[Auto-enriched from linked project resources]</p>
+<p>This resource is useful for anyone working on urban mobility analysis, road infrastructure planning, or land-use evaluation in cities of the Global South. The UrbanInfraDL repository provides a deep learning pipeline for segmenting road infrastructure -- roads, sidewalks, and bicycle lanes -- from satellite imagery, with a focus on Bogota, Colombia.</p>
+<p>You can use the provided patch extraction tool and training scripts for three segmentation architectures (DeepLabV3+, SegFormer, U-Net) to train models that classify urban road space from your own satellite imagery. This makes it possible to evaluate how road space is allocated across different transport modes and to support evidence-based advocacy for more equitable infrastructure distribution.</p>
+<p>Researchers and developers can extend this work by applying the pipeline to other cities with similar urban structures, or by incorporating additional annotation classes (e.g., bus lanes, green spaces) to broaden the analysis. The modular design -- separate patch extraction and model training steps -- makes it straightforward to experiment with different architectures or hyperparameters.</p>
+<p>Known limitations: No pre-trained model weights or sample datasets are included in the repository; you will need your own high-resolution TIFF satellite imagery and corresponding label files. The repository does not document its Python dependencies, so some setup effort is required. The codebase is a research prototype (8 commits) rather than a production-ready tool.</p>
+<p>Source: https://github.com/yangshao2/UrbanInfraDL</p></section>
+<section><h2>Datasets</h2><ul><li><a href="https://github.com/yangshao2/UrbanInfraDL" rel="noopener noreferrer">Link</a></li></ul></section>
+<section><h2>About</h2><p>Powered by / Provided by: Fundación Despacio<br>Catalyzed by: Lacuna-Fund / Meridian (Climate-call) &amp; FAIR Forward - AI for All, GIZ<br>Financed by: BMZ</p><p>Authors: Luisa Olaya</p><p>Contact: Fundación Despacio (mafe@despacio.org), World Resources Institute</p></section>
+        <p><a href="../../">Browse the full FAIR Forward catalogue</a></p>
+      </main>
+    </div>
+    <script type="module" crossorigin src="../../assets/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Miti360 is an integrated, machine-learning ready dataset for individual-tree and stand-level reforestation monitoring that fuses high-resolution drone orthop...">
+    <meta property="og:title" content="Miti360: A Comprehensive Dataset for AI-Powered Forest Monitoring - FAIR Forward">
+    <meta property="og:description" content="Miti360 is an integrated, machine-learning ready dataset for individual-tree and stand-level reforestation monitoring that fuses high-resolution drone orthop...">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://fair-forward.github.io/datasets/projects/ui_45-miti360_a_comprehensive_dataset_for_aipowered/">
+    <meta property="og:image" content="https://fair-forward.github.io/datasets/projects/ui_45/images/placeholder_image.jpeg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Miti360: A Comprehensive Dataset for AI-Powered Forest Monitoring - FAIR Forward">
+    <meta name="twitter:description" content="Miti360 is an integrated, machine-learning ready dataset for individual-tree and stand-level reforestation monitoring that fuses high-resolution drone orthop...">
+    <meta name="twitter:image" content="https://fair-forward.github.io/datasets/projects/ui_45/images/placeholder_image.jpeg">
+    <meta http-equiv="Content-Security-Policy" content="default-src &#x27;self&#x27;; script-src &#x27;self&#x27;; style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src &#x27;self&#x27; https: data:; connect-src &#x27;self&#x27; https://cdn.jsdelivr.net; font-src &#x27;self&#x27; https://cdnjs.cloudflare.com https://fonts.gstatic.com; frame-src &#x27;none&#x27;;">
+    <link rel="canonical" href="https://fair-forward.github.io/datasets/projects/ui_45-miti360_a_comprehensive_dataset_for_aipowered/">
+    <title>Miti360: A Comprehensive Dataset for AI-Powered Forest Monitoring - FAIR Forward</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" crossorigin href="../../assets/index.css">
+    <style>
+      .seo-fallback{max-width:820px;margin:0 auto;padding:2rem 1.25rem;font-family:'Public Sans',system-ui,-apple-system,sans-serif;color:#1a2b3c;line-height:1.6}
+      .seo-fallback a{color:#1565c0}
+      .seo-fallback .seo-home{font-size:.9rem;font-weight:600;text-decoration:none}
+      .seo-fallback h1{font-size:1.9rem;line-height:1.25;margin:1rem 0 .75rem}
+      .seo-fallback h2{font-size:1.15rem;margin:2rem 0 .5rem}
+      .seo-fallback .seo-meta{color:#5a6b7c;font-size:.95rem;margin:0 0 1.5rem}
+      .seo-fallback img{max-width:100%;height:auto;border-radius:8px;margin:1rem 0}
+      .seo-fallback ul{padding-left:1.2rem;margin:.25rem 0}
+    </style>
+</head>
+<body>
+    <div id="root">
+      <main class="seo-fallback">
+        <a class="seo-home" href="../../">FAIR Forward - Open Data &amp; AI Use Cases</a>
+        <h1>Miti360: A Comprehensive Dataset for AI-Powered Forest Monitoring</h1>
+        <p class="seo-meta">Country: Kenya | SDG 15 | Data: Geospatial/Remote Sensing, Images | License: CC-BY 4.0 | Maturity: Dataset</p>
+        <img src="../../projects/ui_45/images/placeholder_image.jpeg" alt="Miti360: A Comprehensive Dataset for AI-Powered Forest Monitoring">
+<p>Miti360 is an integrated, machine-learning ready dataset for individual-tree and stand-level reforestation monitoring that fuses high-resolution drone orthophotos, terrestrial stereo and single images, precise ground measurements (tree height, crown diameter, basal diameter and GPS locations), species labels, and multi-year weather time series for nearby stations. The collection is designed to support detection, segmentation, species classification, and biophysical parameter estimation (e.g., crown diameter, height, biomass proxies), and to enable linking short-term growth dynamics to weather. Data are provided in standard GIS and ML formats (GeoTIFF, JPEG, JSON, SHP, time-series API) for immediate integration into research and operational pipelines.</p>
+<section><h2>Data characteristics</h2><p>Miti360 contains the following core components and formats (quantities as provided):<br>- Orthophotos (GeoTIFF): high-resolution stitched orthomosaics (2 GeoTIFFs) and 844 orthophoto tiles exported for annotation. <br>- Tree crown annotations (orthophoto): ~24,000 annotated crowns (bounding boxes) exported in JSON; 1,208 crowns have species labels and are also provided as a 1208-feature shapefile (SHP). <br>- Ground measurements (numeric): 1,208 measurement records (600 individual trees sampled twice across two campaigns) in JSON — fields include tree height, crown diameter, basal diameter, and GPS coordinates. <br>- Terrestrial single images: 1,208 JPEG images paired with semantic segmentation masks (mask files exported alongside images). <br>- Terrestrial stereo images: 2,416 JPEG stereoscopic image pairs (left/right) with corresponding masks for 3D/photogrammetric workflows. <br>- Weather time series: daily data spanning 8 years from 40 stations, accessible via an API endpoint for linking meteorological drivers to growth. <br>All annotations and metadata use common interchange formats (JSON, SHP, GeoTIFF, JPEG) to enable GIS analyses and ML training without format conversion</p></section>
+<section><h2>Model characteristics</h2><p>[Auto-enriched from linked project resources]</p>
+<p>Processed Data and Pretrained Models: ML-ready dataset for forest monitoring from a 770-hectare reforested area in Kieni Forest, Kenya. Aerial imagery: 2 orthophotos + 844 tiles (TIF). Tree annotations: 57,058 crown bounding boxes (JSON) and 1,208 species records (CSV). Ground measurements: 1,208 trees with height, crown diameter, basal diameter, GPS coordinates (collected July 2024 - February 2025). Terrestrial images: 1,208 smartphone photos + 2,416 stereo image pairs (JPEG). Weather data: 8 years of daily precipitation and temperature from 40 stations (API). CRS: EPSG:21037. License: CC-BY 4.0. Code for AI Models: Jupyter Notebooks available in the GitHub repository. Data hosted on Google Cloud Storage.</p>
+<p>Source: https://github.com/DeKUT-DSAIL/miti360</p></section>
+<section><h2>How to use</h2><p>The Miti360 dataset is intended for training and assessing machine learning models in various forestry applications.<br>- Use the orthophoto tiles and bounding box annotations to train models for individual tree detection, counting, and classification from aerial imagery.<br>- Use the terrestrial stereoscopic images to develop and benchmark 3D computer vision models for automating forest inventory, such as estimating biophysical parameters.<br>- Combine the ground-truth measurements (TH, CD, BD) and weather data to train models that determine quantitative relationships between tree growth and local weather conditions.<br>- Leverage the multi-year data (2024-2025) to analyse changes in biophysical parameters and determine which tree species are growing well in the reforested area.</p>
+<p>The dataset is designed to be integrated. By augmenting this dataset with others, one can<br>- Combine Miti360 with other global forestry datasets mentioned in the report (like NEON Crowns or Auto Arborist) to train models with greater geographic diversity, addressing a key gap this dataset was built to fill.<br>- Augment the dataset with socio-economic data on local farming to explore and validate the contribution of farmers to reforestation, an application suggested in the report.</p>
+<p>Cost &amp; resources one can use:<br>- Cost: Only associated compute costs<br>- Resources: The source code used for data analysis as well as preliminary models trained on the dataset will be made available.</p></section>
+<section><h2>Datasets</h2><ul><li><a href="https://github.com/DeKUT-DSAIL/miti360" rel="noopener noreferrer">Link</a></li></ul></section>
+<section><h2>Additional resources</h2><ul><li><a href="https://www.dw.com/en/artificial-intelligence-boosts-kenyas-forestry-conservation/video-69618432" rel="noopener noreferrer">Video 69618432 (dw.com)</a></li><li><a href="https://dekut-dsail.github.io/projects/treedetection.html" rel="noopener noreferrer">Treedetection.Html (dekut-dsail.github.io)</a></li><li><a href="https://agu.confex.com/agu/agu24/meetingapp.cgi/Paper/1728502" rel="noopener noreferrer">1728502 (agu.confex.com)</a></li><li><a href="https://ieeexplore.ieee.org/document/11060524" rel="noopener noreferrer">11060524 (ieeexplore.ieee.org)</a></li></ul></section>
+<section><h2>About</h2><p>Powered by / Provided by: Dedan Kimathi University of Technology (Kenya)<br>Catalyzed by: Lacuna-Fund / Meridian (Climate-call) &amp; FAIR Forward - AI for All, GIZ<br>Financed by: BMZ</p><p>Authors: Ciira Maina</p><p>Contact: Prof. Ciira Maina (ciira.maina@dkut.ac.ke), Centre for Data Science and Artificial Intelligence, Dedan Kimathi University of Technology</p></section>
+        <p><a href="../../">Browse the full FAIR Forward catalogue</a></p>
+      </main>
+    </div>
+    <script type="module" crossorigin src="../../assets/index.js"></script>
+</body>
+</html>

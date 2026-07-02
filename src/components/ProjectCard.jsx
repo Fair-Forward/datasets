@@ -6,10 +6,14 @@ import { hasHealthSignal, availabilityLabel, contextLabel } from '../utils/healt
 
 const ProjectCard = ({ project, onClick, onFilterSDG }) => {
   const {
-    title, description, sdgs = [], data_types = [], image,
+    id, slug, title, description, sdgs = [], data_types = [], image,
     has_dataset, has_usecase, is_lacuna, has_access_note,
     countries = [], license, quality_score, health
   } = project
+
+  // Real crawlable link to the project's prerendered page. Clicking opens the panel
+  // in place (preventDefault); crawlers, middle-click and open-in-new-tab follow the href.
+  const projectHref = withBasePath('projects/' + (slug || id) + '/')
 
   const qs = quality_score || 0
   const completeness = completenessFromScore(qs)
@@ -54,10 +58,6 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
     <div
       className={cardClasses}
       onClick={() => onClick(project)}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(project) } }}
-      aria-label={`View details for ${title}`}
     >
       <div
         className={`card-image${image ? ' has-image' : ''}`}
@@ -97,7 +97,16 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
           </span>
         </div>
 
-        <h3>{title}</h3>
+        <h3>
+          <a
+            href={projectHref}
+            className="card-title-link"
+            style={{ color: 'inherit', textDecoration: 'none' }}
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); onClick(project) }}
+          >
+            {title}
+          </a>
+        </h3>
         {truncatedDesc && <p className="card-desc">{truncatedDesc}</p>}
 
         {(typeLabel || has_access_note || showHealthWarning) && (

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Until now, the lack of automatic evaluation tools made Kinyarwanda-English machine translation development slow and expensive, as it required manual human re...">
+    <meta property="og:title" content="KinyCOMET: Automatic evaluation of machine translation for Kinyarwanda-English - FAIR Forward">
+    <meta property="og:description" content="Until now, the lack of automatic evaluation tools made Kinyarwanda-English machine translation development slow and expensive, as it required manual human re...">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://fair-forward.github.io/datasets/projects/ui_86-kinycomet_automatic_evaluation_of_machine_translat/">
+    <meta property="og:image" content="https://fair-forward.github.io/datasets/projects/ui_86/images/kinycomet.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="KinyCOMET: Automatic evaluation of machine translation for Kinyarwanda-English - FAIR Forward">
+    <meta name="twitter:description" content="Until now, the lack of automatic evaluation tools made Kinyarwanda-English machine translation development slow and expensive, as it required manual human re...">
+    <meta name="twitter:image" content="https://fair-forward.github.io/datasets/projects/ui_86/images/kinycomet.png">
+    <meta http-equiv="Content-Security-Policy" content="default-src &#x27;self&#x27;; script-src &#x27;self&#x27;; style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src &#x27;self&#x27; https: data:; connect-src &#x27;self&#x27; https://cdn.jsdelivr.net; font-src &#x27;self&#x27; https://cdnjs.cloudflare.com https://fonts.gstatic.com; frame-src &#x27;none&#x27;;">
+    <link rel="canonical" href="https://fair-forward.github.io/datasets/projects/ui_86-kinycomet_automatic_evaluation_of_machine_translat/">
+    <title>KinyCOMET: Automatic evaluation of machine translation for Kinyarwanda-English - FAIR Forward</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" crossorigin href="../../assets/index.css">
+    <style>
+      .seo-fallback{max-width:820px;margin:0 auto;padding:2rem 1.25rem;font-family:'Public Sans',system-ui,-apple-system,sans-serif;color:#1a2b3c;line-height:1.6}
+      .seo-fallback a{color:#1565c0}
+      .seo-fallback .seo-home{font-size:.9rem;font-weight:600;text-decoration:none}
+      .seo-fallback h1{font-size:1.9rem;line-height:1.25;margin:1rem 0 .75rem}
+      .seo-fallback h2{font-size:1.15rem;margin:2rem 0 .5rem}
+      .seo-fallback .seo-meta{color:#5a6b7c;font-size:.95rem;margin:0 0 1.5rem}
+      .seo-fallback img{max-width:100%;height:auto;border-radius:8px;margin:1rem 0}
+      .seo-fallback ul{padding-left:1.2rem;margin:.25rem 0}
+    </style>
+</head>
+<body>
+    <div id="root">
+      <main class="seo-fallback">
+        <a class="seo-home" href="../../">FAIR Forward - Open Data &amp; AI Use Cases</a>
+        <h1>KinyCOMET: Automatic evaluation of machine translation for Kinyarwanda-English</h1>
+        <p class="seo-meta">Country: Rwanda | SDG 9, SDG 10 | Data: Text | License: Apache 2.0 | Maturity: Dataset &gt; Model &gt; Pilot</p>
+        <img src="../../projects/ui_86/images/kinycomet.png" alt="KinyCOMET: Automatic evaluation of machine translation for Kinyarwanda-English">
+<p>Until now, the lack of automatic evaluation tools made Kinyarwanda-English machine translation development slow and expensive, as it required manual human review. We’ve bridged this gap by creating a new evaluation dataset and model. Both are now open-source to support the research community. Our methodology and results are detailed in our upcoming paper for LREC 2026.</p>
+<section><h2>Data characteristics</h2><p>4000 rows of parallel sentences English - Kinyarwanda with annotated translation quality as Direct Assessment</p></section>
+<section><h2>Model characteristics</h2><p>[Auto-enriched from linked project resources]</p>
+<p>Pretrained Model: KinyCOMET-Unbabel, a translation quality estimation model for Kinyarwanda-English (bidirectional). Fine-tuned on Unbabel/wmt22-comet-da using the COMET framework. Input: source text, machine translation, and human reference translation. Output: quality score from 0 to 1. Achieves 0.75 Pearson correlation with human judgments (vs. 0.30 for BLEU), Spearman 0.59, MAE 0.07. A second variant (KinyCOMET-XLM) based on XLM-RoBERTa-large achieves 0.73 Pearson. Trained on 4,323 human-annotated translation pairs scored by 15 annotators following WMT Direct Assessment standards. Install via pip install unbabel-comet; load with comet.load_from_checkpoint(&quot;chrismazii/kinycomet_unbabel&quot;). License: Apache 2.0.</p>
+<p>Source: https://huggingface.co/datasets/chrismazii/kinycomet_dataset, https://huggingface.co/chrismazii/kinycomet_unbabel</p></section>
+<section><h2>Datasets</h2><ul><li><a href="https://huggingface.co/datasets/chrismazii/kinycomet_dataset" rel="noopener noreferrer">Link</a></li></ul></section>
+<section><h2>Use cases</h2><ul><li><a href="https://huggingface.co/chrismazii/kinycomet_unbabel" rel="noopener noreferrer">Link</a></li></ul></section>
+<section><h2>About</h2><p>Powered by / Provided by: Mbaza NLP community, German Research Center for Artificial Intelligence (DFKI)<br>Catalyzed by: Regional AI Hub Rwanda, FAIR Forward - AI for All, GIZ<br>Financed by: BMZ</p><p>Authors: Jan Nehring</p><p>Contact: Chris Prince Mazimpaka chrismazimpaka7@gmail.com</p></section>
+        <p><a href="../../">Browse the full FAIR Forward catalogue</a></p>
+      </main>
+    </div>
+    <script type="module" crossorigin src="../../assets/index.js"></script>
+</body>
+</html>
