@@ -251,21 +251,72 @@ const DetailPanel = ({ project, onClose }) => {
     if (!project) return
     const setMeta = (selector, value) => {
       const el = document.querySelector(selector)
-      if (el) el.setAttribute('content', value)
+      if (el && value != null) el.setAttribute('content', value)
     }
-    const previousTitle = document.title
-    const previousOgTitle = document.querySelector('meta[property="og:title"]')?.getAttribute('content')
-    const previousTwTitle = document.querySelector('meta[name="twitter:title"]')?.getAttribute('content')
+    const getMeta = (selector) => document.querySelector(selector)?.getAttribute('content')
+
+    // Save current values so close/unmount/switch restores the generic site tags.
+    const prev = {
+      title: document.title,
+      ogTitle: getMeta('meta[property="og:title"]'),
+      twTitle: getMeta('meta[name="twitter:title"]'),
+      description: getMeta('meta[name="description"]'),
+      ogDescription: getMeta('meta[property="og:description"]'),
+      twDescription: getMeta('meta[name="twitter:description"]'),
+      ogUrl: getMeta('meta[property="og:url"]'),
+      ogImage: getMeta('meta[property="og:image"]'),
+      twImage: getMeta('meta[name="twitter:image"]')
+    }
 
     const heading = `${project.title} - ${SITE_NAME}`
+    const description = (project.description || '').replace(/\s+/g, ' ').trim().slice(0, 160)
+    const slug = project.slug || project.id
+    // Absolute URL of the content-rich prerendered page for this project.
+    const canonicalUrl = `${window.location.origin}${withBasePath('projects/' + slug + '/')}`
+    const imageUrl = project.image ? `${window.location.origin}${withBasePath(project.image)}` : null
+
     document.title = heading
     setMeta('meta[property="og:title"]', heading)
     setMeta('meta[name="twitter:title"]', heading)
+    if (description) {
+      setMeta('meta[name="description"]', description)
+      setMeta('meta[property="og:description"]', description)
+      setMeta('meta[name="twitter:description"]', description)
+    }
+    setMeta('meta[property="og:url"]', canonicalUrl)
+    if (imageUrl) {
+      setMeta('meta[property="og:image"]', imageUrl)
+      setMeta('meta[name="twitter:image"]', imageUrl)
+    }
+
+    // Point crawlers at the prerendered canonical page. index.html has no canonical
+    // link, so create one on the homepage/?project= view; the prerendered pages already
+    // ship one, in which case we just update (and later restore) its href.
+    let canonicalEl = document.querySelector('link[rel="canonical"]')
+    const createdCanonical = !canonicalEl
+    if (!canonicalEl) {
+      canonicalEl = document.createElement('link')
+      canonicalEl.setAttribute('rel', 'canonical')
+      document.head.appendChild(canonicalEl)
+    }
+    const prevCanonicalHref = createdCanonical ? null : canonicalEl.getAttribute('href')
+    canonicalEl.setAttribute('href', canonicalUrl)
 
     return () => {
-      document.title = previousTitle
-      if (previousOgTitle != null) setMeta('meta[property="og:title"]', previousOgTitle)
-      if (previousTwTitle != null) setMeta('meta[name="twitter:title"]', previousTwTitle)
+      document.title = prev.title
+      setMeta('meta[property="og:title"]', prev.ogTitle)
+      setMeta('meta[name="twitter:title"]', prev.twTitle)
+      setMeta('meta[name="description"]', prev.description)
+      setMeta('meta[property="og:description"]', prev.ogDescription)
+      setMeta('meta[name="twitter:description"]', prev.twDescription)
+      setMeta('meta[property="og:url"]', prev.ogUrl)
+      setMeta('meta[property="og:image"]', prev.ogImage)
+      setMeta('meta[name="twitter:image"]', prev.twImage)
+      if (createdCanonical) {
+        canonicalEl.remove()
+      } else if (prevCanonicalHref != null) {
+        canonicalEl.setAttribute('href', prevCanonicalHref)
+      }
     }
   }, [project])
 

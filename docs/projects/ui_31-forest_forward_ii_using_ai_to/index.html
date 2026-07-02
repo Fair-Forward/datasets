@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mapping carbon content in forests: This application leverages advanced geospatial technologies, such as remote sensing and AI, to support forest conservation...">
+    <meta property="og:title" content="Forest Forward II: Using AI to map carbon in forests using High Carbon Stock Approach and assess fire vulnerability of forests to Combat Climate Change and Protect Livelihoods in India - FAIR Forward">
+    <meta property="og:description" content="Mapping carbon content in forests: This application leverages advanced geospatial technologies, such as remote sensing and AI, to support forest conservation...">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://fair-forward.github.io/datasets/projects/ui_31-forest_forward_ii_using_ai_to/">
+    <meta property="og:image" content="https://fair-forward.github.io/datasets/projects/ui_31/images/goa-forest.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Forest Forward II: Using AI to map carbon in forests using High Carbon Stock Approach and assess fire vulnerability of forests to Combat Climate Change and Protect Livelihoods in India - FAIR Forward">
+    <meta name="twitter:description" content="Mapping carbon content in forests: This application leverages advanced geospatial technologies, such as remote sensing and AI, to support forest conservation...">
+    <meta name="twitter:image" content="https://fair-forward.github.io/datasets/projects/ui_31/images/goa-forest.jpg">
+    <meta http-equiv="Content-Security-Policy" content="default-src &#x27;self&#x27;; script-src &#x27;self&#x27;; style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src &#x27;self&#x27; https: data:; connect-src &#x27;self&#x27; https://cdn.jsdelivr.net; font-src &#x27;self&#x27; https://cdnjs.cloudflare.com https://fonts.gstatic.com; frame-src &#x27;none&#x27;;">
+    <link rel="canonical" href="https://fair-forward.github.io/datasets/projects/ui_31-forest_forward_ii_using_ai_to/">
+    <title>Forest Forward II: Using AI to map carbon in forests using High Carbon Stock Approach and assess fire vulnerability of forests to Combat Climate Change and Protect Livelihoods in India - FAIR Forward</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" crossorigin href="../../assets/index.css">
+    <style>
+      .seo-fallback{max-width:820px;margin:0 auto;padding:2rem 1.25rem;font-family:'Public Sans',system-ui,-apple-system,sans-serif;color:#1a2b3c;line-height:1.6}
+      .seo-fallback a{color:#1565c0}
+      .seo-fallback .seo-home{font-size:.9rem;font-weight:600;text-decoration:none}
+      .seo-fallback h1{font-size:1.9rem;line-height:1.25;margin:1rem 0 .75rem}
+      .seo-fallback h2{font-size:1.15rem;margin:2rem 0 .5rem}
+      .seo-fallback .seo-meta{color:#5a6b7c;font-size:.95rem;margin:0 0 1.5rem}
+      .seo-fallback img{max-width:100%;height:auto;border-radius:8px;margin:1rem 0}
+      .seo-fallback ul{padding-left:1.2rem;margin:.25rem 0}
+    </style>
+</head>
+<body>
+    <div id="root">
+      <main class="seo-fallback">
+        <a class="seo-home" href="../../">FAIR Forward - Open Data &amp; AI Use Cases</a>
+        <h1>Forest Forward II: Using AI to map carbon in forests using High Carbon Stock Approach and assess fire vulnerability of forests to Combat Climate Change and Protect Livelihoods in India</h1>
+        <p class="seo-meta">Country: India | SDG 13 | Data: Geospatial/Remote Sensing | License: MIT | Maturity: Dataset &gt; Model &gt; Pilot &gt; Use case</p>
+        <img src="../../projects/ui_31/images/goa-forest.jpg" alt="Forest Forward II: Using AI to map carbon in forests using High Carbon Stock Approach and assess fire vulnerability of forests to Combat Climate Change and Protect Livelihoods in India">
+<p>Mapping carbon content in forests: This application leverages advanced geospatial technologies, such as remote sensing and AI, to support forest conservation efforts in India. The application will allow stakeholders to better monitor forest health, estimate biomass, and contribute to climate mitigation efforts.<br> Fire Vulnerability Mapping: This application would help develop a fire vulnerability map which could help to identify areas that are prone to fires based on several forest degradation indicators.</p>
+<section><h2>Data characteristics</h2><p>The datasets used for this projects are all publicly available or accessible via common platforms such as Planet.com <br>More details to follow.</p></section>
+<section><h2>Model characteristics</h2><p>This model is trained to predict above-ground biomass (AGB) in tropical and subtropical forests using multi-source satellite imagery at the pixel level. Specifically:</p>
+<p>Prediction Unit: Estimates biomass at individual pixel level (typically 10-40m resolution depending on input data)<br>Output: Biomass density in Mg/ha (megagrams per hectare)<br>Input Data: Processes multi-sensor data including Sentinel-1, Sentinel-2, Landsat-8, PALSAR, and DEM<br>Application Scope: Best suited for tropical and subtropical forest ecosystems in South/Southeast Asia<br>Biomass Range: Validated for forests with biomass between ~40-460 Mg/ha</p></section>
+<section><h2>How to use</h2><p>The pipeline is designed to handle multi-source satellite imagery and corresponding biomass data with pixel-level precision. Key aspects include:</p>
+<p>End-to-End Workflow: From raw data ingestion to model training, evaluation, and deployment<br>Advanced Feature Engineering: Comprehensive spectral indices, texture features, spatial gradients, and PCA components<br>Stable Neural Architecture: Utilizes a custom StableResNet with residual connections and layer normalization for robust biomass regression<br>Multi-Site Data Processing: Capable of processing and integrating data from multiple geographically distinct study sites<br>Flexible Deployment: Includes HuggingFace deployment capabilities with Gradio interface<br>Memory Efficient Processing: Chunk-based processing for handling large satellite images</p></section>
+<section><h2>Use cases</h2><ul><li><a href="https://github.com/vertify-earth/biomass-dl-model-training" rel="noopener noreferrer">Link</a></li><li><a href="https://github.com/vertify-earth/ForestFireGoa" rel="noopener noreferrer">Link</a></li><li><a href="https://huggingface.co/vertify/biomass-model" rel="noopener noreferrer">Link</a></li></ul></section>
+<section><h2>About</h2><p>Powered by / Provided by: Vertify Earth<br>Catalyzed by: FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/), GIZ <br>Financed by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)</p><p>Authors: Jonas Nothnagel, Philipp Olbrich</p><p>Contact: Michael Anthony &lt;michael@vertify.earth&gt;</p></section>
+        <p><a href="../../">Browse the full FAIR Forward catalogue</a></p>
+      </main>
+    </div>
+    <script type="module" crossorigin src="../../assets/index.js"></script>
+</body>
+</html>

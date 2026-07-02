@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The project successfully developed a machine learning model to predict daily Global Horizontal Irradiance (GHI) in Sub-Saharan Africa, with a specific focus...">
+    <meta property="og:title" content="Estimating Solar Irradiance for Improved Solar Energy Planning in Sub-Saharan Africa through AI - FAIR Forward">
+    <meta property="og:description" content="The project successfully developed a machine learning model to predict daily Global Horizontal Irradiance (GHI) in Sub-Saharan Africa, with a specific focus...">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://fair-forward.github.io/datasets/projects/ui_80-estimating_solar_irradiance_for_improved_solar/">
+    <meta property="og:image" content="https://fair-forward.github.io/datasets/projects/ui_80/images/placeholder_image.jpeg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Estimating Solar Irradiance for Improved Solar Energy Planning in Sub-Saharan Africa through AI - FAIR Forward">
+    <meta name="twitter:description" content="The project successfully developed a machine learning model to predict daily Global Horizontal Irradiance (GHI) in Sub-Saharan Africa, with a specific focus...">
+    <meta name="twitter:image" content="https://fair-forward.github.io/datasets/projects/ui_80/images/placeholder_image.jpeg">
+    <meta http-equiv="Content-Security-Policy" content="default-src &#x27;self&#x27;; script-src &#x27;self&#x27;; style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src &#x27;self&#x27; https: data:; connect-src &#x27;self&#x27; https://cdn.jsdelivr.net; font-src &#x27;self&#x27; https://cdnjs.cloudflare.com https://fonts.gstatic.com; frame-src &#x27;none&#x27;;">
+    <link rel="canonical" href="https://fair-forward.github.io/datasets/projects/ui_80-estimating_solar_irradiance_for_improved_solar/">
+    <title>Estimating Solar Irradiance for Improved Solar Energy Planning in Sub-Saharan Africa through AI - FAIR Forward</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" crossorigin href="../../assets/index.css">
+    <style>
+      .seo-fallback{max-width:820px;margin:0 auto;padding:2rem 1.25rem;font-family:'Public Sans',system-ui,-apple-system,sans-serif;color:#1a2b3c;line-height:1.6}
+      .seo-fallback a{color:#1565c0}
+      .seo-fallback .seo-home{font-size:.9rem;font-weight:600;text-decoration:none}
+      .seo-fallback h1{font-size:1.9rem;line-height:1.25;margin:1rem 0 .75rem}
+      .seo-fallback h2{font-size:1.15rem;margin:2rem 0 .5rem}
+      .seo-fallback .seo-meta{color:#5a6b7c;font-size:.95rem;margin:0 0 1.5rem}
+      .seo-fallback img{max-width:100%;height:auto;border-radius:8px;margin:1rem 0}
+      .seo-fallback ul{padding-left:1.2rem;margin:.25rem 0}
+    </style>
+</head>
+<body>
+    <div id="root">
+      <main class="seo-fallback">
+        <a class="seo-home" href="../../">FAIR Forward - Open Data &amp; AI Use Cases</a>
+        <h1>Estimating Solar Irradiance for Improved Solar Energy Planning in Sub-Saharan Africa through AI</h1>
+        <p class="seo-meta">Country: Uganda | SDG 13 | Data: Geospatial/Remote Sensing, Tabular, Meterological | Maturity: Dataset &gt; Model &gt; Pilot &gt; Use case</p>
+        <img src="../../projects/ui_80/images/placeholder_image.jpeg" alt="Estimating Solar Irradiance for Improved Solar Energy Planning in Sub-Saharan Africa through AI">
+<p>The project successfully developed a machine learning model to predict daily Global Horizontal Irradiance (GHI) in Sub-Saharan Africa, with a specific focus on Uganda. The core objective was to correct the systematic bias found in readily available satellite-derived solar irradiation data (like NASA CERES and CAMS). Key activities included identifying five installation sites in Uganda for ground-truth data collection (Gulu, Mbale, Jinja, Kasese, Hoima), procuring pyranometers (though installation was hindered by lack of Ministry of Energy approval), and extensively collecting data from four satellite sources and partner ground stations (Cross Boundary Energy, Makerere University, Ministry of Energy) combined with local topological information (ie. altitude). A Random Forest model was trained on this integrated dataset, proving superior to other models (LSTMs, SVMs) by effectively adjusting the satellite predictions to align with the ground truth across all climatic regions, thus providing a significantly more reliable and bankable estimate of solar resources essential for rural electrification planning.</p>
+<section><h2>Data characteristics</h2><p>[Auto-enriched from linked project resources]</p>
+<p>Bias-corrected daily Global Horizontal Irradiance (GHI) data for Uganda, derived by correcting CAMS and NASA POWER satellite datasets against ground-truth measurements from 56 validation sites across Uganda. Training data includes measurements from 7 African countries. The correction addresses a 20% satellite overestimation of solar potential. Data is accessible via the Solar Irradiance Portal web interface and a RESTful API for application integration.</p>
+<p>Source: https://github.com/Marconi-Lab/Solar_irradiation, https://irradiation-portal-55883164704.europe-west1.run.app/</p></section>
+<section><h2>Model characteristics</h2><p>[Auto-enriched from linked project resources]</p>
+<p>Random Forest model (SuSSE -- Sub-Saharan Solar Estimation) that corrects satellite-derived solar irradiance estimates for Uganda. Input: CAMS and NASA POWER satellite GHI data. Output: bias-corrected daily GHI values. Validated against 56 ground-truth sites across Uganda, achieving R-squared of 0.86 and correcting a 20% overestimation in standard satellite products. Application: deployed as an interactive web portal with maps, charts, and a RESTful API for integration. Code: Python package at github.com/Marconi-Lab/Solar_irradiation (87.9% Jupyter Notebook, 12.1% Python).</p>
+<p>Source: https://github.com/Marconi-Lab/Solar_irradiation, https://irradiation-portal-55883164704.europe-west1.run.app/</p></section>
+<section><h2>How to use</h2><p>[Auto-enriched from linked project resources]</p>
+<p>## How to Use This Resource</p>
+<p>This resource addresses a critical problem for solar energy planning in Uganda: standard satellite data sources such as CAMS and NASA POWER systematically overestimate solar irradiance by roughly 20%, which reduces lifetime energy savings for consumers by 5-20% and creates financial risk through incorrect system sizing. The Irradiation Portal provides corrected Global Horizontal Irradiance (GHI) data by applying a machine learning model trained on ground-truth measurements from 56 validation sites across Uganda and 7 African countries, achieving an R-squared accuracy of 0.86.</p>
+<p>Anyone involved in solar project development, rural electrification planning, or energy policy in Uganda can access the corrected data through the [Irradiation Portal web application](https://irradiation-portal-55883164704.europe-west1.run.app/). The portal offers interactive data exploration with dynamic charts and maps, monthly irradiance measurements in kWh/m2/day, and historical data access -- all through a standard web browser. Technical documentation and user support are built into the portal.</p>
+<p>For organisations that want to integrate the corrected solar data into their own planning tools or applications, a RESTful API is available through the portal. This enables automated data retrieval for feasibility studies, system design calculations, or monitoring dashboards.</p>
+<p>Researchers and developers looking to extend the underlying methodology can access the SuSSE (Sub-Saharan Solar Estimation) model code, which is openly available on [GitHub](https://github.com/Marconi-Lab/Solar_irradiation). The repository includes the full codebase with Jupyter Notebooks and Python scripts, along with testing and development tools. This opens possibilities for adapting the correction model to other Sub-Saharan African countries where similar satellite overestimation issues exist.</p>
+<p>Sources:<br>- https://github.com/Marconi-Lab/Solar_irradiation<br>- https://irradiation-portal-55883164704.europe-west1.run.app/</p></section>
+<section><h2>Datasets</h2><ul><li><a href="https://github.com/Marconi-Lab/Solar_irradiation" rel="noopener noreferrer">Link</a></li></ul></section>
+<section><h2>Use cases</h2><ul><li><a href="https://irradiation-portal-55883164704.europe-west1.run.app/" rel="noopener noreferrer">Link</a></li><li><a href="https://github.com/Marconi-Lab/Irradiation_Portal" rel="noopener noreferrer">Link</a></li></ul></section>
+<section><h2>About</h2><p>Powered by / Provided by: Makerere University (Marconi Lab)<br>Catalyzed by: FAIR Forward - AI for All, GIZ<br>Financed by: BMZ</p><p>Contact: Jan Mikelson &lt;jan.mikelson@gmail.com&gt;           Andrew Katumba katraxuk@gmail.com</p></section>
+        <p><a href="../../">Browse the full FAIR Forward catalogue</a></p>
+      </main>
+    </div>
+    <script type="module" crossorigin src="../../assets/index.js"></script>
+</body>
+</html>

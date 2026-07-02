@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The AI model based on this dataset enables efficient and cost-effective remote monitoring of biomass changes. This is crucial for assessing reforestation suc...">
+    <meta property="og:title" content="Detecting forest degradation by predicting biomass in cocoa plantations in Cote d&#x27;Ivoire
+ - FAIR Forward">
+    <meta property="og:description" content="The AI model based on this dataset enables efficient and cost-effective remote monitoring of biomass changes. This is crucial for assessing reforestation suc...">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://fair-forward.github.io/datasets/projects/ui_6-detecting_forest_degradation_by_predicting_biomass/">
+    <meta property="og:image" content="https://fair-forward.github.io/datasets/projects/ui_6/images/cocoa_biomass.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Detecting forest degradation by predicting biomass in cocoa plantations in Cote d&#x27;Ivoire
+ - FAIR Forward">
+    <meta name="twitter:description" content="The AI model based on this dataset enables efficient and cost-effective remote monitoring of biomass changes. This is crucial for assessing reforestation suc...">
+    <meta name="twitter:image" content="https://fair-forward.github.io/datasets/projects/ui_6/images/cocoa_biomass.png">
+    <meta http-equiv="Content-Security-Policy" content="default-src &#x27;self&#x27;; script-src &#x27;self&#x27;; style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src &#x27;self&#x27; https: data:; connect-src &#x27;self&#x27; https://cdn.jsdelivr.net; font-src &#x27;self&#x27; https://cdnjs.cloudflare.com https://fonts.gstatic.com; frame-src &#x27;none&#x27;;">
+    <link rel="canonical" href="https://fair-forward.github.io/datasets/projects/ui_6-detecting_forest_degradation_by_predicting_biomass/">
+    <title>Detecting forest degradation by predicting biomass in cocoa plantations in Cote d&#x27;Ivoire
+ - FAIR Forward</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" crossorigin href="../../assets/index.css">
+    <style>
+      .seo-fallback{max-width:820px;margin:0 auto;padding:2rem 1.25rem;font-family:'Public Sans',system-ui,-apple-system,sans-serif;color:#1a2b3c;line-height:1.6}
+      .seo-fallback a{color:#1565c0}
+      .seo-fallback .seo-home{font-size:.9rem;font-weight:600;text-decoration:none}
+      .seo-fallback h1{font-size:1.9rem;line-height:1.25;margin:1rem 0 .75rem}
+      .seo-fallback h2{font-size:1.15rem;margin:2rem 0 .5rem}
+      .seo-fallback .seo-meta{color:#5a6b7c;font-size:.95rem;margin:0 0 1.5rem}
+      .seo-fallback img{max-width:100%;height:auto;border-radius:8px;margin:1rem 0}
+      .seo-fallback ul{padding-left:1.2rem;margin:.25rem 0}
+    </style>
+</head>
+<body>
+    <div id="root">
+      <main class="seo-fallback">
+        <a class="seo-home" href="../../">FAIR Forward - Open Data &amp; AI Use Cases</a>
+        <h1>Detecting forest degradation by predicting biomass in cocoa plantations in Cote d&#x27;Ivoire
+</h1>
+        <p class="seo-meta">Country: Cote d&#x27;Ivoire | SDG 13, SDG 15 | Data: Images | License: CC-BY 4.0 | Maturity: Dataset &gt; Model &gt; Pilot</p>
+        <img src="../../projects/ui_6/images/cocoa_biomass.png" alt="Detecting forest degradation by predicting biomass in cocoa plantations in Cote d&#x27;Ivoire
+">
+<p>The AI model based on this dataset enables efficient and cost-effective remote monitoring of biomass changes. This is crucial for assessing reforestation success and detecting forest degradation due to cocoa farming. Also it reduces the need for extensive and expensive on-the-ground surveys. The dataset and the models developed from it aim to predict biomass levels in shaded regions of Côte d&#x27;Ivoire using a combination of GEDI, Sentinel-2 satellite imagery, and ground truth biomass measurements.</p>
+<section><h2>Data characteristics</h2><p>[Auto-enriched from linked project resources]</p>
+<p>Forest aboveground biomass (AGB) dataset for Cote d&#x27;Ivoire. 263 field plots measured between 2021 and 2023. Data Type: Tabular (CSV, also available as Parquet). Columns: identifiant (plot ID), dates (measurement date), Latitude (4.04 to 9.99), Longitude (-8.09 to -2.74), biomass_mg_ha (0.91 to 391 t/ha). Biomass calculated using allometric equations from field measurements of tree height, diameter at chest height, density, and species. Dataset size: 17.8 kB. License: CC BY 4.0.</p>
+<p>Source: https://huggingface.co/datasets/data354/Africa_Biomass_dataset</p></section>
+<section><h2>Model characteristics</h2><p>[Auto-enriched from linked project resources]</p>
+<p>Dataset intended for building AGB estimation models using satellite imagery (GEDI, Sentinel-2) combined with ground truth measurements from 263 plots in Cote d&#x27;Ivoire. Input: satellite imagery paired with field data (tree height, diameter, density, species). Output: biomass prediction in tonnes per hectare (t/ha). Addresses the scarcity of locally-developed AGB estimation models for African tropical forests. License: CC BY 4.0.</p>
+<p>Source: https://huggingface.co/datasets/data354/Africa_Biomass_dataset</p></section>
+<section><h2>How to use</h2><p>The Africa Biomass Dataset enables immediate applications in biomass estimation, land-use monitoring, and carbon-stock analysis using existing remote sensing and machine-learning tools, making it useful for climate modelling, nature-based solutions, and sustainable land-management planning. Researchers can extend this work by integrating higher-resolution satellite imagery, adding ground-truth data, or fine-tuning models for country-specific ecosystems, though care must be taken to account for regional imbalances, sparse labels, and ecological variability, an ethical AI assessment is recommended before replication. The dataset opens opportunities for collaboration across climate scientists, AI researchers, and environmental agencies, and documentation on Hugging Face provides guidance for developers.</p></section>
+<section><h2>Datasets</h2><ul><li><a href="https://huggingface.co/datasets/data354/Africa_Biomass_dataset" rel="noopener noreferrer">Link</a></li></ul></section>
+<section><h2>Additional resources</h2><ul><li><a href="https://zindi.africa/competitions/africa-biomass-challenge" rel="noopener noreferrer">Africa Biomass Challenge (zindi.africa)</a></li><li><a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=&amp;ved=2ahUKEwjn657i3p-VAxXTRfEDHUweFDcQFnoECAoQAQ&amp;url=https%3A%2F%2Fstorage.googleapis.com%2Fdownload%2Fstorage%2Fv1%2Fb%2Findaba-public%2Fo%2FIssouf_TOURE.pdf%3Fgeneration%3D1724089094997741%26alt%3Dmedia&amp;usg=AOvVaw35fJfv4r2g0OJp3rZLpYIt&amp;opi=89978449" rel="noopener noreferrer">google.com</a></li></ul></section>
+<section><h2>About</h2><p>Powered by / Provided by: Data354, Zindi<br>Catalyzed by: FAIR Forward - AI for All, GIZ<br>Financed by: BMZ</p><p>Authors: Elikplim Sabblah, Ruth Schmidt</p><p>Contact: Data354 (gabriel.fonlladosa@data354.co)</p></section>
+        <p><a href="../../">Browse the full FAIR Forward catalogue</a></p>
+      </main>
+    </div>
+    <script type="module" crossorigin src="../../assets/index.js"></script>
+</body>
+</html>

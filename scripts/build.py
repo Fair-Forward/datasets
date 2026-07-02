@@ -160,6 +160,16 @@ def main():
         "Building React application (Vite)"
     ):
         sys.exit(1)
+
+    # Step 6: Generate per-project SEO pages + sitemap.xml + robots.txt (non-fatal).
+    # Must run after Step 5 (needs docs/assets/) and after Step 4's cleanup, so the
+    # slug-named page directories survive in the final committed output.
+    if not run_command(
+        [PYTHON, 'scripts/generate_seo_pages.py'],
+        "Generating SEO pages (per-project HTML + sitemap)"
+    ):
+        print("Warning: SEO page generation failed (non-fatal); "
+              "site will deploy without refreshed SEO pages.")
     
     print("\n" + "="*60)
     print("  ✅ BUILD COMPLETE!")

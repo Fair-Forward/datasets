@@ -50,6 +50,8 @@ function App() {
       <GitHubPagesRedirect />
       <Routes>
         <Route path="/" element={<CatalogPage />} />
+        {/* Prerendered per-project SEO pages boot here and open the project in place */}
+        <Route path="/projects/:slug" element={<CatalogPage />} />
         <Route path="/insights" element={<InsightsPage />} />
         <Route path="/insights.html" element={<InsightsPage />} />
       </Routes>

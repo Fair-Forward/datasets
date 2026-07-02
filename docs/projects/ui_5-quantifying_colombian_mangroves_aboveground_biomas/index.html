@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="This open-access dataset supports machine learning (ML) applications for mangrove forest monitoring, addressing the need for more openly available and well-a...">
+    <meta property="og:title" content="Quantifying Colombian mangroves aboveground biomass and carbon content - FAIR Forward">
+    <meta property="og:description" content="This open-access dataset supports machine learning (ML) applications for mangrove forest monitoring, addressing the need for more openly available and well-a...">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://fair-forward.github.io/datasets/projects/ui_5-quantifying_colombian_mangroves_aboveground_biomas/">
+    <meta property="og:image" content="https://fair-forward.github.io/datasets/projects/ui_5/images/mangroves.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Quantifying Colombian mangroves aboveground biomass and carbon content - FAIR Forward">
+    <meta name="twitter:description" content="This open-access dataset supports machine learning (ML) applications for mangrove forest monitoring, addressing the need for more openly available and well-a...">
+    <meta name="twitter:image" content="https://fair-forward.github.io/datasets/projects/ui_5/images/mangroves.png">
+    <meta http-equiv="Content-Security-Policy" content="default-src &#x27;self&#x27;; script-src &#x27;self&#x27;; style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src &#x27;self&#x27; https: data:; connect-src &#x27;self&#x27; https://cdn.jsdelivr.net; font-src &#x27;self&#x27; https://cdnjs.cloudflare.com https://fonts.gstatic.com; frame-src &#x27;none&#x27;;">
+    <link rel="canonical" href="https://fair-forward.github.io/datasets/projects/ui_5-quantifying_colombian_mangroves_aboveground_biomas/">
+    <title>Quantifying Colombian mangroves aboveground biomass and carbon content - FAIR Forward</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" crossorigin href="../../assets/index.css">
+    <style>
+      .seo-fallback{max-width:820px;margin:0 auto;padding:2rem 1.25rem;font-family:'Public Sans',system-ui,-apple-system,sans-serif;color:#1a2b3c;line-height:1.6}
+      .seo-fallback a{color:#1565c0}
+      .seo-fallback .seo-home{font-size:.9rem;font-weight:600;text-decoration:none}
+      .seo-fallback h1{font-size:1.9rem;line-height:1.25;margin:1rem 0 .75rem}
+      .seo-fallback h2{font-size:1.15rem;margin:2rem 0 .5rem}
+      .seo-fallback .seo-meta{color:#5a6b7c;font-size:.95rem;margin:0 0 1.5rem}
+      .seo-fallback img{max-width:100%;height:auto;border-radius:8px;margin:1rem 0}
+      .seo-fallback ul{padding-left:1.2rem;margin:.25rem 0}
+    </style>
+</head>
+<body>
+    <div id="root">
+      <main class="seo-fallback">
+        <a class="seo-home" href="../../">FAIR Forward - Open Data &amp; AI Use Cases</a>
+        <h1>Quantifying Colombian mangroves aboveground biomass and carbon content</h1>
+        <p class="seo-meta">Country: Colombia | SDG 15 | Data: Geospatial/Remote Sensing | License: CC-BY 4.0 | Maturity: Dataset</p>
+        <img src="../../projects/ui_5/images/mangroves.png" alt="Quantifying Colombian mangroves aboveground biomass and carbon content">
+<p>This open-access dataset supports machine learning (ML) applications for mangrove forest monitoring, addressing the need for more openly available and well-annotated datasets to calibrate and validate ML models. It focuses on improving the estimation of above-ground biomass (AGB) and above-ground carbon (AGC) in Colombian Caribbean mangroves. The pilot area, Via Parque Isla de Salamanca National Natural Park (VIPIS) in the Magdalena department, is a Ramsar and UNESCO Biosphere Reserve. Existing global AGB and AGC models often lack the precision and cost-effectiveness needed for regional monitoring.<br>The dataset includes both plot-level and tree-level field measurements from 20 newly surveyed plots, providing detailed attributes such as DBH, height, species, AGB (from allometric equations), and AGC. Using these field data, high-resolution satellite imagery, and machine learning models, satellite-based AGB and AGC maps covering ~6,000 ha of mangroves at 10 m spatial resolution have also been generated.</p>
+<section><h2>Data characteristics</h2><p>This geodatabase contains geospatial information collected and processed under the LACUNA project, aimed at quantifying above-ground biomass (AGB) and above-ground carbon (AGC) in Colombian mangroves, specifically in the VIPIS area (Vía Parque Isla de Salamanca). The data are organized into two main datasets: Ground_truth and Satellite AGB/AGC.<br>Ground_truth Dataset – Field and reference data:<br>•  MangroveTrees (point layer): Structural details of individual trees, including DBH, height, species, AGB, and AGC, for trees in 20 sampled plots.<br>•  MangrovePlot (point layer): Centroids of the 20 plots, with aggregated AGB and AGC per plot.<br>•  TreesCanopy (polygon layer): Tree canopy projections with attributes linked to MangroveTrees.<br>•  MangrovePlots (polygon layer): Plot boundaries (10 × 10 m) with estimated AGB and AGC values.<br>Satellite AGB/AGC Dataset – Remote-sensing derived data:<br>•  Provides 10 m resolution maps of AGB and AGC for 2025, generated using Sentinel-1 and Sentinel-2 data combined with in-situ measurements and a Random Forest machine learning model.</p></section>
+<section><h2>Model characteristics</h2><p>[Auto-enriched from linked project resources]</p>
+<p>Geospatial dataset for quantifying above-ground biomass (AGB) and above-ground carbon (AGC) in Colombian mangroves, focused on Vía Parque Isla de Salamanca (VIPIS) National Natural Park. Created by INVEMAR (Instituto de Investigaciones Marinas y Costeras). Data organized into &quot;Ground_truth&quot; (field measurements) and &quot;Adapted_AOI&quot; (reference data layers). Available formats: Shapefile, WFS, geodatabase, JPG, PNG, and PDF. Researchers: MSc. Venus Lorena Rocha G. and Esp. Claudia Correa (LabSIS, INVEMAR). Access is free; users must acknowledge INVEMAR as the source.</p>
+<p>Source: https://acceso-datos-ambientales-invemar.hub.arcgis.com/maps/a0cab53befd44804923800a194c703d6/about</p></section>
+<section><h2>How to use</h2><p>The geodatabase provides detailed plot-level and tree-level field data from Colombian Caribbean mangroves, including measurements such as DBH, height, species, above-ground biomass (AGB), and above-ground carbon (AGC). Users can directly integrate the Ground_truth dataset with other similar field datasets to train and validate machine learning models for accurate estimation of mangrove biomass and carbon stocks.<br>The satellite dataset supports spatially explicit analysis of forest structure, carbon dynamics, and environmental factors influencing mangrove ecosystems. Combined with additional datasets, it can help improve model robustness, enable cross-site comparisons, and enhance predictive accuracy.<br>Beyond modeling, the dataset facilitates carbon stock quantification, conservation planning, forest management, and climate policy development.</p></section>
+<section><h2>Datasets</h2><ul><li><a href="https://acceso-datos-ambientales-invemar.hub.arcgis.com/maps/a0cab53befd44804923800a194c703d6/about" rel="noopener noreferrer">Link</a></li></ul></section>
+<section><h2>About</h2><p>Powered by / Provided by: Marine and Coastal Research Institute &quot;José Benito Vives de Andréis&quot; (INVEMAR) Colombia, Centre Tecnològic de Telecomunicacions de Catalunya (CTTC)<br>Catalyzed by: Lacuna-Fund / Meridian (Climate-call) &amp; FAIR Forward - AI for All, GIZ<br>Financed by: BMZ</p><p>Authors: María Cuevas</p><p>Contact: CTTC María Cuevas (mcuevas@cttc.es),  INVEMAR Cristian Montes (cristian.montes@invemar.org.co)</p></section>
+        <p><a href="../../">Browse the full FAIR Forward catalogue</a></p>
+      </main>
+    </div>
+    <script type="module" crossorigin src="../../assets/index.js"></script>
+</body>
+</html>
