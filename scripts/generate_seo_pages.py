@@ -212,12 +212,13 @@ def build_page(project):
     )
 
 
-def build_sitemap(projects):
+def build_sitemap(slugs):
     # lastmod is intentionally omitted to keep output deterministic (no date churn).
-    # Only URLs that return HTTP 200 on a direct request are listed: the homepage and
-    # the generated project pages. The SPA-only /insights route is excluded.
+    # Only URLs that return HTTP 200 are listed: the homepage and the project pages that
+    # were actually written (the caller passes their slugs). The SPA-only /insights route
+    # is excluded.
     urls = [SITE_BASE]
-    urls += [SITE_BASE + "projects/" + (p.get("slug") or p.get("id")) + "/" for p in projects]
+    urls += [SITE_BASE + "projects/" + slug + "/" for slug in slugs]
     body = "\n".join("  <url><loc>{}</loc></url>".format(esc(u)) for u in urls)
     return ('<?xml version="1.0" encoding="UTF-8"?>\n'
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
@@ -240,7 +241,7 @@ def main():
         catalog = json.load(f)
 
     projects = catalog.get("projects") or []
-    written = 0
+    written_slugs = []
     failed = 0
     for project in projects:
         slug = project.get("slug") or project.get("id")
@@ -253,18 +254,19 @@ def main():
             os.makedirs(out_dir, exist_ok=True)
             with open(os.path.join(out_dir, "index.html"), "w", encoding="utf-8") as f:
                 f.write(build_page(project))
-            written += 1
+            written_slugs.append(slug)
         except Exception as exc:  # one bad project must not break the whole build
             print("  Failed to generate page for {}: {}".format(slug, exc))
             failed += 1
 
+    # Sitemap lists only the pages actually written, so every <loc> returns HTTP 200.
     with open(os.path.join(DOCS_DIR, "sitemap.xml"), "w", encoding="utf-8") as f:
-        f.write(build_sitemap(projects))
+        f.write(build_sitemap(written_slugs))
     with open(os.path.join(DOCS_DIR, "robots.txt"), "w", encoding="utf-8") as f:
         f.write(build_robots())
 
     print("Wrote {} project pages ({} failed), sitemap.xml ({} urls), robots.txt".format(
-        written, failed, len(projects) + 1))
+        len(written_slugs), failed, len(written_slugs) + 1))
     return 0
 
 

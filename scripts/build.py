@@ -168,8 +168,10 @@ def main():
         [PYTHON, 'scripts/generate_seo_pages.py'],
         "Generating SEO pages (per-project HTML + sitemap)"
     ):
-        print("Warning: SEO page generation failed (non-fatal); "
-              "site will deploy without refreshed SEO pages.")
+        # Fatal: Step 4 already removed the per-project page dirs, so a failed
+        # regeneration would deploy a site with no project pages and a stale sitemap.
+        # Fail the build rather than ship that broken state.
+        sys.exit(1)
     
     print("\n" + "="*60)
     print("  ✅ BUILD COMPLETE!")

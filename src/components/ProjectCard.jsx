@@ -58,10 +58,6 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
     <div
       className={cardClasses}
       onClick={() => onClick(project)}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(project) } }}
-      aria-label={`View details for ${title}`}
     >
       <div
         className={`card-image${image ? ' has-image' : ''}`}
