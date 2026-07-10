@@ -389,261 +389,82 @@ const DetailPanel = ({ project, onClose }) => {
               <p>Loading details...</p>
             </div>
           ) : (
-            <>
-              {/* Hero image -- leads the panel so the access button below reads as the main action */}
-              {(() => {
-                if (project.image) {
-                  return (
-                    <div
-                      className="panel-header-image"
-                      style={{ backgroundImage: `url("${withBasePath(project.image)}")` }}
-                    />
-                  )
-                }
-                const sdgColor = sdgPrimary?.color || null
-                if (sdgColor) {
-                  return (
-                    <div
-                      className="panel-header-image no-image"
-                      style={{ backgroundImage: `linear-gradient(135deg, ${sdgColor}18 0%, ${sdgColor}35 100%)` }}
-                    />
-                  )
-                }
-                return null
-              })()}
-
-              {/* Eyebrow + title + lede */}
-              {eyebrowParts.length > 0 && (
-                <div className="panel-eyebrow">
-                  {eyebrowParts.join(' · ')}
-                </div>
-              )}
-              {sdgList.length > 0 && (
-                <div className="panel-sdg-chips">
-                  {sdgList.map((s) => (
-                    <span className="panel-sdg-chip" key={s.num}>
-                      <span className="panel-sdg-chip-dot" style={{ background: s.color || 'var(--accent-teal)' }} />
-                      {s.label}{s.name ? ` · ${s.name}` : ''}
-                    </span>
-                  ))}
-                </div>
-              )}
-              <h1 className="panel-title">{project.title}</h1>
-              {project?.description && (
-                <div className="panel-lede">
-                  <DocMarkdown>{project.description}</DocMarkdown>
-                </div>
-              )}
-
-              {contacts.length > 0 && (
-                <div className="panel-contact-callout">
-                  <span className="panel-contact-label">Contact / Authors</span>
-                  <span className="panel-contact-value">{renderContacts()}</span>
-                </div>
-              )}
-
-              {/* Primary actions */}
-              <div className="panel-actions">
-                {hasAnyLinks ? (
-                  <>
-                    {datasetLinks.map((link, idx) => {
-                      const external = link.url && (link.url.startsWith('http://') || link.url.startsWith('https://'))
-                      const hasCustomName = link.name && link.name !== 'Link'
-                      const genericLabel = idx === 0 ? 'Access Dataset' : `Access Dataset ${idx + 1}`
-                      const label = hasCustomName ? link.name : genericLabel
-                      return (
-                        <a
-                          key={`dataset-${idx}`}
-                          className="panel-cta"
-                          href={resolvePublicHref(link.url)}
-                          target={external ? '_blank' : undefined}
-                          rel={external ? 'noopener noreferrer' : undefined}
-                        >
-                          <i className="fas fa-database"></i>
-                          {label}
-                        </a>
-                      )
-                    })}
-                    {usecaseLinks.map((link, idx) => {
-                      const external = link.url && (link.url.startsWith('http://') || link.url.startsWith('https://'))
-                      const hasCustomName = link.name && link.name !== 'Link'
-                      const genericLabel = idx === 0 ? 'Access Model/System' : `Access Model/System ${idx + 1}`
-                      const label = hasCustomName ? link.name : genericLabel
-                      return (
-                        <a
-                          key={`usecase-${idx}`}
-                          className="panel-cta"
-                          href={resolvePublicHref(link.url)}
-                          target={external ? '_blank' : undefined}
-                          rel={external ? 'noopener noreferrer' : undefined}
-                        >
-                          <i className="fas fa-robot"></i>
-                          {label}
-                        </a>
-                      )
-                    })}
-                  </>
-                ) : showHostedDocuments ? (
-                  hostedDocuments.map((doc, idx) => {
-                    const isPdf = doc.url?.toLowerCase().endsWith('.pdf')
-                    return (
-                      <a
-                        key={`hosted-cta-${idx}`}
-                        className="panel-cta"
-                        href={resolvePublicHref(doc.url)}
-                      >
-                        <i className={`fas ${isPdf ? 'fa-file-pdf' : 'fa-file-arrow-down'}`}></i>
-                        {doc.name || 'Download Document'}
-                      </a>
-                    )
-                  })
-                ) : showAccessCallout ? (
-                  <div
-                    className={`panel-access-note panel-access-note-${project.access_note_kind || 'info'}`}
-                  >
-                    <i className={`fas ${accessNoteIconClass}`}></i>
-                    <div className="panel-access-note-body documentation-content">
-                      <DocMarkdown>{project.access_note_markdown}</DocMarkdown>
-                    </div>
-                  </div>
-                ) : null}
-              </div>
-
-              {/* Access note context (shown below documents CTA) */}
-              {showHostedDocuments && showAccessCallout && (
-                <div className={`panel-access-note panel-access-note-${project.access_note_kind || 'info'}`}>
-                  <i className={`fas ${accessNoteIconClass}`}></i>
-                  <div className="panel-access-note-body documentation-content">
-                    <DocMarkdown>{project.access_note_markdown}</DocMarkdown>
-                  </div>
-                </div>
-              )}
-
-              {/* Meta strip: Data type | License | Documentation | Status */}
-              <div className="panel-meta-strip">
-                <div className="panel-meta-cell">
-                  <div className="panel-meta-label">Data type</div>
-                  <div className="panel-meta-value">{dataTypeText || '—'}</div>
-                </div>
-                <div className="panel-meta-cell">
-                  <div className="panel-meta-label">License</div>
-                  <div className="panel-meta-value">{licenseValue ? renderLicense(licenseValue) : 'Not specified'}</div>
-                </div>
-                <div className="panel-meta-cell">
-                  <div className="panel-meta-label">Documentation</div>
-                  <div className="panel-meta-value panel-meta-depth">
-                    {depthText}
-                    <span className="completeness-indicator" aria-hidden="true">
-                      {[1, 2, 3, 4, 5].map(i => (
-                        <span key={i} className={`completeness-dot${i <= depthDots ? ' filled' : ''}`} />
-                      ))}
-                    </span>
-                  </div>
-                </div>
-                <div className="panel-meta-cell">
-                  <div className="panel-meta-label">Status</div>
-                  <div className={`panel-meta-value panel-status-value status-${statusState}`}>
-                    <span className="status-dot" aria-hidden="true"></span>{statusText}
-                  </div>
-                </div>
-              </div>
-
-              {/* Link health -- availability, when it was last checked, and what was found */}
-              {showHealth && (
-                <div className={`panel-status health-${health.availability}`}>
-                  <span className="health-dot" aria-hidden="true"></span>
-                  <div className="panel-status-body">
-                    <span className="panel-status-headline">
-                      {availabilityLabel(health.availability)}
-                      {healthContext && (
-                        <span className="panel-status-context"> · {healthContext}</span>
-                      )}
-                    </span>
-                    {healthDetails.length > 0 && (
-                      <span className="panel-status-detail">{healthDetails.join(' · ')}</span>
-                    )}
-                    {brokenLinkCount > 0 && (
-                      <span className="panel-status-broken">
-                        {brokenLinkCount === 1
-                          ? '1 link did not respond at the last check'
-                          : `${brokenLinkCount} links did not respond at the last check`}
+            <div className="panel-grid">
+              {/* LEFT: narrative column -- header fields + free-text sections rendered as-is */}
+              <div className="panel-narrative">
+                {eyebrowParts.length > 0 && (
+                  <div className="panel-eyebrow">{eyebrowParts.join(' · ')}</div>
+                )}
+                <h1 className="panel-title">{project.title}</h1>
+                {sdgList.length > 0 && (
+                  <div className="panel-sdg-chips">
+                    {sdgList.map((s) => (
+                      <span className="panel-sdg-chip" key={s.num}>
+                        <span className="panel-sdg-chip-dot" style={{ background: s.color || 'var(--accent-teal)' }} />
+                        {s.label}{s.name ? ` · ${s.name}` : ''}
                       </span>
-                    )}
+                    ))}
                   </div>
-                </div>
-              )}
-
-              {/* Maturity stepper */}
-              {maturityTags.length > 0 && (
-                <div className="panel-maturity">
-                  <div className="panel-section-eyebrow">Maturity</div>
-                  <div className="maturity-stepper">
-                    {MATURITY_STEPS.map((step, i) => {
-                      const reached = maturityTags.includes(step.key)
-                      const prevReached = i > 0 && maturityTags.includes(MATURITY_STEPS[i - 1].key)
-                      return (
-                        <Fragment key={step.key}>
-                          {i > 0 && <span className={`maturity-line${prevReached && reached ? ' filled' : ''}`}></span>}
-                          <div className={`maturity-node${reached ? ' reached' : ''}`}>
-                            <span className="maturity-dot"></span>
-                            <span className="maturity-label">{step.label}</span>
-                          </div>
-                        </Fragment>
-                      )
-                    })}
+                )}
+                {contacts.length > 0 && (
+                  <div className="panel-contact-top">
+                    <div className="panel-contact-top-label">Contact / Authors</div>
+                    <div className="panel-contact-top-value">{renderContacts()}</div>
                   </div>
-                </div>
-              )}
+                )}
+                {project?.description && (
+                  <div className="panel-lede">
+                    <DocMarkdown>{project.description}</DocMarkdown>
+                  </div>
+                )}
 
-              {/* D) Flat content sections */}
-              <div className="panel-data active">
                 {/* About -- only when the markdown adds detail beyond the lede shown up top */}
                 {markdownContent.description &&
                   markdownContent.description.trim() !== (project?.description || '').trim() && (
-                  <section className="detail-section" id="description">
-                    <h3>About</h3>
-                    <div className="detail-content documentation-content">
+                  <section className="panel-freetext" id="description">
+                    <div className="panel-freetext-label">About</div>
+                    <div className="documentation-content">
                       <DocMarkdown>{markdownContent.description}</DocMarkdown>
                     </div>
                   </section>
                 )}
 
-                {/* Data Characteristics -- data types already live in the meta strip above */}
+                {/* Data Characteristics -- free-text, any shape */}
                 {markdownContent.data_characteristics?.trim() && (
-                  <section className="detail-section" id="data-characteristics">
-                    <h3>Data Characteristics</h3>
-                    <div className="detail-content documentation-content">
+                  <section className="panel-freetext" id="data-characteristics">
+                    <div className="panel-freetext-label">Data Characteristics</div>
+                    <div className="documentation-content">
                       <DocMarkdown>{markdownContent.data_characteristics}</DocMarkdown>
                     </div>
                   </section>
                 )}
 
-                {/* Model Characteristics Section */}
+                {/* Model / Use Case Characteristics -- free-text, only when present */}
                 {markdownContent.model_characteristics?.trim() && (
-                  <section className="detail-section" id="model-characteristics">
-                    <h3>Model / Use Case Characteristics</h3>
-                    <div className="detail-content documentation-content">
+                  <section className="panel-freetext" id="model-characteristics">
+                    <div className="panel-freetext-label">Model / Use Case Characteristics</div>
+                    <div className="documentation-content">
                       <DocMarkdown>{markdownContent.model_characteristics}</DocMarkdown>
                     </div>
                   </section>
                 )}
 
-                {/* How to Use Section */}
+                {/* How to Use It -- free-text */}
                 {markdownContent.how_to_use && (
-                  <section className="detail-section" id="how-to-use">
-                    <h3>How to Use It</h3>
-                    <div className="detail-content documentation-content">
+                  <section className="panel-freetext" id="how-to-use">
+                    <div className="panel-freetext-label">How to Use It</div>
+                    <div className="documentation-content">
                       <DocMarkdown>{markdownContent.how_to_use}</DocMarkdown>
                     </div>
                   </section>
                 )}
 
-                {/* Additional Resources Section */}
+                {/* Additional Resources -- only when present */}
                 {additionalResourceLinks.length > 0 && (
-                  <section className="detail-section" id="additional-resources">
-                    <h3>Additional Resources</h3>
+                  <section className="panel-freetext" id="additional-resources">
+                    <div className="panel-freetext-label">Additional Resources</div>
                     <div className="additional-resources-list">
-                      {additionalResources.filter(r => r.url).map((resource, idx) => {
+                      {additionalResourceLinks.map((resource, idx) => {
                         const external =
                           resource.url &&
                           (resource.url.startsWith('http://') ||
@@ -664,70 +485,247 @@ const DetailPanel = ({ project, onClose }) => {
                     </div>
                   </section>
                 )}
+              </div>
 
-                {/* Region Section -- inline chips */}
-                {project?.countries?.length > 0 && (
-                  <section className="detail-section" id="region">
-                    <h3>Region</h3>
-                    <div className="region-chips">
-                      {project.countries.map(c => <span className="region-chip" key={c}>{c}</span>)}
-                    </div>
-                  </section>
-                )}
+              {/* RIGHT: facts rail -- reliable catalogue fields + access */}
+              <div className="panel-rail">
+                {/* Cover image */}
+                {(() => {
+                  if (project.image) {
+                    return (
+                      <div
+                        className="panel-rail-image"
+                        style={{ backgroundImage: `url("${withBasePath(project.image)}")` }}
+                      />
+                    )
+                  }
+                  const sdgColor = sdgPrimary?.color || null
+                  if (sdgColor) {
+                    return (
+                      <div
+                        className="panel-rail-image no-image"
+                        style={{ backgroundImage: `linear-gradient(135deg, ${sdgColor}18 0%, ${sdgColor}35 100%)` }}
+                      />
+                    )
+                  }
+                  return null
+                })()}
 
-                {/* Organizations Involved Section -- dot-list format */}
-                {organizations && (
-                  <section className="detail-section" id="organizations">
-                    <h3>Organizations Involved</h3>
-                    {organizations.raw ? (
-                      <div className="documentation-content">
-                        <DocMarkdown>{organizations.raw}</DocMarkdown>
-                      </div>
-                    ) : (
-                      <div className="org-list">
-                        {organizations.powered && (
-                          <div className="org-list-item">
-                            <span className="org-dot org-dot-powered"></span>
-                            <div>
-                              <span className="org-list-label">Powered by / Provided by</span>
-                              <div className="org-list-content"><DocMarkdown>{organizations.powered}</DocMarkdown></div>
-                            </div>
-                          </div>
-                        )}
-                        {organizations.catalyzed && (
-                          <div className="org-list-item">
-                            <span className="org-dot org-dot-catalyzed"></span>
-                            <div>
-                              <span className="org-list-label">Catalyzed by</span>
-                              <div className="org-list-content"><DocMarkdown>{organizations.catalyzed}</DocMarkdown></div>
-                            </div>
-                          </div>
-                        )}
-                        {organizations.financed && (
-                          <div className="org-list-item">
-                            <span className="org-dot org-dot-financed"></span>
-                            <div>
-                              <span className="org-list-label">Financed by</span>
-                              <div className="org-list-content"><DocMarkdown>{organizations.financed}</DocMarkdown></div>
-                            </div>
-                          </div>
-                        )}
+                {/* Datasets / Models access clusters (or documents / access-note fallback) */}
+                {hasAnyLinks ? (
+                  <>
+                    {datasetLinks.length > 0 && (
+                      <div className="rail-cluster">
+                        <div className="rail-cluster-label">Datasets</div>
+                        <div className="rail-chips-col">
+                          {datasetLinks.map((link, idx) => {
+                            const external = link.url && (link.url.startsWith('http://') || link.url.startsWith('https://'))
+                            const hasCustomName = link.name && link.name !== 'Link'
+                            const genericLabel = idx === 0 ? 'Access Dataset' : `Access Dataset ${idx + 1}`
+                            const label = hasCustomName ? link.name : genericLabel
+                            return (
+                              <a
+                                key={`dataset-${idx}`}
+                                className="rail-chip"
+                                href={resolvePublicHref(link.url)}
+                                target={external ? '_blank' : undefined}
+                                rel={external ? 'noopener noreferrer' : undefined}
+                              >
+                                <span>{label}</span>
+                                <i className="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                              </a>
+                            )
+                          })}
+                        </div>
                       </div>
                     )}
-                  </section>
-                )}
+                    {usecaseLinks.length > 0 && (
+                      <div className="rail-cluster">
+                        <div className="rail-cluster-label">Models</div>
+                        <div className="rail-chips-wrap">
+                          {usecaseLinks.map((link, idx) => {
+                            const external = link.url && (link.url.startsWith('http://') || link.url.startsWith('https://'))
+                            const hasCustomName = link.name && link.name !== 'Link'
+                            const genericLabel = idx === 0 ? 'Access Model/System' : `Access Model/System ${idx + 1}`
+                            const label = hasCustomName ? link.name : genericLabel
+                            return (
+                              <a
+                                key={`usecase-${idx}`}
+                                className="rail-chip-sm"
+                                href={resolvePublicHref(link.url)}
+                                target={external ? '_blank' : undefined}
+                                rel={external ? 'noopener noreferrer' : undefined}
+                              >
+                                <span>{label}</span>
+                                <i className="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                              </a>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    )}
+                  </>
+                ) : showHostedDocuments ? (
+                  <div className="rail-cluster">
+                    <div className="rail-cluster-label">Documents</div>
+                    <div className="rail-chips-col">
+                      {hostedDocuments.map((doc, idx) => {
+                        const isPdf = doc.url?.toLowerCase().endsWith('.pdf')
+                        return (
+                          <a
+                            key={`hosted-${idx}`}
+                            className="rail-doc-link"
+                            href={resolvePublicHref(doc.url)}
+                          >
+                            <i className={`fas ${isPdf ? 'fa-file-pdf' : 'fa-file-arrow-down'}`} aria-hidden="true"></i>
+                            <span>{doc.name || 'Download Document'}</span>
+                          </a>
+                        )
+                      })}
+                    </div>
+                  </div>
+                ) : null}
 
-                {/* Footer meta: Editor */}
-                {project?.editor && (
-                  <div className="panel-metadata-grid">
-                    <div className="metadata-cell">
-                      <span className="metadata-label">Editor of this information</span>
-                      <span className="metadata-value">{project.editor}</span>
+                {/* Access note (shown when there is no public dataset/use-case link) */}
+                {showAccessCallout && (
+                  <div className={`rail-access-note rail-access-note-${project.access_note_kind || 'info'}`}>
+                    <div className="rail-access-note-label">
+                      <i className={`fas ${accessNoteIconClass}`} aria-hidden="true"></i> Access note
+                    </div>
+                    <div className="rail-access-note-body documentation-content">
+                      <DocMarkdown>{project.access_note_markdown}</DocMarkdown>
                     </div>
                   </div>
                 )}
+
+                {/* Facts */}
+                <div className="rail-facts">
+                  <div className="rail-fact-row">
+                    <span className="rail-fact-label">Data type</span>
+                    <span className="rail-fact-value">{dataTypeText || '—'}</span>
+                  </div>
+                  <div className="rail-fact-row">
+                    <span className="rail-fact-label">License</span>
+                    <span className="rail-fact-value">
+                      {licenseValue ? renderLicense(licenseValue) : <span className="rail-fact-empty">Not specified</span>}
+                    </span>
+                  </div>
+                  <div className="rail-fact-row">
+                    <span className="rail-fact-label">Documentation</span>
+                    <span className="rail-fact-value rail-fact-depth">
+                      {depthText}
+                      <span className="completeness-indicator" aria-hidden="true">
+                        {[1, 2, 3, 4, 5].map(i => (
+                          <span key={i} className={`completeness-dot${i <= depthDots ? ' filled' : ''}`} />
+                        ))}
+                      </span>
+                    </span>
+                  </div>
+                  <div className="rail-fact-row">
+                    <span className="rail-fact-label">Status</span>
+                    <span className={`rail-fact-value rail-status status-${statusState}`}>
+                      <span className="status-dot" aria-hidden="true"></span>{statusText}
+                    </span>
+                  </div>
+                  {project?.countries?.length > 0 && (
+                    <div className="rail-fact-row">
+                      <span className="rail-fact-label">Country</span>
+                      <span className="rail-fact-value">{project.countries.join(', ')}</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Link health -- kept whenever there is more to report than the Status row */}
+                {showHealth && (healthDetails.length > 0 || brokenLinkCount > 0 || healthContext) && (
+                  <div className={`rail-health health-${health.availability}`}>
+                    <span className="health-dot" aria-hidden="true"></span>
+                    <div className="rail-health-body">
+                      <span className="rail-health-headline">
+                        {availabilityLabel(health.availability)}
+                        {healthContext && (
+                          <span className="rail-health-context"> · {healthContext}</span>
+                        )}
+                      </span>
+                      {healthDetails.length > 0 && (
+                        <span className="rail-health-detail">{healthDetails.join(' · ')}</span>
+                      )}
+                      {brokenLinkCount > 0 && (
+                        <span className="rail-health-broken">
+                          {brokenLinkCount === 1
+                            ? '1 link did not respond at the last check'
+                            : `${brokenLinkCount} links did not respond at the last check`}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Maturity -- vertical stepper */}
+                {maturityTags.length > 0 && (
+                  <div className="rail-maturity">
+                    <div className="rail-cluster-label">Maturity</div>
+                    <div className="rail-stepper">
+                      {MATURITY_STEPS.map((step, i) => {
+                        const reached = maturityTags.includes(step.key)
+                        return (
+                          <Fragment key={step.key}>
+                            {i > 0 && (
+                              <span className={`rail-step-line${reached ? ' filled' : ''}`}></span>
+                            )}
+                            <div className={`rail-step${reached ? ' reached' : ''}`}>
+                              <span className="rail-step-dot"></span>
+                              <span className="rail-step-label">{step.label}</span>
+                            </div>
+                          </Fragment>
+                        )
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* Organisations + Contact + Editor */}
+                {(organizations || project?.editor) && (
+                  <div className="rail-orgs">
+                    {organizations && (organizations.raw ? (
+                      <div className="rail-org">
+                        <div className="rail-org-label">Organizations Involved</div>
+                        <div className="rail-org-value documentation-content"><DocMarkdown>{organizations.raw}</DocMarkdown></div>
+                      </div>
+                    ) : (
+                      <>
+                        {organizations.powered && (
+                          <div className="rail-org">
+                            <div className="rail-org-label"><span className="rail-org-dot" style={{ background: 'var(--primary)' }}></span> Powered by / Provided by</div>
+                            <div className="rail-org-value documentation-content"><DocMarkdown>{organizations.powered}</DocMarkdown></div>
+                          </div>
+                        )}
+                        {organizations.catalyzed && (
+                          <div className="rail-org">
+                            <div className="rail-org-label"><span className="rail-org-dot" style={{ background: 'var(--accent-gold)' }}></span> Catalyzed by</div>
+                            <div className="rail-org-value documentation-content"><DocMarkdown>{organizations.catalyzed}</DocMarkdown></div>
+                          </div>
+                        )}
+                        {organizations.financed && (
+                          <div className="rail-org">
+                            <div className="rail-org-label"><span className="rail-org-dot" style={{ background: '#8a8578' }}></span> Financed by</div>
+                            <div className="rail-org-value documentation-content"><DocMarkdown>{organizations.financed}</DocMarkdown></div>
+                          </div>
+                        )}
+                      </>
+                    ))}
+
+                    {project?.editor && (
+                      <div className="rail-contact-block">
+                        <div className="rail-org">
+                          <div className="rail-org-label">Editor of this information</div>
+                          <div className="rail-editor-value">{project.editor}</div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
-            </>
+            </div>
           )}
         </div>
       </div>
