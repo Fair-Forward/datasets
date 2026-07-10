@@ -667,10 +667,11 @@ const DetailPanel = ({ project, onClose }) => {
                     <div className="rail-stepper">
                       {MATURITY_STEPS.map((step, i) => {
                         const reached = maturityTags.includes(step.key)
+                        const prevReached = i > 0 && maturityTags.includes(MATURITY_STEPS[i - 1].key)
                         return (
                           <Fragment key={step.key}>
                             {i > 0 && (
-                              <span className={`rail-step-line${reached ? ' filled' : ''}`}></span>
+                              <span className={`rail-step-line${prevReached && reached ? ' filled' : ''}`}></span>
                             )}
                             <div className={`rail-step${reached ? ' reached' : ''}`}>
                               <span className="rail-step-dot"></span>
