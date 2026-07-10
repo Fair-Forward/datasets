@@ -3,11 +3,11 @@ import { withBasePath } from '../utils/basePath'
 
 // Define the maturity funnel stages in order of progression
 const FUNNEL_STAGES = [
-  { key: 'dataset', label: 'Datasets+', color: '#64748b', patterns: ['dataset'] },
-  { key: 'model', label: 'Models+', color: '#3b82f6', patterns: ['model'] },
-  { key: 'pilot', label: 'Pilots+', color: '#6366f1', patterns: ['pilot'] },
-  { key: 'usecase', label: 'Use Cases+', color: '#8b5cf6', patterns: ['use-case', 'use case', 'usecase'] },
-  { key: 'business', label: 'Business Model', color: '#10b981', patterns: ['business model', 'business-model', 'scaled'] }
+  { key: 'dataset', label: 'Datasets+', color: '#8a8578', patterns: ['dataset'] },
+  { key: 'model', label: 'Models+', color: '#7fa08f', patterns: ['model'] },
+  { key: 'pilot', label: 'Pilots+', color: '#4f8f74', patterns: ['pilot'] },
+  { key: 'usecase', label: 'Use Cases+', color: '#2f6f5e', patterns: ['use-case', 'use case', 'usecase'] },
+  { key: 'business', label: 'Business Model', color: '#c08a3e', patterns: ['business model', 'business-model', 'scaled'] }
 ]
 
 // Parse maturity string and return which stages this project has reached
@@ -216,7 +216,7 @@ const MaturityChart = ({ maturityDistribution, catalogProjects }) => {
                   width={pos.width}
                   height={pos.height}
                   rx={8}
-                  fill={hasData ? pos.stage.color : '#e2e8f0'}
+                  fill={hasData ? pos.stage.color : '#e4ddce'}
                   opacity={hoveredStage && !isHovered ? 0.4 : 1}
                   className="sankey-stage-rect"
                 />
@@ -287,7 +287,7 @@ const MaturityChart = ({ maturityDistribution, catalogProjects }) => {
                   y={y}
                   textAnchor="middle"
                   className="sankey-dropoff-text"
-                  fill="#64748b"
+                  fill="var(--text-muted)"
                   fontSize={11}
                   fontWeight="600"
                 >

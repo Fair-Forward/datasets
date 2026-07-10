@@ -41,41 +41,42 @@
   /* --- Typography families --- */
   --font-sans: 'Public Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
 
-  /* --- Theme colors (Catalogue v2 -- cool indigo) --- */
-  --primary:       #2b337a;
-  --primary-light: #3a4499;
-  --background:    #edf0f5;
-  --card-background: #ffffff;
-  --text:          #1e2230;
-  --text-light:    #5b6478;
-  --text-muted:    #7a8294;
-  --text-faint:    #8a91a3;
-  --border:        #e3e7ee;
-  --border-soft:   #e7eaf0;
-  --border-light:  #eef1f6;
-  --surface-cool:  #f6f8fb;
-  --accent-teal:   #0f9e8e;
-  --accent-gold:   #c79a3e;
+  /* --- Theme colors (Warm-neutral redesign) --- */
+  --primary:       #2f6f5e;   /* deep green -- primary action/accent */
+  --primary-light: #3f8f6f;   /* hover/gradient partner */
+  --background:    #f1ede3;   /* warm paper page background */
+  --card-background: #fbfaf6; /* cards sit a touch warm, not stark white */
+  --text:          #22201b;   /* near-black warm ink */
+  --text-light:    #5f5a50;   /* body secondary */
+  --text-muted:    #6b665c;   /* muted labels */
+  --text-faint:    #a39b8b;   /* eyebrows, meta, uppercase labels */
+  --border:        #e2ddd0;   /* default hairline */
+  --border-soft:   #e6dfd2;   /* card borders */
+  --border-light:  #ece7dd;   /* inner dividers */
+  --surface-cool:  #f6f3ec;   /* rail / inset surfaces (now warm) */
+  --accent-teal:   #0f9e8e;   /* org "catalyzed" dot etc. */
+  --accent-gold:   #c08a3e;   /* warm gold accent / endpoint */
   --shadow:        rgba(0, 0, 0, 0.04);
   --shadow-hover:  rgba(0, 0, 0, 0.08);
-  --title-color:   #1e2230;
-  --btn-text:      #ffffff;
-  --yellow:        #c79a3e;
+  --title-color:   #1f1d18;   /* display-title ink */
+  --btn-text:      #fbfaf6;   /* text on primary */
+  --yellow:        #c08a3e;
 
-  /* --- Visualization palette (sequential indigo ramp) --- */
-  --viz-1: #dfe3f1;   /* Lightest */
-  --viz-2: #aab2dc;
-  --viz-3: #6f7bc0;
-  --viz-4: #454f9e;
-  --viz-5: #2b337a;   /* Darkest = primary */
+  /* --- Visualization palette (warm-green sequential ramp) --- */
+  --viz-1: #e4ddce;   /* Lightest */
+  --viz-2: #b7cabb;
+  --viz-3: #8fb0a0;
+  --viz-4: #4f8f74;
+  --viz-5: #2f6f5e;   /* Darkest = primary */
 
-  /* --- Maturity pipeline stage colors (indigo -> teal ramp) --- */
-  --maturity-dataset:  #8a91a3;   /* slate -- starting point */
-  --maturity-model:    #6f7bc0;   /* light indigo -- building */
-  --maturity-pilot:    #454f9e;   /* indigo -- testing */
-  --maturity-usecase:  #2b337a;   /* primary -- deploying */
-  --maturity-business: #0f9e8e;   /* teal -- sustainable endpoint */
+  /* --- Maturity pipeline stage colors (warm slate -> green -> gold) --- */
+  --maturity-dataset:  #8a8578;   /* warm slate -- starting point */
+  --maturity-model:    #7fa08f;   /* soft green -- building */
+  --maturity-pilot:    #4f8f74;   /* mid green -- testing */
+  --maturity-usecase:  #2f6f5e;   /* primary green -- deploying */
+  --maturity-business: #c08a3e;   /* gold -- sustainable endpoint */
 
   /* --- Semantic colors --- */
   --color-success:  #1f9d57;
@@ -92,8 +93,8 @@
   --shadow-md:    0 4px 12px var(--shadow), 0 2px 4px rgba(0, 0, 0, 0.03);
   --shadow-lg:    0 8px 24px var(--shadow-hover), 0 4px 8px rgba(0, 0, 0, 0.04);
   --shadow-xl:    0 16px 32px var(--shadow-hover), 0 6px 12px rgba(0, 0, 0, 0.05);
-  --shadow-focus: 0 0 0 3px rgba(43, 51, 122, 0.15);
-  --shadow-panel: -12px 0 40px rgba(15, 23, 42, 0.12);
+  --shadow-focus: 0 0 0 3px rgba(47, 111, 94, 0.15);
+  --shadow-panel: -12px 0 40px rgba(31, 29, 24, 0.12);
 
   /* --- Transition durations --- */
   --transition-fast: 150ms ease-out;
@@ -102,7 +103,7 @@
 
   /* --- Layout (rem so they scale with the root font-size) --- */
   --content-max-width:  76rem;     /* 1140px at 15px base */
-  --detail-panel-width: 54.6667rem; /* 820px at 15px base */
+  --detail-panel-width: 76rem; /* wider panel so the narrative column isn't cramped */
 }
 
 /* --- Global focus-visible --- */

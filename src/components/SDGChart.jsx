@@ -148,11 +148,11 @@ const SDGChart = ({ sdgDistribution, onSDGClick }) => {
                 </div>
               </div>
               <div className="sdg-bar-track">
-                <div 
+                <div
                   className="sdg-bar-fill"
-                  style={{ 
+                  style={{
                     width: `${(item.count / maxCount) * 100}%`,
-                    backgroundColor: item.color,
+                    backgroundColor: 'var(--viz-5)',
                     '--bar-width': `${(item.count / maxCount) * 100}%`
                   }}
                 >
