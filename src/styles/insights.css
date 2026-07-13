@@ -362,7 +362,7 @@
   padding: 0.5rem 1rem;
   font-size: var(--text-xs);
   color: var(--primary);
-  background: rgba(47, 111, 94, 0.08);
+  background: rgba(13, 138, 95, 0.08);
   text-align: center;
 }
 
@@ -491,12 +491,12 @@
   align-items: center;
   gap: 0.25rem;
   padding: 0.25rem 0.5rem;
-  background: rgba(47, 111, 94, 0.1);
+  background: rgba(13, 138, 95, 0.1);
   color: var(--primary);
   border-radius: var(--radius-pill);
   font-size: var(--text-xs);
   font-weight: 500;
-  border: 1px solid rgba(47, 111, 94, 0.2);
+  border: 1px solid rgba(13, 138, 95, 0.2);
 }
 
 .country-sdg-mini-icon {
@@ -514,8 +514,8 @@
 .country-data-type {
   display: inline-block;
   padding: 0.25rem 0.5rem;
-  background: #efe9dd;
-  color: #6b6152;
+  background: #eaf1ee;
+  color: #3c5049;
   border-radius: var(--radius-pill);
   font-size: var(--text-xs);
   font-weight: 500;
@@ -540,7 +540,7 @@
 
 .country-view-projects:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(47, 111, 94, 0.3);
+  box-shadow: 0 4px 12px rgba(13, 138, 95, 0.3);
 }
 
 /* ==================
@@ -1537,7 +1537,7 @@
 
 /* Network Container */
 .org-network-container {
-  background: linear-gradient(135deg, #faf7f0 0%, #f6f3ec 100%);
+  background: linear-gradient(135deg, #f4f6f6 0%, #e8ebec 100%);
   border: none;
   border-radius: var(--radius-lg);
   padding: 1.5rem;
@@ -1757,18 +1757,18 @@
 }
 
 .org-detail-badge.powered {
-  background: #ecfdf5;
-  color: var(--color-success);
+  background: rgba(13, 138, 95, 0.10);
+  color: var(--primary);
 }
 
 .org-detail-badge.catalyzed {
-  background: #f6efe0;
-  color: #9a7b3c;
+  background: rgba(192, 138, 62, 0.14);
+  color: #8a6b2e;
 }
 
 .org-detail-badge.financed {
-  background: #efe9dd;
-  color: #6b665c;
+  background: rgba(111, 120, 131, 0.12);
+  color: #5f6873;
 }
 
 .org-detail-connections {
@@ -1913,7 +1913,7 @@
 
 .org-network-filter-label {
   padding: 0.25rem 0.75rem;
-  background: rgba(47, 111, 94, 0.1);
+  background: rgba(13, 138, 95, 0.1);
   color: var(--primary);
   border-radius: var(--radius-xl);
   font-weight: 500;
