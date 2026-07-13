@@ -52,7 +52,7 @@ const COLOR_CONFIG = {
   empty: '#eef1f1',           // Light neutral for empty countries
   emptyHover: '#e2e5e7',      // Slightly darker on hover
   emptyStroke: '#e2e5e7',     // Subtle border for empty
-  dataStroke: '#0d8a5f',      // Emerald border for countries with data
+  dataStroke: '#0a5f42',      // Darker emerald border, stays visible against the deepest fill
   strokeHighlight: '#0b7350', // Deep emerald for selected
   gradientStart: '#e7efeb',   // Lightest emerald (viz-1)
   gradientMid: '#83b79f',     // Mid emerald (viz-3)

@@ -772,7 +772,7 @@
         }
 
         .data-type-chip:hover {
-            background-color: #eef4f1; /* Light purple background on hover */
+            background-color: #eef4f1; /* emerald wash on hover */
         }
 
         .data-type-chip-long {
@@ -1761,7 +1761,7 @@ a.additional-resource-item i {
 }
 
 .org-dot-powered { background-color: var(--primary); }
-.org-dot-catalyzed { background-color: var(--accent-teal); }
+.org-dot-catalyzed { background-color: var(--accent-gold); }
 .org-dot-financed { background-color: var(--accent-gold); }
 
 .org-list-label {
@@ -2145,7 +2145,7 @@ a.additional-resource-item i {
 }
 
 .panel-domain-badge:hover {
-    background-color: #eef4f1; /* Light blue background on hover */
+    background-color: #eef4f1; /* emerald wash on hover */
 }
 
 /* Panel links section */

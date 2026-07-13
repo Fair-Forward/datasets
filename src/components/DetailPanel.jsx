@@ -708,7 +708,7 @@ const DetailPanel = ({ project, onClose }) => {
                         )}
                         {organizations.financed && (
                           <div className="rail-org">
-                            <div className="rail-org-label"><span className="rail-org-dot" style={{ background: '#8a8578' }}></span> Financed by</div>
+                            <div className="rail-org-label"><span className="rail-org-dot" style={{ background: 'var(--text-muted)' }}></span> Financed by</div>
                             <div className="rail-org-value documentation-content"><DocMarkdown>{organizations.financed}</DocMarkdown></div>
                           </div>
                         )}

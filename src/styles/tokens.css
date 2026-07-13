@@ -85,8 +85,8 @@
   --color-info:     #3b82f6;
   --color-purple:   #8b5cf6;
   --color-cyan:     #06b6d4;
-  --color-surface:        #f8fafc;
-  --color-surface-hover:  #f1f5f9;
+  --color-surface:        #f4f6f6;
+  --color-surface-hover:  #eceff0;
 
   /* --- Elevation (box-shadow) scale --- */
   --shadow-sm:    0 1px 3px var(--shadow), 0 1px 2px rgba(0, 0, 0, 0.02);
