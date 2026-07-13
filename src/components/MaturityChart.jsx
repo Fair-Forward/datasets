@@ -3,10 +3,10 @@ import { withBasePath } from '../utils/basePath'
 
 // Define the maturity funnel stages in order of progression
 const FUNNEL_STAGES = [
-  { key: 'dataset', label: 'Datasets+', color: '#8a8578', patterns: ['dataset'] },
-  { key: 'model', label: 'Models+', color: '#7fa08f', patterns: ['model'] },
-  { key: 'pilot', label: 'Pilots+', color: '#4f8f74', patterns: ['pilot'] },
-  { key: 'usecase', label: 'Use Cases+', color: '#2f6f5e', patterns: ['use-case', 'use case', 'usecase'] },
+  { key: 'dataset', label: 'Datasets+', color: '#8a929b', patterns: ['dataset'] },
+  { key: 'model', label: 'Models+', color: '#74b394', patterns: ['model'] },
+  { key: 'pilot', label: 'Pilots+', color: '#38a074', patterns: ['pilot'] },
+  { key: 'usecase', label: 'Use Cases+', color: '#0d8a5f', patterns: ['use-case', 'use case', 'usecase'] },
   { key: 'business', label: 'Business Model', color: '#c08a3e', patterns: ['business model', 'business-model', 'scaled'] }
 ]
 
@@ -216,7 +216,7 @@ const MaturityChart = ({ maturityDistribution, catalogProjects }) => {
                   width={pos.width}
                   height={pos.height}
                   rx={8}
-                  fill={hasData ? pos.stage.color : '#e4ddce'}
+                  fill={hasData ? pos.stage.color : '#e2e5e7'}
                   opacity={hoveredStage && !isHovered ? 0.4 : 1}
                   className="sankey-stage-rect"
                 />

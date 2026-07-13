@@ -465,8 +465,8 @@
         .filter-segmented {
             display: inline-flex;
             gap: 0.25rem;
-            background: #eae4d7;
-            border: 1px solid #e2dccb;
+            background: #eceff0;
+            border: 1px solid #e3e6e8;
             border-radius: var(--radius-md);
             padding: 0.25rem;
         }
@@ -668,7 +668,7 @@
 
         .card-image {
             height: 10.5333rem;
-            background-color: #eae5da;
+            background-color: #e8ebec;
             background-size: cover;
             background-position: center;
             position: relative;
@@ -720,7 +720,7 @@
         }
 
         .card-sdg-badge:hover {
-            background: #fbfaf6;
+            background: #ffffff;
         }
 
         .card-sdg-dot {
@@ -772,7 +772,7 @@
         }
 
         .data-type-chip:hover {
-            background-color: #f5f3ff; /* Light purple background on hover */
+            background-color: #eef4f1; /* emerald wash on hover */
         }
 
         .data-type-chip-long {
@@ -853,8 +853,8 @@
         .card-type-tag {
             font-size: var(--text-xs);
             font-weight: 500;
-            color: #6b6152;
-            background: #efe9dd;
+            color: #3c5049;
+            background: #eaf1ee;
             padding: 0.25rem 0.6rem;
             border-radius: 0.4667rem;
             max-width: 100%;
@@ -869,16 +869,16 @@
             gap: 0.35rem;
             font-size: var(--text-xs);
             font-weight: 500;
-            color: #8a6d3b;
-            background: #fcf6e9;
-            border: 1px solid #e3d6bb;
+            color: #8a6b3e;
+            background: rgba(192, 138, 62, 0.10);
+            border: 1px solid rgba(192, 138, 62, 0.28);
             padding: 0.22rem 0.55rem;
             border-radius: var(--radius-sm);
             white-space: nowrap;
         }
 
         .card-access-badge i {
-            color: #b9924a;
+            color: #c08a3e;
             font-size: 0.7rem;
         }
 
@@ -916,7 +916,7 @@
         }
 
         .tag {
-            background-color: rgba(47, 111, 94, 0.08); /* blue with alpha */
+            background-color: rgba(13, 138, 95, 0.08); /* primary tint */
             padding: 0.25rem 0.75rem;
             border-radius: var(--radius-pill);
             font-size: var(--text-xs);
@@ -926,7 +926,7 @@
         }
 
         .tag:hover {
-            background-color: rgba(47, 111, 94, 0.12); /* blue with alpha, slightly darker */
+            background-color: rgba(13, 138, 95, 0.12); /* primary tint, slightly darker */
         }
 
         .card-footer {
@@ -950,7 +950,7 @@
             width: 0.3333rem;
             height: 0.3333rem;
             border-radius: 50%;
-            background: #d8d1c2;
+            background: #d7dbde;
         }
 
         .completeness-dot.filled {
@@ -1205,21 +1205,21 @@
         .btn-primary {
             background-color: var(--primary);
             color: var(--btn-text);
-            box-shadow: 0 2px 4px rgba(47, 111, 94, 0.15); /* blue with alpha */
+            box-shadow: 0 2px 4px rgba(13, 138, 95, 0.15); /* primary tint */
         }
 
         .btn-primary:hover {
             background-color: var(--primary-light);
-            box-shadow: 0 4px 8px rgba(47, 111, 94, 0.2); /* blue with alpha */
+            box-shadow: 0 4px 8px rgba(13, 138, 95, 0.2); /* primary tint */
         }
 
         .btn-secondary {
-            background-color: rgba(47, 111, 94, 0.08); /* blue with alpha */
+            background-color: rgba(13, 138, 95, 0.08); /* primary tint */
             color: var(--primary);
         }
 
         .btn-secondary:hover {
-            background-color: rgba(47, 111, 94, 0.12); /* blue with alpha, slightly darker */
+            background-color: rgba(13, 138, 95, 0.12); /* primary tint, slightly darker */
         }
 
         .btn-view-details:hover {
@@ -1718,7 +1718,7 @@
 
 a.additional-resource-item:hover {
     border-color: var(--primary-light);
-    background: rgba(47, 111, 94, 0.04);
+    background: rgba(13, 138, 95, 0.04);
     color: var(--primary);
 }
 
@@ -1761,7 +1761,7 @@ a.additional-resource-item i {
 }
 
 .org-dot-powered { background-color: var(--primary); }
-.org-dot-catalyzed { background-color: var(--accent-teal); }
+.org-dot-catalyzed { background-color: var(--accent-gold); }
 .org-dot-financed { background-color: var(--accent-gold); }
 
 .org-list-label {
@@ -1907,7 +1907,7 @@ a.additional-resource-item i {
 }
 
 .panel-link:hover {
-    background-color: rgba(47, 111, 94, 0.08);
+    background-color: rgba(13, 138, 95, 0.08);
     color: var(--primary-light);
     text-decoration: none;
 }
@@ -1931,7 +1931,7 @@ a.additional-resource-item i {
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 1rem;
-    background-color: #f0ebe0;
+    background-color: #f4f6f6;
     border-bottom: 1px solid var(--border);
     font-family: 'Fira Code', 'Roboto Mono', monospace;
     font-size: var(--text-xs);
@@ -2096,7 +2096,7 @@ a.additional-resource-item i {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    background: linear-gradient(135deg, #f4f6f6 0%, #e8ebec 100%);
     z-index: -1;
 }
 
@@ -2145,7 +2145,7 @@ a.additional-resource-item i {
 }
 
 .panel-domain-badge:hover {
-    background-color: #eef2ff; /* Light blue background on hover */
+    background-color: #eef4f1; /* emerald wash on hover */
 }
 
 /* Panel links section */
@@ -2268,13 +2268,13 @@ a.additional-resource-item i {
 }
 
 .panel-access-note-info {
-    background: #eef2ff;
-    color: #1e3a5f;
-    border-color: rgba(37, 99, 235, 0.25);
+    background: #eef1f2;
+    color: #3a4654;
+    border-color: rgba(95, 104, 115, 0.28);
 }
 
 .panel-access-note-info > i {
-    color: #2563eb;
+    color: #5f6873;
 }
 
 .panel-access-note-documents {
@@ -2288,14 +2288,14 @@ a.additional-resource-item i {
 }
 
 .panel-hosted-document-link {
-    border-color: rgba(217, 119, 6, 0.45);
-    background: #fffbeb;
-    color: #78350f;
+    border-color: rgba(192, 138, 62, 0.45);
+    background: rgba(192, 138, 62, 0.10);
+    color: #8a6b2e;
 }
 
 .panel-hosted-document-link:hover {
-    background: #fef3c7;
-    border-color: var(--color-warning);
+    background: rgba(192, 138, 62, 0.18);
+    border-color: var(--accent-gold);
 }
 
 /* Panel actions (CTA buttons) */
@@ -2676,7 +2676,7 @@ a.additional-resource-item i {
     height: 0.7333rem;
     border-radius: 50%;
     background: var(--card-background);
-    border: 2px solid #d4dae3;
+    border: 2px solid #d7dbde;
 }
 
 .maturity-node.reached .maturity-dot {
@@ -2699,7 +2699,7 @@ a.additional-resource-item i {
 .maturity-line {
     flex: 1 1 auto;
     height: 0.1333rem;
-    background: #d4dae3;
+    background: #e2e5e7;
     margin-top: 0.3rem;
 }
 
@@ -2947,8 +2947,8 @@ a.additional-resource-item i {
     border-radius: var(--radius-pill);
     font-size: var(--text-sm);
     font-weight: 600;
-    background: #f4ecdf;
-    color: #8a5a2b;
+    background: #eaf1ee;
+    color: #3a424a;
     border: none;
 }
 
@@ -3002,7 +3002,7 @@ a.additional-resource-item i {
 .panel-rail-image {
     height: 8.5333rem;
     border-radius: 0.8rem;
-    background-color: #eae5da;
+    background-color: #e8ebec;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -3049,7 +3049,7 @@ a.additional-resource-item i {
     font-weight: 500;
     color: var(--primary);
     background: var(--card-background);
-    border: 1px solid #d8ddce;
+    border: 1px solid #d8e5de;
     border-radius: var(--radius-md);
     padding: 0.65rem 0.95rem;
     text-decoration: none;
@@ -3101,7 +3101,7 @@ a.additional-resource-item i {
     font-weight: 600;
     color: var(--primary);
     background: var(--card-background);
-    border: 1px solid #d8ddce;
+    border: 1px solid #d8e5de;
     border-radius: var(--radius-md);
     padding: 0.6rem 0.9rem;
     text-decoration: none;
@@ -3121,8 +3121,8 @@ a.additional-resource-item i {
 /* Rail access note (amber, warm) */
 .rail-access-note {
     margin-top: 1.6rem;
-    background: #f7f0e2;
-    border: 1px solid #ead9bd;
+    background: rgba(192, 138, 62, 0.10);
+    border: 1px solid rgba(192, 138, 62, 0.30);
     border-radius: var(--radius-lg);
     padding: 0.9rem 0.95rem;
 }
@@ -3135,7 +3135,7 @@ a.additional-resource-item i {
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #9a7b3c;
+    color: #8a6b2e;
     margin-bottom: 0.55rem;
 }
 
@@ -3290,7 +3290,7 @@ a.additional-resource-item i {
     height: 0.6667rem;
     border-radius: 50%;
     background: var(--card-background);
-    border: 2px solid #d8d1c2;
+    border: 2px solid #d7dbde;
     flex-shrink: 0;
 }
 
@@ -3313,7 +3313,7 @@ a.additional-resource-item i {
 .rail-step-line {
     width: 0.1333rem;
     height: 0.8667rem;
-    background: #e4ddd0;
+    background: #e2e5e7;
     margin-left: 0.2667rem;
 }
 

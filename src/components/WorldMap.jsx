@@ -47,17 +47,17 @@ const normalizeName = (value = '') =>
     .replace(/[^a-z]/gi, '')
     .toLowerCase()
 
-// Warm-green sequential palette - aligned with primary theme
+// Emerald sequential palette - aligned with primary theme (viz ramp)
 const COLOR_CONFIG = {
-  empty: '#eae5da',           // Warm light for empty countries
-  emptyHover: '#e0dccb',      // Slightly darker on hover
-  emptyStroke: '#e2ddd0',     // Subtle warm border for empty
-  dataStroke: '#255f50',      // Strong green border for countries with data
-  strokeHighlight: '#2f6f5e', // Primary green for selected
-  gradientStart: '#e4ddce',   // Lightest (viz-1)
-  gradientMid: '#8fb0a0',     // Mid green (viz-3)
-  gradientEnd: '#2f6f5e',     // Deep green for high values (viz-5)
-  ocean: '#f6f3ec'            // Warm off-white for ocean/background
+  empty: '#eef1f1',           // Light neutral for empty countries
+  emptyHover: '#e2e5e7',      // Slightly darker on hover
+  emptyStroke: '#e2e5e7',     // Subtle border for empty
+  dataStroke: '#0a5f42',      // Darker emerald border, stays visible against the deepest fill
+  strokeHighlight: '#0b7350', // Deep emerald for selected
+  gradientStart: '#e7efeb',   // Lightest emerald (viz-1)
+  gradientMid: '#83b79f',     // Mid emerald (viz-3)
+  gradientEnd: '#0d8a5f',     // Deep emerald for high values (viz-5)
+  ocean: '#f6f7f7'            // Whisper-grey for ocean/background
 }
 
 const WorldMap = ({
@@ -112,7 +112,7 @@ const WorldMap = ({
     }
   }, [projectData])
 
-  // Color scale using the warm-green sequential ramp
+  // Color scale using the emerald sequential ramp
   const colorScale = useMemo(() => {
     return scaleLinear()
       .domain([0, maxValue * 0.3, maxValue])
@@ -288,7 +288,7 @@ const WorldMap = ({
                         strokeWidth: hasData ? 1.2 : 0.3,
                         outline: 'none',
                         transition: 'all 0.2s ease-out',
-                        filter: isSelected ? 'drop-shadow(0 0 4px rgba(47, 111, 94, 0.5))' : 'none'
+                        filter: isSelected ? 'drop-shadow(0 0 4px rgba(13, 138, 95, 0.5))' : 'none'
                       },
                       hover: {
                         fill: hasData ? colorScale(countryData.projects) : COLOR_CONFIG.emptyHover,
@@ -296,7 +296,7 @@ const WorldMap = ({
                         strokeWidth: hasData ? 2 : 0.5,
                         outline: 'none',
                         cursor: hasData ? 'pointer' : 'default',
-                        filter: hasData ? 'brightness(1.05) drop-shadow(0 0 6px rgba(47, 111, 94, 0.4))' : 'none'
+                        filter: hasData ? 'brightness(1.05) drop-shadow(0 0 6px rgba(13, 138, 95, 0.4))' : 'none'
                       },
                       pressed: {
                         fill: hasData ? colorScale(countryData.projects) : COLOR_CONFIG.emptyHover,
