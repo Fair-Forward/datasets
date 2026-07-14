@@ -87,6 +87,57 @@ export const parseContacts = (raw = '') => {
   return segments.map(parseContact).filter(c => c.label || c.href)
 }
 
+// Friendly display names for well-known hosts so a bare link reads as a real
+// destination instead of an anonymous "Access Dataset 2".
+const KNOWN_HOSTS = [
+  [/(^|\.)huggingface\.co$/i, 'Hugging Face'],
+  [/(^|\.)github\.com$/i, 'GitHub'],
+  [/(^|\.)gitlab\.com$/i, 'GitLab'],
+  [/(^|\.)kaggle\.com$/i, 'Kaggle'],
+  [/(^|\.)zenodo\.org$/i, 'Zenodo'],
+  [/(^|\.)figshare\.com$/i, 'figshare'],
+  [/(^|\.)data\.world$/i, 'data.world'],
+  [/(^|\.)drive\.google\.com$/i, 'Google Drive'],
+  [/(^|\.)docs\.google\.com$/i, 'Google Docs'],
+  [/(^|\.)doi\.org$/i, 'DOI']
+]
+
+// Path segments that don't identify a resource; skipped when picking the tail.
+const NOISE_SEGMENT = /^(tree|blob|main|master|resolve|datasets?|models?|record|records|en|view|file|files|download|raw|-)$/i
+
+// Derive a human-readable label for a raw link URL:
+//   https://huggingface.co/somyalab/Spark_somya_TTS         -> "Hugging Face: Spark_somya_TTS"
+//   https://huggingface.co/roymukund/X/tree/main            -> "Hugging Face: X"
+//   https://spiredatasets.ee.iisc.ac.in/syspincorpus        -> "spiredatasets.ee.iisc.ac.in"
+// Returns null for non-http/unparseable URLs so callers can fall back.
+export const labelFromUrl = (rawUrl = '') => {
+  if (!rawUrl || typeof rawUrl !== 'string') return null
+  let u
+  try {
+    u = new URL(rawUrl.trim())
+  } catch {
+    return null
+  }
+  if (!/^https?:$/.test(u.protocol)) return null
+  const host = u.hostname.replace(/^www\./, '')
+  const known = KNOWN_HOSTS.find(([re]) => re.test(host))
+  const hostLabel = known ? known[1] : host
+  const segments = u.pathname.split('/').filter(Boolean)
+  // Walk back from the end to the first segment that names something.
+  let tail = ''
+  for (let i = segments.length - 1; i >= 0; i--) {
+    const seg = decodeURIComponent(segments[i])
+    if (!NOISE_SEGMENT.test(seg)) { tail = seg; break }
+  }
+  if (tail) {
+    tail = tail.replace(/\.(git|zip|csv|json|pdf|html?)$/i, '').trim()
+    if (tail.length > 34) tail = tail.slice(0, 33).trimEnd() + '…'
+  }
+  // The tail is the distinguishing resource name (repo / corpus id) and hosts often
+  // repeat across a project's links, so keep it whenever there is one.
+  return tail ? `${hostLabel}: ${tail}` : hostLabel
+}
+
 export const licenseLabel = (license = '') => {
   if (!license) return ''
   const trimmed = license.trim()

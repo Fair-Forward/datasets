@@ -4,7 +4,7 @@ import remarkGfm from 'remark-gfm'
 import { withBasePath, resolvePublicHref } from '../utils/basePath'
 import { parseSdgList } from '../utils/sdgColors'
 import { completenessFromScore, depthLabel } from '../utils/depth'
-import { parseContacts, licenseLabel, firstUrl } from '../utils/parsing'
+import { parseContacts, licenseLabel, firstUrl, labelFromUrl } from '../utils/parsing'
 import { hasHealthSignal, availabilityLabel, contextLabel, healthDetailLines } from '../utils/health'
 import { SITE_NAME, SITE_TITLE, SITE_DESCRIPTION, SITE_URL, SITE_OG_IMAGE } from '../utils/site'
 
@@ -39,6 +39,45 @@ const markdownLinkComponents = {
 const DocMarkdown = ({ children }) => (
   <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownLinkComponents}>{children}</ReactMarkdown>
 )
+
+// Reshape a free-text field for the panel: split inline "•" bullet runs into a
+// real markdown list and shorten bare URLs to friendly link text, so a source
+// cell dumped as one "• A • B • https://long/url" line renders as a scannable
+// block instead of a wall. The URL is always preserved as the link target.
+const formatFreeText = (md) => {
+  if (!md || typeof md !== 'string') return md
+  let text = md.trim()
+  // Drop a stray pair of wrapping quotes some source cells carry.
+  if (text.length > 1 && text.startsWith('"') && text.endsWith('"')) {
+    text = text.slice(1, -1).trim()
+  }
+  // Inline bullet separators -> real list items.
+  if (text.includes('•')) {
+    const parts = text.split('•').map(s => s.trim()).filter(Boolean)
+    const lines = []
+    parts.forEach((part, i) => {
+      if (i === 0 && !text.trimStart().startsWith('•')) {
+        lines.push(part, '')      // lead-in sentence stays a paragraph
+      } else {
+        lines.push(`- ${part}`)
+      }
+    })
+    text = lines.join('\n')
+  }
+  // Angle-bracket autolinks <https://...> -> shortened markdown links.
+  text = text.replace(/<(https?:\/\/[^>\s]+)>/g, (_m, url) => {
+    const clean = url.replace(/[.,;:]+$/, '')
+    const label = labelFromUrl(clean) || clean
+    return `[${label}](${clean})`
+  })
+  // Shorten remaining bare URLs (those not already inside a markdown link) to a label.
+  text = text.replace(/(^|[^([<\]])(https?:\/\/[^\s)]+)/g, (_m, pre, url) => {
+    const clean = url.replace(/[.,;:]+$/, '')
+    const label = labelFromUrl(clean) || clean
+    return `${pre}[${label}](${clean})`
+  })
+  return text
+}
 
 // Build shareable URL for a project using its stable slug
 const getShareUrl = (slug) => {
@@ -434,7 +473,7 @@ const DetailPanel = ({ project, onClose }) => {
                   <section className="panel-freetext" id="data-characteristics">
                     <div className="panel-freetext-label">Data Characteristics</div>
                     <div className="documentation-content">
-                      <DocMarkdown>{markdownContent.data_characteristics}</DocMarkdown>
+                      <DocMarkdown>{formatFreeText(markdownContent.data_characteristics)}</DocMarkdown>
                     </div>
                   </section>
                 )}
@@ -444,7 +483,7 @@ const DetailPanel = ({ project, onClose }) => {
                   <section className="panel-freetext" id="model-characteristics">
                     <div className="panel-freetext-label">Model / Use Case Characteristics</div>
                     <div className="documentation-content">
-                      <DocMarkdown>{markdownContent.model_characteristics}</DocMarkdown>
+                      <DocMarkdown>{formatFreeText(markdownContent.model_characteristics)}</DocMarkdown>
                     </div>
                   </section>
                 )}
@@ -454,7 +493,7 @@ const DetailPanel = ({ project, onClose }) => {
                   <section className="panel-freetext" id="how-to-use">
                     <div className="panel-freetext-label">How to Use It</div>
                     <div className="documentation-content">
-                      <DocMarkdown>{markdownContent.how_to_use}</DocMarkdown>
+                      <DocMarkdown>{formatFreeText(markdownContent.how_to_use)}</DocMarkdown>
                     </div>
                   </section>
                 )}
@@ -521,8 +560,8 @@ const DetailPanel = ({ project, onClose }) => {
                           {datasetLinks.map((link, idx) => {
                             const external = link.url && (link.url.startsWith('http://') || link.url.startsWith('https://'))
                             const hasCustomName = link.name && link.name !== 'Link'
-                            const genericLabel = idx === 0 ? 'Access Dataset' : `Access Dataset ${idx + 1}`
-                            const label = hasCustomName ? link.name : genericLabel
+                            const fallback = idx === 0 ? 'Access dataset' : `Access dataset ${idx + 1}`
+                            const label = hasCustomName ? link.name : (labelFromUrl(link.url) || fallback)
                             return (
                               <a
                                 key={`dataset-${idx}`}
@@ -541,17 +580,17 @@ const DetailPanel = ({ project, onClose }) => {
                     )}
                     {usecaseLinks.length > 0 && (
                       <div className="rail-cluster">
-                        <div className="rail-cluster-label">Models</div>
-                        <div className="rail-chips-wrap">
+                        <div className="rail-cluster-label">Models &amp; systems</div>
+                        <div className="rail-chips-col">
                           {usecaseLinks.map((link, idx) => {
                             const external = link.url && (link.url.startsWith('http://') || link.url.startsWith('https://'))
                             const hasCustomName = link.name && link.name !== 'Link'
-                            const genericLabel = idx === 0 ? 'Access Model/System' : `Access Model/System ${idx + 1}`
-                            const label = hasCustomName ? link.name : genericLabel
+                            const fallback = idx === 0 ? 'Access model/system' : `Access model/system ${idx + 1}`
+                            const label = hasCustomName ? link.name : (labelFromUrl(link.url) || fallback)
                             return (
                               <a
                                 key={`usecase-${idx}`}
-                                className="rail-chip-sm"
+                                className="rail-chip"
                                 href={resolvePublicHref(link.url)}
                                 target={external ? '_blank' : undefined}
                                 rel={external ? 'noopener noreferrer' : undefined}

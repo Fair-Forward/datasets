@@ -44,7 +44,7 @@
   --font-serif: var(--font-sans);  /* serif retired in this direction: display titles use the sans at heavier weight */
 
   /* --- Theme colors (Clean-emerald redesign) --- */
-  --primary:       #0d8a5f;   /* emerald -- primary action/accent */
+  --primary:       #0c815a;   /* emerald -- primary action/accent (AA: 4.9:1 on white, both directions) */
   --primary-light: #17a673;   /* lighter partner for gradients */
   --background:    #f6f7f7;   /* whisper-grey page canvas (cool, not warm) */
   --card-background: #ffffff; /* pure white cards */
@@ -56,7 +56,7 @@
   --border-soft:   #e7e9eb;   /* card borders */
   --border-light:  #eef0f1;   /* inner dividers */
   --surface-cool:  #f4f6f6;   /* rail / inset surfaces */
-  --accent-teal:   #0d8a5f;   /* folded into primary in this direction */
+  --accent-teal:   #0c815a;   /* folded into primary in this direction */
   --accent-gold:   #c08a3e;   /* KEEP -- "Catalyzed by" dot, maturity endpoint */
   --shadow:        rgba(0, 0, 0, 0.04);
   --shadow-hover:  rgba(0, 0, 0, 0.08);
@@ -93,7 +93,7 @@
   --shadow-md:    0 4px 12px var(--shadow), 0 2px 4px rgba(0, 0, 0, 0.03);
   --shadow-lg:    0 8px 24px var(--shadow-hover), 0 4px 8px rgba(0, 0, 0, 0.04);
   --shadow-xl:    0 16px 32px var(--shadow-hover), 0 6px 12px rgba(0, 0, 0, 0.05);
-  --shadow-focus: 0 0 0 3px rgba(13, 138, 95, 0.15);
+  --shadow-focus: 0 0 0 3px rgba(12, 129, 90, 0.18);
   --shadow-panel: -12px 0 40px rgba(20, 26, 31, 0.10);
 
   /* --- Transition durations --- */
