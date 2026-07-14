@@ -4,7 +4,7 @@ import remarkGfm from 'remark-gfm'
 import { withBasePath, resolvePublicHref } from '../utils/basePath'
 import { parseSdgList } from '../utils/sdgColors'
 import { completenessFromScore, depthLabel } from '../utils/depth'
-import { parseContacts, licenseLabel, firstUrl } from '../utils/parsing'
+import { parseContacts, licenseLabel, firstUrl, labelFromUrl } from '../utils/parsing'
 import { hasHealthSignal, availabilityLabel, contextLabel, healthDetailLines } from '../utils/health'
 import { SITE_NAME, SITE_TITLE, SITE_DESCRIPTION, SITE_URL, SITE_OG_IMAGE } from '../utils/site'
 
@@ -39,6 +39,68 @@ const markdownLinkComponents = {
 const DocMarkdown = ({ children }) => (
   <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownLinkComponents}>{children}</ReactMarkdown>
 )
+
+// Reshape a free-text field for the panel: split inline "•" bullet runs into a
+// real markdown list and shorten bare URLs to friendly link text, so a source
+// cell dumped as one "• A • B • https://long/url" line renders as a scannable
+// block instead of a wall. The URL is always preserved as the link target.
+const formatFreeText = (md) => {
+  if (!md || typeof md !== 'string') return md
+  let text = md.trim()
+  // Drop a stray pair of wrapping quotes some source cells carry -- but only when
+  // the whole string is a single quoted span (exactly one pair), so text that
+  // merely contains several quoted phrases isn't corrupted.
+  if (text.length > 1 && text.startsWith('"') && text.endsWith('"') &&
+      (text.match(/"/g) || []).length === 2) {
+    text = text.slice(1, -1).trim()
+  }
+  // Inline bullet separators -> real list items.
+  if (text.includes('•')) {
+    const parts = text.split('•').map(s => s.trim()).filter(Boolean)
+    const lines = []
+    parts.forEach((part, i) => {
+      if (i === 0 && !text.trimStart().startsWith('•')) {
+        lines.push(part, '')      // lead-in sentence stays a paragraph
+      } else {
+        lines.push(`- ${part}`)
+      }
+    })
+    text = lines.join('\n')
+  }
+  // Turn a raw URL into a shortened markdown link, re-emitting any trailing
+  // sentence punctuation (. , ; :) that the URL match swallowed so it isn't lost.
+  const shortenUrl = (url) => {
+    const trail = (url.match(/[.,;:]+$/) || [''])[0]
+    const clean = trail ? url.slice(0, -trail.length) : url
+    const label = labelFromUrl(clean) || clean
+    return `[${label}](${clean})${trail}`
+  }
+  // Angle-bracket autolinks <https://...> -> shortened markdown links.
+  text = text.replace(/<(https?:\/\/[^>\s]+)>/g, (_m, url) => shortenUrl(url))
+  // Shorten remaining bare URLs (those not already inside a markdown link) to a label.
+  text = text.replace(/(^|[^([<\]])(https?:\/\/[^\s)]+)/g, (_m, pre, url) => `${pre}${shortenUrl(url)}`)
+  return text
+}
+
+// Display labels for a link cluster, disambiguating any that collide (two links
+// resolving to the same host+resource) with a trailing counter so no two buttons
+// in a cluster read identically.
+const uniqueLinkLabels = (links, fallbackNoun) => {
+  const base = links.map((link, idx) => {
+    const hasCustomName = link.name && link.name !== 'Link'
+    if (hasCustomName) return link.name
+    return labelFromUrl(link.url) ||
+      (idx === 0 ? `Access ${fallbackNoun}` : `Access ${fallbackNoun} ${idx + 1}`)
+  })
+  const counts = {}
+  base.forEach(l => { counts[l] = (counts[l] || 0) + 1 })
+  const used = {}
+  return base.map(l => {
+    if (counts[l] <= 1) return l
+    used[l] = (used[l] || 0) + 1
+    return `${l} (${used[l]})`
+  })
+}
 
 // Build shareable URL for a project using its stable slug
 const getShareUrl = (slug) => {
@@ -308,6 +370,9 @@ const DetailPanel = ({ project, onClose }) => {
 
   const hasAnyLinks = datasetLinks.length > 0 || usecaseLinks.length > 0
 
+  const datasetLinkLabels = uniqueLinkLabels(datasetLinks, 'dataset')
+  const usecaseLinkLabels = uniqueLinkLabels(usecaseLinks, 'model/system')
+
   const additionalResourceLinks = additionalResources.filter(r => r.url)
 
   // A contact cell may list several people (separated by ';', ',' or '&'); parse
@@ -434,7 +499,7 @@ const DetailPanel = ({ project, onClose }) => {
                   <section className="panel-freetext" id="data-characteristics">
                     <div className="panel-freetext-label">Data Characteristics</div>
                     <div className="documentation-content">
-                      <DocMarkdown>{markdownContent.data_characteristics}</DocMarkdown>
+                      <DocMarkdown>{formatFreeText(markdownContent.data_characteristics)}</DocMarkdown>
                     </div>
                   </section>
                 )}
@@ -444,7 +509,7 @@ const DetailPanel = ({ project, onClose }) => {
                   <section className="panel-freetext" id="model-characteristics">
                     <div className="panel-freetext-label">Model / Use Case Characteristics</div>
                     <div className="documentation-content">
-                      <DocMarkdown>{markdownContent.model_characteristics}</DocMarkdown>
+                      <DocMarkdown>{formatFreeText(markdownContent.model_characteristics)}</DocMarkdown>
                     </div>
                   </section>
                 )}
@@ -454,7 +519,7 @@ const DetailPanel = ({ project, onClose }) => {
                   <section className="panel-freetext" id="how-to-use">
                     <div className="panel-freetext-label">How to Use It</div>
                     <div className="documentation-content">
-                      <DocMarkdown>{markdownContent.how_to_use}</DocMarkdown>
+                      <DocMarkdown>{formatFreeText(markdownContent.how_to_use)}</DocMarkdown>
                     </div>
                   </section>
                 )}
@@ -519,10 +584,8 @@ const DetailPanel = ({ project, onClose }) => {
                         <div className="rail-cluster-label">Datasets</div>
                         <div className="rail-chips-col">
                           {datasetLinks.map((link, idx) => {
+                            const label = datasetLinkLabels[idx]
                             const external = link.url && (link.url.startsWith('http://') || link.url.startsWith('https://'))
-                            const hasCustomName = link.name && link.name !== 'Link'
-                            const genericLabel = idx === 0 ? 'Access Dataset' : `Access Dataset ${idx + 1}`
-                            const label = hasCustomName ? link.name : genericLabel
                             return (
                               <a
                                 key={`dataset-${idx}`}
@@ -541,17 +604,15 @@ const DetailPanel = ({ project, onClose }) => {
                     )}
                     {usecaseLinks.length > 0 && (
                       <div className="rail-cluster">
-                        <div className="rail-cluster-label">Models</div>
-                        <div className="rail-chips-wrap">
+                        <div className="rail-cluster-label">Models &amp; systems</div>
+                        <div className="rail-chips-col">
                           {usecaseLinks.map((link, idx) => {
+                            const label = usecaseLinkLabels[idx]
                             const external = link.url && (link.url.startsWith('http://') || link.url.startsWith('https://'))
-                            const hasCustomName = link.name && link.name !== 'Link'
-                            const genericLabel = idx === 0 ? 'Access Model/System' : `Access Model/System ${idx + 1}`
-                            const label = hasCustomName ? link.name : genericLabel
                             return (
                               <a
                                 key={`usecase-${idx}`}
-                                className="rail-chip-sm"
+                                className="rail-chip"
                                 href={resolvePublicHref(link.url)}
                                 target={external ? '_blank' : undefined}
                                 rel={external ? 'noopener noreferrer' : undefined}

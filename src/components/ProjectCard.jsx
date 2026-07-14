@@ -55,10 +55,7 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
   const fallbackColor = !image ? (primarySdg?.color || null) : null
 
   return (
-    <div
-      className={cardClasses}
-      onClick={() => onClick(project)}
-    >
+    <div className={cardClasses}>
       <div
         className={`card-image${image ? ' has-image' : ''}`}
         style={
@@ -139,8 +136,8 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
             )}
           </span>
         )}
-        <span className="card-cta">
-          View details <i className="fas fa-arrow-right" aria-hidden="true"></i>
+        <span className="card-cta" aria-hidden="true">
+          View details <i className="fas fa-arrow-right"></i>
         </span>
       </div>
     </div>
