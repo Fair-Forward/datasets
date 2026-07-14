@@ -123,14 +123,20 @@ export const labelFromUrl = (rawUrl = '') => {
   const known = KNOWN_HOSTS.find(([re]) => re.test(host))
   const hostLabel = known ? known[1] : host
   const segments = u.pathname.split('/').filter(Boolean)
+  // decodeURIComponent throws on malformed percent-escapes (e.g. "50%off"), which
+  // new URL() accepts, so decode defensively.
+  const safeDecode = (s) => { try { return decodeURIComponent(s) } catch { return s } }
   // Walk back from the end to the first segment that names something.
   let tail = ''
   for (let i = segments.length - 1; i >= 0; i--) {
-    const seg = decodeURIComponent(segments[i])
+    const seg = safeDecode(segments[i])
     if (!NOISE_SEGMENT.test(seg)) { tail = seg; break }
   }
   if (tail) {
-    tail = tail.replace(/\.(git|zip|csv|json|pdf|html?)$/i, '').trim()
+    tail = tail
+      .replace(/\.(git|zip|csv|json|pdf|html?)$/i, '')
+      .replace(/[[\]()]/g, '')  // strip chars that would break a markdown link label
+      .trim()
     if (tail.length > 34) tail = tail.slice(0, 33).trimEnd() + '…'
   }
   // The tail is the distinguishing resource name (repo / corpus id) and hosts often

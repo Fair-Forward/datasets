@@ -47,8 +47,11 @@ const DocMarkdown = ({ children }) => (
 const formatFreeText = (md) => {
   if (!md || typeof md !== 'string') return md
   let text = md.trim()
-  // Drop a stray pair of wrapping quotes some source cells carry.
-  if (text.length > 1 && text.startsWith('"') && text.endsWith('"')) {
+  // Drop a stray pair of wrapping quotes some source cells carry -- but only when
+  // the whole string is a single quoted span (exactly one pair), so text that
+  // merely contains several quoted phrases isn't corrupted.
+  if (text.length > 1 && text.startsWith('"') && text.endsWith('"') &&
+      (text.match(/"/g) || []).length === 2) {
     text = text.slice(1, -1).trim()
   }
   // Inline bullet separators -> real list items.
@@ -64,19 +67,39 @@ const formatFreeText = (md) => {
     })
     text = lines.join('\n')
   }
+  // Turn a raw URL into a shortened markdown link, re-emitting any trailing
+  // sentence punctuation (. , ; :) that the URL match swallowed so it isn't lost.
+  const shortenUrl = (url) => {
+    const trail = (url.match(/[.,;:]+$/) || [''])[0]
+    const clean = trail ? url.slice(0, -trail.length) : url
+    const label = labelFromUrl(clean) || clean
+    return `[${label}](${clean})${trail}`
+  }
   // Angle-bracket autolinks <https://...> -> shortened markdown links.
-  text = text.replace(/<(https?:\/\/[^>\s]+)>/g, (_m, url) => {
-    const clean = url.replace(/[.,;:]+$/, '')
-    const label = labelFromUrl(clean) || clean
-    return `[${label}](${clean})`
-  })
+  text = text.replace(/<(https?:\/\/[^>\s]+)>/g, (_m, url) => shortenUrl(url))
   // Shorten remaining bare URLs (those not already inside a markdown link) to a label.
-  text = text.replace(/(^|[^([<\]])(https?:\/\/[^\s)]+)/g, (_m, pre, url) => {
-    const clean = url.replace(/[.,;:]+$/, '')
-    const label = labelFromUrl(clean) || clean
-    return `${pre}[${label}](${clean})`
-  })
+  text = text.replace(/(^|[^([<\]])(https?:\/\/[^\s)]+)/g, (_m, pre, url) => `${pre}${shortenUrl(url)}`)
   return text
+}
+
+// Display labels for a link cluster, disambiguating any that collide (two links
+// resolving to the same host+resource) with a trailing counter so no two buttons
+// in a cluster read identically.
+const uniqueLinkLabels = (links, fallbackNoun) => {
+  const base = links.map((link, idx) => {
+    const hasCustomName = link.name && link.name !== 'Link'
+    if (hasCustomName) return link.name
+    return labelFromUrl(link.url) ||
+      (idx === 0 ? `Access ${fallbackNoun}` : `Access ${fallbackNoun} ${idx + 1}`)
+  })
+  const counts = {}
+  base.forEach(l => { counts[l] = (counts[l] || 0) + 1 })
+  const used = {}
+  return base.map(l => {
+    if (counts[l] <= 1) return l
+    used[l] = (used[l] || 0) + 1
+    return `${l} (${used[l]})`
+  })
 }
 
 // Build shareable URL for a project using its stable slug
@@ -347,6 +370,9 @@ const DetailPanel = ({ project, onClose }) => {
 
   const hasAnyLinks = datasetLinks.length > 0 || usecaseLinks.length > 0
 
+  const datasetLinkLabels = uniqueLinkLabels(datasetLinks, 'dataset')
+  const usecaseLinkLabels = uniqueLinkLabels(usecaseLinks, 'model/system')
+
   const additionalResourceLinks = additionalResources.filter(r => r.url)
 
   // A contact cell may list several people (separated by ';', ',' or '&'); parse
@@ -558,10 +584,8 @@ const DetailPanel = ({ project, onClose }) => {
                         <div className="rail-cluster-label">Datasets</div>
                         <div className="rail-chips-col">
                           {datasetLinks.map((link, idx) => {
+                            const label = datasetLinkLabels[idx]
                             const external = link.url && (link.url.startsWith('http://') || link.url.startsWith('https://'))
-                            const hasCustomName = link.name && link.name !== 'Link'
-                            const fallback = idx === 0 ? 'Access dataset' : `Access dataset ${idx + 1}`
-                            const label = hasCustomName ? link.name : (labelFromUrl(link.url) || fallback)
                             return (
                               <a
                                 key={`dataset-${idx}`}
@@ -583,10 +607,8 @@ const DetailPanel = ({ project, onClose }) => {
                         <div className="rail-cluster-label">Models &amp; systems</div>
                         <div className="rail-chips-col">
                           {usecaseLinks.map((link, idx) => {
+                            const label = usecaseLinkLabels[idx]
                             const external = link.url && (link.url.startsWith('http://') || link.url.startsWith('https://'))
-                            const hasCustomName = link.name && link.name !== 'Link'
-                            const fallback = idx === 0 ? 'Access model/system' : `Access model/system ${idx + 1}`
-                            const label = hasCustomName ? link.name : (labelFromUrl(link.url) || fallback)
                             return (
                               <a
                                 key={`usecase-${idx}`}
