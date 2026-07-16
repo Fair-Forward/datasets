@@ -140,6 +140,17 @@ def main():
     else:
         print("No new images downloaded; skipping catalog regeneration.")
 
+    # Step 3b: Generate the public API from the finished catalog.
+    # Must run after Step 3 (which can regenerate catalog.json with new image paths)
+    # and before Step 5, which copies public/api/ into docs/ as part of the Vite
+    # build. Fatal: a stale API is worse than a failed build, because partners
+    # mirror it into their own repositories.
+    if not run_command(
+        [PYTHON, 'scripts/generate_api.py'],
+        "Generating public API (JSON)"
+    ):
+        sys.exit(1)
+
     # Step 4: Clean stale project directories from docs/
     # Vite's emptyOutDir:false preserves old dirs; remove any not in public/projects/
     docs_projects = os.path.join('docs', 'projects')

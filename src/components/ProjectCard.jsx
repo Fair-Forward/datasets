@@ -43,9 +43,12 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
     ? (countries.length > 2 ? `${countries.slice(0, 2).join(', ')} +${countries.length - 2}` : countries.join(', '))
     : null
 
-  const licenseValue = license && license.trim() ? license : 'CC-BY 4.0'
-  const licenseUrl = firstUrl(licenseValue)
-  const licenseText = licenseLabel(licenseValue)
+  // No license recorded means unknown terms, not permissive ones -- asserting a
+  // default here would state a reuse grant on the partner's behalf that nobody
+  // verified. The card simply omits the chip; the detail panel says "Not specified".
+  const licenseValue = license && license.trim() ? license : null
+  const licenseUrl = licenseValue ? firstUrl(licenseValue) : null
+  const licenseText = licenseValue ? licenseLabel(licenseValue) : ''
 
   const typeLabel = data_types.length > 0
     ? (data_types.length > 1 ? `${data_types[0]} +${data_types.length - 1}` : data_types[0])

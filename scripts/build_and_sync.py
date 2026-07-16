@@ -502,6 +502,15 @@ if not args.skip_fetch:
             "Lacuna Dataset": [
                 "Lacuna Dataset (Yes/No)", "Lacuna Dataset", "Lacuna Fund Dataset", "Is Lacuna Dataset"
             ],
+            # Drives the maturity stepper and the public API's maturity filter. Was
+            # absent from this map, so when the sheet dropped the "[INTERNAL]" suffix
+            # the header passed through unmapped and the field silently emptied for
+            # every project. Both spellings are listed so either restores the canonical name.
+            "Maturity / Readiness for replication or scaling [INTERNAL]": [
+                "Maturity / Readiness for replication or scaling [INTERNAL]",
+                "Maturity / Readiness for replication or scaling",
+                "Maturity / Readiness", "Maturity", "Readiness for replication or scaling"
+            ],
             # --- End of new columns ---
         }
 
@@ -512,7 +521,9 @@ if not args.skip_fetch:
             "Description - What can be done with this? What is this about?", # Needed for create_project_dirs
             "Data - Key Characteristics", # Needed for create_project_dirs
             "Model/Use-Case - Key Characteristics", # Needed for create_project_dirs
-            "Deep Dive - How can you concretely work with this and build on this?" # Needed for create_project_dirs
+            "Deep Dive - How can you concretely work with this and build on this?", # Needed for create_project_dirs
+            "Country Team", # Every project carries one; losing it empties the map and country filter
+            "Maturity / Readiness for replication or scaling [INTERNAL]" # Drives the stepper and the API maturity filter
         ]
 
         # --- Start: New Fuzzy Matching Logic ---

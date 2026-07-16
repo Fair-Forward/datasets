@@ -94,6 +94,12 @@
             border-radius: var(--radius-sm);
         }
 
+        /* The API entry is an anchor, not a modal trigger, so it needs the underline
+           reset the button reset already gave the others. */
+        a.header-info-button {
+            text-decoration: none;
+        }
+
         .header-info-button:hover,
         .header-info-button:focus-visible {
             color: var(--primary);

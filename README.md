@@ -59,6 +59,72 @@ Place files in `public/projects/<project_id>/documents/`. These will appear as d
 
 ---
 
+## API
+
+The catalog is also published as JSON, so other catalogs and tools can list these projects alongside their own. The files are static, so there is no key to request and no rate limit.
+
+The same information is on the website at **[fair-forward.github.io/datasets/api/](https://fair-forward.github.io/datasets/api/)**, linked from the header. That page is generated from the data, so its counts are always current.
+
+```bash
+curl https://fair-forward.github.io/datasets/api/v1/index.json
+```
+
+| Endpoint | Contents |
+|---|---|
+| [`api/v1/index.json`](https://fair-forward.github.io/datasets/api/v1/index.json) | Counts, licenses, vocabularies, and the notes below |
+| [`api/v1/catalog.json`](https://fair-forward.github.io/datasets/api/v1/catalog.json) | Every published project |
+| [`api/v1/datasets.json`](https://fair-forward.github.io/datasets/api/v1/datasets.json) | Projects that publish a dataset |
+| [`api/v1/usecases.json`](https://fair-forward.github.io/datasets/api/v1/usecases.json) | Projects that publish a use case |
+
+Every endpoint returns the same envelope: `api_version`, `license`, `count`, `vocabularies`, `version`, and `projects`. Start with `index.json`; it describes the rest.
+
+### Licenses
+
+Two different things are licensed here, and it matters which one you mean.
+
+The catalog metadata is **CC0 1.0**. You can republish these records freely, with or without attribution. Every response says so under `license`.
+
+The linked assets are not ours. Each record's `license` field describes the dataset or model we point at. It is `null` for about half the projects. That means no license has been recorded, not that the asset is unlicensed and not that it is free to reuse.
+
+### Identifiers
+
+Store `id`, for example `ui_6`. It comes from the Project ID column in the sheet and survives title edits. `canonical_url` contains a title-derived slug that changes when the title does, and `aliases` lists identifiers a project used to be reachable by.
+
+### Filtering
+
+Records carry the same vocabularies the website filters on: `sdgs`, `data_types`, `countries` (with ISO codes), and `maturity.tags`. Maturity stages are cumulative, so a project that reached a use case also carries `pilot`:
+
+```python
+pilot_plus = [p for p in data["projects"]
+              if {"pilot", "usecase", "business"} & set(p["maturity"]["tags"])]
+```
+
+### Keeping in sync
+
+There are no per-record dates, because the sheet does not record any. Instead every response carries a `version` content hash: fetch again and compare it to see whether anything changed. HTTP `Last-Modified` and `ETag` date the file. The catalog is rebuilt when someone triggers it, not on a schedule.
+
+### Before you reuse the data
+
+- A project is listed only while it has a working link or an access note, so records can appear and disappear. A missing id is not a retraction.
+- Fields under `content` carry `provenance: "curated"` or `"auto-enriched"`. Auto-enriched text was drafted from the linked resources and is not a verified claim by the project team.
+- `contact` usually holds a personal email address. It is published so people can reach a project team about their work. Please do not use it for bulk collection or unrelated outreach.
+
+### Example
+
+```python
+import urllib.request, json
+
+url = "https://fair-forward.github.io/datasets/api/v1/usecases.json"
+data = json.load(urllib.request.urlopen(url))
+
+for p in data["projects"]:
+    license = p["license"]["name"] if p["license"] else "not recorded"
+    countries = ", ".join(c["name"] for c in p["countries"]) or "not listed"
+    print(f'{p["title"]}\n  {countries} | {license}\n  {p["canonical_url"]}')
+```
+
+---
+
 ## Local development
 
 ### Prerequisites
@@ -111,6 +177,9 @@ npm run dev
 | `scripts/build.py` | Rebuild from existing `docs/data_catalog.xlsx` (no fetch) |
 | `scripts/generate_catalog_data.py` | Excel -> `public/data/catalog.json` |
 | `scripts/generate_insights_data.py` | Excel -> `public/data/insights.json` |
+| `scripts/generate_api.py` | `catalog.json` -> `public/api/` (the public API and its guide page) |
+| `scripts/text_parsing.py` | Shared link/license/organization parsing (no CLI) |
+| `scripts/check_parity.py` | Verify `text_parsing.py` still matches its JavaScript twin |
 | `scripts/validate_data.py` | Run quality checks, generate report, optionally write notes to sheet |
 
 ---
