@@ -128,7 +128,11 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
       </div>
 
       <div className="card-footer">
-        {licenseText && (
+        {/* The footer is space-between, so the empty span keeps "View details" on the
+            right when no license is recorded. Without it the CTA slides to the left
+            edge and alternates position down the grid. Same placeholder trick as
+            .card-meta-top above. */}
+        {licenseText ? (
           <span className="card-license">
             {licenseUrl ? (
               <a href={licenseUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
@@ -138,6 +142,8 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
               licenseText
             )}
           </span>
+        ) : (
+          <span className="card-license" />
         )}
         <span className="card-cta" aria-hidden="true">
           View details <i className="fas fa-arrow-right"></i>

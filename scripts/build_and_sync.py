@@ -511,10 +511,25 @@ if not args.skip_fetch:
                 "Maturity / Readiness for replication or scaling",
                 "Maturity / Readiness", "Maturity", "Readiness for replication or scaling"
             ],
+            # generate_catalog_data.py reads this by exact name too, so a rename in the
+            # sheet would empty additional_resources for every project without an error.
+            # Every other column it reads is mapped above; this was the last gap.
+            "Link to additional Resources (Paper, Publications, etc)": [
+                "Link to additional Resources (Paper, Publications, etc)",
+                "Link to additional Resources", "Additional Resources",
+                "Papers, Publications", "Further Reading"
+            ],
             # --- End of new columns ---
         }
 
-        # Identify which canonical columns are absolutely required
+        # Critical = the fetch aborts before writing anything when one of these cannot be
+        # matched, so the live site keeps its last-good state. That fail-safe is why the
+        # bar can be strict: a column that sits on ~every record and whose silent emptying
+        # would corrupt the whole catalogue rather than degrade one field. The maturity
+        # wipe (a renamed header that no alias caught, publishing 89 blank steppers on a
+        # green build) is the exact failure this prevents. License (44/89, nullable by
+        # design -- an empty value is honest, not broken) and Point of Contact (auxiliary,
+        # and PII we would sooner drop than hard-require) deliberately stay optional.
         CRITICAL_COLUMNS = [
             # Project ID is now optional - can be generated from titles
             "Dataset Link", # Needed for downstream catalog generation
@@ -522,8 +537,11 @@ if not args.skip_fetch:
             "Data - Key Characteristics", # Needed for create_project_dirs
             "Model/Use-Case - Key Characteristics", # Needed for create_project_dirs
             "Deep Dive - How can you concretely work with this and build on this?", # Needed for create_project_dirs
-            "Country Team", # Every project carries one; losing it empties the map and country filter
-            "Maturity / Readiness for replication or scaling [INTERNAL]" # Drives the stepper and the API maturity filter
+            "Country Team", # 89/89; losing it empties the map and country filter
+            "Maturity / Readiness for replication or scaling [INTERNAL]", # 89/89; drives the stepper and the API maturity filter
+            "Domain/SDG", # 88/89; the primary filter and every card's SDG badge
+            "Data Type", # 88/89; the type filter and card tags
+            "Organizations Involved", # 89/89; the maker attribution the catalogue exists to give
         ]
 
         # --- Start: New Fuzzy Matching Logic ---

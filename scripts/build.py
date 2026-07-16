@@ -61,6 +61,16 @@ def main():
         check=False
     )
 
+    # Step 1b2: Confirm the Python link/license parsing still matches its JavaScript
+    # twin over every URL now in the catalog. Fatal: the two label the same links, so
+    # a divergence means the site and the published API describe the same asset
+    # differently. Skips itself when node is unavailable.
+    if not run_command(
+        [PYTHON, 'scripts/check_parity.py'],
+        "Checking Python/JavaScript parsing parity"
+    ):
+        sys.exit(1)
+
     # Step 1c: Diff catalog to detect suspicious changes
     # At this point public/data/catalog.json is new, docs/data/catalog.json is still old
     print(f"\n{'='*60}")

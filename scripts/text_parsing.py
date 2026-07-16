@@ -58,12 +58,66 @@ def clean_label(label=''):
     return result.strip()
 
 
+_BAD_ESCAPE_RE = re.compile(r'%(?![0-9a-fA-F]{2})')
+# new URL() rejects a host containing any of these; urlparse happily accepts them.
+_BAD_HOST_RE = re.compile(r'[\s%<>\\^`{|}]')
+
+
 def _safe_decode(segment):
-    """Percent-decode a path segment, leaving malformed escapes intact."""
-    try:
-        return unquote(segment)
-    except Exception:
+    """Percent-decode a path segment, leaving malformed escapes intact.
+
+    Mirrors labelFromUrl's safeDecode, which catches decodeURIComponent's throw and
+    returns the raw segment.
+    """
+    if _BAD_ESCAPE_RE.search(segment):
         return segment
+    return unquote(segment)
+
+
+def _strict_decode(segment):
+    """Percent-decode, raising on a malformed escape like decodeURIComponent does.
+
+    licenseLabel calls decodeURIComponent bare, so a malformed escape throws there
+    and unwinds to the hostname fallback. Swallowing it instead made Python publish
+    a different license name than the site rendered for the same cell.
+    """
+    if _BAD_ESCAPE_RE.search(segment):
+        raise ValueError('malformed percent-escape')
+    return unquote(segment)
+
+
+def _js_url(raw):
+    """Parse a URL, returning None for anything new URL() would reject.
+
+    urlparse is far more permissive than the WHATWG parser the frontend uses: it
+    accepts spaces and stray '%' in the host and out-of-range ports, where new URL()
+    throws. label_from_url has to agree with its JavaScript twin, so the stricter
+    parser's rejections are reproduced here.
+    """
+    try:
+        parsed = urlparse(raw.strip())
+    except ValueError:
+        return None
+    if parsed.scheme.lower() not in ('http', 'https'):
+        return None
+    try:
+        parsed.port  # raises when the port is non-numeric or out of range
+    except ValueError:
+        return None
+    if parsed.netloc == '' and parsed.path.startswith('/'):
+        # new URL('https:///path') slides the first path segment into the host.
+        rest = parsed.path.lstrip('/')
+        if not rest:
+            return None
+        host, _, tail = rest.partition('/')
+        parsed = parsed._replace(netloc=host, path='/' + tail)
+    try:
+        hostname = parsed.hostname
+    except ValueError:
+        return None
+    if not hostname or _BAD_HOST_RE.search(hostname):
+        return None
+    return parsed
 
 
 def label_from_url(raw_url=''):
@@ -77,21 +131,10 @@ def label_from_url(raw_url=''):
     """
     if not raw_url or not isinstance(raw_url, str):
         return None
-    try:
-        parsed = urlparse(raw_url.strip())
-    except ValueError:
+    parsed = _js_url(raw_url)
+    if parsed is None:
         return None
-    if parsed.scheme.lower() not in ('http', 'https'):
-        return None
-    try:
-        hostname = parsed.hostname
-    except ValueError:
-        # urlparse defers IPv6/port validation to attribute access.
-        return None
-    if not hostname:
-        return None
-
-    host = re.sub(r'^www\.', '', hostname)
+    host = re.sub(r'^www\.', '', parsed.hostname)
     host_label = host
     for pattern, name in KNOWN_HOSTS:
         if pattern.search(host):
@@ -152,19 +195,26 @@ def label_from_resource_url(url):
     return None
 
 
-# Short names produced by LICENSE_NORMALIZATION mapped to SPDX identifiers, so a
-# harvester can act on the license instead of string-matching our prose. Values
-# absent here (bespoke or unrecognised licenses) report spdx: null rather than a
+# SPDX identifiers we recognise, so a harvester can act on the license instead of
+# string-matching our prose. Anything not listed reports spdx: null rather than a
 # guess -- claiming the wrong license for a partner's asset is worse than silence.
-SPDX_BY_NAME = {
-    'CC-BY 4.0': 'CC-BY-4.0',
-    'CC0 1.0': 'CC0-1.0',
-    'CC-BY-SA 4.0': 'CC-BY-SA-4.0',
-    'Apache 2.0': 'Apache-2.0',
-    'MIT': 'MIT',
-    'AGPL 3.0': 'AGPL-3.0',
-    'ODbL 1.0': 'ODbL-1.0',
-}
+SPDX_IDS = frozenset({
+    'CC-BY-4.0', 'CC0-1.0', 'CC-BY-SA-4.0', 'Apache-2.0', 'MIT', 'AGPL-3.0', 'ODbL-1.0',
+})
+
+
+def spdx_for(name):
+    """Map a display name to an SPDX id, or None when we do not recognise it.
+
+    Separators are normalised because the same license reaches here spelled two
+    ways: LICENSE_NORMALIZATION emits "CC-BY 4.0" from the sheet's usual wording,
+    while license_label's bare-version shorthand emits "CC-BY-4.0". Matching only
+    one of them silently dropped the id for the other.
+    """
+    if not name or not isinstance(name, str):
+        return None
+    key = re.sub(r'\s+', '-', name.strip())
+    return key if key in SPDX_IDS else None
 
 
 def license_parts(raw):
@@ -181,7 +231,7 @@ def license_parts(raw):
         return None
     return {
         'name': name or None,
-        'spdx': SPDX_BY_NAME.get(name),
+        'spdx': spdx_for(name),
         'url': url,
     }
 
@@ -207,18 +257,22 @@ def license_label(license_text=''):
     if label:
         return label
 
+    # Mirrors licenseLabel's two try blocks. Both construct new URL(), so a URL that
+    # parser rejects throws twice over there and yields the literal 'License'.
+    parsed = _js_url(url)
+    if parsed is None:
+        return 'License'
     try:
-        parsed = urlparse(url)
         segments = [s for s in parsed.path.split('/') if s]
         if segments:
-            last = _safe_decode(segments[-1])
+            last = _strict_decode(segments[-1])
             if last:
                 return last
-        if parsed.hostname:
-            return re.sub(r'^www\.', '', parsed.hostname)
     except ValueError:
+        # A malformed escape throws in the first block; the second re-parses and
+        # returns the host.
         pass
-    return 'License'
+    return re.sub(r'^www\.', '', parsed.hostname)
 
 
 # Organization cells encode three roles as prose, e.g.

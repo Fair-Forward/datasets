@@ -402,7 +402,11 @@ def build_record(project):
         "canonical_url": SITE_BASE + "projects/" + project["slug"] + "/",
         "aliases": project.get("aliases") or [],
         "title": (project.get("title") or "").strip(),
-        "description": (project.get("description") or "").strip() or None,
+        # Same shape as the content fields, and for the same reason: descriptions come
+        # from the same sheet column family and can be auto-enriched too (ui_55 is),
+        # so the marker has to be lifted into a flag here as well rather than shipped
+        # inline as though the project team had written it.
+        "description": content_field(project.get("description")),
         "kind": kind,
         "countries": countries,
         "regions": regions,
@@ -447,24 +451,34 @@ def build_vocabularies(records, catalog):
     }
 
 
-def envelope(records, catalog, vocabularies, description):
-    """Wrap records in the shared envelope every endpoint returns."""
-    body = {
+def catalog_version(records, vocabularies):
+    """Content hash of the whole catalog, carried identically by every endpoint.
+
+    One version for the catalog rather than one per subset: a consumer polls any
+    endpoint (index.json is 5 KB, the records are hundreds) and a changed value
+    means "something in the catalog changed, re-fetch what you mirror". A
+    per-subset hash would answer a narrower question than anyone asks, and would
+    leave a consumer polling usecases.json blind to a fix in a record it mirrors
+    that had merely stopped qualifying.
+    """
+    payload = json.dumps({"projects": records, "vocabularies": vocabularies},
+                         sort_keys=True, ensure_ascii=False)
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()[:16]
+
+
+def envelope(records, vocabularies, description, version):
+    """Wrap records in the shared envelope every record endpoint returns."""
+    return {
         "api_version": API_VERSION,
         "description": description,
         "source": SITE_BASE,
         "documentation": SITE_BASE + "api/v1/index.json",
         "license": METADATA_LICENSE,
+        "version": version,
         "count": len(records),
         "vocabularies": vocabularies,
         "projects": records,
     }
-    # Hash the payload as it will be served, minus the version line itself, so the
-    # value changes when and only when the content does.
-    digest = hashlib.sha256(
-        json.dumps(body, sort_keys=True, ensure_ascii=False).encode("utf-8")
-    ).hexdigest()[:16]
-    return {**body, "version": digest}
 
 
 def write_docs_page(records, vocabularies, path):
@@ -532,6 +546,8 @@ def generate_api(catalog_path=CATALOG_PATH, output_dir=OUTPUT_DIR):
 
     os.makedirs(output_dir, exist_ok=True)
 
+    version = catalog_version(records, vocabularies)
+
     endpoints = {
         "catalog.json": (records, "Every published project."),
         "datasets.json": (datasets, "Projects that publish a dataset."),
@@ -540,11 +556,12 @@ def generate_api(catalog_path=CATALOG_PATH, output_dir=OUTPUT_DIR):
     for filename, (subset, description) in endpoints.items():
         write_json(
             os.path.join(output_dir, filename),
-            envelope(subset, catalog, vocabularies, description),
+            envelope(subset, vocabularies, description, version),
         )
 
     index = {
         "api_version": API_VERSION,
+        "version": version,
         "name": "Fair Forward Data Catalog API",
         "description": (
             "Open datasets, models and AI use cases for international development, "

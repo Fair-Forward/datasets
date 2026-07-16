@@ -1,5 +1,6 @@
 {
   "api_version": "1.0",
+  "version": "465e9286b50af245",
   "name": "Fair Forward Data Catalog API",
   "description": "Open datasets, models and AI use cases for international development, built by local partners.",
   "source": "https://fair-forward.github.io/datasets/",

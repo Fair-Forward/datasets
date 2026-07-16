@@ -3,6 +3,7 @@ import json
 import os
 import re
 import shutil
+import sys
 import argparse
 from collections import Counter
 from utils import (
@@ -91,9 +92,14 @@ def resolve_column(df, candidates, label):
     """Find the first candidate header present, or warn loudly and return None.
 
     A missing column reads as an empty cell on every row, which publishes a blank
-    field rather than failing -- the failure mode that lost maturity. Warn instead
-    of raising: the sheet is edited by people who cannot fix a red build, and the
-    update workflow surfaces this through its [REVIEW NEEDED] pull request.
+    field rather than failing -- the failure mode that lost maturity. Warning rather
+    than raising here is deliberate, and it is the second of two layers: build_and_sync
+    aborts the *fetch* when a CRITICAL_COLUMNS header cannot be matched, before any file
+    is written, so the load-bearing columns already fail safe there with the live site
+    untouched. By the time this runs the Excel is on disk (and may be a stale copy on a
+    rebuild), so raising would block a build over data that is fine. The sheet is edited
+    by people who cannot fix a red build, and the update workflow surfaces this warning
+    through its [REVIEW NEEDED] pull request.
     """
     for name in candidates:
         if name in df.columns:
@@ -605,7 +611,12 @@ def generate_catalog_json():
 
 if __name__ == "__main__":
     result = generate_catalog_json()
-    if result:
-        # Return project count for use by other scripts
-        print(f"\nProject count: {result['stats']['total_projects']}")
+    if not result:
+        # generate_catalog_json() reports every failure by returning None. Without a
+        # non-zero exit the process looks successful, so build.py's check=True would
+        # carry on and rebuild the site and the public API from the *previous*
+        # catalog.json: a green build that silently republishes stale data.
+        sys.exit(1)
+    # Return project count for use by other scripts
+    print(f"\nProject count: {result['stats']['total_projects']}")
 

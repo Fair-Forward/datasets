@@ -29,6 +29,9 @@ CATALOG_PATH = os.path.join("public", "data", "catalog.json")
 PARSING_JS = os.path.abspath(os.path.join("src", "utils", "parsing.js"))
 
 # Shapes the catalog may not contain today but the rules must still agree on.
+# The malformed ones matter as much as the tidy ones: Python's urlparse accepts hosts
+# and ports that the frontend's new URL() rejects, and unquote swallows escapes that
+# decodeURIComponent throws on, so each of these caught a real divergence.
 EXTRA_URLS = [
     "https://huggingface.co/roymukund/X/tree/main",
     "https://github.com/org/repo.git",
@@ -39,13 +42,23 @@ EXTRA_URLS = [
     "https://www.doi.org/10.1234/abc",
     "https://example.com/path/(parens)",
     "https://example.com/download/raw/main",  # all-noise path
+    "https://example.com:99999/a",           # port out of range
+    "https://exa mple.com/a",                # space in host
+    "https://ex%mple.com/a",                 # malformed escape in host
+    "https:///path",                         # empty authority
+    "http://[not-a-host]/x",                 # unparseable host
+    "https://",
     "ftp://example.com/x",
     "not a url",
     "",
 ]
 EXTRA_LICENSES = ["4.0", "1.0", "", "CC-BY 4.0", "https://example.com/",
                   "https://creativecommons.org/licenses/by/4.0/",
-                  "Name (X)\nhttps://example.com/licenses/some-license"]
+                  "Name (X)\nhttps://example.com/licenses/some-license",
+                  "https://example.com/50%off",      # malformed escape in the segment
+                  "https://example.com/%E4%B8%AD",   # non-ascii segment
+                  "https://ex%mple.com/",            # malformed escape in the host
+                  "https:///path"]
 
 NODE_SCRIPT = """
 import {{ readFileSync }} from 'fs'
