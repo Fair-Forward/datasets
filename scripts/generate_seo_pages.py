@@ -23,18 +23,13 @@ import json
 import os
 from string import Template
 
-SITE_BASE = "https://fair-forward.github.io/datasets/"  # authoritative base, trailing slash
-SITE_NAME = "FAIR Forward"                                # keep in sync with src/utils/site.js
+from utils import SITE_BASE, SITE_NAME, CSP
+
 DEFAULT_OG_IMAGE = SITE_BASE + "img/fair_forward.png"
 CATALOG_PATH = os.path.join("public", "data", "catalog.json")
 DOCS_DIR = "docs"
 
-# Mirrors the CSP in index.html; generated pages inherit the same policy (they only
-# load the same-origin bundle, so script-src 'self' is sufficient).
-CSP = ("default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' "
-       "https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' https: data:; "
-       "connect-src 'self' https://cdn.jsdelivr.net; font-src 'self' https://cdnjs.cloudflare.com "
-       "https://fonts.gstatic.com; frame-src 'none';")
+
 
 MATURITY_LABELS = {
     "dataset": "Dataset", "model": "Model", "pilot": "Pilot",

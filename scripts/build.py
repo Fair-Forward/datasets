@@ -61,6 +61,16 @@ def main():
         check=False
     )
 
+    # Step 1b2: Confirm the Python link/license parsing still matches its JavaScript
+    # twin over every URL now in the catalog. Fatal: the two label the same links, so
+    # a divergence means the site and the published API describe the same asset
+    # differently. Skips itself when node is unavailable.
+    if not run_command(
+        [PYTHON, 'scripts/check_parity.py'],
+        "Checking Python/JavaScript parsing parity"
+    ):
+        sys.exit(1)
+
     # Step 1c: Diff catalog to detect suspicious changes
     # At this point public/data/catalog.json is new, docs/data/catalog.json is still old
     print(f"\n{'='*60}")
@@ -139,6 +149,17 @@ def main():
             sys.exit(1)
     else:
         print("No new images downloaded; skipping catalog regeneration.")
+
+    # Step 3b: Generate the public API from the finished catalog.
+    # Must run after Step 3 (which can regenerate catalog.json with new image paths)
+    # and before Step 5, which copies public/api/ into docs/ as part of the Vite
+    # build. Fatal: a stale API is worse than a failed build, because partners
+    # mirror it into their own repositories.
+    if not run_command(
+        [PYTHON, 'scripts/generate_api.py'],
+        "Generating public API (JSON)"
+    ):
+        sys.exit(1)
 
     # Step 4: Clean stale project directories from docs/
     # Vite's emptyOutDir:false preserves old dirs; remove any not in public/projects/

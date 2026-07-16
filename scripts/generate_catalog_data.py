@@ -3,7 +3,9 @@ import json
 import os
 import re
 import shutil
+import sys
 import argparse
+from collections import Counter
 from utils import (
     normalize_for_directory,
     resolve_project_id,
@@ -15,6 +17,7 @@ from utils import (
     documents_dir_has_files,
     is_auto_enriched,
 )
+from text_parsing import label_from_url, label_from_resource_url
 
 # Parse command line arguments
 parser = argparse.ArgumentParser(description='Generate catalog JSON from Excel file.')
@@ -73,6 +76,59 @@ def clean_str(value):
     if s == 'nan':
         return ''
     return s
+
+
+# Sheet headers drift: the "[INTERNAL]" suffix was dropped from the maturity column
+# in July 2026, which silently emptied maturity for every project because the lookup
+# below is by exact name. build_and_sync.py's fuzzy matcher now normalises it on fetch,
+# but build.py also runs against an Excel saved before a rename, so accept either.
+MATURITY_COLUMNS = [
+    'Maturity / Readiness for replication or scaling [INTERNAL]',
+    'Maturity / Readiness for replication or scaling',
+]
+
+
+def resolve_column(df, candidates, label):
+    """Find the first candidate header present, or warn loudly and return None.
+
+    A missing column reads as an empty cell on every row, which publishes a blank
+    field rather than failing -- the failure mode that lost maturity. Warning rather
+    than raising here is deliberate, and it is the second of two layers: build_and_sync
+    aborts the *fetch* when a CRITICAL_COLUMNS header cannot be matched, before any file
+    is written, so the load-bearing columns already fail safe there with the live site
+    untouched. By the time this runs the Excel is on disk (and may be a stale copy on a
+    rebuild), so raising would block a build over data that is fine. The sheet is edited
+    by people who cannot fix a red build, and the update workflow surfaces this warning
+    through its [REVIEW NEEDED] pull request.
+    """
+    for name in candidates:
+        if name in df.columns:
+            return name
+    print(f"WARNING: no column matched '{label}'. Tried: {candidates}. "
+          f"This field will be EMPTY for every project. Check the sheet header.")
+    return None
+
+
+def label_links(links, resource_style=False):
+    """Replace the extractor's 'Link' placeholder with a label derived from the URL.
+
+    The sheet almost never uses markdown link syntax, so extract_http_links names
+    nearly every link 'Link'. Deriving the label here means catalog.json and the
+    public API ship a real destination name instead of leaving each consumer to
+    work it out; the site used to do this in the browser.
+
+    resource_style picks the article-oriented labeller for papers and posts, whose
+    slug reads as a headline, rather than the repository-oriented one that keeps a
+    dataset identifier verbatim.
+    """
+    derive = label_from_resource_url if resource_style else label_from_url
+    labeled = []
+    for link in links:
+        name = link.get('name', '')
+        if not name or name == 'Link':
+            name = derive(link['url']) or 'Link'
+        labeled.append({'name': name, 'url': link['url']})
+    return labeled
 
 
 def clean_country_list(country_text):
@@ -284,6 +340,8 @@ def generate_catalog_json():
             if col in df.columns:
                 df[col] = df[col].fillna('')
         
+        maturity_column = resolve_column(df, MATURITY_COLUMNS, 'maturity')
+
         # Calculate statistics
         dataset_count = 0
         usecase_count = 0
@@ -295,13 +353,14 @@ def generate_catalog_json():
         all_sdgs = set()
         all_data_types = set()
         all_countries = set()
+        fragile_ids = []
         
         for index, row in df.iterrows():
             dataset_link_text = row.get('Dataset Link', '')
             usecase_link_text = row.get('Model/Use-Case Links', '')
 
-            dataset_urls = extract_http_links(dataset_link_text)
-            usecase_urls = extract_http_links(usecase_link_text)
+            dataset_urls = label_links(extract_http_links(dataset_link_text))
+            usecase_urls = label_links(extract_http_links(usecase_link_text))
 
             # Cell starting with text (not a URL/markdown link) is a disclaimer,
             # even if it embeds a contact URL — don't treat as a dataset link
@@ -320,6 +379,14 @@ def generate_catalog_json():
             if error_msg or not normalized_project_id:
                 print(f"Row {index}: Skipping - {error_msg}")
                 continue
+
+            # An id derived from a title is only stable until someone edits that
+            # title, which would silently break every external reference to the
+            # project. Report rather than fail: the sheet is edited by people who
+            # cannot fix a red build, and the update workflow already routes
+            # change_summary.md into a [REVIEW NEEDED] pull request.
+            if id_source and not id_source.startswith('Project ID'):
+                fragile_ids.append((normalized_project_id, id_source))
 
             access_note_kind = None
             access_note_markdown = None
@@ -343,15 +410,13 @@ def generate_catalog_json():
 
             project_ids.add(normalized_project_id)
             
-            # Count countries
+            # Count countries. Build the filter vocabulary from the same cleaned
+            # values the project carries, so every filter option matches at least
+            # one project and every project value is offered as a filter.
             country_text = row.get('Country Team', '')
-            if isinstance(country_text, str) and not pd.isna(country_text):
-                parts = re.split(r',|\s+and\s+|;', country_text)
-                for part in parts:
-                    country = part.strip()
-                    if country:
-                        valid_countries.add(country)
-                        all_countries.add(country)
+            project_countries = clean_country_list(country_text)
+            valid_countries.update(project_countries)
+            all_countries.update(project_countries)
             
             # Get display title
             onsite_name = row.get('OnSite Name', '')
@@ -401,44 +466,18 @@ def generate_catalog_json():
                        lacuna_dataset.strip().lower() in ['yes', 'y', 'true', '1']
             
             # Parse maturity tags
-            maturity_string = str(row.get('Maturity / Readiness for replication or scaling [INTERNAL]', ''))
+            maturity_string = clean_str(str(row.get(maturity_column, ''))) if maturity_column else ''
             maturity_tags = parse_maturity_tags(maturity_string)
             
             # Parse additional resources column
+            # Only entries with a valid URL are included (plain text notes are skipped).
             additional_resources_raw = row.get('Link to additional Resources (Paper, Publications, etc)', '')
             additional_resources = []
             if isinstance(additional_resources_raw, str) and not pd.isna(additional_resources_raw) and additional_resources_raw.strip():
-                resource_text = additional_resources_raw.strip()
-                # Extract any URLs from the text
-                resource_urls = extract_links_allow_site_paths(resource_text)
-                if resource_urls:
-                    for ru in resource_urls:
-                        label = ru['name']
-                        # If label is just "Link", derive a nicer one from the URL
-                        if label == 'Link' and ru['url']:
-                            try:
-                                from urllib.parse import urlparse
-                                parsed = urlparse(ru['url'])
-                                if parsed.scheme in ('http', 'https'):
-                                    domain = parsed.netloc.replace('www.', '')
-                                    path = parsed.path.strip('/').split('/')
-                                    slug = path[-1] if path and path[-1] else ''
-                                    slug = slug.replace('-', ' ').replace('_', ' ')
-                                    if slug and len(slug) > 3:
-                                        label = f"{slug.title()} ({domain})"
-                                    else:
-                                        label = domain or 'Link'
-                                elif ru['url'].startswith('/'):
-                                    path = ru['url'].strip('/').split('/')
-                                    slug = path[-1] if path and path[-1] else ''
-                                    slug = slug.replace('-', ' ').replace('_', ' ')
-                                    label = slug.title() if slug else 'Link'
-                                else:
-                                    label = 'Link'
-                            except Exception:
-                                label = 'Link'
-                        additional_resources.append({'name': label, 'url': ru['url']})
-                # Only include entries that have a valid URL (skip plain text notes for now)
+                additional_resources = label_links(
+                    extract_links_allow_site_paths(additional_resources_raw.strip()),
+                    resource_style=True,
+                )
 
             has_access_note = access_note_kind is not None
             hosted_documents = (
@@ -473,7 +512,7 @@ def generate_catalog_json():
                 'hosted_documents': hosted_documents,
                 'sdgs': sdgs,
                 'data_types': data_types,
-                'countries': clean_country_list(country_text),
+                'countries': project_countries,
                 'license': normalize_license(str(row.get('License', ''))),
                 'contact': clean_str(str(row.get('Point of Contact/Communities', ''))),
                 'organizations': clean_str(str(row.get('Organizations Involved', ''))),
@@ -495,6 +534,26 @@ def generate_catalog_json():
 
             projects.append(project)
         
+        # A duplicate id gives two projects the same public identity, breaking any
+        # external reference to either and silently under-reporting the project
+        # count. The sheet holds duplicate Project ID rows that survive today only
+        # because the link rule drops them, so this is one edit away from real.
+        duplicate_ids = sorted(
+            pid for pid, n in Counter(p['id'] for p in projects).items() if n > 1
+        )
+        if duplicate_ids:
+            raise ValueError(
+                f"Duplicate project id(s): {', '.join(duplicate_ids)}. "
+                f"Each published row needs its own Project ID in the sheet."
+            )
+
+        if fragile_ids:
+            print(f"\nWARNING: {len(fragile_ids)} project(s) have a title-derived ID "
+                  f"because the 'Project ID' column is empty. These IDs will change "
+                  f"if the title is edited, breaking saved links and API references:")
+            for pid, source in fragile_ids:
+                print(f"  - {pid} (from {source})")
+
         # Calculate final counts
         project_count = len(project_ids)
         country_count = len(valid_countries)
@@ -552,7 +611,12 @@ def generate_catalog_json():
 
 if __name__ == "__main__":
     result = generate_catalog_json()
-    if result:
-        # Return project count for use by other scripts
-        print(f"\nProject count: {result['stats']['total_projects']}")
+    if not result:
+        # generate_catalog_json() reports every failure by returning None. Without a
+        # non-zero exit the process looks successful, so build.py's check=True would
+        # carry on and rebuild the site and the public API from the *previous*
+        # catalog.json: a green build that silently republishes stale data.
+        sys.exit(1)
+    # Return project count for use by other scripts
+    print(f"\nProject count: {result['stats']['total_projects']}")
 

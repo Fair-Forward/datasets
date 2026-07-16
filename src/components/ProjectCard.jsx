@@ -43,9 +43,12 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
     ? (countries.length > 2 ? `${countries.slice(0, 2).join(', ')} +${countries.length - 2}` : countries.join(', '))
     : null
 
-  const licenseValue = license && license.trim() ? license : 'CC-BY 4.0'
-  const licenseUrl = firstUrl(licenseValue)
-  const licenseText = licenseLabel(licenseValue)
+  // No license recorded means unknown terms, not permissive ones -- asserting a
+  // default here would state a reuse grant on the partner's behalf that nobody
+  // verified. The card simply omits the chip; the detail panel says "Not specified".
+  const licenseValue = license && license.trim() ? license : null
+  const licenseUrl = licenseValue ? firstUrl(licenseValue) : null
+  const licenseText = licenseValue ? licenseLabel(licenseValue) : ''
 
   const typeLabel = data_types.length > 0
     ? (data_types.length > 1 ? `${data_types[0]} +${data_types.length - 1}` : data_types[0])
@@ -125,7 +128,11 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
       </div>
 
       <div className="card-footer">
-        {licenseText && (
+        {/* The footer is space-between, so the empty span keeps "View details" on the
+            right when no license is recorded. Without it the CTA slides to the left
+            edge and alternates position down the grid. Same placeholder trick as
+            .card-meta-top above. */}
+        {licenseText ? (
           <span className="card-license">
             {licenseUrl ? (
               <a href={licenseUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
@@ -135,6 +142,8 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
               licenseText
             )}
           </span>
+        ) : (
+          <span className="card-license" />
         )}
         <span className="card-cta" aria-hidden="true">
           View details <i className="fas fa-arrow-right"></i>

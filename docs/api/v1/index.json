@@ -1,0 +1,183 @@
+{
+  "api_version": "1.0",
+  "version": "465e9286b50af245",
+  "name": "Fair Forward Data Catalog API",
+  "description": "Open datasets, models and AI use cases for international development, built by local partners.",
+  "source": "https://fair-forward.github.io/datasets/",
+  "license": {
+    "spdx": "CC0-1.0",
+    "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "note": "Covers the catalogue metadata in this file: you may republish these records freely, with or without attribution. It does NOT cover the linked assets. Each record's `license` field describes the terms of the asset itself, which Fair Forward does not own; a null value means no license has been recorded, not that the asset is unlicensed or free to reuse."
+  },
+  "endpoints": [
+    {
+      "url": "https://fair-forward.github.io/datasets/api/v1/catalog.json",
+      "description": "Every published project.",
+      "count": 89
+    },
+    {
+      "url": "https://fair-forward.github.io/datasets/api/v1/datasets.json",
+      "description": "Projects that publish a dataset.",
+      "count": 72
+    },
+    {
+      "url": "https://fair-forward.github.io/datasets/api/v1/usecases.json",
+      "description": "Projects that publish a use case.",
+      "count": 38
+    }
+  ],
+  "counts": {
+    "projects": 89,
+    "datasets": 72,
+    "usecases": 38
+  },
+  "vocabularies": {
+    "sdgs": [
+      "SDG 2",
+      "SDG 4",
+      "SDG 5",
+      "SDG 7",
+      "SDG 8",
+      "SDG 9",
+      "SDG 10",
+      "SDG 11",
+      "SDG 12",
+      "SDG 13",
+      "SDG 14",
+      "SDG 15",
+      "SDG 16"
+    ],
+    "data_types": [
+      "Drone Imagery",
+      "Geospatial/Remote Sensing",
+      "Images",
+      "Meterological",
+      "Other",
+      "Tabular",
+      "Text",
+      "Voice"
+    ],
+    "countries": [
+      {
+        "name": "Angola",
+        "iso2": "AO"
+      },
+      {
+        "name": "Benin",
+        "iso2": "BJ"
+      },
+      {
+        "name": "Brazil",
+        "iso2": "BR"
+      },
+      {
+        "name": "Cameroon",
+        "iso2": "CM"
+      },
+      {
+        "name": "Colombia",
+        "iso2": "CO"
+      },
+      {
+        "name": "Cote d'Ivoire",
+        "iso2": "CI"
+      },
+      {
+        "name": "Democratic Republic of Congo",
+        "iso2": "CD"
+      },
+      {
+        "name": "Ecuador",
+        "iso2": "EC"
+      },
+      {
+        "name": "Ethiopia",
+        "iso2": "ET"
+      },
+      {
+        "name": "Ghana",
+        "iso2": "GH"
+      },
+      {
+        "name": "India",
+        "iso2": "IN"
+      },
+      {
+        "name": "Indonesia",
+        "iso2": "ID"
+      },
+      {
+        "name": "Kenya",
+        "iso2": "KE"
+      },
+      {
+        "name": "Madagascar",
+        "iso2": "MG"
+      },
+      {
+        "name": "Mozambique",
+        "iso2": "MZ"
+      },
+      {
+        "name": "Niger",
+        "iso2": "NE"
+      },
+      {
+        "name": "Nigeria",
+        "iso2": "NG"
+      },
+      {
+        "name": "Pakistan",
+        "iso2": "PK"
+      },
+      {
+        "name": "Rwanda",
+        "iso2": "RW"
+      },
+      {
+        "name": "Senegal",
+        "iso2": "SN"
+      },
+      {
+        "name": "South Africa",
+        "iso2": "ZA"
+      },
+      {
+        "name": "Tanzania",
+        "iso2": "TZ"
+      },
+      {
+        "name": "Togo",
+        "iso2": "TG"
+      },
+      {
+        "name": "Uganda",
+        "iso2": "UG"
+      },
+      {
+        "name": "Zambia",
+        "iso2": "ZM"
+      }
+    ],
+    "regions": [
+      "East Africa",
+      "Global",
+      "West Africa"
+    ],
+    "maturity_stages": [
+      "dataset",
+      "model",
+      "pilot",
+      "usecase",
+      "business"
+    ]
+  },
+  "identifiers": "`id` is stable: it is authored in the source sheet and survives title edits. Store it. `canonical_url` contains a title-derived slug that changes when the title does; `aliases` lists identifiers a project was previously reachable by.",
+  "freshness": "There are no per-record dates: the source carries none, so incremental sync is not possible. `version` is a content hash -- re-fetch and compare it to detect any change. HTTP Last-Modified and ETag date the file. The catalogue is rebuilt manually, not on a schedule.",
+  "caveats": [
+    "Membership is derived from link presence, not authored: a project is published only while it has a working link or an access note, so records can appear and disappear. Absence is not a retraction.",
+    "`license` is null for roughly half of projects, meaning no license was recorded. Do not infer permission from a null.",
+    "`content` fields marked provenance: \"auto-enriched\" were machine-drafted from the linked resources, not written or verified by the project team.",
+    "`contact` is free text and usually contains a personal email address. It is published so users can reach the project team about their work; please do not use it for bulk collection or unrelated outreach."
+  ]
+}

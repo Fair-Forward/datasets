@@ -4,6 +4,22 @@ import pandas as pd
 
 PROJECTS_DIR = os.path.join("public", "projects")
 
+# Public site identity (single source of truth for every generator that emits
+# absolute URLs: SEO pages, sitemap, and the public API).
+SITE_BASE = "https://fair-forward.github.io/datasets/"  # authoritative base, trailing slash
+SITE_NAME = "FAIR Forward"                              # keep in sync with src/utils/site.js
+
+# Content-Security-Policy for every generated page. Mirrors the meta tag in
+# index.html, which cannot import this and must be edited alongside it.
+CSP = ("default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' "
+       "https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' https: data:; "
+       "connect-src 'self' https://cdn.jsdelivr.net; font-src 'self' https://cdnjs.cloudflare.com "
+       "https://fonts.gstatic.com; frame-src 'none';")
+
+# The site's type face, loaded from Google Fonts (permitted by the CSP above).
+FONT_HREF = ("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:"
+             "wght@400;500;600;700;800&display=swap")
+
 # Google Sheet configuration (single source of truth)
 GOOGLE_SHEET_ID = "18sgZgPGZuZjeBTHrmbr1Ra7mx8vSToUqnx8vCjhIp0c"
 GOOGLE_SHEET_GID = 756053104

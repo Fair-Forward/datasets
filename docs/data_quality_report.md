@@ -1,5 +1,5 @@
 # Data Quality Report
-Generated: 2026-06-29 08:45
+Generated: 2026-07-16 09:20
 
 ## Summary
 - **89** projects evaluated
@@ -8,7 +8,7 @@ Generated: 2026-06-29 08:45
 - **2** license values need review
 - **0** organization fields contain email addresses
 - **3** unrecognized country names
-- **23** flagged URLs (see details below)
+- **22** flagged URLs (see details below)
 
 ## Projects Needing Attention (score < 50)
 
@@ -43,26 +43,25 @@ All flagged links are still shown on the website. No links are removed automatic
 | URL | Status | Used By |
 |---|---|---|
 | https://data.cmr.forest-atlas.org/ | ConnectionError | Forest carbon sequestration in the Congo |
-| https://www.gbif.org/ | 403 | African Trees for Climate Resilience: A  |
 | https://data.cod.forest-atlas.org/ | ConnectionError | Forest carbon sequestration in the Congo |
-| https://igf2025.sched.com/event/24FLE/ws-#323-new-data-governance-models-for-african-nlp-ecosystems | 403 | Our language, our data: Co-creating equi |
-| https://www.audiopedia.foundation/bharat | 403 | Empowering Women across India with audio |
+| https://dl.acm.org/doi/10.1145/3394486.3403363 | 403 | Open source AI Pest Control for smallhol |
 | https://audiopedia.app.box.com/s/4wtqy4idpnilf3b3abisuuu2vdi0oi1q | 404 | Empowering Women across India with audio |
+| https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana | 404 | Supporting food security and climate cha |
+| https://faktaiklim.prosa.ai/ | ConnectionError | Combatting Climate Disinformation in Ind |
+| https://www.gbif.org/ | 403 | African Trees for Climate Resilience: A  |
 | https://www.kaggle.com/datasets/responsibleailab/agrivoltaic-dataset-ghana | 404 | Explore the Agrivoltaic Dataset: Dive in |
 | https://www.kaggle.com/datasets/mapbiomasecuador/lulc-training-data-for-ecuador-ml/data | 404 | Monitoring the impact of palm oil monocu |
-| https://huggingface.co/immverse-ai/voice-tech-for-all-challenge-v2 | 401 | Voice Tech for All: Building Inclusive S |
-| https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana | 404 | Supporting food security and climate cha |
-| https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana/code | 404 | Supporting food security and climate cha |
 | https://www.kaggle.com/datasets/responsibleailab/accent-classification-dataset-ghana | 404 | Discover Ghanaian Voices: A Dataset for  |
-| https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5087469 | 403 | Landslide and flood disaster hotspot mon |
+| https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana/code | 404 | Supporting food security and climate cha |
 | https://github.com/Marconi-Lab/Irradiation_Portal | 404 | Estimating Solar Irradiance for Improved |
-| https://dl.acm.org/doi/10.1145/3394486.3403363 | 403 | Open source AI Pest Control for smallhol |
-| https://moodle.com/news/moodlemoot-global-day-3/ | 403 | Better language translation for more tra |
+| https://dataexplorer.ts.adex.org.in/dataset/583e8f01-160e-4f51-bde5-31dc7f2a5887 | 404 | Predicting Crop Health using open-source |
+| https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5087469 | 403 | Landslide and flood disaster hotspot mon |
+| https://www.maseno.ac.ke/common-voice-piloting-alternative-language-data-licenses-workshop-kenya-maseno-university | SSLError | Our language, our data: Co-creating equi |
+| https://huggingface.co/immverse-ai/voice-tech-for-all-challenge-v2 | 401 | Voice Tech for All: Building Inclusive S |
 | https://huggingface.co/spaces/GIZ/audit_assistant/tree/main | 401 | AI as a helping hand to understand audit |
 | https://aiopeneducation.pubpub.org/pub/7npwm2su/release/5?readingCollection=06969c6d | 403 | Better language translation for more tra |
 | https://digitalgreen.org/wp-content/uploads/2024/10/GIZ-FF_DG_Learning-Report.pdf | 403 | Data-driven decision-making for farmers  |
-| https://dataexplorer.ts.adex.org.in/dataset/583e8f01-160e-4f51-bde5-31dc7f2a5887 | 404 | Predicting Crop Health using open-source |
-| https://www.maseno.ac.ke/common-voice-piloting-alternative-language-data-licenses-workshop-kenya-maseno-university | SSLError | Our language, our data: Co-creating equi |
+| https://openstat-madagascar.com/bdd/energie-et-environnement/131-donnees-sur-l-energie-solaire-et-labellisation-d-images-de-panneaux-photovoltaiques-a-madagascar | 404 | Helping to measure solar energy adoption |
 | https://www.wadhwaniai.org/programs/pest-management/pest-management-ai-solution/ | 404 | Open source AI Pest Control for smallhol |
 | https://agu.confex.com/agu/agu24/meetingapp.cgi/Paper/1728502 | 502 | Miti360: A Comprehensive Dataset for AI- |
 

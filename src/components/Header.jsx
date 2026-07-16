@@ -141,6 +141,11 @@ const Header = () => {
           <button type="button" className="header-info-button" onClick={() => { triggerRef.current = document.activeElement; setInfoType('fair') }}>
             Fair sharing
           </button>
+          {/* A real navigation out of the app: the API guide is a static page generated
+              next to the JSON it documents, so it is an anchor rather than a modal. */}
+          <a href={withBasePath('api/')} className="header-info-button">
+            API
+          </a>
         </div>
         <nav className="top-nav-links" aria-label="Main navigation">
           <Link to="/" className={`nav-link ${!isInsights ? 'active' : ''}`} aria-current={!isInsights ? 'page' : undefined}>
