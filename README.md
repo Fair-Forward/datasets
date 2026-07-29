@@ -125,6 +125,12 @@ for p in data["projects"]:
 
 ---
 
+## Related catalogs
+
+Other funders and initiatives run repositories that overlap with this one. [ECOSYSTEM.md](ECOSYSTEM.md) lists them, along with whether each can be read by a machine, as the starting point for exchanging entries instead of duplicating them.
+
+---
+
 ## Local development
 
 ### Prerequisites
