@@ -12,6 +12,11 @@ Each page also loads the same app bundle; when the browser runs it, the SPA boot
 at /datasets/projects/<slug>/ (via the /projects/:slug route in src/App.jsx) and
 opens that project in place inside the full interactive catalogue.
 
+The same trick gives /insights a real file. Without one it falls through to
+docs/404.html, whose location.replace() to the site root costs the visit its referrer
+and its ?utm_* query before analytics can read them -- so a shared insights link would
+report as untracked direct traffic. Every URL worth sharing is now a served document.
+
 Output is deterministic (depends only on catalog.json), so re-running without data
 changes produces byte-identical files and no git churn.
 
@@ -23,7 +28,7 @@ import json
 import os
 from string import Template
 
-from utils import SITE_BASE, SITE_NAME, CSP
+from utils import SITE_BASE, SITE_NAME, CSP, ANALYTICS, FONT_HREF
 
 DEFAULT_OG_IMAGE = SITE_BASE + "img/fair_forward.png"
 CATALOG_PATH = os.path.join("public", "data", "catalog.json")
@@ -57,6 +62,7 @@ PAGE = Template("""<!DOCTYPE html>
     <meta name="twitter:description" content="$description">
     <meta name="twitter:image" content="$og_image">
     <meta http-equiv="Content-Security-Policy" content="$csp">
+    $analytics
     <link rel="canonical" href="$canonical">
     <title>$title_tag</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -80,6 +86,56 @@ PAGE = Template("""<!DOCTYPE html>
 $body
     </div>
     <script type="module" crossorigin src="../../assets/index.js"></script>
+</body>
+</html>
+""")
+
+# docs/insights/index.html sits one level below docs/, hence ../ rather than ../../.
+# The fallback body is deliberately thin: the charts are drawn from insights.json at
+# runtime and there is no static text to bake in, so it only has to describe the page
+# for crawlers and give a no-JS reader a way back to the catalogue.
+INSIGHTS_PAGE = Template("""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="$description">
+    <meta property="og:title" content="$og_title">
+    <meta property="og:description" content="$description">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="$canonical">
+    <meta property="og:image" content="$og_image">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="$og_title">
+    <meta name="twitter:description" content="$description">
+    <meta name="twitter:image" content="$og_image">
+    <meta http-equiv="Content-Security-Policy" content="$csp">
+    $analytics
+    <link rel="canonical" href="$canonical">
+    <title>$og_title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="$font_href" rel="stylesheet">
+    <link rel="stylesheet" crossorigin href="../assets/index.css">
+    <style>
+      .seo-fallback{max-width:820px;margin:0 auto;padding:2rem 1.25rem;font-family:'Hanken Grotesk',system-ui,-apple-system,sans-serif;color:#141a1f;line-height:1.6}
+      .seo-fallback a{color:#0c815a}
+      .seo-fallback h1{font-size:1.9rem;line-height:1.25;margin:1rem 0 .75rem}
+    </style>
+</head>
+<body>
+    <div id="root">
+      <main class="seo-fallback">
+        <a href="../">FAIR Forward - Open Data &amp; AI Use Cases</a>
+        <h1>Insights &amp; Visualisations</h1>
+        <p>Where the $count projects in the FAIR Forward catalogue are based, how they
+        progress from data to deployment, and which Sustainable Development Goals they
+        address.</p>
+        <p><a href="../">Browse the full FAIR Forward catalogue</a></p>
+      </main>
+    </div>
+    <script type="module" crossorigin src="../assets/index.js"></script>
 </body>
 </html>
 """)
@@ -203,16 +259,33 @@ def build_page(project):
         canonical=esc(canonical),
         og_image=esc(og_image),
         csp=esc(CSP),
+        analytics=ANALYTICS,
         body=build_body(project),
+    )
+
+
+def build_insights_page(project_count):
+    return INSIGHTS_PAGE.substitute(
+        description=meta_description(
+            "Where the {} projects in the FAIR Forward catalogue are based, how they "
+            "progress from data to deployment, and which Sustainable Development Goals "
+            "they address.".format(project_count)),
+        og_title=esc("Insights & Visualisations - " + SITE_NAME),
+        canonical=esc(SITE_BASE + "insights/"),
+        og_image=esc(DEFAULT_OG_IMAGE),
+        csp=esc(CSP),
+        analytics=ANALYTICS,
+        font_href=esc(FONT_HREF),
+        count=project_count,
     )
 
 
 def build_sitemap(slugs):
     # lastmod is intentionally omitted to keep output deterministic (no date churn).
-    # Only URLs that return HTTP 200 are listed: the homepage and the project pages that
-    # were actually written (the caller passes their slugs). The SPA-only /insights route
-    # is excluded.
-    urls = [SITE_BASE]
+    # Only URLs that return HTTP 200 are listed: the homepage, /insights/ (written just
+    # below) and the project pages that were actually written (the caller passes their
+    # slugs).
+    urls = [SITE_BASE, SITE_BASE + "insights/"]
     urls += [SITE_BASE + "projects/" + slug + "/" for slug in slugs]
     body = "\n".join("  <url><loc>{}</loc></url>".format(esc(u)) for u in urls)
     return ('<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -254,14 +327,21 @@ def main():
             print("  Failed to generate page for {}: {}".format(slug, exc))
             failed += 1
 
+    # A real file for /insights, so shared links to it keep their referrer and ?utm_*
+    # instead of being laundered through the 404 redirect shim.
+    insights_dir = os.path.join(DOCS_DIR, "insights")
+    os.makedirs(insights_dir, exist_ok=True)
+    with open(os.path.join(insights_dir, "index.html"), "w", encoding="utf-8") as f:
+        f.write(build_insights_page(len(projects)))
+
     # Sitemap lists only the pages actually written, so every <loc> returns HTTP 200.
     with open(os.path.join(DOCS_DIR, "sitemap.xml"), "w", encoding="utf-8") as f:
         f.write(build_sitemap(written_slugs))
     with open(os.path.join(DOCS_DIR, "robots.txt"), "w", encoding="utf-8") as f:
         f.write(build_robots())
 
-    print("Wrote {} project pages ({} failed), sitemap.xml ({} urls), robots.txt".format(
-        len(written_slugs), failed, len(written_slugs) + 1))
+    print("Wrote {} project pages ({} failed), insights page, sitemap.xml ({} urls), "
+          "robots.txt".format(len(written_slugs), failed, len(written_slugs) + 2))
     return 0
 
 

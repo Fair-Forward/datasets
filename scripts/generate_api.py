@@ -40,7 +40,7 @@ import os
 from string import Template
 
 from utils import (COUNTRY_ISO_MAP, SITE_BASE, AUTO_ENRICHED_PREFIX, CSP, FONT_HREF,
-                   is_auto_enriched)
+                   ANALYTICS, is_auto_enriched)
 from text_parsing import license_parts, org_section_parts, parse_organizations
 
 API_VERSION = "1.0"
@@ -74,6 +74,7 @@ DOCS_PAGE = Template("""<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="How to read the FAIR Forward catalog as JSON: endpoints, licenses, identifiers and filtering.">
 <meta http-equiv="Content-Security-Policy" content="$csp">
+$analytics
 <link rel="canonical" href="${base}api/">
 <title>API - FAIR Forward Data Catalog</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -285,7 +286,8 @@ pilot_plus = [p <span class="c-key">for</span> p <span class="c-key">in</span> d
   <footer>
     <p>Fair Forward, Artificial Intelligence for All. A project by GIZ. Catalog metadata is CC0 1.0.</p>
     <p>Questions, or a field you need that is not here?
-    <a href="https://github.com/Fair-Forward/datasets/issues/new">Open an issue on GitHub</a>.</p>
+    <a href="https://github.com/Fair-Forward/datasets/issues/new">Open an issue on GitHub</a>.
+    <a href="${base}privacy/">Privacy</a>.</p>
   </footer>
 
 </div></div>
@@ -511,6 +513,7 @@ def write_docs_page(records, vocabularies, path):
     page = DOCS_PAGE.substitute(
         base=SITE_BASE,
         csp=CSP,
+        analytics=ANALYTICS,
         font_href=FONT_HREF,
         total_projects=total,
         total_datasets=recorded(lambda r: "dataset" in r["kind"]),

@@ -193,7 +193,17 @@ def main():
         # regeneration would deploy a site with no project pages and a stale sitemap.
         # Fail the build rather than ship that broken state.
         sys.exit(1)
-    
+
+    # Step 7: Confirm every built page head carries the same CSP and analytics tag.
+    # Must run last, on the finished docs/. Fatal: a CSP that blocks the analytics
+    # script on some pages, or a missing tag, reports as "those pages get no traffic"
+    # and nothing else anywhere would flag it.
+    if not run_command(
+        [PYTHON, 'scripts/check_head_parity.py'],
+        "Checking page head parity (CSP + analytics)"
+    ):
+        sys.exit(1)
+
     print("\n" + "="*60)
     print("  ✅ BUILD COMPLETE!")
     print("="*60)

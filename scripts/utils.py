@@ -9,11 +9,35 @@ PROJECTS_DIR = os.path.join("public", "projects")
 SITE_BASE = "https://fair-forward.github.io/datasets/"  # authoritative base, trailing slash
 SITE_NAME = "FAIR Forward"                              # keep in sync with src/utils/site.js
 
+# Web analytics: Umami Cloud, EU region. Cookieless and stores no personal data, so the
+# site needs no consent banner; what it does collect is described at /privacy/.
+#
+# The Website ID is public by design (it ships in the page source), so it is committed
+# rather than injected at build time -- the team rebuilds through GitHub Actions and must
+# not need a secret for this. Paste the ID from the Umami dashboard here AND in the tag in
+# index.html, which cannot import this module. scripts/check_head_parity.py fails the build
+# if the two drift.
+# data-domains keeps `npm run dev` and `npm run preview` out of the numbers: the tracker
+# only reports when the page is served from this hostname. Worth knowing that a wrong value
+# here records nothing at all, silently -- so if the dashboard flatlines, check this first.
+UMAMI_WEBSITE_ID = "7a91a77f-68bb-428e-b40e-fea84d0bf1c9"
+UMAMI_DOMAIN = "fair-forward.github.io"
+ANALYTICS = ('<script defer src="https://cloud.umami.is/script.js" '
+             'data-website-id="{}" data-domains="{}"></script>'.format(
+                 UMAMI_WEBSITE_ID, UMAMI_DOMAIN))
+
 # Content-Security-Policy for every generated page. Mirrors the meta tag in
 # index.html, which cannot import this and must be edited alongside it.
-CSP = ("default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' "
+#
+# The two umami.is hosts are exactly what the tracker touches and no more: the script is
+# served from cloud.umami.is, and with no data-host-url set it POSTs to the gateway, which
+# routes by Website ID rather than by region. Both were confirmed against a live page load
+# rather than read off the docs. Widen this only against an observed request.
+CSP = ("default-src 'self'; script-src 'self' https://cloud.umami.is; "
+       "style-src 'self' 'unsafe-inline' "
        "https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' https: data:; "
-       "connect-src 'self' https://cdn.jsdelivr.net; font-src 'self' https://cdnjs.cloudflare.com "
+       "connect-src 'self' https://cdn.jsdelivr.net https://gateway.umami.is; "
+       "font-src 'self' https://cdnjs.cloudflare.com "
        "https://fonts.gstatic.com; frame-src 'none';")
 
 # The site's type face, loaded from Google Fonts (permitted by the CSP above).

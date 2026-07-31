@@ -131,6 +131,58 @@ Other funders and initiatives run repositories that overlap with this one. [ECOS
 
 ---
 
+## Traffic, and links you share
+
+GitHub Pages reports nothing about who visits, so the site carries [Umami](https://umami.is),
+an open-source analytics tool hosted in the EU. It sets no cookies, which is why there is no
+consent banner; [the privacy page](https://fair-forward.github.io/datasets/privacy/) says
+plainly what it does record.
+
+**The dashboard is public: [cloud.umami.is/share/My5RtFnm08TzktG6](https://cloud.umami.is/share/My5RtFnm08TzktG6)**
+
+No account, no login, nothing to ask anyone for. It carries the aggregate views (overview,
+period comparison, breakdowns by page, referrer and location, and UTM campaigns) and also
+the per-session rows, which list a visit's city, browser, OS, device and the pages it
+viewed. Anyone the link reaches can see all of that, so treat it as published.
+
+Local `npm run dev` and `npm run preview` traffic is excluded via `data-domains`, so the
+numbers are real visitors rather than our own testing.
+
+### Tag links before you post them
+
+LinkedIn's in-app browser often strips the referrer, and what survives arrives as an
+anonymous `lnkd.in` bucket. A post you cannot distinguish from every other post tells you
+nothing, so add campaign parameters to any link you publish:
+
+```
+https://fair-forward.github.io/datasets/?utm_source=linkedin&utm_medium=social&utm_campaign=kenya-datasets-launch
+```
+
+| Parameter | Use |
+|---|---|
+| `utm_source` | Where the link is posted: `linkedin`, `newsletter`, `bmz-blog`, `partner-site` |
+| `utm_medium` | How it travels: `social`, `email`, `blog` |
+| `utm_campaign` | One slug per post, reused nowhere else, e.g. `kenya-datasets-launch` |
+
+Keep one campaign slug per post even when the same post goes to several places. Then
+`utm_source` separates the channels and `utm_campaign` still totals the post.
+
+### Any of these URLs is safe to share
+
+The homepage, `/insights/`, `/api/` and every `/projects/<slug>/` page are real files, so
+they keep their referrer and their `utm_*` parameters. Deep links to anything else fall
+through `404.html`, which redirects to the homepage and loses both, and the visit lands as
+untracked direct traffic.
+
+### One-time setup
+
+Analytics is dormant until a real Umami Website ID replaces the placeholder in three
+places: `UMAMI_WEBSITE_ID` in `scripts/utils.py`, `index.html`, and
+`public/privacy/index.html`. `scripts/check_head_parity.py` reports which state the site
+is in on every build.
+
+---
+
 ## Local development
 
 ### Prerequisites
@@ -184,8 +236,10 @@ npm run dev
 | `scripts/generate_catalog_data.py` | Excel -> `public/data/catalog.json` |
 | `scripts/generate_insights_data.py` | Excel -> `public/data/insights.json` |
 | `scripts/generate_api.py` | `catalog.json` -> `public/api/` (the public API and its guide page) |
+| `scripts/generate_seo_pages.py` | Per-project pages, `/insights/`, `sitemap.xml`, `robots.txt` |
 | `scripts/text_parsing.py` | Shared link/license/organization parsing (no CLI) |
 | `scripts/check_parity.py` | Verify `text_parsing.py` still matches its JavaScript twin |
+| `scripts/check_head_parity.py` | Verify every page head carries the same CSP and analytics tag |
 | `scripts/validate_data.py` | Run quality checks, generate report, optionally write notes to sheet |
 
 ---

@@ -1,3 +1,5 @@
+import { withBasePath } from '../utils/basePath'
+
 const Footer = () => {
   return (
     <footer>
@@ -7,6 +9,9 @@ const Footer = () => {
           <a href="https://github.com/Fair-Forward/datasets" target="_blank" rel="noopener noreferrer">
             Contribute to the Source Code on GitHub <i className="fab fa-github"></i>
           </a>
+          {' · '}
+          {/* Static page under public/, not a router route -- plain href, not <Link>. */}
+          <a href={withBasePath('privacy/')}>Privacy</a>
         </p>
         <p className="footer-secondary">
           For technical questions/feedback{' '}
