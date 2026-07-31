@@ -7,7 +7,7 @@
 <!-- CSP and the analytics tag are mirrored from scripts/utils.py. Edit together;
      scripts/check_head_parity.py fails the build if they drift. -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cloud.umami.is; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' https: data:; connect-src 'self' https://cdn.jsdelivr.net https://gateway.umami.is; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; frame-src 'none';">
-<script defer src="https://cloud.umami.is/script.js" data-website-id="7a91a77f-68bb-428e-b40e-fea84d0bf1c9"></script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="7a91a77f-68bb-428e-b40e-fea84d0bf1c9" data-domains="fair-forward.github.io"></script>
 <link rel="canonical" href="https://fair-forward.github.io/datasets/privacy/">
 <title>Privacy - FAIR Forward Data Catalog</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -87,16 +87,30 @@
       <tbody>
         <tr><td>Page visited</td><td class="note">Which datasets and use cases people actually open</td></tr>
         <tr><td>Referring site</td><td class="note">Whether a link we shared brought anyone here</td></tr>
-        <tr><td>Country</td><td class="note">Whether the catalog reaches the regions it is built for</td></tr>
+        <tr><td>Country, region and city</td><td class="note">Whether the catalog reaches the regions it is built for</td></tr>
         <tr><td>Browser, operating system, device type</td><td class="note">Whether the site works on the devices people use</td></tr>
       </tbody>
     </table></div>
     <p>Umami states that it collects no personally identifiable information and anonymises
-    what it does collect. Your IP address is used to work out a country and is not part of
-    the statistics we can see. We cannot identify you, follow you across other websites, or
-    connect a visit to any other visit. See
-    <a href="https://umami.is/privacy" rel="noopener noreferrer">Umami's privacy policy</a>
-    for their side of it.</p>
+    what it does collect. Your IP address is used to work out a location and is not stored
+    in the statistics. We do not know your name, and we do not follow you across other
+    websites. See <a href="https://umami.is/privacy" rel="noopener noreferrer">Umami's
+    privacy policy</a> for their side of it.</p>
+    <p>Being precise about one thing: the pages you open in a single visit are grouped
+    together as a session. So a session shows as one row, listing its city, browser,
+    operating system, device and the pages it viewed, without a name attached to it.</p>
+  </section>
+
+  <section>
+    <h2>These statistics are public</h2>
+    <p>We publish them rather than keep them to ourselves. The
+    <a href="https://cloud.umami.is/share/My5RtFnm08TzktG6" rel="noopener noreferrer">live
+    dashboard</a> is open to anyone, with no account and no login, and it includes the
+    per-session rows described above.</p>
+    <p>We would rather you could see exactly what we see than take our word for what we
+    collect. If you think that is the wrong call,
+    <a href="https://github.com/Fair-Forward/datasets/issues/new" rel="noopener noreferrer">tell
+    us</a> and we will reconsider it.</p>
   </section>
 
   <section>

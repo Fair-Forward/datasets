@@ -17,9 +17,14 @@ SITE_NAME = "FAIR Forward"                              # keep in sync with src/
 # not need a secret for this. Paste the ID from the Umami dashboard here AND in the tag in
 # index.html, which cannot import this module. scripts/check_head_parity.py fails the build
 # if the two drift.
+# data-domains keeps `npm run dev` and `npm run preview` out of the numbers: the tracker
+# only reports when the page is served from this hostname. Worth knowing that a wrong value
+# here records nothing at all, silently -- so if the dashboard flatlines, check this first.
 UMAMI_WEBSITE_ID = "7a91a77f-68bb-428e-b40e-fea84d0bf1c9"
+UMAMI_DOMAIN = "fair-forward.github.io"
 ANALYTICS = ('<script defer src="https://cloud.umami.is/script.js" '
-             'data-website-id="{}"></script>'.format(UMAMI_WEBSITE_ID))
+             'data-website-id="{}" data-domains="{}"></script>'.format(
+                 UMAMI_WEBSITE_ID, UMAMI_DOMAIN))
 
 # Content-Security-Policy for every generated page. Mirrors the meta tag in
 # index.html, which cannot import this and must be edited alongside it.

@@ -134,9 +134,19 @@ Other funders and initiatives run repositories that overlap with this one. [ECOS
 ## Traffic, and links you share
 
 GitHub Pages reports nothing about who visits, so the site carries [Umami](https://umami.is),
-an open-source analytics tool hosted in the EU. It sets no cookies and records no personal
-data, which is why there is no consent banner; [the privacy page](https://fair-forward.github.io/datasets/privacy/)
-says plainly what it does record.
+an open-source analytics tool hosted in the EU. It sets no cookies, which is why there is no
+consent banner; [the privacy page](https://fair-forward.github.io/datasets/privacy/) says
+plainly what it does record.
+
+**The dashboard is public: [cloud.umami.is/share/My5RtFnm08TzktG6](https://cloud.umami.is/share/My5RtFnm08TzktG6)**
+
+No account, no login, nothing to ask anyone for. It carries the aggregate views (overview,
+period comparison, breakdowns by page, referrer and location, and UTM campaigns) and also
+the per-session rows, which list a visit's city, browser, OS, device and the pages it
+viewed. Anyone the link reaches can see all of that, so treat it as published.
+
+Local `npm run dev` and `npm run preview` traffic is excluded via `data-domains`, so the
+numbers are real visitors rather than our own testing.
 
 ### Tag links before you post them
 
