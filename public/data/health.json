@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-09-14",
+  "generated_at": "2026-09-21",
   "entries": {
     "ui_0": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -13,7 +13,7 @@
     },
     "ui_1": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -23,7 +23,7 @@
     },
     "ui_2": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "stable_archive",
       "activity_score": 60,
       "link_count": 2,
@@ -33,7 +33,7 @@
     },
     "ui_3": {
       "availability": "unavailable",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 2,
@@ -46,23 +46,23 @@
     },
     "ui_4": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
-      "activity_score": 24,
+      "activity_score": 23,
       "link_count": 1,
       "broken_links": [],
       "github": {
         "repo": "yangshao2/UrbanInfraDL",
         "pushed_at": "2025-06-30T15:46:41Z",
         "archived": false,
-        "days_since_commit": 440,
+        "days_since_commit": 447,
         "stars": 0
       },
       "hf": null
     },
     "ui_5": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -72,24 +72,24 @@
     },
     "ui_6": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "no_recent_updates",
-      "activity_score": 12,
+      "activity_score": 11,
       "link_count": 1,
       "broken_links": [],
       "github": null,
       "hf": {
         "id": "data354/Africa_Biomass_dataset",
         "kind": "datasets",
-        "downloads": 15,
+        "downloads": 13,
         "likes": 4,
         "last_modified": "2024-06-28T15:39:21.000Z",
-        "days_since_modified": 807
+        "days_since_modified": 814
       }
     },
     "ui_7": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -99,7 +99,7 @@
     },
     "ui_8": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -109,7 +109,7 @@
     },
     "ui_9": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -119,7 +119,7 @@
     },
     "ui_10": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -129,7 +129,7 @@
     },
     "ui_11": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 3,
@@ -139,7 +139,7 @@
     },
     "ui_12": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "recently_updated",
       "activity_score": 73,
       "link_count": 2,
@@ -148,15 +148,15 @@
       "hf": {
         "id": "KaraAgroAI/CADI-AI",
         "kind": "datasets",
-        "downloads": 50,
+        "downloads": 52,
         "likes": 3,
         "last_modified": "2026-07-30T15:25:52.000Z",
-        "days_since_modified": 46
+        "days_since_modified": 53
       }
     },
     "ui_13": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 2,
@@ -166,7 +166,7 @@
     },
     "ui_14": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "recently_updated",
       "activity_score": 67,
       "link_count": 1,
@@ -175,14 +175,14 @@
         "repo": "Ashesi-Org/Financial-Inclusion-Speech-Dataset",
         "pushed_at": "2026-07-19T14:01:20Z",
         "archived": false,
-        "days_since_commit": 57,
+        "days_since_commit": 64,
         "stars": 15
       },
       "hf": null
     },
     "ui_15": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -192,7 +192,7 @@
     },
     "ui_16": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "stable_archive",
       "activity_score": 60,
       "link_count": 1,
@@ -202,7 +202,7 @@
     },
     "ui_17": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -212,7 +212,7 @@
     },
     "ui_18": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "stable_archive",
       "activity_score": 60,
       "link_count": 4,
@@ -222,24 +222,24 @@
     },
     "ui_19": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "no_recent_updates",
-      "activity_score": 22,
+      "activity_score": 24,
       "link_count": 1,
       "broken_links": [],
       "github": null,
       "hf": {
         "id": "KaraAgroAI/Drone-based-Agricultural-Dataset-for-Crop-Yield-Estimation",
         "kind": "datasets",
-        "downloads": 169,
+        "downloads": 225,
         "likes": 16,
         "last_modified": "2023-08-11T17:44:53.000Z",
-        "days_since_modified": 1129
+        "days_since_modified": 1136
       }
     },
     "ui_20": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -249,23 +249,23 @@
     },
     "ui_21": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "recently_updated",
-      "activity_score": 32,
+      "activity_score": 31,
       "link_count": 2,
       "broken_links": [],
       "github": {
         "repo": "iLab-DSU/imarika-weather-pipeline",
         "pushed_at": "2025-10-08T08:44:58Z",
         "archived": false,
-        "days_since_commit": 341,
+        "days_since_commit": 348,
         "stars": 0
       },
       "hf": null
     },
     "ui_22": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 2,
@@ -277,7 +277,7 @@
     },
     "ui_23": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": 25,
       "link_count": 6,
@@ -286,14 +286,14 @@
         "repo": "undpindia/VAYU_OpenAir",
         "pushed_at": "2025-05-23T04:56:00Z",
         "archived": false,
-        "days_since_commit": 479,
+        "days_since_commit": 486,
         "stars": 2
       },
       "hf": null
     },
     "ui_24": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 3,
@@ -303,30 +303,30 @@
     },
     "ui_25": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "no_recent_updates",
-      "activity_score": 16,
+      "activity_score": 13,
       "link_count": 4,
       "broken_links": [],
       "github": {
         "repo": "WadhwaniAI/pest-management-opendata",
         "pushed_at": "2024-10-14T14:36:45Z",
         "archived": true,
-        "days_since_commit": 700,
+        "days_since_commit": 707,
         "stars": 8
       },
       "hf": {
         "id": "wadhwani-ai/pest-management-opendata",
         "kind": "datasets",
-        "downloads": 39,
+        "downloads": 21,
         "likes": 0,
         "last_modified": "2026-08-16T08:45:06.000Z",
-        "days_since_modified": 29
+        "days_since_modified": 36
       }
     },
     "ui_26": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 2,
@@ -336,7 +336,7 @@
     },
     "ui_27": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "no_recent_updates",
       "activity_score": 3,
       "link_count": 3,
@@ -345,14 +345,14 @@
         "repo": "karya-inc/dataset-hindi-mundari-translation",
         "pushed_at": "2023-04-06T00:52:55Z",
         "archived": false,
-        "days_since_commit": 1257,
+        "days_since_commit": 1264,
         "stars": 1
       },
       "hf": null
     },
     "ui_28": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "recently_updated",
       "activity_score": 72,
       "link_count": 3,
@@ -361,23 +361,23 @@
         "repo": "digitalgreenorg/DG_Open",
         "pushed_at": "2025-11-23T09:15:39Z",
         "archived": false,
-        "days_since_commit": 295,
-        "stars": 14
+        "days_since_commit": 302,
+        "stars": 15
       },
       "hf": {
         "id": "DigiGreen/farmerchat-queries-large",
         "kind": "datasets",
-        "downloads": 118,
-        "likes": 3,
+        "downloads": 123,
+        "likes": 4,
         "last_modified": "2026-06-04T15:02:31.000Z",
-        "days_since_modified": 102
+        "days_since_modified": 109
       }
     },
     "ui_29": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
-      "activity_score": 31,
+      "activity_score": 30,
       "link_count": 3,
       "broken_links": [
         "https://dataexplorer.ts.adex.org.in/dataset/583e8f01-160e-4f51-bde5-31dc7f2a5887"
@@ -386,14 +386,14 @@
         "repo": "pranavmyname/zindi_crop_health",
         "pushed_at": "2025-08-15T00:49:15Z",
         "archived": false,
-        "days_since_commit": 395,
+        "days_since_commit": 402,
         "stars": 1
       },
       "hf": null
     },
     "ui_31": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "recently_updated",
       "activity_score": 47,
       "link_count": 3,
@@ -402,7 +402,7 @@
         "repo": "vertify-earth/biomass-dl-model-training",
         "pushed_at": "2026-01-29T15:19:02Z",
         "archived": false,
-        "days_since_commit": 228,
+        "days_since_commit": 235,
         "stars": 3
       },
       "hf": {
@@ -411,45 +411,45 @@
         "downloads": 0,
         "likes": 2,
         "last_modified": "2025-05-17T20:49:12.000Z",
-        "days_since_modified": 484
+        "days_since_modified": 491
       }
     },
     "ui_32": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "recently_updated",
-      "activity_score": 47,
+      "activity_score": 46,
       "link_count": 1,
       "broken_links": [],
       "github": {
         "repo": "NaLamKI/geo-ai",
         "pushed_at": "2026-04-08T13:16:49Z",
         "archived": false,
-        "days_since_commit": 159,
+        "days_since_commit": 166,
         "stars": 0
       },
       "hf": null
     },
     "ui_33": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "recently_updated",
-      "activity_score": 58,
+      "activity_score": 57,
       "link_count": 7,
       "broken_links": [],
       "github": null,
       "hf": {
         "id": "somyalab/Spark_somya_TTS",
         "kind": "models",
-        "downloads": 52,
+        "downloads": 46,
         "likes": 1,
         "last_modified": "2026-01-24T20:18:32.000Z",
-        "days_since_modified": 232
+        "days_since_modified": 239
       }
     },
     "ui_34": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "stable_archive",
       "activity_score": 36,
       "link_count": 3,
@@ -458,14 +458,14 @@
         "repo": "vertify-earth/biomass-prediction-NorthEastIndia",
         "pushed_at": "2025-07-28T12:48:17Z",
         "archived": false,
-        "days_since_commit": 413,
+        "days_since_commit": 420,
         "stars": 0
       },
       "hf": null
     },
     "ui_35": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 2,
@@ -477,41 +477,41 @@
     },
     "ui_36": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "no_recent_updates",
-      "activity_score": 11,
+      "activity_score": 10,
       "link_count": 2,
       "broken_links": [],
       "github": null,
       "hf": {
         "id": "HCSA/HCSA_Indonesia_Forest_Plot_Data_2023",
         "kind": "datasets",
-        "downloads": 12,
+        "downloads": 10,
         "likes": 5,
         "last_modified": "2024-03-29T05:29:22.000Z",
-        "days_since_modified": 899
+        "days_since_modified": 906
       }
     },
     "ui_37": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "no_recent_updates",
-      "activity_score": 10,
+      "activity_score": 14,
       "link_count": 3,
       "broken_links": [],
       "github": null,
       "hf": {
         "id": "prosa-text/nusa-dialogue",
         "kind": "datasets",
-        "downloads": 8,
+        "downloads": 23,
         "likes": 1,
         "last_modified": "2024-04-27T03:42:00.000Z",
-        "days_since_modified": 870
+        "days_since_modified": 877
       }
     },
     "ui_38": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "recently_updated",
       "activity_score": 46,
       "link_count": 2,
@@ -520,14 +520,14 @@
         "repo": "insaninfonesia/WeatherData",
         "pushed_at": "2026-03-30T14:59:23Z",
         "archived": false,
-        "days_since_commit": 168,
+        "days_since_commit": 175,
         "stars": 0
       },
       "hf": null
     },
     "ui_39": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "stable_archive",
       "activity_score": 60,
       "link_count": 1,
@@ -537,7 +537,7 @@
     },
     "ui_40": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 2,
@@ -547,23 +547,23 @@
     },
     "ui_42": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "recently_updated",
-      "activity_score": 47,
+      "activity_score": 46,
       "link_count": 2,
       "broken_links": [],
       "github": {
         "repo": "think-ke/sheng-dataset",
         "pushed_at": "2026-04-09T07:56:44Z",
         "archived": false,
-        "days_since_commit": 158,
+        "days_since_commit": 165,
         "stars": 0
       },
       "hf": null
     },
     "ui_44": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "stable_archive",
       "activity_score": 60,
       "link_count": 1,
@@ -573,23 +573,23 @@
     },
     "ui_45": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "recently_updated",
-      "activity_score": 53,
+      "activity_score": 60,
       "link_count": 1,
       "broken_links": [],
       "github": {
         "repo": "DeKUT-DSAIL/miti360",
-        "pushed_at": "2026-06-17T12:53:53Z",
+        "pushed_at": "2026-09-20T21:22:22Z",
         "archived": false,
-        "days_since_commit": 89,
+        "days_since_commit": 0,
         "stars": 0
       },
       "hf": null
     },
     "ui_46": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -599,7 +599,7 @@
     },
     "ui_47": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -609,7 +609,7 @@
     },
     "ui_50": {
       "availability": "unavailable",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -621,7 +621,7 @@
     },
     "ui_51": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 3,
@@ -631,7 +631,7 @@
     },
     "ui_52": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -641,30 +641,30 @@
     },
     "ui_53": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "recently_updated",
-      "activity_score": 54,
+      "activity_score": 53,
       "link_count": 2,
       "broken_links": [],
       "github": {
         "repo": "hausanlp/NaijaSenti",
         "pushed_at": "2025-10-14T17:24:25Z",
         "archived": false,
-        "days_since_commit": 334,
+        "days_since_commit": 341,
         "stars": 41
       },
       "hf": {
         "id": "Davlan/naija-twitter-sentiment-afriberta-large",
         "kind": "models",
-        "downloads": 131,
+        "downloads": 140,
         "likes": 6,
         "last_modified": "2022-06-27T11:50:40.000Z",
-        "days_since_modified": 1540
+        "days_since_modified": 1547
       }
     },
     "ui_54": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -674,7 +674,7 @@
     },
     "ui_55": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -684,16 +684,16 @@
     },
     "ui_56": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "recently_updated",
-      "activity_score": 68,
+      "activity_score": 67,
       "link_count": 4,
       "broken_links": [],
       "github": {
         "repo": "Digital-Umuganda/Mbaza-chatbot",
         "pushed_at": "2021-07-31T14:31:30Z",
         "archived": false,
-        "days_since_commit": 1871,
+        "days_since_commit": 1878,
         "stars": 0
       },
       "hf": {
@@ -702,12 +702,12 @@
         "downloads": 31,
         "likes": 0,
         "last_modified": "2026-06-18T11:20:21.000Z",
-        "days_since_modified": 88
+        "days_since_modified": 95
       }
     },
     "ui_57": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -717,24 +717,24 @@
     },
     "ui_59": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "no_recent_updates",
-      "activity_score": 19,
+      "activity_score": 18,
       "link_count": 2,
       "broken_links": [],
       "github": null,
       "hf": {
         "id": "mbazaNLP/common-voice-kinyarwanda-english-dataset",
         "kind": "datasets",
-        "downloads": 81,
+        "downloads": 63,
         "likes": 0,
         "last_modified": "2022-12-21T12:40:09.000Z",
-        "days_since_modified": 1363
+        "days_since_modified": 1370
       }
     },
     "ui_60": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "stable_archive",
       "activity_score": 60,
       "link_count": 2,
@@ -744,24 +744,24 @@
     },
     "ui_61": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "no_recent_updates",
-      "activity_score": 27,
+      "activity_score": 24,
       "link_count": 6,
       "broken_links": [],
       "github": null,
       "hf": {
         "id": "DigitalUmuganda/kinyarwanda-english-machine-translation-dataset",
         "kind": "datasets",
-        "downloads": 487,
+        "downloads": 278,
         "likes": 4,
         "last_modified": "2022-11-04T16:12:51.000Z",
-        "days_since_modified": 1409
+        "days_since_modified": 1416
       }
     },
     "ui_63": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -771,7 +771,7 @@
     },
     "ui_64": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -781,7 +781,7 @@
     },
     "ui_65": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -791,7 +791,7 @@
     },
     "ui_66": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -801,7 +801,7 @@
     },
     "ui_67": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -811,7 +811,7 @@
     },
     "ui_68": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -821,7 +821,7 @@
     },
     "ui_69": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -831,7 +831,7 @@
     },
     "ui_70": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -841,7 +841,7 @@
     },
     "ui_71": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -851,7 +851,7 @@
     },
     "ui_72": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -861,7 +861,7 @@
     },
     "ui_73": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -871,7 +871,7 @@
     },
     "ui_74": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -881,7 +881,7 @@
     },
     "ui_75": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "no_recent_updates",
       "activity_score": 11,
       "link_count": 2,
@@ -890,31 +890,31 @@
         "repo": "radiantearth/spot-the-crop-challenge",
         "pushed_at": "2022-10-29T01:20:51Z",
         "archived": false,
-        "days_since_commit": 1416,
+        "days_since_commit": 1423,
         "stars": 11
       },
       "hf": null
     },
     "ui_78": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "no_recent_updates",
-      "activity_score": 21,
+      "activity_score": 20,
       "link_count": 2,
       "broken_links": [],
       "github": null,
       "hf": {
         "id": "rgautroncgiar/croppie_coffee_ug",
         "kind": "datasets",
-        "downloads": 105,
+        "downloads": 101,
         "likes": 1,
         "last_modified": "2024-09-26T12:31:34.000Z",
-        "days_since_modified": 718
+        "days_since_modified": 725
       }
     },
     "ui_79": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": 26,
       "link_count": 2,
@@ -923,16 +923,16 @@
         "repo": "SunbirdAI/lamwo-electrification-project",
         "pushed_at": "2025-05-21T09:09:15Z",
         "archived": false,
-        "days_since_commit": 481,
+        "days_since_commit": 488,
         "stars": 3
       },
       "hf": null
     },
     "ui_80": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "recently_updated",
-      "activity_score": 61,
+      "activity_score": 60,
       "link_count": 3,
       "broken_links": [
         "https://irradiation-portal-55883164704.europe-west1.run.app/",
@@ -942,14 +942,14 @@
         "repo": "Marconi-Lab/Solar_irradiation",
         "pushed_at": "2026-08-17T12:26:01Z",
         "archived": false,
-        "days_since_commit": 28,
+        "days_since_commit": 35,
         "stars": 1
       },
       "hf": null
     },
     "ui_81": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -959,7 +959,7 @@
     },
     "ui_82": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -969,7 +969,7 @@
     },
     "ui_83": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "stable_archive",
       "activity_score": 60,
       "link_count": 1,
@@ -979,7 +979,7 @@
     },
     "ui_85": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -989,47 +989,47 @@
     },
     "ui_86": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "recently_updated",
-      "activity_score": 48,
+      "activity_score": 46,
       "link_count": 2,
       "broken_links": [],
       "github": null,
       "hf": {
         "id": "chrismazii/kinycomet_dataset",
         "kind": "datasets",
-        "downloads": 22,
+        "downloads": 17,
         "likes": 0,
         "last_modified": "2025-11-06T21:31:19.000Z",
-        "days_since_modified": 311
+        "days_since_modified": 318
       }
     },
     "ui_87": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "recently_updated",
-      "activity_score": 82,
+      "activity_score": 83,
       "link_count": 6,
       "broken_links": [],
       "github": {
         "repo": "c4ir-rw/ac-ai-models",
         "pushed_at": "2026-03-11T08:27:10Z",
         "archived": false,
-        "days_since_commit": 187,
+        "days_since_commit": 194,
         "stars": 2
       },
       "hf": {
         "id": "C4IR-RW/kinya-ag-tts",
         "kind": "datasets",
-        "downloads": 201,
+        "downloads": 254,
         "likes": 1,
         "last_modified": "2026-09-03T09:00:26.000Z",
-        "days_since_modified": 11
+        "days_since_modified": 18
       }
     },
     "ui_89": {
       "availability": "available",
-      "checked_at": "2026-09-14",
+      "checked_at": "2026-09-21",
       "context": "no_recent_updates",
       "activity_score": 0,
       "link_count": 1,
@@ -1038,7 +1038,7 @@
         "repo": "digitalgreenorg/frame-templates",
         "pushed_at": "2024-08-23T10:02:18Z",
         "archived": false,
-        "days_since_commit": 752,
+        "days_since_commit": 759,
         "stars": 0
       },
       "hf": null
