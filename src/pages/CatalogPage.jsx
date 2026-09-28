@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react'
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import { useSearchParams, useParams, useNavigate } from 'react-router-dom'
 import CatalogHeader from '../components/CatalogHeader'
 import FilterBar from '../components/FilterBar'
@@ -10,6 +10,37 @@ import { withBasePath } from '../utils/basePath'
 import { rankScore } from '../utils/ranking'
 import { matchesStatus, entryStatusValues, STATUS_OPTIONS } from '../utils/health'
 
+const count = (n, one, many) => `${n.toLocaleString('en')} ${n === 1 ? one : many}`
+
+const prefersReducedMotion = () =>
+  typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+
+// Stands in for the page while catalog.json loads: the same shapes the page will
+// have, so nothing jumps when it arrives.
+const CatalogSkeleton = () => (
+  <div className="catalog-skeleton" aria-busy="true">
+    <p className="sr-only" role="status">Loading catalog...</p>
+    <div className="skeleton-hero" aria-hidden="true">
+      <span className="skeleton-line skeleton-h1" />
+      <span className="skeleton-line skeleton-h1 short" />
+      <span className="skeleton-line skeleton-lead" />
+      <span className="skeleton-line skeleton-search" />
+    </div>
+    <div className="container">
+      <div className="grid" aria-hidden="true">
+        {Array.from({ length: 6 }, (_, i) => (
+          <div className="skeleton-card" key={i}>
+            <span className="skeleton-cover" />
+            <span className="skeleton-line" />
+            <span className="skeleton-line skeleton-title" />
+            <span className="skeleton-line short" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+)
+
 const CatalogPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const routeParams = useParams()
@@ -18,6 +49,17 @@ const CatalogPage = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [selectedProject, setSelectedProject] = useState(null)
+  const resultsCountRef = useRef(null)
+
+  // The hero's Search button: filtering is already live, so submitting takes the
+  // reader to the results and hands focus to the count, which then announces them.
+  const handleBrowse = useCallback(() => {
+    document.getElementById('main-content')?.scrollIntoView({
+      behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+      block: 'start'
+    })
+    resultsCountRef.current?.focus({ preventScroll: true })
+  }, [])
 
   // Handle project selection and URL updates
   const handleProjectSelect = useCallback((project) => {
@@ -234,6 +276,8 @@ const CatalogPage = () => {
     return [...projects].sort((a, b) => rankScore(b) - rankScore(a))
   }, [catalogData, filters, availableStatuses])
 
+  const regionNames = useMemo(() => new Set(catalogData?.filters?.regions || []), [catalogData])
+
   // Calculate dynamic stats based on filtered results
   const dynamicStats = useMemo(() => {
     if (!catalogData?.stats) return null
@@ -253,9 +297,18 @@ const CatalogPage = () => {
       total_datasets: datasetCount,
       total_usecases: usecaseCount,
       total_access_note_projects: accessNoteCount,
-      total_countries: new Set(filteredProjects.flatMap(p => p.countries || [])).size
+      // Countries only: the pipeline lists the regional and global scopes in the same
+      // field ("East Africa", "Global") under filters.regions, and the header's total
+      // leaves them out too.
+      total_countries: new Set(
+        filteredProjects.flatMap(p => p.countries || []).filter(c => !regionNames.has(c))
+      ).size
     }
-  }, [filteredProjects, catalogData])
+  }, [filteredProjects, catalogData, regionNames])
+
+  const clearAllFilters = useCallback(() => {
+    handleFilterChange({ search: '', view: 'all', sdg: '', dataType: '', country: '', maturity: '', status: '' })
+  }, [handleFilterChange])
 
   // Handle escape key to close panel
   useEffect(() => {
@@ -273,12 +326,7 @@ const CatalogPage = () => {
       <div>
         <Header />
         <main>
-          <div className="container">
-            <div className="catalog-loading">
-              <div className="insights-loading-spinner"></div>
-              <p>Loading catalog...</p>
-            </div>
-          </div>
+          <CatalogSkeleton />
         </main>
       </div>
     )
@@ -312,9 +360,10 @@ const CatalogPage = () => {
   return (
     <div>
       <CatalogHeader
-        stats={dynamicStats}
+        totals={catalogData.stats}
         search={filters.search}
         onSearchChange={(value) => handleFilterChange({ ...filters, search: value })}
+        onBrowse={handleBrowse}
       />
 
       <main id="main-content">
@@ -329,12 +378,33 @@ const CatalogPage = () => {
       
       <div className="container">
         <h2 className="sr-only">Project catalog</h2>
-        <div className="results-bar" aria-live="polite">
-          <div className="results-count">
-            {filteredProjects.length} of {catalogData.stats.total_projects} results &middot; sorted by documentation depth
+        <div className="results-bar">
+          <div className="results-summary">
+            {/* The live count for the current filter (the hero states the whole
+                catalogue). Focus lands here from the hero's Search button. */}
+            <p className="results-count" ref={resultsCountRef} tabIndex={-1} aria-live="polite">
+              {filteredProjects.length === catalogData.stats.total_projects
+                ? count(filteredProjects.length, 'project', 'projects')
+                : `${filteredProjects.length.toLocaleString('en')} of ${count(catalogData.stats.total_projects, 'project', 'projects')}`}
+            </p>
+            {/* The breakdown only once a filter narrows the catalogue; unfiltered, it
+                would repeat the totals in the header. */}
+            {dynamicStats && filteredProjects.length > 0 && (
+              <p className="results-detail">
+                {filteredProjects.length < catalogData.stats.total_projects && (
+                  <>
+                    {count(dynamicStats.total_datasets, 'dataset', 'datasets')}
+                    {' · '}{count(dynamicStats.total_usecases, 'pilot or use case', 'pilots and use cases')}
+                    {' · '}{count(dynamicStats.total_countries, 'country', 'countries')}
+                    {' · '}
+                  </>
+                )}
+                sorted by documentation depth
+              </p>
+            )}
           </div>
           <div className="completeness-legend">
-            <span className="completeness-legend-dots">
+            <span className="completeness-legend-dots" aria-hidden="true">
               {[1,2,3,4,5].map(i => <span key={i} className={`completeness-dot${i <= 4 ? ' filled' : ''}`} />)}
             </span>
             <span>= documentation depth</span>
@@ -355,6 +425,9 @@ const CatalogPage = () => {
           <div className="empty-state visible">
             <h3>No matching items found</h3>
             <p>Try adjusting your filters or search term to find what you're looking for.</p>
+            <button type="button" className="link-quiet empty-state-action" onClick={clearAllFilters}>
+              Clear filters and search
+            </button>
           </div>
         )}
       </div>

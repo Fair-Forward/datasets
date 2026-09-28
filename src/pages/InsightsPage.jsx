@@ -4,7 +4,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import WorldMap from '../components/WorldMap'
 import SDGChart from '../components/SDGChart'
-import MaturityChart from '../components/MaturityChart'
+import MaturityChart, { MATURITY_STEPS } from '../components/MaturityChart'
 import SDGCountryHeatmap from '../components/SDGCountryHeatmap'
 import { withBasePath } from '../utils/basePath'
 
@@ -16,6 +16,7 @@ const InsightsPage = () => {
   const [error, setError] = useState(null)
   const [selectedCountry, setSelectedCountry] = useState(null)
   const [sdgView, setSdgView] = useState('chart') // 'chart' | 'heatmap'
+  const [maturityStep, setMaturityStep] = useState(MATURITY_STEPS[0].key)
 
   const loadData = () => {
     setLoading(true)
@@ -66,23 +67,6 @@ const InsightsPage = () => {
     navigate(`/?region=${encodeURIComponent(country)}&sdg=${encodeURIComponent(sdg)}`)
   }
 
-  // Calculate maturity distribution from catalog data
-  const getMaturityDistribution = () => {
-    if (!catalogData?.projects) return null
-    
-    const maturityCounts = {}
-    catalogData.projects.forEach(project => {
-      const maturity = project.maturity?.trim() || 'Not specified'
-      if (maturity && maturity !== '') {
-        maturityCounts[maturity] = (maturityCounts[maturity] || 0) + 1
-      }
-    })
-    
-    // Only return if we have actual data
-    const totalWithMaturity = Object.values(maturityCounts).reduce((a, b) => a + b, 0)
-    return totalWithMaturity > 0 ? maturityCounts : null
-  }
-
   if (loading) {
     return (
       <div className="insights-page">
@@ -128,7 +112,9 @@ const InsightsPage = () => {
   // Dataset count comes from the catalog stats (individual dataset links), the same
   // authoritative figure the catalog header shows -- not the project-row count.
   const totalDatasets = catalogData?.stats?.total_datasets
-  const maturityDistribution = getMaturityDistribution()
+  // Same for countries: the catalog header's figure, so the two pages never disagree.
+  const totalCountries = catalogData?.stats?.total_countries ?? total_countries
+  const sdgCount = Object.keys(sdg_distribution || {}).length
 
   return (
     <div className="insights-page">
@@ -148,35 +134,27 @@ const InsightsPage = () => {
           </p>
         </div>
 
-        {/* Summary Stats */}
-        <div className="insights-hero-stats" style={{ '--stat-count': totalDatasets != null ? 4 : 3 }}>
+        {/* Summary: the catalogue's figures, set the same way as on the catalogue page. */}
+        <ul className="figures-list insights-figures">
           {totalDatasets != null && (
-            <div className="hero-stat">
-              <div className="hero-stat-content">
-                <span className="hero-stat-value">{totalDatasets}</span>
-                <span className="hero-stat-label">Total Datasets</span>
-              </div>
-            </div>
+            <li className="figure">
+              <span className="figure-number">{Number(totalDatasets).toLocaleString('en')}</span>
+              <span className="figure-label">datasets</span>
+            </li>
           )}
-          <div className="hero-stat">
-            <div className="hero-stat-content">
-              <span className="hero-stat-value">{total_projects}</span>
-              <span className="hero-stat-label">Total Projects</span>
-            </div>
-          </div>
-          <div className="hero-stat">
-            <div className="hero-stat-content">
-              <span className="hero-stat-value">{total_countries}</span>
-              <span className="hero-stat-label">Countries</span>
-            </div>
-          </div>
-          <div className="hero-stat">
-            <div className="hero-stat-content">
-              <span className="hero-stat-value">{Object.keys(sdg_distribution || {}).length}</span>
-              <span className="hero-stat-label">SDGs Covered</span>
-            </div>
-          </div>
-        </div>
+          <li className="figure">
+            <span className="figure-number">{Number(total_projects).toLocaleString('en')}</span>
+            <span className="figure-label">projects</span>
+          </li>
+          <li className="figure">
+            <span className="figure-number">{Number(totalCountries).toLocaleString('en')}</span>
+            <span className="figure-label">countries</span>
+          </li>
+          <li className="figure">
+            <span className="figure-number">{sdgCount}</span>
+            <span className="figure-label">of 17 SDGs covered</span>
+          </li>
+        </ul>
 
         {/* World Map Section */}
         <div className="insight-card insight-card-map">
@@ -262,20 +240,30 @@ const InsightsPage = () => {
           </div>
         </div>
 
-        {/* Maturity / Pipeline Status Section */}
+        {/* Maturity: a snapshot of what the projects reached, not a funnel */}
         {catalogData?.projects && (
           <div className="insight-card insight-card-maturity">
             <div className="insight-card-header">
               <div>
                 <h2>Project Maturity</h2>
-                <p>How projects progress from data to deployment</p>
+                <p>What the projects we supported had reached by the end of our programme, and what stays open for others to build on.</p>
+              </div>
+              <div className="insight-tabs" role="group" aria-label="Maturity views">
+                {MATURITY_STEPS.map(s => (
+                  <button
+                    key={s.key}
+                    type="button"
+                    className={`insight-tab ${maturityStep === s.key ? 'active' : ''}`}
+                    aria-pressed={maturityStep === s.key}
+                    onClick={() => setMaturityStep(s.key)}
+                  >
+                    {s.label}
+                  </button>
+                ))}
               </div>
             </div>
-            
-            <MaturityChart 
-              maturityDistribution={maturityDistribution} 
-              catalogProjects={catalogData.projects}
-            />
+
+            <MaturityChart projects={catalogData.projects} step={maturityStep} />
           </div>
         )}
 

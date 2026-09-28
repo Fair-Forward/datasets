@@ -1,320 +1,138 @@
-import { useMemo, useState } from 'react'
-import { withBasePath } from '../utils/basePath'
+import { Fragment, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { MATURITY_STAGES, furthestStage, gridSlot, printOrder, reachedCount } from '../utils/maturity'
 
-// Define the maturity funnel stages in order of progression
-const FUNNEL_STAGES = [
-  { key: 'dataset', label: 'Datasets+', color: '#8a929b', patterns: ['dataset'] },
-  { key: 'model', label: 'Models+', color: '#74b394', patterns: ['model'] },
-  { key: 'pilot', label: 'Pilots+', color: '#38a074', patterns: ['pilot'] },
-  { key: 'usecase', label: 'Use Cases+', color: '#0d8a5f', patterns: ['use-case', 'use case', 'usecase'] },
-  { key: 'business', label: 'Business Model', color: '#c08a3e', patterns: ['business model', 'business-model', 'scaled'] }
+// Three views of the same dots. Their tabs sit in the section header, as the SDG
+// section's do.
+export const MATURITY_STEPS = [
+  { key: 'reached', label: 'What projects reached' },
+  { key: 'lacuna', label: 'Lacuna Fund projects' },
+  { key: 'reuse', label: 'Reuse by others' }
 ]
 
-// Parse maturity string and return which stages this project has reached
-const parseMaturityStages = (maturityString) => {
-  if (!maturityString || typeof maturityString !== 'string') return []
-  
-  const normalized = maturityString.toLowerCase().trim()
-  const reachedStages = []
-  
-  // Check each stage - if any pattern matches, this project has reached that stage
-  for (const stage of FUNNEL_STAGES) {
-    for (const pattern of stage.patterns) {
-      if (normalized.includes(pattern)) {
-        reachedStages.push(stage.key)
-        break // Found this stage, move to next
-      }
-    }
-  }
-  
-  return reachedStages
+// Dots per row on wide screens, tablets and phones; insights.css picks the layout.
+const PER_ROW = [8, 6, 5]
+
+const STAGE_PHRASES = {
+  dataset: 'have a dataset',
+  model: 'reached at least a model',
+  pilot: 'reached at least a pilot',
+  usecase: 'reached at least a use case',
+  business: 'reached a business model'
 }
 
-const MaturityChart = ({ maturityDistribution, catalogProjects }) => {
-  const [hoveredStage, setHoveredStage] = useState(null)
+const stageName = key => MATURITY_STAGES.find(stage => stage.key === key)?.name
 
-  // Process data - count projects that have reached EACH stage
-  const sankeyData = useMemo(() => {
-    // If we have raw catalog projects, use them for accurate counting
-    // Otherwise fall back to the distribution (less accurate)
-    let stageCounts = {}
-    let totalProjects = 0
-    
-    FUNNEL_STAGES.forEach(stage => {
-      stageCounts[stage.key] = 0
-    })
+// Every column holds every project, in the same place: inked where the project
+// reached the stage within our programme, open (pale) where the work is there for
+// others to take further. So no column loses projects; the ink shows what we
+// followed up, the rest stays open. A project lights up across all five columns.
+const MaturityChart = ({ projects, step = 'reached' }) => {
+  const chartRef = useRef(null)
+  const [tip, setTip] = useState(null)
+  const [pointed, setPointed] = useState(null)
 
-    if (catalogProjects && Array.isArray(catalogProjects)) {
-      // Count from raw project data - each project counts toward ALL stages it has reached
-      totalProjects = catalogProjects.length
-      
-      catalogProjects.forEach(project => {
-        const reachedStages = parseMaturityStages(project.maturity)
-        reachedStages.forEach(stageKey => {
-          stageCounts[stageKey] = (stageCounts[stageKey] || 0) + 1
-        })
-      })
-    } else if (maturityDistribution) {
-      // Fallback: parse the distribution keys and accumulate counts
-      // This is less accurate but works if we only have aggregated data
-      Object.entries(maturityDistribution).forEach(([maturityString, count]) => {
-        const reachedStages = parseMaturityStages(maturityString)
-        reachedStages.forEach(stageKey => {
-          stageCounts[stageKey] = (stageCounts[stageKey] || 0) + count
-        })
-        totalProjects += count
-      })
-    }
-
-    // Build stage data with counts
-    const stages = FUNNEL_STAGES.map(stage => ({
-      ...stage,
-      count: stageCounts[stage.key] || 0,
-      percentage: totalProjects > 0 ? (stageCounts[stage.key] / totalProjects) * 100 : 0
-    }))
-
-    const maxCount = Math.max(...stages.map(s => s.count), 1)
-
-    return { stages, totalProjects, maxCount }
-  }, [maturityDistribution, catalogProjects])
-
-  if (!sankeyData || sankeyData.totalProjects === 0) {
+  const order = printOrder(projects, { lacunaFirst: step === 'lacuna' })
+  if (order.length === 0) {
     return <div className="maturity-chart-empty">No maturity data available</div>
   }
 
-  const { stages, totalProjects, maxCount } = sankeyData
+  const lacuna = order.filter(project => project.is_lacuna).length
+  const rows = Object.fromEntries(PER_ROW.map(n => [`--rows-${n}`, Math.ceil(order.length / n)]))
+  const slots = order.map((_, i) => PER_ROW.reduce((vars, n) => {
+    const { row, col } = gridSlot(i, n)
+    return { ...vars, [`--r${n}`]: row, [`--c${n}`]: col }
+  }, { '--i': i }))
 
-  // SVG dimensions
-  const svgWidth = 800
-  const svgHeight = 420
-  const stageWidth = 120
-  const stageGap = (svgWidth - (stages.length * stageWidth)) / (stages.length + 1)
-  const maxFlowHeight = 280
-  const topPadding = 70
-
-  // Calculate positions and heights for each stage - height based on count
-  const stagePositions = stages.map((stage, index) => {
-    const x = stageGap + index * (stageWidth + stageGap)
-    const heightRatio = stage.count / maxCount
-    const height = Math.max(heightRatio * maxFlowHeight, 40)
-    const y = topPadding + (maxFlowHeight - height) / 2
-    
-    return { x, y, width: stageWidth, height, stage }
-  })
-
-  // Create Sankey flow paths between stages
-  const createFlowPath = (fromPos, toPos, fromStage, toStage) => {
-    // Flow width is based on the smaller of the two connected stages
-    const flowCount = Math.min(fromStage.count, toStage.count)
-    if (flowCount <= 0) return null
-    
-    const flowHeightRatio = flowCount / maxCount
-    const flowHeight = Math.max(flowHeightRatio * maxFlowHeight, 20)
-    
-    // Start from right side of 'from' box
-    const x1 = fromPos.x + fromPos.width
-    const y1Center = fromPos.y + fromPos.height / 2
-    const y1Start = y1Center - flowHeight / 2
-    const y1End = y1Center + flowHeight / 2
-    
-    // End at left side of 'to' box
-    const x2 = toPos.x
-    const y2Center = toPos.y + toPos.height / 2
-    const y2Start = y2Center - flowHeight / 2
-    const y2End = y2Center + flowHeight / 2
-    
-    // Control points for smooth curve
-    const cpOffset = (x2 - x1) * 0.5
-    
-    return `
-      M ${x1} ${y1Start}
-      C ${x1 + cpOffset} ${y1Start}, ${x2 - cpOffset} ${y2Start}, ${x2} ${y2Start}
-      L ${x2} ${y2End}
-      C ${x2 - cpOffset} ${y2End}, ${x1 + cpOffset} ${y1End}, ${x1} ${y1End}
-      Z
-    `
+  // The project's name, set just above the dot under the pointer.
+  const showTip = (event, project, column) => {
+    const chart = chartRef.current?.getBoundingClientRect()
+    if (!chart) return
+    const dot = event.currentTarget.getBoundingClientRect()
+    setTip({
+      project,
+      x: dot.left + dot.width / 2 - chart.left,
+      y: dot.top - chart.top,
+      align: column === 0 ? 'start' : column === MATURITY_STAGES.length - 1 ? 'end' : 'center'
+    })
   }
 
   return (
-    <div className="sankey-chart-wrapper">
-      {/* Header */}
-      <div className="sankey-header">
-        <div className="sankey-title">
-          <span className="sankey-title-text">Project Maturity Pipeline</span>
-          <span className="sankey-subtitle">How many projects have reached each stage</span>
-        </div>
+    <div className="maturity" data-step={step} style={rows}>
+      <p className="maturity-key" aria-live="polite">
+        {step === 'lacuna' ? (
+          <span className="maturity-key-item">
+            <span className="maturity-swatch is-reached" aria-hidden="true" />
+            Lacuna Fund projects: {lacuna}
+          </span>
+        ) : (
+          <>
+            <span className="maturity-key-item">
+              <span className="maturity-swatch is-reached" aria-hidden="true" />
+              Reached within our projects
+            </span>
+            <span className="maturity-key-item">
+              <span className="maturity-swatch is-open" aria-hidden="true" />
+              {step === 'reuse' ? 'Open for anyone to build on' : 'Open for others to build on'}
+            </span>
+          </>
+        )}
+      </p>
+
+      <div className="maturity-chart" ref={chartRef}>
+        {MATURITY_STAGES.map((stage, column) => {
+          const count = reachedCount(order, stage.key)
+          return (
+            <Fragment key={stage.key}>
+              <div
+                className={`maturity-column${column > 0 ? ' is-open-ended' : ''}${pointed === stage.key ? ' is-pointed' : ''}`}
+                style={{ gridColumn: column + 1 }}
+              >
+                {order.map((project, i) => {
+                  const reached = project.maturity_tags.includes(stage.key)
+                  return (
+                    <Link
+                      key={project.id}
+                      to={`/?project=${project.slug || project.id}`}
+                      className={`maturity-dot ${reached ? 'is-reached' : 'is-open'}` +
+                        (project.is_lacuna ? ' is-lacuna' : '') +
+                        (tip?.project.id === project.id ? ' is-hovered' : '')}
+                      style={slots[i]}
+                      tabIndex={-1}
+                      aria-hidden="true"
+                      onMouseEnter={(e) => showTip(e, project, column)}
+                      onMouseLeave={() => setTip(null)}
+                    />
+                  )
+                })}
+              </div>
+              <Link
+                to={`/?maturity=${stage.key}`}
+                className="maturity-label"
+                style={{ gridColumn: column + 1 }}
+                aria-label={`${stage.label}: ${count} of ${order.length} projects ${STAGE_PHRASES[stage.key]}. Show them in the catalogue`}
+                onMouseEnter={() => setPointed(stage.key)}
+                onMouseLeave={() => setPointed(null)}
+                onFocus={() => setPointed(stage.key)}
+                onBlur={() => setPointed(null)}
+              >
+                <span className="maturity-count">{count}</span>
+                <span className="maturity-stage">{stage.label}</span>
+              </Link>
+            </Fragment>
+          )
+        })}
+
+        {tip && (
+          <div className={`maturity-tip is-${tip.align}`} style={{ left: tip.x, top: tip.y }} aria-hidden="true">
+            <span className="maturity-tip-title">{tip.project.title}</span>
+            <span className="maturity-tip-meta">
+              Reached: {stageName(furthestStage(tip.project))}
+              {tip.project.is_lacuna ? ' · Lacuna Fund project' : ''}
+            </span>
+          </div>
+        )}
       </div>
-
-      {/* Sankey Diagram */}
-      <div className="sankey-container">
-        <svg 
-          viewBox={`0 0 ${svgWidth} ${svgHeight}`} 
-          className="sankey-svg"
-          preserveAspectRatio="xMidYMid meet"
-        >
-          {/* Gradient definitions for flows */}
-          <defs>
-            {stagePositions.slice(0, -1).map((fromPos, index) => {
-              const toPos = stagePositions[index + 1]
-              return (
-                <linearGradient key={`gradient-${index}`} id={`gradient-${index}`} x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor={fromPos.stage.color} />
-                  <stop offset="100%" stopColor={toPos.stage.color} />
-                </linearGradient>
-              )
-            })}
-          </defs>
-
-          {/* Flow paths between stages */}
-          {stagePositions.slice(0, -1).map((fromPos, index) => {
-            const toPos = stagePositions[index + 1]
-            const path = createFlowPath(fromPos, toPos, fromPos.stage, toPos.stage)
-            
-            if (!path) return null
-            
-            const isHighlighted = hoveredStage === fromPos.stage.key || hoveredStage === toPos.stage.key
-            
-            return (
-              <path
-                key={`flow-${index}`}
-                d={path}
-                fill={`url(#gradient-${index})`}
-                opacity={hoveredStage && !isHighlighted ? 0.2 : 0.55}
-                className="sankey-flow"
-              />
-            )
-          })}
-
-          {/* Stage boxes */}
-          {stagePositions.map((pos, index) => {
-            const isHovered = hoveredStage === pos.stage.key
-            const hasData = pos.stage.count > 0
-            
-            const handleStageClick = () => {
-              if (hasData) {
-                window.location.href = withBasePath(`/?maturity=${pos.stage.key}`)
-              }
-            }
-            
-            return (
-              <g
-                key={pos.stage.key}
-                className={`sankey-stage ${isHovered ? 'hovered' : ''} ${hasData ? 'has-data clickable' : 'empty'}`}
-                onMouseEnter={() => setHoveredStage(pos.stage.key)}
-                onMouseLeave={() => setHoveredStage(null)}
-                onClick={handleStageClick}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleStageClick() } }}
-                style={{ cursor: hasData ? 'pointer' : 'default' }}
-                tabIndex={hasData ? 0 : undefined}
-                role={hasData ? 'button' : undefined}
-                aria-label={hasData ? `${pos.stage.label}: ${pos.stage.count} projects. Click to filter catalog.` : `${pos.stage.label}: ${pos.stage.count} projects`}
-              >
-                {/* Stage rectangle */}
-                <rect
-                  x={pos.x}
-                  y={pos.y}
-                  width={pos.width}
-                  height={pos.height}
-                  rx={8}
-                  fill={hasData ? pos.stage.color : '#e2e5e7'}
-                  opacity={hoveredStage && !isHovered ? 0.4 : 1}
-                  className="sankey-stage-rect"
-                />
-                
-                {/* Stage count - inside the box */}
-                <text
-                  x={pos.x + pos.width / 2}
-                  y={pos.y + pos.height / 2}
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  className="sankey-stage-count"
-                  fill="#fff"
-                  fontSize={pos.height > 60 ? 28 : pos.height > 40 ? 22 : 16}
-                  fontWeight="700"
-                >
-                  {pos.stage.count}
-                </text>
-              </g>
-            )
-          })}
-
-          {/* Labels below stages */}
-          {stagePositions.map((pos) => (
-            <g key={`label-${pos.stage.key}`}>
-              {/* Label text */}
-              <text
-                x={pos.x + pos.width / 2}
-                y={topPadding + maxFlowHeight + 35}
-                textAnchor="middle"
-                className="sankey-label-text"
-                fill="var(--text)"
-                fontSize={13}
-                fontWeight="600"
-              >
-                {pos.stage.label}
-              </text>
-
-              {/* Percentage */}
-              <text
-                x={pos.x + pos.width / 2}
-                y={topPadding + maxFlowHeight + 52}
-                textAnchor="middle"
-                className="sankey-label-percent"
-                fill="var(--text-light)"
-                fontSize={11}
-              >
-                {pos.stage.percentage.toFixed(0)}% of projects
-              </text>
-            </g>
-          ))}
-
-          {/* Drop-off indicators between stages */}
-          {stagePositions.slice(0, -1).map((fromPos, index) => {
-            const toPos = stagePositions[index + 1]
-            const dropOff = fromPos.stage.count - toPos.stage.count
-            const dropOffPercent = fromPos.stage.count > 0 
-              ? ((dropOff / fromPos.stage.count) * 100).toFixed(0)
-              : 0
-            if (dropOff <= 0) return null
-            
-            const x = fromPos.x + fromPos.width + stageGap / 2
-            const y = 30
-            
-            return (
-              <g key={`dropoff-${index}`} className="sankey-dropoff">
-                <text
-                  x={x}
-                  y={y}
-                  textAnchor="middle"
-                  className="sankey-dropoff-text"
-                  fill="var(--text-muted)"
-                  fontSize={11}
-                  fontWeight="600"
-                >
-                  −{dropOffPercent}%
-                </text>
-                <text
-                  x={x}
-                  y={y + 13}
-                  textAnchor="middle"
-                  className="sankey-dropoff-subtext"
-                  fill="var(--text-light)"
-                  fontSize={9}
-                >
-                  drop off
-                </text>
-              </g>
-            )
-          })}
-        </svg>
-      </div>
-
-      {/* Summary annotation */}
-      {stages[4]?.count > 0 && stages[0]?.count > 0 && (
-        <div className="sankey-annotation">
-          {((stages[4].count / stages[0].count) * 100).toFixed(0)}% of projects reach a sustainable business model
-        </div>
-      )}
     </div>
   )
 }

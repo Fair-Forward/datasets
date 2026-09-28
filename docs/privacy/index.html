@@ -15,11 +15,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --canvas: #f6f7f7; --card: #ffffff; --surface: #f4f6f6;
+    --canvas: #ffffff; --card: #ffffff; --surface: #f4f6fa;
     --primary: #0c815a;
-    --ink: #141a1f; --ink-2: #48505a; --ink-muted: #5f6873; --ink-faint: #9aa2ac;
-    --border: #e3e6e8; --border-light: #eef0f1;
-    --shadow: 0 1px 2px rgba(20,26,31,.04), 0 1px 12px rgba(20,26,31,.03);
+    --ink: #10173e; --ink-2: #3f4660; --ink-muted: #5c6278; --ink-faint: #5c6278;
+    --border: #e0e3eb; --border-light: #e0e3eb;
+    --shadow: none;
     --sans: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
     --measure: 68ch;
   }
@@ -30,30 +30,28 @@
   .masthead-in { max-width: 82ch; margin: 0 auto; padding: .85rem 1.5rem;
     display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
   .masthead img { height: 26px; width: auto; display: block; }
-  .back { font-size: .8125rem; font-weight: 600; color: var(--primary); text-decoration: none; }
+  .back { font-size: .875rem; font-weight: 600; color: var(--primary); text-decoration: none; }
   .back:hover { text-decoration: underline; }
   .wrap { max-width: 82ch; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
   .stack { display: flex; flex-direction: column; gap: 2.75rem; }
   .prose { max-width: var(--measure); }
-  .eyebrow { font-size: .8125rem; font-weight: 600; letter-spacing: .09em;
-    text-transform: uppercase; color: var(--ink-faint); margin: 0 0 .6rem; }
-  h1 { font-size: 2.1rem; font-weight: 700; letter-spacing: -.02em; line-height: 1.15;
+  .eyebrow { font-size: .9375rem; font-weight: 600; color: var(--ink-muted); margin: 0 0 .6rem; }
+  h1 { font-size: 2.4rem; font-weight: 600; letter-spacing: -.02em; line-height: 1.12;
     text-wrap: balance; margin: 0 0 .75rem; }
   .standfirst { font-size: 1.0625rem; color: var(--ink-2); margin: 0; max-width: var(--measure); }
-  h2 { font-size: 1.1875rem; font-weight: 600; letter-spacing: -.01em; text-wrap: balance; margin: 0 0 .5rem; }
+  h2 { font-size: 1.4rem; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; text-wrap: balance; margin: 0 0 .5rem; }
   p { color: var(--ink-2); margin: 0 0 .75rem; max-width: var(--measure); }
   p:last-child { margin-bottom: 0; }
   strong { color: var(--ink); font-weight: 600; }
   a { color: var(--primary); text-underline-offset: 2px; }
-  a:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; border-radius: 3px; }
+  a:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
   section { display: flex; flex-direction: column; gap: .85rem; }
   ul { color: var(--ink-2); margin: 0; padding-left: 1.15rem; max-width: var(--measure); }
   li { margin-bottom: .3rem; }
-  .scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; box-shadow: var(--shadow); }
+  .scroll { overflow-x: auto; border: 1px solid var(--border); box-shadow: var(--shadow); }
   table { border-collapse: collapse; width: 100%; background: var(--card); font-size: .8125rem; }
   th, td { text-align: left; padding: .6rem .85rem; border-bottom: 1px solid var(--border-light); vertical-align: top; }
-  th { font-size: .7rem; text-transform: uppercase; letter-spacing: .07em; color: var(--ink-faint);
-    font-weight: 600; white-space: nowrap; background: var(--surface); }
+  th { font-size: .8125rem; color: var(--ink-muted); font-weight: 600; white-space: nowrap; background: var(--surface); }
   tr:last-child td { border-bottom: 0; }
   td.note { color: var(--ink-muted); }
   footer { color: var(--ink-faint); font-size: .8125rem; max-width: var(--measure); }

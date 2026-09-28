@@ -3,6 +3,7 @@ import { parseFirstSdg } from '../utils/sdgColors'
 import { licenseLabel, firstUrl } from '../utils/parsing'
 import { completenessFromScore, depthLabel } from '../utils/depth'
 import { hasHealthSignal, availabilityLabel, contextLabel } from '../utils/health'
+import RisoPrint from './RisoPrint'
 
 const ProjectCard = ({ project, onClick, onFilterSDG }) => {
   const {
@@ -45,7 +46,7 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
 
   // No license recorded means unknown terms, not permissive ones -- asserting a
   // default here would state a reuse grant on the partner's behalf that nobody
-  // verified. The card simply omits the chip; the detail panel says "Not specified".
+  // verified. The card simply omits it; the detail panel says "Not specified".
   const licenseValue = license && license.trim() ? license : null
   const licenseUrl = licenseValue ? firstUrl(licenseValue) : null
   const licenseText = licenseValue ? licenseLabel(licenseValue) : ''
@@ -55,31 +56,11 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
     : null
 
   const primarySdg = parseFirstSdg(sdgs)
-  const fallbackColor = !image ? (primarySdg?.color || null) : null
 
   return (
-    <div className={cardClasses}>
-      <div
-        className={`card-image${image ? ' has-image' : ''}`}
-        style={
-          image
-            ? { backgroundImage: `url("${withBasePath(image)}")` }
-            : fallbackColor
-              ? { backgroundImage: `linear-gradient(135deg, ${fallbackColor}20 0%, ${fallbackColor}44 100%)` }
-              : undefined
-        }
-      >
-        {primarySdg && (
-          <button
-            className="card-sdg-badge"
-            onClick={(e) => { e.stopPropagation(); onFilterSDG?.(sdgs[0]) }}
-            title={`Filter by ${primarySdg.label}`}
-            type="button"
-          >
-            <span className="card-sdg-dot" style={{ background: primarySdg.color || 'var(--accent-teal)' }}></span>
-            {primarySdg.label}{primarySdg.name ? ` · ${primarySdg.name}` : ''}
-          </button>
-        )}
+    <article className={cardClasses}>
+      <div className="card-cover">
+        <RisoPrint src={image ? withBasePath(image) : null} />
       </div>
 
       <div className="card-body">
@@ -97,11 +78,10 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
           </span>
         </div>
 
-        <h3>
+        <h3 className="card-title">
           <a
             href={projectHref}
             className="card-title-link"
-            style={{ color: 'inherit', textDecoration: 'none' }}
             onClick={(e) => { e.preventDefault(); e.stopPropagation(); onClick(project) }}
           >
             {title}
@@ -128,10 +108,24 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
       </div>
 
       <div className="card-footer">
-        {/* The footer is space-between, so the empty span keeps "View details" on the
-            right when no license is recorded. Without it the CTA slides to the left
-            edge and alternates position down the grid. Same placeholder trick as
-            .card-meta-top above. */}
+        {/* The SDG sits under the title rather than over the image: it is a way to
+            filter, so it lives with the other small actions. The empty spans keep the
+            license on the right when either side is missing (space-between). */}
+        {primarySdg ? (
+          <button
+            className="card-sdg"
+            onClick={(e) => { e.stopPropagation(); onFilterSDG?.(sdgs[0]) }}
+            title={`Filter by ${primarySdg.label}`}
+            type="button"
+          >
+            <span className="swatch" style={{ background: primarySdg.color || 'var(--press-ink)' }} aria-hidden="true"></span>
+            <span className="card-sdg-text">
+              {primarySdg.label}{primarySdg.name ? ` · ${primarySdg.name}` : ''}
+            </span>
+          </button>
+        ) : (
+          <span className="card-sdg" />
+        )}
         {licenseText ? (
           <span className="card-license">
             {licenseUrl ? (
@@ -145,11 +139,8 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
         ) : (
           <span className="card-license" />
         )}
-        <span className="card-cta" aria-hidden="true">
-          View details <i className="fas fa-arrow-right"></i>
-        </span>
       </div>
-    </div>
+    </article>
   )
 }
 

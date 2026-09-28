@@ -68,16 +68,16 @@ PAGE = Template("""<!DOCTYPE html>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="$font_href" rel="stylesheet">
     <link rel="stylesheet" crossorigin href="../../assets/index.css">
     <style>
-      .seo-fallback{max-width:820px;margin:0 auto;padding:2rem 1.25rem;font-family:'Public Sans',system-ui,-apple-system,sans-serif;color:#1a2b3c;line-height:1.6}
-      .seo-fallback a{color:#1565c0}
+      .seo-fallback{max-width:820px;margin:0 auto;padding:2rem 1.25rem;font-family:'Hanken Grotesk',system-ui,-apple-system,sans-serif;color:#10173e;line-height:1.6}
+      .seo-fallback a{color:#0c815a}
       .seo-fallback .seo-home{font-size:.9rem;font-weight:600;text-decoration:none}
-      .seo-fallback h1{font-size:1.9rem;line-height:1.25;margin:1rem 0 .75rem}
-      .seo-fallback h2{font-size:1.15rem;margin:2rem 0 .5rem}
-      .seo-fallback .seo-meta{color:#5a6b7c;font-size:.95rem;margin:0 0 1.5rem}
-      .seo-fallback img{max-width:100%;height:auto;border-radius:8px;margin:1rem 0}
+      .seo-fallback h1{font-weight:600;font-size:1.9rem;line-height:1.2;margin:1rem 0 .75rem}
+      .seo-fallback h2{font-weight:600;font-size:1.2rem;margin:2rem 0 .5rem}
+      .seo-fallback .seo-meta{color:#5c6278;font-size:.95rem;margin:0 0 1.5rem}
+      .seo-fallback img{max-width:100%;height:auto;margin:1rem 0}
       .seo-fallback ul{padding-left:1.2rem;margin:.25rem 0}
     </style>
 </head>
@@ -119,9 +119,9 @@ INSIGHTS_PAGE = Template("""<!DOCTYPE html>
     <link href="$font_href" rel="stylesheet">
     <link rel="stylesheet" crossorigin href="../assets/index.css">
     <style>
-      .seo-fallback{max-width:820px;margin:0 auto;padding:2rem 1.25rem;font-family:'Hanken Grotesk',system-ui,-apple-system,sans-serif;color:#141a1f;line-height:1.6}
+      .seo-fallback{max-width:820px;margin:0 auto;padding:2rem 1.25rem;font-family:'Hanken Grotesk',system-ui,-apple-system,sans-serif;color:#10173e;line-height:1.6}
       .seo-fallback a{color:#0c815a}
-      .seo-fallback h1{font-size:1.9rem;line-height:1.25;margin:1rem 0 .75rem}
+      .seo-fallback h1{font-weight:600;font-size:1.9rem;line-height:1.2;margin:1rem 0 .75rem}
     </style>
 </head>
 <body>
@@ -129,9 +129,9 @@ INSIGHTS_PAGE = Template("""<!DOCTYPE html>
       <main class="seo-fallback">
         <a href="../">FAIR Forward - Open Data &amp; AI Use Cases</a>
         <h1>Insights &amp; Visualisations</h1>
-        <p>Where the $count projects in the FAIR Forward catalogue are based, how they
-        progress from data to deployment, and which Sustainable Development Goals they
-        address.</p>
+        <p>Where the $count projects in the FAIR Forward catalogue are based, what they
+        had reached by the end of the programme, and which Sustainable Development Goals
+        they address.</p>
         <p><a href="../">Browse the full FAIR Forward catalogue</a></p>
       </main>
     </div>
@@ -260,6 +260,7 @@ def build_page(project):
         og_image=esc(og_image),
         csp=esc(CSP),
         analytics=ANALYTICS,
+        font_href=esc(FONT_HREF),
         body=build_body(project),
     )
 
@@ -267,9 +268,9 @@ def build_page(project):
 def build_insights_page(project_count):
     return INSIGHTS_PAGE.substitute(
         description=meta_description(
-            "Where the {} projects in the FAIR Forward catalogue are based, how they "
-            "progress from data to deployment, and which Sustainable Development Goals "
-            "they address.".format(project_count)),
+            "Where the {} projects in the FAIR Forward catalogue are based, what they "
+            "had reached by the end of the programme, and which Sustainable Development "
+            "Goals they address.".format(project_count)),
         og_title=esc("Insights & Visualisations - " + SITE_NAME),
         canonical=esc(SITE_BASE + "insights/"),
         og_image=esc(DEFAULT_OG_IMAGE),

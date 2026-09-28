@@ -49,15 +49,15 @@ const normalizeName = (value = '') =>
 
 // Emerald sequential palette - aligned with primary theme (viz ramp)
 const COLOR_CONFIG = {
-  empty: '#eef1f1',           // Light neutral for empty countries
-  emptyHover: '#e2e5e7',      // Slightly darker on hover
-  emptyStroke: '#e2e5e7',     // Subtle border for empty
-  dataStroke: '#0a5f42',      // Darker emerald border, stays visible against the deepest fill
-  strokeHighlight: '#0b7350', // Deep emerald for selected
-  gradientStart: '#e7efeb',   // Lightest emerald (viz-1)
-  gradientMid: '#83b79f',     // Mid emerald (viz-3)
-  gradientEnd: '#0d8a5f',     // Deep emerald for high values (viz-5)
-  ocean: '#f6f7f7'            // Whisper-grey for ocean/background
+  empty: '#e6e9f0',           // Paper-grey land with no projects
+  emptyHover: '#dde1ea',      // A shade darker on hover
+  emptyStroke: '#d5d9e4',     // Hairline border for empty land
+  dataStroke: '#1b216d',      // Deep press ink, visible against the fullest screen
+  strokeHighlight: '#0c815a', // Spot colour: the country you can act on
+  gradientStart: '#e8ecf9',   // Lightest screen of the press ink (viz-1)
+  gradientMid: '#808ec4',     // Mid screen (viz-3)
+  gradientEnd: '#2a3486',     // Full press ink (viz-5)
+  ocean: '#f4f6fa'            // Paper-2 for the sea
 }
 
 const WorldMap = ({
@@ -271,7 +271,9 @@ const WorldMap = ({
             {({ geographies }) =>
               geographies.map((geo) => {
                 const countryData = getCountryData(geo)
-                const isSelected = selectedCountry?.iso2 === countryData?.iso2
+                // Both sides must exist: countries without data have no iso2, and
+                // undefined === undefined would mark every one of them as selected.
+                const isSelected = Boolean(selectedCountry && countryData && selectedCountry.iso2 === countryData.iso2)
                 const hasData = countryData && countryData.projects > 0
                 
                 return (
@@ -284,19 +286,17 @@ const WorldMap = ({
                     style={{
                       default: {
                         fill: hasData ? colorScale(countryData.projects) : COLOR_CONFIG.empty,
-                        stroke: hasData ? COLOR_CONFIG.dataStroke : COLOR_CONFIG.emptyStroke,
-                        strokeWidth: hasData ? 1.2 : 0.3,
+                        stroke: isSelected ? COLOR_CONFIG.strokeHighlight : (hasData ? COLOR_CONFIG.dataStroke : COLOR_CONFIG.emptyStroke),
+                        strokeWidth: isSelected ? 2 : (hasData ? 0.8 : 0.3),
                         outline: 'none',
-                        transition: 'all 0.2s ease-out',
-                        filter: isSelected ? 'drop-shadow(0 0 4px rgba(13, 138, 95, 0.5))' : 'none'
+                        transition: 'fill 0.2s ease-out, stroke 0.2s ease-out'
                       },
                       hover: {
                         fill: hasData ? colorScale(countryData.projects) : COLOR_CONFIG.emptyHover,
                         stroke: hasData ? COLOR_CONFIG.strokeHighlight : COLOR_CONFIG.emptyStroke,
                         strokeWidth: hasData ? 2 : 0.5,
                         outline: 'none',
-                        cursor: hasData ? 'pointer' : 'default',
-                        filter: hasData ? 'brightness(1.05) drop-shadow(0 0 6px rgba(13, 138, 95, 0.4))' : 'none'
+                        cursor: hasData ? 'pointer' : 'default'
                       },
                       pressed: {
                         fill: hasData ? colorScale(countryData.projects) : COLOR_CONFIG.emptyHover,

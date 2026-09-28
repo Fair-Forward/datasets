@@ -152,7 +152,7 @@ const Header = () => {
             Projects
           </Link>
           <Link to="/insights" className={`nav-link ${isInsights ? 'active' : ''}`} aria-current={isInsights ? 'page' : undefined}>
-            <i className="fas fa-chart-line" aria-hidden="true"></i> Insights
+            Insights
           </Link>
         </nav>
       </div>
@@ -162,7 +162,7 @@ const Header = () => {
           <div className="header-info-backdrop" onClick={closeInfo}></div>
           <div className="header-info-modal" role="dialog" aria-modal="true" ref={modalRef} aria-label={infoType === 'about' ? 'About this website' : 'Fair sharing'}>
             <button className="header-info-close" onClick={closeInfo} aria-label="Close info panel">
-              <i className="fas fa-times"></i>
+              <i className="fas fa-times" aria-hidden="true"></i>
             </button>
             {renderInfoContent()}
           </div>

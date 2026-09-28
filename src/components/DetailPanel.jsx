@@ -7,6 +7,7 @@ import { completenessFromScore, depthLabel } from '../utils/depth'
 import { parseContacts, licenseLabel, firstUrl, labelFromUrl } from '../utils/parsing'
 import { hasHealthSignal, availabilityLabel, contextLabel, healthDetailLines } from '../utils/health'
 import { SITE_NAME, SITE_TITLE, SITE_DESCRIPTION, SITE_URL, SITE_OG_IMAGE } from '../utils/site'
+import RisoPrint from './RisoPrint'
 
 // Cumulative maturity pipeline rendered as a stepper in the detail panel.
 const MATURITY_STEPS = [
@@ -401,7 +402,6 @@ const DetailPanel = ({ project, onClose }) => {
   }
 
   // --- Detail panel v2 derived values ---
-  const sdgPrimary = sdgList[0] || null
   const eyebrowParts = []
   if (project?.countries?.length) eyebrowParts.push(project.countries[0])
 
@@ -465,7 +465,7 @@ const DetailPanel = ({ project, onClose }) => {
                   <div className="panel-sdg-chips">
                     {sdgList.map((s) => (
                       <span className="panel-sdg-chip" key={s.num}>
-                        <span className="panel-sdg-chip-dot" style={{ background: s.color || 'var(--accent-teal)' }} />
+                        <span className="panel-sdg-chip-dot" style={{ background: s.color || 'var(--press-ink)' }} />
                         {s.label}{s.name ? ` · ${s.name}` : ''}
                       </span>
                     ))}
@@ -487,7 +487,7 @@ const DetailPanel = ({ project, onClose }) => {
                 {markdownContent.description &&
                   markdownContent.description.trim() !== (project?.description || '').trim() && (
                   <section className="panel-freetext" id="description">
-                    <div className="panel-freetext-label">About</div>
+                    <h2 className="panel-freetext-label">About</h2>
                     <div className="documentation-content">
                       <DocMarkdown>{markdownContent.description}</DocMarkdown>
                     </div>
@@ -497,7 +497,7 @@ const DetailPanel = ({ project, onClose }) => {
                 {/* Data Characteristics -- free-text, any shape */}
                 {markdownContent.data_characteristics?.trim() && (
                   <section className="panel-freetext" id="data-characteristics">
-                    <div className="panel-freetext-label">Data Characteristics</div>
+                    <h2 className="panel-freetext-label">Data Characteristics</h2>
                     <div className="documentation-content">
                       <DocMarkdown>{formatFreeText(markdownContent.data_characteristics)}</DocMarkdown>
                     </div>
@@ -507,7 +507,7 @@ const DetailPanel = ({ project, onClose }) => {
                 {/* Model / Use Case Characteristics -- free-text, only when present */}
                 {markdownContent.model_characteristics?.trim() && (
                   <section className="panel-freetext" id="model-characteristics">
-                    <div className="panel-freetext-label">Model / Use Case Characteristics</div>
+                    <h2 className="panel-freetext-label">Model / Use Case Characteristics</h2>
                     <div className="documentation-content">
                       <DocMarkdown>{formatFreeText(markdownContent.model_characteristics)}</DocMarkdown>
                     </div>
@@ -517,7 +517,7 @@ const DetailPanel = ({ project, onClose }) => {
                 {/* How to Use It -- free-text */}
                 {markdownContent.how_to_use && (
                   <section className="panel-freetext" id="how-to-use">
-                    <div className="panel-freetext-label">How to Use It</div>
+                    <h2 className="panel-freetext-label">How to Use It</h2>
                     <div className="documentation-content">
                       <DocMarkdown>{formatFreeText(markdownContent.how_to_use)}</DocMarkdown>
                     </div>
@@ -527,7 +527,7 @@ const DetailPanel = ({ project, onClose }) => {
                 {/* Additional Resources -- only when present */}
                 {additionalResourceLinks.length > 0 && (
                   <section className="panel-freetext" id="additional-resources">
-                    <div className="panel-freetext-label">Additional Resources</div>
+                    <h2 className="panel-freetext-label">Additional Resources</h2>
                     <div className="additional-resources-list">
                       {additionalResourceLinks.map((resource, idx) => {
                         const external =
@@ -554,27 +554,11 @@ const DetailPanel = ({ project, onClose }) => {
 
               {/* RIGHT: facts rail -- reliable catalogue fields + access */}
               <div className="panel-rail">
-                {/* Cover image */}
-                {(() => {
-                  if (project.image) {
-                    return (
-                      <div
-                        className="panel-rail-image"
-                        style={{ backgroundImage: `url("${withBasePath(project.image)}")` }}
-                      />
-                    )
-                  }
-                  const sdgColor = sdgPrimary?.color || null
-                  if (sdgColor) {
-                    return (
-                      <div
-                        className="panel-rail-image no-image"
-                        style={{ backgroundImage: `linear-gradient(135deg, ${sdgColor}18 0%, ${sdgColor}35 100%)` }}
-                      />
-                    )
-                  }
-                  return null
-                })()}
+                {/* Cover print -- the same riso print as the card, larger */}
+                <RisoPrint
+                  src={project.image ? withBasePath(project.image) : null}
+                  className="panel-rail-print"
+                />
 
                 {/* Datasets / Models access clusters (or documents / access-note fallback) */}
                 {hasAnyLinks ? (
@@ -757,7 +741,7 @@ const DetailPanel = ({ project, onClose }) => {
                       <>
                         {organizations.powered && (
                           <div className="rail-org">
-                            <div className="rail-org-label"><span className="rail-org-dot" style={{ background: 'var(--primary)' }}></span> Powered by / Provided by</div>
+                            <div className="rail-org-label"><span className="rail-org-dot" style={{ background: 'var(--press-ink)' }}></span> Powered by / Provided by</div>
                             <div className="rail-org-value documentation-content"><DocMarkdown>{organizations.powered}</DocMarkdown></div>
                           </div>
                         )}
