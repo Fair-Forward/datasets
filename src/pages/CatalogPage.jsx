@@ -10,6 +10,10 @@ import { withBasePath } from '../utils/basePath'
 import { rankScore } from '../utils/ranking'
 import { matchesStatus, entryStatusValues, STATUS_OPTIONS } from '../utils/health'
 
+// The first row of prints can sit in the first screen, so they load straight away;
+// the rest wait until they near the viewport.
+const EAGER_PRINTS = 4
+
 const count = (n, one, many) => `${n.toLocaleString('en')} ${n === 1 ? one : many}`
 
 const prefersReducedMotion = () =>
@@ -276,11 +280,10 @@ const CatalogPage = () => {
     return [...projects].sort((a, b) => rankScore(b) - rankScore(a))
   }, [catalogData, filters, availableStatuses])
 
-  const regionNames = useMemo(() => new Set(catalogData?.filters?.regions || []), [catalogData])
-
   // Calculate dynamic stats based on filtered results
   const dynamicStats = useMemo(() => {
     if (!catalogData?.stats) return null
+    const countryCodes = catalogData.filters?.country_codes || {}
     
     // Count datasets and usecases from filtered projects
     let datasetCount = 0
@@ -297,14 +300,14 @@ const CatalogPage = () => {
       total_datasets: datasetCount,
       total_usecases: usecaseCount,
       total_access_note_projects: accessNoteCount,
-      // Countries only: the pipeline lists the regional and global scopes in the same
-      // field ("East Africa", "Global") under filters.regions, and the header's total
-      // leaves them out too.
+      // Countries by ISO code, the rule behind the header's total: regional and global
+      // scopes ("East Africa", "Global") have no code, and two spellings of one country
+      // share one.
       total_countries: new Set(
-        filteredProjects.flatMap(p => p.countries || []).filter(c => !regionNames.has(c))
+        filteredProjects.flatMap(p => p.countries || []).map(c => countryCodes[c]).filter(Boolean)
       ).size
     }
-  }, [filteredProjects, catalogData, regionNames])
+  }, [filteredProjects, catalogData])
 
   const clearAllFilters = useCallback(() => {
     handleFilterChange({ search: '', view: 'all', sdg: '', dataType: '', country: '', maturity: '', status: '' })
@@ -417,6 +420,7 @@ const CatalogPage = () => {
               project={project}
               onClick={handleProjectSelect}
               onFilterSDG={(sdg) => handleFilterChange({ ...filters, sdg })}
+              eager={idx < EAGER_PRINTS}
             />
           ))}
         </div>

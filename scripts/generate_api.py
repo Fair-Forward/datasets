@@ -39,8 +39,8 @@ import json
 import os
 from string import Template
 
-from utils import (COUNTRY_ISO_MAP, SITE_BASE, AUTO_ENRICHED_PREFIX, CSP, FONT_HREF,
-                   ANALYTICS, is_auto_enriched)
+from utils import (SITE_BASE, AUTO_ENRICHED_PREFIX, CSP, FONT_HREF,
+                   ANALYTICS, is_auto_enriched, split_places)
 from text_parsing import license_parts, org_section_parts, parse_organizations
 
 API_VERSION = "1.0"
@@ -318,24 +318,6 @@ def content_field(text):
             return None
         return {"text": stripped, "provenance": "auto-enriched"}
     return {"text": text.strip(), "provenance": "curated"}
-
-
-def split_places(names):
-    """Split catalog `countries` into ISO-coded countries and uncoded regions.
-
-    The column mixes granularities ("Kenya" alongside "West Africa" and "Global"),
-    which a consumer cannot resolve from the strings alone. COUNTRY_ISO_MAP decides:
-    anything it codes is a country, anything left over is published as a region
-    rather than silently dropped or passed off as a country.
-    """
-    countries, regions = [], []
-    for name in names:
-        iso2 = COUNTRY_ISO_MAP.get(name)
-        if iso2:
-            countries.append({"name": name, "iso2": iso2})
-        else:
-            regions.append(name)
-    return countries, regions
 
 
 def build_organizations(project):

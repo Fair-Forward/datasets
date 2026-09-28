@@ -5,7 +5,7 @@ import { completenessFromScore, depthLabel } from '../utils/depth'
 import { hasHealthSignal, availabilityLabel, contextLabel } from '../utils/health'
 import RisoPrint from './RisoPrint'
 
-const ProjectCard = ({ project, onClick, onFilterSDG }) => {
+const ProjectCard = ({ project, onClick, onFilterSDG, eager = false }) => {
   const {
     id, slug, title, description, sdgs = [], data_types = [], image,
     has_dataset, has_usecase, is_lacuna, has_access_note,
@@ -60,7 +60,7 @@ const ProjectCard = ({ project, onClick, onFilterSDG }) => {
   return (
     <article className={cardClasses}>
       <div className="card-cover">
-        <RisoPrint src={image ? withBasePath(image) : null} />
+        <RisoPrint src={image ? withBasePath(image) : null} eager={eager} />
       </div>
 
       <div className="card-body">

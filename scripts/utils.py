@@ -89,15 +89,33 @@ def clean_country_list(country_text):
     return countries
 
 
+def split_places(names):
+    """Split catalog `countries` into ISO-coded countries and uncoded regions.
+
+    The column mixes granularities ("Kenya" alongside "West Africa" and "Global"),
+    which a consumer cannot resolve from the strings alone. COUNTRY_ISO_MAP decides:
+    anything it codes is a country, anything left over is published as a region
+    rather than silently dropped or passed off as a country.
+    """
+    countries, regions = [], []
+    for name in names:
+        iso2 = COUNTRY_ISO_MAP.get(name)
+        if iso2:
+            countries.append({"name": name, "iso2": iso2})
+        else:
+            regions.append(name)
+    return countries, regions
+
+
 def count_countries(names):
     """Number of distinct countries among place names, counted by ISO code.
 
-    The 'Country Team' column mixes granularities ("Kenya" alongside "East Africa" and
-    "Global"). COUNTRY_ISO_MAP decides what a country is -- the same rule the public
-    API's split_places() publishes -- so regional and global scopes are not counted,
-    and two spellings of one country ("DRC", "Democratic Republic of Congo") count once.
+    Uses split_places(), the rule the public API publishes, so regional and global
+    scopes ("East Africa", "Global") are not counted, and two spellings of one country
+    ("DRC", "Democratic Republic of Congo") count once.
     """
-    return len({COUNTRY_ISO_MAP[name] for name in names if name in COUNTRY_ISO_MAP})
+    countries, _ = split_places(names)
+    return len({country["iso2"] for country in countries})
 
 
 def get_gsheet_client(credentials_path=None):

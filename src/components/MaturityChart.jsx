@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState } from 'react'
+import { Fragment, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { MATURITY_STAGES, furthestStage, gridSlot, printOrder, reachedCount } from '../utils/maturity'
 
@@ -32,17 +32,31 @@ const MaturityChart = ({ projects, step = 'reached' }) => {
   const [tip, setTip] = useState(null)
   const [pointed, setPointed] = useState(null)
 
-  const order = printOrder(projects, { lacunaFirst: step === 'lacuna' })
+  // The layout depends only on the projects and the view, not on the pointer, so it
+  // is not rebuilt on every hover.
+  const { order, lacuna, rows, slots, counts } = useMemo(() => {
+    const order = printOrder(projects, { lacunaFirst: step === 'lacuna' })
+    const slots = order.map((_, i) => {
+      const vars = { '--i': i }
+      for (const n of PER_ROW) {
+        const { row, col } = gridSlot(i, n)
+        vars[`--r${n}`] = row
+        vars[`--c${n}`] = col
+      }
+      return vars
+    })
+    return {
+      order,
+      lacuna: order.filter(project => project.is_lacuna).length,
+      rows: Object.fromEntries(PER_ROW.map(n => [`--rows-${n}`, Math.ceil(order.length / n)])),
+      slots,
+      counts: Object.fromEntries(MATURITY_STAGES.map(stage => [stage.key, reachedCount(order, stage.key)]))
+    }
+  }, [projects, step])
+
   if (order.length === 0) {
     return <div className="maturity-chart-empty">No maturity data available</div>
   }
-
-  const lacuna = order.filter(project => project.is_lacuna).length
-  const rows = Object.fromEntries(PER_ROW.map(n => [`--rows-${n}`, Math.ceil(order.length / n)]))
-  const slots = order.map((_, i) => PER_ROW.reduce((vars, n) => {
-    const { row, col } = gridSlot(i, n)
-    return { ...vars, [`--r${n}`]: row, [`--c${n}`]: col }
-  }, { '--i': i }))
 
   // The project's name, set just above the dot under the pointer.
   const showTip = (event, project, column) => {
@@ -81,7 +95,7 @@ const MaturityChart = ({ projects, step = 'reached' }) => {
 
       <div className="maturity-chart" ref={chartRef}>
         {MATURITY_STAGES.map((stage, column) => {
-          const count = reachedCount(order, stage.key)
+          const count = counts[stage.key]
           return (
             <Fragment key={stage.key}>
               <div

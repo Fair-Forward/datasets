@@ -18,7 +18,7 @@ from utils import (
     is_auto_enriched,
     clean_country_list,
     count_countries,
-    COUNTRY_ISO_MAP,
+    split_places,
 )
 from text_parsing import label_from_url, label_from_resource_url
 
@@ -541,9 +541,11 @@ def generate_catalog_json():
         project_count = len(project_ids)
         # Countries are what COUNTRY_ISO_MAP codes (counted by ISO code); the rest of the
         # vocabulary ("East Africa", "Global") are regional or global scopes. They stay
-        # filterable, and are listed so the site can leave them out of country counts.
+        # filterable. Each country name ships with its ISO code so the site counts a
+        # filtered set by the same rule, with two spellings of one country counting once.
+        coded_places, region_names = split_places(sorted(all_countries))
         country_count = count_countries(all_countries)
-        region_names = sorted(c for c in all_countries if c not in COUNTRY_ISO_MAP)
+        country_codes = {place['name']: place['iso2'] for place in coded_places}
         access_note_project_count = sum(1 for p in projects if p.get('has_access_note'))
 
         # Build alias lookup map: old_title_id -> stable_id
@@ -570,6 +572,7 @@ def generate_catalog_json():
                 'data_types': sorted(list(all_data_types)),
                 'countries': sorted(list(all_countries)),
                 'regions': region_names,
+                'country_codes': country_codes,
                 'maturity_stages': [stage['key'] for stage in MATURITY_STAGES]
             }
         }
