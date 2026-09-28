@@ -3,7 +3,7 @@ import pandas as pd
 import json
 import re
 from collections import Counter
-from utils import resolve_project_id, row_included_for_catalog_or_insights, COUNTRY_ISO_MAP
+from utils import resolve_project_id, row_included_for_catalog_or_insights, COUNTRY_ISO_MAP, clean_country_list
 
 # Parse command line arguments
 parser = argparse.ArgumentParser(description='Generate insights data JSON from data catalog.')
@@ -19,10 +19,11 @@ def analyze_data(excel_path):
         df = pd.read_excel(excel_path)
         print(f"Loaded {len(df)} rows from {excel_path}")
         
-        country_iso_map = COUNTRY_ISO_MAP
-
-        # Extract country distribution - ONLY from projects with valid links
+        # Extract country distribution - ONLY from projects with valid links. Keyed by
+        # ISO code: COUNTRY_ISO_MAP decides what a country is (the rule the catalog
+        # stats and the public API use), and two spellings of one country merge.
         country_counts = Counter()
+        country_names = {}  # ISO code -> the name first seen for it
         country_sdgs = {}  # Track SDGs per country
         country_data_types = {}  # Track data types per country
         project_ids = set()
@@ -56,45 +57,30 @@ def analyze_data(excel_path):
                 types = re.split(r'[,;]', data_type_text)
                 row_data_types = [t.strip() for t in types if t.strip()]
             
-            # Extract countries
-            country_text = row.get('Country Team', '')
-            if isinstance(country_text, str) and not pd.isna(country_text):
-                # Split by common delimiters
-                parts = re.split(r',|\s+and\s+|;|/', country_text)
-                for part in parts:
-                    country = part.strip()
-                    # Clean up common variations
-                    country = re.sub(r'\(.*?\)', '', country).strip()
-                    country = country.replace('Republic of', '').strip()
-                    country = country.replace('Democratic Republic of', '').strip()
-                    
-                    # Skip generic entries
-                    if country and len(country) > 1 and country not in ['Global', 'Regional']:
-                        country_counts[country] += 1
-                        # Track SDGs for this country
-                        if country not in country_sdgs:
-                            country_sdgs[country] = set()
-                        country_sdgs[country].update(row_sdgs)
-                        # Track data types for this country
-                        if country not in country_data_types:
-                            country_data_types[country] = set()
-                        country_data_types[country].update(row_data_types)
-        
+            # Extract countries, parsed exactly as the catalog parses them. Regional and
+            # global scopes ("East Africa", "Global") have no ISO code and are skipped.
+            for country in clean_country_list(row.get('Country Team', '')):
+                iso_code = COUNTRY_ISO_MAP.get(country)
+                if not iso_code:
+                    continue
+                country_counts[iso_code] += 1
+                country_names.setdefault(iso_code, country)
+                country_sdgs.setdefault(iso_code, set()).update(row_sdgs)
+                country_data_types.setdefault(iso_code, set()).update(row_data_types)
+
         # Prepare data for map visualization with ISO codes
         map_data = {}
-        for country, count in country_counts.items():
-            iso_code = country_iso_map.get(country)
-            if iso_code:
-                sdgs = sorted(list(country_sdgs.get(country, [])), 
-                             key=lambda x: int(re.search(r'\d+', x).group()) if re.search(r'\d+', x) else 0)
-                data_types = sorted(list(country_data_types.get(country, [])))
-                map_data[iso_code] = {
-                    'name': country,
-                    'projects': count,
-                    'iso2': iso_code,
-                    'sdgs': sdgs,
-                    'data_types': data_types
-                }
+        for iso_code, count in country_counts.items():
+            sdgs = sorted(list(country_sdgs.get(iso_code, [])),
+                         key=lambda x: int(re.search(r'\d+', x).group()) if re.search(r'\d+', x) else 0)
+            data_types = sorted(list(country_data_types.get(iso_code, [])))
+            map_data[iso_code] = {
+                'name': country_names[iso_code],
+                'projects': count,
+                'iso2': iso_code,
+                'sdgs': sdgs,
+                'data_types': data_types
+            }
         
         # Calculate summary stats
         total_projects = len(project_ids)

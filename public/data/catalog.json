@@ -5210,7 +5210,7 @@
     "total_datasets": 93,
     "total_usecases": 57,
     "total_access_note_projects": 10,
-    "total_countries": 28
+    "total_countries": 25
   },
   "filters": {
     "sdgs": [
@@ -5267,6 +5267,11 @@
       "Uganda",
       "West Africa",
       "Zambia"
+    ],
+    "regions": [
+      "East Africa",
+      "Global",
+      "West Africa"
     ],
     "maturity_stages": [
       "dataset",

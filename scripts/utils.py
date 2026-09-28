@@ -41,6 +41,7 @@ CSP = ("default-src 'self'; script-src 'self' https://cloud.umami.is; "
        "https://fonts.gstatic.com; frame-src 'none';")
 
 # The site's type face, loaded from Google Fonts (permitted by the CSP above).
+# index.html and public/privacy/index.html hold literal copies of this URL.
 FONT_HREF = ("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:"
              "wght@400;500;600;700;800&display=swap")
 
@@ -68,6 +69,35 @@ COUNTRY_ISO_MAP = {
     'Panama': 'PA',
 }
 KNOWN_COUNTRIES = set(COUNTRY_ISO_MAP.keys())
+
+
+def clean_country_list(country_text):
+    """Split country text into clean list, handling slash-separated region qualifiers."""
+    if not country_text or not isinstance(country_text, str):
+        return []
+    parts = re.split(r',|\s+and\s+|;', country_text)
+    countries = []
+    for part in parts:
+        country = part.strip()
+        if not country:
+            continue
+        # Split "Benin/West Africa" -> take the country name (first part)
+        if '/' in country:
+            country = country.split('/')[0].strip()
+        if country:
+            countries.append(country)
+    return countries
+
+
+def count_countries(names):
+    """Number of distinct countries among place names, counted by ISO code.
+
+    The 'Country Team' column mixes granularities ("Kenya" alongside "East Africa" and
+    "Global"). COUNTRY_ISO_MAP decides what a country is -- the same rule the public
+    API's split_places() publishes -- so regional and global scopes are not counted,
+    and two spellings of one country ("DRC", "Democratic Republic of Congo") count once.
+    """
+    return len({COUNTRY_ISO_MAP[name] for name in names if name in COUNTRY_ISO_MAP})
 
 
 def get_gsheet_client(credentials_path=None):
