@@ -180,12 +180,13 @@ const SDGCountryHeatmap = ({ projects = [], onCellClick }) => {
         </div>
       </div>
 
-      {/* Legend */}
+      {/* Legend: cells encode the count as the opacity (0.3 to 1) of their SDG colour,
+          so the key shows that opacity ramp in a neutral ink, not a hue the cells never use. */}
       <div className="heatmap-legend">
         <span className="heatmap-legend-label">Fewer projects</span>
         <div className="heatmap-legend-gradient">
           <div className="heatmap-legend-bar" style={{
-            background: `linear-gradient(to right, rgba(13, 138, 95, 0.15), rgba(13, 138, 95, 0.5), rgba(13, 138, 95, 0.9))`
+            background: `linear-gradient(to right, rgba(42, 52, 134, 0.3), rgba(42, 52, 134, 1))`
           }}></div>
         </div>
         <span className="heatmap-legend-label">More projects</span>

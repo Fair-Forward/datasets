@@ -1,7 +1,9 @@
 /* ===================================
-   Design Tokens
-   Single source of truth for spacing,
-   sizing, color, and elevation values.
+   Design Tokens: "The Open Press"
+   The catalogue reads as an index printed on a community riso press:
+   white stock, one navy ink (the FAIR Forward logo ink) for type and
+   halftone imagery, and a single emerald spot colour for everything a
+   reader can act on. See DESIGN.md.
    =================================== */
 
 :root {
@@ -17,98 +19,148 @@
   --space-12: 3rem;      /* 48px */
   --space-16: 4rem;      /* 64px */
 
-  /* --- Border-radius scale --- */
-  --radius-sm:   0.375rem;  /* 6px */
-  --radius-md:   0.625rem;  /* 10px */
-  --radius-card: 0.875rem;  /* 14px - cards (Catalogue v2) */
-  --radius-lg:   1rem;      /* 16px - cards, panels */
-  --radius-xl:   1.25rem;   /* 20px - hero sections, detail panel */
+  /* --- Corners ---
+     Print has no rounded corners. Surfaces, controls and buttons are square;
+     only dots (halftone, status, depth) are round. The legacy names stay as
+     aliases so older rules resolve to the same square edge. */
+  --radius-sm:   0;
+  --radius-md:   0;
+  --radius-card: 0;
+  --radius-lg:   0;
+  --radius-xl:   0;
   --radius-pill: 999px;
   --radius-full: 50%;
 
   /* --- Font-size scale --- */
-  --text-xs:   0.8125rem;   /* ~11px */
-  --text-sm:   0.875rem;    /* ~12px */
-  --text-base: 0.9375rem;   /* ~13px */
-  --text-md:   1rem;         /* ~14px */
-  --text-lg:   1.0625rem;   /* ~15px */
-  --text-xl:   1.1875rem;   /* ~17px */
-  --text-2xl:  1.375rem;    /* ~19px */
-  --text-3xl:  1.625rem;    /* ~23px */
-  --text-4xl:  2.25rem;     /* ~32px */
-  --text-5xl:  2.75rem;     /* ~39px */
+  --text-xs:   0.8125rem;
+  --text-sm:   0.875rem;
+  --text-base: 0.9375rem;
+  --text-md:   1rem;
+  --text-lg:   1.0625rem;
+  --text-xl:   1.1875rem;
+  --text-2xl:  1.375rem;
+  --text-3xl:  1.625rem;
+  --text-4xl:  2.25rem;
+  --text-5xl:  2.75rem;
 
-  /* --- Typography families --- */
+  /* --- Display ramp (statements, titles, section headlines) ---
+     Sans sizes for working text use the --text-* scale above. */
+  --type-display:    3.25rem;   /* the page title in the hero */
+  --type-display-md: 2.6rem;    /* hero title on tablets */
+  --type-display-sm: 2.25rem;   /* hero title on phones */
+  --type-display-xs: 2rem;      /* hero title on small phones */
+  --type-figure:     2.5rem;    /* the catalogue's totals in the hero's figures row */
+  --type-figure-sm:  2rem;      /* the same on phones */
+  --type-title:      3rem;      /* page titles */
+  --type-headline:   2.4rem;    /* detail panel title */
+  --type-statement:  1.875rem;  /* secondary statements, lead figures */
+  --type-section:    1.75rem;   /* section headlines, results count, dialog titles */
+  --type-subsection: 1.45rem;   /* sections inside the panel */
+  --type-entry:      1.3rem;    /* entry titles */
+
+  /* --- Typography ---
+     One family, Hanken Grotesk, carries everything. Display text is the same
+     face at heavier weight and tighter tracking, never a second family. */
   --font-sans: 'Hanken Grotesk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: var(--font-sans);   /* clean-emerald is all-sans: mono retired from labels/eyebrows (code blocks keep their own hardcoded monospace fallback) */
-  --font-serif: var(--font-sans);  /* serif retired in this direction: display titles use the sans at heavier weight */
+  --font-display: var(--font-sans);
+  --font-mono: var(--font-sans);   /* no mono labels; code blocks carry their own monospace stack */
 
-  /* --- Theme colors (Clean-emerald redesign) --- */
-  --primary:       #0c815a;   /* emerald -- primary action/accent (AA: 4.9:1 on white, both directions) */
-  --primary-light: #17a673;   /* lighter partner for gradients */
-  --background:    #f6f7f7;   /* whisper-grey page canvas (cool, not warm) */
-  --card-background: #ffffff; /* pure white cards */
-  --text:          #141a1f;   /* near-black cool ink */
-  --text-light:    #48505a;   /* body secondary */
-  --text-muted:    #5f6873;   /* muted labels */
-  --text-faint:    #9aa2ac;   /* eyebrows, meta, uppercase labels */
-  --border:        #e3e6e8;   /* default hairline / chip border */
-  --border-soft:   #e7e9eb;   /* card borders */
-  --border-light:  #eef0f1;   /* inner dividers */
-  --surface-cool:  #f4f6f6;   /* rail / inset surfaces */
-  --accent-teal:   #0c815a;   /* folded into primary in this direction */
-  --accent-gold:   #c08a3e;   /* KEEP -- "Catalyzed by" dot, maturity endpoint */
-  --shadow:        rgba(0, 0, 0, 0.04);
-  --shadow-hover:  rgba(0, 0, 0, 0.08);
-  --title-color:   #141a1f;   /* display-title ink (same as --text) */
-  --btn-text:      #ffffff;   /* text on primary */
-  --yellow:        #c08a3e;
+  /* --- Paper & ink --- */
+  --paper:          #ffffff;   /* the only page ground */
+  --paper-2:        #f4f6fa;   /* grouped regions: rail, filter drawer, insets */
+  --paper-3:        #eaedf4;   /* pressed / hover fill on paper-2 */
+  --ink:            #10173e;   /* navy ink: body text and headlines (17:1 on paper) */
+  --ink-2:          #3f4660;   /* secondary text (9.3:1) */
+  --ink-3:          #5c6278;   /* meta, captions, labels (6:1) -- the floor for text */
+  --ink-faint:      #8d92a2;   /* non-text marks only: empty dots, dividers (3.1:1) */
+  --hairline:       #e0e3eb;   /* rules, card and control edges */
+  --hairline-strong:#c8ccd8;   /* rules that must read at a glance */
 
-  /* --- Visualization palette (emerald sequential ramp, cool light end) --- */
-  --viz-1: #e7efeb;   /* Lightest */
-  --viz-2: #bcd8cb;
-  --viz-3: #83b79f;
-  --viz-4: #3f9b72;
-  --viz-5: #0d8a5f;   /* Darkest = primary */
+  /* The press ink: halftone imagery and data marks are printed in the logo's
+     own navy. It is a material, never a signal -- no button or link uses it. */
+  --press-ink:      #2a3486;
+  --press-ink-soft: #cacde1;   /* a 25% screen of the press ink (empty marks) */
 
-  /* --- Maturity pipeline stage colors (cool slate -> emerald -> gold endpoint) --- */
-  --maturity-dataset:  #8a929b;   /* cool slate -- starting point */
-  --maturity-model:    #74b394;   /* soft emerald -- building */
-  --maturity-pilot:    #38a074;   /* mid emerald -- testing */
-  --maturity-usecase:  #0d8a5f;   /* primary emerald -- deploying */
-  --maturity-business: #c08a3e;   /* gold -- sustainable endpoint */
+  /* The spot colour: emerald means "you can act on this" -- primary action,
+     links on hover, focus, the current selection. Rare by design. */
+  --spot:           #0c815a;   /* 4.9:1 on paper */
+  --spot-deep:      #006d49;   /* hover / pressed (6.4:1) */
+  --spot-wash:      rgba(12, 129, 90, 0.08);
 
-  /* --- Semantic colors --- */
-  --color-success:  #1f9d57;
-  --color-warning:  #f59e0b;
-  --color-danger:   #ef4444;
-  --color-info:     #3b82f6;
-  --color-purple:   #8b5cf6;
-  --color-cyan:     #06b6d4;
-  --color-surface:        #f4f6f6;
-  --color-surface-hover:  #eceff0;
+  /* The one warm ember: "Catalyzed by" attribution. One meaning, never decoration. */
+  --ember:          #c08a3e;
 
-  /* --- Elevation (box-shadow) scale --- */
-  --shadow-sm:    0 1px 3px var(--shadow), 0 1px 2px rgba(0, 0, 0, 0.02);
-  --shadow-md:    0 4px 12px var(--shadow), 0 2px 4px rgba(0, 0, 0, 0.03);
-  --shadow-lg:    0 8px 24px var(--shadow-hover), 0 4px 8px rgba(0, 0, 0, 0.04);
-  --shadow-xl:    0 16px 32px var(--shadow-hover), 0 6px 12px rgba(0, 0, 0, 0.05);
-  --shadow-focus: 0 0 0 3px rgba(12, 129, 90, 0.18);
-  --shadow-panel: -12px 0 40px rgba(20, 26, 31, 0.10);
+  /* --- Legacy aliases (older rules and components still read these) --- */
+  --primary:         var(--spot);
+  --primary-light:   var(--spot-deep);
+  --background:      var(--paper);
+  --card-background: var(--paper);
+  --text:            var(--ink);
+  --text-light:      var(--ink-2);
+  --text-muted:      var(--ink-3);
+  --text-faint:      var(--ink-3);   /* was 2.6:1 gray; text now never drops below ink-3 */
+  --border:          var(--hairline);
+  --border-soft:     var(--hairline);
+  --border-light:    var(--hairline);
+  --surface-cool:    var(--paper-2);
+  --accent-teal:     var(--spot);
+  --accent-gold:     var(--ember);
+  --shadow:          rgba(16, 23, 62, 0.06);
+  --shadow-hover:    rgba(16, 23, 62, 0.12);
+  --title-color:     var(--ink);
+  --btn-text:        #ffffff;
+  --yellow:          var(--ember);
 
-  /* --- Transition durations --- */
-  --transition-fast: 150ms ease-out;
-  --transition-base: 200ms ease-out;
-  --transition-slow: 350ms ease-out;
+  /* --- Visualization palette: screens of the press ink, even steps in OKLCH
+     lightness (hue 272). Ink text reads on 1-3, white on 4-5. --- */
+  --viz-1: #e8ecf9;
+  --viz-2: #b2bde0;
+  --viz-3: #808ec4;
+  --viz-4: #5261a5;
+  --viz-5: #2a3486;   /* = press ink */
+
+  /* --- Semantic colors (genuine status only) --- */
+  --color-success:  #1e8347;
+  --color-warning:  #a15b00;
+  --color-danger:   #c8352a;
+  --color-info:     #2f5fa8;
+  --color-purple:   #6b4fa0;
+  --color-cyan:     #0f7c8c;
+  --color-surface:        var(--paper-2);
+  --color-surface-hover:  var(--paper-3);
+
+  /* --- Elevation ---
+     Flat by default: resting surfaces carry a hairline, never a shadow. A
+     shadow means "this floats above the page" (panel, modal, popover). */
+  --shadow-sm:    none;
+  --shadow-md:    none;
+  --shadow-lg:    0 14px 32px -14px rgba(16, 23, 62, 0.28);
+  --shadow-xl:    0 18px 40px -12px rgba(16, 23, 62, 0.32);
+  --shadow-focus: 0 0 0 3px rgba(12, 129, 90, 0.22);
+  --shadow-panel: -18px 0 48px -12px rgba(16, 23, 62, 0.22);
+
+  /* --- Motion --- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);   /* ease-out-quint */
+  --transition-fast: 150ms var(--ease-out);
+  --transition-base: 200ms var(--ease-out);
+  --transition-slow: 320ms var(--ease-out);
+
+  /* --- Layering --- */
+  --z-sticky:   10;
+  --z-overlay:  999;
+  --z-panel:    1000;
+  --z-modal-backdrop: 1005;
+  --z-modal:    1010;
+  --z-skip:     1100;
 
   /* --- Layout (rem so they scale with the root font-size) --- */
-  --content-max-width:  76rem;     /* 1140px at 15px base */
-  --detail-panel-width: 76rem; /* wider panel so the narrative column isn't cramped */
+  --content-max-width:  76rem;
+  --detail-panel-width: 76rem;
 }
 
 /* --- Global focus-visible --- */
 :focus-visible {
-  outline: 2px solid var(--primary);
+  outline: 2px solid var(--spot);
   outline-offset: 2px;
 }
 
@@ -126,12 +178,11 @@
 }
 
 .detail-panel-content::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: var(--radius-pill);
+  background: var(--hairline-strong);
 }
 
 .detail-panel-content::-webkit-scrollbar-thumb:hover {
-  background: var(--text-light);
+  background: var(--ink-3);
 }
 
 /* --- Skip link --- */
@@ -139,11 +190,10 @@
   position: absolute;
   top: -100%;
   left: 1rem;
-  z-index: 9999;
-  padding: 0.5rem 1rem;
-  background: var(--primary);
+  z-index: var(--z-skip);
+  padding: 0.6rem 1rem;
+  background: var(--spot);
   color: var(--btn-text);
-  border-radius: var(--radius-md);
   font-size: var(--text-sm);
   font-weight: 600;
   text-decoration: none;

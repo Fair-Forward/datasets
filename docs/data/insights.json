@@ -1,6 +1,6 @@
 {
   "total_projects": 89,
-  "total_countries": 27,
+  "total_countries": 25,
   "map_data": {
     "AO": {
       "name": "Angola",
@@ -13,6 +13,24 @@
         "Geospatial/Remote Sensing",
         "Images",
         "Tabular"
+      ]
+    },
+    "CD": {
+      "name": "Democratic Republic of Congo",
+      "projects": 3,
+      "iso2": "CD",
+      "sdgs": [
+        "SDG 2",
+        "SDG 5",
+        "SDG 10",
+        "SDG 15"
+      ],
+      "data_types": [
+        "Geospatial/Remote Sensing",
+        "Images",
+        "Tabular",
+        "Text",
+        "Voice"
       ]
     },
     "KE": {

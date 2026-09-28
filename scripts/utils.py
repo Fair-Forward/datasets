@@ -41,6 +41,7 @@ CSP = ("default-src 'self'; script-src 'self' https://cloud.umami.is; "
        "https://fonts.gstatic.com; frame-src 'none';")
 
 # The site's type face, loaded from Google Fonts (permitted by the CSP above).
+# index.html and public/privacy/index.html hold literal copies of this URL.
 FONT_HREF = ("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:"
              "wght@400;500;600;700;800&display=swap")
 
@@ -68,6 +69,53 @@ COUNTRY_ISO_MAP = {
     'Panama': 'PA',
 }
 KNOWN_COUNTRIES = set(COUNTRY_ISO_MAP.keys())
+
+
+def clean_country_list(country_text):
+    """Split country text into clean list, handling slash-separated region qualifiers."""
+    if not country_text or not isinstance(country_text, str):
+        return []
+    parts = re.split(r',|\s+and\s+|;', country_text)
+    countries = []
+    for part in parts:
+        country = part.strip()
+        if not country:
+            continue
+        # Split "Benin/West Africa" -> take the country name (first part)
+        if '/' in country:
+            country = country.split('/')[0].strip()
+        if country:
+            countries.append(country)
+    return countries
+
+
+def split_places(names):
+    """Split catalog `countries` into ISO-coded countries and uncoded regions.
+
+    The column mixes granularities ("Kenya" alongside "West Africa" and "Global"),
+    which a consumer cannot resolve from the strings alone. COUNTRY_ISO_MAP decides:
+    anything it codes is a country, anything left over is published as a region
+    rather than silently dropped or passed off as a country.
+    """
+    countries, regions = [], []
+    for name in names:
+        iso2 = COUNTRY_ISO_MAP.get(name)
+        if iso2:
+            countries.append({"name": name, "iso2": iso2})
+        else:
+            regions.append(name)
+    return countries, regions
+
+
+def count_countries(names):
+    """Number of distinct countries among place names, counted by ISO code.
+
+    Uses split_places(), the rule the public API publishes, so regional and global
+    scopes ("East Africa", "Global") are not counted, and two spellings of one country
+    ("DRC", "Democratic Republic of Congo") count once.
+    """
+    countries, _ = split_places(names)
+    return len({country["iso2"] for country in countries})
 
 
 def get_gsheet_client(credentials_path=None):

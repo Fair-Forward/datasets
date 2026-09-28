@@ -72,7 +72,7 @@ const SDGChart = ({ sdgDistribution, onSDGClick }) => {
           sdg,
           number,
           count,
-          color: SDG_COLORS[number] || '#666',
+          color: SDG_COLORS[number] || '#5c6278',
           fullName: SDG_NAMES[number] || sdg,
           percentage: (count / total) * 100
         }
@@ -148,12 +148,14 @@ const SDGChart = ({ sdgDistribution, onSDGClick }) => {
                 </div>
               </div>
               <div className="sdg-bar-track">
+                {/* Bars print as a halftone screen, so the count sits just past the
+                    bar's end rather than on it. Scaling to 88% of the track keeps room
+                    for that label beside the longest bar; proportions are unchanged. */}
                 <div
                   className="sdg-bar-fill"
                   style={{
-                    width: `${(item.count / maxCount) * 100}%`,
-                    backgroundColor: 'var(--viz-5)',
-                    '--bar-width': `${(item.count / maxCount) * 100}%`
+                    width: `${(item.count / maxCount) * 88}%`,
+                    '--bar-width': `${(item.count / maxCount) * 88}%`
                   }}
                 >
                   <span className="sdg-bar-value">{item.count}</span>

@@ -16,6 +16,9 @@ from utils import (
     merge_access_note_link_columns,
     documents_dir_has_files,
     is_auto_enriched,
+    clean_country_list,
+    count_countries,
+    split_places,
 )
 from text_parsing import label_from_url, label_from_resource_url
 
@@ -129,24 +132,6 @@ def label_links(links, resource_style=False):
             name = derive(link['url']) or 'Link'
         labeled.append({'name': name, 'url': link['url']})
     return labeled
-
-
-def clean_country_list(country_text):
-    """Split country text into clean list, handling slash-separated region qualifiers."""
-    if not country_text or not isinstance(country_text, str):
-        return []
-    parts = re.split(r',|\s+and\s+|;', country_text)
-    countries = []
-    for part in parts:
-        country = part.strip()
-        if not country:
-            continue
-        # Split "Benin/West Africa" -> take the country name (first part)
-        if '/' in country:
-            country = country.split('/')[0].strip()
-        if country:
-            countries.append(country)
-    return countries
 
 
 def _content_length_score(text, thresholds):
@@ -345,7 +330,6 @@ def generate_catalog_json():
         # Calculate statistics
         dataset_count = 0
         usecase_count = 0
-        valid_countries = set()
         project_ids = set()
         projects = []
         
@@ -410,12 +394,11 @@ def generate_catalog_json():
 
             project_ids.add(normalized_project_id)
             
-            # Count countries. Build the filter vocabulary from the same cleaned
+            # Collect places. Build the filter vocabulary from the same cleaned
             # values the project carries, so every filter option matches at least
             # one project and every project value is offered as a filter.
             country_text = row.get('Country Team', '')
             project_countries = clean_country_list(country_text)
-            valid_countries.update(project_countries)
             all_countries.update(project_countries)
             
             # Get display title
@@ -556,7 +539,13 @@ def generate_catalog_json():
 
         # Calculate final counts
         project_count = len(project_ids)
-        country_count = len(valid_countries)
+        # Countries are what COUNTRY_ISO_MAP codes (counted by ISO code); the rest of the
+        # vocabulary ("East Africa", "Global") are regional or global scopes. They stay
+        # filterable. Each country name ships with its ISO code so the site counts a
+        # filtered set by the same rule, with two spellings of one country counting once.
+        coded_places, region_names = split_places(sorted(all_countries))
+        country_count = count_countries(all_countries)
+        country_codes = {place['name']: place['iso2'] for place in coded_places}
         access_note_project_count = sum(1 for p in projects if p.get('has_access_note'))
 
         # Build alias lookup map: old_title_id -> stable_id
@@ -582,6 +571,8 @@ def generate_catalog_json():
                 'sdgs': sorted(list(all_sdgs), key=lambda x: int(re.search(r'\d+', x).group())),
                 'data_types': sorted(list(all_data_types)),
                 'countries': sorted(list(all_countries)),
+                'regions': region_names,
+                'country_codes': country_codes,
                 'maturity_stages': [stage['key'] for stage in MATURITY_STAGES]
             }
         }
@@ -596,7 +587,8 @@ def generate_catalog_json():
         print(f"  - {dataset_count} datasets")
         print(f"  - {usecase_count} use cases")
         print(f"  - {access_note_project_count} info / no public link projects")
-        print(f"  - {country_count} countries")
+        print(f"  - {country_count} countries"
+              + (f" (+ {len(region_names)} regional/global scopes: {', '.join(region_names)})" if region_names else ""))
         print(f"  - {len(all_sdgs)} SDGs")
         print(f"  - {len(all_data_types)} data types")
         

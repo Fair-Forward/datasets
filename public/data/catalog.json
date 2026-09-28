@@ -5210,7 +5210,7 @@
     "total_datasets": 93,
     "total_usecases": 57,
     "total_access_note_projects": 10,
-    "total_countries": 28
+    "total_countries": 25
   },
   "filters": {
     "sdgs": [
@@ -5268,6 +5268,38 @@
       "West Africa",
       "Zambia"
     ],
+    "regions": [
+      "East Africa",
+      "Global",
+      "West Africa"
+    ],
+    "country_codes": {
+      "Angola": "AO",
+      "Benin": "BJ",
+      "Brazil": "BR",
+      "Cameroon": "CM",
+      "Colombia": "CO",
+      "Cote d'Ivoire": "CI",
+      "Democratic Republic of Congo": "CD",
+      "Ecuador": "EC",
+      "Ethiopia": "ET",
+      "Ghana": "GH",
+      "India": "IN",
+      "Indonesia": "ID",
+      "Kenya": "KE",
+      "Madagascar": "MG",
+      "Mozambique": "MZ",
+      "Niger": "NE",
+      "Nigeria": "NG",
+      "Pakistan": "PK",
+      "Rwanda": "RW",
+      "Senegal": "SN",
+      "South Africa": "ZA",
+      "Tanzania": "TZ",
+      "Togo": "TG",
+      "Uganda": "UG",
+      "Zambia": "ZM"
+    },
     "maturity_stages": [
       "dataset",
       "model",
