@@ -15,12 +15,13 @@ RUN = '2026-10-05'
 UI80_ALL_TIME = {'u:a': 198, 'u:b': 187, 'u:c': 30, 'u:d': 12, 'e:x@example.org': 7}
 
 
-def gh_obs(repo_id, last='2026-08-02', all_time=None, active=None, archived=False, fork_of=None, forks=1,
+def gh_obs(repo_id, last='2026-08-02', all_time=None, active=None, archived=False, fork_of=None, fork=False, forks=1,
            stars=1, lic=None, rel_in=0, rel_total=0, latest_rel=None, response_items=(), outside_prs=()):
     all_time = dict(UI80_ALL_TIME) if all_time is None else all_time
     active = {'u:a': 5, 'u:b': 2} if active is None else active
     people = cm.merge_people(all_time, active)
-    record = {'platform': 'github', 'id': repo_id, 'renamed_from': None, 'fork_of': fork_of, 'archived': archived,
+    record = {'platform': 'github', 'id': repo_id, 'renamed_from': None, 'fork': bool(fork_of) or fork,
+              'fork_of': fork_of, 'archived': archived,
               'forks': forks, 'stars': stars, 'license': cm.normalise_licenses(lic, 'github'),
               'last_change_at': last, 'gaps': [], 'contributors_total': people['total'],
               'contributors_active': people['active'], 'absence_factor': people['absence_factor'],
@@ -98,6 +99,21 @@ class SummariseTests(unittest.TestCase):
                         two['key']: gh_obs('o/two', all_time={'u:a': 5, 'u:c': 20}, active={'u:c': 2})}
         people = hc.summarise_entry([one, two], observations, RUN)['people']['github']
         self.assertEqual((people['total'], people['active'], people['absence_factor'], people['assets']), (3, 2, 1, 2))
+
+    def test_the_last_change_counts_archived_repositories_too(self):
+        live = asset('github:o/live', 'github', 'o/live')
+        old = asset('github:o/old', 'github', 'o/old')
+        observations = {live['key']: gh_obs('o/live', last='2023-04-06'),
+                        old['key']: gh_obs('o/old', last='2024-05-24', archived=True)}
+        self.assertEqual(hc.summarise_entry([live, old], observations, RUN)['last_change'],
+                         {'at': '2024-05-24', 'platform': 'github', 'archived': False})
+        only_old = hc.summarise_entry([old], {old['key']: observations[old['key']]}, RUN)
+        self.assertEqual(only_old['last_change'], {'at': '2024-05-24', 'platform': 'github', 'archived': True})
+
+    def test_a_fork_marks_its_history_even_when_the_original_is_unnamed(self):
+        one = asset('github:o/fork', 'github', 'o/fork')
+        oss = hc.summarise_entry([one], {one['key']: gh_obs('o/fork', fork=True)}, RUN)
+        self.assertTrue(oss['people']['github']['fork_history'])
 
     def test_pools_reply_times_across_repositories_before_the_minimum(self):
         one = asset('github:o/one', 'github', 'o/one')

@@ -17,6 +17,7 @@ import argparse
 import csv
 import html
 import json
+import os
 import re
 import statistics
 from collections import Counter
@@ -35,8 +36,11 @@ _INTERNAL = ('sdg_list', 'platform_set', 'flag_details')
 def ensure_outside_repo(path):
     """The resolved output directory, or ValueError when it lies inside this repository."""
     resolved = Path(path).expanduser().resolve()
-    if resolved == REPO_ROOT or REPO_ROOT in resolved.parents:
-        raise ValueError(f'{resolved} is inside the repository; the report is private, write it elsewhere')
+    # Compare existing ancestors as files, so another letter case on a case-insensitive disk
+    # cannot slip past.
+    for candidate in (resolved, *resolved.parents):
+        if candidate == REPO_ROOT or (candidate.exists() and os.path.samefile(candidate, REPO_ROOT)):
+            raise ValueError(f'{resolved} is inside the repository; the report is private, write it elsewhere')
     return resolved
 
 
@@ -76,8 +80,9 @@ def quality_flags(project, entry):
             flags.append(('failed', f"{asset['platform']} {ident} could not be reached this run"))
         if asset.get('renamed_from'):
             flags.append(('renamed', f"linked as {asset['renamed_from']}, now {asset['id']}"))
-        if asset.get('fork_of'):
-            flags.append(('fork_linked', f"{asset['id']} is a fork of {asset['fork_of']}"))
+        if asset.get('fork'):
+            original = asset.get('fork_of') or 'a repository under a personal account'
+            flags.append(('fork_linked', f"{asset['id']} is a fork of {original}"))
         if asset.get('archived'):
             flags.append(('archived', f"{asset['id']} is archived by its maintainers"))
         if asset.get('linked_is_latest') is False:

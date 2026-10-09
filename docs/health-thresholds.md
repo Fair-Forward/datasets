@@ -131,7 +131,14 @@ Rules:
   `github_only`, `no_releases_on_platform`, `archive_record`, `gated`, `unreadable`,
   `empty_repository` or `no_human_commits`.
 - **Private repositories are refused** even when the token running the check could read them, so a
-  local run with a personal token publishes nothing a visitor could not see.
+  local run with a personal token publishes nothing a visitor could not see. Only the statuses a host
+  uses for a missing or non-public asset count as "unreadable" (GitHub 404, 410, 451; Hugging Face
+  also 401 and 403); bad credentials, a bare 403 or a malformed request fail the run instead and
+  fall under carry-forward.
+- **Dates after the run day are ignored.** Commit and publication dates come from people's clocks;
+  a date in the future never becomes the last change.
+- **Forks**: a fork's original repository is named only when an organisation owns it; personal
+  account names the catalogue does not list are not published.
 - **Carry-forward**: when a source cannot be reached (network errors, rate limits, the request
   budget), the project keeps its previous `oss` block with its own `measured_at` for up to
   `CARRY_FORWARD_MAX_DAYS` (28), provided it covers the same assets. When most sources fail and a

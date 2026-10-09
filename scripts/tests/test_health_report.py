@@ -44,6 +44,11 @@ class SafetyTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             hr.ensure_outside_repo(REPO)
 
+    @unittest.skipUnless(Path(str(REPO).swapcase()).exists(), 'needs a case-insensitive file system')
+    def test_refuses_the_repository_under_another_letter_case(self):
+        with self.assertRaises(ValueError):
+            hr.ensure_outside_repo(Path(str(REPO).swapcase()) / 'reports')
+
     def test_accepts_a_directory_elsewhere(self):
         with tempfile.TemporaryDirectory() as tmp:
             self.assertEqual(hr.ensure_outside_repo(Path(tmp) / 'out'), (Path(tmp) / 'out').resolve())
@@ -53,7 +58,7 @@ class FlagTests(unittest.TestCase):
     def test_names_the_link_problems_a_maintainer_can_fix(self):
         assets = [
             {'key': 'github:a/old', 'platform': 'github', 'id': 'a/new', 'status': 'measured', 'renamed_from': 'a/old',
-             'fork_of': 'up/new', 'archived': True},
+             'fork': True, 'fork_of': 'up/new', 'archived': True},
             {'key': 'github:a/private', 'platform': 'github', 'id': 'a/private', 'status': 'unavailable'},
             {'key': 'zenodo:1', 'platform': 'zenodo', 'id': '1', 'status': 'measured', 'linked_is_latest': False, 'latest_id': '2'},
             {'key': 'huggingface:datasets/h/d', 'platform': 'huggingface', 'id': 'h/d', 'status': 'measured', 'gated': 'auto',

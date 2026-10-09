@@ -26,6 +26,17 @@ DOI_HANDLES = 'https://doi.org/api/handles'
 # Failures worth carrying a previous measurement over; "unavailable" is a lasting fact instead.
 TRANSIENT = frozenset({'failed', 'budget', 'rate_limited'})
 
+# Statuses each host uses for "this asset is not public or no longer exists". Anything else that
+# fails (bad credentials, a bare 403, a malformed request) is a failure of the run, which is carried
+# over or stops the run, never published as a fact about the asset. GitHub answers 404 for private
+# repositories; Hugging Face answers 401 for gated or private ones.
+UNAVAILABLE_STATUSES = {
+    'github': (404, 410, 451),
+    'huggingface': (401, 403, 404, 410, 451),
+    'zenodo': (403, 404, 410),
+    'doi': (404,),
+}
+
 _LINK_NEXT = re.compile(r'<([^>]+)>\s*;\s*rel="?next"?', re.I)
 
 
@@ -57,8 +68,10 @@ class ApiClient:
     """GET JSON from one host within a request budget, retrying what is worth retrying."""
 
     def __init__(self, name, headers=None, budget=100, min_interval=0.0, max_wait=120, retries=3,
-                 timeout=(5, 20), session=None, sleep=time.sleep, clock=time.time):
+                 timeout=(5, 20), session=None, sleep=time.sleep, clock=time.time,
+                 unavailable=(404, 410, 451)):
         self.name = name
+        self.unavailable = frozenset(unavailable)
         self.headers = dict(headers or {})
         self.budget = budget
         self.min_interval = min_interval
@@ -135,12 +148,11 @@ class ApiClient:
                     attempt += 1
                     self._retry(attempt, 'rate_limited', status)
                     continue
-                raise SourceError('unavailable', status)
             if status >= 500:
                 attempt += 1
                 self._retry(attempt, 'failed', status)
                 continue
-            raise SourceError('unavailable', status)
+            raise SourceError('unavailable' if status in self.unavailable else 'failed', status)
 
     def paginate(self, url, params=None, max_pages=5, stop=None):
         """(items, complete) across pages linked by rel="next". complete is False when the
@@ -160,6 +172,12 @@ class ApiClient:
 def _day(value):
     parsed = parse_ts(value)
     return parsed.date().isoformat() if parsed else None
+
+
+def _day_until(value, end):
+    """The date of a timestamp, or None when it is unparseable or after the window end."""
+    parsed = parse_ts(value)
+    return parsed.date().isoformat() if parsed and parsed < end else None
 
 
 def _iso(moment):
@@ -229,7 +247,12 @@ def fetch_github_repo(gh, owner, repo, window):
     record = {
         'platform': 'github', 'id': full,
         'renamed_from': f'{owner}/{repo}' if full.lower() != f'{owner}/{repo}'.lower() else None,
-        'fork_of': (data.get('parent') or {}).get('full_name') if data.get('fork') else None,
+        'fork': bool(data.get('fork')),
+        # The original of a fork is named only when an organisation owns it: a personal account name
+        # that the catalogue does not list is not ours to publish.
+        'fork_of': ((data.get('parent') or {}).get('full_name')
+                    if data.get('fork') and ((data.get('parent') or {}).get('owner') or {}).get('type') == 'Organization'
+                    else None),
         'archived': bool(data.get('archived')),
         'forks': data.get('forks_count'), 'stars': data.get('stargazers_count'),
         'license': normalise_licenses((data.get('license') or {}).get('spdx_id'), 'github'),
@@ -245,23 +268,25 @@ def fetch_github_repo(gh, owner, repo, window):
             record['gaps'].append({'metric': 'last_change', 'reason': 'empty_repository'})
             return _result(record)
         raise
-    active, last_human = {}, None
+    def human_dates(page):
+        # Committer dates come from the committer's clock; a date after the run day is ignored.
+        return [m for m in (_committed_at(c) for c in page if _human_commit(c) is not None) if m and m < end]
+
+    active = {}
     for commit in commits:
         key = _human_commit(commit)
-        if key is None:
-            continue
-        active[key] = active.get(key, 0) + 1
-        moment = _committed_at(commit)
-        if moment and (last_human is None or moment > last_human):
-            last_human = moment
-    if last_human is None:
-        # Nobody committed in the window: read the newest page of history once.
-        recent, _ = gh.get_json(f'{base}/commits', {'sha': branch, 'per_page': 30})
-        recent = recent or []
-        human = [c for c in recent if _human_commit(c) is not None]
-        dates = [m for m in (_committed_at(c) for c in (human or recent)) if m]
-        last_human = max(dates) if dates else None
-    record['last_change_at'] = last_human.date().isoformat() if last_human else None
+        if key is not None:
+            active[key] = active.get(key, 0) + 1
+    dates = human_dates(commits)
+    if not dates:
+        # Nobody committed in the window: read back through history for the newest human commit.
+        history, _ = gh.paginate(f'{base}/commits', {'sha': branch, 'per_page': 100}, max_pages=3,
+                                 stop=lambda page: bool(human_dates(page)))
+        dates = human_dates(history)
+    if dates:
+        record['last_change_at'] = max(dates).date().isoformat()
+    else:
+        record['gaps'].append({'metric': 'last_change', 'reason': 'no_human_commits'})
 
     # All-time contributors, bots removed; anonymous ones count by email.
     contributors, _ = gh.paginate(f'{base}/contributors', {'anon': 1, 'per_page': 100}, max_pages=5)
@@ -328,15 +353,20 @@ def fetch_github_repo(gh, owner, repo, window):
     return _result(record, {'all_time': all_time, 'active': active}, response_items, outside_prs)
 
 
-_HF_EXPAND = ('private', 'gated', 'disabled', 'likes', 'lastModified', 'createdAt', 'cardData')
-_HF_DOWNLOADS = ('downloads', 'downloadsAllTime')
+_HF_FIELDS = {
+    'models': ('private', 'gated', 'disabled', 'likes', 'lastModified', 'createdAt', 'cardData',
+               'downloads', 'downloadsAllTime'),
+    'datasets': ('private', 'gated', 'disabled', 'likes', 'lastModified', 'createdAt', 'cardData',
+                 'downloads', 'downloadsAllTime'),
+    # Spaces answer 400 to `gated` and have no downloads.
+    'spaces': ('private', 'disabled', 'likes', 'lastModified', 'createdAt', 'cardData'),
+}
 
 
 def fetch_hf_asset(hf, kind, repo_id, window):
     """CHAOSS facts for one public Hugging Face model, dataset or space."""
     start, end = window
-    fields = _HF_EXPAND + (() if kind == 'spaces' else _HF_DOWNLOADS)
-    data, _ = hf.get_json(f'{HF_API}/{kind}/{repo_id}', [('expand[]', field) for field in fields])
+    data, _ = hf.get_json(f'{HF_API}/{kind}/{repo_id}', [('expand[]', field) for field in _HF_FIELDS[kind]])
     if not isinstance(data, dict):
         raise SourceError('failed', detail='unexpected repository response')
     if data.get('private') or data.get('disabled'):
@@ -429,7 +459,7 @@ def fetch_zenodo_record(zen, record_id, window):
         'latest_id': str(latest) if latest else None,
         'versions_total': max(summary['total'], relation.get('count') or 0),
         'versions_in_window': summary['in_window'],
-        'last_change_at': summary['latest_at'] or _day(meta.get('publication_date')),
+        'last_change_at': summary['latest_at'] or _day_until(meta.get('publication_date'), end),
         'downloads_all_time': stats.get('downloads'), 'views_all_time': stats.get('views'),
         'license': normalise_licenses((meta.get('license') or {}).get('id'), 'zenodo'),
         'resource_type': (meta.get('resource_type') or {}).get('type'),

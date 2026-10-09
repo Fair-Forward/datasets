@@ -31,8 +31,8 @@ from datetime import datetime, timedelta, timezone
 
 import chaoss_metrics as cm
 from health_assets import OPEN_HOSTS, discover_assets, host_counts, in_scope_urls, is_archive_url
-from health_sources import (TRANSIENT, ApiClient, SourceError, fetch_github_repo, fetch_hf_asset,
-                            fetch_zenodo_record, resolve_doi)
+from health_sources import (TRANSIENT, UNAVAILABLE_STATUSES, ApiClient, SourceError, fetch_github_repo,
+                            fetch_hf_asset, fetch_zenodo_record, resolve_doi)
 
 SCHEMA_VERSION = 2
 DEFAULT_OUTPUTS = ('public/data/health.json', 'docs/data/health.json')
@@ -129,11 +129,13 @@ def make_clients(github_budget):
     if token:
         github_headers['Authorization'] = f'Bearer {token}'
     return {
-        'github': ApiClient('GitHub', github_headers, budget=github_budget),
-        'huggingface': ApiClient('Hugging Face', {'User-Agent': USER_AGENT}, budget=400, min_interval=0.25),
+        'github': ApiClient('GitHub', github_headers, budget=github_budget,
+                            unavailable=UNAVAILABLE_STATUSES['github']),
+        'huggingface': ApiClient('Hugging Face', {'User-Agent': USER_AGENT}, budget=400, min_interval=0.25,
+                                 unavailable=UNAVAILABLE_STATUSES['huggingface']),
         'zenodo': ApiClient('Zenodo', {'User-Agent': USER_AGENT, 'Accept': 'application/json'},
-                            budget=60, min_interval=0.5),
-        'doi': ApiClient('doi.org', {'User-Agent': USER_AGENT}, budget=20),
+                            budget=60, min_interval=0.5, unavailable=UNAVAILABLE_STATUSES['zenodo']),
+        'doi': ApiClient('doi.org', {'User-Agent': USER_AGENT}, budget=20, unavailable=UNAVAILABLE_STATUSES['doi']),
     }
 
 
@@ -265,7 +267,7 @@ def summarise_entry(assets, observations, run_date):
             bucket = buckets.setdefault(record['platform'], {'all_time': {}, 'active': {}, 'assets': 0,
                                                              'fork_history': False})
             bucket['assets'] += 1
-            bucket['fork_history'] = bucket['fork_history'] or bool(record.get('fork_of'))
+            bucket['fork_history'] = bucket['fork_history'] or bool(record.get('fork'))
             for key, count in observation['people']['all_time'].items():
                 bucket['all_time'][key] = bucket['all_time'].get(key, 0) + count
             for key, count in observation['people']['active'].items():
@@ -284,9 +286,10 @@ def summarise_entry(assets, observations, run_date):
             if summary['total']:
                 people[platform] = dict(summary, assets=bucket['assets'], fork_history=bucket['fork_history'])
 
+    # The freshest change across every asset, archived or not; "archived" only when every dated
+    # asset is an archived repository (context and activity treat archives on their own).
     dated = [(r['last_change_at'], r['platform'], bool(r.get('archived'))) for r in measured if r.get('last_change_at')]
-    live = [d for d in dated if not d[2]]
-    pick = max(live or dated) if dated else None
+    pick = max(dated, key=lambda d: (d[0], d[1])) if dated else None
 
     releases = {}
     if by['github']:
@@ -333,7 +336,8 @@ def summarise_entry(assets, observations, run_date):
         'window': {'start': start.date().isoformat(), 'end': (end - timedelta(days=1)).date().isoformat()},
         'scope': {'github': len(by['github']), 'huggingface': len(by['huggingface']),
                   'zenodo': len(by['zenodo']), 'unreadable': unreadable, 'failed': failed},
-        'last_change': {'at': pick[0], 'platform': pick[1], 'archived': pick[2]} if pick else None,
+        'last_change': ({'at': pick[0], 'platform': pick[1], 'archived': all(d[2] for d in dated)}
+                        if pick else None),
         'people': people,
         'releases': releases,
         'reuse': reuse,

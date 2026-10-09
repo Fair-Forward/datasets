@@ -125,11 +125,24 @@ class ApiClientTests(unittest.TestCase):
         api.get_json('u')
         self.assertEqual(clock.slept, [8.0])
 
-    def test_auth_walls_without_rate_limit_headers_are_unavailable(self):
-        api, _, _ = client({'u': FakeResponse(401, {})})
+    def test_only_a_host_that_hides_private_assets_behind_401_reads_it_as_unavailable(self):
+        api, _, _ = client({'u': FakeResponse(401, {})}, unavailable=(401, 403, 404, 410, 451))
         with self.assertRaises(hs.SourceError) as ctx:
             api.get_json('u')
         self.assertEqual(ctx.exception.kind, 'unavailable')
+
+    def test_bad_credentials_or_a_bare_403_fail_the_request_instead(self):
+        for status in (401, 403):
+            api, _, _ = client({'u': FakeResponse(status, {})})
+            with self.assertRaises(hs.SourceError) as ctx:
+                api.get_json('u')
+            self.assertEqual(ctx.exception.kind, 'failed', status)
+
+    def test_a_bad_request_is_a_failure_not_a_missing_asset(self):
+        api, _, _ = client({'u': FakeResponse(400, {})})
+        with self.assertRaises(hs.SourceError) as ctx:
+            api.get_json('u')
+        self.assertEqual((ctx.exception.kind, ctx.exception.status), ('failed', 400))
 
     def test_stops_at_the_request_budget(self):
         api, _, _ = client({'u': FakeResponse(200, {})}, budget=1)
@@ -254,15 +267,41 @@ class GithubFetchTests(unittest.TestCase):
     def test_forks_skip_the_community_profile(self):
         routes = github_routes()
         routes[f'{GH}/Old-Org/Repo'] = FakeResponse(200, {'full_name': 'Old-Org/Repo', 'private': False, 'fork': True,
-                                                          'parent': {'full_name': 'Upstream/Repo'},
+                                                          'parent': {'full_name': 'Upstream/Repo',
+                                                                     'owner': {'type': 'Organization'}},
                                                           'default_branch': 'main'})
         base = f'{GH}/Old-Org/Repo'
         for suffix in ('commits', 'contributors', 'releases', 'issues', 'community/profile'):
             routes[f'{base}/{suffix}'] = routes.pop(f'{GH}/New-Org/Repo/{suffix}')
         result, session = self.fetch(routes)
+        self.assertTrue(result['record']['fork'])
         self.assertEqual(result['record']['fork_of'], 'Upstream/Repo')
         self.assertIsNone(result['record']['files'])
         self.assertNotIn(f'{base}/community/profile', [url for url, _ in session.calls])
+
+    def test_a_fork_of_a_personal_repository_does_not_name_its_owner(self):
+        routes = github_routes()
+        routes[f'{GH}/Old-Org/Repo'] = FakeResponse(200, {'full_name': 'New-Org/Repo', 'private': False, 'fork': True,
+                                                          'parent': {'full_name': 'someperson/Repo', 'owner': {'type': 'User'}},
+                                                          'default_branch': 'main'})
+        result, _ = self.fetch(routes)
+        self.assertEqual((result['record']['fork'], result['record']['fork_of']), (True, None))
+        self.assertNotIn('someperson', json.dumps(result['record']))
+
+    def test_last_change_is_empty_when_only_bots_committed(self):
+        def commits(url, params):
+            return FakeResponse(200, [gh_commit('dependabot[bot]', '2026-09-01T00:00:00Z', user_type='Bot'),
+                                      gh_commit('github-actions[bot]', '2025-01-01T00:00:00Z', user_type='Bot')])
+        result, _ = self.fetch(github_routes(**{f'{GH}/New-Org/Repo/commits': commits}))
+        self.assertIsNone(result['record']['last_change_at'])
+        self.assertIn({'metric': 'last_change', 'reason': 'no_human_commits'}, result['record']['gaps'])
+
+    def test_commit_dates_after_the_run_are_ignored(self):
+        def commits(url, params):
+            return FakeResponse(200, [gh_commit('alice', '2031-01-01T00:00:00Z'), gh_commit('bob', '2026-08-02T00:00:00Z')])
+        result, _ = self.fetch(github_routes(**{f'{GH}/New-Org/Repo/commits': commits}))
+        self.assertEqual(result['record']['last_change_at'], '2026-08-02')
+        self.assertEqual(result['record']['contributors_active'], 2)
 
     def test_last_change_falls_back_to_history_when_only_bots_committed_recently(self):
         def commits(url, params):
@@ -316,9 +355,13 @@ def hf_routes(**overrides):
     return routes
 
 
+def hf_client(routes):
+    return client(routes, unavailable=hs.UNAVAILABLE_STATUSES['huggingface'])
+
+
 class HuggingFaceFetchTests(unittest.TestCase):
     def test_measures_a_dataset(self):
-        api, _, _ = client(hf_routes())
+        api, _, _ = hf_client(hf_routes())
         record = hs.fetch_hf_asset(api, 'datasets', 'Old/ds', WINDOW)['record']
         self.assertEqual((record['id'], record['renamed_from']), ('New/ds', 'Old/ds'))
         self.assertEqual((record['downloads_30d'], record['downloads_all_time'], record['likes']), (64, 2155, 3))
@@ -328,10 +371,24 @@ class HuggingFaceFetchTests(unittest.TestCase):
         self.assertEqual(record['discussions'], {'total': 2, 'closed': 1})
         self.assertNotIn('alice', json.dumps(record))
 
+    def test_asks_each_kind_only_for_fields_it_has(self):
+        routes = hf_routes(**{f'{HF}/spaces/o/app': FakeResponse(200, {'id': 'o/app', 'likes': 2,
+                                                                        'lastModified': '2026-01-01T00:00:00Z'})})
+        api, session, _ = hf_client(routes)
+        hs.fetch_hf_asset(api, 'spaces', 'o/app', WINDOW)
+        hs.fetch_hf_asset(api, 'datasets', 'Old/ds', WINDOW)
+        asked = {url: [value for key, value in (params or []) if key == 'expand[]'] for url, params in session.calls
+                 if url in (f'{HF}/spaces/o/app', f'{HF}/datasets/Old/ds')}
+        self.assertNotIn('gated', asked[f'{HF}/spaces/o/app'])
+        self.assertNotIn('downloads', asked[f'{HF}/spaces/o/app'])
+        self.assertIn('likes', asked[f'{HF}/spaces/o/app'])
+        self.assertIn('gated', asked[f'{HF}/datasets/Old/ds'])
+        self.assertIn('downloadsAllTime', asked[f'{HF}/datasets/Old/ds'])
+
     def test_gated_commit_history_is_a_named_gap(self):
         routes = hf_routes(**{f'{HF}/datasets/New/ds/commits/main': FakeResponse(401, {})})
         routes[f'{HF}/datasets/Old/ds']._body['gated'] = 'auto'
-        api, _, _ = client(routes)
+        api, _, _ = hf_client(routes)
         record = hs.fetch_hf_asset(api, 'datasets', 'Old/ds', WINDOW)['record']
         self.assertIn({'metric': 'contributors', 'reason': 'gated'}, record['gaps'])
         self.assertIsNone(record['contributors_total'])
@@ -339,7 +396,7 @@ class HuggingFaceFetchTests(unittest.TestCase):
     def test_refuses_private_repositories(self):
         routes = hf_routes()
         routes[f'{HF}/datasets/Old/ds']._body['private'] = True
-        api, _, _ = client(routes)
+        api, _, _ = hf_client(routes)
         with self.assertRaises(hs.SourceError) as ctx:
             hs.fetch_hf_asset(api, 'datasets', 'Old/ds', WINDOW)
         self.assertEqual(ctx.exception.kind, 'unavailable')
@@ -379,6 +436,20 @@ class ZenodoFetchTests(unittest.TestCase):
         self.assertEqual((record['versions_total'], record['versions_in_window'], record['last_change_at']),
                          (1, 0, '2024-05-01'))
         self.assertEqual(record['license'][0]['spdx'], 'CC0-1.0')
+
+
+class ZenodoDateTests(unittest.TestCase):
+    def test_publication_dates_after_the_run_are_ignored_for_the_last_change(self):
+        routes = {
+            f'{ZEN}/444': FakeResponse(200, {'id': 444, 'conceptrecid': '400', 'stats': {},
+                                             'metadata': {'publication_date': '2031-01-01'}}),
+            f'{ZEN}/444/versions': FakeResponse(200, {'hits': {'total': 2, 'hits': [
+                {'id': 444, 'metadata': {'publication_date': '2031-01-01'}},
+                {'id': 443, 'metadata': {'publication_date': '2025-03-01'}}]}}),
+        }
+        api, _, _ = client(routes)
+        record = hs.fetch_zenodo_record(api, '444', WINDOW)['record']
+        self.assertEqual(record['last_change_at'], '2025-03-01')
 
 
 class DoiTests(unittest.TestCase):

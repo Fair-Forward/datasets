@@ -139,6 +139,11 @@ class ReleaseTests(unittest.TestCase):
         self.assertEqual(cm.release_summary(dates, start, end),
                          {'in_window': 2, 'total': 3, 'latest_at': '2026-10-08'})
 
+    def test_a_date_after_the_window_counts_but_is_never_the_latest(self):
+        start, end = cm.window_bounds('2026-10-08')
+        dates = [cm.parse_ts('2031-01-01'), cm.parse_ts('2026-06-03')]
+        self.assertEqual(cm.release_summary(dates, start, end), {'in_window': 1, 'total': 2, 'latest_at': '2026-06-03'})
+
     def test_no_releases(self):
         start, end = cm.window_bounds('2026-10-08')
         self.assertEqual(cm.release_summary([], start, end), {'in_window': 0, 'total': 0, 'latest_at': None})

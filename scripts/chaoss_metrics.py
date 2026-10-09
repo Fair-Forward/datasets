@@ -215,7 +215,9 @@ def closure_summary(prs, minimum=MIN_OUTSIDE_CHANGE_REQUESTS):
 def release_summary(dates, start, end):
     """CHAOSS Release Frequency: releases (or archive versions) in the window, in total, latest."""
     parsed = [d for d in (parse_ts(value) for value in dates) if d is not None]
-    latest = max(parsed) if parsed else None
+    # A user-entered date after the window end (a wrong clock) still counts, but is never the latest.
+    past = [d for d in parsed if d < end]
+    latest = max(past) if past else None
     return {
         'in_window': sum(1 for d in parsed if start <= d < end),
         'total': len(parsed),
