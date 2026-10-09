@@ -1,39 +1,72 @@
 {
-  "generated_at": "2026-10-05",
+  "schema_version": 2,
+  "generated_at": "2026-10-09",
+  "method": {
+    "page": "https://github.com/Fair-Forward/datasets/blob/main/docs/health-thresholds.md",
+    "window_days": 365,
+    "min_outside_items": 5,
+    "min_outside_change_requests": 5,
+    "min_group": 5,
+    "absence_share": 0.5
+  },
   "entries": {
     "ui_0": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_1": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_2": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "stable_archive",
       "activity_score": 60,
       "link_count": 2,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "dataverse": 2
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_3": {
       "availability": "unavailable",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 2,
@@ -41,1013 +74,6151 @@
         "https://data.cmr.forest-atlas.org/",
         "https://data.cod.forest-atlas.org/"
       ],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 2
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_4": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": 22,
       "link_count": 1,
       "broken_links": [],
-      "github": {
-        "repo": "yangshao2/UrbanInfraDL",
-        "pushed_at": "2025-06-30T15:46:41Z",
-        "archived": false,
-        "days_since_commit": 462,
-        "stars": 0
+      "hosts": {
+        "github": 1
       },
-      "hf": null
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": false,
+        "several_contributors": false
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 1,
+          "huggingface": 0,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2025-06-30",
+          "platform": "github",
+          "archived": false
+        },
+        "people": {
+          "github": {
+            "total": 1,
+            "active": 0,
+            "absence_factor": 1,
+            "assets": 1,
+            "fork_history": false
+          }
+        },
+        "releases": {
+          "github": {
+            "in_window": 0,
+            "total": 0,
+            "latest_at": null
+          }
+        },
+        "reuse": {
+          "github": {
+            "forks": 0,
+            "stars": 0
+          }
+        },
+        "license": {
+          "github": [
+            {
+              "status": "none",
+              "spdx": null,
+              "raw": null,
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "too_few_items",
+            "count": 0
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "too_few_items",
+            "count": 0
+          }
+        ],
+        "assets": [
+          {
+            "key": "github:yangshao2/urbaninfradl",
+            "platform": "github",
+            "url": "https://github.com/yangshao2/UrbanInfraDL",
+            "id": "yangshao2/UrbanInfraDL",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 0,
+            "stars": 0,
+            "license": [
+              {
+                "status": "none",
+                "spdx": null,
+                "raw": null
+              }
+            ],
+            "last_change_at": "2025-06-30",
+            "gaps": [],
+            "contributors_total": 1,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          }
+        ]
+      }
     },
     "ui_5": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_6": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "no_recent_updates",
       "activity_score": 13,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": {
-        "id": "data354/Africa_Biomass_dataset",
-        "kind": "datasets",
-        "downloads": 21,
-        "likes": 4,
-        "last_modified": "2024-06-28T15:39:21.000Z",
-        "days_since_modified": 829
+      "hosts": {
+        "huggingface": 1
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": false,
+        "several_contributors": false
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 0,
+          "huggingface": 1,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2024-06-28",
+          "platform": "huggingface",
+          "archived": false
+        },
+        "people": {
+          "huggingface": {
+            "total": 1,
+            "active": 0,
+            "absence_factor": 1,
+            "assets": 1,
+            "fork_history": false
+          }
+        },
+        "releases": {},
+        "reuse": {
+          "huggingface": {
+            "downloads_30d": 21,
+            "downloads_all_time": 898,
+            "likes": 4
+          }
+        },
+        "license": {
+          "huggingface": [
+            {
+              "status": "detected",
+              "spdx": "CC-BY-4.0",
+              "raw": "cc-by-4.0",
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "github_only"
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "github_only"
+          },
+          {
+            "metric": "releases",
+            "reason": "no_releases_on_platform"
+          }
+        ],
+        "assets": [
+          {
+            "key": "huggingface:datasets/data354/africa_biomass_dataset",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/datasets/data354/Africa_Biomass_dataset",
+            "kind": "datasets",
+            "id": "data354/Africa_Biomass_dataset",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2024-06-28",
+            "created_at": "2024-06-10",
+            "likes": 4,
+            "downloads_30d": 21,
+            "downloads_all_time": 898,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-4.0",
+                "raw": "cc-by-4.0"
+              }
+            ],
+            "contributors_total": 1,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 1,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured"
+          }
+        ]
       }
     },
     "ui_7": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "figshare": 1
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_8": {
       "availability": "unavailable",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [
         "https://play.google.com/store/apps/details?id=org.core23lab.hdf&pcampaignid=web_share&pli=1"
       ],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_9": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
-      "activity_score": null,
+      "activity_score": 36,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "huggingface": 1
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": false,
+        "several_contributors": false
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 0,
+          "huggingface": 1,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2025-09-15",
+          "platform": "huggingface",
+          "archived": false
+        },
+        "people": {
+          "huggingface": {
+            "total": 1,
+            "active": 0,
+            "absence_factor": 1,
+            "assets": 1,
+            "fork_history": false
+          }
+        },
+        "releases": {},
+        "reuse": {
+          "huggingface": {
+            "downloads_30d": 6,
+            "downloads_all_time": 109,
+            "likes": 0
+          }
+        },
+        "license": {
+          "huggingface": [
+            {
+              "status": "none",
+              "spdx": null,
+              "raw": null,
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "github_only"
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "github_only"
+          },
+          {
+            "metric": "releases",
+            "reason": "no_releases_on_platform"
+          }
+        ],
+        "assets": [
+          {
+            "key": "huggingface:datasets/ksan26/edades",
+            "platform": "huggingface",
+            "url": "https://doi.org/10.57967/hf/6491",
+            "kind": "datasets",
+            "id": "ksan26/EDADES",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2025-09-15",
+            "created_at": "2025-09-15",
+            "likes": 0,
+            "downloads_30d": 6,
+            "downloads_all_time": 109,
+            "license": [
+              {
+                "status": "none",
+                "spdx": null,
+                "raw": null
+              }
+            ],
+            "contributors_total": 1,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 0,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured",
+            "resolved_from": "10.57967/hf/6491"
+          }
+        ]
+      }
     },
     "ui_10": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "kaggle": 1
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_11": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 3,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 3
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_12": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "recently_updated",
       "activity_score": 72,
       "link_count": 2,
       "broken_links": [],
-      "github": null,
-      "hf": {
-        "id": "KaraAgroAI/CADI-AI",
-        "kind": "datasets",
-        "downloads": 57,
-        "likes": 3,
-        "last_modified": "2026-07-30T15:25:52.000Z",
-        "days_since_modified": 67
+      "hosts": {
+        "huggingface": 2
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": true,
+        "several_contributors": true
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 0,
+          "huggingface": 2,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2026-07-31",
+          "platform": "huggingface",
+          "archived": false
+        },
+        "people": {
+          "huggingface": {
+            "total": 2,
+            "active": 1,
+            "absence_factor": 1,
+            "assets": 2,
+            "fork_history": false
+          }
+        },
+        "releases": {},
+        "reuse": {
+          "huggingface": {
+            "downloads_30d": 82,
+            "downloads_all_time": 2559,
+            "likes": 6
+          }
+        },
+        "license": {
+          "huggingface": [
+            {
+              "status": "detected",
+              "spdx": "CC-BY-SA-4.0",
+              "raw": "cc-by-sa-4.0",
+              "assets": 1
+            },
+            {
+              "status": "detected",
+              "spdx": "AGPL-3.0",
+              "raw": "agpl-3.0",
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "github_only"
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "github_only"
+          },
+          {
+            "metric": "releases",
+            "reason": "no_releases_on_platform"
+          }
+        ],
+        "assets": [
+          {
+            "key": "huggingface:datasets/karaagroai/cadi-ai",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/datasets/KaraAgroAI/CADI-AI",
+            "kind": "datasets",
+            "id": "KaraAgro-AI/CADI-AI",
+            "renamed_from": "KaraAgroAI/CADI-AI",
+            "gated": false,
+            "last_change_at": "2026-07-30",
+            "created_at": "2023-05-17",
+            "likes": 3,
+            "downloads_30d": 65,
+            "downloads_all_time": 2159,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-SA-4.0",
+                "raw": "cc-by-sa-4.0"
+              }
+            ],
+            "contributors_total": 2,
+            "contributors_active": 1,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 1,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured"
+          },
+          {
+            "key": "huggingface:models/karaagroai/cadi-ai",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/KaraAgroAI/CADI-AI",
+            "kind": "models",
+            "id": "KaraAgro-AI/CADI-AI",
+            "renamed_from": "KaraAgroAI/CADI-AI",
+            "gated": false,
+            "last_change_at": "2026-07-31",
+            "created_at": "2023-05-17",
+            "likes": 3,
+            "downloads_30d": 17,
+            "downloads_all_time": 400,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "AGPL-3.0",
+                "raw": "agpl-3.0"
+              }
+            ],
+            "contributors_total": 2,
+            "contributors_active": 1,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 1,
+              "closed": 1
+            },
+            "gaps": [],
+            "status": "measured"
+          }
+        ]
       }
     },
     "ui_13": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 2,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "kaggle": 2
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_14": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "recently_updated",
-      "activity_score": 66,
+      "activity_score": 65,
       "link_count": 1,
       "broken_links": [],
-      "github": {
-        "repo": "Ashesi-Org/Financial-Inclusion-Speech-Dataset",
-        "pushed_at": "2026-07-19T14:01:20Z",
-        "archived": false,
-        "days_since_commit": 78,
-        "stars": 15
+      "hosts": {
+        "github": 1
       },
-      "hf": null
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": true,
+        "several_contributors": true
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 1,
+          "huggingface": 0,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2026-07-19",
+          "platform": "github",
+          "archived": false
+        },
+        "people": {
+          "github": {
+            "total": 2,
+            "active": 1,
+            "absence_factor": 1,
+            "assets": 1,
+            "fork_history": false
+          }
+        },
+        "releases": {
+          "github": {
+            "in_window": 0,
+            "total": 0,
+            "latest_at": null
+          }
+        },
+        "reuse": {
+          "github": {
+            "forks": 6,
+            "stars": 15
+          }
+        },
+        "license": {
+          "github": [
+            {
+              "status": "detected",
+              "spdx": "CC-BY-4.0",
+              "raw": "CC-BY-4.0",
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "too_few_items",
+            "count": 0
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "too_few_items",
+            "count": 0
+          }
+        ],
+        "assets": [
+          {
+            "key": "github:ashesi-org/financial-inclusion-speech-dataset",
+            "platform": "github",
+            "url": "https://github.com/Ashesi-Org/Financial-Inclusion-Speech-Dataset",
+            "id": "Ashesi-Org/Financial-Inclusion-Speech-Dataset",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 6,
+            "stars": 15,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-4.0",
+                "raw": "CC-BY-4.0"
+              }
+            ],
+            "last_change_at": "2026-07-19",
+            "gaps": [],
+            "contributors_total": 2,
+            "contributors_active": 1,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          }
+        ]
+      }
     },
     "ui_15": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "kaggle": 1
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_16": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "stable_archive",
       "activity_score": 60,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "zenodo": 1
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": {
+        "status": "partial",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 0,
+          "huggingface": 0,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 1
+        },
+        "last_change": null,
+        "people": {},
+        "releases": {},
+        "reuse": {},
+        "license": {},
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [],
+        "assets": [
+          {
+            "key": "zenodo:15778396",
+            "platform": "zenodo",
+            "url": "https://zenodo.org/records/15778396",
+            "id": "15778396",
+            "status": "failed"
+          }
+        ]
+      }
     },
     "ui_17": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "kaggle": 1
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_18": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "stable_archive",
       "activity_score": 60,
       "link_count": 4,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "doi_other": 3,
+        "zenodo": 1
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 0,
+          "huggingface": 0,
+          "zenodo": 1,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2025-07-23",
+          "platform": "zenodo",
+          "archived": false
+        },
+        "people": {},
+        "releases": {
+          "zenodo": {
+            "in_window": 0,
+            "total": 2,
+            "latest_at": "2025-07-23"
+          }
+        },
+        "reuse": {
+          "zenodo": {
+            "downloads": 431,
+            "views": 603
+          }
+        },
+        "license": {
+          "zenodo": [
+            {
+              "status": "detected",
+              "spdx": "CC-BY-4.0",
+              "raw": "cc-by-4.0",
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "github_only"
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "github_only"
+          },
+          {
+            "metric": "contributors",
+            "reason": "archive_record"
+          },
+          {
+            "metric": "absence_factor",
+            "reason": "archive_record"
+          }
+        ],
+        "assets": [
+          {
+            "key": "zenodo:15704554",
+            "platform": "zenodo",
+            "url": "https://doi.org/10.5281/zenodo.15704554",
+            "id": "15704554",
+            "concept_id": "15704553",
+            "linked_is_latest": false,
+            "latest_id": "16368331",
+            "versions_total": 2,
+            "versions_in_window": 0,
+            "last_change_at": "2025-07-23",
+            "downloads_all_time": 431,
+            "views_all_time": 603,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-4.0",
+                "raw": "cc-by-4.0"
+              }
+            ],
+            "resource_type": "dataset",
+            "access_right": "open",
+            "gaps": [],
+            "status": "measured"
+          }
+        ]
+      }
     },
     "ui_19": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "no_recent_updates",
       "activity_score": 23,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": {
-        "id": "KaraAgroAI/Drone-based-Agricultural-Dataset-for-Crop-Yield-Estimation",
-        "kind": "datasets",
-        "downloads": 192,
-        "likes": 16,
-        "last_modified": "2023-08-11T17:44:53.000Z",
-        "days_since_modified": 1150
+      "hosts": {
+        "huggingface": 1
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": false,
+        "several_contributors": false
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 0,
+          "huggingface": 1,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2023-08-11",
+          "platform": "huggingface",
+          "archived": false
+        },
+        "people": {
+          "huggingface": {
+            "total": 1,
+            "active": 0,
+            "absence_factor": 1,
+            "assets": 1,
+            "fork_history": false
+          }
+        },
+        "releases": {},
+        "reuse": {
+          "huggingface": {
+            "downloads_30d": 206,
+            "downloads_all_time": 3321,
+            "likes": 16
+          }
+        },
+        "license": {
+          "huggingface": [
+            {
+              "status": "detected",
+              "spdx": "CC-BY-4.0",
+              "raw": "cc-by-4.0",
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "github_only"
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "github_only"
+          },
+          {
+            "metric": "releases",
+            "reason": "no_releases_on_platform"
+          }
+        ],
+        "assets": [
+          {
+            "key": "huggingface:datasets/karaagroai/drone-based-agricultural-dataset-for-crop-yield-estimation",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/datasets/KaraAgroAI/Drone-based-Agricultural-Dataset-for-Crop-Yield-Estimation",
+            "kind": "datasets",
+            "id": "KaraAgroAI/Drone-based-Agricultural-Dataset-for-Crop-Yield-Estimation",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2023-08-11",
+            "created_at": "2023-08-02",
+            "likes": 16,
+            "downloads_30d": 206,
+            "downloads_all_time": 3321,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-4.0",
+                "raw": "cc-by-4.0"
+              }
+            ],
+            "contributors_total": 1,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 4,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured"
+          }
+        ]
       }
     },
     "ui_20": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_21": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "recently_updated",
-      "activity_score": 30,
+      "activity_score": 31,
       "link_count": 2,
       "broken_links": [],
-      "github": {
-        "repo": "iLab-DSU/imarika-weather-pipeline",
-        "pushed_at": "2025-10-08T08:44:58Z",
-        "archived": false,
-        "days_since_commit": 362,
-        "stars": 0
+      "hosts": {
+        "github": 2
       },
-      "hf": null
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": true,
+        "several_contributors": true
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 2,
+          "huggingface": 0,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2025-10-25",
+          "platform": "github",
+          "archived": false
+        },
+        "people": {
+          "github": {
+            "total": 2,
+            "active": 1,
+            "absence_factor": 1,
+            "assets": 2,
+            "fork_history": true
+          }
+        },
+        "releases": {
+          "github": {
+            "in_window": 0,
+            "total": 0,
+            "latest_at": null
+          }
+        },
+        "reuse": {
+          "github": {
+            "forks": 0,
+            "stars": 0
+          }
+        },
+        "license": {
+          "github": [
+            {
+              "status": "none",
+              "spdx": null,
+              "raw": null,
+              "assets": 2
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "too_few_items",
+            "count": 0
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "too_few_items",
+            "count": 0
+          }
+        ],
+        "assets": [
+          {
+            "key": "github:ilab-dsu/imarika-weather-pipeline",
+            "platform": "github",
+            "url": "https://github.com/iLab-DSU/imarika-weather-pipeline",
+            "id": "iLab-DSU/imarika-weather-pipeline",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 0,
+            "stars": 0,
+            "license": [
+              {
+                "status": "none",
+                "spdx": null,
+                "raw": null
+              }
+            ],
+            "last_change_at": "2025-10-08",
+            "gaps": [],
+            "contributors_total": 1,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          },
+          {
+            "key": "github:ilab-dsu/agricultural-recommendations-chat",
+            "platform": "github",
+            "url": "https://github.com/iLab-DSU/Agricultural-Recommendations-Chat",
+            "id": "iLab-DSU/Agricultural-Recommendations-Chat",
+            "renamed_from": null,
+            "fork": true,
+            "fork_of": null,
+            "archived": false,
+            "forks": 0,
+            "stars": 0,
+            "license": [
+              {
+                "status": "none",
+                "spdx": null,
+                "raw": null
+              }
+            ],
+            "last_change_at": "2025-10-25",
+            "gaps": [],
+            "contributors_total": 1,
+            "contributors_active": 1,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": null,
+            "status": "measured"
+          }
+        ]
+      }
     },
     "ui_22": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 2,
       "broken_links": [
         "https://audiopedia.app.box.com/s/4wtqy4idpnilf3b3abisuuu2vdi0oi1q"
       ],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 2
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_23": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
-      "activity_score": 24,
+      "activity_score": 23,
       "link_count": 6,
       "broken_links": [],
-      "github": {
-        "repo": "undpindia/VAYU_OpenAir",
-        "pushed_at": "2025-05-23T04:56:00Z",
-        "archived": false,
-        "days_since_commit": 500,
-        "stars": 2
+      "hosts": {
+        "github": 5,
+        "website": 1
       },
-      "hf": null
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": false,
+        "several_contributors": true
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 5,
+          "huggingface": 0,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2025-05-23",
+          "platform": "github",
+          "archived": false
+        },
+        "people": {
+          "github": {
+            "total": 11,
+            "active": 0,
+            "absence_factor": 2,
+            "assets": 5,
+            "fork_history": false
+          }
+        },
+        "releases": {
+          "github": {
+            "in_window": 0,
+            "total": 0,
+            "latest_at": null
+          }
+        },
+        "reuse": {
+          "github": {
+            "forks": 2,
+            "stars": 4
+          }
+        },
+        "license": {
+          "github": [
+            {
+              "status": "detected",
+              "spdx": "MIT",
+              "raw": "MIT",
+              "assets": 2
+            },
+            {
+              "status": "detected",
+              "spdx": "GPL-3.0",
+              "raw": "GPL-3.0",
+              "assets": 1
+            },
+            {
+              "status": "none",
+              "spdx": null,
+              "raw": null,
+              "assets": 1
+            },
+            {
+              "status": "detected",
+              "spdx": "Apache-2.0",
+              "raw": "Apache-2.0",
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "too_few_items",
+            "count": 0
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "too_few_items",
+            "count": 0
+          }
+        ],
+        "assets": [
+          {
+            "key": "github:undpindia/vayu_openair",
+            "platform": "github",
+            "url": "https://github.com/undpindia/VAYU_OpenAir",
+            "id": "undpindia/VAYU_OpenAir",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 2,
+            "stars": 2,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "MIT",
+                "raw": "MIT"
+              }
+            ],
+            "last_change_at": "2025-05-23",
+            "gaps": [],
+            "contributors_total": 6,
+            "contributors_active": 0,
+            "absence_factor": 2,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          },
+          {
+            "key": "github:econaiorg/vayu-gnn",
+            "platform": "github",
+            "url": "https://github.com/EconAIorg/vayu-gnn/tree/main",
+            "id": "EconAIorg/vayu-gnn",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 0,
+            "stars": 1,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "GPL-3.0",
+                "raw": "GPL-3.0"
+              }
+            ],
+            "last_change_at": "2025-03-23",
+            "gaps": [],
+            "contributors_total": 2,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          },
+          {
+            "key": "github:alphawarrior21/vayuassist",
+            "platform": "github",
+            "url": "https://github.com/Alphawarrior21/VayuAssist",
+            "id": "Alphawarrior21/VayuAssist",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 0,
+            "stars": 1,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "MIT",
+                "raw": "MIT"
+              }
+            ],
+            "last_change_at": "2025-03-21",
+            "gaps": [],
+            "contributors_total": 1,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          },
+          {
+            "key": "github:akbp24/clearsky",
+            "platform": "github",
+            "url": "https://github.com/akbp24/ClearSky",
+            "id": "akbp24/ClearSky",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 0,
+            "stars": 0,
+            "license": [
+              {
+                "status": "none",
+                "spdx": null,
+                "raw": null
+              }
+            ],
+            "last_change_at": "2025-03-21",
+            "gaps": [],
+            "contributors_total": 1,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          },
+          {
+            "key": "github:sherwaldeepesh/vayu_airnode",
+            "platform": "github",
+            "url": "https://github.com/sherwaldeepesh/vayu_airnode",
+            "id": "sherwaldeepesh/vayu_airnode",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 0,
+            "stars": 0,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "Apache-2.0",
+                "raw": "Apache-2.0"
+              }
+            ],
+            "last_change_at": "2025-03-24",
+            "gaps": [],
+            "contributors_total": 1,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          }
+        ]
+      }
     },
     "ui_24": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 3,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "huggingface_org": 1,
+        "website": 2
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_25": {
       "availability": "available",
-      "checked_at": "2026-10-05",
-      "context": "no_recent_updates",
-      "activity_score": 18,
+      "checked_at": "2026-10-09",
+      "context": "recently_updated",
+      "activity_score": 74,
       "link_count": 4,
       "broken_links": [],
-      "github": {
-        "repo": "WadhwaniAI/pest-management-opendata",
-        "pushed_at": "2024-10-14T14:36:45Z",
-        "archived": true,
-        "days_since_commit": 721,
-        "stars": 8
+      "hosts": {
+        "github": 2,
+        "huggingface": 1,
+        "website": 1
       },
-      "hf": {
-        "id": "wadhwani-ai/pest-management-opendata",
-        "kind": "datasets",
-        "downloads": 66,
-        "likes": 0,
-        "last_modified": "2026-08-16T08:45:06.000Z",
-        "days_since_modified": 50
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": true,
+        "several_contributors": true
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 2,
+          "huggingface": 1,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2026-08-16",
+          "platform": "huggingface",
+          "archived": false
+        },
+        "people": {
+          "github": {
+            "total": 5,
+            "active": 0,
+            "absence_factor": 1,
+            "assets": 2,
+            "fork_history": false
+          },
+          "huggingface": {
+            "total": 2,
+            "active": 1,
+            "absence_factor": 1,
+            "assets": 1,
+            "fork_history": false
+          }
+        },
+        "releases": {
+          "github": {
+            "in_window": 0,
+            "total": 0,
+            "latest_at": null
+          }
+        },
+        "reuse": {
+          "github": {
+            "forks": 3,
+            "stars": 22
+          },
+          "huggingface": {
+            "downloads_30d": 76,
+            "downloads_all_time": 1299,
+            "likes": 0
+          }
+        },
+        "license": {
+          "github": [
+            {
+              "status": "detected",
+              "spdx": "Apache-2.0",
+              "raw": "Apache-2.0",
+              "assets": 2
+            }
+          ],
+          "huggingface": [
+            {
+              "status": "detected",
+              "spdx": "Apache-2.0",
+              "raw": "apache-2.0",
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "too_few_items",
+            "count": 0
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "too_few_items",
+            "count": 0
+          }
+        ],
+        "assets": [
+          {
+            "key": "github:wadhwaniai/pest-management-opendata",
+            "platform": "github",
+            "url": "https://github.com/WadhwaniAI/pest-management-opendata?tab=readme-ov-file",
+            "id": "WadhwaniAI/pest-management-opendata",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": true,
+            "forks": 0,
+            "stars": 8,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "Apache-2.0",
+                "raw": "Apache-2.0"
+              }
+            ],
+            "last_change_at": "2024-10-14",
+            "gaps": [],
+            "contributors_total": 3,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          },
+          {
+            "key": "huggingface:datasets/wadhwani-ai/pest-management-opendata",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/datasets/wadhwani-ai/pest-management-opendata",
+            "kind": "datasets",
+            "id": "wadhwani-ai/pest-management-opendata",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2026-08-16",
+            "created_at": "2023-01-27",
+            "likes": 0,
+            "downloads_30d": 76,
+            "downloads_all_time": 1299,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "Apache-2.0",
+                "raw": "apache-2.0"
+              }
+            ],
+            "contributors_total": 2,
+            "contributors_active": 1,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 0,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured"
+          },
+          {
+            "key": "github:wadhwaniai/pest-monitoring",
+            "platform": "github",
+            "url": "https://github.com/WadhwaniAI/pest-monitoring",
+            "id": "WadhwaniAI/pest-monitoring",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": true,
+            "forks": 3,
+            "stars": 14,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "Apache-2.0",
+                "raw": "Apache-2.0"
+              }
+            ],
+            "last_change_at": "2025-07-24",
+            "gaps": [],
+            "contributors_total": 3,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": true,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          }
+        ]
       }
     },
     "ui_26": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 2,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "gitlab": 2
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_27": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "no_recent_updates",
-      "activity_score": 3,
+      "activity_score": 10,
       "link_count": 3,
       "broken_links": [],
-      "github": {
-        "repo": "karya-inc/dataset-hindi-mundari-translation",
-        "pushed_at": "2023-04-06T00:52:55Z",
-        "archived": false,
-        "days_since_commit": 1278,
-        "stars": 1
+      "hosts": {
+        "github": 3
       },
-      "hf": null
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": false,
+        "several_contributors": true
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 3,
+          "huggingface": 0,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2024-05-24",
+          "platform": "github",
+          "archived": false
+        },
+        "people": {
+          "github": {
+            "total": 6,
+            "active": 0,
+            "absence_factor": 2,
+            "assets": 3,
+            "fork_history": false
+          }
+        },
+        "releases": {
+          "github": {
+            "in_window": 0,
+            "total": 0,
+            "latest_at": null
+          }
+        },
+        "reuse": {
+          "github": {
+            "forks": 1,
+            "stars": 12
+          }
+        },
+        "license": {
+          "github": [
+            {
+              "status": "unrecognised",
+              "spdx": null,
+              "raw": "NOASSERTION",
+              "assets": 2
+            },
+            {
+              "status": "detected",
+              "spdx": "MIT",
+              "raw": "MIT",
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "too_few_items",
+            "count": 0
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "too_few_items",
+            "count": 0
+          }
+        ],
+        "assets": [
+          {
+            "key": "github:karya-inc/dataset-hindi-mundari-translation",
+            "platform": "github",
+            "url": "https://github.com/karya-inc/dataset-hindi-mundari-translation",
+            "id": "karya-inc/dataset-hindi-mundari-translation",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 0,
+            "stars": 1,
+            "license": [
+              {
+                "status": "unrecognised",
+                "spdx": null,
+                "raw": "NOASSERTION"
+              }
+            ],
+            "last_change_at": "2023-04-06",
+            "gaps": [],
+            "contributors_total": 2,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          },
+          {
+            "key": "github:karya-inc/dataset-mundari-tts",
+            "platform": "github",
+            "url": "https://github.com/karya-inc/dataset-mundari-tts",
+            "id": "karya-inc/dataset-mundari-tts",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 0,
+            "stars": 2,
+            "license": [
+              {
+                "status": "unrecognised",
+                "spdx": null,
+                "raw": "NOASSERTION"
+              }
+            ],
+            "last_change_at": "2023-04-06",
+            "gaps": [],
+            "contributors_total": 1,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          },
+          {
+            "key": "github:microsoft/muntts-a-text-to-speech-system-for-mundari",
+            "platform": "github",
+            "url": "https://github.com/microsoft/MunTTS-A-Text-to-Speech-System-For-Mundari",
+            "id": "microsoft/MunTTS-A-Text-to-Speech-System-For-Mundari",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": true,
+            "forks": 1,
+            "stars": 9,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "MIT",
+                "raw": "MIT"
+              }
+            ],
+            "last_change_at": "2024-05-24",
+            "gaps": [],
+            "contributors_total": 4,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": true
+            },
+            "status": "measured"
+          }
+        ]
+      }
     },
     "ui_28": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "recently_updated",
       "activity_score": 72,
       "link_count": 3,
       "broken_links": [],
-      "github": {
-        "repo": "digitalgreenorg/DG_Open",
-        "pushed_at": "2025-11-23T09:15:39Z",
-        "archived": false,
-        "days_since_commit": 316,
-        "stars": 15
+      "hosts": {
+        "github": 1,
+        "huggingface": 1,
+        "website": 1
       },
-      "hf": {
-        "id": "DigiGreen/farmerchat-queries-large",
-        "kind": "datasets",
-        "downloads": 171,
-        "likes": 4,
-        "last_modified": "2026-06-04T15:02:31.000Z",
-        "days_since_modified": 123
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": true,
+        "several_contributors": true
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 1,
+          "huggingface": 1,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2026-06-04",
+          "platform": "huggingface",
+          "archived": false
+        },
+        "people": {
+          "github": {
+            "total": 3,
+            "active": 1,
+            "absence_factor": 1,
+            "assets": 1,
+            "fork_history": false
+          },
+          "huggingface": {
+            "total": 1,
+            "active": 1,
+            "absence_factor": 1,
+            "assets": 1,
+            "fork_history": false
+          }
+        },
+        "releases": {
+          "github": {
+            "in_window": 0,
+            "total": 0,
+            "latest_at": null
+          }
+        },
+        "reuse": {
+          "github": {
+            "forks": 14,
+            "stars": 15
+          },
+          "huggingface": {
+            "downloads_30d": 185,
+            "downloads_all_time": 626,
+            "likes": 4
+          }
+        },
+        "license": {
+          "github": [
+            {
+              "status": "none",
+              "spdx": null,
+              "raw": null,
+              "assets": 1
+            }
+          ],
+          "huggingface": [
+            {
+              "status": "detected",
+              "spdx": "CC-BY-4.0",
+              "raw": "cc-by-4.0",
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "too_few_items",
+            "count": 0
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "too_few_items",
+            "count": 0
+          }
+        ],
+        "assets": [
+          {
+            "key": "github:digitalgreenorg/dg_open",
+            "platform": "github",
+            "url": "https://github.com/digitalgreenorg/DG_Open",
+            "id": "digitalgreenorg/DG_Open",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 14,
+            "stars": 15,
+            "license": [
+              {
+                "status": "none",
+                "spdx": null,
+                "raw": null
+              }
+            ],
+            "last_change_at": "2025-11-23",
+            "gaps": [],
+            "contributors_total": 3,
+            "contributors_active": 1,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          },
+          {
+            "key": "huggingface:datasets/digigreen/farmerchat-queries-large",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/datasets/DigiGreen/farmerchat-queries-large",
+            "kind": "datasets",
+            "id": "DigiGreen/farmerchat-queries-large",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2026-06-04",
+            "created_at": "2026-06-04",
+            "likes": 4,
+            "downloads_30d": 185,
+            "downloads_all_time": 626,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-4.0",
+                "raw": "cc-by-4.0"
+              }
+            ],
+            "contributors_total": 1,
+            "contributors_active": 1,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 1,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured"
+          }
+        ]
       }
     },
     "ui_29": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
-      "activity_score": 29,
+      "activity_score": 28,
       "link_count": 3,
       "broken_links": [
         "https://dataexplorer.ts.adex.org.in/dataset/583e8f01-160e-4f51-bde5-31dc7f2a5887"
       ],
-      "github": {
-        "repo": "pranavmyname/zindi_crop_health",
-        "pushed_at": "2025-08-15T00:49:15Z",
-        "archived": false,
-        "days_since_commit": 416,
-        "stars": 1
+      "hosts": {
+        "github": 1,
+        "website": 2
       },
-      "hf": null
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": false,
+        "several_contributors": false
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 1,
+          "huggingface": 0,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2025-08-15",
+          "platform": "github",
+          "archived": false
+        },
+        "people": {
+          "github": {
+            "total": 1,
+            "active": 0,
+            "absence_factor": 1,
+            "assets": 1,
+            "fork_history": false
+          }
+        },
+        "releases": {
+          "github": {
+            "in_window": 0,
+            "total": 0,
+            "latest_at": null
+          }
+        },
+        "reuse": {
+          "github": {
+            "forks": 1,
+            "stars": 1
+          }
+        },
+        "license": {
+          "github": [
+            {
+              "status": "none",
+              "spdx": null,
+              "raw": null,
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "too_few_items",
+            "count": 0
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "too_few_items",
+            "count": 0
+          }
+        ],
+        "assets": [
+          {
+            "key": "github:pranavmyname/zindi_crop_health",
+            "platform": "github",
+            "url": "https://github.com/pranavmyname/zindi_crop_health",
+            "id": "pranavmyname/zindi_crop_health",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 1,
+            "stars": 1,
+            "license": [
+              {
+                "status": "none",
+                "spdx": null,
+                "raw": null
+              }
+            ],
+            "last_change_at": "2025-08-15",
+            "gaps": [],
+            "contributors_total": 1,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          }
+        ]
+      }
     },
     "ui_31": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "recently_updated",
-      "activity_score": 46,
+      "activity_score": 49,
       "link_count": 3,
       "broken_links": [],
-      "github": {
-        "repo": "vertify-earth/biomass-dl-model-training",
-        "pushed_at": "2026-01-29T15:19:02Z",
-        "archived": false,
-        "days_since_commit": 249,
-        "stars": 3
+      "hosts": {
+        "github": 2,
+        "huggingface": 1
       },
-      "hf": {
-        "id": "vertify/biomass-model",
-        "kind": "models",
-        "downloads": 0,
-        "likes": 2,
-        "last_modified": "2025-05-17T20:49:12.000Z",
-        "days_since_modified": 505
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": true,
+        "several_contributors": true
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 2,
+          "huggingface": 1,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2026-03-20",
+          "platform": "github",
+          "archived": false
+        },
+        "people": {
+          "github": {
+            "total": 3,
+            "active": 3,
+            "absence_factor": 1,
+            "assets": 2,
+            "fork_history": false
+          },
+          "huggingface": {
+            "total": 1,
+            "active": 0,
+            "absence_factor": 1,
+            "assets": 1,
+            "fork_history": false
+          }
+        },
+        "releases": {
+          "github": {
+            "in_window": 0,
+            "total": 0,
+            "latest_at": null
+          }
+        },
+        "reuse": {
+          "github": {
+            "forks": 2,
+            "stars": 5
+          },
+          "huggingface": {
+            "downloads_30d": 0,
+            "downloads_all_time": 0,
+            "likes": 2
+          }
+        },
+        "license": {
+          "github": [
+            {
+              "status": "none",
+              "spdx": null,
+              "raw": null,
+              "assets": 2
+            }
+          ],
+          "huggingface": [
+            {
+              "status": "detected",
+              "spdx": "MIT",
+              "raw": "mit",
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "too_few_items",
+            "count": 1
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "too_few_items",
+            "count": 1
+          }
+        ],
+        "assets": [
+          {
+            "key": "github:vertify-earth/biomass-dl-model-training",
+            "platform": "github",
+            "url": "https://github.com/vertify-earth/biomass-dl-model-training",
+            "id": "vertify-earth/biomass-prediction-pixelwise",
+            "renamed_from": "vertify-earth/biomass-dl-model-training",
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 1,
+            "stars": 3,
+            "license": [
+              {
+                "status": "none",
+                "spdx": null,
+                "raw": null
+              }
+            ],
+            "last_change_at": "2026-01-29",
+            "gaps": [],
+            "contributors_total": 2,
+            "contributors_active": 2,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 1,
+            "outside_change_requests": 1,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": true
+            },
+            "status": "measured"
+          },
+          {
+            "key": "github:vertify-earth/forestfiregoa",
+            "platform": "github",
+            "url": "https://github.com/vertify-earth/ForestFireGoa",
+            "id": "vertify-earth/ForestFireGoa",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 1,
+            "stars": 2,
+            "license": [
+              {
+                "status": "none",
+                "spdx": null,
+                "raw": null
+              }
+            ],
+            "last_change_at": "2026-03-20",
+            "gaps": [],
+            "contributors_total": 1,
+            "contributors_active": 1,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          },
+          {
+            "key": "huggingface:models/vertify/biomass-model",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/vertify/biomass-model",
+            "kind": "models",
+            "id": "vertify/biomass-model",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2025-05-17",
+            "created_at": "2025-05-17",
+            "likes": 2,
+            "downloads_30d": 0,
+            "downloads_all_time": 0,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "MIT",
+                "raw": "mit"
+              }
+            ],
+            "contributors_total": 1,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 0,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured"
+          }
+        ]
       }
     },
     "ui_32": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "recently_updated",
       "activity_score": 45,
       "link_count": 1,
       "broken_links": [],
-      "github": {
-        "repo": "NaLamKI/geo-ai",
-        "pushed_at": "2026-04-08T13:16:49Z",
-        "archived": false,
-        "days_since_commit": 180,
-        "stars": 0
+      "hosts": {
+        "github": 1
       },
-      "hf": null
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": true,
+        "several_contributors": true
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 1,
+          "huggingface": 0,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2026-04-08",
+          "platform": "github",
+          "archived": false
+        },
+        "people": {
+          "github": {
+            "total": 2,
+            "active": 2,
+            "absence_factor": 1,
+            "assets": 1,
+            "fork_history": false
+          }
+        },
+        "releases": {
+          "github": {
+            "in_window": 0,
+            "total": 0,
+            "latest_at": null
+          }
+        },
+        "reuse": {
+          "github": {
+            "forks": 0,
+            "stars": 0
+          }
+        },
+        "license": {
+          "github": [
+            {
+              "status": "none",
+              "spdx": null,
+              "raw": null,
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "too_few_items",
+            "count": 0
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "too_few_items",
+            "count": 0
+          }
+        ],
+        "assets": [
+          {
+            "key": "github:nalamki/geo-ai",
+            "platform": "github",
+            "url": "https://github.com/NaLamKI/geo-ai",
+            "id": "NaLamKI/geo-ai",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 0,
+            "stars": 0,
+            "license": [
+              {
+                "status": "none",
+                "spdx": null,
+                "raw": null
+              }
+            ],
+            "last_change_at": "2026-04-08",
+            "gaps": [],
+            "contributors_total": 2,
+            "contributors_active": 2,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          }
+        ]
+      }
     },
     "ui_33": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "recently_updated",
       "activity_score": 54,
       "link_count": 7,
       "broken_links": [],
-      "github": null,
-      "hf": {
-        "id": "somyalab/Spark_somya_TTS",
-        "kind": "models",
-        "downloads": 32,
-        "likes": 1,
-        "last_modified": "2026-01-24T20:18:32.000Z",
-        "days_since_modified": 253
+      "hosts": {
+        "huggingface": 4,
+        "website": 3
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": true,
+        "several_contributors": true
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 0,
+          "huggingface": 3,
+          "zenodo": 0,
+          "unreadable": 1,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2026-01-25",
+          "platform": "huggingface",
+          "archived": false
+        },
+        "people": {
+          "huggingface": {
+            "total": 2,
+            "active": 2,
+            "absence_factor": 1,
+            "assets": 2,
+            "fork_history": false
+          }
+        },
+        "releases": {},
+        "reuse": {
+          "huggingface": {
+            "downloads_30d": 31,
+            "downloads_all_time": 232,
+            "likes": 1
+          }
+        },
+        "license": {
+          "huggingface": [
+            {
+              "status": "detected",
+              "spdx": "Apache-2.0",
+              "raw": "apache-2.0",
+              "assets": 1
+            },
+            {
+              "status": "detected",
+              "spdx": "CC-BY-4.0",
+              "raw": "cc-by-4.0",
+              "assets": 1
+            },
+            {
+              "status": "none",
+              "spdx": null,
+              "raw": null,
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "github_only"
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "github_only"
+          },
+          {
+            "metric": "releases",
+            "reason": "no_releases_on_platform"
+          }
+        ],
+        "assets": [
+          {
+            "key": "huggingface:models/somyalab/spark_somya_tts",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/somyalab/Spark_somya_TTS",
+            "kind": "models",
+            "id": "somyalab/Spark_somya_TTS",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2026-01-24",
+            "created_at": "2026-01-24",
+            "likes": 1,
+            "downloads_30d": 31,
+            "downloads_all_time": 232,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "Apache-2.0",
+                "raw": "apache-2.0"
+              }
+            ],
+            "contributors_total": 1,
+            "contributors_active": 1,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 0,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured"
+          },
+          {
+            "key": "huggingface:models/roymukund/voice-tech-cdac-submission",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/roymukund/Voice-Tech-CDAC-Submission/tree/main",
+            "kind": "models",
+            "id": "roymukund/Voice-Tech-CDAC-Submission",
+            "renamed_from": null,
+            "gated": "auto",
+            "last_change_at": "2026-01-25",
+            "created_at": "2025-11-24",
+            "likes": 0,
+            "downloads_30d": 0,
+            "downloads_all_time": 0,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-4.0",
+                "raw": "cc-by-4.0"
+              }
+            ],
+            "contributors_total": null,
+            "contributors_active": null,
+            "absence_factor": null,
+            "discussions": {
+              "total": 0,
+              "closed": 0
+            },
+            "gaps": [
+              {
+                "metric": "contributors",
+                "reason": "gated"
+              }
+            ],
+            "status": "measured"
+          },
+          {
+            "key": "huggingface:models/vinaybabu/voice-tech-for-all-v2",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/vinaybabu/voice-tech-for-all-v2",
+            "kind": "models",
+            "id": "vinaybabu/voice-tech-for-all-v2",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2026-01-24",
+            "created_at": "2026-01-21",
+            "likes": 0,
+            "downloads_30d": 0,
+            "downloads_all_time": 0,
+            "license": [
+              {
+                "status": "none",
+                "spdx": null,
+                "raw": null
+              }
+            ],
+            "contributors_total": 1,
+            "contributors_active": 1,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 0,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured"
+          },
+          {
+            "key": "huggingface:models/immverse-ai/voice-tech-for-all-challenge-v2",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/immverse-ai/voice-tech-for-all-challenge-v2",
+            "id": "immverse-ai/voice-tech-for-all-challenge-v2",
+            "status": "unavailable"
+          }
+        ]
       }
     },
     "ui_34": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "stable_archive",
       "activity_score": 36,
       "link_count": 3,
       "broken_links": [],
-      "github": {
-        "repo": "vertify-earth/biomass-prediction-NorthEastIndia",
-        "pushed_at": "2025-07-28T12:48:17Z",
-        "archived": false,
-        "days_since_commit": 434,
-        "stars": 0
+      "hosts": {
+        "github": 1,
+        "website": 1,
+        "zenodo": 1
       },
-      "hf": null
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": false,
+        "several_contributors": false
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 1,
+          "huggingface": 0,
+          "zenodo": 1,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2025-07-28",
+          "platform": "zenodo",
+          "archived": false
+        },
+        "people": {
+          "github": {
+            "total": 1,
+            "active": 0,
+            "absence_factor": 1,
+            "assets": 1,
+            "fork_history": false
+          }
+        },
+        "releases": {
+          "github": {
+            "in_window": 0,
+            "total": 0,
+            "latest_at": null
+          },
+          "zenodo": {
+            "in_window": 0,
+            "total": 1,
+            "latest_at": "2025-07-28"
+          }
+        },
+        "reuse": {
+          "github": {
+            "forks": 0,
+            "stars": 0
+          },
+          "zenodo": {
+            "downloads": 223,
+            "views": 184
+          }
+        },
+        "license": {
+          "github": [
+            {
+              "status": "none",
+              "spdx": null,
+              "raw": null,
+              "assets": 1
+            }
+          ],
+          "zenodo": [
+            {
+              "status": "detected",
+              "spdx": "CC-BY-4.0",
+              "raw": "cc-by-4.0",
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "too_few_items",
+            "count": 0
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "too_few_items",
+            "count": 0
+          }
+        ],
+        "assets": [
+          {
+            "key": "github:vertify-earth/biomass-prediction-northeastindia",
+            "platform": "github",
+            "url": "https://github.com/vertify-earth/biomass-prediction-NorthEastIndia",
+            "id": "vertify-earth/biomass-prediction-NorthEastIndia",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 0,
+            "stars": 0,
+            "license": [
+              {
+                "status": "none",
+                "spdx": null,
+                "raw": null
+              }
+            ],
+            "last_change_at": "2025-07-28",
+            "gaps": [],
+            "contributors_total": 1,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          },
+          {
+            "key": "zenodo:16536024",
+            "platform": "zenodo",
+            "url": "https://zenodo.org/records/16536024",
+            "id": "16536024",
+            "concept_id": "16536023",
+            "linked_is_latest": true,
+            "latest_id": "16536024",
+            "versions_total": 1,
+            "versions_in_window": 0,
+            "last_change_at": "2025-07-28",
+            "downloads_all_time": 223,
+            "views_all_time": 184,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-4.0",
+                "raw": "cc-by-4.0"
+              }
+            ],
+            "resource_type": "dataset",
+            "access_right": "open",
+            "gaps": [],
+            "status": "measured"
+          }
+        ]
+      }
     },
     "ui_35": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 2,
       "broken_links": [
         "https://faktaiklim.prosa.ai/"
       ],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "huggingface_org": 1,
+        "website": 1
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_36": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "no_recent_updates",
-      "activity_score": 9,
+      "activity_score": 8,
       "link_count": 2,
       "broken_links": [],
-      "github": null,
-      "hf": {
-        "id": "HCSA/HCSA_Indonesia_Forest_Plot_Data_2023",
-        "kind": "datasets",
-        "downloads": 7,
-        "likes": 5,
-        "last_modified": "2024-03-29T05:29:22.000Z",
-        "days_since_modified": 920
+      "hosts": {
+        "huggingface": 1,
+        "website": 1
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": false,
+        "several_contributors": null
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 0,
+          "huggingface": 1,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2024-03-29",
+          "platform": "huggingface",
+          "archived": false
+        },
+        "people": {},
+        "releases": {},
+        "reuse": {
+          "huggingface": {
+            "downloads_30d": 6,
+            "downloads_all_time": 400,
+            "likes": 5
+          }
+        },
+        "license": {
+          "huggingface": [
+            {
+              "status": "detected",
+              "spdx": "CC-BY-SA-4.0",
+              "raw": "cc-by-sa-4.0",
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "github_only"
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "github_only"
+          },
+          {
+            "metric": "releases",
+            "reason": "no_releases_on_platform"
+          },
+          {
+            "metric": "contributors",
+            "reason": "gated"
+          },
+          {
+            "metric": "absence_factor",
+            "reason": "gated"
+          }
+        ],
+        "assets": [
+          {
+            "key": "huggingface:datasets/hcsa/hcsa_indonesia_forest_plot_data_2023",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/datasets/HCSA/HCSA_Indonesia_Forest_Plot_Data_2023",
+            "kind": "datasets",
+            "id": "HCSA/HCSA_Indonesia_Forest_Plot_Data_2023",
+            "renamed_from": null,
+            "gated": "auto",
+            "last_change_at": "2024-03-29",
+            "created_at": "2024-02-04",
+            "likes": 5,
+            "downloads_30d": 6,
+            "downloads_all_time": 400,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-SA-4.0",
+                "raw": "cc-by-sa-4.0"
+              }
+            ],
+            "contributors_total": null,
+            "contributors_active": null,
+            "absence_factor": null,
+            "discussions": {
+              "total": 2,
+              "closed": 0
+            },
+            "gaps": [
+              {
+                "metric": "contributors",
+                "reason": "gated"
+              }
+            ],
+            "status": "measured"
+          }
+        ]
       }
     },
     "ui_37": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "no_recent_updates",
       "activity_score": 16,
       "link_count": 3,
       "broken_links": [],
-      "github": null,
-      "hf": {
-        "id": "prosa-text/nusa-dialogue",
-        "kind": "datasets",
-        "downloads": 39,
-        "likes": 1,
-        "last_modified": "2024-04-27T03:42:00.000Z",
-        "days_since_modified": 891
+      "hosts": {
+        "huggingface": 3
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": false,
+        "several_contributors": true
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 0,
+          "huggingface": 3,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2024-04-27",
+          "platform": "huggingface",
+          "archived": false
+        },
+        "people": {
+          "huggingface": {
+            "total": 2,
+            "active": 0,
+            "absence_factor": 1,
+            "assets": 1,
+            "fork_history": false
+          }
+        },
+        "releases": {},
+        "reuse": {
+          "huggingface": {
+            "downloads_30d": 68,
+            "downloads_all_time": 3067,
+            "likes": 1
+          }
+        },
+        "license": {
+          "huggingface": [
+            {
+              "status": "detected",
+              "spdx": "CC-BY-SA-4.0",
+              "raw": "cc-by-sa-4.0",
+              "assets": 3
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "github_only"
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "github_only"
+          },
+          {
+            "metric": "releases",
+            "reason": "no_releases_on_platform"
+          }
+        ],
+        "assets": [
+          {
+            "key": "huggingface:datasets/prosa-text/nusa-dialogue",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/datasets/prosa-text/nusa-dialogue",
+            "kind": "datasets",
+            "id": "prosa-text/nusa-dialogue",
+            "renamed_from": null,
+            "gated": "auto",
+            "last_change_at": "2024-04-27",
+            "created_at": "2024-01-08",
+            "likes": 1,
+            "downloads_30d": 41,
+            "downloads_all_time": 1839,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-SA-4.0",
+                "raw": "cc-by-sa-4.0"
+              }
+            ],
+            "contributors_total": null,
+            "contributors_active": null,
+            "absence_factor": null,
+            "discussions": {
+              "total": 0,
+              "closed": 0
+            },
+            "gaps": [
+              {
+                "metric": "contributors",
+                "reason": "gated"
+              }
+            ],
+            "status": "measured"
+          },
+          {
+            "key": "huggingface:datasets/prosa-text/nusa-translation",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/datasets/prosa-text/nusa-translation",
+            "kind": "datasets",
+            "id": "prosa-text/nusa-translation",
+            "renamed_from": null,
+            "gated": "auto",
+            "last_change_at": "2024-04-27",
+            "created_at": "2024-01-25",
+            "likes": 0,
+            "downloads_30d": 12,
+            "downloads_all_time": 651,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-SA-4.0",
+                "raw": "cc-by-sa-4.0"
+              }
+            ],
+            "contributors_total": null,
+            "contributors_active": null,
+            "absence_factor": null,
+            "discussions": {
+              "total": 4,
+              "closed": 4
+            },
+            "gaps": [
+              {
+                "metric": "contributors",
+                "reason": "gated"
+              }
+            ],
+            "status": "measured"
+          },
+          {
+            "key": "huggingface:models/prosa-text/indobert-nusa",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/prosa-text/indobert-nusa",
+            "kind": "models",
+            "id": "prosa-text/indobert-nusa",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2024-04-27",
+            "created_at": "2024-02-20",
+            "likes": 0,
+            "downloads_30d": 15,
+            "downloads_all_time": 577,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-SA-4.0",
+                "raw": "cc-by-sa-4.0"
+              }
+            ],
+            "contributors_total": 2,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 1,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured"
+          }
+        ]
       }
     },
     "ui_38": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "recently_updated",
       "activity_score": 44,
       "link_count": 2,
       "broken_links": [
         "https://colabs.commonroom.info/login/?next=%2F"
       ],
-      "github": {
-        "repo": "insaninfonesia/WeatherData",
-        "pushed_at": "2026-03-30T14:59:23Z",
-        "archived": false,
-        "days_since_commit": 189,
-        "stars": 0
+      "hosts": {
+        "github": 1,
+        "website": 1
       },
-      "hf": null
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": true,
+        "several_contributors": false
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 1,
+          "huggingface": 0,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2026-03-30",
+          "platform": "github",
+          "archived": false
+        },
+        "people": {
+          "github": {
+            "total": 1,
+            "active": 1,
+            "absence_factor": 1,
+            "assets": 1,
+            "fork_history": false
+          }
+        },
+        "releases": {
+          "github": {
+            "in_window": 0,
+            "total": 0,
+            "latest_at": null
+          }
+        },
+        "reuse": {
+          "github": {
+            "forks": 0,
+            "stars": 0
+          }
+        },
+        "license": {
+          "github": [
+            {
+              "status": "none",
+              "spdx": null,
+              "raw": null,
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "too_few_items",
+            "count": 0
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "too_few_items",
+            "count": 0
+          }
+        ],
+        "assets": [
+          {
+            "key": "github:insaninfonesia/weatherdata",
+            "platform": "github",
+            "url": "https://github.com/insaninfonesia/WeatherData",
+            "id": "insaninfonesia/WeatherData",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 0,
+            "stars": 0,
+            "license": [
+              {
+                "status": "none",
+                "spdx": null,
+                "raw": null
+              }
+            ],
+            "last_change_at": "2026-03-30",
+            "gaps": [],
+            "contributors_total": 1,
+            "contributors_active": 1,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          }
+        ]
+      }
     },
     "ui_39": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "stable_archive",
       "activity_score": 60,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "zenodo": 1
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": {
+        "status": "partial",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 0,
+          "huggingface": 0,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 1
+        },
+        "last_change": null,
+        "people": {},
+        "releases": {},
+        "reuse": {},
+        "license": {},
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [],
+        "assets": [
+          {
+            "key": "zenodo:15618532",
+            "platform": "zenodo",
+            "url": "https://zenodo.org/records/15618532",
+            "id": "15618532",
+            "status": "failed"
+          }
+        ]
+      }
     },
     "ui_40": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 2,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 2
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_42": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "recently_updated",
       "activity_score": 45,
       "link_count": 2,
       "broken_links": [],
-      "github": {
-        "repo": "think-ke/sheng-dataset",
-        "pushed_at": "2026-04-09T07:56:44Z",
-        "archived": false,
-        "days_since_commit": 179,
-        "stars": 0
+      "hosts": {
+        "github": 2
       },
-      "hf": null
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": true,
+        "several_contributors": true
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 2,
+          "huggingface": 0,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2026-04-09",
+          "platform": "github",
+          "archived": false
+        },
+        "people": {
+          "github": {
+            "total": 4,
+            "active": 1,
+            "absence_factor": 1,
+            "assets": 2,
+            "fork_history": false
+          }
+        },
+        "releases": {
+          "github": {
+            "in_window": 0,
+            "total": 0,
+            "latest_at": null
+          }
+        },
+        "reuse": {
+          "github": {
+            "forks": 0,
+            "stars": 0
+          }
+        },
+        "license": {
+          "github": [
+            {
+              "status": "none",
+              "spdx": null,
+              "raw": null,
+              "assets": 2
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "too_few_items",
+            "count": 0
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "too_few_items",
+            "count": 0
+          }
+        ],
+        "assets": [
+          {
+            "key": "github:think-ke/sheng-dataset",
+            "platform": "github",
+            "url": "https://github.com/think-ke/sheng-dataset/",
+            "id": "think-ke/sheng-dataset",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 0,
+            "stars": 0,
+            "license": [
+              {
+                "status": "none",
+                "spdx": null,
+                "raw": null
+              }
+            ],
+            "last_change_at": "2026-04-09",
+            "gaps": [],
+            "contributors_total": 2,
+            "contributors_active": 1,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          },
+          {
+            "key": "github:think-ke/mpsr",
+            "platform": "github",
+            "url": "https://github.com/think-ke/mpsr",
+            "id": "think-ke/mpsr",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 0,
+            "stars": 0,
+            "license": [
+              {
+                "status": "none",
+                "spdx": null,
+                "raw": null
+              }
+            ],
+            "last_change_at": "2023-07-05",
+            "gaps": [],
+            "contributors_total": 2,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          }
+        ]
+      }
     },
     "ui_44": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "stable_archive",
       "activity_score": 60,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "zenodo": 1
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 0,
+          "huggingface": 0,
+          "zenodo": 1,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2024-08-21",
+          "platform": "zenodo",
+          "archived": false
+        },
+        "people": {},
+        "releases": {
+          "zenodo": {
+            "in_window": 0,
+            "total": 1,
+            "latest_at": "2024-08-21"
+          }
+        },
+        "reuse": {
+          "zenodo": {
+            "downloads": 265,
+            "views": 1636
+          }
+        },
+        "license": {
+          "zenodo": [
+            {
+              "status": "detected",
+              "spdx": "CC-BY-4.0",
+              "raw": "cc-by-4.0",
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "github_only"
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "github_only"
+          },
+          {
+            "metric": "contributors",
+            "reason": "archive_record"
+          },
+          {
+            "metric": "absence_factor",
+            "reason": "archive_record"
+          }
+        ],
+        "assets": [
+          {
+            "key": "zenodo:13355021",
+            "platform": "zenodo",
+            "url": "https://zenodo.org/records/13355021",
+            "id": "13355021",
+            "concept_id": "13355020",
+            "linked_is_latest": true,
+            "latest_id": "13355021",
+            "versions_total": 1,
+            "versions_in_window": 0,
+            "last_change_at": "2024-08-21",
+            "downloads_all_time": 265,
+            "views_all_time": 1636,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-4.0",
+                "raw": "cc-by-4.0"
+              }
+            ],
+            "resource_type": "dataset",
+            "access_right": "open",
+            "gaps": [],
+            "status": "measured"
+          }
+        ]
+      }
     },
     "ui_45": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "recently_updated",
-      "activity_score": 59,
+      "activity_score": 58,
       "link_count": 1,
       "broken_links": [],
-      "github": {
-        "repo": "DeKUT-DSAIL/miti360",
-        "pushed_at": "2026-09-20T21:22:22Z",
-        "archived": false,
-        "days_since_commit": 14,
-        "stars": 0
+      "hosts": {
+        "github": 1
       },
-      "hf": null
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": true,
+        "several_contributors": true
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 1,
+          "huggingface": 0,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2026-09-20",
+          "platform": "github",
+          "archived": false
+        },
+        "people": {
+          "github": {
+            "total": 2,
+            "active": 2,
+            "absence_factor": 1,
+            "assets": 1,
+            "fork_history": false
+          }
+        },
+        "releases": {
+          "github": {
+            "in_window": 0,
+            "total": 0,
+            "latest_at": null
+          }
+        },
+        "reuse": {
+          "github": {
+            "forks": 0,
+            "stars": 0
+          }
+        },
+        "license": {
+          "github": [
+            {
+              "status": "detected",
+              "spdx": "CC-BY-4.0",
+              "raw": "CC-BY-4.0",
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "too_few_items",
+            "count": 0
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "too_few_items",
+            "count": 0
+          }
+        ],
+        "assets": [
+          {
+            "key": "github:dekut-dsail/miti360",
+            "platform": "github",
+            "url": "https://github.com/DeKUT-DSAIL/miti360",
+            "id": "DeKUT-DSAIL/miti360",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 0,
+            "stars": 0,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-4.0",
+                "raw": "CC-BY-4.0"
+              }
+            ],
+            "last_change_at": "2026-09-20",
+            "gaps": [],
+            "contributors_total": 2,
+            "contributors_active": 2,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          }
+        ]
+      }
     },
     "ui_46": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_47": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_50": {
       "availability": "unavailable",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [
         "https://dev.platform.farmer.chat/login"
       ],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_51": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 3,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 3
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_52": {
       "availability": "unavailable",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [
         "https://openstat-madagascar.com/bdd/energie-et-environnement/131-donnees-sur-l-energie-solaire-et-labellisation-d-images-de-panneaux-photovoltaiques-a-madagascar"
       ],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_53": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "recently_updated",
       "activity_score": 52,
       "link_count": 2,
       "broken_links": [],
-      "github": {
-        "repo": "hausanlp/NaijaSenti",
-        "pushed_at": "2025-10-14T17:24:25Z",
-        "archived": false,
-        "days_since_commit": 356,
-        "stars": 43
+      "hosts": {
+        "github": 1,
+        "huggingface": 1
       },
-      "hf": {
-        "id": "Davlan/naija-twitter-sentiment-afriberta-large",
-        "kind": "models",
-        "downloads": 141,
-        "likes": 6,
-        "last_modified": "2022-06-27T11:50:40.000Z",
-        "days_since_modified": 1561
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": true,
+        "several_contributors": true
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 1,
+          "huggingface": 1,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2025-10-14",
+          "platform": "github",
+          "archived": false
+        },
+        "people": {
+          "github": {
+            "total": 5,
+            "active": 1,
+            "absence_factor": 1,
+            "assets": 1,
+            "fork_history": true
+          },
+          "huggingface": {
+            "total": 3,
+            "active": 0,
+            "absence_factor": 1,
+            "assets": 1,
+            "fork_history": false
+          }
+        },
+        "releases": {
+          "github": {
+            "in_window": 0,
+            "total": 1,
+            "latest_at": "2022-04-19"
+          }
+        },
+        "reuse": {
+          "github": {
+            "forks": 30,
+            "stars": 43
+          },
+          "huggingface": {
+            "downloads_30d": 148,
+            "downloads_all_time": 7687,
+            "likes": 6
+          }
+        },
+        "license": {
+          "github": [
+            {
+              "status": "detected",
+              "spdx": "CC-BY-4.0",
+              "raw": "CC-BY-4.0",
+              "assets": 1
+            }
+          ],
+          "huggingface": [
+            {
+              "status": "none",
+              "spdx": null,
+              "raw": null,
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "too_few_items",
+            "count": 0
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "too_few_items",
+            "count": 0
+          }
+        ],
+        "assets": [
+          {
+            "key": "github:hausanlp/naijasenti",
+            "platform": "github",
+            "url": "https://github.com/hausanlp/NaijaSenti",
+            "id": "hausanlp/NaijaSenti",
+            "renamed_from": null,
+            "fork": true,
+            "fork_of": null,
+            "archived": false,
+            "forks": 30,
+            "stars": 43,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-4.0",
+                "raw": "CC-BY-4.0"
+              }
+            ],
+            "last_change_at": "2025-10-14",
+            "gaps": [],
+            "contributors_total": 5,
+            "contributors_active": 1,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 1,
+            "latest_release_at": "2022-04-19",
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": null,
+            "status": "measured"
+          },
+          {
+            "key": "huggingface:models/davlan/naija-twitter-sentiment-afriberta-large",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/Davlan/naija-twitter-sentiment-afriberta-large",
+            "kind": "models",
+            "id": "Davlan/naija-twitter-sentiment-afriberta-large",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2022-06-27",
+            "created_at": "2022-03-02",
+            "likes": 6,
+            "downloads_30d": 148,
+            "downloads_all_time": 7687,
+            "license": [
+              {
+                "status": "none",
+                "spdx": null,
+                "raw": null
+              }
+            ],
+            "contributors_total": 3,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 2,
+              "closed": 1
+            },
+            "gaps": [],
+            "status": "measured"
+          }
+        ]
       }
     },
     "ui_54": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_55": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_56": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "recently_updated",
-      "activity_score": 66,
+      "activity_score": 67,
       "link_count": 4,
       "broken_links": [],
-      "github": {
-        "repo": "Digital-Umuganda/Mbaza-chatbot",
-        "pushed_at": "2021-07-31T14:31:30Z",
-        "archived": false,
-        "days_since_commit": 1892,
-        "stars": 0
+      "hosts": {
+        "github": 1,
+        "huggingface": 2,
+        "website": 1
       },
-      "hf": {
-        "id": "DigitalUmuganda/common-voice-kinyarwanda-text-dataset",
-        "kind": "datasets",
-        "downloads": 28,
-        "likes": 0,
-        "last_modified": "2026-06-18T11:20:21.000Z",
-        "days_since_modified": 109
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": true,
+        "several_contributors": true
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 1,
+          "huggingface": 2,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2026-06-18",
+          "platform": "huggingface",
+          "archived": false
+        },
+        "people": {
+          "github": {
+            "total": 2,
+            "active": 0,
+            "absence_factor": 1,
+            "assets": 1,
+            "fork_history": false
+          },
+          "huggingface": {
+            "total": 3,
+            "active": 1,
+            "absence_factor": 1,
+            "assets": 2,
+            "fork_history": false
+          }
+        },
+        "releases": {
+          "github": {
+            "in_window": 0,
+            "total": 0,
+            "latest_at": null
+          }
+        },
+        "reuse": {
+          "github": {
+            "forks": 0,
+            "stars": 0
+          },
+          "huggingface": {
+            "downloads_30d": 70,
+            "downloads_all_time": 2645,
+            "likes": 0
+          }
+        },
+        "license": {
+          "github": [
+            {
+              "status": "none",
+              "spdx": null,
+              "raw": null,
+              "assets": 1
+            }
+          ],
+          "huggingface": [
+            {
+              "status": "none",
+              "spdx": null,
+              "raw": null,
+              "assets": 1
+            },
+            {
+              "status": "detected",
+              "spdx": "CC-BY-4.0",
+              "raw": "cc-by-4.0",
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "too_few_items",
+            "count": 0
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "too_few_items",
+            "count": 0
+          }
+        ],
+        "assets": [
+          {
+            "key": "huggingface:datasets/digitalumuganda/common-voice-kinyarwanda-text-dataset",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/datasets/DigitalUmuganda/common-voice-kinyarwanda-text-dataset",
+            "kind": "datasets",
+            "id": "DigitalUmuganda/common-voice-kinyarwanda-text-dataset",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2026-06-18",
+            "created_at": "2022-05-20",
+            "likes": 0,
+            "downloads_30d": 25,
+            "downloads_all_time": 1277,
+            "license": [
+              {
+                "status": "none",
+                "spdx": null,
+                "raw": null
+              }
+            ],
+            "contributors_total": 3,
+            "contributors_active": 1,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 4,
+              "closed": 3
+            },
+            "gaps": [],
+            "status": "measured"
+          },
+          {
+            "key": "huggingface:datasets/mbazanlp/common-voice-kinyarwanda-english-dataset",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/datasets/mbazaNLP/common-voice-kinyarwanda-english-dataset",
+            "kind": "datasets",
+            "id": "mbazaNLP/common-voice-kinyarwanda-english-dataset",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2022-12-21",
+            "created_at": "2022-12-21",
+            "likes": 0,
+            "downloads_30d": 45,
+            "downloads_all_time": 1368,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-4.0",
+                "raw": "cc-by-4.0"
+              }
+            ],
+            "contributors_total": 1,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 0,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured"
+          },
+          {
+            "key": "github:digital-umuganda/mbaza-chatbot",
+            "platform": "github",
+            "url": "https://github.com/Digital-Umuganda/Mbaza-chatbot",
+            "id": "Digital-Umuganda/Mbaza-chatbot",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 0,
+            "stars": 0,
+            "license": [
+              {
+                "status": "none",
+                "spdx": null,
+                "raw": null
+              }
+            ],
+            "last_change_at": "2021-07-31",
+            "gaps": [],
+            "contributors_total": 2,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          }
+        ]
       }
     },
     "ui_57": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_59": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "no_recent_updates",
       "activity_score": 17,
       "link_count": 2,
       "broken_links": [],
-      "github": null,
-      "hf": {
-        "id": "mbazaNLP/common-voice-kinyarwanda-english-dataset",
-        "kind": "datasets",
-        "downloads": 53,
-        "likes": 0,
-        "last_modified": "2022-12-21T12:40:09.000Z",
-        "days_since_modified": 1384
+      "hosts": {
+        "huggingface": 1,
+        "website": 1
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": false,
+        "several_contributors": false
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 0,
+          "huggingface": 1,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2022-12-21",
+          "platform": "huggingface",
+          "archived": false
+        },
+        "people": {
+          "huggingface": {
+            "total": 1,
+            "active": 0,
+            "absence_factor": 1,
+            "assets": 1,
+            "fork_history": false
+          }
+        },
+        "releases": {},
+        "reuse": {
+          "huggingface": {
+            "downloads_30d": 45,
+            "downloads_all_time": 1368,
+            "likes": 0
+          }
+        },
+        "license": {
+          "huggingface": [
+            {
+              "status": "detected",
+              "spdx": "CC-BY-4.0",
+              "raw": "cc-by-4.0",
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "github_only"
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "github_only"
+          },
+          {
+            "metric": "releases",
+            "reason": "no_releases_on_platform"
+          }
+        ],
+        "assets": [
+          {
+            "key": "huggingface:datasets/mbazanlp/common-voice-kinyarwanda-english-dataset",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/datasets/mbazaNLP/common-voice-kinyarwanda-english-dataset",
+            "kind": "datasets",
+            "id": "mbazaNLP/common-voice-kinyarwanda-english-dataset",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2022-12-21",
+            "created_at": "2022-12-21",
+            "likes": 0,
+            "downloads_30d": 45,
+            "downloads_all_time": 1368,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-4.0",
+                "raw": "cc-by-4.0"
+              }
+            ],
+            "contributors_total": 1,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 0,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured"
+          }
+        ]
       }
     },
     "ui_60": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "stable_archive",
       "activity_score": 60,
       "link_count": 2,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "dataverse": 1,
+        "github_org": 1
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_61": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "no_recent_updates",
-      "activity_score": 22,
+      "activity_score": 23,
       "link_count": 6,
       "broken_links": [],
-      "github": null,
-      "hf": {
-        "id": "DigitalUmuganda/kinyarwanda-english-machine-translation-dataset",
-        "kind": "datasets",
-        "downloads": 156,
-        "likes": 4,
-        "last_modified": "2022-11-04T16:12:51.000Z",
-        "days_since_modified": 1431
+      "hosts": {
+        "huggingface": 6
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": false,
+        "several_contributors": true
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 0,
+          "huggingface": 6,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2023-10-02",
+          "platform": "huggingface",
+          "archived": false
+        },
+        "people": {
+          "huggingface": {
+            "total": 4,
+            "active": 0,
+            "absence_factor": 1,
+            "assets": 6,
+            "fork_history": false
+          }
+        },
+        "releases": {},
+        "reuse": {
+          "huggingface": {
+            "downloads_30d": 440,
+            "downloads_all_time": 28186,
+            "likes": 7
+          }
+        },
+        "license": {
+          "huggingface": [
+            {
+              "status": "detected",
+              "spdx": "CC-BY-4.0",
+              "raw": "cc-by-4.0",
+              "assets": 2
+            },
+            {
+              "status": "detected",
+              "spdx": "CC-BY-2.0",
+              "raw": "cc-by-2.0",
+              "assets": 3
+            },
+            {
+              "status": "none",
+              "spdx": null,
+              "raw": null,
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "github_only"
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "github_only"
+          },
+          {
+            "metric": "releases",
+            "reason": "no_releases_on_platform"
+          }
+        ],
+        "assets": [
+          {
+            "key": "huggingface:datasets/digitalumuganda/kinyarwanda-english-machine-translation-dataset",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/datasets/DigitalUmuganda/kinyarwanda-english-machine-translation-dataset",
+            "kind": "datasets",
+            "id": "DigitalUmuganda/kinyarwanda-english-machine-translation-dataset",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2022-11-04",
+            "created_at": "2022-06-07",
+            "likes": 5,
+            "downloads_30d": 189,
+            "downloads_all_time": 23077,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-4.0",
+                "raw": "cc-by-4.0"
+              }
+            ],
+            "contributors_total": 2,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 3,
+              "closed": 1
+            },
+            "gaps": [],
+            "status": "measured"
+          },
+          {
+            "key": "huggingface:datasets/mbazanlp/kinyarwanda_english_parallel_dataset",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/datasets/mbazaNLP/Kinyarwanda_English_parallel_dataset",
+            "kind": "datasets",
+            "id": "mbazaNLP/Kinyarwanda_English_parallel_dataset",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2023-04-08",
+            "created_at": "2022-10-19",
+            "likes": 1,
+            "downloads_30d": 24,
+            "downloads_all_time": 1072,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-4.0",
+                "raw": "cc-by-4.0"
+              }
+            ],
+            "contributors_total": 2,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 0,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured"
+          },
+          {
+            "key": "huggingface:datasets/mbazanlp/nmt_education_parallel_data_en_kin",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/datasets/mbazaNLP/NMT_Education_parallel_data_en_kin",
+            "kind": "datasets",
+            "id": "mbazaNLP/NMT_Education_parallel_data_en_kin",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2023-09-11",
+            "created_at": "2023-08-23",
+            "likes": 1,
+            "downloads_30d": 76,
+            "downloads_all_time": 2121,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-2.0",
+                "raw": "cc-by-2.0"
+              }
+            ],
+            "contributors_total": 1,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 2,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured"
+          },
+          {
+            "key": "huggingface:models/mbazanlp/quantized_nllb_finetuned_edu_en_kin_8bit",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/mbazaNLP/Quantized_Nllb_Finetuned_Edu_En_Kin_8bit",
+            "kind": "models",
+            "id": "mbazaNLP/Quantized_Nllb_Finetuned_Edu_En_Kin_8bit",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2023-10-02",
+            "created_at": "2023-10-02",
+            "likes": 0,
+            "downloads_30d": 17,
+            "downloads_all_time": 234,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-2.0",
+                "raw": "cc-by-2.0"
+              }
+            ],
+            "contributors_total": 1,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 1,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured"
+          },
+          {
+            "key": "huggingface:models/mbazanlp/nllb_finetuned_general_en_kin",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/mbazaNLP/Nllb_finetuned_general_en_kin",
+            "kind": "models",
+            "id": "mbazaNLP/Nllb_finetuned_general_en_kin",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2023-09-05",
+            "created_at": "2023-09-05",
+            "likes": 0,
+            "downloads_30d": 115,
+            "downloads_all_time": 1312,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-2.0",
+                "raw": "cc-by-2.0"
+              }
+            ],
+            "contributors_total": 1,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 2,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured"
+          },
+          {
+            "key": "huggingface:models/digitalumuganda/finetuned-nllb",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/DigitalUmuganda/Finetuned-NLLB",
+            "kind": "models",
+            "id": "DigitalUmuganda/Finetuned-NLLB",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2023-06-13",
+            "created_at": "2023-06-11",
+            "likes": 0,
+            "downloads_30d": 19,
+            "downloads_all_time": 370,
+            "license": [
+              {
+                "status": "none",
+                "spdx": null,
+                "raw": null
+              }
+            ],
+            "contributors_total": 1,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 3,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured"
+          }
+        ]
       }
     },
     "ui_63": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_64": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_65": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_66": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_67": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_68": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_69": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_70": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_71": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_72": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_73": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_74": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_75": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "no_recent_updates",
       "activity_score": 11,
       "link_count": 2,
       "broken_links": [],
-      "github": {
-        "repo": "radiantearth/spot-the-crop-challenge",
-        "pushed_at": "2022-10-29T01:20:51Z",
-        "archived": false,
-        "days_since_commit": 1437,
-        "stars": 11
+      "hosts": {
+        "github": 1,
+        "website": 1
       },
-      "hf": null
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": false,
+        "several_contributors": true
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 1,
+          "huggingface": 0,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2022-01-19",
+          "platform": "github",
+          "archived": false
+        },
+        "people": {
+          "github": {
+            "total": 4,
+            "active": 0,
+            "absence_factor": 2,
+            "assets": 1,
+            "fork_history": false
+          }
+        },
+        "releases": {
+          "github": {
+            "in_window": 0,
+            "total": 0,
+            "latest_at": null
+          }
+        },
+        "reuse": {
+          "github": {
+            "forks": 2,
+            "stars": 11
+          }
+        },
+        "license": {
+          "github": [
+            {
+              "status": "detected",
+              "spdx": "Apache-2.0",
+              "raw": "Apache-2.0",
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "too_few_items",
+            "count": 0
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "too_few_items",
+            "count": 0
+          }
+        ],
+        "assets": [
+          {
+            "key": "github:radiantearth/spot-the-crop-challenge",
+            "platform": "github",
+            "url": "https://github.com/radiantearth/spot-the-crop-challenge",
+            "id": "radiantearth/spot-the-crop-challenge",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 2,
+            "stars": 11,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "Apache-2.0",
+                "raw": "Apache-2.0"
+              }
+            ],
+            "last_change_at": "2022-01-19",
+            "gaps": [],
+            "contributors_total": 4,
+            "contributors_active": 0,
+            "absence_factor": 2,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          }
+        ]
+      }
     },
     "ui_78": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "no_recent_updates",
       "activity_score": 21,
       "link_count": 2,
       "broken_links": [],
-      "github": null,
-      "hf": {
-        "id": "rgautroncgiar/croppie_coffee_ug",
-        "kind": "datasets",
-        "downloads": 129,
-        "likes": 1,
-        "last_modified": "2024-09-26T12:31:34.000Z",
-        "days_since_modified": 739
+      "hosts": {
+        "huggingface": 2
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": false,
+        "several_contributors": false
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 0,
+          "huggingface": 2,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2024-09-26",
+          "platform": "huggingface",
+          "archived": false
+        },
+        "people": {
+          "huggingface": {
+            "total": 1,
+            "active": 0,
+            "absence_factor": 1,
+            "assets": 2,
+            "fork_history": false
+          }
+        },
+        "releases": {},
+        "reuse": {
+          "huggingface": {
+            "downloads_30d": 164,
+            "downloads_all_time": 2879,
+            "likes": 6
+          }
+        },
+        "license": {
+          "huggingface": [
+            {
+              "status": "detected",
+              "spdx": "CC-BY-SA-4.0",
+              "raw": "cc-by-sa-4.0",
+              "assets": 1
+            },
+            {
+              "status": "detected",
+              "spdx": "GPL-3.0",
+              "raw": "gpl-3.0",
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "github_only"
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "github_only"
+          },
+          {
+            "metric": "releases",
+            "reason": "no_releases_on_platform"
+          }
+        ],
+        "assets": [
+          {
+            "key": "huggingface:datasets/rgautroncgiar/croppie_coffee_ug",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/datasets/rgautroncgiar/croppie_coffee_ug",
+            "kind": "datasets",
+            "id": "rgautroncgiar/croppie_coffee_ug",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2024-09-26",
+            "created_at": "2024-06-28",
+            "likes": 1,
+            "downloads_30d": 131,
+            "downloads_all_time": 2455,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-SA-4.0",
+                "raw": "cc-by-sa-4.0"
+              }
+            ],
+            "contributors_total": 1,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 1,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured"
+          },
+          {
+            "key": "huggingface:models/rgautroncgiar/croppie_coffee_ug",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/rgautroncgiar/croppie_coffee_ug",
+            "kind": "models",
+            "id": "rgautroncgiar/croppie_coffee_ug",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2024-09-26",
+            "created_at": "2024-06-28",
+            "likes": 5,
+            "downloads_30d": 33,
+            "downloads_all_time": 424,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "GPL-3.0",
+                "raw": "gpl-3.0"
+              }
+            ],
+            "contributors_total": 1,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 0,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured"
+          }
+        ]
       }
     },
     "ui_79": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
-      "activity_score": 25,
+      "activity_score": 24,
       "link_count": 2,
       "broken_links": [],
-      "github": {
-        "repo": "SunbirdAI/lamwo-electrification-project",
-        "pushed_at": "2025-05-21T09:09:15Z",
-        "archived": false,
-        "days_since_commit": 502,
-        "stars": 3
+      "hosts": {
+        "github": 1,
+        "website": 1
       },
-      "hf": null
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": false,
+        "several_contributors": true
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 1,
+          "huggingface": 0,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2025-05-21",
+          "platform": "github",
+          "archived": false
+        },
+        "people": {
+          "github": {
+            "total": 3,
+            "active": 0,
+            "absence_factor": 1,
+            "assets": 1,
+            "fork_history": false
+          }
+        },
+        "releases": {
+          "github": {
+            "in_window": 0,
+            "total": 0,
+            "latest_at": null
+          }
+        },
+        "reuse": {
+          "github": {
+            "forks": 2,
+            "stars": 3
+          }
+        },
+        "license": {
+          "github": [
+            {
+              "status": "detected",
+              "spdx": "GPL-3.0",
+              "raw": "GPL-3.0",
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "too_few_items",
+            "count": 0
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "too_few_items",
+            "count": 0
+          }
+        ],
+        "assets": [
+          {
+            "key": "github:sunbirdai/lamwo-electrification-project",
+            "platform": "github",
+            "url": "https://github.com/SunbirdAI/lamwo-electrification-project/tree/main",
+            "id": "SunbirdAI/lamwo-electrification-project",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 2,
+            "stars": 3,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "GPL-3.0",
+                "raw": "GPL-3.0"
+              }
+            ],
+            "last_change_at": "2025-05-21",
+            "gaps": [],
+            "contributors_total": 3,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          }
+        ]
+      }
     },
     "ui_80": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "recently_updated",
-      "activity_score": 59,
+      "activity_score": 57,
       "link_count": 3,
       "broken_links": [
         "https://irradiation-portal-55883164704.europe-west1.run.app/",
         "https://github.com/Marconi-Lab/Irradiation_Portal"
       ],
-      "github": {
-        "repo": "Marconi-Lab/Solar_irradiation",
-        "pushed_at": "2026-08-17T12:26:01Z",
-        "archived": false,
-        "days_since_commit": 49,
-        "stars": 1
+      "hosts": {
+        "github": 2,
+        "website": 1
       },
-      "hf": null
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": true,
+        "several_contributors": true
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 1,
+          "huggingface": 0,
+          "zenodo": 0,
+          "unreadable": 1,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2026-08-02",
+          "platform": "github",
+          "archived": false
+        },
+        "people": {
+          "github": {
+            "total": 5,
+            "active": 2,
+            "absence_factor": 2,
+            "assets": 1,
+            "fork_history": false
+          }
+        },
+        "releases": {
+          "github": {
+            "in_window": 0,
+            "total": 0,
+            "latest_at": null
+          }
+        },
+        "reuse": {
+          "github": {
+            "forks": 1,
+            "stars": 1
+          }
+        },
+        "license": {
+          "github": [
+            {
+              "status": "none",
+              "spdx": null,
+              "raw": null,
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "too_few_items",
+            "count": 0
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "too_few_items",
+            "count": 0
+          }
+        ],
+        "assets": [
+          {
+            "key": "github:marconi-lab/solar_irradiation",
+            "platform": "github",
+            "url": "https://github.com/Marconi-Lab/Solar_irradiation",
+            "id": "Marconi-Lab/SolarIrradiation",
+            "renamed_from": "Marconi-Lab/Solar_irradiation",
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 1,
+            "stars": 1,
+            "license": [
+              {
+                "status": "none",
+                "spdx": null,
+                "raw": null
+              }
+            ],
+            "last_change_at": "2026-08-02",
+            "gaps": [],
+            "contributors_total": 5,
+            "contributors_active": 2,
+            "absence_factor": 2,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          },
+          {
+            "key": "github:marconi-lab/irradiation_portal",
+            "platform": "github",
+            "url": "https://github.com/Marconi-Lab/Irradiation_Portal",
+            "id": "Marconi-Lab/Irradiation_Portal",
+            "status": "unavailable"
+          }
+        ]
+      }
     },
     "ui_81": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "huggingface": 1
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": {
+        "status": "unreadable",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 0,
+          "huggingface": 0,
+          "zenodo": 0,
+          "unreadable": 1,
+          "failed": 0
+        },
+        "last_change": null,
+        "people": {},
+        "releases": {},
+        "reuse": {},
+        "license": {},
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [],
+        "assets": [
+          {
+            "key": "huggingface:spaces/giz/audit_assistant",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/spaces/GIZ/audit_assistant/tree/main",
+            "id": "GIZ/audit_assistant",
+            "status": "unavailable"
+          }
+        ]
+      }
     },
     "ui_82": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_83": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "stable_archive",
       "activity_score": 60,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "dataverse": 1
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_85": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": null,
       "activity_score": null,
       "link_count": 1,
       "broken_links": [],
-      "github": null,
-      "hf": null
+      "hosts": {
+        "website": 1
+      },
+      "compare": {
+        "open_asset": false,
+        "measured": false,
+        "changed_12m": null,
+        "several_contributors": null
+      },
+      "oss": null
     },
     "ui_86": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "recently_updated",
-      "activity_score": 44,
+      "activity_score": 50,
       "link_count": 2,
       "broken_links": [],
-      "github": null,
-      "hf": {
-        "id": "chrismazii/kinycomet_dataset",
-        "kind": "datasets",
-        "downloads": 12,
-        "likes": 0,
-        "last_modified": "2025-11-06T21:31:19.000Z",
-        "days_since_modified": 332
+      "hosts": {
+        "huggingface": 2
+      },
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": true,
+        "several_contributors": false
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 0,
+          "huggingface": 2,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2026-02-02",
+          "platform": "huggingface",
+          "archived": false
+        },
+        "people": {
+          "huggingface": {
+            "total": 1,
+            "active": 1,
+            "absence_factor": 1,
+            "assets": 2,
+            "fork_history": false
+          }
+        },
+        "releases": {},
+        "reuse": {
+          "huggingface": {
+            "downloads_30d": 20,
+            "downloads_all_time": 420,
+            "likes": 0
+          }
+        },
+        "license": {
+          "huggingface": [
+            {
+              "status": "detected",
+              "spdx": "Apache-2.0",
+              "raw": "apache-2.0",
+              "assets": 2
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "github_only"
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "github_only"
+          },
+          {
+            "metric": "releases",
+            "reason": "no_releases_on_platform"
+          }
+        ],
+        "assets": [
+          {
+            "key": "huggingface:datasets/chrismazii/kinycomet_dataset",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/datasets/chrismazii/kinycomet_dataset",
+            "kind": "datasets",
+            "id": "chrismazii/kinycomet_dataset",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2025-11-06",
+            "created_at": "2025-09-29",
+            "likes": 0,
+            "downloads_30d": 10,
+            "downloads_all_time": 339,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "Apache-2.0",
+                "raw": "apache-2.0"
+              }
+            ],
+            "contributors_total": 1,
+            "contributors_active": 1,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 1,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured"
+          },
+          {
+            "key": "huggingface:models/chrismazii/kinycomet_unbabel",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/chrismazii/kinycomet_unbabel",
+            "kind": "models",
+            "id": "chrismazii/kinycomet_unbabel",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2026-02-02",
+            "created_at": "2025-08-14",
+            "likes": 0,
+            "downloads_30d": 10,
+            "downloads_all_time": 81,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "Apache-2.0",
+                "raw": "apache-2.0"
+              }
+            ],
+            "contributors_total": 1,
+            "contributors_active": 1,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 0,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured"
+          }
+        ]
       }
     },
     "ui_87": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "recently_updated",
-      "activity_score": 80,
+      "activity_score": 81,
       "link_count": 6,
       "broken_links": [],
-      "github": {
-        "repo": "c4ir-rw/ac-ai-models",
-        "pushed_at": "2026-03-11T08:27:10Z",
-        "archived": false,
-        "days_since_commit": 208,
-        "stars": 2
+      "hosts": {
+        "github": 1,
+        "huggingface": 5
       },
-      "hf": {
-        "id": "C4IR-RW/kinya-ag-tts",
-        "kind": "datasets",
-        "downloads": 189,
-        "likes": 1,
-        "last_modified": "2026-09-03T09:00:26.000Z",
-        "days_since_modified": 32
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": true,
+        "several_contributors": true
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 1,
+          "huggingface": 5,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2026-09-03",
+          "platform": "huggingface",
+          "archived": false
+        },
+        "people": {
+          "github": {
+            "total": 2,
+            "active": 2,
+            "absence_factor": 1,
+            "assets": 1,
+            "fork_history": false
+          },
+          "huggingface": {
+            "total": 2,
+            "active": 2,
+            "absence_factor": 1,
+            "assets": 5,
+            "fork_history": false
+          }
+        },
+        "releases": {
+          "github": {
+            "in_window": 0,
+            "total": 0,
+            "latest_at": null
+          }
+        },
+        "reuse": {
+          "github": {
+            "forks": 1,
+            "stars": 3
+          },
+          "huggingface": {
+            "downloads_30d": 747,
+            "downloads_all_time": 5341,
+            "likes": 3
+          }
+        },
+        "license": {
+          "github": [
+            {
+              "status": "detected",
+              "spdx": "CC-BY-SA-4.0",
+              "raw": "CC-BY-SA-4.0",
+              "assets": 1
+            }
+          ],
+          "huggingface": [
+            {
+              "status": "detected",
+              "spdx": "CC-BY-4.0",
+              "raw": "cc-by-4.0",
+              "assets": 5
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "too_few_items",
+            "count": 0
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "too_few_items",
+            "count": 0
+          }
+        ],
+        "assets": [
+          {
+            "key": "huggingface:datasets/c4ir-rw/kinya-ag-tts",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/datasets/C4IR-RW/kinya-ag-tts",
+            "kind": "datasets",
+            "id": "C4IR-RW/kinya-ag-tts",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2026-09-03",
+            "created_at": "2025-10-08",
+            "likes": 1,
+            "downloads_30d": 243,
+            "downloads_all_time": 3374,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-4.0",
+                "raw": "cc-by-4.0"
+              }
+            ],
+            "contributors_total": 2,
+            "contributors_active": 2,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 1,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured"
+          },
+          {
+            "key": "huggingface:datasets/c4ir-rw/kinya-ag-retrieval",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/datasets/C4IR-RW/kinya-ag-retrieval",
+            "kind": "datasets",
+            "id": "C4IR-RW/kinya-ag-retrieval",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2026-03-11",
+            "created_at": "2025-10-09",
+            "likes": 1,
+            "downloads_30d": 229,
+            "downloads_all_time": 550,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-4.0",
+                "raw": "cc-by-4.0"
+              }
+            ],
+            "contributors_total": 2,
+            "contributors_active": 1,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 0,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured"
+          },
+          {
+            "key": "huggingface:models/c4ir-rw/kinya-flex-tts",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/C4IR-RW/kinya-flex-tts",
+            "kind": "models",
+            "id": "C4IR-RW/kinya-flex-tts",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2026-03-17",
+            "created_at": "2025-10-09",
+            "likes": 1,
+            "downloads_30d": 0,
+            "downloads_all_time": 0,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-4.0",
+                "raw": "cc-by-4.0"
+              }
+            ],
+            "contributors_total": 2,
+            "contributors_active": 2,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 1,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured"
+          },
+          {
+            "key": "huggingface:models/c4ir-rw/kiny-colbert-free",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/C4IR-RW/kiny-colbert-free",
+            "kind": "models",
+            "id": "C4IR-RW/kiny-colbert-free",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2026-03-11",
+            "created_at": "2026-01-07",
+            "likes": 0,
+            "downloads_30d": 275,
+            "downloads_all_time": 1417,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-4.0",
+                "raw": "cc-by-4.0"
+              }
+            ],
+            "contributors_total": 1,
+            "contributors_active": 1,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 0,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured"
+          },
+          {
+            "key": "huggingface:models/c4ir-rw/kinyabert",
+            "platform": "huggingface",
+            "url": "https://huggingface.co/C4IR-RW/kinyabert",
+            "kind": "models",
+            "id": "C4IR-RW/kinyabert",
+            "renamed_from": null,
+            "gated": false,
+            "last_change_at": "2026-03-11",
+            "created_at": "2025-10-09",
+            "likes": 0,
+            "downloads_30d": 0,
+            "downloads_all_time": 0,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-4.0",
+                "raw": "cc-by-4.0"
+              }
+            ],
+            "contributors_total": 2,
+            "contributors_active": 2,
+            "absence_factor": 1,
+            "discussions": {
+              "total": 0,
+              "closed": 0
+            },
+            "gaps": [],
+            "status": "measured"
+          },
+          {
+            "key": "github:c4ir-rw/ac-ai-models",
+            "platform": "github",
+            "url": "https://github.com/c4ir-rw/ac-ai-models",
+            "id": "c4ir-rw/ac-ai-models",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 1,
+            "stars": 3,
+            "license": [
+              {
+                "status": "detected",
+                "spdx": "CC-BY-SA-4.0",
+                "raw": "CC-BY-SA-4.0"
+              }
+            ],
+            "last_change_at": "2026-03-11",
+            "gaps": [],
+            "contributors_total": 2,
+            "contributors_active": 2,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          }
+        ]
       }
     },
     "ui_89": {
       "availability": "available",
-      "checked_at": "2026-10-05",
+      "checked_at": "2026-10-09",
       "context": "no_recent_updates",
       "activity_score": 0,
       "link_count": 1,
       "broken_links": [],
-      "github": {
-        "repo": "digitalgreenorg/frame-templates",
-        "pushed_at": "2024-08-23T10:02:18Z",
-        "archived": false,
-        "days_since_commit": 773,
-        "stars": 0
+      "hosts": {
+        "github": 1
       },
-      "hf": null
+      "compare": {
+        "open_asset": true,
+        "measured": true,
+        "changed_12m": false,
+        "several_contributors": true
+      },
+      "oss": {
+        "status": "measured",
+        "measured_at": "2026-10-09",
+        "window": {
+          "start": "2025-10-10",
+          "end": "2026-10-09"
+        },
+        "scope": {
+          "github": 1,
+          "huggingface": 0,
+          "zenodo": 0,
+          "unreadable": 0,
+          "failed": 0
+        },
+        "last_change": {
+          "at": "2024-08-23",
+          "platform": "github",
+          "archived": false
+        },
+        "people": {
+          "github": {
+            "total": 2,
+            "active": 0,
+            "absence_factor": 1,
+            "assets": 1,
+            "fork_history": false
+          }
+        },
+        "releases": {
+          "github": {
+            "in_window": 0,
+            "total": 0,
+            "latest_at": null
+          }
+        },
+        "reuse": {
+          "github": {
+            "forks": 1,
+            "stars": 0
+          }
+        },
+        "license": {
+          "github": [
+            {
+              "status": "unrecognised",
+              "spdx": null,
+              "raw": "NOASSERTION",
+              "assets": 1
+            }
+          ]
+        },
+        "first_response": null,
+        "change_requests": null,
+        "gaps": [
+          {
+            "metric": "first_response",
+            "reason": "too_few_items",
+            "count": 0
+          },
+          {
+            "metric": "change_request_closure",
+            "reason": "too_few_items",
+            "count": 0
+          }
+        ],
+        "assets": [
+          {
+            "key": "github:digitalgreenorg/frame-templates",
+            "platform": "github",
+            "url": "https://github.com/digitalgreenorg/frame-templates",
+            "id": "digitalgreenorg/frame-templates",
+            "renamed_from": null,
+            "fork": false,
+            "fork_of": null,
+            "archived": false,
+            "forks": 1,
+            "stars": 0,
+            "license": [
+              {
+                "status": "unrecognised",
+                "spdx": null,
+                "raw": "NOASSERTION"
+              }
+            ],
+            "last_change_at": "2024-08-23",
+            "gaps": [],
+            "contributors_total": 2,
+            "contributors_active": 0,
+            "absence_factor": 1,
+            "releases_in_window": 0,
+            "releases_total": 0,
+            "latest_release_at": null,
+            "outside_items": 0,
+            "outside_change_requests": 0,
+            "files": {
+              "readme": true,
+              "contributing": false,
+              "code_of_conduct": false
+            },
+            "status": "measured"
+          }
+        ]
+      }
     }
   }
 }
