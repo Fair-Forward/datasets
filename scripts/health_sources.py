@@ -1,0 +1,500 @@
+"""Read public activity data from GitHub, Hugging Face, Zenodo and doi.org.
+
+ApiClient wraps one host: a request budget per run, polite spacing, retries with backoff for
+server and network errors, and waits on the hosts' rate-limit headers. Fetchers turn one asset into
+a record of public facts (dates, counts, licences) plus in-memory working data.
+
+Privacy: account names and emails are needed only to count each person once. They live in the
+`people` maps a fetcher returns, which health_check.py combines per project and discards. They are
+never written to a file or a log. Private repositories are refused even when a token can see them,
+so a local run with a personal token publishes nothing a public visitor could not see.
+"""
+import re
+import time
+
+import requests
+
+from chaoss_metrics import (INSIDE_ASSOCIATIONS, MAX_RESPONSE_ITEMS, identity_key, is_bot,
+                            merge_people, normalise_licenses, parse_ts, release_summary)
+from health_assets import classify_url
+
+GITHUB_API = 'https://api.github.com'
+HF_API = 'https://huggingface.co/api'
+ZENODO_API = 'https://zenodo.org/api'
+DOI_HANDLES = 'https://doi.org/api/handles'
+
+# Failures worth carrying a previous measurement over; "unavailable" is a lasting fact instead.
+TRANSIENT = frozenset({'failed', 'budget', 'rate_limited'})
+
+# Statuses each host uses for "this asset is not public or no longer exists". Anything else that
+# fails (bad credentials, a bare 403, a malformed request) is a failure of the run, which is carried
+# over or stops the run, never published as a fact about the asset. GitHub answers 404 for private
+# repositories; Hugging Face answers 401 for gated or private ones.
+UNAVAILABLE_STATUSES = {
+    'github': (404, 410, 451),
+    'huggingface': (401, 403, 404, 410, 451),
+    'zenodo': (403, 404, 410),
+    'doi': (404,),
+}
+
+_LINK_NEXT = re.compile(r'<([^>]+)>\s*;\s*rel="?next"?', re.I)
+
+
+class SourceError(Exception):
+    """kind: unavailable (missing, private, auth wall), failed, budget or rate_limited."""
+
+    def __init__(self, kind, status=None, detail=''):
+        text = kind + (f' ({status})' if status else '') + (f': {detail}' if detail else '')
+        super().__init__(text)
+        self.kind = kind
+        self.status = status
+
+
+def _header(headers, name):
+    if not headers:
+        return None
+    for key, value in headers.items():
+        if key.lower() == name:
+            return value
+    return None
+
+
+def _next_link(headers):
+    match = _LINK_NEXT.search(_header(headers, 'link') or '')
+    return match.group(1) if match else None
+
+
+def _is_html(headers):
+    """True for an HTML page, which a JSON API sends only from a firewall or proxy in front of it
+    (Zenodo answers 403 "unusual traffic" this way). Such a page says nothing about the asset."""
+    return 'text/html' in (_header(headers, 'content-type') or '').lower()
+
+
+class ApiClient:
+    """GET JSON from one host within a request budget, retrying what is worth retrying."""
+
+    def __init__(self, name, headers=None, budget=100, min_interval=0.0, max_wait=120, retries=3,
+                 timeout=(5, 20), session=None, sleep=time.sleep, clock=time.time,
+                 unavailable=(404, 410, 451)):
+        self.name = name
+        self.unavailable = frozenset(unavailable)
+        self.headers = dict(headers or {})
+        self.budget = budget
+        self.min_interval = min_interval
+        self.max_wait = max_wait
+        self.retries = retries
+        self.timeout = timeout
+        self.session = session or requests.Session()
+        self.sleep = sleep
+        self.clock = clock
+        self.used = 0
+        self._last = None
+
+    def _rate_limit_wait(self, headers):
+        """Seconds the host asks us to wait, or None when the response is not a rate limit."""
+        retry_after = _header(headers, 'retry-after')
+        if retry_after is not None:
+            try:
+                return max(0.0, float(retry_after))
+            except ValueError:
+                pass
+        if _header(headers, 'x-ratelimit-remaining') == '0':
+            try:
+                return max(0.0, float(_header(headers, 'x-ratelimit-reset')) - self.clock()) + 1
+            except (TypeError, ValueError):
+                pass
+        policy = _header(headers, 'ratelimit')  # Hugging Face: '"api";r=<remaining>;t=<seconds>'
+        if policy:
+            remaining, reset = re.search(r'\br=(\d+)', policy), re.search(r'\bt=(\d+)', policy)
+            if remaining and reset and int(remaining.group(1)) == 0:
+                return float(reset.group(1)) + 1
+        return None
+
+    def _retry(self, attempt, kind, status=None):
+        """Back off before the next attempt, or raise once the retries are spent."""
+        if attempt > self.retries:
+            raise SourceError(kind, status)
+        self.sleep(2 ** attempt)
+
+    def get_json(self, url, params=None):
+        """(data, headers) for a 2xx response; data is None for 204. Raises SourceError."""
+        attempt = 0
+        while True:
+            if self.used >= self.budget:
+                raise SourceError('budget', detail=self.name)
+            if self.min_interval and self._last is not None:
+                wait = self.min_interval - (self.clock() - self._last)
+                if wait > 0:
+                    self.sleep(wait)
+            self.used += 1
+            self._last = self.clock()
+            try:
+                resp = self.session.get(url, params=params, headers=self.headers, timeout=self.timeout)
+            except requests.exceptions.RequestException:
+                attempt += 1
+                self._retry(attempt, 'failed')
+                continue
+            status = resp.status_code
+            if status == 204:
+                return None, resp.headers
+            if 200 <= status < 300:
+                try:
+                    return resp.json(), resp.headers
+                except ValueError:
+                    raise SourceError('failed', status, 'invalid JSON')
+            if status in (401, 403, 429):
+                wait = self._rate_limit_wait(resp.headers)
+                if wait is not None:
+                    attempt += 1
+                    if wait > self.max_wait or attempt > self.retries:
+                        raise SourceError('rate_limited', status)
+                    self.sleep(wait)
+                    continue
+                if status == 429:
+                    attempt += 1
+                    self._retry(attempt, 'rate_limited', status)
+                    continue
+            if status >= 500:
+                attempt += 1
+                self._retry(attempt, 'failed', status)
+                continue
+            lasting = status in self.unavailable and not _is_html(resp.headers)
+            raise SourceError('unavailable' if lasting else 'failed', status)
+
+    def paginate(self, url, params=None, max_pages=5, stop=None):
+        """(items, complete) across pages linked by rel="next". complete is False when the
+        listing was cut at max_pages; stop(page) ends the listing early as complete."""
+        items, pages, next_url, next_params = [], 0, url, params
+        while next_url and pages < max_pages:
+            data, headers = self.get_json(next_url, next_params)
+            pages += 1
+            page = data if isinstance(data, list) else []
+            items.extend(page)
+            if stop and page and stop(page):
+                return items, True
+            next_url, next_params = _next_link(headers), None
+        return items, next_url is None
+
+
+def _day(value):
+    parsed = parse_ts(value)
+    return parsed.date().isoformat() if parsed else None
+
+
+def _day_until(value, end):
+    """The date of a timestamp, or None when it is unparseable or after the window end."""
+    parsed = parse_ts(value)
+    return parsed.date().isoformat() if parsed and parsed < end else None
+
+
+def _iso(moment):
+    return moment.strftime('%Y-%m-%dT%H:%M:%SZ')
+
+
+def _result(record, people=None, response_items=None, outside_prs=None):
+    return {'record': record, 'people': people, 'response_items': response_items or [],
+            'outside_prs': outside_prs or []}
+
+
+def _human_commit(commit):
+    author = commit.get('author') or {}
+    meta = (commit.get('commit') or {}).get('author') or {}
+    if is_bot(author.get('login'), author.get('type'), meta.get('email'), meta.get('name')):
+        return None
+    return identity_key(author.get('login'), meta.get('email'), meta.get('name')) or 'n:unknown'
+
+
+def _committed_at(commit):
+    return parse_ts(((commit.get('commit') or {}).get('committer') or {}).get('date'))
+
+
+def _listing(gh, url):
+    """A list endpoint's first page, or [] when it cannot be read (counted as no reply)."""
+    try:
+        data, _ = gh.get_json(url, {'per_page': 100})
+    except SourceError as err:
+        if err.kind != 'unavailable':
+            raise
+        return []
+    return data if isinstance(data, list) else []
+
+
+def _first_reply(gh, base, item):
+    """When someone other than the author (and not a bot) first replied, or None."""
+    author = (item.get('user') or {}).get('login')
+    replies = []
+    if item.get('comments'):
+        for comment in _listing(gh, f"{base}/issues/{item['number']}/comments"):
+            user = comment.get('user') or {}
+            if user.get('login') != author and not is_bot(user.get('login'), user.get('type')):
+                replies.append(parse_ts(comment.get('created_at')))
+                break
+    if item.get('pull_request'):
+        for review in _listing(gh, f"{base}/pulls/{item['number']}/reviews"):
+            user = review.get('user') or {}
+            if (user.get('login') != author and not is_bot(user.get('login'), user.get('type'))
+                    and review.get('submitted_at')):
+                replies.append(parse_ts(review['submitted_at']))
+                break
+    replies = [moment for moment in replies if moment]
+    return min(replies) if replies else None
+
+
+def fetch_github_repo(gh, owner, repo, window):
+    """CHAOSS facts for one public GitHub repository within the measurement window."""
+    start, end = window
+    data, _ = gh.get_json(f'{GITHUB_API}/repos/{owner}/{repo}')
+    if not isinstance(data, dict):
+        raise SourceError('failed', detail='unexpected repository response')
+    if data.get('private') or data.get('visibility', 'public') != 'public':
+        raise SourceError('unavailable', detail='not public')
+    full = data.get('full_name') or f'{owner}/{repo}'
+    base = f'{GITHUB_API}/repos/{full}'
+    branch = data.get('default_branch') or 'main'
+    record = {
+        'platform': 'github', 'id': full,
+        'renamed_from': f'{owner}/{repo}' if full.lower() != f'{owner}/{repo}'.lower() else None,
+        'fork': bool(data.get('fork')),
+        # The original of a fork is named only when an organisation owns it: a personal account name
+        # that the catalogue does not list is not ours to publish.
+        'fork_of': ((data.get('parent') or {}).get('full_name')
+                    if data.get('fork') and ((data.get('parent') or {}).get('owner') or {}).get('type') == 'Organization'
+                    else None),
+        'archived': bool(data.get('archived')),
+        'forks': data.get('forks_count'), 'stars': data.get('stargazers_count'),
+        'license': normalise_licenses((data.get('license') or {}).get('spdx_id'), 'github'),
+        'last_change_at': None, 'gaps': [],
+    }
+
+    # Commits on the default branch in the window: who was active, and the last human change.
+    try:
+        commits, _ = gh.paginate(f'{base}/commits',
+                                 {'sha': branch, 'since': _iso(start), 'per_page': 100}, max_pages=10)
+    except SourceError as err:
+        if err.status == 409:  # GitHub answers 409 for a repository without commits
+            record['gaps'].append({'metric': 'last_change', 'reason': 'empty_repository'})
+            return _result(record)
+        raise
+    def human_dates(page):
+        # Committer dates come from the committer's clock; a date after the run day is ignored.
+        return [m for m in (_committed_at(c) for c in page if _human_commit(c) is not None) if m and m < end]
+
+    active = {}
+    for commit in commits:
+        key = _human_commit(commit)
+        if key is not None:
+            active[key] = active.get(key, 0) + 1
+    dates = human_dates(commits)
+    if not dates:
+        # Nobody committed in the window: read back through history for the newest human commit.
+        history, _ = gh.paginate(f'{base}/commits', {'sha': branch, 'per_page': 100}, max_pages=3,
+                                 stop=lambda page: bool(human_dates(page)))
+        dates = human_dates(history)
+    if dates:
+        record['last_change_at'] = max(dates).date().isoformat()
+    else:
+        record['gaps'].append({'metric': 'last_change', 'reason': 'no_human_commits'})
+
+    # All-time contributors, bots removed; anonymous ones count by email.
+    contributors, _ = gh.paginate(f'{base}/contributors', {'anon': 1, 'per_page': 100}, max_pages=5)
+    all_time = {}
+    for person in contributors:
+        if person.get('type') == 'Anonymous':
+            if is_bot(email=person.get('email'), name=person.get('name')):
+                continue
+            key = identity_key(email=person.get('email'), name=person.get('name'))
+        else:
+            if is_bot(person.get('login'), person.get('type')):
+                continue
+            key = identity_key(login=person.get('login'))
+        if key:
+            all_time[key] = all_time.get(key, 0) + int(person.get('contributions') or 0)
+    people = merge_people(all_time, active)
+    record.update({'contributors_total': people['total'], 'contributors_active': people['active'],
+                   'absence_factor': people['absence_factor']})
+
+    releases, _ = gh.paginate(f'{base}/releases', {'per_page': 100}, max_pages=3)
+    summary = release_summary([r.get('published_at') for r in releases if not r.get('draft')], start, end)
+    record.update({'releases_in_window': summary['in_window'], 'releases_total': summary['total'],
+                   'latest_release_at': summary['latest_at']})
+
+    # Issues and pull requests opened in the window by people outside the project.
+    def older_than_window(page):
+        created = parse_ts(page[-1].get('created_at'))
+        return created is not None and created < start
+
+    listing = {'state': 'all', 'sort': 'created', 'direction': 'desc', 'per_page': 100}
+    try:
+        items, _ = gh.paginate(f'{base}/issues', listing, max_pages=5, stop=older_than_window)
+    except SourceError as err:
+        if err.kind != 'unavailable':
+            raise
+        # Issues disabled (GitHub answers 410): pull requests are still open to outsiders and listed
+        # under /pulls, which carries no comment count, so their comments are always read.
+        try:
+            pulls, _ = gh.paginate(f'{base}/pulls', listing, max_pages=5, stop=older_than_window)
+        except SourceError as err:
+            if err.kind != 'unavailable':
+                raise
+            pulls = []
+        items = [dict(pr, pull_request={'url': pr.get('url')}, comments=1) for pr in pulls]
+    outside = []
+    for item in items:
+        created = parse_ts(item.get('created_at'))
+        user = item.get('user') or {}
+        if (created is not None and start <= created < end
+                and item.get('author_association') not in INSIDE_ASSOCIATIONS
+                and not is_bot(user.get('login'), user.get('type'))):
+            outside.append(item)
+    outside_prs = [{'created_at': parse_ts(i['created_at']), 'closed_at': parse_ts(i.get('closed_at'))}
+                   for i in outside if i.get('pull_request')]
+    record.update({'outside_items': len(outside), 'outside_change_requests': len(outside_prs)})
+    # Replies are read for every outside item (newest first) so a project can pool its repositories
+    # before the Time to First Response minimum applies.
+    response_items = [{'created_at': parse_ts(item['created_at']), 'first_reply_at': _first_reply(gh, base, item)}
+                      for item in outside[:MAX_RESPONSE_ITEMS]]
+
+    # Community files. GitHub has no community profile for forks.
+    record['files'] = None
+    if not data.get('fork'):
+        try:
+            profile, _ = gh.get_json(f'{base}/community/profile')
+            files = (profile or {}).get('files') or {}
+            record['files'] = {name: bool(files.get(name)) for name in ('readme', 'contributing', 'code_of_conduct')}
+        except SourceError as err:
+            if err.kind != 'unavailable':
+                raise
+
+    return _result(record, {'all_time': all_time, 'active': active}, response_items, outside_prs)
+
+
+_HF_FIELDS = {
+    'models': ('private', 'gated', 'disabled', 'likes', 'lastModified', 'createdAt', 'cardData',
+               'downloads', 'downloadsAllTime'),
+    'datasets': ('private', 'gated', 'disabled', 'likes', 'lastModified', 'createdAt', 'cardData',
+                 'downloads', 'downloadsAllTime'),
+    # Spaces answer 400 to `gated` and have no downloads.
+    'spaces': ('private', 'disabled', 'likes', 'lastModified', 'createdAt', 'cardData'),
+}
+
+
+def fetch_hf_asset(hf, kind, repo_id, window):
+    """CHAOSS facts for one public Hugging Face model, dataset or space."""
+    start, end = window
+    data, _ = hf.get_json(f'{HF_API}/{kind}/{repo_id}', [('expand[]', field) for field in _HF_FIELDS[kind]])
+    if not isinstance(data, dict):
+        raise SourceError('failed', detail='unexpected repository response')
+    if data.get('private') or data.get('disabled'):
+        raise SourceError('unavailable', detail='not public')
+    current = data.get('id') or repo_id
+    record = {
+        'platform': 'huggingface', 'kind': kind, 'id': current,
+        'renamed_from': repo_id if current.lower() != repo_id.lower() else None,
+        'gated': data.get('gated') or False,
+        'last_change_at': _day(data.get('lastModified')), 'created_at': _day(data.get('createdAt')),
+        'likes': data.get('likes'), 'downloads_30d': data.get('downloads'),
+        'downloads_all_time': data.get('downloadsAllTime'),
+        'license': normalise_licenses((data.get('cardData') or {}).get('license'), 'huggingface'),
+        'contributors_total': None, 'contributors_active': None, 'absence_factor': None,
+        'discussions': None, 'gaps': [],
+    }
+    people = None
+    try:
+        commits, _ = hf.paginate(f'{HF_API}/{kind}/{current}/commits/main', max_pages=10)
+    except SourceError as err:
+        if err.kind != 'unavailable':
+            raise
+        reason = 'gated' if record['gated'] else 'unreadable'
+        record['gaps'].append({'metric': 'contributors', 'reason': reason})
+    else:
+        all_time, active = {}, {}
+        for commit in commits:
+            moment = parse_ts(commit.get('date'))
+            for author in commit.get('authors') or []:
+                user = author.get('user')
+                if not user or is_bot(login=user):
+                    continue
+                key = identity_key(login=user)
+                all_time[key] = all_time.get(key, 0) + 1
+                if moment and start <= moment < end:
+                    active[key] = active.get(key, 0) + 1
+        summary = merge_people(all_time, active)
+        record.update({'contributors_total': summary['total'], 'contributors_active': summary['active'],
+                       'absence_factor': summary['absence_factor']})
+        people = {'all_time': all_time, 'active': active}
+    try:
+        discussions, _ = hf.get_json(f'{HF_API}/{kind}/{current}/discussions')
+        if isinstance(discussions, dict):
+            record['discussions'] = {'total': discussions.get('count'),
+                                     'closed': discussions.get('numClosedDiscussions')}
+    except SourceError as err:
+        if err.kind != 'unavailable':
+            raise
+    return _result(record, people)
+
+
+def fetch_zenodo_record(zen, record_id, window):
+    """Facts for one Zenodo record: versions (release frequency), downloads and views across all
+    versions, licence. A record has no commit or issue history, so no people metrics."""
+    start, end = window
+    data, _ = zen.get_json(f'{ZENODO_API}/records/{record_id}')
+    if not isinstance(data, dict):
+        raise SourceError('failed', detail='unexpected record response')
+    meta = data.get('metadata') or {}
+    stats = data.get('stats') or {}
+    relation = ((meta.get('relations') or {}).get('version') or [{}])[0] or {}
+
+    dates, versions, page, size = [], [], 1, 25
+    try:
+        while page <= 8:
+            body, _ = zen.get_json(f'{ZENODO_API}/records/{record_id}/versions', {'size': size, 'page': page})
+            hits = ((body or {}).get('hits') or {}).get('hits') or []
+            for hit in hits:
+                published = (hit.get('metadata') or {}).get('publication_date') or hit.get('created')
+                dates.append(published)
+                if hit.get('id') is not None and parse_ts(published):
+                    # publication_date is a bare date, so versions published on one day tie; the
+                    # upload time, then the numeric id, order those.
+                    hit_id = str(hit['id'])
+                    versions.append((parse_ts(published), parse_ts(hit.get('created')) or parse_ts(published),
+                                     int(hit_id) if hit_id.isdigit() else -1, hit_id))
+            total = ((body or {}).get('hits') or {}).get('total') or 0
+            total = total.get('value', 0) if isinstance(total, dict) else total
+            if len(hits) < size or page * size >= total:
+                break
+            page += 1
+    except SourceError as err:
+        if err.kind != 'unavailable':
+            raise
+        # No versions listing: the record's own date and version count still stand, and pages read
+        # before the failure are dropped so a partial listing cannot name the wrong latest version.
+        dates, versions = [meta.get('publication_date')], []
+    summary = release_summary(dates, start, end)
+    # The version relation no longer names the latest child; the versions listing does.
+    latest = max(versions)[-1] if versions else (relation.get('last_child') or {}).get('pid_value')
+    record = {
+        'platform': 'zenodo', 'id': str(record_id),
+        'concept_id': str(data['conceptrecid']) if data.get('conceptrecid') else None,
+        'linked_is_latest': relation.get('is_last'),
+        'latest_id': str(latest) if latest else None,
+        'versions_total': max(summary['total'], relation.get('count') or 0),
+        'versions_in_window': summary['in_window'],
+        'last_change_at': summary['latest_at'] or _day_until(meta.get('publication_date'), end),
+        'downloads_all_time': stats.get('downloads'), 'views_all_time': stats.get('views'),
+        'license': normalise_licenses((meta.get('license') or {}).get('id'), 'zenodo'),
+        'resource_type': (meta.get('resource_type') or {}).get('type'),
+        'access_right': meta.get('access_right'),
+        'gaps': [],
+    }
+    return _result(record)
+
+
+def resolve_doi(client, doi):
+    """classify_url() of the URL a DOI points to, with that url added; None if it has none."""
+    body, _ = client.get_json(f'{DOI_HANDLES}/{doi}')
+    for value in (body or {}).get('values') or []:
+        if value.get('type') == 'URL':
+            url = (value.get('data') or {}).get('value')
+            if url:
+                return dict(classify_url(url), url=url)
+    return None

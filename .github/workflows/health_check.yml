@@ -12,6 +12,7 @@ permissions:
 jobs:
   health-check:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     # Avoid racing the Google Sheet sync, which regenerates catalog.json
     concurrency:
       group: health-check
@@ -31,12 +32,16 @@ jobs:
     - name: Install dependencies
       run: pip install requests pandas
 
+    - name: Run unit tests
+      run: python -m unittest discover -s scripts/tests -t scripts
+
     - name: Run health check
       env:
-        # Authenticated GitHub API calls get 5000 req/hr instead of 60
+        # GITHUB_TOKEN allows 1,000 REST requests per hour per repository; a run uses about 350
+        # and health_check.py stops at 800 (--github-budget).
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        RUN_TIMESTAMP=$(date -u +'%Y-%m-%d') python scripts/health_check.py
+        RUN_TIMESTAMP=$(date -u +'%Y-%m-%d') python scripts/health_check.py --summary pr_body.md
 
     - name: Commit and push results
       env:
@@ -54,7 +59,7 @@ jobs:
         git commit -m "Weekly health check $(date -u +'%Y-%m-%d')"
         git push -u origin "$BRANCH"
         gh pr create --title "Weekly health check $(date -u +'%Y-%m-%d')" \
-          --body "Automated weekly link health check results." \
+          --body-file pr_body.md \
           --base main
         PR_NUM=$(gh pr list --head "$BRANCH" --json number --jq '.[0].number')
         # Enable auto-merge (queues behind required checks, if any are ever added). When the
