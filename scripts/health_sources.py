@@ -399,12 +399,16 @@ def fetch_zenodo_record(zen, record_id, window):
     stats = data.get('stats') or {}
     relation = ((meta.get('relations') or {}).get('version') or [{}])[0] or {}
 
-    dates, page, size = [], 1, 25
+    dates, versions, page, size = [], [], 1, 25
     try:
         while page <= 8:
             body, _ = zen.get_json(f'{ZENODO_API}/records/{record_id}/versions', {'size': size, 'page': page})
             hits = ((body or {}).get('hits') or {}).get('hits') or []
-            dates.extend((h.get('metadata') or {}).get('publication_date') or h.get('created') for h in hits)
+            for hit in hits:
+                published = (hit.get('metadata') or {}).get('publication_date') or hit.get('created')
+                dates.append(published)
+                if hit.get('id') is not None and parse_ts(published):
+                    versions.append((parse_ts(published), str(hit['id'])))
             total = ((body or {}).get('hits') or {}).get('total') or 0
             total = total.get('value', 0) if isinstance(total, dict) else total
             if len(hits) < size or page * size >= total:
@@ -416,7 +420,8 @@ def fetch_zenodo_record(zen, record_id, window):
         # No versions listing: the record's own date and version count still stand.
         dates = [meta.get('publication_date')]
     summary = release_summary(dates, start, end)
-    latest = (relation.get('last_child') or {}).get('pid_value')
+    # The version relation no longer names the latest child; the versions listing does.
+    latest = max(versions)[1] if versions else (relation.get('last_child') or {}).get('pid_value')
     record = {
         'platform': 'zenodo', 'id': str(record_id),
         'concept_id': str(data['conceptrecid']) if data.get('conceptrecid') else None,

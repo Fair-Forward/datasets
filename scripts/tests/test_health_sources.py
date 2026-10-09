@@ -352,9 +352,10 @@ class ZenodoFetchTests(unittest.TestCase):
                 'id': 111, 'conceptrecid': '100', 'stats': {'downloads': 387, 'views': 2358},
                 'metadata': {'license': {'id': 'cc-by-4.0'}, 'access_right': 'open', 'resource_type': {'type': 'dataset'},
                              'publication_date': '2025-01-01',
-                             'relations': {'version': [{'is_last': False, 'count': 2, 'last_child': {'pid_value': '222'}}]}}}),
+                             'relations': {'version': [{'index': 0, 'is_last': False, 'parent': {'pid_value': '100'}}]}}}),
             f'{ZEN}/111/versions': FakeResponse(200, {'hits': {'total': 2, 'hits': [
-                {'metadata': {'publication_date': '2025-01-01'}}, {'metadata': {'publication_date': '2026-07-29'}}]}}),
+                {'id': 222, 'metadata': {'publication_date': '2026-07-29'}},
+                {'id': 111, 'metadata': {'publication_date': '2025-01-01'}}]}}),
         }
         api, _, _ = client(routes)
         result = hs.fetch_zenodo_record(api, '111', WINDOW)
