@@ -131,6 +131,13 @@ class ApiClientTests(unittest.TestCase):
             api.get_json('u')
         self.assertEqual(ctx.exception.kind, 'unavailable')
 
+    def test_a_firewall_page_is_a_failure_not_a_missing_asset(self):
+        page = FakeResponse(403, ValueError('not JSON'), {'Content-Type': 'text/html; charset=utf-8'})
+        api, _, _ = client({'u': page}, unavailable=(403, 404, 410))
+        with self.assertRaises(hs.SourceError) as ctx:
+            api.get_json('u')
+        self.assertEqual(ctx.exception.kind, 'failed')
+
     def test_bad_credentials_or_a_bare_403_fail_the_request_instead(self):
         for status in (401, 403):
             api, _, _ = client({'u': FakeResponse(status, {})})
@@ -251,6 +258,18 @@ class GithubFetchTests(unittest.TestCase):
         self.assertEqual((record['outside_items'], record['outside_change_requests']), (2, 1))
         self.assertEqual(len(result['outside_prs']), 1)
         self.assertEqual([i['first_reply_at'] for i in result['response_items']], [None, None])
+
+    def test_reads_pull_requests_when_issues_are_disabled(self):
+        base = f'{GH}/New-Org/Repo'
+        pulls = [dict(gh_item(8, '2026-08-01T00:00:00Z', closed='2026-08-03T00:00:00Z'), url='x'),
+                 dict(gh_item(6, '2026-06-01T00:00:00Z'), url='y')]
+        for pr in pulls:
+            del pr['comments']
+        routes = github_routes(**{f'{base}/issues': FakeResponse(410, {}), f'{base}/pulls': FakeResponse(200, pulls),
+                                  f'{base}/pulls/6/reviews': FakeResponse(200, [])})
+        result, session = self.fetch(routes)
+        self.assertEqual((result['record']['outside_items'], result['record']['outside_change_requests']), (2, 2))
+        self.assertIn(f'{base}/issues/8/comments', [url for url, _ in session.calls])
 
     def test_never_puts_identities_in_the_record(self):
         result, _ = self.fetch(github_routes())
@@ -436,6 +455,18 @@ class ZenodoFetchTests(unittest.TestCase):
         self.assertEqual((record['versions_total'], record['versions_in_window'], record['last_change_at']),
                          (1, 0, '2024-05-01'))
         self.assertEqual(record['license'][0]['spdx'], 'CC0-1.0')
+
+
+    def test_versions_published_on_one_day_are_ordered_by_upload(self):
+        routes = {
+            f'{ZEN}/999999': FakeResponse(200, {'id': 999999, 'conceptrecid': '900', 'stats': {},
+                                                'metadata': {'publication_date': '2026-05-01'}}),
+            f'{ZEN}/999999/versions': FakeResponse(200, {'hits': {'total': 2, 'hits': [
+                {'id': 999999, 'created': '2026-05-01T08:00:00Z', 'metadata': {'publication_date': '2026-05-01'}},
+                {'id': 1000001, 'created': '2026-05-01T15:00:00Z', 'metadata': {'publication_date': '2026-05-01'}}]}}),
+        }
+        api, _, _ = client(routes)
+        self.assertEqual(hs.fetch_zenodo_record(api, '999999', WINDOW)['record']['latest_id'], '1000001')
 
 
 class ZenodoDateTests(unittest.TestCase):

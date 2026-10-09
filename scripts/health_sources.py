@@ -64,6 +64,12 @@ def _next_link(headers):
     return match.group(1) if match else None
 
 
+def _is_html(headers):
+    """True for an HTML page, which a JSON API sends only from a firewall or proxy in front of it
+    (Zenodo answers 403 "unusual traffic" this way). Such a page says nothing about the asset."""
+    return 'text/html' in (_header(headers, 'content-type') or '').lower()
+
+
 class ApiClient:
     """GET JSON from one host within a request budget, retrying what is worth retrying."""
 
@@ -152,7 +158,8 @@ class ApiClient:
                 attempt += 1
                 self._retry(attempt, 'failed', status)
                 continue
-            raise SourceError('unavailable' if status in self.unavailable else 'failed', status)
+            lasting = status in self.unavailable and not _is_html(resp.headers)
+            raise SourceError('unavailable' if lasting else 'failed', status)
 
     def paginate(self, url, params=None, max_pages=5, stop=None):
         """(items, complete) across pages linked by rel="next". complete is False when the
@@ -316,13 +323,21 @@ def fetch_github_repo(gh, owner, repo, window):
         created = parse_ts(page[-1].get('created_at'))
         return created is not None and created < start
 
+    listing = {'state': 'all', 'sort': 'created', 'direction': 'desc', 'per_page': 100}
     try:
-        items, _ = gh.paginate(f'{base}/issues', {'state': 'all', 'sort': 'created', 'direction': 'desc',
-                                                  'per_page': 100}, max_pages=5, stop=older_than_window)
+        items, _ = gh.paginate(f'{base}/issues', listing, max_pages=5, stop=older_than_window)
     except SourceError as err:
         if err.kind != 'unavailable':
             raise
-        items = []  # no issue tracker
+        # Issues disabled (GitHub answers 410): pull requests are still open to outsiders and listed
+        # under /pulls, which carries no comment count, so their comments are always read.
+        try:
+            pulls, _ = gh.paginate(f'{base}/pulls', listing, max_pages=5, stop=older_than_window)
+        except SourceError as err:
+            if err.kind != 'unavailable':
+                raise
+            pulls = []
+        items = [dict(pr, pull_request={'url': pr.get('url')}, comments=1) for pr in pulls]
     outside = []
     for item in items:
         created = parse_ts(item.get('created_at'))
@@ -438,7 +453,11 @@ def fetch_zenodo_record(zen, record_id, window):
                 published = (hit.get('metadata') or {}).get('publication_date') or hit.get('created')
                 dates.append(published)
                 if hit.get('id') is not None and parse_ts(published):
-                    versions.append((parse_ts(published), str(hit['id'])))
+                    # publication_date is a bare date, so versions published on one day tie; the
+                    # upload time, then the numeric id, order those.
+                    hit_id = str(hit['id'])
+                    versions.append((parse_ts(published), parse_ts(hit.get('created')) or parse_ts(published),
+                                     int(hit_id) if hit_id.isdigit() else -1, hit_id))
             total = ((body or {}).get('hits') or {}).get('total') or 0
             total = total.get('value', 0) if isinstance(total, dict) else total
             if len(hits) < size or page * size >= total:
@@ -447,11 +466,12 @@ def fetch_zenodo_record(zen, record_id, window):
     except SourceError as err:
         if err.kind != 'unavailable':
             raise
-        # No versions listing: the record's own date and version count still stand.
-        dates = [meta.get('publication_date')]
+        # No versions listing: the record's own date and version count still stand, and pages read
+        # before the failure are dropped so a partial listing cannot name the wrong latest version.
+        dates, versions = [meta.get('publication_date')], []
     summary = release_summary(dates, start, end)
     # The version relation no longer names the latest child; the versions listing does.
-    latest = max(versions)[1] if versions else (relation.get('last_child') or {}).get('pid_value')
+    latest = max(versions)[-1] if versions else (relation.get('last_child') or {}).get('pid_value')
     record = {
         'platform': 'zenodo', 'id': str(record_id),
         'concept_id': str(data['conceptrecid']) if data.get('conceptrecid') else None,

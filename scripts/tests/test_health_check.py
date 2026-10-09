@@ -5,6 +5,7 @@ Logins and emails are invented and must never reach the output.
 """
 import json
 import unittest
+from pathlib import Path
 from unittest import mock
 
 import chaoss_metrics as cm
@@ -188,6 +189,17 @@ class CarryForwardTests(unittest.TestCase):
         previous = hc.summarise_entry([SOLAR], {SOLAR['key']: gh_obs('x')}, '2026-09-28')
         self.assertEqual(hc.carry_forward(self.partial(), previous, RUN)['status'], 'partial')
 
+    def test_keeps_a_measurement_when_doi_org_fails_this_run(self):
+        doi = '10.57967/HF/6491'
+        linked = {'key': 'doi:' + doi.lower(), 'platform': 'huggingface', 'id': None, 'kind': None,
+                  'url': f'https://doi.org/{doi}', 'doi': doi}
+        resolved = dict(linked, key='huggingface:datasets/org/ds', id='org/ds', kind='datasets', resolved_from=doi)
+        previous = hc.summarise_entry([SOLAR, resolved], {SOLAR['key']: gh_obs('Marconi-Lab/SolarIrradiation'),
+                                                           resolved['key']: hf_obs('org/ds')}, '2026-09-28')
+        fresh = hc.summarise_entry([SOLAR, linked], {SOLAR['key']: gh_obs('Marconi-Lab/SolarIrradiation'),
+                                                      linked['key']: SourceError('failed', 502)}, RUN)
+        self.assertEqual(hc.carry_forward(fresh, previous, RUN)['status'], 'carried_forward')
+
     def test_a_complete_measurement_replaces_the_previous_one(self):
         fresh = hc.summarise_entry([SOLAR, PORTAL], ui80_observations(), RUN)
         self.assertEqual(hc.carry_forward(fresh, self.previous(), RUN)['measured_at'], RUN)
@@ -310,6 +322,15 @@ class RunTests(unittest.TestCase):
                                        'requests': {'GitHub': 9}, 'budgets': {'GitHub': 800}})
         self.assertIn('Weekly health check', text)
         self.assertNotIn('@', text)
+
+
+class MethodTests(unittest.TestCase):
+    def test_the_method_link_points_at_a_document_the_repository_publishes(self):
+        # Until the methodology page ships, health.json links the methodology document itself.
+        prefix = 'https://github.com/Fair-Forward/datasets/blob/main/'
+        self.assertTrue(hc.METHOD_PAGE.startswith(prefix), hc.METHOD_PAGE)
+        document = Path(__file__).resolve().parents[2] / hc.METHOD_PAGE[len(prefix):]
+        self.assertTrue(document.exists(), document)
 
 
 if __name__ == '__main__':

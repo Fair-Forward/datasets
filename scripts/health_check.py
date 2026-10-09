@@ -36,7 +36,9 @@ from health_sources import (TRANSIENT, UNAVAILABLE_STATUSES, ApiClient, SourceEr
 
 SCHEMA_VERSION = 2
 DEFAULT_OUTPUTS = ('public/data/health.json', 'docs/data/health.json')
-METHOD_PAGE = 'https://fair-forward.github.io/datasets/open-source-health/'
+# The methodology. Until the site's own page ships (/open-source-health/), this is the document
+# in the repository that describes every rule.
+METHOD_PAGE = 'https://github.com/Fair-Forward/datasets/blob/main/docs/health-thresholds.md'
 USER_AGENT = 'FairForward-DataCatalog/1.0 (+https://fair-forward.github.io/datasets/)'
 
 # Projects whose partners asked us to leave out the open-source health facts (CHAOSS recommends
@@ -363,9 +365,15 @@ def carry_forward(fresh, previous, run_date):
     age = cm.days_between(previous.get('measured_at'), run_date)
     if age is None or age > cm.CARRY_FORWARD_MAX_DAYS:
         return fresh
-    same_assets = sorted(a['key'] for a in previous.get('assets') or []) == \
-        sorted(a['key'] for a in fresh.get('assets') or [])
+    same_assets = sorted(_link_key(a) for a in previous.get('assets') or []) == \
+        sorted(_link_key(a) for a in fresh.get('assets') or [])
     return dict(previous, status='carried_forward') if same_assets else fresh
+
+
+def _link_key(asset):
+    """The asset's key as linked: a DOI keeps its own key whether or not doi.org answered this run."""
+    doi = asset.get('resolved_from')
+    return 'doi:' + doi.lower() if doi else asset['key']
 
 
 def compare_flags(hosts, oss):
