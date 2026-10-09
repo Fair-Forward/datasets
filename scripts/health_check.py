@@ -22,10 +22,10 @@ catalog.json uses), so the live site picks up the signal without an app rebuild.
 import json
 import math
 import os
-import re
 import argparse
 from datetime import datetime, timezone
 
+from health_assets import in_scope_urls, is_archive_url, parse_github, parse_hf
 from utils import check_urls
 
 parser = argparse.ArgumentParser(description='Compute per-entry health/sustainability signals.')
@@ -58,73 +58,12 @@ _UNRELIABLE_404_HOSTS = ('kaggle.com',)
 GITHUB_API = 'https://api.github.com/repos/{owner}/{repo}'
 HF_API = 'https://huggingface.co/api/{kind}/{repo_id}'
 
-# GitHub path segments that are not user/repo pairs.
-_GITHUB_RESERVED = {
-    'orgs', 'about', 'features', 'marketplace', 'sponsors', 'topics', 'collections',
-    'settings', 'notifications', 'explore', 'pulls', 'issues', 'search', 'apps',
-}
-
 
 def run_date():
     """Resolve the run date string (YYYY-MM-DD)."""
     if args.timestamp:
         return args.timestamp[:10]
     return datetime.now(timezone.utc).strftime('%Y-%m-%d')
-
-
-def in_scope_urls(entry):
-    """Collect http(s) URLs from dataset_links + usecase_links (the model/app/demo links)."""
-    urls = []
-    for link in (entry.get('dataset_links', []) + entry.get('usecase_links', [])):
-        url = (link.get('url') or '').strip()
-        if url.startswith('http'):
-            urls.append(url)
-    # Preserve order, drop duplicates.
-    return list(dict.fromkeys(urls))
-
-
-def parse_github(url):
-    """Return (owner, repo) for a github.com repository URL, else None."""
-    m = re.match(r'https?://github\.com/([^/\s?#]+)/([^/\s?#]+)', url, re.I)
-    if not m:
-        return None
-    owner, repo = m.group(1), m.group(2).removesuffix('.git')
-    if owner.lower() in _GITHUB_RESERVED:
-        return None
-    return owner, repo
-
-
-def parse_hf(url):
-    """Return (kind, repo_id) for a huggingface.co model/dataset/space URL, else None.
-
-    kind is one of 'models' | 'datasets' | 'spaces' (matching the HF API namespace).
-    """
-    m = re.match(r'https?://huggingface\.co/(.+)', url, re.I)
-    if not m:
-        return None
-    parts = [p for p in m.group(1).split('?')[0].split('#')[0].strip('/').split('/') if p]
-    if not parts:
-        return None
-    kind = 'models'
-    if parts[0] == 'datasets':
-        kind, parts = 'datasets', parts[1:]
-    elif parts[0] == 'spaces':
-        kind, parts = 'spaces', parts[1:]
-    if len(parts) < 2:
-        # A single segment is an org/user page, not a specific asset -- no stats to read.
-        return None
-    return kind, f'{parts[0]}/{parts[1]}'
-
-
-def is_archive_url(url):
-    """True for DOI archive hosts (Zenodo, Harvard Dataverse) -- stable & citable by design."""
-    low = url.lower()
-    return (
-        'zenodo.org/record' in low
-        or 'zenodo.org/doi' in low
-        or 'doi.org/10.5281/zenodo' in low
-        or 'dataverse.harvard.edu' in low
-    )
 
 
 def is_reachable(url, result):
