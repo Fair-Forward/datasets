@@ -49,7 +49,7 @@ A row appears on the website when **any** of these are true:
 
 ### Data quality checks
 
-The build automatically scores each project (0-100) based on how complete its information is — title, description, links, data and model characteristics, how-to-use guidance, license, SDGs, countries, data types, and maturity. Cards are then ordered by this documentation score, nudged by the weekly health signal: projects with recent activity or many downloads/stars rank a little higher, and entries whose links no longer resolve rank lower. Documentation completeness stays the main driver, and projects without GitHub/Hugging Face activity data are never penalised for lacking it. See `docs/health-thresholds.md` for the exact methodology.
+The build automatically scores each project (0-100) based on how complete its information is: title, description, links, data and model characteristics, how-to-use guidance, license, SDGs, countries, data types, and maturity. Cards are then ordered by this documentation score, nudged by the weekly health signal: projects with recent activity or many downloads/stars rank a little higher, and entries whose links no longer resolve rank lower. Documentation completeness stays the main driver, and projects without GitHub/Hugging Face activity data are never penalised for lacking it. The same weekly check records open-source health facts (last change, contributors, releases, reuse, license at source) for every linked GitHub repository, Hugging Face model or dataset and Zenodo record, following [CHAOSS](https://chaoss.community/) metric definitions. See `docs/health-thresholds.md` for the exact methodology.
 
 Quality feedback is written back to the Google Sheet as cell notes (small black triangle in the cell corner, visible on hover). These notes suggest improvements like adding missing descriptions or using standard license formats.
 
@@ -223,6 +223,16 @@ python scripts/generate_catalog_data.py
 # Run data quality validation only
 python scripts/validate_data.py
 
+# Weekly health check (links, open-source health facts); needs GITHUB_TOKEN
+python scripts/health_check.py
+
+# Private open-source health comparison, written outside the repository
+python scripts/health_report.py --out ~/reports/open-source-health
+
+# Tests
+python -m unittest discover -s scripts/tests -t scripts
+npm test
+
 # Dev server with hot reload
 npm run dev
 ```
@@ -241,6 +251,11 @@ npm run dev
 | `scripts/check_parity.py` | Verify `text_parsing.py` still matches its JavaScript twin |
 | `scripts/check_head_parity.py` | Verify every page head carries the same CSP and analytics tag |
 | `scripts/validate_data.py` | Run quality checks, generate report, optionally write notes to sheet |
+| `scripts/health_check.py` | Weekly: link availability and open-source health facts -> `public/data/health.json` |
+| `scripts/chaoss_metrics.py` | CHAOSS metric definitions, thresholds and metric maths (no CLI) |
+| `scripts/health_assets.py` | Which links are open assets the health check can measure (no CLI) |
+| `scripts/health_sources.py` | GitHub, Hugging Face, Zenodo and doi.org clients for the health check (no CLI) |
+| `scripts/health_report.py` | Private comparison of the open-source health facts; refuses to write inside the repo |
 
 ---
 

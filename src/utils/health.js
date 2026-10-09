@@ -43,21 +43,35 @@ export const entryStatusValues = (health) => {
 export const matchesStatus = (health, status) =>
   !status || entryStatusValues(health).includes(status)
 
+// Dates in health.json are calendar dates measured in UTC; format them in UTC so a reader west of
+// Greenwich does not see the day before.
 const fmtDate = (iso) => {
   if (!iso) return null
   const d = new Date(iso)
   if (Number.isNaN(d.getTime())) return null
-  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })
 }
 
 const fmtMonthYear = (iso) => {
   if (!iso) return null
   const d = new Date(iso)
   if (Number.isNaN(d.getTime())) return null
-  return d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })
+  return d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric', timeZone: 'UTC' })
 }
 
+const count = (n, one, many) => `${n.toLocaleString('en-GB')} ${n === 1 ? one : many}`
+
+const starsLine = (stars) =>
+  typeof stars === 'number' && stars > 0 ? `${count(stars, 'star', 'stars')} on GitHub` : null
+
+const downloadsLine = (downloads) =>
+  typeof downloads === 'number'
+    ? `${count(downloads, 'download', 'downloads')} on Hugging Face in the last 30 days`
+    : null
+
 // Build the muted supporting-detail lines shown in the detail panel Status section.
+// schema_version 2 entries carry an `oss` block (open-source health facts); older entries carry
+// `github` / `hf`, whose pushed_at is the last push to any branch, not the last commit.
 export const healthDetailLines = (health) => {
   if (!health) return []
   const lines = []
@@ -65,22 +79,34 @@ export const healthDetailLines = (health) => {
   const checked = fmtDate(health.checked_at)
   if (checked) lines.push(`Checked ${checked}`)
 
+  if (health.oss) {
+    const change = health.oss.last_change
+    if (change?.archived) {
+      lines.push('GitHub repository archived')
+    } else {
+      const changed = fmtMonthYear(change?.at)
+      if (changed) lines.push(`Last change ${changed}`)
+    }
+    const reuse = health.oss.reuse || {}
+    const stars = starsLine(reuse.github?.stars)
+    if (stars) lines.push(stars)
+    const downloads = downloadsLine(reuse.huggingface?.downloads_30d)
+    if (downloads) lines.push(downloads)
+    return lines
+  }
+
   if (health.github) {
     if (health.github.archived) {
       lines.push('GitHub repository archived')
     } else {
-      const updated = fmtMonthYear(health.github.pushed_at)
-      if (updated) lines.push(`Last commit ${updated}`)
+      const pushed = fmtMonthYear(health.github.pushed_at)
+      if (pushed) lines.push(`Last push ${pushed}`)
     }
-    if (typeof health.github.stars === 'number' && health.github.stars > 0) {
-      lines.push(`${health.github.stars.toLocaleString('en-GB')} stars on GitHub`)
-    }
+    const stars = starsLine(health.github.stars)
+    if (stars) lines.push(stars)
   }
-
-  if (health.hf && typeof health.hf.downloads === 'number') {
-    const downloads = health.hf.downloads.toLocaleString('en-GB')
-    lines.push(`${downloads} downloads on Hugging Face`)
-  }
+  const downloads = downloadsLine(health.hf?.downloads)
+  if (downloads) lines.push(downloads)
 
   return lines
 }
