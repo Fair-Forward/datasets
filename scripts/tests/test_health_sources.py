@@ -210,6 +210,7 @@ def github_routes(**overrides):
             gh_item(8, '2026-08-01T00:00:00Z', pr=True, closed='2026-08-03T00:00:00Z'),
             gh_item(7, '2026-07-01T00:00:00Z'),
             gh_item(1, '2024-01-01T00:00:00Z')]),
+        f'{base}/pulls/8/reviews': FakeResponse(200, []),
         f'{base}/community/profile': FakeResponse(200, {'files': {'readme': {'url': 'x'}, 'contributing': None,
                                                                   'code_of_conduct': None}}),
     }
@@ -236,7 +237,7 @@ class GithubFetchTests(unittest.TestCase):
         self.assertEqual(record['files'], {'readme': True, 'contributing': False, 'code_of_conduct': False})
         self.assertEqual((record['outside_items'], record['outside_change_requests']), (2, 1))
         self.assertEqual(len(result['outside_prs']), 1)
-        self.assertEqual(result['response_items'], [])
+        self.assertEqual([i['first_reply_at'] for i in result['response_items']], [None, None])
 
     def test_never_puts_identities_in_the_record(self):
         result, _ = self.fetch(github_routes())
@@ -273,7 +274,7 @@ class GithubFetchTests(unittest.TestCase):
         self.assertEqual(result['record']['last_change_at'], '2022-01-19')
         self.assertEqual(result['record']['contributors_active'], 0)
 
-    def test_reads_first_replies_once_there_are_enough_outside_items(self):
+    def test_first_replies_ignore_the_author_and_bots(self):
         base = f'{GH}/New-Org/Repo'
         items = [gh_item(n, f'2026-09-0{n}T00:00:00Z', comments=2) for n in range(1, 6)]
         routes = github_routes(**{f'{base}/issues': FakeResponse(200, items)})
@@ -285,6 +286,12 @@ class GithubFetchTests(unittest.TestCase):
         result, _ = self.fetch(routes)
         replies = [(i['first_reply_at'] - i['created_at']).total_seconds() / 3600 for i in result['response_items']]
         self.assertEqual(replies, [5.0] * 5)
+
+    def test_an_unreadable_comment_listing_counts_as_no_reply(self):
+        base = f'{GH}/New-Org/Repo'
+        routes = github_routes(**{f'{base}/issues': FakeResponse(200, [gh_item(3, '2026-09-03T00:00:00Z', comments=1)])})
+        result, _ = self.fetch(routes)
+        self.assertEqual([i['first_reply_at'] for i in result['response_items']], [None])
 
     def test_an_empty_repository_is_a_named_gap(self):
         routes = github_routes(**{f'{GH}/New-Org/Repo/commits': FakeResponse(409, {})})

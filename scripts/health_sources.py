@@ -14,9 +14,8 @@ import time
 
 import requests
 
-from chaoss_metrics import (INSIDE_ASSOCIATIONS, MAX_RESPONSE_ITEMS, MIN_OUTSIDE_ITEMS,
-                            identity_key, is_bot, merge_people, normalise_licenses, parse_ts,
-                            release_summary)
+from chaoss_metrics import (INSIDE_ASSOCIATIONS, MAX_RESPONSE_ITEMS, identity_key, is_bot,
+                            merge_people, normalise_licenses, parse_ts, release_summary)
 from health_assets import classify_url
 
 GITHUB_API = 'https://api.github.com'
@@ -184,20 +183,29 @@ def _committed_at(commit):
     return parse_ts(((commit.get('commit') or {}).get('committer') or {}).get('date'))
 
 
+def _listing(gh, url):
+    """A list endpoint's first page, or [] when it cannot be read (counted as no reply)."""
+    try:
+        data, _ = gh.get_json(url, {'per_page': 100})
+    except SourceError as err:
+        if err.kind != 'unavailable':
+            raise
+        return []
+    return data if isinstance(data, list) else []
+
+
 def _first_reply(gh, base, item):
     """When someone other than the author (and not a bot) first replied, or None."""
     author = (item.get('user') or {}).get('login')
     replies = []
     if item.get('comments'):
-        comments, _ = gh.get_json(f"{base}/issues/{item['number']}/comments", {'per_page': 100})
-        for comment in comments or []:
+        for comment in _listing(gh, f"{base}/issues/{item['number']}/comments"):
             user = comment.get('user') or {}
             if user.get('login') != author and not is_bot(user.get('login'), user.get('type')):
                 replies.append(parse_ts(comment.get('created_at')))
                 break
     if item.get('pull_request'):
-        reviews, _ = gh.get_json(f"{base}/pulls/{item['number']}/reviews", {'per_page': 100})
-        for review in reviews or []:
+        for review in _listing(gh, f"{base}/pulls/{item['number']}/reviews"):
             user = review.get('user') or {}
             if (user.get('login') != author and not is_bot(user.get('login'), user.get('type'))
                     and review.get('submitted_at')):
@@ -301,11 +309,10 @@ def fetch_github_repo(gh, owner, repo, window):
     outside_prs = [{'created_at': parse_ts(i['created_at']), 'closed_at': parse_ts(i.get('closed_at'))}
                    for i in outside if i.get('pull_request')]
     record.update({'outside_items': len(outside), 'outside_change_requests': len(outside_prs)})
-    response_items = []
-    if len(outside) >= MIN_OUTSIDE_ITEMS:
-        for item in outside[:MAX_RESPONSE_ITEMS]:  # newest first
-            response_items.append({'created_at': parse_ts(item['created_at']),
-                                   'first_reply_at': _first_reply(gh, base, item)})
+    # Replies are read for every outside item (newest first) so a project can pool its repositories
+    # before the Time to First Response minimum applies.
+    response_items = [{'created_at': parse_ts(item['created_at']), 'first_reply_at': _first_reply(gh, base, item)}
+                      for item in outside[:MAX_RESPONSE_ITEMS]]
 
     # Community files. GitHub has no community profile for forks.
     record['files'] = None
