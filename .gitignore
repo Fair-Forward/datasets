@@ -40,6 +40,16 @@ pr_body.md
 CLAUDE.md
 .claude/
 
+# Local design tooling (impeccable): tool-installed copies and project state
+.impeccable/
+.github/skills/impeccable/
+.github/hooks/impeccable.json
+
+# Local exports and working files that may hold contact data
+/*.docx
+contact_extraction*.txt
+bcc_list*.txt
+
 # Google service accounts / secrets
 data_sources/google_sheets_api/*.json
 data_sources/google_sheets_api/*.pem
