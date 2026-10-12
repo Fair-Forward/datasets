@@ -36,9 +36,8 @@ from health_sources import (TRANSIENT, UNAVAILABLE_STATUSES, ApiClient, SourceEr
 
 SCHEMA_VERSION = 2
 DEFAULT_OUTPUTS = ('public/data/health.json', 'docs/data/health.json')
-# The methodology. Until the site's own page ships (/open-source-health/), this is the document
-# in the repository that describes every rule.
-METHOD_PAGE = 'https://github.com/Fair-Forward/datasets/blob/main/docs/health-thresholds.md'
+# The methodology page, written by generate_health_page.py (test_health_check asserts they match).
+METHOD_PAGE = 'https://fair-forward.github.io/datasets/open-source-health/'
 USER_AGENT = 'FairForward-DataCatalog/1.0 (+https://fair-forward.github.io/datasets/)'
 
 # Projects whose partners asked us to leave out the open-source health facts (CHAOSS recommends
@@ -135,8 +134,10 @@ def make_clients(github_budget):
                             unavailable=UNAVAILABLE_STATUSES['github']),
         'huggingface': ApiClient('Hugging Face', {'User-Agent': USER_AGENT}, budget=400, min_interval=0.25,
                                  unavailable=UNAVAILABLE_STATUSES['huggingface']),
+        # Zenodo can take 15-20 s per request and its gateway gives up at 30 s, so wait longer.
         'zenodo': ApiClient('Zenodo', {'User-Agent': USER_AGENT, 'Accept': 'application/json'},
-                            budget=60, min_interval=0.5, unavailable=UNAVAILABLE_STATUSES['zenodo']),
+                            budget=60, min_interval=1.0, timeout=(10, 60),
+                            unavailable=UNAVAILABLE_STATUSES['zenodo']),
         'doi': ApiClient('doi.org', {'User-Agent': USER_AGENT}, budget=20, unavailable=UNAVAILABLE_STATUSES['doi']),
     }
 
@@ -192,7 +193,8 @@ def collect(projects, clients, window):
                 observations[asset['key']] = fetch_asset(asset, clients, window)
             except SourceError as err:
                 observations[asset['key']] = err
-                print(f"  not measured: {asset['platform']} {asset['id'] or asset['doi']} ({err.kind})")
+                status = f', {err.status}' if err.status else ''
+                print(f"  not measured: {asset['platform']} {asset['id'] or asset['doi']} ({err.kind}{status})")
     return assets_by_project, observations
 
 

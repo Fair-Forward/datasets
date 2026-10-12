@@ -2,10 +2,11 @@
 """
 Verify every page head carries the same CSP and the same analytics tag.
 
-Five surfaces serve HTML and each one owns its own <head>: index.html (hand-written,
+Six surfaces serve HTML and each one owns its own <head>: index.html (hand-written,
 Vite copies it to docs/), the per-project SEO pages and /insights (generate_seo_pages.py),
-the API guide (generate_api.py), and the privacy page (hand-written under public/).
-The generated three import CSP and ANALYTICS from utils.py; the two hand-written ones
+the API guide (generate_api.py), the open-source health methodology
+(generate_health_page.py), and the privacy page (hand-written under public/).
+The generated four import CSP and ANALYTICS from utils.py; the two hand-written ones
 cannot, so they hold literal copies.
 
 Drift here is silent and expensive in both directions. A stale CSP blocks the analytics
@@ -85,6 +86,7 @@ def main():
     generated = [os.path.join(DOCS_DIR, "index.html"),
                  os.path.join(DOCS_DIR, "insights", "index.html"),
                  os.path.join(DOCS_DIR, "api", "index.html"),
+                 os.path.join(DOCS_DIR, "open-source-health", "index.html"),
                  os.path.join(DOCS_DIR, "privacy", "index.html")]
     project_pages = sorted(glob.glob(os.path.join(DOCS_DIR, "projects", "*", "index.html")))
     generated += project_pages

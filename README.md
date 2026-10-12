@@ -169,7 +169,7 @@ Keep one campaign slug per post even when the same post goes to several places. 
 
 ### Any of these URLs is safe to share
 
-The homepage, `/insights/`, `/api/` and every `/projects/<slug>/` page are real files, so
+The homepage, `/insights/`, `/api/`, `/open-source-health/` and every `/projects/<slug>/` page are real files, so
 they keep their referrer and their `utm_*` parameters. Deep links to anything else fall
 through `404.html`, which redirects to the homepage and loses both, and the visit lands as
 untracked direct traffic.
@@ -255,6 +255,7 @@ npm run dev
 | `scripts/chaoss_metrics.py` | CHAOSS metric definitions, thresholds and metric maths (no CLI) |
 | `scripts/health_assets.py` | Which links are open assets the health check can measure (no CLI) |
 | `scripts/health_sources.py` | GitHub, Hugging Face, Zenodo and doi.org clients for the health check (no CLI) |
+| `scripts/generate_health_page.py` | `catalog.json` -> `public/open-source-health/` (the methodology page the health block links to) |
 | `scripts/health_report.py` | Private comparison of the open-source health facts; refuses to write inside the repo |
 
 ---

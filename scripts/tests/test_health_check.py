@@ -5,7 +5,6 @@ Logins and emails are invented and must never reach the output.
 """
 import json
 import unittest
-from pathlib import Path
 from unittest import mock
 
 import chaoss_metrics as cm
@@ -325,12 +324,10 @@ class RunTests(unittest.TestCase):
 
 
 class MethodTests(unittest.TestCase):
-    def test_the_method_link_points_at_a_document_the_repository_publishes(self):
-        # Until the methodology page ships, health.json links the methodology document itself.
-        prefix = 'https://github.com/Fair-Forward/datasets/blob/main/'
-        self.assertTrue(hc.METHOD_PAGE.startswith(prefix), hc.METHOD_PAGE)
-        document = Path(__file__).resolve().parents[2] / hc.METHOD_PAGE[len(prefix):]
-        self.assertTrue(document.exists(), document)
+    def test_the_method_link_is_the_page_the_build_writes(self):
+        import generate_health_page
+        from utils import SITE_BASE
+        self.assertEqual(hc.METHOD_PAGE, SITE_BASE + generate_health_page.PAGE_PATH)
 
 
 if __name__ == '__main__':

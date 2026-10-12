@@ -281,12 +281,14 @@ def build_insights_page(project_count):
     )
 
 
-def build_sitemap(slugs):
+def build_sitemap(slugs, docs_dir=DOCS_DIR):
     # lastmod is intentionally omitted to keep output deterministic (no date churn).
     # Only URLs that return HTTP 200 are listed: the homepage, /insights/ (written just
-    # below) and the project pages that were actually written (the caller passes their
-    # slugs).
+    # below), the open-source health methodology once Vite has copied it into docs/, and
+    # the project pages that were actually written (the caller passes their slugs).
     urls = [SITE_BASE, SITE_BASE + "insights/"]
+    if os.path.exists(os.path.join(docs_dir, "open-source-health", "index.html")):
+        urls.append(SITE_BASE + "open-source-health/")
     urls += [SITE_BASE + "projects/" + slug + "/" for slug in slugs]
     body = "\n".join("  <url><loc>{}</loc></url>".format(esc(u)) for u in urls)
     return ('<?xml version="1.0" encoding="UTF-8"?>\n'
