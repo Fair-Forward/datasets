@@ -24,7 +24,8 @@ class FakeSheet:
 def write(existing_note):
     # The first project is on row 3, after the header and the explanation row.
     sheet = FakeSheet(['Project ID', 'License'], [[''], [''], ['', existing_note]])
-    with mock.patch.object(validate_data, 'get_gsheet_client', return_value=(None, None, sheet)):
+    with mock.patch.object(validate_data, 'get_gsheet_client', return_value=(None, None, sheet)), \
+            mock.patch('builtins.print'):
         validate_data.write_notes_to_sheet({0: {validate_data.COL_LICENSE: 'New hint.'}}, 'creds.json')
     return sheet.written['B3']
 
