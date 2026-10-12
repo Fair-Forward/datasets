@@ -1,4 +1,4 @@
-"""CHAOSS metric definitions and the pure maths behind the open-source health signal.
+"""CHAOSS metric definitions and the pure maths behind the catalogue's CHAOSS metrics.
 
 The catalogue reports facts about each project's open assets (GitHub repositories, Hugging Face
 datasets and models, Zenodo records) using metric definitions from CHAOSS, the Linux Foundation's

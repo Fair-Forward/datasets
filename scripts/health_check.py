@@ -1,4 +1,4 @@
-"""Compute the per-entry health signal for the catalog, including open-source health facts.
+"""Compute the per-entry health signal for the catalog, including the CHAOSS metrics.
 
 For every catalog entry this checks the in-scope links (dataset links + use-case/model/app links)
 and produces:
@@ -7,7 +7,7 @@ and produces:
                    "available" / "unavailable" (with the specific dead links listed).
   context       -- an optional status tag where a host exposes it: "recently_updated" /
                    "stable_archive" / "no_recent_updates".
-  oss           -- open-source health facts for every GitHub repository, Hugging Face model,
+  oss           -- CHAOSS metrics for every GitHub repository, Hugging Face model,
                    dataset or space and Zenodo record the entry links, following CHAOSS metric
                    definitions (chaoss_metrics.py). Facts, never scores; gaps are named.
   compare       -- the yes/no facts the Insights page and the private report count, decided here
@@ -36,12 +36,11 @@ from health_sources import (TRANSIENT, UNAVAILABLE_STATUSES, ApiClient, SourceEr
 
 SCHEMA_VERSION = 2
 DEFAULT_OUTPUTS = ('public/data/health.json', 'docs/data/health.json')
-# The methodology. Until the site's own page ships (/open-source-health/), this is the document
-# in the repository that describes every rule.
-METHOD_PAGE = 'https://github.com/Fair-Forward/datasets/blob/main/docs/health-thresholds.md'
+# The methodology page, written by generate_health_page.py (test_health_check asserts they match).
+METHOD_PAGE = 'https://fair-forward.github.io/datasets/chaoss/'
 USER_AGENT = 'FairForward-DataCatalog/1.0 (+https://fair-forward.github.io/datasets/)'
 
-# Projects whose partners asked us to leave out the open-source health facts (CHAOSS recommends
+# Projects whose partners asked us to leave out the CHAOSS metrics (CHAOSS recommends
 # offering an opt-out). Their links are still checked. Note who asked and when beside the id.
 OPT_OUT_IDS = frozenset()
 
@@ -63,7 +62,7 @@ _PLATFORMS = ('github', 'huggingface', 'zenodo')
 
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(
-        description='Compute per-entry health signals and open-source health facts.')
+        description='Compute per-entry health signals and CHAOSS metrics.')
     parser.add_argument('--input', default='public/data/catalog.json', help='Path to catalog JSON')
     parser.add_argument('--outputs', nargs='+', default=None,
                         help='Output paths for health.json (written to each)')
@@ -135,8 +134,10 @@ def make_clients(github_budget):
                             unavailable=UNAVAILABLE_STATUSES['github']),
         'huggingface': ApiClient('Hugging Face', {'User-Agent': USER_AGENT}, budget=400, min_interval=0.25,
                                  unavailable=UNAVAILABLE_STATUSES['huggingface']),
+        # Zenodo can take 15-20 s per request and its gateway gives up at 30 s, so wait longer.
         'zenodo': ApiClient('Zenodo', {'User-Agent': USER_AGENT, 'Accept': 'application/json'},
-                            budget=60, min_interval=0.5, unavailable=UNAVAILABLE_STATUSES['zenodo']),
+                            budget=60, min_interval=1.0, timeout=(10, 60),
+                            unavailable=UNAVAILABLE_STATUSES['zenodo']),
         'doi': ApiClient('doi.org', {'User-Agent': USER_AGENT}, budget=20, unavailable=UNAVAILABLE_STATUSES['doi']),
     }
 
@@ -192,7 +193,8 @@ def collect(projects, clients, window):
                 observations[asset['key']] = fetch_asset(asset, clients, window)
             except SourceError as err:
                 observations[asset['key']] = err
-                print(f"  not measured: {asset['platform']} {asset['id'] or asset['doi']} ({err.kind})")
+                status = f', {err.status}' if err.status else ''
+                print(f"  not measured: {asset['platform']} {asset['id'] or asset['doi']} ({err.kind}{status})")
     return assets_by_project, observations
 
 
@@ -244,7 +246,7 @@ def _people_gap_reason(measured, people_buckets):
 
 
 def summarise_entry(assets, observations, run_date):
-    """The public open-source health block for one project: per-platform facts, named gaps, and
+    """The public CHAOSS metrics block for one project: per-platform facts, named gaps, and
     one record per linked asset. People are combined per platform (one person counts once across a
     project's repositories) and never summed across platforms."""
     start, end = cm.window_bounds(run_date)
@@ -517,7 +519,7 @@ def render_summary(doc, stats):
         f"## Weekly health check {doc.get('generated_at')}",
         '',
         f'- Links: {len(entries)} projects checked, {available} available, {len(entries) - available} unavailable',
-        f"- Open-source health, following CHAOSS metric definitions: {statuses['measured']} measured, "
+        f"- CHAOSS metrics: {statuses['measured']} measured, "
         f"{statuses['partial']} partial, {statuses['carried_forward']} carried forward, "
         f"{statuses['unreadable']} unreadable, {statuses['opted_out']} opted out",
         f"- Asset links measured: GitHub {assets['github']}, Hugging Face {assets['huggingface']}, "
@@ -590,7 +592,7 @@ def main(argv=None):
     available = sum(1 for r in entries.values() if r['availability'] == 'available')
     measured = sum(1 for r in entries.values() if r['compare']['measured'])
     print(f'  {len(entries)} entries with links | {available} available, '
-          f'{len(entries) - available} unavailable | {measured} with open-source health facts')
+          f'{len(entries) - available} unavailable | {measured} with CHAOSS metrics')
     print('  API requests: ' + ', '.join(f'{name} {used}' for name, used in stats['requests'].items()))
 
     for path in args.outputs:

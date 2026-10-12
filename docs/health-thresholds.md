@@ -1,4 +1,4 @@
-# Health signal and open-source health: threshold rules
+# Health signal and CHAOSS metrics: threshold rules
 
 Each catalog entry carries a health signal, recomputed weekly by `scripts/health_check.py` (GitHub
 Action: `.github/workflows/health_check.yml`) and written to `public/data/health.json` and
@@ -88,7 +88,7 @@ only ever boosts entries where GitHub / Hugging Face expose the data; the absenc
 is never a penalty**, so datasets on Zenodo, Dataverse, Kaggle, or plain servers are not pushed down
 merely for their host. The 5-dot indicator continues to reflect `quality_score` only.
 
-## Part 4: Open-source health (CHAOSS metric definitions)
+## Part 4: CHAOSS metrics
 
 Where an entry links a GitHub repository, a Hugging Face model, dataset or space, or a Zenodo
 record, the weekly check reads public activity data for **every** such asset and reports facts using

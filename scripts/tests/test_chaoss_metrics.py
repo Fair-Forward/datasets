@@ -1,4 +1,6 @@
-"""Tests for chaoss_metrics: the pure CHAOSS metric maths behind the open-source health signal."""
+"""Tests for chaoss_metrics: the pure CHAOSS metric maths behind the catalogue's CHAOSS metrics."""
+import os
+import re
 import unittest
 from datetime import datetime, timezone
 
@@ -230,6 +232,36 @@ class MetricListTests(unittest.TestCase):
         for metric in cm.CHAOSS_METRICS:
             self.assertRegex(metric['url'], r'^https://chaoss\.community/\?p=\d+$')
             self.assertNotIn('—', metric['label'])
+
+
+HEALTH_JS = os.path.join(os.path.dirname(__file__), '..', '..', 'src', 'utils', 'health.js')
+REUSE_KEYS = ('forks', 'popularity', 'downloads')  # one "Reuse" row in the panel
+
+
+def panel_chaoss_names(js_text):
+    """CHAOSS_NAMES from src/utils/health.js: the metric each panel row names on hover."""
+    block = re.search(r'const CHAOSS_NAMES = \{(.*?)\n\}', js_text, re.S)
+    return dict(re.findall(r"(\w+): '([^']+)'", block.group(1))) if block else {}
+
+
+def page_chaoss_names():
+    """The same names as CHAOSS_METRICS states them on /chaoss/, with the reuse metrics in one row."""
+    names = {m['key']: m['chaoss'] for m in cm.CHAOSS_METRICS}
+    names['reuse'] = ', '.join(names.pop(key) for key in REUSE_KEYS)
+    return names
+
+
+class PanelParityTests(unittest.TestCase):
+    """The panel's hover labels and the methodology page must name the same CHAOSS metrics."""
+
+    def test_the_panel_names_the_metrics_the_page_names(self):
+        with open(HEALTH_JS, encoding='utf-8') as f:
+            self.assertEqual(panel_chaoss_names(f.read()), page_chaoss_names())
+
+    def test_a_renamed_metric_is_caught(self):
+        with open(HEALTH_JS, encoding='utf-8') as f:
+            js = f.read().replace("'Licenses Declared'", "'Licences Declared'")
+        self.assertNotEqual(panel_chaoss_names(js), page_chaoss_names())
 
 
 if __name__ == '__main__':

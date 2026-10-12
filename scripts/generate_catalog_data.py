@@ -19,6 +19,7 @@ from utils import (
     clean_country_list,
     count_countries,
     split_places,
+    QUALITY_SCORE_MAX,
 )
 from text_parsing import label_from_url, label_from_resource_url
 
@@ -210,7 +211,7 @@ def compute_quality_score(project):
     if project.get('maturity_tags'):
         score += 5
 
-    return min(score, 100)
+    return min(score, QUALITY_SCORE_MAX)
 
 
 # Define the maturity funnel stages in order of progression (matching MaturityChart.jsx)

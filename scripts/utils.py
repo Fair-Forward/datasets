@@ -9,6 +9,10 @@ PROJECTS_DIR = os.path.join("public", "projects")
 SITE_BASE = "https://fair-forward.github.io/datasets/"  # authoritative base, trailing slash
 SITE_NAME = "FAIR Forward"                              # keep in sync with src/utils/site.js
 
+# The documentation score's ceiling (generate_catalog_data.py); the default order adds
+# ranking.js's activity boost on top, and the CHAOSS methodology page states both.
+QUALITY_SCORE_MAX = 100
+
 # Web analytics: Umami Cloud, EU region. Cookieless and stores no personal data, so the
 # site needs no consent banner; what it does collect is described at /privacy/.
 #

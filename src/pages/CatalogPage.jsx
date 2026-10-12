@@ -402,7 +402,7 @@ const CatalogPage = () => {
                     {' · '}
                   </>
                 )}
-                sorted by documentation depth
+                sorted by documentation depth and recent activity
               </p>
             )}
           </div>

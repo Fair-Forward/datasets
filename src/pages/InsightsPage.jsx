@@ -6,17 +6,20 @@ import WorldMap from '../components/WorldMap'
 import SDGChart from '../components/SDGChart'
 import MaturityChart, { MATURITY_STEPS } from '../components/MaturityChart'
 import SDGCountryHeatmap from '../components/SDGCountryHeatmap'
+import ChaossBySdg, { OSS_VIEWS } from '../components/ChaossBySdg'
 import { withBasePath } from '../utils/basePath'
 
 const InsightsPage = () => {
   const navigate = useNavigate()
   const [insightsData, setInsightsData] = useState(null)
   const [catalogData, setCatalogData] = useState(null)
+  const [healthData, setHealthData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [selectedCountry, setSelectedCountry] = useState(null)
   const [sdgView, setSdgView] = useState('chart') // 'chart' | 'heatmap'
   const [maturityStep, setMaturityStep] = useState(MATURITY_STEPS[0].key)
+  const [ossView, setOssView] = useState(OSS_VIEWS[0].key)
 
   const loadData = () => {
     setLoading(true)
@@ -29,11 +32,16 @@ const InsightsPage = () => {
       fetch(withBasePath('data/catalog.json')).then(res => {
         if (!res.ok) throw new Error('Failed to load catalog data')
         return res.json()
-      })
+      }),
+      // Optional: without the weekly health data the page simply leaves that section out.
+      fetch(withBasePath('data/health.json'))
+        .then(res => (res.ok ? res.json() : null))
+        .catch(() => null)
     ])
-      .then(([insights, catalog]) => {
+      .then(([insights, catalog, health]) => {
         setInsightsData(insights)
         setCatalogData(catalog)
+        setHealthData(health)
         setLoading(false)
       })
       .catch(err => {
@@ -299,12 +307,39 @@ const InsightsPage = () => {
                 />
               )}
               {sdgView === 'heatmap' && (
-                <SDGCountryHeatmap 
+                <SDGCountryHeatmap
                   projects={catalogData.projects}
                   onCellClick={handleHeatmapCellClick}
                 />
               )}
             </div>
+          </div>
+        )}
+
+        {/* CHAOSS metrics by SDG: projects counted, never named */}
+        {healthData?.schema_version >= 2 && catalogData?.projects && (
+          <div className="insight-card insight-card-oss">
+            <div className="insight-card-header">
+              <div>
+                <h2>CHAOSS metrics by SDG</h2>
+                <p>Which goals have open repositories, models or data records, and how they are kept. Projects are counted, never named.</p>
+              </div>
+              <div className="insight-tabs" role="group" aria-label="CHAOSS metric views">
+                {OSS_VIEWS.map(v => (
+                  <button
+                    key={v.key}
+                    type="button"
+                    className={`insight-tab ${ossView === v.key ? 'active' : ''}`}
+                    aria-pressed={ossView === v.key}
+                    onClick={() => setOssView(v.key)}
+                  >
+                    {v.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <ChaossBySdg projects={catalogData.projects} health={healthData} view={ossView} />
           </div>
         )}
 
