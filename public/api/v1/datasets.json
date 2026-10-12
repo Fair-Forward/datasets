@@ -8,16 +8,13 @@
     "url": "https://creativecommons.org/publicdomain/zero/1.0/",
     "note": "Covers the catalogue metadata in this file: you may republish these records freely, with or without attribution. It does NOT cover the linked assets. Each record's `license` field describes the terms of the asset itself, which Fair Forward does not own; a null value means no license has been recorded, not that the asset is unlicensed or free to reuse."
   },
-  "version": "536b13b469a14c5e",
+  "version": "c5b555cd35188c2e",
   "count": 72,
   "vocabularies": {
     "sdgs": [
-      "SDG 1",
       "SDG 2",
-      "SDG 3",
       "SDG 4",
       "SDG 5",
-      "SDG 6",
       "SDG 7",
       "SDG 8",
       "SDG 9",
@@ -27,8 +24,7 @@
       "SDG 13",
       "SDG 14",
       "SDG 15",
-      "SDG 16",
-      "SDG 17"
+      "SDG 16"
     ],
     "data_types": [
       "Drone Imagery",
@@ -145,9 +141,7 @@
     "regions": [
       "East Africa",
       "Global",
-      "Valid entries:  [country names",
-      "West Africa",
-      "or regions such as \"West Africa\" or Global]"
+      "West Africa"
     ],
     "maturity_stages": [
       "dataset",

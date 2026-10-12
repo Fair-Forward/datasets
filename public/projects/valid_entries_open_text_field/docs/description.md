@@ -1,1 +1,0 @@
-Valid entries: [Open Text field]

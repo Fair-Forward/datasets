@@ -10,7 +10,7 @@ import re
 import csv
 import json
 from thefuzz import process, fuzz
-from utils import normalize_for_directory, resolve_project_id, PROJECTS_DIR, GOOGLE_SHEET_ID, GOOGLE_SHEET_GID, DEFAULT_CREDENTIALS_PATH
+from utils import normalize_for_directory, resolve_project_id, PROJECTS_DIR, GOOGLE_SHEET_ID, GOOGLE_SHEET_GID, DEFAULT_CREDENTIALS_PATH, project_rows
 
 # Parse command line arguments
 parser = argparse.ArgumentParser(description='Fetch data from Google Sheets and build the website.')
@@ -243,7 +243,7 @@ def create_project_directories(df):
         os.makedirs(public_projects_dir)
     
     # Iterate through each row in the dataframe
-    for index, row in df.iterrows():
+    for index, row in project_rows(df):
         # --- Find existing directory for this row (if any) ---
         existing_dir = find_existing_directory_for_row(row, public_projects_dir)
         
@@ -378,7 +378,7 @@ def create_project_directories(df):
     # --- Cleanup orphaned directories ---
     # Get all directories that SHOULD exist based on current data
     correct_dirs = set()
-    for idx, row in df.iterrows():
+    for idx, row in project_rows(df):
         resolved_dir, _, _ = resolve_project_id(row, projects_dir=public_projects_dir, row_idx=idx)
         if resolved_dir:
             correct_dirs.add(resolved_dir)

@@ -20,6 +20,7 @@ from utils import (
     count_countries,
     split_places,
     QUALITY_SCORE_MAX,
+    project_rows,
 )
 from text_parsing import label_from_url, label_from_resource_url
 
@@ -343,7 +344,7 @@ def generate_catalog_json():
         all_countries = set()
         fragile_ids = []
         
-        for index, row in df.iterrows():
+        for index, row in project_rows(df):
             dataset_link_text = row.get('Dataset Link', '')
             usecase_link_text = row.get('Model/Use-Case Links', '')
 

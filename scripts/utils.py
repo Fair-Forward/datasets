@@ -315,6 +315,26 @@ def documents_dir_has_files(project_id):
     return False
 
 
+def project_rows(df):
+    """(index, row) for the Sheet's project rows, skipping its explanation block.
+
+    Under the header the Sheet keeps explanation rows ("Valid entries: ..." in every column) that
+    have no Project ID. build_and_sync.py drops only the first of them, so every row above the
+    first Project ID is treated as explanation. A project further down without an ID still counts
+    (it gets a title-derived ID and a warning), and without any Project ID at all every row
+    counts, so an older export cannot empty the catalogue.
+    """
+    def has_id(row):
+        value = row.get('Project ID')
+        return isinstance(value, str) and bool(value.strip())
+
+    started = 'Project ID' not in df.columns or not any(has_id(row) for _, row in df.iterrows())
+    for index, row in df.iterrows():
+        started = started or has_id(row)
+        if started:
+            yield index, row
+
+
 def row_included_for_catalog_or_insights(row, row_idx=None):
     """
     Match catalog inclusion: http link(s), any non-empty text in link columns,

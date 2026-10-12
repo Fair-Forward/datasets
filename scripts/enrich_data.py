@@ -43,6 +43,7 @@ from utils import (
     resolve_project_id,
     DEFAULT_CREDENTIALS_PATH,
     AUTO_ENRICHED_PREFIX,
+    project_rows,
 )
 
 # Inlined from generate_catalog_data.py to avoid its module-level argparse
@@ -1155,7 +1156,7 @@ def write_enrichment_to_sheet(results, discovered_resources,
     # Build project_id -> Excel row index mapping
     df = pd.read_excel(excel_path)
     id_to_row_idx = {}
-    for idx, row in df.iterrows():
+    for idx, row in project_rows(df):
         pid, _src, _err = resolve_project_id(row, row_idx=idx)
         if pid:
             id_to_row_idx[pid] = idx

@@ -3,7 +3,7 @@ import pandas as pd
 import json
 import re
 from collections import Counter
-from utils import resolve_project_id, row_included_for_catalog_or_insights, COUNTRY_ISO_MAP, clean_country_list
+from utils import resolve_project_id, row_included_for_catalog_or_insights, COUNTRY_ISO_MAP, clean_country_list, project_rows
 
 # Parse command line arguments
 parser = argparse.ArgumentParser(description='Generate insights data JSON from data catalog.')
@@ -29,7 +29,7 @@ def analyze_data(excel_path):
         project_ids = set()
         sdg_counts = Counter()  # Global SDG counts
         
-        for index, row in df.iterrows():
+        for index, row in project_rows(df):
             if not row_included_for_catalog_or_insights(row, row_idx=index):
                 continue
 
