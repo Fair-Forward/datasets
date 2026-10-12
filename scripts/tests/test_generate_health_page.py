@@ -2,7 +2,6 @@
 import os
 import re
 import unittest
-import unittest.mock
 
 import chaoss_metrics as cm
 import generate_health_page as gp
@@ -10,7 +9,7 @@ from utils import ANALYTICS, CSP
 
 WORKFLOW = "on:\n  schedule:\n    - cron: '0 9 * * 1'   # 09:00 UTC every Monday\n"
 RANKING = "export const ACTIVITY_WEIGHT = 40\nexport const UNAVAILABLE_PENALTY = 20\n"
-WORD_BUDGET = 480  # the page was about 1,350 words; it stays a short reference
+WORD_BUDGET = 490  # the page was about 1,350 words; it stays a short reference (about 480)
 
 
 def visible(page):
@@ -67,7 +66,8 @@ class PageTests(unittest.TestCase):
         self.assertIn(f'at least {cm.MIN_OUTSIDE_ITEMS} outside issues and pull requests', page)
         self.assertIn(f'up to {cm.CARRY_FORWARD_MAX_DAYS} days', page)
         self.assertIn(cm.SCHEDULE_TEXT, page)
-        self.assertIn(f'at least {cm.MIN_GROUP} projects can be compared', page)
+        self.assertIn(f'an SDG with at least {cm.MIN_GROUP} measured projects', page)
+        self.assertIn('pull requests from the last 12 months', page)
         self.assertIn(f'the {cm.WINDOW_DAYS} days up to the day of measurement', page)
         self.assertIn(f'at least {round(cm.ABSENCE_SHARE * 100)}% of all commits', page)
 
@@ -93,7 +93,7 @@ class PageTests(unittest.TestCase):
 
     def test_says_bots_are_left_out_of_people_not_of_everything(self):
         page = self.page()
-        self.assertIn('Bots are left out of people counts', page)
+        self.assertIn('Bots are left out of people counts, response times, pull request closure', page)
         self.assertNotIn('every count', page)
 
     def test_privacy_promise_is_about_contributors(self):
@@ -126,6 +126,9 @@ class PageTests(unittest.TestCase):
 
     def test_substitutes_coverage_from_the_catalogue(self):
         self.assertIn('2 of 4 projects', self.page())
+
+    def test_says_which_links_are_read(self):
+        self.assertIn('2 of 4 projects link measured assets in their dataset or use-case links', self.page())
 
     def test_carries_the_shared_head(self):
         page = self.page()

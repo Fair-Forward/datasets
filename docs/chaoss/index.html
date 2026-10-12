@@ -92,7 +92,7 @@
   <header class="prose">
     <h1>How the CHAOSS metrics are measured</h1>
     <p class="standfirst">Each project's panel shows CHAOSS metrics for its repositories, models and records on
-    GitHub, Hugging Face and Zenodo, measured weekly from public data. The definitions come from
+    GitHub, Hugging Face and Zenodo, measured from public data. The definitions come from
     <a href="https://chaoss.community/">CHAOSS</a>, the Linux Foundation's Community Health Analytics in Open Source Software
     project, which does not review or endorse this catalogue.</p>
   </header>
@@ -110,11 +110,11 @@
         <tr><td>Reuse</td><td><a href="https://chaoss.community/?p=3573">Project Popularity</a></td><td class="note">GitHub stars, Hugging Face likes, views on Zenodo.</td></tr>
         <tr><td>Reuse</td><td><a href="https://chaoss.community/?p=4466">Number of Downloads</a></td><td class="note">Hugging Face and Zenodo downloads, as each platform counts them.</td></tr>
         <tr><td>License at source</td><td><a href="https://chaoss.community/?p=3963">Licenses Declared</a></td><td class="note">Licence declared at the source; it can differ from the catalogue's.</td></tr>
-        <tr><td>Response time</td><td><a href="https://chaoss.community/?p=3448">Time to First Response</a></td><td class="note">Median time to a first reply on outside GitHub issues and pull requests.</td></tr>
+        <tr><td>Response time</td><td><a href="https://chaoss.community/?p=3448">Time to First Response</a></td><td class="note">Median time to a first reply on outside GitHub issues and pull requests from the last 12 months.</td></tr>
         <tr><td>Pull request closure</td><td><a href="https://chaoss.community/?p=4834">Change Request Closure Ratio</a></td><td class="note">Outside pull requests from the last 12 months that are now closed.</td></tr>
       </tbody>
     </table></div>
-    <p class="prose">A metric without enough data is listed as not measurable, never shown as 0.</p>
+    <p class="prose">Metrics without enough data are listed as not measurable, never as 0.</p>
   </section>
 
   <hr>
@@ -126,8 +126,8 @@
       <li>Response time needs at least 5 outside issues and pull requests, pull request closure at
       least 5 outside pull requests. Outside: anyone but the owner, organisation members and
       collaborators.</li>
-      <li>Bots are left out of people counts, response times and the last change on GitHub
-      (<a href="https://chaoss.community/?p=3465">Bot Activity</a>).</li>
+      <li>Bots are left out of people counts, response times, pull request closure and the last change
+      on GitHub (<a href="https://chaoss.community/?p=3465">Bot Activity</a>).</li>
       <li>Measured every Monday at 09:00 UTC. If a source cannot be read, a project can keep its previous measurement
       for up to 28 days.</li>
     </ul>
@@ -137,7 +137,7 @@
 
   <section>
     <h2>Coverage</h2>
-    <p class="prose">37 of 89 projects link measured assets: 32 GitHub repositories, 35 Hugging Face models, datasets or spaces and 5 Zenodo records. 11 more projects link only to pages not measured yet: Kaggle, Harvard Dataverse, figshare, GitLab and organisation pages on Hugging Face or GitHub. Not counted: private or gated content, non-default branches, work
+    <p class="prose">37 of 89 projects link measured assets in their dataset or use-case links: 32 GitHub repositories, 35 Hugging Face models, datasets or spaces and 5 Zenodo records. 11 more projects link only to pages not measured yet: Kaggle, Harvard Dataverse, figshare, GitLab and organisation pages on Hugging Face or GitHub. Not counted: private or gated content, non-default branches, work
     outside repositories.</p>
   </section>
 
@@ -148,8 +148,8 @@
     <p class="prose">The default order adds up to 40 points for recent changes, stars and
     downloads to a documentation score of up to 100; a project whose links all failed at the last
     check loses 20 points. Insights compares SDGs, not projects, as
-    <a href="https://chaoss.community/practitioner-guide-introduction/">CHAOSS advises</a>, and shows figures only where at least 5 projects can be
-    compared.</p>
+    <a href="https://chaoss.community/practitioner-guide-introduction/">CHAOSS advises</a>, and shows figures only for an SDG with at least
+    5 measured projects.</p>
   </section>
 
   <hr>

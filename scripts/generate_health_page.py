@@ -2,7 +2,7 @@
 
 The detail panel's "CHAOSS metrics" block and the Insights view link here. The page names
 CHAOSS, says which CHAOSS metric each row follows and links its definition, and states the
-thresholds and blind spots of the measurement. Thresholds come from chaoss_metrics.py and coverage
+thresholds, coverage and limits of the measurement. Thresholds come from chaoss_metrics.py and coverage
 counts from catalog.json, so the page cannot state a rule or a number the collector does not apply;
 it depends on nothing else, so re-running it without data changes writes the same bytes. The weekly
 health.json figures never appear here.
@@ -49,7 +49,7 @@ METRIC_TEXT = {
     'popularity': 'GitHub stars, Hugging Face likes, views on Zenodo.',
     'downloads': 'Hugging Face and Zenodo downloads, as each platform counts them.',
     'license': "Licence declared at the source; it can differ from the catalogue's.",
-    'first_response': 'Median time to a first reply on outside GitHub issues and pull requests.',
+    'first_response': 'Median time to a first reply on outside GitHub issues and pull requests from the last 12 months.',
     'change_request_closure': 'Outside pull requests from the last 12 months that are now closed.',
 }
 
@@ -87,7 +87,7 @@ $style$page_style</style>
   <header class="prose">
     <h1>How the CHAOSS metrics are measured</h1>
     <p class="standfirst">Each project's panel shows CHAOSS metrics for its repositories, models and records on
-    GitHub, Hugging Face and Zenodo, measured weekly from public data. The definitions come from
+    GitHub, Hugging Face and Zenodo, measured from public data. The definitions come from
     <a href="$chaoss_home">CHAOSS</a>, the Linux Foundation's Community Health Analytics in Open Source Software
     project, which does not review or endorse this catalogue.</p>
   </header>
@@ -100,7 +100,7 @@ $style$page_style</style>
 $metric_rows
       </tbody>
     </table></div>
-    <p class="prose">A metric without enough data is listed as not measurable, never shown as 0.</p>
+    <p class="prose">Metrics without enough data are listed as not measurable, never as 0.</p>
   </section>
 
   <hr>
@@ -112,8 +112,8 @@ $metric_rows
       <li>Response time needs at least $min_items outside issues and pull requests, pull request closure at
       least $min_prs outside pull requests. Outside: anyone but the owner, organisation members and
       collaborators.</li>
-      <li>Bots are left out of people counts, response times and the last change on GitHub
-      (<a href="$bot_url">Bot Activity</a>).</li>
+      <li>Bots are left out of people counts, response times, pull request closure and the last change
+      on GitHub (<a href="$bot_url">Bot Activity</a>).</li>
       <li>Measured $schedule_text. If a source cannot be read, a project can keep its previous measurement
       for up to $carry_days days.</li>
     </ul>
@@ -134,8 +134,8 @@ $metric_rows
     <p class="prose">The default order adds up to $activity_weight points for recent changes, stars and
     downloads to a documentation score of up to $quality_max; a project whose links all failed at the last
     check loses $unavailable_penalty points. Insights compares SDGs, not projects, as
-    <a href="$guide_url">CHAOSS advises</a>, and shows figures only where at least $min_group projects can be
-    compared.</p>
+    <a href="$guide_url">CHAOSS advises</a>, and shows figures only for an SDG with at least
+    $min_group measured projects.</p>
   </section>
 
   <hr>
@@ -218,7 +218,7 @@ def _join(items, word):
 def _metric_rows():
     rows = []
     for metric in cm.CHAOSS_METRICS:
-        counted = METRIC_TEXT[metric['key']].format(absence_pct=round(cm.ABSENCE_SHARE * 100))
+        counted = METRIC_TEXT[metric['key']].replace('{absence_pct}', str(round(cm.ABSENCE_SHARE * 100)))
         rows.append(f'        <tr><td>{metric["label"]}</td>'
                     f'<td><a href="{metric["url"]}">{metric["chaoss"]}</a></td>'
                     f'<td class="note">{counted}</td></tr>')
@@ -226,7 +226,8 @@ def _metric_rows():
 
 
 def _coverage_sentence(counts):
-    return (f"{counts['measurable']} of {counts['projects']} projects link measured assets: "
+    return (f"{counts['measurable']} of {counts['projects']} projects link measured assets in their dataset "
+            f"or use-case links: "
             f"{_count(counts['github'], 'GitHub repository', 'GitHub repositories')}, "
             f"{_count(counts['huggingface'], 'Hugging Face model, dataset or space', 'Hugging Face models, datasets or spaces')} "
             f"and {_count(counts['zenodo'], 'Zenodo record', 'Zenodo records')}."
