@@ -1,73 +1,6 @@
 {
   "projects": [
     {
-      "id": "valid_entries_open_text_field",
-      "slug": "valid_entries_open_text_field-valid_entries_open_text_field",
-      "aliases": [],
-      "title": "Valid entries: [Open Text field]",
-      "description": "Valid entries: [Open Text field]",
-      "dataset_links": [],
-      "usecase_links": [],
-      "access_note_kind": "info",
-      "access_note_markdown": "Valid entries: [URL(s), Multiple links with some \", ; or space\" in between.]",
-      "has_access_note": true,
-      "hosted_documents": [],
-      "sdgs": [
-        "SDG 1",
-        "SDG 2",
-        "SDG 3",
-        "SDG 4",
-        "SDG 5",
-        "SDG 6",
-        "SDG 7",
-        "SDG 8",
-        "SDG 9",
-        "SDG 10",
-        "SDG 11",
-        "SDG 12",
-        "SDG 13",
-        "SDG 14",
-        "SDG 15",
-        "SDG 16",
-        "SDG 17"
-      ],
-      "data_types": [
-        "Drone Imagery",
-        "Text",
-        "Voice",
-        "Geospatial/Remote Sensing",
-        "Other",
-        "Images",
-        "Meterological",
-        "Tabular"
-      ],
-      "countries": [
-        "Valid entries:  [country names",
-        "or regions such as \"West Africa\" or Global]"
-      ],
-      "license": "Valid entries: [Open Text field for name of licenses]",
-      "contact": "Valid entries: [Name(s) (e-mail)]",
-      "organizations": "Valid entries: \n[Powered by: [names of implementing institutions]\nCatalyzed by: [names of facilitating / supporting institutions]\nFinanced by: [names funders or investors or other financial contributors]]",
-      "editor": "Valid entries: [Open Text field]",
-      "is_lacuna": true,
-      "has_dataset": false,
-      "has_usecase": false,
-      "image": null,
-      "data_characteristics": "Valid entries: [Open Text field]",
-      "model_characteristics": "Valid entries: [Open Text field]",
-      "how_to_use": "Valid entries: [Open Text field]",
-      "maturity": "Dataset  > Model > Pilot > Use-Case >  Use-Case with Business Model",
-      "maturity_tags": [
-        "dataset",
-        "model",
-        "pilot",
-        "usecase",
-        "business"
-      ],
-      "additional_resources": [],
-      "quality_score": 59
-    },
-    {
       "id": "ui_0",
       "slug": "ui_0-african_trees_for_climate_resilience_a",
       "aliases": [
@@ -5274,20 +5207,17 @@
     "geospatial_dataset_of_wheat_and_rice": "ui_89"
   },
   "stats": {
-    "total_projects": 90,
+    "total_projects": 89,
     "total_datasets": 93,
     "total_usecases": 57,
-    "total_access_note_projects": 11,
+    "total_access_note_projects": 10,
     "total_countries": 25
   },
   "filters": {
     "sdgs": [
-      "SDG 1",
       "SDG 2",
-      "SDG 3",
       "SDG 4",
       "SDG 5",
-      "SDG 6",
       "SDG 7",
       "SDG 8",
       "SDG 9",
@@ -5297,8 +5227,7 @@
       "SDG 13",
       "SDG 14",
       "SDG 15",
-      "SDG 16",
-      "SDG 17"
+      "SDG 16"
     ],
     "data_types": [
       "Drone Imagery",
@@ -5337,17 +5266,13 @@
       "Tanzania",
       "Togo",
       "Uganda",
-      "Valid entries:  [country names",
       "West Africa",
-      "Zambia",
-      "or regions such as \"West Africa\" or Global]"
+      "Zambia"
     ],
     "regions": [
       "East Africa",
       "Global",
-      "Valid entries:  [country names",
-      "West Africa",
-      "or regions such as \"West Africa\" or Global]"
+      "West Africa"
     ],
     "country_codes": {
       "Angola": "AO",

@@ -3,7 +3,7 @@ import os
 import re
 import argparse
 from datetime import datetime
-from utils import KNOWN_COUNTRIES, DEFAULT_CREDENTIALS_PATH, get_gsheet_client, check_urls
+from utils import KNOWN_COUNTRIES, DEFAULT_CREDENTIALS_PATH, get_gsheet_client, check_urls, project_rows
 from generate_catalog_data import KNOWN_LICENSE_VALUES
 from sheet_notes import merge_note
 
@@ -354,7 +354,8 @@ def build_row_notes(excel_path, broken_urls=None):
     df = pd.read_excel(excel_path)
     row_notes = {}
 
-    for idx, row in df.iterrows():
+    # Explanation rows are no project, and the Sheet protects them: a note there fails the batch.
+    for idx, row in project_rows(df):
         notes = {}
 
         # License check
