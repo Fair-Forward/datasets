@@ -101,7 +101,7 @@
     <div class="scroll"><table>
       <thead><tr><th>Endpoint</th><th>Contents</th><th>Records</th></tr></thead>
       <tbody>
-        <tr><td><a href="v1/catalog.json">v1/catalog.json</a></td><td class="note">Every published project</td><td class="num">89</td></tr>
+        <tr><td><a href="v1/catalog.json">v1/catalog.json</a></td><td class="note">Every published project</td><td class="num">90</td></tr>
         <tr><td><a href="v1/datasets.json">v1/datasets.json</a></td><td class="note">Projects that publish a dataset</td><td class="num">72</td></tr>
         <tr><td><a href="v1/usecases.json">v1/usecases.json</a></td><td class="note">Projects that publish a use case</td><td class="num">38</td></tr>
       </tbody>
@@ -117,7 +117,7 @@
       <p>The catalog metadata is <strong>CC0 1.0</strong>. You can republish these records freely, with or
       without attribution. Every response says so under <code>license</code>.</p>
       <p>The linked assets are not ours. Each record's <code>license</code> field describes the dataset or
-      model we point at. It is <code>null</code> for 45 of 89 projects. That means no
+      model we point at. It is <code>null</code> for 43 of 90 projects. That means no
       license has been recorded, not that the asset is unlicensed and not that it is free to reuse.</p>
     </div>
   </section>
@@ -137,10 +137,10 @@
   <section>
     <h2>Filtering</h2>
     <p class="prose">Records carry the same vocabularies the website filters on: <code>sdgs</code>
-    (13), <code>data_types</code> (8), <code>countries</code> with ISO codes (25),
+    (17), <code>data_types</code> (8), <code>countries</code> with ISO codes (25),
     and <code>maturity.tags</code>. Maturity stages are cumulative, so a project that reached a use case
     also carries <code>pilot</code>:</p>
-    <pre><code><span class="c-com"># 49 of 89 projects have reached pilot or beyond</span>
+    <pre><code><span class="c-com"># 50 of 90 projects have reached pilot or beyond</span>
 <span class="c-key">import</span> urllib.request, json
 
 url = <span class="c-str">"https://fair-forward.github.io/datasets/api/v1/catalog.json"</span>
@@ -151,20 +151,20 @@ pilot_plus = [p <span class="c-key">for</span> p <span class="c-key">in</span> d
     <div class="scroll"><table>
       <thead><tr><th>Field</th><th>Type</th><th>Recorded</th><th>Notes</th></tr></thead>
       <tbody>
-        <tr><td>id</td><td>string</td><td class="num">89</td><td class="note">Stable. Store this one.</td></tr>
-        <tr><td>title</td><td>string</td><td class="num">89</td><td class="note">Plain text.</td></tr>
-        <tr><td>description</td><td>string</td><td class="num">88</td><td class="note">Prose, no markup.</td></tr>
-        <tr><td>organizations</td><td>roles</td><td class="num">89</td><td class="note">provided_by, catalyzed_by, financed_by. Each has text and links.</td></tr>
+        <tr><td>id</td><td>string</td><td class="num">90</td><td class="note">Stable. Store this one.</td></tr>
+        <tr><td>title</td><td>string</td><td class="num">90</td><td class="note">Plain text.</td></tr>
+        <tr><td>description</td><td>string</td><td class="num">89</td><td class="note">Prose, no markup.</td></tr>
+        <tr><td>organizations</td><td>roles</td><td class="num">90</td><td class="note">provided_by, catalyzed_by, financed_by. Each has text and links.</td></tr>
         <tr><td>countries[]</td><td>name, iso2</td><td class="num">89</td><td class="note">ISO 3166-1 alpha-2. Join on iso2, not name.</td></tr>
-        <tr><td>regions[]</td><td>string[]</td><td class="num">5</td><td class="note">Values with no country code, such as "West Africa".</td></tr>
-        <tr><td>sdgs[]</td><td>string[]</td><td class="num">88</td><td class="note">The closest thing we record to a sector.</td></tr>
-        <tr><td>data_types[]</td><td>string[]</td><td class="num">88</td><td class="note">Such as Voice or Geospatial/Remote Sensing.</td></tr>
-        <tr><td>maturity.tags[]</td><td>string[]</td><td class="num">89</td><td class="note">Cumulative stages, as above.</td></tr>
+        <tr><td>regions[]</td><td>string[]</td><td class="num">6</td><td class="note">Values with no country code, such as "West Africa".</td></tr>
+        <tr><td>sdgs[]</td><td>string[]</td><td class="num">89</td><td class="note">The closest thing we record to a sector.</td></tr>
+        <tr><td>data_types[]</td><td>string[]</td><td class="num">89</td><td class="note">Such as Voice or Geospatial/Remote Sensing.</td></tr>
+        <tr><td>maturity.tags[]</td><td>string[]</td><td class="num">90</td><td class="note">Cumulative stages, as above.</td></tr>
         <tr><td>links</td><td>label, url</td><td class="num">83</td><td class="note">Grouped as dataset, usecase, additional, documents.</td></tr>
-        <tr><td>canonical_url</td><td>string</td><td class="num">89</td><td class="note">The project's page here. A good place to link back to.</td></tr>
-        <tr><td>license</td><td>name, spdx, url</td><td class="num">44</td><td class="note">Often null. See above.</td></tr>
-        <tr><td>content</td><td>text, provenance</td><td class="num">76</td><td class="note">Check provenance before showing it.</td></tr>
-        <tr><td>contact</td><td>string</td><td class="num">89</td><td class="note">Free text, usually an email address.</td></tr>
+        <tr><td>canonical_url</td><td>string</td><td class="num">90</td><td class="note">The project's page here. A good place to link back to.</td></tr>
+        <tr><td>license</td><td>name, spdx, url</td><td class="num">47</td><td class="note">Often null. See above.</td></tr>
+        <tr><td>content</td><td>text, provenance</td><td class="num">77</td><td class="note">Check provenance before showing it.</td></tr>
+        <tr><td>contact</td><td>string</td><td class="num">90</td><td class="note">Free text, usually an email address.</td></tr>
         <tr><td>image</td><td>string</td><td class="num">87</td><td class="note">Absolute URL. Some are stock placeholders.</td></tr>
       </tbody>
     </table></div>
@@ -187,7 +187,7 @@ pilot_plus = [p <span class="c-key">for</span> p <span class="c-key">in</span> d
     <div class="notes">
       <div class="note-item">
         <h3>A null license is not permission</h3>
-        <p>45 of 89 projects have no license recorded. That means nobody has
+        <p>43 of 90 projects have no license recorded. That means nobody has
         established the terms, not that the asset is free to reuse. Please show it as unknown rather than
         filling in a default.</p>
       </div>

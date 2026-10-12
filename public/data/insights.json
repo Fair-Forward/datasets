@@ -1,5 +1,5 @@
 {
-  "total_projects": 89,
+  "total_projects": 90,
   "total_countries": 25,
   "map_data": {
     "AO": {
@@ -244,8 +244,7 @@
       "data_types": [
         "Geospatial/Remote Sensing",
         "Meterological",
-        "Other",
-        "Text"
+        "Other"
       ]
     },
     "UG": {
@@ -386,18 +385,22 @@
     }
   },
   "sdg_distribution": {
-    "SDG 2": 43,
-    "SDG 4": 1,
-    "SDG 5": 10,
-    "SDG 7": 3,
-    "SDG 8": 3,
-    "SDG 9": 2,
-    "SDG 10": 35,
-    "SDG 11": 10,
-    "SDG 12": 1,
-    "SDG 13": 27,
-    "SDG 14": 1,
-    "SDG 15": 13,
-    "SDG 16": 1
+    "SDG 1": 1,
+    "SDG 2": 44,
+    "SDG 3": 1,
+    "SDG 4": 2,
+    "SDG 5": 11,
+    "SDG 6": 1,
+    "SDG 7": 4,
+    "SDG 8": 4,
+    "SDG 9": 3,
+    "SDG 10": 36,
+    "SDG 11": 11,
+    "SDG 12": 2,
+    "SDG 13": 28,
+    "SDG 14": 2,
+    "SDG 15": 14,
+    "SDG 16": 2,
+    "SDG 17": 1
   }
 }
