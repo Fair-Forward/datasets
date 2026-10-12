@@ -53,6 +53,8 @@ The build automatically scores each project (0-100) based on how complete its in
 
 Quality feedback is written back to the Google Sheet as cell notes (small black triangle in the cell corner, visible on hover). These notes suggest improvements like adding missing descriptions or using standard license formats.
 
+The weekly check also corrects the Sheet where a project's own sources say otherwise: the license its dataset declares on Hugging Face or Zenodo, and links to repositories that were renamed or to older versions of a Zenodo record. Each corrected cell keeps its previous value in a note starting with "[Source check]", and the Sheet's version history has every earlier state. To stop a cell from being corrected, write [Keep] in its note. The rules are in `docs/health-thresholds.md` (Part 5).
+
 ### Uploading PDFs or documents
 
 Place files in `public/projects/<project_id>/documents/`. These will appear as download buttons on the project's detail page.
@@ -229,6 +231,10 @@ python scripts/health_check.py
 # Private CHAOSS metrics comparison, written outside the repository
 python scripts/health_report.py --out ~/reports/chaoss
 
+# Correct licenses and outdated links in the Sheet from what the sources declare
+# (reports only; --apply writes, then run the sheet sync so the site follows)
+python scripts/sheet_corrections.py
+
 # Tests
 python -m unittest discover -s scripts/tests -t scripts
 npm test
@@ -257,6 +263,8 @@ npm run dev
 | `scripts/health_sources.py` | GitHub, Hugging Face, Zenodo and doi.org clients for the health check (no CLI) |
 | `scripts/generate_health_page.py` | `catalog.json` -> `public/chaoss/` (the methodology page the CHAOSS metrics block links to) |
 | `scripts/health_report.py` | Private comparison of the CHAOSS metrics; refuses to write inside the repo |
+| `scripts/sheet_corrections.py` | Weekly: correct licenses and outdated links in the Sheet from what the sources declare |
+| `scripts/sheet_notes.py` | Shared cell-note rules: each script replaces only its own paragraph, `[Keep]` pins a cell (no CLI) |
 
 ---
 

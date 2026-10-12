@@ -199,7 +199,7 @@ def label_from_resource_url(url):
 # string-matching our prose. Anything not listed reports spdx: null rather than a
 # guess -- claiming the wrong license for a partner's asset is worse than silence.
 SPDX_IDS = frozenset({
-    'CC-BY-4.0', 'CC0-1.0', 'CC-BY-SA-4.0', 'Apache-2.0', 'MIT', 'AGPL-3.0', 'ODbL-1.0',
+    'CC-BY-4.0', 'CC0-1.0', 'CC-BY-SA-4.0', 'Apache-2.0', 'MIT', 'AGPL-3.0', 'GPL-3.0', 'ODbL-1.0',
 })
 
 

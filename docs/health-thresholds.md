@@ -154,6 +154,59 @@ Rules:
   projects show coverage only. A named comparison exists only in the private report written by
   `scripts/health_report.py`, which refuses to write inside this repository.
 
+## Part 5: Corrections to the master Sheet
+
+After the weekly check, `scripts/sheet_corrections.py` corrects the master Google Sheet where the
+measured sources contradict it or fill a gap, then starts the "Manually Update Website from Google
+Sheets" workflow so the site follows. It writes only what the sources declare themselves.
+
+- **License** (the `License` column): the licence the project's data declares at its source.
+  - The first group the project has assets in decides: datasets (Hugging Face datasets, and Zenodo
+    records not filed as software, since uploaders often file a dataset as a publication), else
+    models, else code (GitHub repositories, Hugging Face spaces, Zenodo software). Every asset in
+    that group must declare the same licence; one that declares nothing may be the very dataset
+    the Sheet describes, so it blocks the change.
+  - Only a dataset's own licence replaces a filled cell: a Hugging Face dataset or a Zenodo record
+    filed as a dataset. A model's or code's licence, or a Zenodo record filed as a publication
+    (which may be a paper with Zenodo's default licence), only fills an empty cell.
+  - Nothing changes when the dataset column also links data the check cannot read, such as
+    Mozilla's Data Collective, Kaggle or a project website: the Sheet's licence may describe that
+    data (ui_56 and ui_59 link Common Voice, which is CC0, next to a CC-BY-4.0 dataset).
+  - A linked asset that could not be read, several licences, a custom or unrecognised licence, or a
+    cell holding text that is not one licence the catalogue knows (for example "data CC0, code
+    MIT") leave the cell alone.
+  - Only licences with a catalogue spelling are written (`SPDX_TO_CATALOGUE`, derived from
+    `LICENSE_NORMALIZATION` in `generate_catalog_data.py` and `SPDX_IDS` in `text_parsing.py`).
+- **Links** (the dataset and model link columns):
+  - a repository renamed on GitHub or Hugging Face gets its new address, since the old one only
+    redirects;
+  - a link to an older version of a Zenodo record becomes the record's all-versions DOI, which
+    always opens the latest version;
+  - only that whole link is replaced, and other links and text in the cell stay;
+  - a new address is written only once it answers (a DOI is checked at the DOI registry).
+
+Safeguards:
+
+- Each changed cell gets a `[Source check]` paragraph in its note with the date, the previous value
+  and the source that declared the new one. The Sheet's version history keeps every earlier state.
+  The value and its note are written in one request, which applies all or nothing.
+- A cell whose note contains `[Keep]` is never changed. Protected cells (except their editable
+  ranges), formulas, a Project ID the Sheet holds in two rows, and rows with nothing but a Project
+  ID are left alone.
+- The cells are read again just before the write; one a person changed while the run was checking
+  new addresses is left for the next run.
+- A run that would change more than `MAX_CHANGES` (30) cells writes nothing and fails the workflow:
+  a jump like that points at a fault, not at the sources.
+- Column headers are matched exactly (`COLUMNS`); a renamed header stops the run before anything
+  is written.
+- Notes are shared (`scripts/sheet_notes.py`): `validate_data.py` replaces only its own
+  `[Auto-check]` paragraph and `sheet_corrections.py` only its `[Source check]` paragraph, so what a
+  person wrote in a note survives both. A paragraph runs to the next blank line: a person's text
+  belongs in its own paragraph, though a `[Keep]` line typed directly under an automatic one, and
+  anything typed under a `[Source check]` line, is kept.
+
+Without `--apply` the script only reports what it would change.
+
 ## Tuning
 
 Thresholds and the metric list live in `scripts/chaoss_metrics.py` (`WINDOW_DAYS`, `RECENT_DAYS`,
@@ -162,7 +215,8 @@ Thresholds and the metric list live in `scripts/chaoss_metrics.py` (`WINDOW_DAYS
 `CARRY_FORWARD_MAX_DAYS`, `BOT_LOGINS`, `CHAOSS_METRICS`). Availability rules
 (`_ACCESS_RESTRICTED`, `_UNRELIABLE_404_HOSTS`) and `OPT_OUT_IDS` live in
 `scripts/health_check.py`, the ranking weights (`ACTIVITY_WEIGHT`, `UNAVAILABLE_PENALTY`) in
-`src/utils/ranking.js`. Update the code and this document together.
+`src/utils/ranking.js`, and the Sheet corrections' rules (`TIERS`, `COLUMNS`, `MAX_CHANGES`,
+`NOTE_PREFIX`) in `scripts/sheet_corrections.py`. Update the code and this document together.
 
 Tests: `python -m unittest discover -s scripts/tests -t scripts` (the weekly workflow runs them
 before the check) and `npm test`.
