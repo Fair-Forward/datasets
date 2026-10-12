@@ -19,6 +19,15 @@ class MergeTests(unittest.TestCase):
     def test_an_empty_paragraph_removes_its_own_and_keeps_the_rest(self):
         self.assertEqual(sn.merge_note('A person.\n\n[Auto-check] Old.', '[Auto-check]', ''), 'A person.')
 
+    def test_a_keep_line_typed_under_a_replaced_paragraph_survives(self):
+        self.assertEqual(sn.merge_note('[Auto-check] Old hint.\n[Keep]', '[Auto-check]', '[Auto-check] New.'),
+                         '[Keep]\n\n[Auto-check] New.')
+
+    def test_lines_a_person_typed_under_a_one_line_paragraph_survive(self):
+        existing = '[Source check] 2026-10-05: Was "MIT".\nConfirmed with the partner.'
+        self.assertEqual(sn.merge_note(existing, '[Source check]', '[Source check] new', own_lines=1),
+                         'Confirmed with the partner.\n\n[Source check] new')
+
     def test_starts_a_note_on_an_empty_cell(self):
         self.assertEqual(sn.merge_note('', '[Source check]', '[Source check] x'), '[Source check] x')
         self.assertEqual(sn.merge_note(None, '[Source check]', '[Source check] x'), '[Source check] x')

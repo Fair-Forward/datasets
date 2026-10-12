@@ -74,7 +74,7 @@ class DecideLicenseTests(unittest.TestCase):
                                       hf('models', 'o/m', lic('AGPL-3.0')), gh('o/c', lic('MIT'))])
         self.assertEqual((decision['value'], decision['tier']), ('CC-BY-SA 4.0', 'dataset'))
 
-    def test_a_model_licence_decides_when_no_dataset_declares_one(self):
+    def test_a_model_licence_decides_when_there_is_no_dataset(self):
         decision = sc.decide_license([gh('o/c'), hf('models', 'o/m', lic('MIT'))])
         self.assertEqual((decision['value'], decision['tier']), ('MIT', 'model'))
 
@@ -88,9 +88,15 @@ class DecideLicenseTests(unittest.TestCase):
         self.assertNotIn('value', decision)
         self.assertIn('CC-BY-2.0, CC-BY-4.0', decision['reason'])
 
-    def test_an_asset_without_a_licence_does_not_block_the_others(self):
+    def test_a_dataset_that_declares_nothing_settles_nothing(self):
+        # ui_56: a Common Voice set (CC0 at Mozilla) declares nothing on Hugging Face, its sibling CC-BY-4.0.
         decision = sc.decide_license([hf('datasets', 'o/a'), hf('datasets', 'o/b', lic('CC-BY-4.0'))])
-        self.assertEqual(decision['value'], 'CC-BY 4.0')
+        self.assertNotIn('value', decision)
+        self.assertEqual(decision['reason'], 'not every dataset declares a licence')
+
+    def test_datasets_that_declare_nothing_leave_no_say_to_a_model(self):
+        self.assertEqual(sc.decide_license([hf('datasets', 'o/a'), hf('models', 'o/m', lic('MIT'))]),
+                         {'reason': None})
 
     def test_a_custom_licence_settles_nothing(self):
         decision = sc.decide_license([hf('datasets', 'o/a', lic(None, 'other')),
@@ -162,7 +168,35 @@ class PlanLicenseTests(unittest.TestCase):
         changes, skipped = run(health({'ui_75': entry(gh('o/c', lic('Apache-2.0')))}),
                                sheet(row('ui_75', license='CC-BY 4.0')))
         self.assertEqual(changes, [])
-        self.assertIn('only code declares Apache-2.0', skipped[0]['reason'])
+        self.assertIn('only a dataset\'s own licence replaces a filled cell, so the Sheet keeps "CC-BY 4.0"',
+                      skipped[0]['reason'])
+
+    def test_a_model_licence_fills_an_empty_cell_but_never_replaces_one(self):
+        doc = health({'ui_1': entry(hf('models', 'o/m', lic('MIT')))})
+        changes, _ = run(doc, sheet(row('ui_1')))
+        self.assertEqual((changes[0]['new'], changes[0]['kind']), ('MIT', 'fill'))
+        changes, skipped = run(doc, sheet(row('ui_1', license='CC-BY 4.0')))
+        self.assertEqual(changes, [])
+        self.assertIn('so the Sheet keeps "CC-BY 4.0"', skipped[0]['reason'])
+
+    def test_a_zenodo_publication_fills_but_never_replaces(self):
+        # A record filed as a publication can be a paper with Zenodo's default licence.
+        doc = health({'ui_1': entry(zen(1, lic('CC-BY-4.0'), resource_type='publication'))})
+        changes, _ = run(doc, sheet(row('ui_1')))
+        self.assertEqual(changes[0]['new'], 'CC-BY 4.0')
+        changes, skipped = run(doc, sheet(row('ui_1', license='CC0 1.0')))
+        self.assertEqual(changes, [])
+        self.assertIn('so the Sheet keeps "CC0 1.0"', skipped[0]['reason'])
+
+    def test_data_linked_where_the_check_cannot_read_blocks_any_licence_change(self):
+        # ui_59: Common Voice at Mozilla's Data Collective (CC0) next to a CC-BY-4.0 set on Hugging Face.
+        elsewhere = 'https://datacollective.mozillafoundation.org/datasets?q=common+voice&locale=rw'
+        doc = health({'ui_59': entry(hf('datasets', 'o/d', lic('CC-BY-4.0')))})
+        cells = f'{elsewhere}\nhttps://huggingface.co/datasets/o/d'
+        for licence in ('CC-0', ''):
+            changes, skipped = run(doc, sheet(row('ui_59', dataset=cells, license=licence)))
+            self.assertEqual(changes, [], licence)
+            self.assertIn(f'the dataset column also links {elsewhere}', skipped[0]['reason'])
 
     def test_leaves_a_cell_that_already_says_it_in_another_spelling(self):
         changes, skipped = run(health({'ui_1': entry(hf('datasets', 'o/d', lic('CC-BY-4.0')))}),
@@ -175,11 +209,10 @@ class PlanLicenseTests(unittest.TestCase):
         self.assertEqual(changes, [])
         self.assertIn('not one licence the catalogue knows', skipped[0]['reason'])
 
-    def test_says_when_other_datasets_declare_none(self):
-        changes, _ = run(health({'ui_56': entry(hf('datasets', 'o/a'), hf('datasets', 'o/b', lic('CC-BY-4.0')))}),
-                         sheet(row('ui_56', license='CC0 1.0')))
-        self.assertIn('the dataset on Hugging Face declares CC-BY-4.0, and 1 more declares none.',
-                      changes[0]['note'])
+    def test_a_silent_dataset_blocks_a_change(self):
+        changes, skipped = run(health({'ui_56': entry(hf('datasets', 'o/a'), hf('datasets', 'o/b', lic('CC-BY-4.0')))}),
+                               sheet(row('ui_56', license='CC0 1.0')))
+        self.assertEqual((changes, skipped[0]['reason']), ([], 'not every dataset declares a licence'))
 
     def test_counts_several_declaring_assets(self):
         changes, _ = run(health({'ui_87': entry(hf('datasets', 'o/a', lic('CC-BY-4.0')),
@@ -207,6 +240,20 @@ class PlanLicenseTests(unittest.TestCase):
         self.assertEqual((changes, skipped[0]['reason']), ([], 'protected in the Sheet'))
         changes, skipped = run(doc, grid, formulas=notes_at(2, LICENSE, '=A1'))
         self.assertEqual((changes, skipped[0]['reason']), ([], 'the cell holds a formula'))
+
+    def test_a_number_in_the_formula_view_is_not_a_formula(self):
+        # The FORMULA rendering returns a number typed into the cell as a number, not text.
+        doc = health({'ui_1': entry(hf('datasets', 'o/d', lic('CC0-1.0')))})
+        changes, _ = run(doc, sheet(row('ui_1', license='4.0')), formulas=notes_at(2, LICENSE, 4.0))
+        self.assertEqual((changes[0]['old'], changes[0]['new']), ('4.0', 'CC0 1.0'))
+
+    def test_an_unprotected_exception_inside_a_protected_range_can_be_written(self):
+        doc = health({'ui_1': entry(hf('datasets', 'o/d', lic('CC-BY-4.0')))})
+        whole_sheet = (None, None, None, None, ((2, None, LICENSE, LICENSE + 1),))
+        changes, _ = run(doc, sheet(row('ui_1')), protected=[whole_sheet])
+        self.assertEqual(changes[0]['new'], 'CC-BY 4.0')
+        changes, skipped = run(doc, sheet(row('ui_1')), protected=[(None, None, None, None, ((2, None, 0, 1),))])
+        self.assertEqual((changes, skipped[0]['reason']), ([], 'protected in the Sheet'))
 
     def test_keeps_a_persons_note_and_replaces_its_own_record(self):
         old = 'Checked with the partner.\n\n[Source check] 2026-10-05: Was "MIT"; something.'
@@ -337,22 +384,38 @@ class SheetShapeTests(unittest.TestCase):
 
 
 class FakeWorksheet:
-    def __init__(self):
-        self.values, self.notes = [], []
+    id = 7
+    title = "Portfolio's sheet"
 
-    def batch_update(self, data, raw=True):
-        self.values.append((list(data), raw))
+    def __init__(self, grid, edited=None):
+        self.grid, self.edited, self.requests, self.reads = grid, edited or {}, [], []
+        self.spreadsheet = self
 
-    def update_notes(self, notes):
-        self.notes.append(dict(notes))
+    def batch_update(self, body):
+        self.requests.append(body['requests'])
+
+    def fetch_sheet_metadata(self, params=None):
+        self.reads.append(params['ranges'])
+        data = []
+        for rng in params['ranges']:
+            cell = rng.split('!')[1]
+            col, r = ord(cell[0]) - 65, int(cell[1:]) - 1
+            value, note = self.edited.get(cell, (self.grid[r][col], ''))
+            cell_data = {}
+            if value:
+                cell_data['formattedValue'] = value
+            if note:
+                cell_data['note'] = note
+            data.append({'rowData': [{'values': [cell_data]}]})
+        return {'sheets': [{'data': data}]}
 
 
 class MainTests(unittest.TestCase):
     def setUp(self):
         self.dir = tempfile.TemporaryDirectory()
         self.addCleanup(self.dir.cleanup)
-        self.ws = FakeWorksheet()
         self.grid = sheet(row('ui_79'), row('ui_80', license='CC0 1.0'))
+        self.ws = FakeWorksheet(self.grid)
         self.doc = health({'ui_79': entry(gh('o/c', lic('GPL-3.0'))),
                            'ui_80': entry(hf('datasets', 'o/d', lic('CC-BY-4.0')))})
 
@@ -366,22 +429,45 @@ class MainTests(unittest.TestCase):
 
     def test_a_report_writes_nothing(self):
         self.assertEqual(self.main(), 0)
-        self.assertEqual((self.ws.values, self.ws.notes), ([], []))
+        self.assertEqual(self.ws.requests, [])
 
-    def test_apply_writes_raw_values_and_notes(self):
+    def test_apply_writes_raw_values_with_their_notes_in_one_request(self):
         self.assertEqual(self.main('--apply'), 0)
-        data, raw = self.ws.values[0]
-        self.assertTrue(raw)
-        self.assertEqual(data, [{'range': 'E3', 'values': [['GPL 3.0']]}, {'range': 'E4', 'values': [['CC-BY 4.0']]}])
-        self.assertEqual(sorted(self.ws.notes[0]), ['E3', 'E4'])
+        self.assertEqual(len(self.ws.requests), 1)
+        cells = [r['updateCells'] for r in self.ws.requests[0]]
+        self.assertEqual([(c['range']['sheetId'], c['range']['startRowIndex'], c['range']['startColumnIndex'])
+                          for c in cells], [(7, 2, 4), (7, 3, 4)])
+        values = [c['rows'][0]['values'][0] for c in cells]
+        self.assertEqual([v['userEnteredValue'] for v in values],
+                         [{'stringValue': 'GPL 3.0'}, {'stringValue': 'CC-BY 4.0'}])
+        self.assertTrue(all(v['note'].startswith('[Source check]') for v in values))
+        # Rich-text runs go too, or an old link could stay behind the new text.
+        self.assertEqual({c['fields'] for c in cells}, {'userEnteredValue,note,textFormatRuns'})
+
+    def test_rereads_the_cells_and_leaves_one_edited_meanwhile_for_next_week(self):
+        self.ws.edited = {'E4': ('MIT', '')}
+        summary = os.path.join(self.dir.name, 'summary.md')
+        out = os.path.join(self.dir.name, 'github_output')
+        self.assertEqual(self.main('--apply', '--summary', summary, env={'GITHUB_OUTPUT': out}), 0)
+        self.assertEqual(self.ws.reads, [["'Portfolio''s sheet'!E3", "'Portfolio''s sheet'!E4"]])
+        self.assertEqual([r['updateCells']['range']['startRowIndex'] for r in self.ws.requests[0]], [2])
+        with open(summary, encoding='utf-8') as f:
+            self.assertIn('ui_80, License: changed in the Sheet while this run was checking', f.read())
+        with open(out, encoding='utf-8') as f:
+            self.assertEqual(f.read(), 'written=1\n')
+
+    def test_a_note_edited_meanwhile_also_holds_the_cell(self):
+        self.ws.edited = {'E3': ('', 'Asked the partner, waiting.')}
+        self.main('--apply')
+        self.assertEqual([r['updateCells']['range']['startRowIndex'] for r in self.ws.requests[0]], [3])
 
     def test_more_changes_than_the_cap_write_nothing(self):
         self.assertEqual(self.main('--apply', '--max-changes', '1'), 3)
-        self.assertEqual((self.ws.values, self.ws.notes), ([], []))
+        self.assertEqual(self.ws.requests, [])
 
     def test_refuses_an_older_health_file(self):
         self.assertEqual(self.main('--apply', doc={'schema_version': 1, 'entries': {}}), 2)
-        self.assertEqual(self.ws.values, [])
+        self.assertEqual(self.ws.requests, [])
 
     def test_tells_github_actions_how_many_cells_it_wrote(self):
         out = os.path.join(self.dir.name, 'github_output')

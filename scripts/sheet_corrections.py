@@ -4,18 +4,21 @@ The weekly health check reads each project's GitHub repositories, Hugging Face d
 spaces, and Zenodo records (public/data/health.json). Where those sources contradict the Sheet, or
 fill a gap in it, this script corrects the Sheet, so the catalogue shows what the sources declare:
 
-- License: the licence the project's data declares at its source. A dataset's licence (a Zenodo
-  record counts as data unless it is filed as software) wins over a model's, and a model's over
-  code's. A licence that only code declares fills an empty cell but never replaces one, because a
-  project's code and data licences can legitimately differ. Several different licences in the
-  deciding group, a custom licence, or a linked asset that could not be read leave the cell alone.
+- License: the licence the project's data declares at its source. Datasets decide when the
+  project has any (a Zenodo record counts as data unless it is filed as software), else models,
+  else code, and every asset in that group must declare the same licence. Only a dataset's own
+  licence replaces a filled cell; a model's, code's, or a Zenodo record filed as a publication
+  (it may be a paper) only fills an empty one. Nothing changes when the dataset column also links
+  data the check cannot read (Mozilla's Data Collective, Kaggle, a website), or when an asset
+  could not be read.
 - Links: a repository renamed on GitHub or Hugging Face gets its new address, and a link to an
   older version of a Zenodo record becomes the record's all-versions DOI, which always opens the
   latest version. A new address is used only once it answers.
 
 Each changed cell gets a "[Source check]" paragraph in its note with the previous value; the
 Sheet's version history keeps every earlier state. A cell whose note contains [Keep] is never
-changed, and neither are protected cells or formulas. A run that would change more than
+changed, and neither are protected cells or formulas. Cells are read again just before the write,
+and one that a person changed meanwhile is left for the next run. A run that would change more than
 MAX_CHANGES cells writes nothing and fails, since a jump like that points at a fault, not at the
 sources. Without --apply it only reports.
 
@@ -32,11 +35,12 @@ from collections import Counter
 from datetime import datetime, timezone
 
 import requests
+from gspread.utils import rowcol_to_a1
 
 from generate_catalog_data import KNOWN_LICENSE_VALUES, normalize_license
 from sheet_notes import is_pinned, merge_note
 from text_parsing import license_label, spdx_for
-from utils import DEFAULT_CREDENTIALS_PATH
+from utils import DEFAULT_CREDENTIALS_PATH, extract_http_links
 
 HEALTH_PATH = os.path.join('public', 'data', 'health.json')
 SCHEMA_VERSION = 2
@@ -59,6 +63,7 @@ LINK_COLUMNS = ('dataset', 'model')
 
 # Whose licence speaks for the project's data, first to last.
 TIERS = ('dataset', 'model', 'code')
+GROUP_NOUNS = {'dataset': 'dataset', 'model': 'model', 'code': 'code repository'}
 PLATFORM_NAMES = {'github': 'GitHub', 'huggingface': 'Hugging Face', 'zenodo': 'Zenodo'}
 NOUNS = {'datasets': 'dataset', 'models': 'model', 'spaces': 'space'}
 
@@ -102,29 +107,42 @@ def asset_noun(asset):
     return NOUNS.get(asset.get('kind'), 'asset')
 
 
+def certainly_data(asset):
+    """A Hugging Face dataset, or a Zenodo record filed as a dataset: never a paper or code."""
+    if asset.get('platform') == 'huggingface':
+        return asset.get('kind') == 'datasets'
+    return asset.get('platform') == 'zenodo' and asset.get('resource_type') == 'dataset'
+
+
 def decide_license(assets):
-    """What the sources declare for the project's data: {value, spdx, tier, declaring, group} when
-    one licence settles it, otherwise {reason}, which is None when there is nothing to report."""
+    """What the sources declare for the project's data: {value, spdx, tier, group, certain} when
+    one licence settles it, otherwise {reason}, which is None when there is nothing to report.
+
+    The first group the project has assets in decides (datasets, else models, else code), and
+    every asset in it must declare the same licence: a dataset that declares nothing may be the
+    one the Sheet describes, and a model's licence says nothing about the data."""
     if not assets:
         return {'reason': None}
     if any(a.get('status') != 'measured' or asset_tier(a) is None for a in assets):
         return {'reason': 'not every linked asset could be read'}
-    for tier in TIERS:
-        group = [a for a in assets if asset_tier(a) == tier]
-        declared = [(a, item) for a in group for item in a.get('license') or [] if item.get('status') != 'none']
-        if not declared:
-            continue
-        if any(item.get('status') != 'detected' or not item.get('spdx') for _, item in declared):
-            return {'tier': tier, 'reason': f'a custom or unrecognised licence at the source ({tier})'}
-        ids = sorted({item['spdx'] for _, item in declared})
-        if len(ids) > 1:
-            return {'tier': tier, 'reason': f'several licences at the source: {", ".join(ids)}'}
-        value = SPDX_TO_CATALOGUE.get(ids[0])
-        if value is None:
-            return {'tier': tier, 'reason': f'{ids[0]} has no spelling in the catalogue yet'}
-        declaring = list({id(a): a for a, _ in declared}.values())
-        return {'value': value, 'spdx': ids[0], 'tier': tier, 'declaring': declaring, 'group': group}
-    return {'reason': None}
+    tier = next(t for t in TIERS if any(asset_tier(a) == t for a in assets))
+    group = [a for a in assets if asset_tier(a) == tier]
+    declared = [[item for item in a.get('license') or [] if item.get('status') != 'none'] for a in group]
+    if not any(declared):
+        return {'reason': None}
+    if not all(declared):
+        return {'tier': tier, 'reason': f'not every {GROUP_NOUNS[tier]} declares a licence'}
+    items = [item for found in declared for item in found]
+    if any(item.get('status') != 'detected' or not item.get('spdx') for item in items):
+        return {'tier': tier, 'reason': f'a custom or unrecognised licence at the source ({tier})'}
+    ids = sorted({item['spdx'] for item in items})
+    if len(ids) > 1:
+        return {'tier': tier, 'reason': f'several licences at the source: {", ".join(ids)}'}
+    value = SPDX_TO_CATALOGUE.get(ids[0])
+    if value is None:
+        return {'tier': tier, 'reason': f'{ids[0]} has no spelling in the catalogue yet'}
+    return {'value': value, 'spdx': ids[0], 'tier': tier, 'group': group,
+            'certain': tier == 'dataset' and all(certainly_data(a) for a in group)}
 
 
 def _plural(noun, n):
@@ -135,19 +153,13 @@ def _plural(noun, n):
 
 def describe_source(decision):
     """'the dataset on Hugging Face declares CC-BY-4.0', '2 datasets on Hugging Face declare ...'."""
-    declaring, spdx = decision['declaring'], decision['spdx']
-    groups = Counter((asset_noun(a), PLATFORM_NAMES.get(a.get('platform'), a.get('platform')))
-                     for a in declaring)
-    if len(declaring) == 1:
+    group, spdx = decision['group'], decision['spdx']
+    groups = Counter((asset_noun(a), PLATFORM_NAMES.get(a.get('platform'), a.get('platform'))) for a in group)
+    if len(group) == 1:
         (noun, platform), = groups
-        text = f'the {noun} on {platform} declares {spdx}'
-    else:
-        parts = [f'{n} {_plural(noun, n)} on {platform}' for (noun, platform), n in sorted(groups.items())]
-        text = f'{" and ".join(parts)} declare {spdx}'
-    rest = len(decision['group']) - len(declaring)
-    if rest:
-        text += f', and {rest} more declare{"s" if rest == 1 else ""} none'
-    return text
+        return f'the {noun} on {platform} declares {spdx}'
+    parts = [f'{n} {_plural(noun, n)} on {platform}' for (noun, platform), n in sorted(groups.items())]
+    return f'{" and ".join(parts)} declare {spdx}'
 
 
 def renamed_url(url, old_id, new_id):
@@ -216,11 +228,7 @@ def verify_link(url, session=None, timeout=30):
 
 def a1(row, col):
     """A1 notation of a zero-based cell."""
-    letters, col = '', col + 1
-    while col:
-        col, rest = divmod(col - 1, 26)
-        letters = chr(65 + rest) + letters
-    return f'{letters}{row + 1}'
+    return rowcol_to_a1(row + 1, col + 1)
 
 
 def _normal(header):
@@ -251,9 +259,14 @@ def _cell(grid, r, c):
 
 
 def _protected(r, c, ranges):
-    def inside(value, start, end):
-        return (start is None or value >= start) and (end is None or value < end)
-    return any(inside(r, r0, r1) and inside(c, c0, c1) for r0, r1, c0, c1 in ranges)
+    """ranges: (r0, r1, c0, c1) or (r0, r1, c0, c1, exceptions), where exceptions are the
+    unprotected ranges inside a protected one, in the same shape as the bounds."""
+    def inside(bounds):
+        r0, r1, c0, c1 = bounds
+        return all((start is None or value >= start) and (end is None or value < end)
+                   for value, start, end in ((r, r0, r1), (c, c0, c1)))
+    return any(inside(entry[:4]) and not any(inside(e) for e in (entry[4] if len(entry) > 4 else ()))
+               for entry in ranges)
 
 
 def _natural(pid):
@@ -275,7 +288,8 @@ class _Sheet:
         """Why this cell must not be written, or None."""
         if _protected(r, c, self.protected):
             return 'protected in the Sheet'
-        if _cell(self.formulas, r, c).startswith('='):
+        # The FORMULA rendering returns numbers as numbers, not text.
+        if str(_cell(self.formulas, r, c)).startswith('='):
             return 'the cell holds a formula'
         if is_pinned(self.note(r, c)):
             return 'pinned with [Keep]'
@@ -283,9 +297,18 @@ class _Sheet:
 
 
 def _change(pid, r, c, column, old, new, kind, sentence, display, sheet, today):
+    # One line, so merge_note can keep whatever a person types under it.
     paragraph = f'{NOTE_PREFIX} {today}: {sentence} {PIN_HINT}'
     return {'pid': pid, 'row': r, 'col': c, 'cell': a1(r, c), 'column': column, 'old': old, 'new': new,
-            'kind': kind, 'display': display, 'note': merge_note(sheet.note(r, c), NOTE_PREFIX, paragraph)}
+            'kind': kind, 'display': display, 'before': (sheet.value(r, c), sheet.note(r, c)),
+            'note': merge_note(sheet.note(r, c), NOTE_PREFIX, paragraph, own_lines=1)}
+
+
+def _unread_data_links(text, assets):
+    """Links in the dataset column that are not an asset the check read: data whose licence the
+    Sheet may describe but the sources cannot confirm."""
+    read = {a.get('url') for a in assets if a.get('status') == 'measured'}
+    return [link['url'] for link in extract_http_links(text) if link['url'] not in read]
 
 
 def _license_plan(pid, oss, r, cols, sheet, today):
@@ -300,9 +323,13 @@ def _license_plan(pid, oss, r, cols, sheet, today):
     current, value, source = recognised_license(old), decision['value'], describe_source(decision)
     if current == value:
         return None, None
-    if old and decision['tier'] == 'code':
+    unread = _unread_data_links(sheet.value(r, cols['dataset']), oss.get('assets') or [])
+    if unread:
         return None, {'pid': pid, 'what': 'License',
-                      'reason': f'only code declares {decision["spdx"]}, and code and data licences can differ, '
+                      'reason': f'the dataset column also links {unread[0]}, which the check cannot read; {source}'}
+    if old and not decision['certain']:
+        return None, {'pid': pid, 'what': 'License',
+                      'reason': f"{source}, but only a dataset's own licence replaces a filled cell, "
                                 f'so the Sheet keeps "{old}"'}
     if old and current is None:
         return None, {'pid': pid, 'what': 'License',
@@ -384,10 +411,38 @@ def plan(health, grid, notes, formulas, protected, verify, today):
     return changes, skipped
 
 
+def still_as_read(worksheet, changes):
+    """The changes whose cell still holds the value and note they were planned from, and the rest
+    as skipped: a person may have edited a cell while the run checked new addresses, and a write
+    from the earlier read would undo that edit."""
+    title = worksheet.title.replace("'", "''")
+    meta = worksheet.spreadsheet.fetch_sheet_metadata(params={
+        'ranges': [f"'{title}'!{c['cell']}" for c in changes], 'includeGridData': 'true',
+        'fields': 'sheets(data(rowData(values(formattedValue,note))))'})
+    data = (meta.get('sheets') or [{}])[0].get('data') or []
+    keep, moved = [], []
+    for change, grid in zip(changes, data + [{}] * (len(changes) - len(data))):
+        rows = grid.get('rowData') or [{}]
+        cell = (rows[0].get('values') or [{}])[0]
+        now = (str(cell.get('formattedValue', '')), cell.get('note', ''))
+        if now == change['before']:
+            keep.append(change)
+        else:
+            moved.append({'pid': change['pid'], 'what': COLUMN_LABELS[change['column']],
+                          'reason': 'changed in the Sheet while this run was checking; left for the next run'})
+    return keep, moved
+
+
 def apply_changes(worksheet, changes):
-    """Write the values as typed (no formula or number parsing), then the notes."""
-    worksheet.batch_update([{'range': c['cell'], 'values': [[c['new']]]} for c in changes], raw=True)
-    worksheet.update_notes({c['cell']: c['note'] for c in changes})
+    """Write each value as typed (a string, no formula or number parsing) together with its note in
+    one batch request, which the Sheets API applies all or nothing: a cell never changes without
+    the record of what it was. Rich-text runs are cleared, since a run can carry the old link."""
+    worksheet.spreadsheet.batch_update({'requests': [{'updateCells': {
+        'range': {'sheetId': worksheet.id, 'startRowIndex': c['row'], 'endRowIndex': c['row'] + 1,
+                  'startColumnIndex': c['col'], 'endColumnIndex': c['col'] + 1},
+        'rows': [{'values': [{'userEnteredValue': {'stringValue': c['new']}, 'note': c['note']}]}],
+        'fields': 'userEnteredValue,note,textFormatRuns',
+    }} for c in changes]})
 
 
 def _md(text):
@@ -421,17 +476,23 @@ def render_summary(health, changes, skipped, applied, capped, max_changes):
 
 def _open_sheet(credentials):
     """The worksheet, its values, formulas and notes, and its protected ranges (zero-based,
-    end-exclusive row and column bounds; None is unbounded)."""
+    end-exclusive row and column bounds; None is unbounded), each with its unprotected exceptions."""
     from utils import get_gsheet_client
     _client, spreadsheet, worksheet = get_gsheet_client(credentials)
     grid = worksheet.get_all_values()
     formulas = worksheet.get_all_values(value_render_option='FORMULA')
     notes = worksheet.get_notes(default_empty_value='')
+    def bounds(rng):
+        return (rng.get('startRowIndex'), rng.get('endRowIndex'),
+                rng.get('startColumnIndex'), rng.get('endColumnIndex'))
+
+    named = {n.get('namedRangeId'): n.get('range') or {} for n in spreadsheet.list_named_ranges()}
     protected = []
     for item in spreadsheet.list_protected_ranges(worksheet.id):
-        rng = item.get('range') or {}
-        protected.append((rng.get('startRowIndex'), rng.get('endRowIndex'),
-                          rng.get('startColumnIndex'), rng.get('endColumnIndex')))
+        # A range protected by name has no 'range' of its own; an unknown name stays the whole sheet.
+        rng = item.get('range') or named.get(item.get('namedRangeId')) or {}
+        exceptions = tuple(bounds(u) for u in item.get('unprotectedRanges') or [])
+        protected.append(bounds(rng) + (exceptions,))
     return worksheet, grid, notes, formulas, protected
 
 
@@ -460,6 +521,9 @@ def main(argv=None, open_sheet=None, verify=None, today=None):
         print(f'Stopped before writing anything: {err}.')
         return 2
     capped = len(changes) > args.max_changes
+    if args.apply and changes and not capped:
+        changes, moved = still_as_read(worksheet, changes)
+        skipped.extend(moved)
     applied = bool(args.apply and changes and not capped)
     if applied:
         apply_changes(worksheet, changes)
