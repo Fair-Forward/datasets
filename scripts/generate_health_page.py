@@ -28,6 +28,7 @@ OUTPUT_PATH = os.path.join('public', 'chaoss', 'index.html')
 WORKFLOW_PATH = os.path.join('.github', 'workflows', 'health_check.yml')
 RANKING_PATH = os.path.join('src', 'utils', 'ranking.js')
 PAGE_PATH = 'chaoss/'
+PAGE_TITLE = 'Community Health (CHAOSS metrics)'  # the <title> and the <h1>
 
 PRACTITIONER_GUIDE_URL = 'https://chaoss.community/practitioner-guide-introduction/'
 CONTACT_EMAIL = 'jonas.nothnagel@gmail.com'  # the catalogue's public contact (src/components/Footer.jsx)
@@ -69,7 +70,7 @@ PAGE = Template("""<!DOCTYPE html>
 <meta http-equiv="Content-Security-Policy" content="$csp">
 $analytics
 <link rel="canonical" href="${base}${page_path}">
-<title>How the CHAOSS metrics are measured - FAIR Forward Data Catalog</title>
+<title>$title - FAIR Forward Data Catalog</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="$font_href" rel="stylesheet">
@@ -85,7 +86,7 @@ $style$page_style</style>
 <main class="wrap"><div class="stack">
 
   <header class="prose">
-    <h1>How the CHAOSS metrics are measured</h1>
+    <h1>$title</h1>
     <p class="standfirst">Each project's panel shows CHAOSS metrics for its repositories, models and records on
     GitHub, Hugging Face and Zenodo, measured from public data. The definitions come from
     <a href="$chaoss_home">CHAOSS</a>, the Linux Foundation's Community Health Analytics in Open Source Software
@@ -255,6 +256,7 @@ def render_page(catalog, workflow_text, ranking_text):
         page_style=PAGE_CSS,
         base=SITE_BASE,
         page_path=PAGE_PATH,
+        title=PAGE_TITLE,
         csp=CSP,
         analytics=ANALYTICS,
         font_href=FONT_HREF,

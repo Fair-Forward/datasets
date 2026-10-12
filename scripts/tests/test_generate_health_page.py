@@ -135,8 +135,8 @@ class PageTests(unittest.TestCase):
         self.assertIn(CSP, page)
         self.assertIn(ANALYTICS, page)
         self.assertIn('<link rel="canonical" href="https://fair-forward.github.io/datasets/chaoss/">', page)
-        self.assertIn('<h1>How the CHAOSS metrics are measured</h1>', page)
-        self.assertIn('<title>How the CHAOSS metrics are measured - FAIR Forward Data Catalog</title>', page)
+        self.assertIn('<h1>Community Health (CHAOSS metrics)</h1>', page)
+        self.assertIn('<title>Community Health (CHAOSS metrics) - FAIR Forward Data Catalog</title>', page)
         self.assertIn('Community Health Analytics in Open Source Software', page)
 
     def test_is_deterministic_and_has_no_em_dash(self):
