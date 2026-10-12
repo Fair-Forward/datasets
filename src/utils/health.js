@@ -52,6 +52,8 @@ const fmtDay = (iso) => {
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })
 }
 
+export const formatDay = fmtDay
+
 const count = (n, one, many) => `${n.toLocaleString('en-GB')} ${n === 1 ? one : many}`
 
 const listOf = (items) =>
