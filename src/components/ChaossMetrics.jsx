@@ -30,7 +30,7 @@ const ChaossMetrics = ({ block, href }) => {
       </dl>
 
       <a className="rail-oss-method" href={href}>
-        How we apply the CHAOSS metrics
+        How the CHAOSS metrics are measured
         <i className="fas fa-arrow-right" aria-hidden="true"></i>
       </a>
     </div>

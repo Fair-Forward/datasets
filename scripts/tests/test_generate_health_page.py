@@ -1,7 +1,7 @@
 """Tests for generate_health_page: the CHAOSS methodology page."""
 import os
+import re
 import unittest
-import unittest.mock
 
 import chaoss_metrics as cm
 import generate_health_page as gp
@@ -9,6 +9,14 @@ from utils import ANALYTICS, CSP
 
 WORKFLOW = "on:\n  schedule:\n    - cron: '0 9 * * 1'   # 09:00 UTC every Monday\n"
 RANKING = "export const ACTIVITY_WEIGHT = 40\nexport const UNAVAILABLE_PENALTY = 20\n"
+WORD_BUDGET = 490  # the page was about 1,350 words; it stays a short reference (about 480)
+
+
+def visible(page):
+    """The text a reader sees: no head, no tags, whitespace collapsed."""
+    return ' '.join(re.sub(r'<[^>]+>', ' ', page.split('<body>', 1)[1]).split())
+
+
 RANKING_JS = os.path.join(os.path.dirname(__file__), '..', '..', 'src', 'utils', 'ranking.js')
 
 
@@ -51,15 +59,17 @@ class PageTests(unittest.TestCase):
         for metric in cm.CHAOSS_METRICS:
             self.assertIn(metric['chaoss'], page)
             self.assertIn(metric['url'], page)
-        self.assertIn(cm.STARTER_MODEL_URL, page)
-        self.assertIn('CHAOSS does not review or endorse this catalogue', page)
+        self.assertIn('which does not review or endorse this catalogue', page)
 
     def test_states_the_thresholds_the_collector_applies(self):
         page = self.page()
         self.assertIn(f'at least {cm.MIN_OUTSIDE_ITEMS} outside issues and pull requests', page)
         self.assertIn(f'up to {cm.CARRY_FORWARD_MAX_DAYS} days', page)
         self.assertIn(cm.SCHEDULE_TEXT, page)
-        self.assertIn(f'at least {cm.MIN_GROUP} measured projects', page)
+        self.assertIn(f'an SDG with at least {cm.MIN_GROUP} measured projects', page)
+        self.assertIn('pull requests from the last 12 months', page)
+        self.assertIn(f'the {cm.WINDOW_DAYS} days up to the day of measurement', page)
+        self.assertIn(f'at least {round(cm.ABSENCE_SHARE * 100)}% of all commits', page)
 
     def test_states_the_ranking_boost_plainly(self):
         page = self.page()
@@ -81,51 +91,52 @@ class PageTests(unittest.TestCase):
             weights = gp.ranking_weights(f.read())
         self.assertEqual(set(weights), {'ACTIVITY_WEIGHT', 'UNAVAILABLE_PENALTY'})
 
-    def test_says_bots_are_left_out_of_people_not_platform_totals(self):
+    def test_says_bots_are_left_out_of_people_not_of_everything(self):
         page = self.page()
-        self.assertIn('left out of every count of people', page)
-        self.assertNotIn('are left out of every count (', page)
-        self.assertIn('Platform totals such as stars and downloads', page)
-
-    def test_follows_only_the_dois_it_can_measure(self):
-        self.assertIn('a Zenodo or Hugging Face DOI is followed to the record it names', self.page())
+        self.assertIn('Bots are left out of people counts, response times, pull request closure', page)
+        self.assertNotIn('every count', page)
 
     def test_privacy_promise_is_about_contributors(self):
-        self.assertIn('never the names, usernames or email addresses of contributors', self.page())
+        self.assertIn("never contributors' names, usernames or email addresses", self.page())
 
-    def test_carry_forward_keeps_the_whole_project_measurement(self):
-        page = self.page()
-        self.assertIn('the project keeps its previous measurement', page)
-        self.assertNotIn('A source that cannot be reached keeps', page)
-
-    def test_future_dates_never_become_the_latest(self):
-        page = self.page()
-        self.assertIn('never becomes the last change or the latest release', page)
-        self.assertNotIn('are ignored', page)
+    def test_a_project_can_keep_its_previous_measurement(self):
+        self.assertIn(f'can keep its previous measurement for up to {cm.CARRY_FORWARD_MAX_DAYS} days', self.page())
 
     def test_describes_zenodo_views(self):
-        self.assertIn('views of a Zenodo record', self.page())
+        self.assertIn('views on Zenodo', self.page())
+
+    def test_speaks_without_we(self):
+        self.assertIsNone(re.search(r"\b(we|our|us)\b", visible(self.page()), re.I))
+
+    def test_has_no_slogans(self):
+        text = visible(self.page())
+        for slogan in ('facts, not scores', 'not scores', 'not that something is wrong'):
+            self.assertNotIn(slogan, text)
+
+    def test_stays_a_short_reference(self):
+        self.assertLessEqual(len(visible(self.page()).split()), WORD_BUDGET)
 
     def test_names_the_hosts_and_pages_we_do_not_measure_yet(self):
         catalog = {'projects': CATALOG['projects'] + [
             project('ui_5', 'https://huggingface.co/some-org'),
             project('ui_6', 'https://www.kaggle.com/datasets/o/k2'),
         ]}
-        self.assertIn('3 more projects link only to pages we do not measure yet: Kaggle and organisation '
+        self.assertIn('3 more projects link only to pages not measured yet: Kaggle and organisation '
                       'pages on Hugging Face.', self.page(catalog))
-
-    def test_says_a_fork_counts_its_original_history(self):
-        self.assertIn("its counts include its original repository's history", self.page())
 
     def test_substitutes_coverage_from_the_catalogue(self):
         self.assertIn('2 of 4 projects', self.page())
+
+    def test_says_which_links_are_read(self):
+        self.assertIn('2 of 4 projects link measured assets in their dataset or use-case links', self.page())
 
     def test_carries_the_shared_head(self):
         page = self.page()
         self.assertIn(CSP, page)
         self.assertIn(ANALYTICS, page)
         self.assertIn('<link rel="canonical" href="https://fair-forward.github.io/datasets/chaoss/">', page)
-        self.assertIn('<h1>How we apply the CHAOSS metrics</h1>', page)
+        self.assertIn('<h1>How the CHAOSS metrics are measured</h1>', page)
+        self.assertIn('<title>How the CHAOSS metrics are measured - FAIR Forward Data Catalog</title>', page)
         self.assertIn('Community Health Analytics in Open Source Software', page)
 
     def test_is_deterministic_and_has_no_em_dash(self):
@@ -140,11 +151,6 @@ class PageTests(unittest.TestCase):
     def test_refuses_a_second_schedule_the_page_does_not_state(self):
         with self.assertRaises(ValueError):
             gp.render_page(CATALOG, WORKFLOW + "    - cron: '0 6 * * 3'\n", RANKING)
-
-    def test_one_starter_metric_still_reads_as_a_sentence(self):
-        only = [dict(m, starter=m['key'] == 'releases') for m in cm.CHAOSS_METRICS]
-        with unittest.mock.patch.object(cm, 'CHAOSS_METRICS', only):
-            self.assertEqual(gp._starter_sentence(), 'Releases is part of')
 
 if __name__ == '__main__':
     unittest.main()
