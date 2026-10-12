@@ -66,7 +66,7 @@ const ChaossBySdg = ({ projects, health, view = 'open' }) => {
     <div className="oss-sdg" data-view={view}>
       <p className="oss-sdg-meta">
         Measured {formatDay(summary.measuredAt)}, following CHAOSS metric definitions.{' '}
-        <a href={withBasePath('chaoss/')}>How we apply the CHAOSS metrics</a>
+        <a href={withBasePath('chaoss/')}>How the CHAOSS metrics are measured</a>
       </p>
 
       <p className="maturity-key oss-sdg-key" aria-live="polite">
