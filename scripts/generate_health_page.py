@@ -69,7 +69,7 @@ PAGE = Template("""<!DOCTYPE html>
 <meta http-equiv="Content-Security-Policy" content="$csp">
 $analytics
 <link rel="canonical" href="${base}${page_path}">
-<title>How the CHAOSS metrics are measured - FAIR Forward Data Catalog</title>
+<title>Community Health (CHAOSS metrics) - FAIR Forward Data Catalog</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="$font_href" rel="stylesheet">
@@ -85,7 +85,7 @@ $style$page_style</style>
 <main class="wrap"><div class="stack">
 
   <header class="prose">
-    <h1>How the CHAOSS metrics are measured</h1>
+    <h1>Community Health (CHAOSS metrics)</h1>
     <p class="standfirst">Each project's panel shows CHAOSS metrics for its repositories, models and records on
     GitHub, Hugging Face and Zenodo, measured from public data. The definitions come from
     <a href="$chaoss_home">CHAOSS</a>, the Linux Foundation's Community Health Analytics in Open Source Software
