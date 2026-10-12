@@ -1,6 +1,6 @@
 {
   "api_version": "1.0",
-  "version": "465e9286b50af245",
+  "version": "536b13b469a14c5e",
   "name": "Fair Forward Data Catalog API",
   "description": "Open datasets, models and AI use cases for international development, built by local partners.",
   "source": "https://fair-forward.github.io/datasets/",
@@ -13,7 +13,7 @@
     {
       "url": "https://fair-forward.github.io/datasets/api/v1/catalog.json",
       "description": "Every published project.",
-      "count": 89
+      "count": 90
     },
     {
       "url": "https://fair-forward.github.io/datasets/api/v1/datasets.json",
@@ -27,15 +27,18 @@
     }
   ],
   "counts": {
-    "projects": 89,
+    "projects": 90,
     "datasets": 72,
     "usecases": 38
   },
   "vocabularies": {
     "sdgs": [
+      "SDG 1",
       "SDG 2",
+      "SDG 3",
       "SDG 4",
       "SDG 5",
+      "SDG 6",
       "SDG 7",
       "SDG 8",
       "SDG 9",
@@ -45,7 +48,8 @@
       "SDG 13",
       "SDG 14",
       "SDG 15",
-      "SDG 16"
+      "SDG 16",
+      "SDG 17"
     ],
     "data_types": [
       "Drone Imagery",
@@ -162,7 +166,9 @@
     "regions": [
       "East Africa",
       "Global",
-      "West Africa"
+      "Valid entries:  [country names",
+      "West Africa",
+      "or regions such as \"West Africa\" or Global]"
     ],
     "maturity_stages": [
       "dataset",
