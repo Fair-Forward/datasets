@@ -426,7 +426,9 @@ if not args.skip_fetch:
         # Get all values
         all_values = sheet.get_all_values()
         actual_headers = all_values[0]
-        # Skip the second row (index 1) which contains explanations
+        # Skip the second row (index 1) which contains explanations. Further explanation rows
+        # stay in the Excel (validate_data/enrich_data map Excel idx + 3 to the sheet row);
+        # consumers skip them through utils.project_rows.
         data = all_values[2:]
 
         # --- Start: Backup raw data ---

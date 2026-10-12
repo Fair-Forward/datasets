@@ -322,17 +322,24 @@ def project_rows(df):
     have no Project ID. build_and_sync.py drops only the first of them, so every row above the
     first Project ID is treated as explanation. A project further down without an ID still counts
     (it gets a title-derived ID and a warning), and without any Project ID at all every row
-    counts, so an older export cannot empty the catalogue.
+    counts, so an older export cannot empty the catalogue. A skipped row that does not read like
+    an explanation is reported, since it may be a new project inserted above the first ID.
     """
-    def has_id(row):
-        value = row.get('Project ID')
-        return isinstance(value, str) and bool(value.strip())
-
-    started = 'Project ID' not in df.columns or not any(has_id(row) for _, row in df.iterrows())
-    for index, row in df.iterrows():
-        started = started or has_id(row)
-        if started:
-            yield index, row
+    if 'Project ID' not in df.columns:
+        yield from df.iterrows()
+        return
+    # Same notion of "has an ID" as resolve_project_id: any non-empty, non-NaN value.
+    has_id = df['Project ID'].map(lambda v: pd.notna(v) and bool(str(v).strip()))
+    if not has_id.any():
+        yield from df.iterrows()
+        return
+    first = int(has_id.to_numpy().argmax())
+    for index, row in df.iloc[:first].iterrows():
+        cells = [str(v) for v in row.tolist() if pd.notna(v) and str(v).strip()]
+        if cells and not any(c.lstrip().lower().startswith('valid entries') for c in cells):
+            print(f"WARNING Row {index}: skipped as a Sheet explanation row (above the first "
+                  f"Project ID) but reads like a project; give it a Project ID if it is one.")
+    yield from df.iloc[first:].iterrows()
 
 
 def row_included_for_catalog_or_insights(row, row_idx=None):
