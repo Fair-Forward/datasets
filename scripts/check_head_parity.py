@@ -4,7 +4,7 @@ Verify every page head carries the same CSP and the same analytics tag.
 
 Six surfaces serve HTML and each one owns its own <head>: index.html (hand-written,
 Vite copies it to docs/), the per-project SEO pages and /insights (generate_seo_pages.py),
-the API guide (generate_api.py), the open-source health methodology
+the API guide (generate_api.py), the CHAOSS methodology
 (generate_health_page.py), and the privacy page (hand-written under public/).
 The generated four import CSP and ANALYTICS from utils.py; the two hand-written ones
 cannot, so they hold literal copies.
@@ -86,7 +86,7 @@ def main():
     generated = [os.path.join(DOCS_DIR, "index.html"),
                  os.path.join(DOCS_DIR, "insights", "index.html"),
                  os.path.join(DOCS_DIR, "api", "index.html"),
-                 os.path.join(DOCS_DIR, "open-source-health", "index.html"),
+                 os.path.join(DOCS_DIR, "chaoss", "index.html"),
                  os.path.join(DOCS_DIR, "privacy", "index.html")]
     project_pages = sorted(glob.glob(os.path.join(DOCS_DIR, "projects", "*", "index.html")))
     generated += project_pages

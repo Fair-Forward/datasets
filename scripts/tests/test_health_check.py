@@ -1,4 +1,4 @@
-"""Tests for health_check: per-project open-source health blocks, carry-forward and validation.
+"""Tests for health_check: per-project CHAOSS metric blocks, carry-forward and validation.
 
 Observations are built by hand in the shape the fetchers return, so no test touches the network.
 Logins and emails are invented and must never reach the output.

@@ -1,6 +1,6 @@
-"""Write the open-source health methodology page: public/open-source-health/index.html.
+"""Write the CHAOSS methodology page: public/chaoss/index.html.
 
-The detail panel's "Open-source health" block and the Insights view link here. The page names
+The detail panel's "CHAOSS metrics" block and the Insights view link here. The page names
 CHAOSS, says which CHAOSS metric each row follows and links its definition, and states the
 thresholds and blind spots of the measurement. Thresholds come from chaoss_metrics.py and coverage
 counts from catalog.json, so the page cannot state a rule or a number the collector does not apply;
@@ -24,9 +24,9 @@ from static_page import STATIC_PAGE_CSS
 from utils import ANALYTICS, CSP, FONT_HREF, SITE_BASE
 
 CATALOG_PATH = os.path.join('public', 'data', 'catalog.json')
-OUTPUT_PATH = os.path.join('public', 'open-source-health', 'index.html')
+OUTPUT_PATH = os.path.join('public', 'chaoss', 'index.html')
 WORKFLOW_PATH = os.path.join('.github', 'workflows', 'health_check.yml')
-PAGE_PATH = 'open-source-health/'
+PAGE_PATH = 'chaoss/'
 
 PRACTITIONER_GUIDE_URL = 'https://chaoss.community/practitioner-guide-introduction/'
 SUNSET_GUIDE_URL = 'https://chaoss.community/practitioner-guide-sunset/'
@@ -68,11 +68,11 @@ PAGE = Template("""<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="How the FAIR Forward catalog measures the open-source health of the projects it lists, following CHAOSS metric definitions.">
+<meta name="description" content="How the FAIR Forward catalog applies the metrics of CHAOSS, the Linux Foundation's Community Health Analytics in Open Source Software project, to the projects it lists.">
 <meta http-equiv="Content-Security-Policy" content="$csp">
 $analytics
 <link rel="canonical" href="${base}${page_path}">
-<title>How we measure open-source health - FAIR Forward Data Catalog</title>
+<title>How we apply the CHAOSS metrics - FAIR Forward Data Catalog</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="$font_href" rel="stylesheet">
@@ -88,10 +88,11 @@ $style$page_style</style>
 <main class="wrap"><div class="stack">
 
   <header class="prose">
-    <h1>How we measure open-source health</h1>
+    <h1>How we apply the CHAOSS metrics</h1>
     <p class="standfirst">Where a project's datasets, models or code live on GitHub, Hugging Face or Zenodo, we
-    read their public activity once a week and report it with metric definitions from CHAOSS. We report facts,
-    not scores, and we do not rank projects.</p>
+    read their public activity once a week and report it with the metrics of CHAOSS, the Linux Foundation's
+    Community Health Analytics in Open Source Software project. We report facts, not scores, and we do not
+    rank projects.</p>
   </header>
 
   <section>
@@ -320,7 +321,7 @@ def render_page(catalog, workflow_text):
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description='Write the open-source health methodology page.')
+    parser = argparse.ArgumentParser(description='Write the CHAOSS methodology page.')
     parser.add_argument('--catalog', default=CATALOG_PATH)
     parser.add_argument('--output', default=OUTPUT_PATH)
     parser.add_argument('--workflow', default=WORKFLOW_PATH)

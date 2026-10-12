@@ -1,5 +1,5 @@
 """Styles shared by the standalone pages the build writes beside the app: the API guide
-(/api/) and the open-source health methodology (/open-source-health/).
+(/api/) and the CHAOSS methodology (/chaoss/).
 
 Both pages own their <head> and inline these rules, so they live here once and cannot drift.
 The rules mirror the Open Press tokens in src/styles/tokens.css.

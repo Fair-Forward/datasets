@@ -1,4 +1,4 @@
-// Open-source health by SDG, for the Insights page. Projects are counted, never named: CHAOSS
+// CHAOSS metrics by SDG, for the Insights page. Projects are counted, never named: CHAOSS
 // advises against comparing projects, so this compares goals, and prints a goal's upkeep figures
 // only when it has at least `min_group` measured projects (health.json `method`). The yes/no facts
 // per project are decided once in scripts/health_check.py (`compare`), so this page and the private

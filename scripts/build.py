@@ -161,13 +161,13 @@ def main():
     ):
         sys.exit(1)
 
-    # Step 3c: Write the open-source health methodology page (public/open-source-health/),
+    # Step 3c: Write the CHAOSS methodology page (public/chaoss/),
     # which the detail panel and Insights link to. Also before Step 5, which copies it into
     # docs/. Fatal: the page states the measurement's thresholds and schedule, and refuses
     # to build when the weekly workflow runs on a different schedule than it states.
     if not run_command(
         [PYTHON, 'scripts/generate_health_page.py'],
-        "Generating open-source health methodology page"
+        "Generating CHAOSS methodology page"
     ):
         sys.exit(1)
 

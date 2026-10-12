@@ -8,7 +8,7 @@ import { parseContacts, licenseLabel, firstUrl, labelFromUrl } from '../utils/pa
 import { hasHealthSignal, contextLabel, ossBlock, brokenLinksNote } from '../utils/health'
 import { SITE_NAME, SITE_TITLE, SITE_DESCRIPTION, SITE_URL, SITE_OG_IMAGE } from '../utils/site'
 import RisoPrint from './RisoPrint'
-import OpenSourceHealth from './OpenSourceHealth'
+import ChaossMetrics from './ChaossMetrics'
 
 // Cumulative maturity pipeline rendered as a stepper in the detail panel.
 const MATURITY_STEPS = [
@@ -685,8 +685,8 @@ const DetailPanel = ({ project, onClose }) => {
                   )}
                 </div>
 
-                {/* Open-source health: facts measured with CHAOSS metric definitions */}
-                {oss && <OpenSourceHealth block={oss} href={withBasePath('open-source-health/')} />}
+                {/* CHAOSS metrics: facts about the project's open assets */}
+                {oss && <ChaossMetrics block={oss} href={withBasePath('chaoss/')} />}
 
                 {/* Maturity -- vertical stepper */}
                 {maturityTags.length > 0 && (

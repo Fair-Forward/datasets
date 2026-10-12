@@ -6,7 +6,7 @@ import WorldMap from '../components/WorldMap'
 import SDGChart from '../components/SDGChart'
 import MaturityChart, { MATURITY_STEPS } from '../components/MaturityChart'
 import SDGCountryHeatmap from '../components/SDGCountryHeatmap'
-import OpenSourceBySdg, { OSS_VIEWS } from '../components/OpenSourceBySdg'
+import ChaossBySdg, { OSS_VIEWS } from '../components/ChaossBySdg'
 import { withBasePath } from '../utils/basePath'
 
 const InsightsPage = () => {
@@ -316,15 +316,15 @@ const InsightsPage = () => {
           </div>
         )}
 
-        {/* Open-source health by SDG: projects counted, never named */}
+        {/* CHAOSS metrics by SDG: projects counted, never named */}
         {healthData?.schema_version >= 2 && catalogData?.projects && (
           <div className="insight-card insight-card-oss">
             <div className="insight-card-header">
               <div>
-                <h2>Open-source health by SDG</h2>
+                <h2>CHAOSS metrics by SDG</h2>
                 <p>Which goals have open repositories, models or data records, and how they are kept. Projects are counted, never named.</p>
               </div>
-              <div className="insight-tabs" role="group" aria-label="Open-source health views">
+              <div className="insight-tabs" role="group" aria-label="CHAOSS metric views">
                 {OSS_VIEWS.map(v => (
                   <button
                     key={v.key}
@@ -339,7 +339,7 @@ const InsightsPage = () => {
               </div>
             </div>
 
-            <OpenSourceBySdg projects={catalogData.projects} health={healthData} view={ossView} />
+            <ChaossBySdg projects={catalogData.projects} health={healthData} view={ossView} />
           </div>
         )}
 

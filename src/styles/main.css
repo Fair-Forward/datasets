@@ -1867,7 +1867,7 @@ footer a:hover {
     text-align: right;
 }
 
-/* Open-source health: facts measured with CHAOSS metric definitions, in hairline rows like
+/* CHAOSS metrics: facts measured with CHAOSS metric definitions, in hairline rows like
    the facts above. It describes and never grades: no status colours, no dots, no score. */
 .rail-oss {
     margin-top: 1.75rem;

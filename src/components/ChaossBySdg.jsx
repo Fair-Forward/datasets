@@ -54,10 +54,10 @@ const Dots = ({ states }) => (
   </span>
 )
 
-// Open-source health by SDG: every project one unnamed dot, grouped by state, so goals are
-// compared and projects never are (CHAOSS advises against comparing projects). A goal with fewer
-// measured projects than the minimum shows its coverage only.
-const OpenSourceBySdg = ({ projects, health, view = 'open' }) => {
+// CHAOSS metrics by SDG: every project one unnamed dot, grouped by state, so goals are compared
+// and projects never are (CHAOSS advises against comparing projects). A goal with fewer projects
+// to compare than the minimum shows no share.
+const ChaossBySdg = ({ projects, health, view = 'open' }) => {
   const summary = useMemo(() => summariseBySdg(projects, health), [projects, health])
   if (!summary) return null
   const [inked, ringed, faint] = KEYS[view]
@@ -66,7 +66,7 @@ const OpenSourceBySdg = ({ projects, health, view = 'open' }) => {
     <div className="oss-sdg" data-view={view}>
       <p className="oss-sdg-meta">
         Measured {formatDay(summary.measuredAt)}, following CHAOSS metric definitions.{' '}
-        <a href={withBasePath('open-source-health/')}>How we measure this</a>
+        <a href={withBasePath('chaoss/')}>How we apply the CHAOSS metrics</a>
       </p>
 
       <p className="maturity-key oss-sdg-key" aria-live="polite">
@@ -103,4 +103,4 @@ const OpenSourceBySdg = ({ projects, health, view = 'open' }) => {
   )
 }
 
-export default OpenSourceBySdg
+export default ChaossBySdg

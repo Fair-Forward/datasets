@@ -1,4 +1,4 @@
-"""Private comparison report for the open-source health facts. Never published.
+"""Private comparison report for the CHAOSS metrics. Never published.
 
 CHAOSS advises against comparing projects with each other, so the public site shows each project's
 own facts and compares SDGs only without names. This report is the named comparison the team uses
@@ -11,7 +11,7 @@ Output, in --out (which must lie outside this repository): index.html (self-cont
 projects.csv, by_sdg.csv and flags.csv. The catalogue's contact field is never read.
 
 Usage:
-  python scripts/health_report.py --out ~/reports/open-source-health [--join assessment.csv]
+  python scripts/health_report.py --out ~/reports/chaoss [--join assessment.csv]
 """
 import argparse
 import csv
@@ -382,7 +382,7 @@ def _glance(rows):
     zen = sum(r['zenodo_downloads'] or 0 for r in measured)
     items = [
         f"{len(rows)} projects in the catalogue; {sum(1 for r in rows if r['open_asset'])} link an open repository, model or record; "
-        f"{len(measured)} have open-source health facts (GitHub {sum(1 for r in measured if 'github' in r['platform_set'])}, "
+        f"{len(measured)} have CHAOSS metrics (GitHub {sum(1 for r in measured if 'github' in r['platform_set'])}, "
         f"Hugging Face {sum(1 for r in measured if 'huggingface' in r['platform_set'])}, "
         f"Zenodo {sum(1 for r in measured if 'zenodo' in r['platform_set'])}).",
         f"Changed in the last 12 months: {_fraction(rows, 'changed_12m') or 'none measured'} (archive records left out).",
@@ -417,7 +417,7 @@ def render_html(rows, sdg, fill, tabs, flags, health, joined_columns=()):
     project_headers += [(c, c) for c in joined_columns]
     sections = [
         f'<p class="label">Private. Not for publication or sharing outside the team.</p>',
-        f'<h1>Open-source health of the catalogue\'s projects</h1>',
+        f'<h1>CHAOSS metrics for the catalogue\'s projects</h1>',
         f'<p class="note">Measured {html.escape(measured_at)} from public GitHub, Hugging Face and Zenodo data, '
         f'following <a href="{cm.CHAOSS_HOME}">CHAOSS</a> metric definitions over a {method.get("window_days", cm.WINDOW_DAYS)}-day window. '
         f'CHAOSS advises against comparing projects with each other; the public catalogue therefore shows each '
@@ -447,7 +447,7 @@ def render_html(rows, sdg, fill, tabs, flags, health, joined_columns=()):
     return ('<!doctype html><html lang="en"><head><meta charset="utf-8">'
             '<meta name="viewport" content="width=device-width, initial-scale=1">'
             '<meta name="robots" content="noindex, nofollow">'
-            '<title>Open-source health: private comparison</title>'
+            '<title>CHAOSS metrics: private comparison</title>'
             f'<style>{_STYLE}</style></head><body><main>' + '\n'.join(sections) + '</main></body></html>\n')
 
 
@@ -469,7 +469,7 @@ def write_report(out, catalog, health, joined, categorical):
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description='Write the private open-source health comparison (never published).')
+    parser = argparse.ArgumentParser(description='Write the private CHAOSS metrics comparison (never published).')
     parser.add_argument('--out', required=True, help='Directory to write to; must lie outside this repository')
     parser.add_argument('--health', default='public/data/health.json', help='health.json (schema_version 2)')
     parser.add_argument('--catalog', default='public/data/catalog.json', help='catalog.json')

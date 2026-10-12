@@ -1,4 +1,4 @@
-"""Tests for generate_health_page: the open-source health methodology page."""
+"""Tests for generate_health_page: the CHAOSS methodology page."""
 import unittest
 
 import chaoss_metrics as cm
@@ -52,7 +52,9 @@ class PageTests(unittest.TestCase):
         page = self.page()
         self.assertIn(CSP, page)
         self.assertIn(ANALYTICS, page)
-        self.assertIn('<link rel="canonical" href="https://fair-forward.github.io/datasets/open-source-health/">', page)
+        self.assertIn('<link rel="canonical" href="https://fair-forward.github.io/datasets/chaoss/">', page)
+        self.assertIn('<h1>How we apply the CHAOSS metrics</h1>', page)
+        self.assertIn('Community Health Analytics in Open Source Software', page)
 
     def test_is_deterministic_and_has_no_em_dash(self):
         self.assertEqual(self.page(), self.page())

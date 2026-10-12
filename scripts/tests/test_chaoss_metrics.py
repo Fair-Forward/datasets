@@ -1,4 +1,4 @@
-"""Tests for chaoss_metrics: the pure CHAOSS metric maths behind the open-source health signal."""
+"""Tests for chaoss_metrics: the pure CHAOSS metric maths behind the catalogue's CHAOSS metrics."""
 import unittest
 from datetime import datetime, timezone
 

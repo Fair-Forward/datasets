@@ -224,10 +224,23 @@ const gapsText = (gaps = []) => {
   return groups.size ? [...groups].map(([reason, metrics]) => `${metrics.join(', ')} (${reason})`).join('; ') : null
 }
 
+// The CHAOSS metric behind each row (the labels are ours; the metrics are CHAOSS's).
+const CHAOSS_NAMES = {
+  last_change: 'Activity Dates and Times',
+  contributors: 'Contributors',
+  absence_factor: 'Contributor Absence Factor',
+  releases: 'Release Frequency',
+  reuse: 'Technical Fork, Project Popularity, Number of Downloads',
+  license: 'Licenses Declared',
+  first_response: 'Time to First Response',
+  change_request_closure: 'Change Request Closure Ratio',
+}
+
 const NOT_ON_A_MEASURED_PLATFORM = 'none of these links is a repository, model or record on GitHub, Hugging Face or Zenodo'
 
-// The detail panel's "Open-source health" block (see docs/health-thresholds.md, Part 4): rows of
-// facts measured with CHAOSS metric definitions, and the gaps named in one line. Null when there is
+// The detail panel's "CHAOSS metrics" block (see docs/health-thresholds.md, Part 4): rows of facts
+// measured with CHAOSS metric definitions, each naming the CHAOSS metric it follows, and the gaps
+// named in one line. Null when there is
 // nothing to show: no health entry, an older health.json, or a project left out at its maintainers' request.
 export const ossBlock = (health) => {
   if (!health || (!health.oss && !health.hosts)) return null
@@ -245,7 +258,7 @@ export const ossBlock = (health) => {
   }
 
   const rows = []
-  const add = (key, label, lines) => { if (lines.length) rows.push({ key, label, lines }) }
+  const add = (key, label, lines) => { if (lines.length) rows.push({ key, label, chaoss: CHAOSS_NAMES[key], lines }) }
 
   const change = oss.last_change
   if (change?.at) {
