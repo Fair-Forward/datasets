@@ -19,18 +19,26 @@ import re
 from string import Template
 
 import chaoss_metrics as cm
-from health_assets import OPEN_HOSTS, discover_assets, host_counts
+from generate_catalog_data import QUALITY_SCORE_MAX
+from health_assets import MEASURED_PLATFORMS, OPEN_HOSTS, discover_assets, host_counts
 from static_page import STATIC_PAGE_CSS
 from utils import ANALYTICS, CSP, FONT_HREF, SITE_BASE
 
 CATALOG_PATH = os.path.join('public', 'data', 'catalog.json')
 OUTPUT_PATH = os.path.join('public', 'chaoss', 'index.html')
 WORKFLOW_PATH = os.path.join('.github', 'workflows', 'health_check.yml')
+RANKING_PATH = os.path.join('src', 'utils', 'ranking.js')
 PAGE_PATH = 'chaoss/'
 
 PRACTITIONER_GUIDE_URL = 'https://chaoss.community/practitioner-guide-introduction/'
 SUNSET_GUIDE_URL = 'https://chaoss.community/practitioner-guide-sunset/'
 CONTACT_EMAIL = 'jonas.nothnagel@gmail.com'  # the catalogue's public contact (src/components/Footer.jsx)
+RANKING_CONSTANTS = ('ACTIVITY_WEIGHT', 'UNAVAILABLE_PENALTY')
+
+# How the coverage line names the open hosts we do not measure yet; organisation pages are grouped.
+UNMEASURED_HOST_NAMES = {'kaggle': 'Kaggle', 'dataverse': 'Harvard Dataverse', 'figshare': 'figshare',
+                         'gitlab': 'GitLab', 'doi_other': 'records behind other DOIs'}
+ORG_PAGE_HOSTS = {'huggingface_org': 'Hugging Face', 'github_org': 'GitHub'}
 
 # What each panel row counts, and where it comes from, in the page's words.
 WHAT_WE_COUNT = {
@@ -44,7 +52,8 @@ WHAT_WE_COUNT = {
                      "together.", 'GitHub, Hugging Face'),
     'absence_factor': ('The smallest number of people who made half of all commits.', 'GitHub, Hugging Face'),
     'forks': ('Forks of the repository.', 'GitHub'),
-    'popularity': ('Stars on GitHub, likes on Hugging Face.', 'GitHub, Hugging Face'),
+    'popularity': ('Stars on GitHub, likes on Hugging Face, views of a Zenodo record across all its versions.',
+                   'GitHub, Hugging Face, Zenodo'),
     'downloads': ('Downloads as each platform counts them: Hugging Face in the last 30 days and over all time, '
                   'Zenodo across all versions of a record. A download is not a person.', 'Hugging Face, Zenodo'),
     'license': ('The licence the source itself declares: GitHub\'s licence detection, the Hugging Face card, '
@@ -91,8 +100,7 @@ $style$page_style</style>
     <h1>How we apply the CHAOSS metrics</h1>
     <p class="standfirst">Where a project's datasets, models or code live on GitHub, Hugging Face or Zenodo, we
     read their public activity once a week and report it with the metrics of CHAOSS, the Linux Foundation's
-    Community Health Analytics in Open Source Software project. We report facts, not scores, and we do not
-    rank projects.</p>
+    Community Health Analytics in Open Source Software project. We report facts, not scores.</p>
   </header>
 
   <section>
@@ -126,7 +134,8 @@ $metric_rows
     <h2>Which links we read</h2>
     <p class="prose">We read each project's dataset links and its use-case, model and app links; additional
     resources and hosted documents are not measured. Every GitHub repository, Hugging Face model, dataset or
-    space and Zenodo record among them is measured, and a DOI is followed to the record it names.
+    space and Zenodo record among them is measured, and a Zenodo or Hugging Face DOI is followed to the record
+    it names.
     $coverage_sentence</p>
   </section>
 
@@ -140,12 +149,15 @@ $metric_rows
       over the whole history.</li>
       <li>"Outside" means anyone GitHub does not list as the repository's owner, a member of its organisation
       or a collaborator.</li>
-      <li>Accounts marked as bots, and automation accounts that are not marked, are left out of every count
-      (CHAOSS <a href="$bot_url">Bot Activity</a>).</li>
+      <li>Accounts marked as bots, and automation accounts we know of, are left out of every count of people,
+      of the issues and pull requests behind response time and closure, and of the last change on GitHub
+      (CHAOSS <a href="$bot_url">Bot Activity</a>). Platform totals such as stars and downloads, and the last
+      update of a Hugging Face model, dataset or space, include their activity.</li>
       <li>Response time needs at least $min_items outside issues and pull requests in the last 12 months, and
       pull request closure at least $min_prs outside pull requests, pooled across a project's repositories.
       An unanswered item counts its age as a lower bound, so a median can read "more than".</li>
-      <li>Dates after the day of measurement come from a wrong clock and are ignored.</li>
+      <li>A date after the day of measurement comes from a wrong clock: it never becomes the last change or
+      the latest release, though such a release still counts in the total.</li>
       <li>The catalogue's status filter calls a project recently updated when something changed in the last
       $recent_days days, and shows no recent updates after $stale_days days (about $stale_months months)
       or when every repository is archived. Zenodo and Harvard Dataverse records count as a stable
@@ -166,8 +178,8 @@ $metric_rows
       <li>Automation accounts we do not know about, and downloads by automated systems, which the platforms
       count like any other.</li>
       <li>Members of an organisation who keep their membership private appear as outside contributors.</li>
-      <li>The history a fork inherits from its original repository; the panel says when a repository is a
-      fork.</li>
+      <li>Which commits a fork made itself: its counts include its original repository's history, and the
+      panel says so.</li>
       <li>Licences stated only in prose: licence detection is mechanical.</li>
       <li>Hosts we do not measure yet, such as GitLab, Kaggle, Harvard Dataverse and figshare.</li>
     </ul>
@@ -178,8 +190,7 @@ $metric_rows
   <section>
     <h2>How to read it</h2>
     <div class="prose">
-      <p>These are facts, measured the same way for every project. They are not scores, and we do not rank
-      projects by them. CHAOSS advises to "avoid using metrics to compare projects against each other when
+      <p>These are facts, measured the same way for every project, not scores. CHAOSS advises to "avoid using metrics to compare projects against each other when
       possible" (<a href="$guide_url">practitioner guide</a>) and notes that "informational repositories might
       not have any releases at all" (<a href="$starter_url">Starter Project Health</a>).</p>
       <p>A dataset that no longer changes can be complete: a project "might seem to be abandoned when it has
@@ -187,8 +198,14 @@ $metric_rows
       research repositories are kept by one person, and an absence factor of 1 describes that rather than
       judging it. "Not measurable" means there was not enough data, not that something is wrong.</p>
       <p>The Insights page compares SDGs, never projects, and prints upkeep figures only for a goal with
-      at least $min_group measured projects. The catalogue's default order gives a small boost to recent
-      activity and downloads; these facts never decide whether a project is listed.</p>
+      at least $min_group measured projects.</p>
+      <p>The catalogue's default order does use these facts. It sorts projects by how fully they are
+      documented, a score of up to $quality_max points, and adds up to $activity_weight points for activity:
+      how recently a project changed (a project with a Zenodo or Harvard Dataverse record gets a fixed value
+      instead) and its GitHub stars or Hugging Face downloads in the last 30 days. A very active project can
+      therefore come before a better-documented but quieter one. A project none of whose links responded at
+      the last check loses $unavailable_penalty points, and a project without these facts gets no boost. The
+      facts never decide whether a project is listed.</p>
     </div>
   </section>
 
@@ -196,8 +213,8 @@ $metric_rows
 
   <section>
     <h2>Privacy</h2>
-    <p class="prose">We read only public data through public APIs and publish counts and dates, never names,
-    usernames or email addresses. Account names are used during a run only to count each person once, and are
+    <p class="prose">We read only public data through public APIs and publish counts and dates, never the names,
+    usernames or email addresses of contributors. Account names are used during a run only to count each person once, and are
     not stored. Private repositories are skipped even when they could be read, and a fork's original repository
     is named only when an organisation owns it.</p>
   </section>
@@ -206,8 +223,9 @@ $metric_rows
 
   <section>
     <h2>When it runs</h2>
-    <p class="prose">The check runs $schedule_text. A source that cannot be reached keeps its previous
-    measurement, with the date it was taken, for up to $carry_days days; the panel shows that date.</p>
+    <p class="prose">The check runs $schedule_text. When a source cannot be read during a run, the project
+    keeps its previous measurement for up to $carry_days days, as long as it covers the same links, and the
+    panel shows the date it was taken. Otherwise the panel names what could not be read.</p>
   </section>
 
   <hr>
@@ -234,9 +252,11 @@ $metric_rows
 
 
 def coverage(catalog):
-    """How many projects link a measurable asset, and the distinct assets per platform."""
+    """How many projects link a measurable asset, the distinct assets per platform, and for projects
+    that link only open hosts we do not measure, how many link each of those hosts."""
     projects = [p for p in catalog.get('projects', []) if p.get('id')]
     keys = {'github': set(), 'huggingface': set(), 'zenodo': set()}
+    other_hosts = {}
     measurable = other_open = 0
     for project in projects:
         assets = discover_assets(project)
@@ -244,10 +264,28 @@ def coverage(catalog):
             keys[asset['platform']].add(asset['key'])
         if assets:
             measurable += 1
-        elif any(host in OPEN_HOSTS for host in host_counts(project)):
+            continue
+        hosts = [host for host in host_counts(project) if host in OPEN_HOSTS]
+        if hosts:
             other_open += 1
+            for host in hosts:
+                other_hosts[host] = other_hosts.get(host, 0) + 1
     return {'projects': len(projects), 'measurable': measurable, 'github': len(keys['github']),
-            'huggingface': len(keys['huggingface']), 'zenodo': len(keys['zenodo']), 'other_open': other_open}
+            'huggingface': len(keys['huggingface']), 'zenodo': len(keys['zenodo']), 'other_open': other_open,
+            'other_hosts': other_hosts}
+
+
+def ranking_weights(ranking_text):
+    """The activity boost and availability penalty the catalogue's default order applies, read from
+    ranking.js, so the page states the weights the site sorts by."""
+    weights = {}
+    for name in RANKING_CONSTANTS:
+        match = re.search(rf'export const {name} = (\d+)\b', ranking_text)
+        if not match:
+            raise ValueError(f'{RANKING_PATH} no longer sets {name} to a whole number; '
+                             f'update ranking_weights and the page together')
+        weights[name] = int(match.group(1))
+    return weights
 
 
 def check_schedule(workflow_text):
@@ -261,6 +299,10 @@ def check_schedule(workflow_text):
 
 def _count(n, one, many):
     return f'{n:,} {one if n == 1 else many}'
+
+
+def _join(items, word):
+    return items[0] if len(items) == 1 else f"{', '.join(items[:-1])} {word} {items[-1]}"
 
 
 def _metric_rows():
@@ -283,13 +325,26 @@ def _coverage_sentence(counts):
     return (f"The catalogue currently has {counts['measurable']} of {counts['projects']} projects with such "
             f"links: {_count(counts['github'], 'GitHub repository', 'GitHub repositories')}, "
             f"{_count(counts['huggingface'], 'Hugging Face model, dataset or space', 'Hugging Face models, datasets or spaces')} "
-            f"and {_count(counts['zenodo'], 'Zenodo record', 'Zenodo records')}. "
-            f"{_count(counts['other_open'], 'more project links', 'more projects link')} only to hosts we do not "
-            f"measure yet.")
+            f"and {_count(counts['zenodo'], 'Zenodo record', 'Zenodo records')}."
+            f"{_unmeasured_sentence(counts)}")
 
 
-def render_page(catalog, workflow_text):
+def _unmeasured_sentence(counts):
+    """Names the hosts behind the projects we cannot measure, most linked first."""
+    if not counts['other_open']:
+        return ''
+    hosts = sorted(counts['other_hosts'].items(), key=lambda item: (-item[1], item[0]))
+    names = [UNMEASURED_HOST_NAMES[host] for host, _ in hosts if host in UNMEASURED_HOST_NAMES]
+    orgs = [ORG_PAGE_HOSTS[host] for host, _ in hosts if host in ORG_PAGE_HOSTS]
+    if orgs:
+        names.append(f"organisation pages on {_join(orgs, 'or')}")
+    return (f" {_count(counts['other_open'], 'more project links', 'more projects link')} only to pages we "
+            f"do not measure yet: {_join(names, 'and')}.")
+
+
+def render_page(catalog, workflow_text, ranking_text):
     check_schedule(workflow_text)
+    weights = ranking_weights(ranking_text)
     return PAGE.substitute(
         style=STATIC_PAGE_CSS,
         page_style=PAGE_CSS,
@@ -311,6 +366,9 @@ def render_page(catalog, workflow_text):
         min_items=cm.MIN_OUTSIDE_ITEMS,
         min_prs=cm.MIN_OUTSIDE_CHANGE_REQUESTS,
         min_group=cm.MIN_GROUP,
+        quality_max=QUALITY_SCORE_MAX,
+        activity_weight=weights['ACTIVITY_WEIGHT'],
+        unavailable_penalty=weights['UNAVAILABLE_PENALTY'],
         recent_days=cm.RECENT_DAYS,
         stale_days=cm.STALE_DAYS,
         stale_months=round(cm.STALE_DAYS / 30.44),
@@ -325,12 +383,15 @@ def main(argv=None):
     parser.add_argument('--catalog', default=CATALOG_PATH)
     parser.add_argument('--output', default=OUTPUT_PATH)
     parser.add_argument('--workflow', default=WORKFLOW_PATH)
+    parser.add_argument('--ranking', default=RANKING_PATH)
     args = parser.parse_args(argv)
     with open(args.catalog, encoding='utf-8') as f:
         catalog = json.load(f)
     with open(args.workflow, encoding='utf-8') as f:
         workflow_text = f.read()
-    page = render_page(catalog, workflow_text)
+    with open(args.ranking, encoding='utf-8') as f:
+        ranking_text = f.read()
+    page = render_page(catalog, workflow_text, ranking_text)
     os.makedirs(os.path.dirname(args.output), exist_ok=True)
     with open(args.output, 'w', encoding='utf-8') as f:
         f.write(page)

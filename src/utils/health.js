@@ -89,7 +89,7 @@ const describeMissing = (assets, verb, { more }) => {
 
 const missingText = (assets, options) => [
   describeMissing(assets.filter(a => a.status === 'unavailable'), 'could not be read', options),
-  describeMissing(assets.filter(a => a.status === 'failed'), 'could not be reached this week', options),
+  describeMissing(assets.filter(a => a.status === 'failed'), 'could not be read this week', options),
 ].filter(Boolean).join('; ') || null
 
 // "from 1 GitHub repository and 2 Hugging Face datasets": the measured assets, by kind.
@@ -171,20 +171,34 @@ const LICENSE_LABELS = {
   other: (item) => item.raw,
 }
 
-const licenseText = (license = {}) => {
-  const platforms = PLATFORM_ORDER.filter(p => license[p]?.length)
-  if (!platforms.length) return null
-  const named = platforms.map(p => {
-    const labels = []
-    for (const item of license[p]) {
-      const label = LICENSE_LABELS[item.status]?.(item)
-      if (label && !labels.includes(label)) labels.push(label)
+// What one platform's assets declare, e.g. "MIT, GPL-3.0; none detected on 1 repository".
+const UNLICENSED_NOUNS = {
+  github: ['repository', 'repositories'],
+  huggingface: ['Hugging Face asset', 'Hugging Face assets'],
+  zenodo: ['Zenodo record', 'Zenodo records'],
+}
+
+const platformLicenseText = (platform, items) => {
+  const labels = []
+  let unlicensed = 0
+  for (const item of items) {
+    if (item.status === 'none') {
+      unlicensed += item.assets || 1
+      continue
     }
-    return [p, labels]
-  }).filter(([, labels]) => labels.length)
-  if (!named.length) return 'none detected'
-  if (platforms.length === 1) return named[0][1].join(', ')
-  return named.map(([p, labels]) => `${labels.join(', ')} (${PLATFORM_NAMES[p]})`).join(', ')
+    const label = LICENSE_LABELS[item.status]?.(item)
+    if (label && !labels.includes(label)) labels.push(label)
+  }
+  if (!labels.length) return 'none detected'
+  if (!unlicensed) return labels.join(', ')
+  const [one, many] = UNLICENSED_NOUNS[platform]
+  return `${labels.join(', ')}; none detected on ${count(unlicensed, one, many)}`
+}
+
+const licenseLines = (license = {}) => {
+  const platforms = PLATFORM_ORDER.filter(p => license[p]?.length)
+  if (platforms.length === 1) return [platformLicenseText(platforms[0], license[platforms[0]])]
+  return platforms.map(p => `${PLATFORM_NAMES[p]}: ${platformLicenseText(p, license[p])}`)
 }
 
 const duration = (hours) =>
@@ -204,7 +218,7 @@ const GAP_REASONS = {
   github_only: 'measured on GitHub only',
   no_releases_on_platform: 'Hugging Face has no releases',
   archive_record: 'a Zenodo record has no commit history',
-  gated: 'gated dataset',
+  gated: 'gated on Hugging Face',
   unreadable: 'commit history could not be read',
   empty_repository: 'empty repository',
   no_human_commits: 'no commits by people',
@@ -278,8 +292,7 @@ export const ossBlock = (health) => {
 
   add('releases', 'Releases', releaseLines(oss.releases))
   add('reuse', 'Reuse', reuseLines(oss.reuse))
-  const license = licenseText(oss.license)
-  if (license) add('license', 'License at source', [license])
+  add('license', 'License at source', licenseLines(oss.license))
 
   const response = oss.first_response
   if (response) {
@@ -293,6 +306,19 @@ export const ossBlock = (health) => {
       [`${requests.closed} of ${count(requests.opened, 'outside pull request', 'outside pull requests')} closed`])
   }
 
+  // Assets whose people could not be counted while others' were: say which, so the count is read
+  // for what it covers.
+  const uncounted = withPeople.length
+    ? ['gated', 'unreadable'].map(reason => {
+      const missing = measured.filter(a => (a.gaps || []).some(g => g.metric === 'contributors' && g.reason === reason))
+      if (!missing.length) return null
+      const nouns = missing.map(assetNoun)
+      const same = nouns.every(noun => noun[0] === nouns[0][0])
+      const what = same ? count(missing.length, nouns[0][0], nouns[0][1]) : count(missing.length, 'asset', 'assets')
+      return `contributors on ${what} (${reason === 'gated' ? 'gated' : 'history not readable'})`
+    }).filter(Boolean)
+    : []
+
   return {
     dateLabel: 'measured',
     date: fmtDay(oss.measured_at),
@@ -300,8 +326,16 @@ export const ossBlock = (health) => {
     note: missingText(assets, { more: true }),
     rows,
     gapsLabel: 'Not measurable',
-    gaps: gapsText(oss.gaps),
+    gaps: [gapsText(oss.gaps), ...uncounted].filter(Boolean).join('; ') || null,
   }
+}
+
+// The Status row: "Links healthy" only when every link answered at the last check.
+export const linkStatus = (health) => {
+  if (!hasHealthSignal(health)) return { text: 'Not checked', state: 'unknown' }
+  if (health.availability !== 'available') return { text: 'Links may be down', state: 'unavailable' }
+  if (health.broken_links?.length) return { text: 'Some links did not respond', state: 'available' }
+  return { text: 'Links healthy', state: 'available' }
 }
 
 // "1 of 3 links did not respond at the last check", shown under the Status row.

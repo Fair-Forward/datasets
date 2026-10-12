@@ -13,10 +13,10 @@ export const OSS_VIEWS = [
 
 // What an inked, a ringed and a faint dot mean in each view.
 const KEYS = {
-  open: ['measured on GitHub, Hugging Face or Zenodo', 'open, on a platform we do not measure yet',
+  open: ['measured on GitHub, Hugging Face or Zenodo', 'open, not measured: another host, an organisation page or not readable',
     'no open repository or record'],
   changed: ['changed in the last 12 months', 'no change in the last 12 months', 'not measured, or an archive record'],
-  several: ['more than one contributor', 'one contributor', 'not measured, or no commit history'],
+  several: ['more than one contributor', 'one contributor', 'not measured, or no readable commit history'],
 }
 
 const FACTS = { changed: 'changed in the last 12 months', several: 'with more than one contributor' }
@@ -32,7 +32,7 @@ const sentence = (row, view, minGroup) => {
       `${row.measured} measured.`
   }
   const fact = view === 'changed' ? row.changed : row.several
-  if (!fact) return `${goalName(row)}: fewer than ${minGroup} measured projects to compare, so no figures are shown.`
+  if (!fact) return `${goalName(row)}: fewer than ${minGroup} projects to compare, so no figures are shown.`
   return `${goalName(row)}: ${fact.yes} of ${projectsOf(fact.of, 'measured project')} ${FACTS[view]}.`
 }
 

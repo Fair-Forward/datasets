@@ -153,6 +153,10 @@ def _content_length_score(text, thresholds):
     return sum(pts for min_chars, pts in thresholds if length >= min_chars)
 
 
+# The documentation score's ceiling; the default order adds ranking.js's activity boost on top.
+QUALITY_SCORE_MAX = 100
+
+
 def compute_quality_score(project):
     """Compute a 0-100 quality score based on field completeness and depth."""
     score = 0
@@ -207,7 +211,7 @@ def compute_quality_score(project):
     if project.get('maturity_tags'):
         score += 5
 
-    return min(score, 100)
+    return min(score, QUALITY_SCORE_MAX)
 
 
 # Define the maturity funnel stages in order of progression (matching MaturityChart.jsx)

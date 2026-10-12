@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { ossBlock, brokenLinksNote } from './health.js'
+import { ossBlock, brokenLinksNote, linkStatus } from './health.js'
 
 const github = (id, extra = {}) => ({ key: `github:${id.toLowerCase()}`, platform: 'github', id, status: 'measured', ...extra })
 
@@ -111,7 +111,7 @@ test('several platforms are named line by line, and a fork says so', () => {
   assert.deepEqual(rows.absence_factor, ['GitHub: half the commits came from 1 person', 'Hugging Face: 1 person made all the commits'])
   assert.deepEqual(rows.releases, ['none in the last 12 months, latest 19 Apr 2022'])
   assert.deepEqual(rows.reuse, ['GitHub: 30 forks, 43 stars', 'Hugging Face: 7,687 downloads (148 in the last 30 days), 6 likes'])
-  assert.deepEqual(rows.license, ['CC-BY-4.0 (GitHub)'])
+  assert.deepEqual(rows.license, ['GitHub: CC-BY-4.0', 'Hugging Face: none detected'])
 })
 
 test('an archived repository and a measurable response time read plainly', () => {
@@ -155,7 +155,7 @@ test('a project whose only asset could not be read or reached says so', () => {
   const failed = ossBlock(entry({ status: 'partial', measured_at: '2026-10-09', people: {}, gaps: [],
     scope: { github: 0, huggingface: 0, zenodo: 0, unreadable: 0, failed: 1 },
     assets: [{ key: 'zenodo:15778396', platform: 'zenodo', id: '15778396', status: 'failed' }] }))
-  assert.equal(failed.gaps, 'the linked Zenodo record could not be reached this week')
+  assert.equal(failed.gaps, 'the linked Zenodo record could not be read this week')
 })
 
 test('no block for opted-out projects, older data or projects without links', () => {
@@ -183,4 +183,34 @@ test('dates read the same in every time zone', () => {
 test('no output uses an em dash', () => {
   const text = JSON.stringify([ossBlock(entry(ui80)), ossBlock(entry(null, { hosts: { website: 1 } })), brokenLinksNote(entry(ui80, { broken_links: ['a'] }))])
   assert.ok(!text.includes('—'))
+})
+
+test('an unlicensed asset is named next to the licences of the others', () => {
+  const block = ossBlock(entry({
+    ...ui80,
+    license: { github: [{ status: 'detected', spdx: 'MIT', raw: 'MIT', assets: 2 },
+      { status: 'detected', spdx: 'GPL-3.0', raw: 'GPL-3.0', assets: 1 }, { status: 'none', spdx: null, raw: null, assets: 1 }] },
+  }))
+  assert.deepEqual(block.rows.find(r => r.key === 'license').lines, ['MIT, GPL-3.0; none detected on 1 repository'])
+})
+
+test('gated assets are named when the contributor count leaves them out', () => {
+  const gatedDataset = (id) => ({ key: `huggingface:datasets/${id}`, platform: 'huggingface', kind: 'datasets', id, status: 'measured',
+    gaps: [{ metric: 'contributors', reason: 'gated' }] })
+  const block = ossBlock(entry({
+    ...ui80,
+    people: { huggingface: { total: 2, active: 0, absence_factor: 1, assets: 1, fork_history: false } },
+    assets: [gatedDataset('o/a'), gatedDataset('o/b'),
+      { key: 'huggingface:models/o/m', platform: 'huggingface', kind: 'models', id: 'o/m', status: 'measured', gaps: [] }],
+    gaps: [{ metric: 'first_response', reason: 'github_only' }, { metric: 'change_request_closure', reason: 'github_only' }],
+  }))
+  assert.equal(block.gaps, 'response time, pull request closure (measured on GitHub only); ' +
+    'contributors on 2 Hugging Face datasets (gated)')
+})
+
+test('the link status never calls links healthy when some did not respond', () => {
+  assert.deepEqual(linkStatus(entry(ui80)), { text: 'Links healthy', state: 'available' })
+  assert.deepEqual(linkStatus(entry(ui80, { broken_links: ['a', 'b'] })), { text: 'Some links did not respond', state: 'available' })
+  assert.deepEqual(linkStatus(entry(ui80, { availability: 'unavailable', broken_links: ['a'] })), { text: 'Links may be down', state: 'unavailable' })
+  assert.deepEqual(linkStatus(undefined), { text: 'Not checked', state: 'unknown' })
 })

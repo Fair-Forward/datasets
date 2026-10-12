@@ -5,7 +5,7 @@ import { withBasePath, resolvePublicHref } from '../utils/basePath'
 import { parseSdgList } from '../utils/sdgColors'
 import { completenessFromScore, depthLabel } from '../utils/depth'
 import { parseContacts, licenseLabel, firstUrl, labelFromUrl } from '../utils/parsing'
-import { hasHealthSignal, contextLabel, ossBlock, brokenLinksNote } from '../utils/health'
+import { hasHealthSignal, contextLabel, ossBlock, brokenLinksNote, linkStatus } from '../utils/health'
 import { SITE_NAME, SITE_TITLE, SITE_DESCRIPTION, SITE_URL, SITE_OG_IMAGE } from '../utils/site'
 import RisoPrint from './RisoPrint'
 import ChaossMetrics from './ChaossMetrics'
@@ -413,17 +413,7 @@ const DetailPanel = ({ project, onClose }) => {
   const maturityTags = project?.maturity_tags || []
 
   // Link-health status for the meta strip -- only assert health we actually have.
-  let statusText = 'Not checked'
-  let statusState = 'unknown'
-  if (showHealth) {
-    if (health.availability === 'available') {
-      statusText = 'Links healthy'
-      statusState = 'available'
-    } else {
-      statusText = 'Links may be down'
-      statusState = 'unavailable'
-    }
-  }
+  const { text: statusText, state: statusState } = linkStatus(health)
 
   return (
     <>
