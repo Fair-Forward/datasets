@@ -1,6 +1,7 @@
 """Tests for generate_health_page: the CHAOSS methodology page."""
 import os
 import unittest
+import unittest.mock
 
 import chaoss_metrics as cm
 import generate_health_page as gp
@@ -135,6 +136,15 @@ class PageTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             gp.render_page(CATALOG, "on:\n  schedule:\n    - cron: '0 6 * * 3'\n", RANKING)
 
+
+    def test_refuses_a_second_schedule_the_page_does_not_state(self):
+        with self.assertRaises(ValueError):
+            gp.render_page(CATALOG, WORKFLOW + "    - cron: '0 6 * * 3'\n", RANKING)
+
+    def test_one_starter_metric_still_reads_as_a_sentence(self):
+        only = [dict(m, starter=m['key'] == 'releases') for m in cm.CHAOSS_METRICS]
+        with unittest.mock.patch.object(cm, 'CHAOSS_METRICS', only):
+            self.assertEqual(gp._starter_sentence(), 'Releases is part of')
 
 if __name__ == '__main__':
     unittest.main()

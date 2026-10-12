@@ -19,6 +19,7 @@ from utils import (
     clean_country_list,
     count_countries,
     split_places,
+    QUALITY_SCORE_MAX,
 )
 from text_parsing import label_from_url, label_from_resource_url
 
@@ -154,10 +155,6 @@ def _content_length_score(text, thresholds):
     if length == 0:
         return 0
     return sum(pts for min_chars, pts in thresholds if length >= min_chars)
-
-
-# The documentation score's ceiling; the default order adds ranking.js's activity boost on top.
-QUALITY_SCORE_MAX = 100
 
 
 def compute_quality_score(project):

@@ -137,10 +137,14 @@ const releaseLines = (releases = {}) => {
 const reuseLines = (reuse = {}) => {
   const lines = []
   const github = reuse.github
-  if (github) {
-    const forks = github.forks || 0
-    const stars = github.stars || 0
-    lines.push(forks || stars ? `${count(forks, 'fork', 'forks')}, ${count(stars, 'star', 'stars')}` : 'no forks or stars')
+  // A count the source did not give is left out, never shown as 0.
+  const githubCounts = github
+    ? [[github.forks, 'fork', 'forks'], [github.stars, 'star', 'stars']].filter(([n]) => typeof n === 'number')
+    : []
+  if (githubCounts.length) {
+    lines.push(githubCounts.length === 2 && githubCounts.every(([n]) => n === 0)
+      ? 'no forks or stars'
+      : githubCounts.map(([n, one, many]) => count(n, one, many)).join(', '))
   }
   const hf = reuse.huggingface
   if (hf) {
@@ -161,7 +165,7 @@ const reuseLines = (reuse = {}) => {
     if (typeof zenodo.views === 'number') parts.push(count(zenodo.views, 'view', 'views'))
     if (parts.length) lines.push(`Zenodo: ${parts.join(', ')}`)
   }
-  if (github && lines.length > 1) lines[0] = `GitHub: ${lines[0]}`
+  if (githubCounts.length && lines.length > 1) lines[0] = `GitHub: ${lines[0]}`
   return lines
 }
 
@@ -201,8 +205,12 @@ const licenseLines = (license = {}) => {
   return platforms.map(p => `${PLATFORM_NAMES[p]}: ${platformLicenseText(p, license[p])}`)
 }
 
-const duration = (hours) =>
-  hours < 48 ? count(Math.max(1, Math.round(hours)), 'hour', 'hours') : count(Math.round(hours / 24), 'day', 'days')
+// Under an hour in minutes, so a quick reply is not rounded up to "1 hour".
+const duration = (hours) => {
+  if (hours < 1) return count(Math.max(1, Math.round(hours * 60)), 'minute', 'minutes')
+  if (hours < 48) return count(Math.round(hours), 'hour', 'hours')
+  return count(Math.round(hours / 24), 'day', 'days')
+}
 
 const GAP_METRICS = {
   last_change: 'last change',

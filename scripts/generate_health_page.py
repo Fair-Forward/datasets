@@ -19,10 +19,9 @@ import re
 from string import Template
 
 import chaoss_metrics as cm
-from generate_catalog_data import QUALITY_SCORE_MAX
 from health_assets import MEASURED_PLATFORMS, OPEN_HOSTS, discover_assets, host_counts
 from static_page import STATIC_PAGE_CSS
-from utils import ANALYTICS, CSP, FONT_HREF, SITE_BASE
+from utils import ANALYTICS, CSP, FONT_HREF, QUALITY_SCORE_MAX, SITE_BASE
 
 CATALOG_PATH = os.path.join('public', 'data', 'catalog.json')
 OUTPUT_PATH = os.path.join('public', 'chaoss', 'index.html')
@@ -289,9 +288,9 @@ def ranking_weights(ranking_text):
 
 
 def check_schedule(workflow_text):
-    """The page states SCHEDULE_TEXT; refuse to publish it when the workflow runs on another cron."""
-    match = re.search(r"cron:\s*['\"]([^'\"]+)['\"]", workflow_text)
-    found = match.group(1).strip() if match else None
+    """The page states SCHEDULE_TEXT; refuse to publish it when the workflow runs on any other cron."""
+    crons = [cron.strip() for cron in re.findall(r"cron:\s*['\"]([^'\"]+)['\"]", workflow_text)]
+    found = crons[0] if len(crons) == 1 else (crons or None)
     if found != cm.SCHEDULE:
         raise ValueError(f'{WORKFLOW_PATH} runs on {found!r}, but the page states "{cm.SCHEDULE_TEXT}" '
                          f'({cm.SCHEDULE}); update chaoss_metrics.SCHEDULE and SCHEDULE_TEXT together')
@@ -317,8 +316,8 @@ def _metric_rows():
 
 def _starter_sentence():
     labels = [m['label'].lower() for m in cm.CHAOSS_METRICS if m['starter']]
-    listed = ', '.join(labels[:-1]) + ' and ' + labels[-1]
-    return f'{listed[0].upper()}{listed[1:]} together form'
+    listed = _join(labels, 'and')
+    return f'{listed[0].upper()}{listed[1:]} {"together form" if len(labels) > 1 else "is part of"}'
 
 
 def _coverage_sentence(counts):

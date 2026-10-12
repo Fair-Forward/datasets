@@ -62,7 +62,6 @@ export const summariseBySdg = (projects, health) => {
 
   return {
     measuredAt: health.generated_at,
-    windowDays: health.method?.window_days ?? 365,
     minGroup,
     all: { key: 'all', label: 'All projects', ...summarise(projects, entries, minGroup) },
     rows,

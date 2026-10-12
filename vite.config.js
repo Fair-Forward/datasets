@@ -13,7 +13,13 @@ const publicIndexPages = () => ({
     server.middlewares.use((req, _res, next) => {
       const [pathname, query] = req.url.split('?')
       if (pathname.length > 1 && pathname.endsWith('/')) {
-        const file = path.join(root, decodeURIComponent(pathname), 'index.html')
+        let decoded
+        try {
+          decoded = decodeURIComponent(pathname)
+        } catch {
+          return next() // a malformed escape is not one of our pages; let Vite answer it
+        }
+        const file = path.join(root, decoded, 'index.html')
         if (file.startsWith(root + path.sep) && fs.existsSync(file)) {
           req.url = `${pathname}index.html${query ? `?${query}` : ''}`
         }

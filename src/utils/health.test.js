@@ -136,6 +136,18 @@ test('a lower-bound median says more than', () => {
   assert.deepEqual(block.rows.find(r => r.key === 'first_response').lines, ['median more than 32 days (5 outside issues and pull requests)'])
 })
 
+test('a response time under an hour reads in minutes, not as 1 hour', () => {
+  const block = ossBlock(entry({ ...ui80, first_response: { items: 6, answered: 6, median_hours: 0.25, median_is_lower_bound: false } }))
+  assert.deepEqual(block.rows.find(r => r.key === 'first_response').lines, ['median 15 minutes (6 outside issues and pull requests)'])
+})
+
+test('a GitHub count the source did not give is left out, not shown as 0', () => {
+  const rows = (reuse) => ossBlock(entry({ ...ui80, reuse })).rows.find(r => r.key === 'reuse')?.lines
+  assert.deepEqual(rows({ github: { forks: null, stars: 3 } }), ['3 stars'])
+  assert.equal(rows({ github: { forks: null, stars: null } }), undefined)
+  assert.deepEqual(rows({ github: { forks: null, stars: null }, zenodo: { downloads: 5, views: 9 } }), ['Zenodo: 5 downloads, 9 views'])
+})
+
 test('a carried-forward block shows the date it was measured', () => {
   assert.equal(ossBlock(entry({ ...ui80, status: 'carried_forward', measured_at: '2026-10-02' })).date, '2 Oct 2026')
 })
