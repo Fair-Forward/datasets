@@ -1849,46 +1849,100 @@ footer a:hover {
     background: transparent;
 }
 
-.rail-health {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.6rem;
-    margin-top: 1rem;
-    padding: 0.8rem 0.9rem;
-    border: 1px solid var(--hairline);
-    background: var(--paper);
-}
-
-.rail-health .health-dot {
-    margin-top: 0.45rem;
-}
-
-.rail-health-body {
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-    min-width: 0;
-}
-
-.rail-health-headline {
-    color: var(--ink);
-    font-size: var(--text-md);
-    font-weight: 600;
-}
-
-.rail-health-context {
+/* Status row: the status tag after the link state, and a line when links did not respond. */
+.rail-status-context {
     color: var(--ink-2);
     font-weight: 400;
 }
 
-.rail-health-detail {
-    color: var(--ink-2);
-    font-size: var(--text-base);
+.rail-fact-row.has-note {
+    flex-wrap: wrap;
+    row-gap: 0.2rem;
 }
 
-.rail-health-broken {
+.rail-fact-note {
+    flex-basis: 100%;
     color: var(--color-warning);
     font-size: var(--text-base);
+    text-align: right;
+}
+
+/* Open-source health: facts measured with CHAOSS metric definitions, in hairline rows like
+   the facts above. It describes and never grades: no status colours, no dots, no score. */
+.rail-oss {
+    margin-top: 1.75rem;
+}
+
+.rail-oss .rail-cluster-label {
+    margin-bottom: 0.15rem;
+}
+
+.rail-oss-caption {
+    margin: 0;
+    color: var(--ink-3);
+    font-size: var(--text-md);
+    line-height: 1.45;
+}
+
+.rail-oss-rows {
+    margin: 0.75rem 0 0;
+    border-top: 1px solid var(--hairline-strong);
+}
+
+.rail-oss-row {
+    display: grid;
+    grid-template-columns: minmax(6.5rem, 36%) minmax(0, 1fr);
+    gap: 1rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--hairline);
+}
+
+.rail-oss-row dt {
+    color: var(--ink-3);
+    font-size: var(--text-md);
+    line-height: 1.45;
+}
+
+.rail-oss-row dd {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin: 0;
+    color: var(--ink);
+    font-size: var(--text-md);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+
+.rail-oss-row.is-gap dd {
+    color: var(--ink-2);
+    font-weight: 400;
+}
+
+.rail-oss-method {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 0.85rem;
+    color: var(--ink);
+    font-size: var(--text-md);
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-color: var(--hairline-strong);
+    text-underline-offset: 0.2em;
+    transition: color var(--transition-fast);
+}
+
+.rail-oss-method i {
+    color: var(--ink-3);
+    font-size: 0.75em;
+}
+
+.rail-oss-method:hover {
+    color: var(--spot-deep);
+    text-decoration-color: currentColor;
 }
 
 /* Maturity: a vertical run of dots, printed where a stage is reached. */

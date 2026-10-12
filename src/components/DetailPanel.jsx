@@ -5,9 +5,10 @@ import { withBasePath, resolvePublicHref } from '../utils/basePath'
 import { parseSdgList } from '../utils/sdgColors'
 import { completenessFromScore, depthLabel } from '../utils/depth'
 import { parseContacts, licenseLabel, firstUrl, labelFromUrl } from '../utils/parsing'
-import { hasHealthSignal, availabilityLabel, contextLabel, healthDetailLines } from '../utils/health'
+import { hasHealthSignal, contextLabel, ossBlock, brokenLinksNote } from '../utils/health'
 import { SITE_NAME, SITE_TITLE, SITE_DESCRIPTION, SITE_URL, SITE_OG_IMAGE } from '../utils/site'
 import RisoPrint from './RisoPrint'
+import OpenSourceHealth from './OpenSourceHealth'
 
 // Cumulative maturity pipeline rendered as a stepper in the detail panel.
 const MATURITY_STEPS = [
@@ -211,8 +212,8 @@ const DetailPanel = ({ project, onClose }) => {
   const health = project?.health
   const showHealth = hasHealthSignal(health)
   const healthContext = showHealth ? contextLabel(health.context) : null
-  const healthDetails = showHealth ? healthDetailLines(health) : []
-  const brokenLinkCount = showHealth ? (health.broken_links?.length || 0) : 0
+  const brokenNote = showHealth ? brokenLinksNote(health) : null
+  const oss = ossBlock(health)
 
   // Compute license value for metadata grid
   const rawLicense = project?.license?.trim()
@@ -647,7 +648,9 @@ const DetailPanel = ({ project, onClose }) => {
                 <div className="rail-facts">
                   <div className="rail-fact-row">
                     <span className="rail-fact-label">Data type</span>
-                    <span className="rail-fact-value">{dataTypeText || '—'}</span>
+                    <span className="rail-fact-value">
+                      {dataTypeText || <span className="rail-fact-empty">Not specified</span>}
+                    </span>
                   </div>
                   <div className="rail-fact-row">
                     <span className="rail-fact-label">License</span>
@@ -666,11 +669,13 @@ const DetailPanel = ({ project, onClose }) => {
                       </span>
                     </span>
                   </div>
-                  <div className="rail-fact-row">
+                  <div className={`rail-fact-row${brokenNote ? ' has-note' : ''}`}>
                     <span className="rail-fact-label">Status</span>
                     <span className={`rail-fact-value rail-status status-${statusState}`}>
                       <span className="status-dot" aria-hidden="true"></span>{statusText}
+                      {healthContext && <span className="rail-status-context"> · {healthContext}</span>}
                     </span>
+                    {brokenNote && <span className="rail-fact-note">{brokenNote}</span>}
                   </div>
                   {project?.countries?.length > 0 && (
                     <div className="rail-fact-row">
@@ -680,30 +685,8 @@ const DetailPanel = ({ project, onClose }) => {
                   )}
                 </div>
 
-                {/* Link health -- kept whenever there is more to report than the Status row */}
-                {showHealth && (healthDetails.length > 0 || brokenLinkCount > 0 || healthContext) && (
-                  <div className={`rail-health health-${health.availability}`}>
-                    <span className="health-dot" aria-hidden="true"></span>
-                    <div className="rail-health-body">
-                      <span className="rail-health-headline">
-                        {availabilityLabel(health.availability)}
-                        {healthContext && (
-                          <span className="rail-health-context"> · {healthContext}</span>
-                        )}
-                      </span>
-                      {healthDetails.length > 0 && (
-                        <span className="rail-health-detail">{healthDetails.join(' · ')}</span>
-                      )}
-                      {brokenLinkCount > 0 && (
-                        <span className="rail-health-broken">
-                          {brokenLinkCount === 1
-                            ? '1 link did not respond at the last check'
-                            : `${brokenLinkCount} links did not respond at the last check`}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                )}
+                {/* Open-source health: facts measured with CHAOSS metric definitions */}
+                {oss && <OpenSourceHealth block={oss} href={withBasePath('open-source-health/')} />}
 
                 {/* Maturity -- vertical stepper */}
                 {maturityTags.length > 0 && (
