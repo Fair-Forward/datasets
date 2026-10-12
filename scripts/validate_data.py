@@ -5,6 +5,7 @@ import argparse
 from datetime import datetime
 from utils import KNOWN_COUNTRIES, DEFAULT_CREDENTIALS_PATH, get_gsheet_client, check_urls
 from generate_catalog_data import KNOWN_LICENSE_VALUES
+from sheet_notes import merge_note
 
 parser = argparse.ArgumentParser(description='Validate catalog data and generate quality report.')
 parser.add_argument('--input', type=str, default="public/data/catalog.json", help='Path to catalog JSON')
@@ -495,14 +496,10 @@ def write_notes_to_sheet(row_notes, credentials_path):
             if col_idx is None:
                 continue
             cell = gspread.utils.rowcol_to_a1(sheet_row, col_idx)
-            full_note = note_prefix + note_text
-
-            # If cell has an existing note that is NOT auto-check, preserve it
-            existing = get_existing_note(sheet_row, col_idx)
-            if existing and note_prefix not in existing:
-                full_note = existing + "\n\n" + full_note
-
-            batch_notes[cell] = full_note
+            # Replace only the previous auto-check paragraph: a person's note, a [Keep] pin and
+            # sheet_corrections.py's [Source check] record stay.
+            batch_notes[cell] = merge_note(get_existing_note(sheet_row, col_idx), note_prefix.strip(),
+                                           note_prefix + note_text)
 
     if not batch_notes:
         print("  No notes to write.")

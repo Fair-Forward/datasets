@@ -8,6 +8,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  actions: write            # starts the sheet sync after the Sheet is corrected
 
 jobs:
   health-check:
@@ -30,7 +31,7 @@ jobs:
         python-version: "3.x"
 
     - name: Install dependencies
-      run: pip install requests pandas
+      run: pip install requests pandas gspread oauth2client
 
     - name: Run unit tests
       run: python -m unittest discover -s scripts/tests -t scripts
@@ -68,3 +69,31 @@ jobs:
         gh pr merge "$PR_NUM" --squash --auto \
           || gh pr merge "$PR_NUM" --squash \
           || echo "::notice::Merge failed. PR #$PR_NUM needs manual merge."
+
+    - name: Create service account credentials
+      env:
+        GOOGLE_SHEETS_CREDENTIALS: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}
+      run: |
+        CRED_FILE="data_sources/google_sheets_api/service_account_JN.json"
+        mkdir -p "$(dirname "$CRED_FILE")"
+        printf '%s' "${GOOGLE_SHEETS_CREDENTIALS}" > "$CRED_FILE"
+        if ! python -m json.tool "$CRED_FILE" > /dev/null 2>&1; then
+          echo "::error::Invalid JSON in credentials file. Check the GOOGLE_SHEETS_CREDENTIALS secret."
+          exit 1
+        fi
+
+    # Licences and outdated links in the master Sheet, corrected from what the sources declare
+    # (docs/health-thresholds.md, Part 5). More than 30 changes write nothing and fail this step.
+    - name: Correct the master Sheet from the sources
+      id: corrections
+      run: python scripts/sheet_corrections.py --apply --summary corrections.md
+
+    - name: Show the corrections
+      if: always() && hashFiles('corrections.md') != ''
+      run: cat corrections.md >> "$GITHUB_STEP_SUMMARY"
+
+    - name: Rebuild the site from the corrected Sheet
+      if: steps.corrections.outputs.written != '' && steps.corrections.outputs.written != '0'
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: gh workflow run update_from_google_sheets.yml --ref main
