@@ -1,6 +1,7 @@
-// The detail panel rail's "CHAOSS metrics" block: facts about a project's open assets, measured
-// weekly with the metrics of CHAOSS (Community Health Analytics in Open Source Software, a Linux
-// Foundation project), in hairline rows like the facts above it. Each row label names the CHAOSS
+// The detail panel rail's "Online Community Health measured through CHAOSS metrics" block (the
+// same title as the method page, PAGE_TITLE in scripts/generate_health_page.py): facts about a
+// project's open assets, measured weekly with the metrics of CHAOSS (Community Health Analytics
+// in Open Source Software, a Linux Foundation project), in hairline rows like the facts above it. Each row label names the CHAOSS
 // metric it follows on hover. Rows without enough data are named in one line instead of showing a
 // zero. The block describes and never grades: no colours, no dots, no score. `block` comes from
 // ossBlock() in utils/health.
@@ -10,7 +11,7 @@ const ChaossMetrics = ({ block, href }) => {
 
   return (
     <div className="rail-oss">
-      <div className="rail-cluster-label">CHAOSS metrics</div>
+      <div className="rail-cluster-label">Online Community Health measured through CHAOSS metrics</div>
       <p className="rail-oss-caption">{caption}</p>
       {block.note && <p className="rail-oss-caption">{block.note}</p>}
 

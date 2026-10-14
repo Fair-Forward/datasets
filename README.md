@@ -261,7 +261,7 @@ npm run dev
 | `scripts/chaoss_metrics.py` | CHAOSS metric definitions, thresholds and metric maths (no CLI) |
 | `scripts/health_assets.py` | Which links are open assets the health check can measure (no CLI) |
 | `scripts/health_sources.py` | GitHub, Hugging Face, Zenodo and doi.org clients for the health check (no CLI) |
-| `scripts/generate_health_page.py` | `catalog.json` -> `public/chaoss/` (the methodology page the CHAOSS metrics block links to) |
+| `scripts/generate_health_page.py` | `catalog.json` -> `public/chaoss/` (the methodology page the panel's Online Community Health block links to) |
 | `scripts/health_report.py` | Private comparison of the CHAOSS metrics; refuses to write inside the repo |
 | `scripts/sheet_corrections.py` | Weekly: correct licenses and outdated links in the Sheet from what the sources declare |
 | `scripts/sheet_notes.py` | Shared cell-note rules: each script replaces only its own paragraph, `[Keep]` pins a cell (no CLI) |

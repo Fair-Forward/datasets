@@ -10,8 +10,8 @@ and produces:
   oss           -- CHAOSS metrics for every GitHub repository, Hugging Face model,
                    dataset or space and Zenodo record the entry links, following CHAOSS metric
                    definitions (chaoss_metrics.py). Facts, never scores; gaps are named.
-  compare       -- the yes/no facts the Insights page and the private report count, decided here
-                   once so both apply the same policy.
+  compare       -- the yes/no facts the private report counts, decided here once so the
+                   policy lives in one place.
 
 Reachability is the universal baseline. Archival platforms (Zenodo, Harvard Dataverse) are frozen
 and permanently citable, so they are surfaced as a positive "stable_archive", never penalised. A

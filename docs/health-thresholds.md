@@ -150,9 +150,9 @@ Rules:
   Add its id to `OPT_OUT_IDS` in `health_check.py`; its links are still checked.
 - **Comparison**: CHAOSS advises against comparing projects with each other. Each entry's
   `compare` flags (`open_asset`, `measured`, `changed_12m`, `several_contributors`) are decided once
-  in Python for counting by SDG without names; SDGs with fewer than `MIN_GROUP` (5) measured
-  projects show coverage only. A named comparison exists only in the private report written by
-  `scripts/health_report.py`, which refuses to write inside this repository.
+  in Python and counted only in the private report written by `scripts/health_report.py`, which
+  refuses to write inside this repository. The public site shows each project's own facts and no
+  cross-project comparison.
 
 ## Part 5: Corrections to the master Sheet
 
