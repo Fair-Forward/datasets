@@ -53,7 +53,7 @@ The build automatically scores each project (0-100) based on how complete its in
 
 Quality feedback is written back to the Google Sheet as cell notes (small black triangle in the cell corner, visible on hover). These notes suggest improvements like adding missing descriptions or using standard license formats.
 
-The weekly check also corrects the Sheet where a project's own sources say otherwise: the license its dataset declares on Hugging Face or Zenodo, and links to repositories that were renamed or to older versions of a Zenodo record. Each corrected cell keeps its previous value in a note starting with "[Source check]", and the Sheet's version history has every earlier state. To stop a cell from being corrected, write [Keep] in its note. The rules are in `docs/health-thresholds.md` (Part 5).
+The weekly check also corrects the Sheet where a project's own sources say otherwise: the license its dataset declares on Hugging Face or Zenodo, the Code License column from what its code declares, and links to repositories that were renamed or to older versions of a Zenodo record. Each corrected cell keeps its previous value in a note starting with "[Source check]", and the Sheet's version history has every earlier state. To stop a cell from being corrected, write [Keep] in its note. The rules are in `docs/health-thresholds.md` (Part 5).
 
 ### Uploading PDFs or documents
 
@@ -86,7 +86,7 @@ Two different things are licensed here, and it matters which one you mean.
 
 The catalog metadata is **CC0 1.0**. You can republish these records freely, with or without attribution. Every response says so under `license`.
 
-The linked assets are not ours. Each record's `license` field describes the dataset or model we point at. It is `null` for about half the projects. That means no license has been recorded, not that the asset is unlicensed and not that it is free to reuse.
+The linked assets are not ours. Each record's `license` field describes the dataset or model we point at. It is `null` for about half the projects. That means no license has been recorded, not that the asset is unlicensed and not that it is free to reuse. `code_licenses` lists what the project's linked code (GitHub repositories, Hugging Face spaces, Zenodo software) declares at its source, checked weekly; it is an empty list when nothing has been confirmed.
 
 ### Identifiers
 

@@ -10,9 +10,9 @@ from generate_catalog_data import KNOWN_LICENSE_VALUES
 from text_parsing import spdx_for
 
 HEADER = ['Project ID', 'Title', 'Access to the dataset [link]',
-          'Access to AI Model /Software / AI System [link]', 'License']
-EXPLAIN = ['Stable id', 'Name', 'Where the data is', 'Where the model is', 'Licence']
-ID, DATASET, MODEL, LICENSE = 0, 2, 3, 4
+          'Access to AI Model /Software / AI System [link]', 'License', 'Code License']
+EXPLAIN = ['Stable id', 'Name', 'Where the data is', 'Where the model is', 'Licence', 'Code licence']
+ID, DATASET, MODEL, LICENSE, CODE_LICENSE = 0, 2, 3, 4, 5
 TODAY = '2026-10-12'
 
 
@@ -50,16 +50,22 @@ def health(entries):
     return {'schema_version': 2, 'generated_at': '2026-10-09', 'entries': entries}
 
 
-def row(pid, dataset='', model='', license=''):
-    return [pid, f'Project {pid}', dataset, model, license]
+def row(pid, dataset='', model='', license='', code_license=''):
+    return [pid, f'Project {pid}', dataset, model, license, code_license]
 
 
 def sheet(*rows):
     return [HEADER, EXPLAIN] + [list(r) for r in rows]
 
 
-def run(doc, grid, notes=(), formulas=(), protected=(), verify=lambda url: True):
-    return sc.plan(doc, grid, list(notes), list(formulas), list(protected), verify, TODAY)
+def run(doc, grid, notes=(), formulas=(), protected=(), verify=lambda url: True, code=False):
+    """The plan for the License and link cells, or with code=True for the Code License cells only."""
+    changes, skipped = sc.plan(doc, grid, list(notes), list(formulas), list(protected), verify, TODAY)
+    if code:
+        return ([c for c in changes if c['column'] == 'code_license'],
+                [x for x in skipped if x['what'] == 'Code License'])
+    return ([c for c in changes if c['column'] != 'code_license'],
+            [x for x in skipped if x['what'] != 'Code License'])
 
 
 def notes_at(r, c, text, rows=3):
@@ -373,7 +379,7 @@ class SheetShapeTests(unittest.TestCase):
     def test_matches_headers_regardless_of_case_and_spacing(self):
         grid = sheet(row('ui_79'))
         grid[0] = [' project id', 'Title', 'access to the dataset  [link]',
-                   'Access to AI Model /Software / AI System [link] ', 'LICENSE']
+                   'Access to AI Model /Software / AI System [link] ', 'LICENSE', 'code  license']
         changes, _ = run(health({'ui_79': entry(gh('o/c', lic('GPL-3.0')))}), grid)
         self.assertEqual(changes[0]['cell'], 'E3')
 
@@ -410,11 +416,61 @@ class FakeWorksheet:
         return {'sheets': [{'data': data}]}
 
 
+class CodeLicenseTests(unittest.TestCase):
+    def test_fills_the_code_licence_from_every_repository(self):
+        doc = health({'ui_23': entry(gh('o/a', lic('MIT')), gh('o/b', lic('Apache-2.0')), gh('o/c', lic('MIT')))})
+        changes, _ = run(doc, sheet(row('ui_23', license='CC-BY 4.0')), code=True)
+        self.assertEqual((changes[0]['cell'], changes[0]['new'], changes[0]['kind']), ('F3', 'Apache 2.0; MIT', 'fill'))
+        self.assertIn('Was empty; 3 code repositories declare Apache-2.0, MIT.', changes[0]['note'])
+
+    def test_the_data_licence_cell_is_not_touched_by_code(self):
+        changes, _ = run(health({'ui_75': entry(gh('o/c', lic('Apache-2.0')))}),
+                         sheet(row('ui_75', license='CC-BY 4.0')))
+        self.assertEqual(changes, [])
+
+    def test_replaces_a_code_licence_the_source_contradicts(self):
+        changes, _ = run(health({'ui_1': entry(gh('o/c', lic('GPL-3.0')))}),
+                         sheet(row('ui_1', code_license='MIT')), code=True)
+        self.assertEqual((changes[0]['new'], changes[0]['kind']), ('GPL 3.0', 'overwrite'))
+
+    def test_leaves_a_cell_that_already_lists_the_same_licences(self):
+        doc = health({'ui_1': entry(gh('o/a', lic('MIT')), gh('o/b', lic('Apache-2.0')))})
+        self.assertEqual(run(doc, sheet(row('ui_1', code_license='MIT; Apache 2.0')), code=True), ([], []))
+
+    def test_a_repository_without_a_licence_settles_nothing(self):
+        doc = health({'ui_1': entry(gh('o/a', lic('MIT')), gh('o/b'))})
+        changes, skipped = run(doc, sheet(row('ui_1')), code=True)
+        self.assertEqual(changes, [])
+        self.assertEqual(skipped[0]['reason'], 'not every code repository declares a licence')
+
+    def test_a_custom_or_unreadable_repository_settles_nothing(self):
+        for asset in (gh('o/a', lic(None, 'unrecognised')), gh('o/a', lic('MIT'), status='unavailable')):
+            changes, skipped = run(health({'ui_1': entry(asset)}), sheet(row('ui_1')), code=True)
+            self.assertEqual(changes, [])
+            self.assertTrue(skipped)
+
+    def test_datasets_and_models_are_not_code(self):
+        doc = health({'ui_1': entry(hf('datasets', 'o/d', lic('CC-BY-4.0')), zen(5, lic('CC0-1.0')))})
+        self.assertEqual(run(doc, sheet(row('ui_1')), code=True), ([], []))
+
+    def test_spaces_and_zenodo_software_are_code(self):
+        doc = health({'ui_1': entry(hf('spaces', 'o/s', lic('MIT')), zen(5, lic('MIT'), resource_type='software'))})
+        changes, _ = run(doc, sheet(row('ui_1')), code=True)
+        self.assertEqual(changes[0]['new'], 'MIT')
+
+    def test_a_keep_note_pins_the_code_licence(self):
+        changes, skipped = run(health({'ui_1': entry(gh('o/c', lic('MIT')))}), sheet(row('ui_1', code_license='GPL 3.0')),
+                               notes=notes_at(2, CODE_LICENSE, 'Partner confirmed. [Keep]'), code=True)
+        self.assertEqual(changes, [])
+        self.assertEqual(skipped[0]['reason'], 'pinned with [Keep]')
+
+
 class MainTests(unittest.TestCase):
     def setUp(self):
         self.dir = tempfile.TemporaryDirectory()
         self.addCleanup(self.dir.cleanup)
-        self.grid = sheet(row('ui_79'), row('ui_80', license='CC0 1.0'))
+        # ui_79's Code License already says what its code declares, so only License cells change.
+        self.grid = sheet(row('ui_79', code_license='GPL 3.0'), row('ui_80', license='CC0 1.0'))
         self.ws = FakeWorksheet(self.grid)
         self.doc = health({'ui_79': entry(gh('o/c', lic('GPL-3.0'))),
                            'ui_80': entry(hf('datasets', 'o/d', lic('CC-BY-4.0')))})

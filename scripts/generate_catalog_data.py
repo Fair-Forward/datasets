@@ -63,6 +63,15 @@ LICENSE_NORMALIZATION = {
 KNOWN_LICENSE_VALUES = set(LICENSE_NORMALIZATION.values())
 
 
+def normalize_code_license(raw):
+    """The Code License cell: one or more licences joined with '; ' (sheet_corrections.py writes it
+    from what the code declares at its source), each normalised like the License column."""
+    if not raw or not isinstance(raw, str) or raw.strip().lower() == 'nan':
+        return ''
+    parts = [normalize_license(part) for part in re.split(r'[;\n]', raw)]
+    return '; '.join(part for part in parts if part)
+
+
 def normalize_license(raw_license):
     """Normalize license strings to canonical short names."""
     if not raw_license or not isinstance(raw_license, str):
@@ -502,6 +511,7 @@ def generate_catalog_json():
                 'data_types': data_types,
                 'countries': project_countries,
                 'license': normalize_license(str(row.get('License', ''))),
+                'code_license': normalize_code_license(str(row.get('Code License', ''))),
                 'contact': clean_str(str(row.get('Point of Contact/Communities', ''))),
                 'organizations': clean_str(str(row.get('Organizations Involved', ''))),
                 'editor': clean_str(str(row.get('Authors', ''))),

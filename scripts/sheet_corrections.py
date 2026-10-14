@@ -11,6 +11,10 @@ fill a gap in it, this script corrects the Sheet, so the catalogue shows what th
   (it may be a paper) only fills an empty one. Nothing changes when the dataset column also links
   data the check cannot read (Mozilla's Data Collective, Kaggle, a website), or when an asset
   could not be read.
+- Code License: the licences the project's code declares at its source (GitHub repositories,
+  Hugging Face spaces, Zenodo records filed as software), several joined with "; ". The column is
+  filled from the sources alone, so it may replace a value, but only when every code asset could be
+  read and declares a licence the catalogue knows.
 - Links: a repository renamed on GitHub or Hugging Face gets its new address, and a link to an
   older version of a Zenodo record becomes the record's all-versions DOI, which always opens the
   latest version. A new address is used only once it answers.
@@ -57,8 +61,11 @@ COLUMNS = {
     'model': ('Access to AI Model /Software / AI System [link]',
               'Access to AI Model, Software, AI Application [link]', 'Model/Use-Case Links'),
     'license': ('License', 'Usage Rights'),
+    'code_license': ('Code License', 'Code Licence'),
 }
-COLUMN_LABELS = {'dataset': 'Dataset link', 'model': 'Model link', 'license': 'License'}
+COLUMN_LABELS = {'dataset': 'Dataset link', 'model': 'Model link', 'license': 'License',
+                 'code_license': 'Code License'}
+CODE_LICENSE_SEPARATOR = '; '
 LINK_COLUMNS = ('dataset', 'model')
 
 # Whose licence speaks for the project's data, first to last.
@@ -342,6 +349,57 @@ def _license_plan(pid, oss, r, cols, sheet, today):
     return _change(pid, r, c, 'license', old, value, kind, sentence, [(old, value, source)], sheet, today), None
 
 
+def decide_code_license(assets):
+    """What the project's code declares: {value, spdx_ids, group} when every code asset could be
+    read and declares licences the catalogue can spell, otherwise {reason}, which is None when the
+    project links no code."""
+    group = [a for a in assets if asset_tier(a) == 'code']
+    if not group:
+        return {'reason': None}
+    if any(a.get('status') != 'measured' for a in group):
+        return {'reason': 'not every code repository could be read'}
+    declared = [[item for item in a.get('license') or [] if item.get('status') != 'none'] for a in group]
+    if not all(declared):
+        return {'reason': 'not every code repository declares a licence'}
+    items = [item for found in declared for item in found]
+    if any(item.get('status') != 'detected' or not item.get('spdx') for item in items):
+        return {'reason': 'a custom or unrecognised licence at the source (code)'}
+    ids = sorted({item['spdx'] for item in items})
+    missing = [i for i in ids if i not in SPDX_TO_CATALOGUE]
+    if missing:
+        return {'reason': f'{missing[0]} has no spelling in the catalogue yet'}
+    return {'value': CODE_LICENSE_SEPARATOR.join(SPDX_TO_CATALOGUE[i] for i in ids), 'spdx_ids': ids, 'group': group}
+
+
+def recognised_code_licenses(text):
+    """The set of catalogue spellings in a Code License cell, or None when a part is not one the
+    catalogue knows."""
+    parts = [part for part in re.split(r'[;\n]', text or '') if part.strip()]
+    found = {recognised_license(part) for part in parts}
+    return None if None in found else found
+
+
+def _code_license_plan(pid, oss, r, cols, sheet, today):
+    decision = decide_code_license(oss.get('assets') or [])
+    if 'value' not in decision:
+        reason = decision.get('reason')
+        return None, ({'pid': pid, 'what': 'Code License', 'reason': reason} if reason else None)
+    c = cols['code_license']
+    old = sheet.value(r, c).strip()
+    if recognised_code_licenses(old) == set(decision['value'].split(CODE_LICENSE_SEPARATOR)):
+        return None, None
+    blocked = sheet.blocked(r, c)
+    if blocked:
+        return None, {'pid': pid, 'what': 'Code License', 'reason': blocked}
+    n = len(decision['group'])
+    source = (f"the code repository declares {', '.join(decision['spdx_ids'])}" if n == 1 else
+              f"{n} code repositories declare {', '.join(decision['spdx_ids'])}")
+    kind = 'overwrite' if old else 'fill'
+    sentence = f'Was "{old}"; {source}.' if old else f'Was empty; {source}.'
+    return _change(pid, r, c, 'code_license', old, decision['value'], kind, sentence,
+                   [(old, decision['value'], source)], sheet, today), None
+
+
 def _link_plan(pid, oss, r, cols, sheet, verify, today):
     targets = link_targets(oss)
     if not targets:
@@ -402,9 +460,10 @@ def plan(health, grid, notes, formulas, protected, verify, today):
             skipped.append({'pid': pid, 'what': 'row', 'reason': reason})
             continue
         r = found[0]
-        change, skip = _license_plan(pid, oss, r, cols, sheet, today)
-        changes.extend([change] if change else [])
-        skipped.extend([skip] if skip else [])
+        for planner in (_license_plan, _code_license_plan):
+            change, skip = planner(pid, oss, r, cols, sheet, today)
+            changes.extend([change] if change else [])
+            skipped.extend([skip] if skip else [])
         link_changes, link_skips = _link_plan(pid, oss, r, cols, sheet, verify, today)
         changes.extend(link_changes)
         skipped.extend(link_skips)
