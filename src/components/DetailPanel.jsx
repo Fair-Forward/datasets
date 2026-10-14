@@ -648,6 +648,12 @@ const DetailPanel = ({ project, onClose }) => {
                       {licenseValue ? renderLicense(licenseValue) : <span className="rail-fact-empty">Not specified</span>}
                     </span>
                   </div>
+                  {project?.code_license && (
+                    <div className="rail-fact-row">
+                      <span className="rail-fact-label">Code license</span>
+                      <span className="rail-fact-value">{project.code_license}</span>
+                    </div>
+                  )}
                   <div className="rail-fact-row">
                     <span className="rail-fact-label">Documentation</span>
                     <span className="rail-fact-value rail-fact-depth">

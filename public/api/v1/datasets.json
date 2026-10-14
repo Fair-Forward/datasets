@@ -8,7 +8,7 @@
     "url": "https://creativecommons.org/publicdomain/zero/1.0/",
     "note": "Covers the catalogue metadata in this file: you may republish these records freely, with or without attribution. It does NOT cover the linked assets. Each record's `license` field describes the terms of the asset itself, which Fair Forward does not own; a null value means no license has been recorded, not that the asset is unlicensed or free to reuse."
   },
-  "version": "c5b555cd35188c2e",
+  "version": "8b089c44cdcfb95d",
   "count": 72,
   "vocabularies": {
     "sdgs": [
@@ -217,6 +217,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Stellenbosch University",
@@ -302,6 +303,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Université d’Abomey-Calavi - Laboratoire de Biomathématiques et d'Estimations Forestières (Benin)",
@@ -389,6 +391,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Reiner Lemoine Institut gGmbH (RLI)",
@@ -464,6 +467,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "World Resources Institute (WRI)",
@@ -543,6 +547,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Fundación Despacio",
@@ -625,6 +630,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Marine and Coastal Research Institute \"José Benito Vives de Andréis\" (INVEMAR) Colombia, Centre Tecnològic de Telecomunicacions de Catalunya (CTTC)",
@@ -710,6 +716,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Data354, Zindi",
@@ -802,6 +809,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Data354",
@@ -872,6 +880,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "ESPOL University",
@@ -955,6 +964,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Ecociencia",
@@ -1045,6 +1055,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Space4Innovation, Namunyak Conservancy, GEO Indigenous Alliance, MUSAP & Rochester Institute for Technology",
@@ -1163,6 +1174,7 @@
         "spdx": "CC-BY-SA-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Kara Agro",
@@ -1257,6 +1269,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Kwame Nkrumah University of Science and Technology (KNUST), Responsible AI Lab, Plant Protection and Regulatory Services Directorate (Ghana)",
@@ -1365,6 +1378,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Ashesi University, Nokwary Technologies",
@@ -1444,6 +1458,7 @@
         "spdx": "ODbL-1.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "RAIL - KNUST",
@@ -1540,6 +1555,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "World Resources Institute (WRI), Centre for Remote Sensing and Geographic Information Services (CERSGIS), NASA SERVIR Global Collaborative, Earth System Science Center",
@@ -1622,6 +1638,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Kwame Nkrumah University of Science and Technology (KNUST), Responsible AI Lab",
@@ -1720,6 +1737,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "University of Energy and Natural Resources (Ghana), University of Twente",
@@ -1833,6 +1851,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Kara Agro, Makerere University (AI Lab, Marconi Lab), National Coffee Research Institute, National Crops Resources Research Institute",
@@ -1922,6 +1941,7 @@
         "spdx": null,
         "url": "https://licensingafricandatasets.com/nwulite-obodo-license"
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Maseno University (Maseno Centre for Applied Artificial Intelligence), Members from the Dholuo language community",
@@ -2035,6 +2055,7 @@
         "spdx": "CC-BY-SA-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Audiopedia",
@@ -2137,6 +2158,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "UNDP India",
@@ -2255,6 +2277,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Indian Institute of Science (IISc)",
@@ -2366,6 +2389,7 @@
         "spdx": "Apache-2.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Wadhwani AI",
@@ -2481,6 +2505,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "GramVaani",
@@ -2585,6 +2610,7 @@
         "spdx": null,
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Karya Inc.",
@@ -2707,6 +2733,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Digital Green",
@@ -2813,6 +2840,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "WRMS - Weather Risk Management Services, ZINDI, Vertify Earth",
@@ -2926,6 +2954,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Bonn Consulting, Fraunhofer Institute",
@@ -3002,6 +3031,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Indian Institute of Science (IISc), Artpark",
@@ -3113,6 +3143,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Vertify Earth, Earth Analytics India Pvt Ltd, Balipara Foundation, Alsisar Impact",
@@ -3209,6 +3240,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Prosa.ai",
@@ -3300,6 +3332,7 @@
         "spdx": "CC-BY-SA-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "High Carbon Stock Approach (HCSA) Foundation, Jaringan Kerja Pemetaan Partisipatif (Seknas JKPP)",
@@ -3395,6 +3428,7 @@
         "spdx": "CC-BY-SA-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Prosa.ai",
@@ -3491,6 +3525,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Common Room Networks Foundation",
@@ -3590,6 +3625,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "RECOFTC",
@@ -3681,6 +3717,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Local Development Research Institute (LDRI)",
@@ -3779,6 +3816,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Tech Innovators Network Kenya (THiNK)",
@@ -3862,6 +3900,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "United States International University Africa (USIU) - Kenya, Kabarak University, Maseno University (Kenya)",
@@ -3958,6 +3997,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Dedan Kimathi University of Technology (Kenya)",
@@ -4057,6 +4097,7 @@
         "spdx": null,
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "International Center of Insect Physiology and Ecology (ICIPE)",
@@ -4141,6 +4182,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Badili Innovations",
@@ -4237,6 +4279,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Digital Green, Viamo, Tech for Her, DynAg, Digifarm, Opportunity International",
@@ -4327,6 +4370,7 @@
         "spdx": "CC0-1.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Mozilla Common Voice",
@@ -4418,6 +4462,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Association Maidi",
@@ -4494,6 +4539,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Bayero University (Kano, Nigeria), Ahmadu Bello University (Zaria, Nigeria), Masakhane NLP, HausaNLP, Kaduna State University",
@@ -4580,6 +4626,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Lahore University (LUMS)",
@@ -4668,6 +4715,7 @@
         "spdx": "CC0-1.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Digital Umuganda",
@@ -4764,6 +4812,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Ministry of Agriculture and Animal Resources (MINAGRI), Centre for the Fourth Industrial Revolution Rwanda (C4IR), Kigali Natural Language Processing (KiNLP)",
@@ -4840,6 +4889,7 @@
         "spdx": "CC0-1.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Digital Umuganda, Mozilla Common Voice",
@@ -4931,6 +4981,7 @@
         "spdx": "MIT",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Rwanda Space Agency (RSA), the Rwandan Ministry of Agriculture, Alliance of Bioversity International and CIAT",
@@ -5030,6 +5081,7 @@
         "spdx": null,
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Digital Umuganda",
@@ -5142,6 +5194,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Move Beyond Consulting\nImplementing partners: MBC, WITS, CSIR, ARC",
@@ -5227,6 +5280,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Move Beyond Consulting\nImplementing partners: MBC, WITS, CSIR, ARC",
@@ -5312,6 +5366,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Move Beyond Consulting\nImplementing partners: MBC, WITS, CSIR, ARC",
@@ -5397,6 +5452,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Move Beyond Consulting\nImplementing partners: MBC, WITS, CSIR, ARC",
@@ -5483,6 +5539,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Move Beyond Consulting\nImplementing partners: MBC, WITS, CSIR, ARC",
@@ -5570,6 +5627,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Move Beyond Consulting\nImplementing partners: MBC, WITS, CSIR, ARC",
@@ -5657,6 +5715,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Move Beyond Consulting\nImplementing partners: MBC, WITS, CSIR, ARC",
@@ -5744,6 +5803,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Move Beyond Consulting\nImplementing partners: MBC, WITS, CSIR, ARC",
@@ -5831,6 +5891,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Move Beyond Consulting\nImplementing partners: MBC, WITS, CSIR, ARC",
@@ -5917,6 +5978,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Move Beyond Consulting\nImplementing partners: MBC, WITS, CSIR, ARC",
@@ -6002,6 +6064,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Move Beyond Consulting\nImplementing partners: MBC, WITS, CSIR, ARC",
@@ -6091,6 +6154,7 @@
         "spdx": "CC0-1.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Stellenbosch University",
@@ -6177,6 +6241,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Radiant Earth, Western Cape Department of Agriculture",
@@ -6275,6 +6340,7 @@
         "spdx": "CC-BY-SA-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Producers Direct, M-Omulimisa, Alliance of Bioversity International and CIAT, Tecnicafé",
@@ -6373,6 +6439,7 @@
         "spdx": "GPL-3.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Sunbird.ai",
@@ -6462,6 +6529,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Makerere University (Marconi Lab)",
@@ -6559,6 +6627,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Makerere University (Makerere AI Lab, Marconi Lab), Clear Global",
@@ -6646,6 +6715,7 @@
         "spdx": "Apache-2.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Mbaza NLP community, German Research Center for Artificial Intelligence (DFKI)",
@@ -6735,6 +6805,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Centre for the Fourth Industrial Revolution Rwanda (C4IR), Kigali Natural Language Processing (KiNLP)",
@@ -6844,6 +6915,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Digital Green",

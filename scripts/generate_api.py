@@ -171,6 +171,7 @@ pilot_plus = [p <span class="c-key">for</span> p <span class="c-key">in</span> d
         <tr><td>links</td><td>label, url</td><td class="num">$cov_links</td><td class="note">Grouped as dataset, usecase, additional, documents.</td></tr>
         <tr><td>canonical_url</td><td>string</td><td class="num">$total_projects</td><td class="note">The project's page here. A good place to link back to.</td></tr>
         <tr><td>license</td><td>name, spdx, url</td><td class="num">$cov_license</td><td class="note">Often null. See above.</td></tr>
+        <tr><td>code_licenses[]</td><td>name, spdx, url</td><td class="num">$cov_code_licenses</td><td class="note">What the linked code declares at its source, checked weekly.</td></tr>
         <tr><td>content</td><td>text, provenance</td><td class="num">$cov_content</td><td class="note">Check provenance before showing it.</td></tr>
         <tr><td>contact</td><td>string</td><td class="num">$cov_contact</td><td class="note">Free text, usually an email address.</td></tr>
         <tr><td>image</td><td>string</td><td class="num">$cov_image</td><td class="note">Absolute URL. Some are stock placeholders.</td></tr>
@@ -338,6 +339,11 @@ def build_record(project):
             "tags": project.get("maturity_tags") or [],
         },
         "license": license_parts(project.get("license")),
+        # What the linked code declares at its source, written weekly by sheet_corrections.py.
+        # A list, since a project's repositories can carry different licences.
+        "code_licenses": [
+            part for part in (license_parts(x) for x in (project.get("code_license") or "").split(";")) if part
+        ],
         "organizations": build_organizations(project),
         "contact": (project.get("contact") or "").strip() or None,
         "access_note": access_note,
@@ -424,6 +430,7 @@ def write_docs_page(records, vocabularies, path):
         "cov_maturity": recorded(lambda r: r["maturity"]["tags"]),
         "cov_links": recorded(lambda r: any(r["links"].values())),
         "cov_license": recorded(lambda r: r["license"]),
+        "cov_code_licenses": recorded(lambda r: r["code_licenses"]),
         "cov_content": recorded(lambda r: any(r["content"].values())),
         "cov_contact": recorded(lambda r: r["contact"]),
         "cov_image": recorded(lambda r: r["image"]),

@@ -491,6 +491,9 @@ if not args.skip_fetch:
                 "Deep Dive - How can you concretely work", "Deep Dive", "How to Use",
                 "Deep dive: How can you concretely work with this and built on this? How much will this cost and which resources are available to help me? " # Added from log
                 ],
+            # Before "License" and matched exactly (MIN_SCORE): "Code License" scores 74 against
+            # "License", so with the shared threshold either column could take the other's header.
+            "Code License": ["Code License", "Code Licence"],
             "License": ["License", "Usage Rights"],
             # --- Add new columns here ---
             "Organizations Involved": [
@@ -551,6 +554,7 @@ if not args.skip_fetch:
         found_canonical_headers = set()
         unmatched_critical = []
         similarity_threshold = 70 # Lowered threshold slightly more
+        MIN_SCORE = {"Code License": 95}  # canonical names that need a near-exact header
         processed_actual_headers = set()
 
         print("Matching sheet headers to canonical script needs...")
@@ -571,7 +575,7 @@ if not args.skip_fetch:
                     best_match_for_canonical = actual_header
 
             # Check if the best match meets the threshold
-            if best_match_for_canonical and highest_score >= similarity_threshold:
+            if best_match_for_canonical and highest_score >= MIN_SCORE.get(canonical_name, similarity_threshold):
                 # Check if this actual header was already mapped to another canonical name
                 # This shouldn't happen with the `processed_actual_headers` check, but as a safeguard:
                 if best_match_for_canonical in header_mapping:

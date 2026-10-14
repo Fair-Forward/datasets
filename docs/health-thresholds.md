@@ -177,6 +177,16 @@ Sheets" workflow so the site follows. It writes only what the sources declare th
     MIT") leave the cell alone.
   - Only licences with a catalogue spelling are written (`SPDX_TO_CATALOGUE`, derived from
     `LICENSE_NORMALIZATION` in `generate_catalog_data.py` and `SPDX_IDS` in `text_parsing.py`).
+- **Code License** (the `Code License` column, next to `License`): the licences the project's code
+  declares at its source, written in the catalogue's spelling and joined with "; " when its
+  repositories differ (for example "Apache 2.0; MIT"). Code is GitHub repositories, Hugging Face
+  spaces and Zenodo records filed as software; datasets and models never count.
+  - The column holds only what the sources declare, so the check may replace a value in it, but
+    only when every code asset could be read and declares a licence the catalogue can spell. A
+    repository without a licence, or with a custom one, leaves the cell alone.
+  - It never touches the `License` column, which describes the data: a code licence there would
+    claim terms for data the code does not carry.
+  - The catalogue shows it as "Code license" in the project panel, and the API as `code_licenses`.
 - **Links** (the dataset and model link columns):
   - a repository renamed on GitHub or Hugging Face gets its new address, since the old one only
     redirects;
@@ -198,7 +208,8 @@ Safeguards:
 - A run that would change more than `MAX_CHANGES` (30) cells writes nothing and fails the workflow:
   a jump like that points at a fault, not at the sources.
 - Column headers are matched exactly (`COLUMNS`); a renamed header stops the run before anything
-  is written.
+  is written. `build_and_sync.py` also matches `Code License` exactly, since its fuzzy matching
+  would otherwise let it and `License` take each other's header.
 - Notes are shared (`scripts/sheet_notes.py`): `validate_data.py` replaces only its own
   `[Auto-check]` paragraph and `sheet_corrections.py` only its `[Source check]` paragraph, so what a
   person wrote in a note survives both. A paragraph runs to the next blank line: a person's text

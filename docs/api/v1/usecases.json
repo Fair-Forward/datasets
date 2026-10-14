@@ -8,7 +8,7 @@
     "url": "https://creativecommons.org/publicdomain/zero/1.0/",
     "note": "Covers the catalogue metadata in this file: you may republish these records freely, with or without attribution. It does NOT cover the linked assets. Each record's `license` field describes the terms of the asset itself, which Fair Forward does not own; a null value means no license has been recorded, not that the asset is unlicensed or free to reuse."
   },
-  "version": "c5b555cd35188c2e",
+  "version": "8b089c44cdcfb95d",
   "count": 38,
   "vocabularies": {
     "sdgs": [
@@ -193,6 +193,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Core23Lab",
@@ -288,6 +289,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Space4Innovation, Namunyak Conservancy, GEO Indigenous Alliance, MUSAP & Rochester Institute for Technology",
@@ -406,6 +408,7 @@
         "spdx": "CC-BY-SA-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Kara Agro",
@@ -500,6 +503,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Kwame Nkrumah University of Science and Technology (KNUST), Responsible AI Lab, Plant Protection and Regulatory Services Directorate (Ghana)",
@@ -611,6 +615,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Strathmore University’s iLabAfrica",
@@ -731,6 +736,7 @@
         "spdx": "CC-BY-SA-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Audiopedia",
@@ -833,6 +839,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "UNDP India",
@@ -951,6 +958,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Indian Institute of Science (IISc)",
@@ -1062,6 +1070,7 @@
         "spdx": "Apache-2.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Wadhwani AI",
@@ -1177,6 +1186,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "GramVaani",
@@ -1281,6 +1291,7 @@
         "spdx": null,
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Karya Inc.",
@@ -1403,6 +1414,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Digital Green",
@@ -1509,6 +1521,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "WRMS - Weather Risk Management Services, ZINDI, Vertify Earth",
@@ -1627,6 +1640,7 @@
         "spdx": "MIT",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Vertify Earth",
@@ -1730,6 +1744,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Indian Institute of Science (IISc), Artpark",
@@ -1841,6 +1856,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Vertify Earth, Earth Analytics India Pvt Ltd, Balipara Foundation, Alsisar Impact",
@@ -1937,6 +1953,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Prosa.ai",
@@ -2028,6 +2045,7 @@
         "spdx": "CC-BY-SA-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "High Carbon Stock Approach (HCSA) Foundation, Jaringan Kerja Pemetaan Partisipatif (Seknas JKPP)",
@@ -2123,6 +2141,7 @@
         "spdx": "CC-BY-SA-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Prosa.ai",
@@ -2219,6 +2238,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Common Room Networks Foundation",
@@ -2320,6 +2340,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Local Development Research Institute (LDRI)",
@@ -2418,6 +2439,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Tech Innovators Network Kenya (THiNK)",
@@ -2498,6 +2520,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Badili Innovations",
@@ -2593,6 +2616,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Bayero University (Kano, Nigeria), Ahmadu Bello University (Zaria, Nigeria), Masakhane NLP, HausaNLP, Kaduna State University",
@@ -2684,6 +2708,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Hesotech GmbH",
@@ -2777,6 +2802,7 @@
         "spdx": "CC0-1.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Digital Umuganda",
@@ -2877,6 +2903,7 @@
         "spdx": "MIT",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Rwanda Space Agency (RSA), the Rwandan Ministry of Agriculture, Alliance of Bioversity International and CIAT",
@@ -2976,6 +3003,7 @@
         "spdx": null,
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Digital Umuganda",
@@ -3093,6 +3121,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Radiant Earth, Western Cape Department of Agriculture",
@@ -3191,6 +3220,7 @@
         "spdx": "CC-BY-SA-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Producers Direct, M-Omulimisa, Alliance of Bioversity International and CIAT, Tecnicafé",
@@ -3289,6 +3319,7 @@
         "spdx": "GPL-3.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Sunbird.ai",
@@ -3378,6 +3409,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Makerere University (Marconi Lab)",
@@ -3468,6 +3500,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Civil Society and Budget Advocacy Group (CSBAG)",
@@ -3546,6 +3579,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Makerere University in cooperation with the National Forestry Authority (NFA) of Uganda",
@@ -3627,6 +3661,7 @@
         ]
       },
       "license": null,
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Made by People / Tanasuk Technologies Africa, Kenya, CLEAR Global, Tech Innovators Network Kenya (THiNK), BRS - Business Registration Service (Kenya)",
@@ -3708,6 +3743,7 @@
         "spdx": "Apache-2.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Mbaza NLP community, German Research Center for Artificial Intelligence (DFKI)",
@@ -3797,6 +3833,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Centre for the Fourth Industrial Revolution Rwanda (C4IR), Kigali Natural Language Processing (KiNLP)",
@@ -3906,6 +3943,7 @@
         "spdx": "CC-BY-4.0",
         "url": null
       },
+      "code_licenses": [],
       "organizations": {
         "provided_by": {
           "text": "Digital Green",
