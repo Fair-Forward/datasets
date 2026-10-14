@@ -1,6 +1,6 @@
 """Write the CHAOSS methodology page: public/chaoss/index.html.
 
-The detail panel's "CHAOSS metrics" block and the Insights view link here. The page names
+The detail panel's CHAOSS block links here. The page names
 CHAOSS, says which CHAOSS metric each row follows and links its definition, and states the
 thresholds, coverage and limits of the measurement. Thresholds come from chaoss_metrics.py and coverage
 counts from catalog.json, so the page cannot state a rule or a number the collector does not apply;
@@ -28,7 +28,7 @@ OUTPUT_PATH = os.path.join('public', 'chaoss', 'index.html')
 WORKFLOW_PATH = os.path.join('.github', 'workflows', 'health_check.yml')
 RANKING_PATH = os.path.join('src', 'utils', 'ranking.js')
 PAGE_PATH = 'chaoss/'
-PAGE_TITLE = 'Community Health (CHAOSS metrics)'  # the <title> and the <h1>
+PAGE_TITLE = 'Online Community Health measured through CHAOSS metrics'  # the <title> and the <h1>
 
 PRACTITIONER_GUIDE_URL = 'https://chaoss.community/practitioner-guide-introduction/'
 CONTACT_EMAIL = 'jonas.nothnagel@gmail.com'  # the catalogue's public contact (src/components/Footer.jsx)
@@ -134,9 +134,8 @@ $metric_rows
     <h2>Use in the catalogue</h2>
     <p class="prose">The default order adds up to $activity_weight points for recent changes, stars and
     downloads to a documentation score of up to $quality_max; a project whose links all failed at the last
-    check loses $unavailable_penalty points. Insights compares SDGs, not projects, as
-    <a href="$guide_url">CHAOSS advises</a>, and shows figures only for an SDG with at least
-    $min_group measured projects.</p>
+    check loses $unavailable_penalty points. Projects are not compared with each other in public, as
+    <a href="$guide_url">CHAOSS advises</a>.</p>
   </section>
 
   <hr>
@@ -268,7 +267,6 @@ def render_page(catalog, workflow_text, ranking_text):
         window_days=cm.WINDOW_DAYS,
         min_items=cm.MIN_OUTSIDE_ITEMS,
         min_prs=cm.MIN_OUTSIDE_CHANGE_REQUESTS,
-        min_group=cm.MIN_GROUP,
         quality_max=QUALITY_SCORE_MAX,
         activity_weight=weights['ACTIVITY_WEIGHT'],
         unavailable_penalty=weights['UNAVAILABLE_PENALTY'],

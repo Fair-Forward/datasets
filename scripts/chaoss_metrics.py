@@ -27,7 +27,7 @@ ABSENCE_SHARE = 0.5                 # Contributor Absence Factor: people making 
 MIN_OUTSIDE_ITEMS = 5               # Time to First Response needs this many outside issues/PRs
 MIN_OUTSIDE_CHANGE_REQUESTS = 5     # Change Request Closure Ratio needs this many outside PRs
 MAX_RESPONSE_ITEMS = 30             # newest outside items whose replies are read, per repository
-MIN_GROUP = 5                       # Insights prints an SDG's upkeep figures from this many projects
+MIN_GROUP = 5                       # smallest group whose upkeep figures are worth reading (kept in health.json)
 CARRY_FORWARD_MAX_DAYS = 28         # an unreachable source keeps its last measurement this long
 
 # GitHub author_association values for people inside a project; anyone else is "outside".
