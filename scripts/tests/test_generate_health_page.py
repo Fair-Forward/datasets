@@ -18,6 +18,7 @@ def visible(page):
 
 
 RANKING_JS = os.path.join(os.path.dirname(__file__), '..', '..', 'src', 'utils', 'ranking.js')
+PANEL_JSX = os.path.join(os.path.dirname(__file__), '..', '..', 'src', 'components', 'ChaossMetrics.jsx')
 
 
 def project(pid, *urls):
@@ -138,6 +139,11 @@ class PageTests(unittest.TestCase):
         self.assertIn('<h1>Online Community Health measured through CHAOSS metrics</h1>', page)
         self.assertIn('<title>Online Community Health measured through CHAOSS metrics - FAIR Forward Data Catalog</title>', page)
         self.assertIn('Community Health Analytics in Open Source Software', page)
+
+    def test_panel_block_carries_the_page_title(self):
+        # The detail panel's block and the method page it links to share one title.
+        with open(PANEL_JSX, encoding='utf-8') as f:
+            self.assertIn(f'>{gp.PAGE_TITLE}<', f.read())
 
     def test_is_deterministic_and_has_no_em_dash(self):
         self.assertEqual(self.page(), self.page())

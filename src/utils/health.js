@@ -52,8 +52,6 @@ const fmtDay = (iso) => {
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })
 }
 
-export const formatDay = fmtDay
-
 const count = (n, one, many) => `${n.toLocaleString('en-GB')} ${n === 1 ? one : many}`
 
 const listOf = (items) =>
@@ -260,9 +258,9 @@ const CHAOSS_NAMES = {
 
 const NOT_ON_A_MEASURED_PLATFORM = 'none of these links is a repository, model or record on GitHub, Hugging Face or Zenodo'
 
-// The detail panel's "CHAOSS metrics" block (see docs/health-thresholds.md, Part 4): rows of facts
-// measured with CHAOSS metric definitions, each naming the CHAOSS metric it follows, and the gaps
-// named in one line. Null when there is
+// The detail panel's "Online Community Health measured through CHAOSS metrics" block (see
+// docs/health-thresholds.md, Part 4): rows of facts measured with CHAOSS metric definitions, each
+// naming the CHAOSS metric it follows, and the gaps named in one line. Null when there is
 // nothing to show: no health entry, an older health.json, or a project left out at its maintainers' request.
 export const ossBlock = (health) => {
   if (!health || (!health.oss && !health.hosts)) return null
