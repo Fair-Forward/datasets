@@ -42,6 +42,27 @@ const DocMarkdown = ({ children }) => (
   <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownLinkComponents}>{children}</ReactMarkdown>
 )
 
+// One destination row of the rail (dataset, model or contact). External links open
+// in a new tab; an email link carries the envelope and says so to screen readers,
+// since the icon itself is hidden from them.
+const RailChip = ({ label, href }) => {
+  const url = href || ''
+  const isMail = url.startsWith('mailto:')
+  const external = url.startsWith('http://') || url.startsWith('https://')
+  return (
+    <a
+      className="rail-chip"
+      href={resolvePublicHref(href)}
+      target={external ? '_blank' : undefined}
+      rel={external ? 'noopener noreferrer' : undefined}
+      aria-label={isMail ? `Email ${label}` : undefined}
+    >
+      <span>{label}</span>
+      <i className={`fas ${isMail ? 'fa-envelope' : 'fa-arrow-up-right-from-square'}`} aria-hidden="true"></i>
+    </a>
+  )
+}
+
 // Reshape a free-text field for the panel: split inline "•" bullet runs into a
 // real markdown list and shorten bare URLs to friendly link text, so a source
 // cell dumped as one "• A • B • https://long/url" line renders as a scannable
@@ -541,22 +562,9 @@ const DetailPanel = ({ project, onClose }) => {
                       <div className="rail-cluster">
                         <div className="rail-cluster-label">Datasets</div>
                         <div className="rail-chips-col">
-                          {datasetLinks.map((link, idx) => {
-                            const label = datasetLinkLabels[idx]
-                            const external = link.url && (link.url.startsWith('http://') || link.url.startsWith('https://'))
-                            return (
-                              <a
-                                key={`dataset-${idx}`}
-                                className="rail-chip"
-                                href={resolvePublicHref(link.url)}
-                                target={external ? '_blank' : undefined}
-                                rel={external ? 'noopener noreferrer' : undefined}
-                              >
-                                <span>{label}</span>
-                                <i className="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
-                              </a>
-                            )
-                          })}
+                          {datasetLinks.map((link, idx) => (
+                            <RailChip key={`dataset-${idx}`} label={datasetLinkLabels[idx]} href={link.url} />
+                          ))}
                         </div>
                       </div>
                     )}
@@ -564,22 +572,9 @@ const DetailPanel = ({ project, onClose }) => {
                       <div className="rail-cluster">
                         <div className="rail-cluster-label">Models &amp; systems</div>
                         <div className="rail-chips-col">
-                          {usecaseLinks.map((link, idx) => {
-                            const label = usecaseLinkLabels[idx]
-                            const external = link.url && (link.url.startsWith('http://') || link.url.startsWith('https://'))
-                            return (
-                              <a
-                                key={`usecase-${idx}`}
-                                className="rail-chip"
-                                href={resolvePublicHref(link.url)}
-                                target={external ? '_blank' : undefined}
-                                rel={external ? 'noopener noreferrer' : undefined}
-                              >
-                                <span>{label}</span>
-                                <i className="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
-                              </a>
-                            )
-                          })}
+                          {usecaseLinks.map((link, idx) => (
+                            <RailChip key={`usecase-${idx}`} label={usecaseLinkLabels[idx]} href={link.url} />
+                          ))}
                         </div>
                       </div>
                     )}
@@ -634,19 +629,7 @@ const DetailPanel = ({ project, onClose }) => {
                                 </span>
                               )
                             }
-                            const isMail = href.startsWith('mailto:')
-                            return (
-                              <a
-                                key={`contact-${idx}`}
-                                className="rail-chip"
-                                href={href}
-                                target={isMail ? undefined : '_blank'}
-                                rel={isMail ? undefined : 'noopener noreferrer'}
-                              >
-                                <span>{label}</span>
-                                <i className={`fas ${isMail ? 'fa-envelope' : 'fa-arrow-up-right-from-square'}`} aria-hidden="true"></i>
-                              </a>
-                            )
+                            return <RailChip key={`contact-${idx}`} label={label} href={href} />
                           })}
                         </div>
                       </>

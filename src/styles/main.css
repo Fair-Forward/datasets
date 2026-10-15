@@ -1742,6 +1742,11 @@ footer a:hover {
     font-weight: 500;
 }
 
+/* With no contact above it, the line opens the cluster and takes only its margin. */
+.rail-entry-editor:first-child {
+    margin-top: 0;
+}
+
 .rail-access-note {
     margin-top: 1.75rem;
     padding: 1rem 1.1rem;
