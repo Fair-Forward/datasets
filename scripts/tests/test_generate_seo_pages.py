@@ -21,5 +21,17 @@ class SitemapTests(unittest.TestCase):
         self.assertIn(f'<loc>{SITE_BASE}projects/ui_1-x/</loc>', sitemap)
 
 
+class AboutBlockTests(unittest.TestCase):
+    def test_labels_the_editor_as_the_catalogue_entrys_not_the_projects_author(self):
+        body = seo.build_body({
+            'title': 'X',
+            'contact': 'Ada Lovelace (ada@example.org)',
+            'editor': 'Luisa Olaya',
+        })
+        self.assertIn('<p>Catalogue entry by Luisa Olaya</p>', body)
+        self.assertNotIn('Authors:', body)
+        self.assertLess(body.index('Contact:'), body.index('Catalogue entry by'))
+
+
 if __name__ == '__main__':
     unittest.main()

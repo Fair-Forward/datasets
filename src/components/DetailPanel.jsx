@@ -378,19 +378,8 @@ const DetailPanel = ({ project, onClose }) => {
   const additionalResourceLinks = additionalResources.filter(r => r.url)
 
   // A contact cell may list several people (separated by ';', ',' or '&'); parse
-  // it into individual contacts so each name links to its own email, joined by '; '.
+  // it into individual contacts so each name gets its own row and email link.
   const contacts = parseContacts(project?.contact || '')
-  const renderContacts = () =>
-    contacts.map(({ label, href }, i) => (
-      <Fragment key={`${label}-${i}`}>
-        {i > 0 && '; '}
-        {href
-          ? (href.startsWith('mailto:')
-              ? <a href={href}>{label}</a>
-              : <a href={href} target="_blank" rel="noopener noreferrer">{label}</a>)
-          : label}
-      </Fragment>
-    ))
 
   // Render license value as JSX using shared parsing
   const renderLicense = (raw) => {
@@ -460,12 +449,6 @@ const DetailPanel = ({ project, onClose }) => {
                         {s.label}{s.name ? ` · ${s.name}` : ''}
                       </span>
                     ))}
-                  </div>
-                )}
-                {contacts.length > 0 && (
-                  <div className="panel-contact-top">
-                    <div className="panel-contact-top-label">Contact / Authors</div>
-                    <div className="panel-contact-top-value">{renderContacts()}</div>
                   </div>
                 )}
                 {project?.description && (
@@ -634,6 +617,48 @@ const DetailPanel = ({ project, onClose }) => {
                   </div>
                 )}
 
+                {/* Contact: the other way to the asset, so it sits with the links. The
+                    catalogue entry's editor goes beneath it, apart from the organisations,
+                    so they do not read as one of the makers. */}
+                {(contacts.length > 0 || project?.editor) && (
+                  <div className="rail-cluster">
+                    {contacts.length > 0 && (
+                      <>
+                        <div className="rail-cluster-label">Contact / Authors</div>
+                        <div className="rail-chips-col">
+                          {contacts.map(({ label, href }, idx) => {
+                            if (!href) {
+                              return (
+                                <span key={`contact-${idx}`} className="rail-chip rail-chip-plain">
+                                  <span>{label}</span>
+                                </span>
+                              )
+                            }
+                            const isMail = href.startsWith('mailto:')
+                            return (
+                              <a
+                                key={`contact-${idx}`}
+                                className="rail-chip"
+                                href={href}
+                                target={isMail ? undefined : '_blank'}
+                                rel={isMail ? undefined : 'noopener noreferrer'}
+                              >
+                                <span>{label}</span>
+                                <i className={`fas ${isMail ? 'fa-envelope' : 'fa-arrow-up-right-from-square'}`} aria-hidden="true"></i>
+                              </a>
+                            )
+                          })}
+                        </div>
+                      </>
+                    )}
+                    {project?.editor && (
+                      <p className="rail-entry-editor">
+                        Catalogue entry by <span>{project.editor}</span>
+                      </p>
+                    )}
+                  </div>
+                )}
+
                 {/* Facts */}
                 <div className="rail-facts">
                   <div className="rail-fact-row">
@@ -702,10 +727,10 @@ const DetailPanel = ({ project, onClose }) => {
                   </div>
                 )}
 
-                {/* Organisations + Contact + Editor */}
-                {(organizations || project?.editor) && (
+                {/* Organisations */}
+                {organizations && (
                   <div className="rail-orgs">
-                    {organizations && (organizations.raw ? (
+                    {organizations.raw ? (
                       <div className="rail-org">
                         <div className="rail-org-label">Organizations Involved</div>
                         <div className="rail-org-value documentation-content"><DocMarkdown>{organizations.raw}</DocMarkdown></div>
@@ -731,15 +756,6 @@ const DetailPanel = ({ project, onClose }) => {
                           </div>
                         )}
                       </>
-                    ))}
-
-                    {project?.editor && (
-                      <div className="rail-contact-block">
-                        <div className="rail-org">
-                          <div className="rail-org-label">Editor of this information</div>
-                          <div className="rail-editor-value">{project.editor}</div>
-                        </div>
-                      </div>
                     )}
                   </div>
                 )}

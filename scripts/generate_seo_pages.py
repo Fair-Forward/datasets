@@ -231,14 +231,16 @@ def build_body(project):
     parts.append(render_links(project.get("usecase_links"), "Use cases"))
     parts.append(render_links(project.get("hosted_documents"), "Documents"))
     parts.append(render_links(project.get("additional_resources"), "Additional resources"))
-    # About block (organizations / authors / contact) -- names people may search for.
+    # About block (organizations / contact / catalogue entry editor) -- names people
+    # may search for. `editor` wrote the catalogue entry; it is not the project's
+    # authors, so it is labelled as the entry's, the same as in the detail panel.
     about = []
     if project.get("organizations"):
         about.append(render_prose(project["organizations"]))
-    if project.get("editor"):
-        about.append("<p>Authors: {}</p>".format(esc(project["editor"])))
     if project.get("contact"):
         about.append("<p>Contact: {}</p>".format(esc(project["contact"])))
+    if project.get("editor"):
+        about.append("<p>Catalogue entry by {}</p>".format(esc(project["editor"])))
     if any(about):
         parts.append("<section><h2>About</h2>{}</section>".format("".join(a for a in about if a)))
     parts.append('        <p><a href="../../">Browse the full FAIR Forward catalogue</a></p>')
