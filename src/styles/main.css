@@ -1436,39 +1436,6 @@ footer a:hover {
     flex-shrink: 0;
 }
 
-.panel-contact-top {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0.2rem 0.6rem;
-    margin-top: 1.25rem;
-}
-
-.panel-contact-top-label {
-    color: var(--ink-3);
-    font-size: var(--text-base);
-    font-weight: 600;
-}
-
-.panel-contact-top-value {
-    color: var(--ink);
-    font-size: var(--text-lg);
-    font-weight: 500;
-    overflow-wrap: anywhere;
-}
-
-.panel-contact-top-value a {
-    color: var(--spot);
-    text-decoration: underline;
-    text-decoration-color: rgba(12, 129, 90, 0.35);
-    text-underline-offset: 0.2em;
-}
-
-.panel-contact-top-value a:hover {
-    color: var(--spot-deep);
-    text-decoration-color: currentColor;
-}
-
 .panel-lede {
     max-width: 46rem;
     margin-top: 1.6rem;
@@ -1751,6 +1718,35 @@ footer a:hover {
     font-size: 0.95rem;
 }
 
+/* A contact with no email or URL is a name, not a destination. */
+.rail-chip-plain,
+.rail-chip-plain:hover {
+    color: var(--ink);
+    font-weight: 500;
+}
+
+.rail-chip-plain:hover span {
+    text-decoration: none;
+}
+
+/* Who wrote the catalogue entry: kept quiet and apart from the makers. */
+.rail-entry-editor {
+    margin: 0.75rem 0 0;
+    color: var(--ink-3);
+    font-size: var(--text-md);
+    line-height: 1.45;
+}
+
+.rail-entry-editor span {
+    color: var(--ink-2);
+    font-weight: 500;
+}
+
+/* With no contact above it, the line opens the cluster and takes only its margin. */
+.rail-entry-editor:first-child {
+    margin-top: 0;
+}
+
 .rail-access-note {
     margin-top: 1.75rem;
     padding: 1rem 1.1rem;
@@ -2031,16 +2027,6 @@ footer a:hover {
 
 .rail-org-value p {
     margin: 0;
-}
-
-.rail-contact-block {
-    padding-top: 1rem;
-    border-top: 1px solid var(--hairline);
-}
-
-.rail-editor-value {
-    color: var(--ink-2);
-    font-size: var(--text-lg);
 }
 
 /* --- Responsive -------------------------------------------------------------- */

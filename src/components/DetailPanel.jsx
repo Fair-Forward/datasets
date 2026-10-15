@@ -42,6 +42,27 @@ const DocMarkdown = ({ children }) => (
   <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownLinkComponents}>{children}</ReactMarkdown>
 )
 
+// One destination row of the rail (dataset, model or contact). External links open
+// in a new tab; an email link carries the envelope and says so to screen readers,
+// since the icon itself is hidden from them.
+const RailChip = ({ label, href }) => {
+  const url = href || ''
+  const isMail = url.startsWith('mailto:')
+  const external = url.startsWith('http://') || url.startsWith('https://')
+  return (
+    <a
+      className="rail-chip"
+      href={resolvePublicHref(href)}
+      target={external ? '_blank' : undefined}
+      rel={external ? 'noopener noreferrer' : undefined}
+      aria-label={isMail ? `Email ${label}` : undefined}
+    >
+      <span>{label}</span>
+      <i className={`fas ${isMail ? 'fa-envelope' : 'fa-arrow-up-right-from-square'}`} aria-hidden="true"></i>
+    </a>
+  )
+}
+
 // Reshape a free-text field for the panel: split inline "•" bullet runs into a
 // real markdown list and shorten bare URLs to friendly link text, so a source
 // cell dumped as one "• A • B • https://long/url" line renders as a scannable
@@ -378,19 +399,8 @@ const DetailPanel = ({ project, onClose }) => {
   const additionalResourceLinks = additionalResources.filter(r => r.url)
 
   // A contact cell may list several people (separated by ';', ',' or '&'); parse
-  // it into individual contacts so each name links to its own email, joined by '; '.
+  // it into individual contacts so each name gets its own row and email link.
   const contacts = parseContacts(project?.contact || '')
-  const renderContacts = () =>
-    contacts.map(({ label, href }, i) => (
-      <Fragment key={`${label}-${i}`}>
-        {i > 0 && '; '}
-        {href
-          ? (href.startsWith('mailto:')
-              ? <a href={href}>{label}</a>
-              : <a href={href} target="_blank" rel="noopener noreferrer">{label}</a>)
-          : label}
-      </Fragment>
-    ))
 
   // Render license value as JSX using shared parsing
   const renderLicense = (raw) => {
@@ -460,12 +470,6 @@ const DetailPanel = ({ project, onClose }) => {
                         {s.label}{s.name ? ` · ${s.name}` : ''}
                       </span>
                     ))}
-                  </div>
-                )}
-                {contacts.length > 0 && (
-                  <div className="panel-contact-top">
-                    <div className="panel-contact-top-label">Contact / Authors</div>
-                    <div className="panel-contact-top-value">{renderContacts()}</div>
                   </div>
                 )}
                 {project?.description && (
@@ -558,22 +562,9 @@ const DetailPanel = ({ project, onClose }) => {
                       <div className="rail-cluster">
                         <div className="rail-cluster-label">Datasets</div>
                         <div className="rail-chips-col">
-                          {datasetLinks.map((link, idx) => {
-                            const label = datasetLinkLabels[idx]
-                            const external = link.url && (link.url.startsWith('http://') || link.url.startsWith('https://'))
-                            return (
-                              <a
-                                key={`dataset-${idx}`}
-                                className="rail-chip"
-                                href={resolvePublicHref(link.url)}
-                                target={external ? '_blank' : undefined}
-                                rel={external ? 'noopener noreferrer' : undefined}
-                              >
-                                <span>{label}</span>
-                                <i className="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
-                              </a>
-                            )
-                          })}
+                          {datasetLinks.map((link, idx) => (
+                            <RailChip key={`dataset-${idx}`} label={datasetLinkLabels[idx]} href={link.url} />
+                          ))}
                         </div>
                       </div>
                     )}
@@ -581,22 +572,9 @@ const DetailPanel = ({ project, onClose }) => {
                       <div className="rail-cluster">
                         <div className="rail-cluster-label">Models &amp; systems</div>
                         <div className="rail-chips-col">
-                          {usecaseLinks.map((link, idx) => {
-                            const label = usecaseLinkLabels[idx]
-                            const external = link.url && (link.url.startsWith('http://') || link.url.startsWith('https://'))
-                            return (
-                              <a
-                                key={`usecase-${idx}`}
-                                className="rail-chip"
-                                href={resolvePublicHref(link.url)}
-                                target={external ? '_blank' : undefined}
-                                rel={external ? 'noopener noreferrer' : undefined}
-                              >
-                                <span>{label}</span>
-                                <i className="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
-                              </a>
-                            )
-                          })}
+                          {usecaseLinks.map((link, idx) => (
+                            <RailChip key={`usecase-${idx}`} label={usecaseLinkLabels[idx]} href={link.url} />
+                          ))}
                         </div>
                       </div>
                     )}
@@ -631,6 +609,36 @@ const DetailPanel = ({ project, onClose }) => {
                     <div className="rail-access-note-body documentation-content">
                       <DocMarkdown>{project.access_note_markdown}</DocMarkdown>
                     </div>
+                  </div>
+                )}
+
+                {/* Contact: the other way to the asset, so it sits with the links. The
+                    catalogue entry's editor goes beneath it, apart from the organisations,
+                    so they do not read as one of the makers. */}
+                {(contacts.length > 0 || project?.editor) && (
+                  <div className="rail-cluster">
+                    {contacts.length > 0 && (
+                      <>
+                        <div className="rail-cluster-label">Contact / Authors</div>
+                        <div className="rail-chips-col">
+                          {contacts.map(({ label, href }, idx) => {
+                            if (!href) {
+                              return (
+                                <span key={`contact-${idx}`} className="rail-chip rail-chip-plain">
+                                  <span>{label}</span>
+                                </span>
+                              )
+                            }
+                            return <RailChip key={`contact-${idx}`} label={label} href={href} />
+                          })}
+                        </div>
+                      </>
+                    )}
+                    {project?.editor && (
+                      <p className="rail-entry-editor">
+                        Catalogue entry by <span>{project.editor}</span>
+                      </p>
+                    )}
                   </div>
                 )}
 
@@ -702,10 +710,10 @@ const DetailPanel = ({ project, onClose }) => {
                   </div>
                 )}
 
-                {/* Organisations + Contact + Editor */}
-                {(organizations || project?.editor) && (
+                {/* Organisations */}
+                {organizations && (
                   <div className="rail-orgs">
-                    {organizations && (organizations.raw ? (
+                    {organizations.raw ? (
                       <div className="rail-org">
                         <div className="rail-org-label">Organizations Involved</div>
                         <div className="rail-org-value documentation-content"><DocMarkdown>{organizations.raw}</DocMarkdown></div>
@@ -731,15 +739,6 @@ const DetailPanel = ({ project, onClose }) => {
                           </div>
                         )}
                       </>
-                    ))}
-
-                    {project?.editor && (
-                      <div className="rail-contact-block">
-                        <div className="rail-org">
-                          <div className="rail-org-label">Editor of this information</div>
-                          <div className="rail-editor-value">{project.editor}</div>
-                        </div>
-                      </div>
                     )}
                   </div>
                 )}
