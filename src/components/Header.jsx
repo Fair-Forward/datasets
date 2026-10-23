@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import { Link, useLocation } from 'react-router-dom'
 import { withBasePath } from '../utils/basePath'
 
@@ -157,7 +158,9 @@ const Header = () => {
         </nav>
       </div>
 
-      {infoType && (
+      {/* Portalled to <body>: inside .top-nav-container's stacking context the
+          sticky filter bar would paint over the modal. */}
+      {infoType && createPortal(
         <>
           <div className="header-info-backdrop" onClick={closeInfo}></div>
           <div className="header-info-modal" role="dialog" aria-modal="true" ref={modalRef} aria-label={infoType === 'about' ? 'About this website' : 'Fair sharing'}>
@@ -166,7 +169,8 @@ const Header = () => {
             </button>
             {renderInfoContent()}
           </div>
-        </>
+        </>,
+        document.body
       )}
     </div>
   )
