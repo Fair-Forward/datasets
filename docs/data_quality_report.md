@@ -1,5 +1,5 @@
 # Data Quality Report
-Generated: 2026-10-12 15:35
+Generated: 2026-11-02 19:05
 
 ## Summary
 - **89** projects evaluated
@@ -8,7 +8,7 @@ Generated: 2026-10-12 15:35
 - **2** license values need review
 - **0** organization fields contain email addresses
 - **3** unrecognized country names
-- **24** flagged URLs (see details below)
+- **36** flagged URLs (see details below)
 
 ## Projects Needing Attention (score < 50)
 
@@ -44,28 +44,40 @@ All flagged links are still shown on the website. No links are removed automatic
 |---|---|---|
 | https://data.cmr.forest-atlas.org/ | ConnectionError | Forest carbon sequestration in the Congo |
 | https://data.cod.forest-atlas.org/ | ConnectionError | Forest carbon sequestration in the Congo |
-| https://dl.acm.org/doi/10.1145/3394486.3403363 | 403 | Open source AI Pest Control for smallhol |
-| https://www.gbif.org/ | 403 | African Trees for Climate Resilience: A  |
-| https://play.google.com/store/apps/details?id=org.core23lab.hdf&pcampaignid=web_share&pli=1 | 404 | Using local-language AI advise women in  |
-| https://faktaiklim.prosa.ai/ | ConnectionError | Combatting Climate Disinformation in Ind |
 | https://audiopedia.app.box.com/s/4wtqy4idpnilf3b3abisuuu2vdi0oi1q | 404 | Empowering Women across India with audio |
+| https://play.google.com/store/apps/details?id=org.core23lab.hdf&pcampaignid=web_share&pli=1 | 404 | Using local-language AI advise women in  |
+| https://igf2025.sched.com/event/24FLE/ws-#323-new-data-governance-models-for-african-nlp-ecosystems | 403 | Our language, our data: Co-creating equi |
 | https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana | 404 | Supporting food security and climate cha |
-| https://www.kaggle.com/datasets/mapbiomasecuador/lulc-training-data-for-ecuador-ml/data | 404 | Monitoring the impact of palm oil monocu |
-| https://www.kaggle.com/datasets/responsibleailab/agrivoltaic-dataset-ghana | 404 | Explore the Agrivoltaic Dataset: Dive in |
-| https://www.kaggle.com/datasets/responsibleailab/accent-classification-dataset-ghana | 404 | Discover Ghanaian Voices: A Dataset for  |
 | https://www.kaggle.com/datasets/responsibleailab/crop-disease-ghana/code | 404 | Supporting food security and climate cha |
+| https://www.kaggle.com/datasets/responsibleailab/accent-classification-dataset-ghana | 404 | Discover Ghanaian Voices: A Dataset for  |
+| https://www.kaggle.com/datasets/mapbiomasecuador/lulc-training-data-for-ecuador-ml/data | 404 | Monitoring the impact of palm oil monocu |
+| https://www.gbif.org/ | 403 | African Trees for Climate Resilience: A  |
+| https://www.kaggle.com/datasets/responsibleailab/agrivoltaic-dataset-ghana | 404 | Explore the Agrivoltaic Dataset: Dive in |
+| https://faktaiklim.prosa.ai/ | ConnectionError | Combatting Climate Disinformation in Ind |
+| https://www.audiopedia.foundation/bharat | 403 | Empowering Women across India with audio |
 | https://huggingface.co/immverse-ai/voice-tech-for-all-challenge-v2 | 401 | Voice Tech for All: Building Inclusive S |
+| https://www.bmz-digital.global/en/news/loud-and-clear-open-source-for-indias-linguistic-diversity/ | 403 | Making AI speak 9 Indian languages: Hind |
+| https://dl.acm.org/doi/10.1145/3394486.3403363 | 403 | Open source AI Pest Control for smallhol |
+| https://www.bmz-digital.global/en/entdeckung-der-sprachlichen-vielfalt-indonesiens-fair-forward-und-prosa-ai-auf-dem-weg-zu-inklusiver-ki-sprachtechnologie/ | 403 | Building inclusive voice technologies in |
+| https://www.bmz-digital.global/en/news/ai-meets-jungle-how-artificial-intelligence-is-saving-indonesias-forests/ | 403 | High Carbon Stock Approach: Mapping Fore |
+| https://www.bmz-digital.global/en/smart-sowing-ai-for-more-harvest-in-kenya-and-uganda/ | 403 | Early Warning System: Advisory services  |
 | https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5087469 | 403 | Landslide and flood disaster hotspot mon |
-| https://huggingface.co/spaces/GIZ/audit_assistant/tree/main | 401 | AI as a helping hand to understand audit |
+| https://www.bmz-digital.global/en/digital-maps-agriculture-rwanda/ | 403 | Solutions from space: Rwanda’s smart har |
+| https://moodle.com/news/moodlemoot-global-day-3/ | 403 | Better language translation for more tra |
 | https://aiopeneducation.pubpub.org/pub/7npwm2su/release/5?readingCollection=06969c6d | 403 | Better language translation for more tra |
-| https://dataexplorer.ts.adex.org.in/dataset/583e8f01-160e-4f51-bde5-31dc7f2a5887 | 404 | Predicting Crop Health using open-source |
-| https://github.com/Marconi-Lab/Irradiation_Portal | 404 | Estimating Solar Irradiance for Improved |
 | https://colabs.commonroom.info/login/?next=%2F | SSLError | Empowering coastal inhabitants in Indone |
+| https://dmmg.icipe.org/dataportal/dataset/data-enabled-climate-shock-absorbance-and-ecosystem-resilience | 502 | Data-enabled climate shock absorbance th |
+| https://dataexplorer.ts.adex.org.in/dataset/583e8f01-160e-4f51-bde5-31dc7f2a5887 | 404 | Predicting Crop Health using open-source |
+| https://huggingface.co/spaces/GIZ/audit_assistant/tree/main | 401 | AI as a helping hand to understand audit |
+| https://www.bmz-digital.global/en/ai-coffee-intelligent-awake/ | 403 | Croppie- helping smallholder coffee prod |
+| https://github.com/Marconi-Lab/Irradiation_Portal | 404 | Estimating Solar Irradiance for Improved |
+| https://openstat-madagascar.com/bdd/energie-et-environnement/131-donnees-sur-l-energie-solaire-et-labellisation-d-images-de-panneaux-photovoltaiques-a-madagascar | 404 | Helping to measure solar energy adoption |
 | https://www.wadhwaniai.org/programs/pest-management/pest-management-ai-solution/ | 404 | Open source AI Pest Control for smallhol |
 | https://digitalgreen.org/wp-content/uploads/2024/10/GIZ-FF_DG_Learning-Report.pdf | 403 | Data-driven decision-making for farmers  |
-| https://openstat-madagascar.com/bdd/energie-et-environnement/131-donnees-sur-l-energie-solaire-et-labellisation-d-images-de-panneaux-photovoltaiques-a-madagascar | 404 | Helping to measure solar energy adoption |
+| https://doi.org/10.4121/7e6d7ca3-060d-4ca5-bd83-d779b598c11d.v1 | ConnectTimeout | Phenological Dataset for Ecological Fore |
+| https://doi.org/10.4121/d97e338b-dc94-4e3d-a473-6dd3d4b48898.v1 | ConnectTimeout | Phenological Dataset for Ecological Fore |
+| https://doi.org/10.4121/9e6b4bca-f3d3-40f3-a8f5-4f71f7790c2f.v1 | ConnectTimeout | Phenological Dataset for Ecological Fore |
 | https://dev.platform.farmer.chat/login | ConnectTimeout | Providing farmers in Kenya and Bihar, In |
-| https://dmmg.icipe.org/dataportal/dataset/data-enabled-climate-shock-absorbance-and-ecosystem-resilience | ReadTimeout | Data-enabled climate shock absorbance th |
 
 ## Score Distribution
 
