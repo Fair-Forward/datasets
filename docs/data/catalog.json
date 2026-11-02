@@ -1838,7 +1838,7 @@
       "dataset_links": [
         {
           "name": "GitHub: geo-ai",
-          "url": "https://github.com/NaLamKI/geo-ai"
+          "url": "https://github.com/AgriFoodData/geo-ai"
         }
       ],
       "usecase_links": [],
@@ -4955,7 +4955,7 @@
       "is_lacuna": false,
       "has_dataset": false,
       "has_usecase": false,
-      "image": null,
+      "image": "/projects/ui_88/images/placeholder_image.jpeg",
       "data_characteristics": "Parallel voice-text corpus in low-resource East and West African languages, sourced from professional film and TV productions. Data quality reflects studio-grade audio. Responsible AI considerations include informed consent from content owners, a no-commercial-use clause, right-to-retract provisions, and no third-party sharing. Bias assessments should account for genre diversity, speaker demographics, and dialect representation across the corpus.",
       "model_characteristics": "No training, only testing for benchmarks. The pipeline combines Badrex's Wav2Vec-BERT 2.0 for Kinyarwanda ASR, Nvidia's SortFormer streaming model for speaker diarisation (current state-of-the-art), and MbazaNLP's fine-tuned NLLB model for open-source English-Kinyarwanda translation, with Gemini 3.1 Pro serving as the best-performing option for context-aware translation. All models accept audio or text input and output transcriptions, speaker segments, and translations optimised for media dialogue and subtitling workflows.",
       "how_to_use": "Users can access transcription and translation services through a web-based platform integrated into post-production subtitling workflows. The solution operates on a usage-based pricing model agreed between the product owner and local studios. Resources include technical documentation, community-maintained model improvements, and training materials for onboarding production teams. Computing costs scale with usage and can be optimised through cloud hosting or shared infrastructure.",
