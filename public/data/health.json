@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-26",
+  "generated_at": "2026-11-02",
   "method": {
     "page": "https://fair-forward.github.io/datasets/chaoss/",
     "window_days": 365,
@@ -12,7 +12,7 @@
   "entries": {
     "ui_0": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -30,7 +30,7 @@
     },
     "ui_1": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -48,7 +48,7 @@
     },
     "ui_2": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "stable_archive",
       "activity_score": 60,
       "link_count": 2,
@@ -66,7 +66,7 @@
     },
     "ui_3": {
       "availability": "unavailable",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 2,
@@ -87,7 +87,7 @@
     },
     "ui_4": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": 20,
       "link_count": 1,
@@ -103,10 +103,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 1,
@@ -207,7 +207,7 @@
     },
     "ui_5": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -225,7 +225,7 @@
     },
     "ui_6": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "no_recent_updates",
       "activity_score": 15,
       "link_count": 1,
@@ -241,10 +241,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 0,
@@ -270,8 +270,8 @@
         "releases": {},
         "reuse": {
           "huggingface": {
-            "downloads_30d": 34,
-            "downloads_all_time": 924,
+            "downloads_30d": 33,
+            "downloads_all_time": 928,
             "likes": 4
           }
         },
@@ -313,8 +313,8 @@
             "last_change_at": "2024-06-28",
             "created_at": "2024-06-10",
             "likes": 4,
-            "downloads_30d": 34,
-            "downloads_all_time": 924,
+            "downloads_30d": 33,
+            "downloads_all_time": 928,
             "license": [
               {
                 "status": "detected",
@@ -337,7 +337,7 @@
     },
     "ui_7": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -355,7 +355,7 @@
     },
     "ui_8": {
       "availability": "unavailable",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -375,9 +375,9 @@
     },
     "ui_9": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
-      "activity_score": 35,
+      "activity_score": 29,
       "link_count": 1,
       "broken_links": [],
       "hosts": {
@@ -391,10 +391,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 0,
@@ -420,7 +420,7 @@
         "releases": {},
         "reuse": {
           "huggingface": {
-            "downloads_30d": 6,
+            "downloads_30d": 1,
             "downloads_all_time": 110,
             "likes": 0
           }
@@ -463,7 +463,7 @@
             "last_change_at": "2025-09-15",
             "created_at": "2025-09-15",
             "likes": 0,
-            "downloads_30d": 6,
+            "downloads_30d": 1,
             "downloads_all_time": 110,
             "license": [
               {
@@ -488,7 +488,7 @@
     },
     "ui_10": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -506,7 +506,7 @@
     },
     "ui_11": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 3,
@@ -524,9 +524,9 @@
     },
     "ui_12": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "recently_updated",
-      "activity_score": 72,
+      "activity_score": 71,
       "link_count": 2,
       "broken_links": [],
       "hosts": {
@@ -540,10 +540,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 0,
@@ -569,8 +569,8 @@
         "releases": {},
         "reuse": {
           "huggingface": {
-            "downloads_30d": 102,
-            "downloads_all_time": 2613,
+            "downloads_30d": 125,
+            "downloads_all_time": 2665,
             "likes": 6
           }
         },
@@ -619,7 +619,7 @@
             "created_at": "2023-05-17",
             "likes": 3,
             "downloads_30d": 73,
-            "downloads_all_time": 2194,
+            "downloads_all_time": 2215,
             "license": [
               {
                 "status": "detected",
@@ -648,8 +648,8 @@
             "last_change_at": "2026-07-31",
             "created_at": "2023-05-17",
             "likes": 3,
-            "downloads_30d": 29,
-            "downloads_all_time": 419,
+            "downloads_30d": 52,
+            "downloads_all_time": 450,
             "license": [
               {
                 "status": "detected",
@@ -672,7 +672,7 @@
     },
     "ui_13": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 2,
@@ -690,7 +690,7 @@
     },
     "ui_14": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "recently_updated",
       "activity_score": 64,
       "link_count": 1,
@@ -706,10 +706,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 1,
@@ -810,7 +810,7 @@
     },
     "ui_15": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -828,7 +828,7 @@
     },
     "ui_16": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "stable_archive",
       "activity_score": 60,
       "link_count": 1,
@@ -844,10 +844,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 0,
@@ -871,8 +871,8 @@
         },
         "reuse": {
           "zenodo": {
-            "downloads": 417,
-            "views": 2545
+            "downloads": 454,
+            "views": 2626
           }
         },
         "license": {
@@ -917,8 +917,8 @@
             "versions_total": 1,
             "versions_in_window": 0,
             "last_change_at": "2025-07-29",
-            "downloads_all_time": 417,
-            "views_all_time": 2545,
+            "downloads_all_time": 454,
+            "views_all_time": 2626,
             "license": [
               {
                 "status": "detected",
@@ -936,7 +936,7 @@
     },
     "ui_17": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -954,7 +954,7 @@
     },
     "ui_18": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "stable_archive",
       "activity_score": 60,
       "link_count": 4,
@@ -975,10 +975,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 0,
@@ -1002,8 +1002,8 @@
         },
         "reuse": {
           "zenodo": {
-            "downloads": 436,
-            "views": 642
+            "downloads": 467,
+            "views": 681
           }
         },
         "license": {
@@ -1048,8 +1048,8 @@
             "versions_total": 1,
             "versions_in_window": 0,
             "last_change_at": "2025-07-23",
-            "downloads_all_time": 436,
-            "views_all_time": 642,
+            "downloads_all_time": 467,
+            "views_all_time": 681,
             "license": [
               {
                 "status": "detected",
@@ -1067,9 +1067,9 @@
     },
     "ui_19": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "no_recent_updates",
-      "activity_score": 23,
+      "activity_score": 24,
       "link_count": 1,
       "broken_links": [],
       "hosts": {
@@ -1083,10 +1083,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 0,
@@ -1112,8 +1112,8 @@
         "releases": {},
         "reuse": {
           "huggingface": {
-            "downloads_30d": 198,
-            "downloads_all_time": 3456,
+            "downloads_30d": 248,
+            "downloads_all_time": 3548,
             "likes": 16
           }
         },
@@ -1155,8 +1155,8 @@
             "last_change_at": "2023-08-11",
             "created_at": "2023-08-02",
             "likes": 16,
-            "downloads_30d": 198,
-            "downloads_all_time": 3456,
+            "downloads_30d": 248,
+            "downloads_all_time": 3548,
             "license": [
               {
                 "status": "detected",
@@ -1179,7 +1179,7 @@
     },
     "ui_20": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -1197,9 +1197,9 @@
     },
     "ui_21": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
-      "activity_score": 30,
+      "activity_score": 29,
       "link_count": 2,
       "broken_links": [],
       "hosts": {
@@ -1213,10 +1213,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 2,
@@ -1348,7 +1348,7 @@
     },
     "ui_22": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 2,
@@ -1368,9 +1368,9 @@
     },
     "ui_23": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
-      "activity_score": 22,
+      "activity_score": 21,
       "link_count": 6,
       "broken_links": [],
       "hosts": {
@@ -1385,10 +1385,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 5,
@@ -1647,7 +1647,7 @@
     },
     "ui_24": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 3,
@@ -1666,9 +1666,9 @@
     },
     "ui_25": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "recently_updated",
-      "activity_score": 72,
+      "activity_score": 71,
       "link_count": 4,
       "broken_links": [],
       "hosts": {
@@ -1684,10 +1684,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 2,
@@ -1727,11 +1727,11 @@
         "reuse": {
           "github": {
             "forks": 3,
-            "stars": 22
+            "stars": 21
           },
           "huggingface": {
-            "downloads_30d": 65,
-            "downloads_all_time": 1312,
+            "downloads_30d": 51,
+            "downloads_all_time": 1323,
             "likes": 0
           }
         },
@@ -1778,7 +1778,7 @@
             "fork_of": null,
             "archived": true,
             "forks": 0,
-            "stars": 8,
+            "stars": 7,
             "license": [
               {
                 "status": "detected",
@@ -1814,8 +1814,8 @@
             "last_change_at": "2026-08-16",
             "created_at": "2023-01-27",
             "likes": 0,
-            "downloads_30d": 65,
-            "downloads_all_time": 1312,
+            "downloads_30d": 51,
+            "downloads_all_time": 1323,
             "license": [
               {
                 "status": "detected",
@@ -1873,7 +1873,7 @@
     },
     "ui_26": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 2,
@@ -1891,7 +1891,7 @@
     },
     "ui_27": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "no_recent_updates",
       "activity_score": 10,
       "link_count": 3,
@@ -1907,10 +1907,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 3,
@@ -2087,7 +2087,7 @@
     },
     "ui_28": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "recently_updated",
       "activity_score": 71,
       "link_count": 3,
@@ -2105,10 +2105,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 1,
@@ -2151,9 +2151,9 @@
             "stars": 15
           },
           "huggingface": {
-            "downloads_30d": 214,
-            "downloads_all_time": 755,
-            "likes": 5
+            "downloads_30d": 226,
+            "downloads_all_time": 817,
+            "likes": 6
           }
         },
         "license": {
@@ -2234,9 +2234,9 @@
             "gated": false,
             "last_change_at": "2026-06-04",
             "created_at": "2026-06-04",
-            "likes": 5,
-            "downloads_30d": 214,
-            "downloads_all_time": 755,
+            "likes": 6,
+            "downloads_30d": 226,
+            "downloads_all_time": 817,
             "license": [
               {
                 "status": "detected",
@@ -2259,7 +2259,7 @@
     },
     "ui_29": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": 27,
       "link_count": 3,
@@ -2278,10 +2278,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 1,
@@ -2382,9 +2382,9 @@
     },
     "ui_31": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "recently_updated",
-      "activity_score": 49,
+      "activity_score": 48,
       "link_count": 3,
       "broken_links": [],
       "hosts": {
@@ -2399,10 +2399,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 2,
@@ -2588,7 +2588,7 @@
     },
     "ui_32": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "recently_updated",
       "activity_score": 43,
       "link_count": 1,
@@ -2604,10 +2604,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 1,
@@ -2672,8 +2672,8 @@
             "key": "github:nalamki/geo-ai",
             "platform": "github",
             "url": "https://github.com/NaLamKI/geo-ai",
-            "id": "NaLamKI/geo-ai",
-            "renamed_from": null,
+            "id": "AgriFoodData/geo-ai",
+            "renamed_from": "NaLamKI/geo-ai",
             "fork": false,
             "fork_of": null,
             "archived": false,
@@ -2708,9 +2708,9 @@
     },
     "ui_33": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "recently_updated",
-      "activity_score": 54,
+      "activity_score": 53,
       "link_count": 7,
       "broken_links": [],
       "hosts": {
@@ -2725,10 +2725,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 0,
@@ -2754,8 +2754,8 @@
         "releases": {},
         "reuse": {
           "huggingface": {
-            "downloads_30d": 43,
-            "downloads_all_time": 263,
+            "downloads_30d": 44,
+            "downloads_all_time": 272,
             "likes": 1
           }
         },
@@ -2809,8 +2809,8 @@
             "last_change_at": "2026-01-24",
             "created_at": "2026-01-24",
             "likes": 1,
-            "downloads_30d": 43,
-            "downloads_all_time": 263,
+            "downloads_30d": 44,
+            "downloads_all_time": 272,
             "license": [
               {
                 "status": "detected",
@@ -2905,7 +2905,7 @@
     },
     "ui_34": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "stable_archive",
       "activity_score": 36,
       "link_count": 3,
@@ -2923,10 +2923,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 1,
@@ -2967,8 +2967,8 @@
             "stars": 0
           },
           "zenodo": {
-            "downloads": 226,
-            "views": 199
+            "downloads": 227,
+            "views": 203
           }
         },
         "license": {
@@ -3050,8 +3050,8 @@
             "versions_total": 1,
             "versions_in_window": 0,
             "last_change_at": "2025-07-28",
-            "downloads_all_time": 226,
-            "views_all_time": 199,
+            "downloads_all_time": 227,
+            "views_all_time": 203,
             "license": [
               {
                 "status": "detected",
@@ -3069,7 +3069,7 @@
     },
     "ui_35": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 2,
@@ -3090,9 +3090,9 @@
     },
     "ui_36": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "no_recent_updates",
-      "activity_score": 9,
+      "activity_score": 10,
       "link_count": 2,
       "broken_links": [],
       "hosts": {
@@ -3107,10 +3107,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 0,
@@ -3128,8 +3128,8 @@
         "releases": {},
         "reuse": {
           "huggingface": {
-            "downloads_30d": 7,
-            "downloads_all_time": 405,
+            "downloads_30d": 10,
+            "downloads_all_time": 410,
             "likes": 5
           }
         },
@@ -3179,8 +3179,8 @@
             "last_change_at": "2024-03-29",
             "created_at": "2024-02-04",
             "likes": 5,
-            "downloads_30d": 7,
-            "downloads_all_time": 405,
+            "downloads_30d": 10,
+            "downloads_all_time": 410,
             "license": [
               {
                 "status": "detected",
@@ -3208,9 +3208,9 @@
     },
     "ui_37": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "no_recent_updates",
-      "activity_score": 15,
+      "activity_score": 16,
       "link_count": 3,
       "broken_links": [],
       "hosts": {
@@ -3224,10 +3224,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 0,
@@ -3253,8 +3253,8 @@
         "releases": {},
         "reuse": {
           "huggingface": {
-            "downloads_30d": 74,
-            "downloads_all_time": 3117,
+            "downloads_30d": 76,
+            "downloads_all_time": 3137,
             "likes": 1
           }
         },
@@ -3296,8 +3296,8 @@
             "last_change_at": "2024-04-27",
             "created_at": "2024-01-08",
             "likes": 1,
-            "downloads_30d": 26,
-            "downloads_all_time": 1851,
+            "downloads_30d": 21,
+            "downloads_all_time": 1858,
             "license": [
               {
                 "status": "detected",
@@ -3331,8 +3331,8 @@
             "last_change_at": "2024-04-27",
             "created_at": "2024-01-25",
             "likes": 0,
-            "downloads_30d": 30,
-            "downloads_all_time": 679,
+            "downloads_30d": 39,
+            "downloads_all_time": 689,
             "license": [
               {
                 "status": "detected",
@@ -3366,8 +3366,8 @@
             "last_change_at": "2024-04-27",
             "created_at": "2024-02-20",
             "likes": 0,
-            "downloads_30d": 18,
-            "downloads_all_time": 587,
+            "downloads_30d": 16,
+            "downloads_all_time": 590,
             "license": [
               {
                 "status": "detected",
@@ -3390,9 +3390,9 @@
     },
     "ui_38": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "recently_updated",
-      "activity_score": 43,
+      "activity_score": 42,
       "link_count": 2,
       "broken_links": [
         "https://colabs.commonroom.info/login/?next=%2F"
@@ -3409,10 +3409,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 1,
@@ -3513,7 +3513,7 @@
     },
     "ui_39": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "stable_archive",
       "activity_score": 60,
       "link_count": 1,
@@ -3529,10 +3529,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 0,
@@ -3542,7 +3542,7 @@
           "failed": 0
         },
         "last_change": {
-          "at": "2026-07-27",
+          "at": "2026-11-02",
           "platform": "zenodo",
           "archived": false
         },
@@ -3551,21 +3551,21 @@
           "zenodo": {
             "in_window": 1,
             "total": 1,
-            "latest_at": "2026-07-27"
+            "latest_at": "2026-11-02"
           }
         },
         "reuse": {
           "zenodo": {
-            "downloads": 9638,
-            "views": 1117
+            "downloads": 9814,
+            "views": 1190
           }
         },
         "license": {
           "zenodo": [
             {
               "status": "detected",
-              "spdx": "CC-BY-4.0",
-              "raw": "cc-by-4.0",
+              "spdx": "CC-BY-NC-SA-4.0",
+              "raw": "cc-by-nc-sa-4.0",
               "assets": 1
             }
           ]
@@ -3601,14 +3601,14 @@
             "latest_id": null,
             "versions_total": 1,
             "versions_in_window": 1,
-            "last_change_at": "2026-07-27",
-            "downloads_all_time": 9638,
-            "views_all_time": 1117,
+            "last_change_at": "2026-11-02",
+            "downloads_all_time": 9814,
+            "views_all_time": 1190,
             "license": [
               {
                 "status": "detected",
-                "spdx": "CC-BY-4.0",
-                "raw": "cc-by-4.0"
+                "spdx": "CC-BY-NC-SA-4.0",
+                "raw": "cc-by-nc-sa-4.0"
               }
             ],
             "resource_type": "publication",
@@ -3621,7 +3621,7 @@
     },
     "ui_40": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 2,
@@ -3639,9 +3639,9 @@
     },
     "ui_42": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "recently_updated",
-      "activity_score": 44,
+      "activity_score": 43,
       "link_count": 2,
       "broken_links": [],
       "hosts": {
@@ -3655,10 +3655,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 2,
@@ -3794,7 +3794,7 @@
     },
     "ui_44": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "stable_archive",
       "activity_score": 60,
       "link_count": 1,
@@ -3810,10 +3810,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 0,
@@ -3837,8 +3837,8 @@
         },
         "reuse": {
           "zenodo": {
-            "downloads": 265,
-            "views": 1702
+            "downloads": 267,
+            "views": 1731
           }
         },
         "license": {
@@ -3883,8 +3883,8 @@
             "versions_total": 1,
             "versions_in_window": 0,
             "last_change_at": "2024-08-21",
-            "downloads_all_time": 265,
-            "views_all_time": 1702,
+            "downloads_all_time": 267,
+            "views_all_time": 1731,
             "license": [
               {
                 "status": "detected",
@@ -3902,9 +3902,9 @@
     },
     "ui_45": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "recently_updated",
-      "activity_score": 57,
+      "activity_score": 56,
       "link_count": 1,
       "broken_links": [],
       "hosts": {
@@ -3918,10 +3918,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 1,
@@ -4022,7 +4022,7 @@
     },
     "ui_46": {
       "availability": "unavailable",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -4042,7 +4042,7 @@
     },
     "ui_47": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -4060,7 +4060,7 @@
     },
     "ui_50": {
       "availability": "unavailable",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -4080,7 +4080,7 @@
     },
     "ui_51": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 3,
@@ -4098,7 +4098,7 @@
     },
     "ui_52": {
       "availability": "unavailable",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -4118,9 +4118,9 @@
     },
     "ui_53": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
-      "activity_score": 50,
+      "activity_score": 49,
       "link_count": 2,
       "broken_links": [],
       "hosts": {
@@ -4135,10 +4135,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 1,
@@ -4181,8 +4181,8 @@
             "stars": 43
           },
           "huggingface": {
-            "downloads_30d": 127,
-            "downloads_all_time": 7745,
+            "downloads_30d": 103,
+            "downloads_all_time": 7764,
             "likes": 6
           }
         },
@@ -4261,8 +4261,8 @@
             "last_change_at": "2022-06-27",
             "created_at": "2022-03-02",
             "likes": 6,
-            "downloads_30d": 127,
-            "downloads_all_time": 7745,
+            "downloads_30d": 103,
+            "downloads_all_time": 7764,
             "license": [
               {
                 "status": "none",
@@ -4284,14 +4284,12 @@
       }
     },
     "ui_54": {
-      "availability": "unavailable",
-      "checked_at": "2026-10-26",
+      "availability": "available",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
-      "broken_links": [
-        "https://lei.lums.edu.pk/datasets/residential-energy-and-weather-data-pakistan.html"
-      ],
+      "broken_links": [],
       "hosts": {
         "website": 1
       },
@@ -4305,7 +4303,7 @@
     },
     "ui_55": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -4323,7 +4321,7 @@
     },
     "ui_56": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "recently_updated",
       "activity_score": 66,
       "link_count": 4,
@@ -4341,10 +4339,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 1,
@@ -4387,8 +4385,8 @@
             "stars": 0
           },
           "huggingface": {
-            "downloads_30d": 77,
-            "downloads_all_time": 2697,
+            "downloads_30d": 84,
+            "downloads_all_time": 2721,
             "likes": 0
           }
         },
@@ -4443,7 +4441,7 @@
             "created_at": "2022-05-20",
             "likes": 0,
             "downloads_30d": 35,
-            "downloads_all_time": 1298,
+            "downloads_all_time": 1306,
             "license": [
               {
                 "status": "none",
@@ -4472,8 +4470,8 @@
             "last_change_at": "2022-12-21",
             "created_at": "2022-12-21",
             "likes": 0,
-            "downloads_30d": 42,
-            "downloads_all_time": 1399,
+            "downloads_30d": 49,
+            "downloads_all_time": 1415,
             "license": [
               {
                 "status": "detected",
@@ -4531,7 +4529,7 @@
     },
     "ui_57": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -4549,9 +4547,9 @@
     },
     "ui_59": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "no_recent_updates",
-      "activity_score": 16,
+      "activity_score": 17,
       "link_count": 2,
       "broken_links": [],
       "hosts": {
@@ -4566,10 +4564,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 0,
@@ -4595,8 +4593,8 @@
         "releases": {},
         "reuse": {
           "huggingface": {
-            "downloads_30d": 42,
-            "downloads_all_time": 1399,
+            "downloads_30d": 49,
+            "downloads_all_time": 1415,
             "likes": 0
           }
         },
@@ -4638,8 +4636,8 @@
             "last_change_at": "2022-12-21",
             "created_at": "2022-12-21",
             "likes": 0,
-            "downloads_30d": 42,
-            "downloads_all_time": 1399,
+            "downloads_30d": 49,
+            "downloads_all_time": 1415,
             "license": [
               {
                 "status": "detected",
@@ -4662,7 +4660,7 @@
     },
     "ui_60": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "stable_archive",
       "activity_score": 60,
       "link_count": 2,
@@ -4681,9 +4679,9 @@
     },
     "ui_61": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "no_recent_updates",
-      "activity_score": 25,
+      "activity_score": 26,
       "link_count": 6,
       "broken_links": [],
       "hosts": {
@@ -4697,10 +4695,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 0,
@@ -4726,9 +4724,9 @@
         "releases": {},
         "reuse": {
           "huggingface": {
-            "downloads_30d": 573,
-            "downloads_all_time": 28557,
-            "likes": 11
+            "downloads_30d": 696,
+            "downloads_all_time": 28749,
+            "likes": 13
           }
         },
         "license": {
@@ -4780,9 +4778,9 @@
             "gated": false,
             "last_change_at": "2022-11-04",
             "created_at": "2022-06-07",
-            "likes": 9,
-            "downloads_30d": 293,
-            "downloads_all_time": 23270,
+            "likes": 11,
+            "downloads_30d": 381,
+            "downloads_all_time": 23394,
             "license": [
               {
                 "status": "detected",
@@ -4811,8 +4809,8 @@
             "last_change_at": "2023-04-08",
             "created_at": "2022-10-19",
             "likes": 1,
-            "downloads_30d": 30,
-            "downloads_all_time": 1092,
+            "downloads_30d": 46,
+            "downloads_all_time": 1112,
             "license": [
               {
                 "status": "detected",
@@ -4841,8 +4839,8 @@
             "last_change_at": "2023-09-11",
             "created_at": "2023-08-23",
             "likes": 1,
-            "downloads_30d": 133,
-            "downloads_all_time": 2213,
+            "downloads_30d": 160,
+            "downloads_all_time": 2247,
             "license": [
               {
                 "status": "detected",
@@ -4871,8 +4869,8 @@
             "last_change_at": "2023-10-02",
             "created_at": "2023-10-02",
             "likes": 0,
-            "downloads_30d": 20,
-            "downloads_all_time": 245,
+            "downloads_30d": 19,
+            "downloads_all_time": 248,
             "license": [
               {
                 "status": "detected",
@@ -4901,8 +4899,8 @@
             "last_change_at": "2023-09-05",
             "created_at": "2023-09-05",
             "likes": 0,
-            "downloads_30d": 81,
-            "downloads_all_time": 1362,
+            "downloads_30d": 73,
+            "downloads_all_time": 1371,
             "license": [
               {
                 "status": "detected",
@@ -4931,8 +4929,8 @@
             "last_change_at": "2023-06-13",
             "created_at": "2023-06-11",
             "likes": 0,
-            "downloads_30d": 16,
-            "downloads_all_time": 375,
+            "downloads_30d": 17,
+            "downloads_all_time": 377,
             "license": [
               {
                 "status": "none",
@@ -4955,7 +4953,7 @@
     },
     "ui_63": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -4973,7 +4971,7 @@
     },
     "ui_64": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -4991,7 +4989,7 @@
     },
     "ui_65": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -5009,7 +5007,7 @@
     },
     "ui_66": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -5027,7 +5025,7 @@
     },
     "ui_67": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -5045,7 +5043,7 @@
     },
     "ui_68": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -5063,7 +5061,7 @@
     },
     "ui_69": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -5081,7 +5079,7 @@
     },
     "ui_70": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -5099,7 +5097,7 @@
     },
     "ui_71": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -5117,7 +5115,7 @@
     },
     "ui_72": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -5135,7 +5133,7 @@
     },
     "ui_73": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -5153,7 +5151,7 @@
     },
     "ui_74": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -5171,7 +5169,7 @@
     },
     "ui_75": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "no_recent_updates",
       "activity_score": 11,
       "link_count": 2,
@@ -5188,10 +5186,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 1,
@@ -5292,7 +5290,7 @@
     },
     "ui_78": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "no_recent_updates",
       "activity_score": 22,
       "link_count": 2,
@@ -5308,10 +5306,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 0,
@@ -5337,9 +5335,9 @@
         "releases": {},
         "reuse": {
           "huggingface": {
-            "downloads_30d": 203,
-            "downloads_all_time": 2990,
-            "likes": 6
+            "downloads_30d": 230,
+            "downloads_all_time": 3051,
+            "likes": 7
           }
         },
         "license": {
@@ -5385,9 +5383,9 @@
             "gated": false,
             "last_change_at": "2024-09-26",
             "created_at": "2024-06-28",
-            "likes": 1,
-            "downloads_30d": 148,
-            "downloads_all_time": 2531,
+            "likes": 2,
+            "downloads_30d": 175,
+            "downloads_all_time": 2588,
             "license": [
               {
                 "status": "detected",
@@ -5417,7 +5415,7 @@
             "created_at": "2024-06-28",
             "likes": 5,
             "downloads_30d": 55,
-            "downloads_all_time": 459,
+            "downloads_all_time": 463,
             "license": [
               {
                 "status": "detected",
@@ -5440,9 +5438,9 @@
     },
     "ui_79": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
-      "activity_score": 23,
+      "activity_score": 22,
       "link_count": 2,
       "broken_links": [],
       "hosts": {
@@ -5457,10 +5455,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 1,
@@ -5561,9 +5559,9 @@
     },
     "ui_80": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "recently_updated",
-      "activity_score": 56,
+      "activity_score": 55,
       "link_count": 3,
       "broken_links": [
         "https://irradiation-portal-55883164704.europe-west1.run.app/",
@@ -5581,10 +5579,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 1,
@@ -5692,7 +5690,7 @@
     },
     "ui_81": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -5708,10 +5706,10 @@
       },
       "oss": {
         "status": "unreadable",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 0,
@@ -5741,7 +5739,7 @@
     },
     "ui_82": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -5759,7 +5757,7 @@
     },
     "ui_83": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "stable_archive",
       "activity_score": 60,
       "link_count": 1,
@@ -5777,7 +5775,7 @@
     },
     "ui_85": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": null,
       "activity_score": null,
       "link_count": 1,
@@ -5795,7 +5793,7 @@
     },
     "ui_86": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "recently_updated",
       "activity_score": 54,
       "link_count": 2,
@@ -5811,10 +5809,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 0,
@@ -5840,8 +5838,8 @@
         "releases": {},
         "reuse": {
           "huggingface": {
-            "downloads_30d": 43,
-            "downloads_all_time": 457,
+            "downloads_30d": 45,
+            "downloads_all_time": 463,
             "likes": 0
           }
         },
@@ -5883,8 +5881,8 @@
             "last_change_at": "2025-11-06",
             "created_at": "2025-09-29",
             "likes": 0,
-            "downloads_30d": 38,
-            "downloads_all_time": 372,
+            "downloads_30d": 41,
+            "downloads_all_time": 378,
             "license": [
               {
                 "status": "detected",
@@ -5913,7 +5911,7 @@
             "last_change_at": "2026-02-02",
             "created_at": "2025-08-14",
             "likes": 0,
-            "downloads_30d": 5,
+            "downloads_30d": 4,
             "downloads_all_time": 85,
             "license": [
               {
@@ -5937,9 +5935,9 @@
     },
     "ui_87": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "recently_updated",
-      "activity_score": 82,
+      "activity_score": 83,
       "link_count": 6,
       "broken_links": [],
       "hosts": {
@@ -5954,10 +5952,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 1,
@@ -6000,9 +5998,9 @@
             "stars": 3
           },
           "huggingface": {
-            "downloads_30d": 1047,
-            "downloads_all_time": 5908,
-            "likes": 3
+            "downloads_30d": 1072,
+            "downloads_all_time": 6222,
+            "likes": 4
           }
         },
         "license": {
@@ -6049,8 +6047,8 @@
             "last_change_at": "2026-09-03",
             "created_at": "2025-10-08",
             "likes": 1,
-            "downloads_30d": 467,
-            "downloads_all_time": 3691,
+            "downloads_30d": 590,
+            "downloads_all_time": 3883,
             "license": [
               {
                 "status": "detected",
@@ -6079,8 +6077,8 @@
             "last_change_at": "2026-03-11",
             "created_at": "2025-10-09",
             "likes": 1,
-            "downloads_30d": 332,
-            "downloads_all_time": 700,
+            "downloads_30d": 305,
+            "downloads_all_time": 781,
             "license": [
               {
                 "status": "detected",
@@ -6108,7 +6106,7 @@
             "gated": false,
             "last_change_at": "2026-03-17",
             "created_at": "2025-10-09",
-            "likes": 1,
+            "likes": 2,
             "downloads_30d": 0,
             "downloads_all_time": 0,
             "license": [
@@ -6139,8 +6137,8 @@
             "last_change_at": "2026-03-11",
             "created_at": "2026-01-07",
             "likes": 0,
-            "downloads_30d": 248,
-            "downloads_all_time": 1517,
+            "downloads_30d": 177,
+            "downloads_all_time": 1558,
             "license": [
               {
                 "status": "detected",
@@ -6228,7 +6226,7 @@
     },
     "ui_89": {
       "availability": "available",
-      "checked_at": "2026-10-26",
+      "checked_at": "2026-11-02",
       "context": "no_recent_updates",
       "activity_score": 0,
       "link_count": 1,
@@ -6244,10 +6242,10 @@
       },
       "oss": {
         "status": "measured",
-        "measured_at": "2026-10-26",
+        "measured_at": "2026-11-02",
         "window": {
-          "start": "2025-10-27",
-          "end": "2026-10-26"
+          "start": "2025-11-03",
+          "end": "2026-11-02"
         },
         "scope": {
           "github": 1,
