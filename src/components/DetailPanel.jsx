@@ -207,8 +207,6 @@ const parseOrganizations = (orgText = '') => {
 }
 
 const DetailPanel = ({ project, onClose }) => {
-  const [markdownContent, setMarkdownContent] = useState({})
-  const [loading, setLoading] = useState(true)
   const [copied, setCopied] = useState(false)
   const panelRef = useRef(null)
   const previousFocusRef = useRef(null)
@@ -252,49 +250,6 @@ const DetailPanel = ({ project, onClose }) => {
       window.prompt('Copy this link:', url)
     }
   }, [project?.slug, project?.id])
-
-  useEffect(() => {
-    if (!project) return
-
-    setLoading(true)
-    setMarkdownContent({})
-
-    const loadMarkdown = async () => {
-      try {
-        const files = {
-          description: 'description.md',
-          data_characteristics: 'data_characteristics.md',
-          model_characteristics: 'model_characteristics.md',
-          how_to_use: 'how_to_use.md'
-        }
-
-        const content = {}
-
-        // Fetch the doc files in parallel so the panel opens without waiting on a
-        // chain of sequential round-trips.
-        await Promise.all(
-          Object.entries(files).map(async ([key, filename]) => {
-            try {
-              const response = await fetch(withBasePath(`projects/${project.id}/docs/${filename}`))
-              if (response.ok) {
-                content[key] = await response.text()
-              }
-            } catch (err) {
-              console.log(`Could not load ${filename}:`, err)
-            }
-          })
-        )
-
-        setMarkdownContent(content)
-        setLoading(false)
-      } catch (err) {
-        console.error('Error loading markdown:', err)
-        setLoading(false)
-      }
-    }
-
-    loadMarkdown()
-  }, [project])
 
   // Focus management and focus trap
   useEffect(() => {
@@ -450,308 +405,295 @@ const DetailPanel = ({ project, onClose }) => {
         </div>
 
         <div className="detail-panel-content">
-          {loading ? (
-            <div className="panel-loader">
-              <div className="loader-spinner"></div>
-              <p>Loading details...</p>
-            </div>
-          ) : (
-            <div className="panel-grid">
-              {/* LEFT: narrative column -- header fields + free-text sections rendered as-is */}
-              <div className="panel-narrative">
-                {eyebrowParts.length > 0 && (
-                  <div className="panel-eyebrow">{eyebrowParts.join(' · ')}</div>
-                )}
-                <h1 className="panel-title">{project.title}</h1>
-                {sdgList.length > 0 && (
-                  <div className="panel-sdg-chips">
-                    {sdgList.map((s) => (
-                      <span className="panel-sdg-chip" key={s.num}>
-                        <span className="panel-sdg-chip-dot" style={{ background: s.color || 'var(--press-ink)' }} />
-                        {s.label}{s.name ? ` · ${s.name}` : ''}
-                      </span>
-                    ))}
+          <div className="panel-grid">
+            {/* LEFT: narrative column -- header fields + free-text sections rendered as-is */}
+            <div className="panel-narrative">
+              {eyebrowParts.length > 0 && (
+                <div className="panel-eyebrow">{eyebrowParts.join(' · ')}</div>
+              )}
+              <h1 className="panel-title">{project.title}</h1>
+              {sdgList.length > 0 && (
+                <div className="panel-sdg-chips">
+                  {sdgList.map((s) => (
+                    <span className="panel-sdg-chip" key={s.num}>
+                      <span className="panel-sdg-chip-dot" style={{ background: s.color || 'var(--press-ink)' }} />
+                      {s.label}{s.name ? ` · ${s.name}` : ''}
+                    </span>
+                  ))}
+                </div>
+              )}
+              {project?.description && (
+                <div className="panel-lede">
+                  <DocMarkdown>{project.description}</DocMarkdown>
+                </div>
+              )}
+
+              {/* The free-text sections render from the catalog record the panel already has.
+                  They used to be fetched from public/projects/<id>/docs/*.md, which hold the
+                  same sheet columns: four extra requests per panel, and on a failed request the
+                  sections vanished without a word. The description is the lede above. */}
+
+              {/* Data Characteristics -- free-text, any shape */}
+              {project.data_characteristics?.trim() && (
+                <section className="panel-freetext" id="data-characteristics">
+                  <h2 className="panel-freetext-label">Data Characteristics</h2>
+                  <div className="documentation-content">
+                    <DocMarkdown>{formatFreeText(project.data_characteristics)}</DocMarkdown>
                   </div>
-                )}
-                {project?.description && (
-                  <div className="panel-lede">
-                    <DocMarkdown>{project.description}</DocMarkdown>
-                  </div>
-                )}
-
-                {/* About -- only when the markdown adds detail beyond the lede shown up top */}
-                {markdownContent.description &&
-                  markdownContent.description.trim() !== (project?.description || '').trim() && (
-                  <section className="panel-freetext" id="description">
-                    <h2 className="panel-freetext-label">About</h2>
-                    <div className="documentation-content">
-                      <DocMarkdown>{markdownContent.description}</DocMarkdown>
-                    </div>
-                  </section>
-                )}
-
-                {/* Data Characteristics -- free-text, any shape */}
-                {markdownContent.data_characteristics?.trim() && (
-                  <section className="panel-freetext" id="data-characteristics">
-                    <h2 className="panel-freetext-label">Data Characteristics</h2>
-                    <div className="documentation-content">
-                      <DocMarkdown>{formatFreeText(markdownContent.data_characteristics)}</DocMarkdown>
-                    </div>
-                  </section>
-                )}
-
-                {/* Model / Use Case Characteristics -- free-text, only when present */}
-                {markdownContent.model_characteristics?.trim() && (
-                  <section className="panel-freetext" id="model-characteristics">
-                    <h2 className="panel-freetext-label">Model / Use Case Characteristics</h2>
-                    <div className="documentation-content">
-                      <DocMarkdown>{formatFreeText(markdownContent.model_characteristics)}</DocMarkdown>
-                    </div>
-                  </section>
-                )}
-
-                {/* How to Use It -- free-text */}
-                {markdownContent.how_to_use && (
-                  <section className="panel-freetext" id="how-to-use">
-                    <h2 className="panel-freetext-label">How to Use It</h2>
-                    <div className="documentation-content">
-                      <DocMarkdown>{formatFreeText(markdownContent.how_to_use)}</DocMarkdown>
-                    </div>
-                  </section>
-                )}
-
-                {/* Additional Resources -- only when present */}
-                {additionalResourceLinks.length > 0 && (
-                  <section className="panel-freetext" id="additional-resources">
-                    <h2 className="panel-freetext-label">Additional Resources</h2>
-                    <div className="additional-resources-list">
-                      {additionalResourceLinks.map((resource, idx) => {
-                        const external =
-                          resource.url &&
-                          (resource.url.startsWith('http://') ||
-                            resource.url.startsWith('https://'))
-                        return (
-                          <a
-                            key={idx}
-                            href={resolvePublicHref(resource.url)}
-                            target={external ? '_blank' : undefined}
-                            rel={external ? 'noopener noreferrer' : undefined}
-                            className="additional-resource-item"
-                          >
-                            <i className="fas fa-arrow-up-right-from-square"></i>
-                            <span>{resource.name}</span>
-                          </a>
-                        )
-                      })}
-                    </div>
-                  </section>
-                )}
-
-                {/* Kind Reminder -- the fair-sharing guidance, on every project */}
-                <section className="panel-freetext" id="fair-sharing">
-                  <h2 className="panel-freetext-label">Kind Reminder</h2>
-                  <FairSharingRecommendations />
                 </section>
-              </div>
+              )}
 
-              {/* RIGHT: facts rail -- reliable catalogue fields + access */}
-              <div className="panel-rail">
-                {/* Cover print -- the same riso print as the card, larger */}
-                <RisoPrint
-                  src={project.image ? withBasePath(project.image) : null}
-                  className="panel-rail-print"
-                />
+              {/* Model / Use Case Characteristics -- free-text, only when present */}
+              {project.model_characteristics?.trim() && (
+                <section className="panel-freetext" id="model-characteristics">
+                  <h2 className="panel-freetext-label">Model / Use Case Characteristics</h2>
+                  <div className="documentation-content">
+                    <DocMarkdown>{formatFreeText(project.model_characteristics)}</DocMarkdown>
+                  </div>
+                </section>
+              )}
 
-                {/* Datasets / Models access clusters (or documents / access-note fallback) */}
-                {hasAnyLinks ? (
-                  <>
-                    {datasetLinks.length > 0 && (
-                      <div className="rail-cluster">
-                        <div className="rail-cluster-label">Datasets</div>
-                        <div className="rail-chips-col">
-                          {datasetLinks.map((link, idx) => (
-                            <RailChip key={`dataset-${idx}`} label={datasetLinkLabels[idx]} href={link.url} />
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    {usecaseLinks.length > 0 && (
-                      <div className="rail-cluster">
-                        <div className="rail-cluster-label">Models &amp; systems</div>
-                        <div className="rail-chips-col">
-                          {usecaseLinks.map((link, idx) => (
-                            <RailChip key={`usecase-${idx}`} label={usecaseLinkLabels[idx]} href={link.url} />
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </>
-                ) : showHostedDocuments ? (
-                  <div className="rail-cluster">
-                    <div className="rail-cluster-label">Documents</div>
-                    <div className="rail-chips-col">
-                      {hostedDocuments.map((doc, idx) => {
-                        const isPdf = doc.url?.toLowerCase().endsWith('.pdf')
-                        return (
-                          <a
-                            key={`hosted-${idx}`}
-                            className="rail-doc-link"
-                            href={resolvePublicHref(doc.url)}
-                          >
-                            <i className={`fas ${isPdf ? 'fa-file-pdf' : 'fa-file-arrow-down'}`} aria-hidden="true"></i>
-                            <span>{doc.name || 'Download Document'}</span>
-                          </a>
-                        )
-                      })}
-                    </div>
+              {/* How to Use It -- free-text */}
+              {project.how_to_use?.trim() && (
+                <section className="panel-freetext" id="how-to-use">
+                  <h2 className="panel-freetext-label">How to Use It</h2>
+                  <div className="documentation-content">
+                    <DocMarkdown>{formatFreeText(project.how_to_use)}</DocMarkdown>
                   </div>
-                ) : null}
+                </section>
+              )}
 
-                {/* Access note (shown when there is no public dataset/use-case link) */}
-                {showAccessCallout && (
-                  <div className={`rail-access-note rail-access-note-${project.access_note_kind || 'info'}`}>
-                    <div className="rail-access-note-label">
-                      <i className={`fas ${accessNoteIconClass}`} aria-hidden="true"></i> Access note
-                    </div>
-                    <div className="rail-access-note-body documentation-content">
-                      <DocMarkdown>{project.access_note_markdown}</DocMarkdown>
-                    </div>
+              {/* Additional Resources -- only when present */}
+              {additionalResourceLinks.length > 0 && (
+                <section className="panel-freetext" id="additional-resources">
+                  <h2 className="panel-freetext-label">Additional Resources</h2>
+                  <div className="additional-resources-list">
+                    {additionalResourceLinks.map((resource, idx) => {
+                      const external =
+                        resource.url &&
+                        (resource.url.startsWith('http://') ||
+                          resource.url.startsWith('https://'))
+                      return (
+                        <a
+                          key={idx}
+                          href={resolvePublicHref(resource.url)}
+                          target={external ? '_blank' : undefined}
+                          rel={external ? 'noopener noreferrer' : undefined}
+                          className="additional-resource-item"
+                        >
+                          <i className="fas fa-arrow-up-right-from-square"></i>
+                          <span>{resource.name}</span>
+                        </a>
+                      )
+                    })}
                   </div>
-                )}
+                </section>
+              )}
 
-                {/* Contact: the other way to the asset, so it sits with the links. The
-                    catalogue entry's editor goes beneath it, apart from the organisations,
-                    so they do not read as one of the makers. */}
-                {(contacts.length > 0 || project?.editor) && (
-                  <div className="rail-cluster">
-                    {contacts.length > 0 && (
-                      <>
-                        <div className="rail-cluster-label">Contact / Authors</div>
-                        <div className="rail-chips-col">
-                          {contacts.map(({ label, href }, idx) => {
-                            if (!href) {
-                              return (
-                                <span key={`contact-${idx}`} className="rail-chip rail-chip-plain">
-                                  <span>{label}</span>
-                                </span>
-                              )
-                            }
-                            return <RailChip key={`contact-${idx}`} label={label} href={href} />
-                          })}
-                        </div>
-                      </>
-                    )}
-                    {project?.editor && (
-                      <p className="rail-entry-editor">
-                        Catalogue entry by <span>{project.editor}</span>
-                      </p>
-                    )}
-                  </div>
-                )}
+              {/* Kind Reminder -- the fair-sharing guidance, on every project */}
+              <section className="panel-freetext" id="fair-sharing">
+                <h2 className="panel-freetext-label">Kind Reminder</h2>
+                <FairSharingRecommendations />
+              </section>
+            </div>
 
-                {/* Facts */}
-                <div className="rail-facts">
-                  <div className="rail-fact-row">
-                    <span className="rail-fact-label">Data type</span>
-                    <span className="rail-fact-value">
-                      {dataTypeText || <span className="rail-fact-empty">Not specified</span>}
-                    </span>
-                  </div>
-                  <div className="rail-fact-row">
-                    <span className="rail-fact-label">License</span>
-                    <span className="rail-fact-value">
-                      {licenseValue ? renderLicense(licenseValue) : <span className="rail-fact-empty">Not specified</span>}
-                    </span>
-                  </div>
-                  <div className="rail-fact-row">
-                    <span className="rail-fact-label">Documentation</span>
-                    <span className="rail-fact-value rail-fact-depth">
-                      {depthText}
-                      <span className="completeness-indicator" aria-hidden="true">
-                        {[1, 2, 3, 4, 5].map(i => (
-                          <span key={i} className={`completeness-dot${i <= depthDots ? ' filled' : ''}`} />
+            {/* RIGHT: facts rail -- reliable catalogue fields + access */}
+            <div className="panel-rail">
+              {/* Cover print -- the same riso print as the card, larger */}
+              <RisoPrint
+                src={project.image ? withBasePath(project.image) : null}
+                className="panel-rail-print"
+              />
+
+              {/* Datasets / Models access clusters (or documents / access-note fallback) */}
+              {hasAnyLinks ? (
+                <>
+                  {datasetLinks.length > 0 && (
+                    <div className="rail-cluster">
+                      <div className="rail-cluster-label">Datasets</div>
+                      <div className="rail-chips-col">
+                        {datasetLinks.map((link, idx) => (
+                          <RailChip key={`dataset-${idx}`} label={datasetLinkLabels[idx]} href={link.url} />
                         ))}
-                      </span>
-                    </span>
-                  </div>
-                  <div className={`rail-fact-row${brokenNote ? ' has-note' : ''}`}>
-                    <span className="rail-fact-label">Status</span>
-                    <span className={`rail-fact-value rail-status status-${statusState}`}>
-                      <span className="status-dot" aria-hidden="true"></span>{statusText}
-                      {healthContext && <span className="rail-status-context"> · {healthContext}</span>}
-                    </span>
-                    {brokenNote && <span className="rail-fact-note">{brokenNote}</span>}
-                  </div>
-                  {project?.countries?.length > 0 && (
-                    <div className="rail-fact-row">
-                      <span className="rail-fact-label">Country</span>
-                      <span className="rail-fact-value">{project.countries.join(', ')}</span>
+                      </div>
                     </div>
                   )}
-                </div>
-
-                {/* CHAOSS metrics: facts about the project's open assets */}
-                {oss && <ChaossMetrics block={oss} href={withBasePath('chaoss/')} />}
-
-                {/* Maturity -- vertical stepper */}
-                {maturityTags.length > 0 && (
-                  <div className="rail-maturity">
-                    <div className="rail-cluster-label">Maturity</div>
-                    <div className="rail-stepper">
-                      {MATURITY_STEPS.map((step, i) => {
-                        const reached = maturityTags.includes(step.key)
-                        const prevReached = i > 0 && maturityTags.includes(MATURITY_STEPS[i - 1].key)
-                        return (
-                          <Fragment key={step.key}>
-                            {i > 0 && (
-                              <span className={`rail-step-line${prevReached && reached ? ' filled' : ''}`}></span>
-                            )}
-                            <div className={`rail-step${reached ? ' reached' : ''}`}>
-                              <span className="rail-step-dot"></span>
-                              <span className="rail-step-label">{step.label}</span>
-                            </div>
-                          </Fragment>
-                        )
-                      })}
-                    </div>
-                  </div>
-                )}
-
-                {/* Organisations */}
-                {organizations && (
-                  <div className="rail-orgs">
-                    {organizations.raw ? (
-                      <div className="rail-org">
-                        <div className="rail-org-label">Organizations Involved</div>
-                        <div className="rail-org-value documentation-content"><DocMarkdown>{organizations.raw}</DocMarkdown></div>
+                  {usecaseLinks.length > 0 && (
+                    <div className="rail-cluster">
+                      <div className="rail-cluster-label">Models &amp; systems</div>
+                      <div className="rail-chips-col">
+                        {usecaseLinks.map((link, idx) => (
+                          <RailChip key={`usecase-${idx}`} label={usecaseLinkLabels[idx]} href={link.url} />
+                        ))}
                       </div>
-                    ) : (
-                      <>
-                        {organizations.powered && (
-                          <div className="rail-org">
-                            <div className="rail-org-label"><span className="rail-org-dot" style={{ background: 'var(--press-ink)' }}></span> Powered by / Provided by</div>
-                            <div className="rail-org-value documentation-content"><DocMarkdown>{organizations.powered}</DocMarkdown></div>
-                          </div>
-                        )}
-                        {organizations.catalyzed && (
-                          <div className="rail-org">
-                            <div className="rail-org-label"><span className="rail-org-dot" style={{ background: 'var(--accent-gold)' }}></span> Catalyzed by</div>
-                            <div className="rail-org-value documentation-content"><DocMarkdown>{organizations.catalyzed}</DocMarkdown></div>
-                          </div>
-                        )}
-                        {organizations.financed && (
-                          <div className="rail-org">
-                            <div className="rail-org-label"><span className="rail-org-dot" style={{ background: 'var(--text-muted)' }}></span> Financed by</div>
-                            <div className="rail-org-value documentation-content"><DocMarkdown>{organizations.financed}</DocMarkdown></div>
-                          </div>
-                        )}
-                      </>
-                    )}
+                    </div>
+                  )}
+                </>
+              ) : showHostedDocuments ? (
+                <div className="rail-cluster">
+                  <div className="rail-cluster-label">Documents</div>
+                  <div className="rail-chips-col">
+                    {hostedDocuments.map((doc, idx) => {
+                      const isPdf = doc.url?.toLowerCase().endsWith('.pdf')
+                      return (
+                        <a
+                          key={`hosted-${idx}`}
+                          className="rail-doc-link"
+                          href={resolvePublicHref(doc.url)}
+                        >
+                          <i className={`fas ${isPdf ? 'fa-file-pdf' : 'fa-file-arrow-down'}`} aria-hidden="true"></i>
+                          <span>{doc.name || 'Download Document'}</span>
+                        </a>
+                      )
+                    })}
+                  </div>
+                </div>
+              ) : null}
+
+              {/* Access note (shown when there is no public dataset/use-case link) */}
+              {showAccessCallout && (
+                <div className={`rail-access-note rail-access-note-${project.access_note_kind || 'info'}`}>
+                  <div className="rail-access-note-label">
+                    <i className={`fas ${accessNoteIconClass}`} aria-hidden="true"></i> Access note
+                  </div>
+                  <div className="rail-access-note-body documentation-content">
+                    <DocMarkdown>{project.access_note_markdown}</DocMarkdown>
+                  </div>
+                </div>
+              )}
+
+              {/* Contact: the other way to the asset, so it sits with the links. The
+                  catalogue entry's editor goes beneath it, apart from the organisations,
+                  so they do not read as one of the makers. */}
+              {(contacts.length > 0 || project?.editor) && (
+                <div className="rail-cluster">
+                  {contacts.length > 0 && (
+                    <>
+                      <div className="rail-cluster-label">Contact / Authors</div>
+                      <div className="rail-chips-col">
+                        {contacts.map(({ label, href }, idx) => {
+                          if (!href) {
+                            return (
+                              <span key={`contact-${idx}`} className="rail-chip rail-chip-plain">
+                                <span>{label}</span>
+                              </span>
+                            )
+                          }
+                          return <RailChip key={`contact-${idx}`} label={label} href={href} />
+                        })}
+                      </div>
+                    </>
+                  )}
+                  {project?.editor && (
+                    <p className="rail-entry-editor">
+                      Catalogue entry by <span>{project.editor}</span>
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {/* Facts */}
+              <div className="rail-facts">
+                <div className="rail-fact-row">
+                  <span className="rail-fact-label">Data type</span>
+                  <span className="rail-fact-value">
+                    {dataTypeText || <span className="rail-fact-empty">Not specified</span>}
+                  </span>
+                </div>
+                <div className="rail-fact-row">
+                  <span className="rail-fact-label">License</span>
+                  <span className="rail-fact-value">
+                    {licenseValue ? renderLicense(licenseValue) : <span className="rail-fact-empty">Not specified</span>}
+                  </span>
+                </div>
+                <div className="rail-fact-row">
+                  <span className="rail-fact-label">Documentation</span>
+                  <span className="rail-fact-value rail-fact-depth">
+                    {depthText}
+                    <span className="completeness-indicator" aria-hidden="true">
+                      {[1, 2, 3, 4, 5].map(i => (
+                        <span key={i} className={`completeness-dot${i <= depthDots ? ' filled' : ''}`} />
+                      ))}
+                    </span>
+                  </span>
+                </div>
+                <div className={`rail-fact-row${brokenNote ? ' has-note' : ''}`}>
+                  <span className="rail-fact-label">Status</span>
+                  <span className={`rail-fact-value rail-status status-${statusState}`}>
+                    <span className="status-dot" aria-hidden="true"></span>{statusText}
+                    {healthContext && <span className="rail-status-context"> · {healthContext}</span>}
+                  </span>
+                  {brokenNote && <span className="rail-fact-note">{brokenNote}</span>}
+                </div>
+                {project?.countries?.length > 0 && (
+                  <div className="rail-fact-row">
+                    <span className="rail-fact-label">Country</span>
+                    <span className="rail-fact-value">{project.countries.join(', ')}</span>
                   </div>
                 )}
               </div>
+
+              {/* CHAOSS metrics: facts about the project's open assets */}
+              {oss && <ChaossMetrics block={oss} href={withBasePath('chaoss/')} />}
+
+              {/* Maturity -- vertical stepper */}
+              {maturityTags.length > 0 && (
+                <div className="rail-maturity">
+                  <div className="rail-cluster-label">Maturity</div>
+                  <div className="rail-stepper">
+                    {MATURITY_STEPS.map((step, i) => {
+                      const reached = maturityTags.includes(step.key)
+                      const prevReached = i > 0 && maturityTags.includes(MATURITY_STEPS[i - 1].key)
+                      return (
+                        <Fragment key={step.key}>
+                          {i > 0 && (
+                            <span className={`rail-step-line${prevReached && reached ? ' filled' : ''}`}></span>
+                          )}
+                          <div className={`rail-step${reached ? ' reached' : ''}`}>
+                            <span className="rail-step-dot"></span>
+                            <span className="rail-step-label">{step.label}</span>
+                          </div>
+                        </Fragment>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Organisations */}
+              {organizations && (
+                <div className="rail-orgs">
+                  {organizations.raw ? (
+                    <div className="rail-org">
+                      <div className="rail-org-label">Organizations Involved</div>
+                      <div className="rail-org-value documentation-content"><DocMarkdown>{organizations.raw}</DocMarkdown></div>
+                    </div>
+                  ) : (
+                    <>
+                      {organizations.powered && (
+                        <div className="rail-org">
+                          <div className="rail-org-label"><span className="rail-org-dot" style={{ background: 'var(--press-ink)' }}></span> Powered by / Provided by</div>
+                          <div className="rail-org-value documentation-content"><DocMarkdown>{organizations.powered}</DocMarkdown></div>
+                        </div>
+                      )}
+                      {organizations.catalyzed && (
+                        <div className="rail-org">
+                          <div className="rail-org-label"><span className="rail-org-dot" style={{ background: 'var(--accent-gold)' }}></span> Catalyzed by</div>
+                          <div className="rail-org-value documentation-content"><DocMarkdown>{organizations.catalyzed}</DocMarkdown></div>
+                        </div>
+                      )}
+                      {organizations.financed && (
+                        <div className="rail-org">
+                          <div className="rail-org-label"><span className="rail-org-dot" style={{ background: 'var(--text-muted)' }}></span> Financed by</div>
+                          <div className="rail-org-value documentation-content"><DocMarkdown>{organizations.financed}</DocMarkdown></div>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
     </>

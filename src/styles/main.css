@@ -1411,28 +1411,6 @@ footer a:hover {
     background: var(--paper);
 }
 
-.panel-loader {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1.25rem;
-    height: 100%;
-    padding: 3rem;
-    color: var(--ink-2);
-}
-
-/* Three dots of ink, breathing. */
-.loader-spinner {
-    width: 0.6rem;
-    height: 0.6rem;
-    margin-right: 2.4rem;
-    border-radius: 50%;
-    background: var(--press-ink);
-    box-shadow: 1.2rem 0 0 var(--press-ink), 2.4rem 0 0 var(--press-ink);
-    animation: skeleton-breathe 700ms ease-in-out infinite alternate;
-}
-
 .panel-grid {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 25rem;
