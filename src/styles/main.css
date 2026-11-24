@@ -304,11 +304,6 @@ h4 {
     font-style: italic;
 }
 
-.info-card .info-card-note {
-    color: var(--ink-2);
-    font-size: var(--text-lg);
-}
-
 /* Fair-sharing guidance (FairSharingRecommendations.jsx): the "Fair sharing" modal and
    the "Kind Reminder" closing every detail panel. Secondary text, so it never outweighs
    the project's own content. */
