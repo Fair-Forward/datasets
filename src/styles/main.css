@@ -304,9 +304,51 @@ h4 {
     font-style: italic;
 }
 
-.info-card .info-card-note {
+/* Fair-sharing guidance (FairSharingRecommendations.jsx): the "Fair sharing" modal and
+   the "Kind Reminder" closing every detail panel. Secondary text, so it never outweighs
+   the project's own content. */
+.fair-sharing {
+    max-width: 65ch;
     color: var(--ink-2);
     font-size: var(--text-lg);
+    line-height: 1.6;
+}
+
+/* Two classes to win over `.info-card p` inside the modal. */
+.fair-sharing .fair-sharing-intro {
+    max-width: none;
+    margin-bottom: 0.9rem;
+    color: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+.fair-sharing-list {
+    padding-left: 1.3rem;
+}
+
+.fair-sharing-list li + li {
+    margin-top: 0.5rem;
+}
+
+.fair-sharing-list li::marker {
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+}
+
+.fair-sharing-link {
+    display: inline-block;
+    margin-top: 1.4rem;
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(16, 23, 62, 0.35);
+    text-underline-offset: 0.28em;
+}
+
+.fair-sharing-link:hover {
+    color: var(--spot-deep);
+    text-decoration-color: currentColor;
 }
 
 .info-card-links {
@@ -1362,28 +1404,6 @@ footer a:hover {
     overflow-y: auto;
     overscroll-behavior: contain;
     background: var(--paper);
-}
-
-.panel-loader {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1.25rem;
-    height: 100%;
-    padding: 3rem;
-    color: var(--ink-2);
-}
-
-/* Three dots of ink, breathing. */
-.loader-spinner {
-    width: 0.6rem;
-    height: 0.6rem;
-    margin-right: 2.4rem;
-    border-radius: 50%;
-    background: var(--press-ink);
-    box-shadow: 1.2rem 0 0 var(--press-ink), 2.4rem 0 0 var(--press-ink);
-    animation: skeleton-breathe 700ms ease-in-out infinite alternate;
 }
 
 .panel-grid {
