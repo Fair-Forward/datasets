@@ -9,6 +9,7 @@ import { hasHealthSignal, contextLabel, ossBlock, brokenLinksNote, linkStatus } 
 import { SITE_NAME, SITE_TITLE, SITE_DESCRIPTION, SITE_URL, SITE_OG_IMAGE } from '../utils/site'
 import RisoPrint from './RisoPrint'
 import ChaossMetrics from './ChaossMetrics'
+import FairSharingRecommendations from './FairSharingRecommendations'
 
 // Cumulative maturity pipeline rendered as a stepper in the detail panel.
 const MATURITY_STEPS = [
@@ -545,6 +546,12 @@ const DetailPanel = ({ project, onClose }) => {
                     </div>
                   </section>
                 )}
+
+                {/* Kind Reminder -- the fair-sharing guidance, on every project */}
+                <section className="panel-freetext" id="fair-sharing">
+                  <h2 className="panel-freetext-label">Kind Reminder</h2>
+                  <FairSharingRecommendations />
+                </section>
               </div>
 
               {/* RIGHT: facts rail -- reliable catalogue fields + access */}

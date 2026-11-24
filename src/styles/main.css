@@ -309,6 +309,53 @@ h4 {
     font-size: var(--text-lg);
 }
 
+/* Fair-sharing guidance (FairSharingRecommendations.jsx): the "Fair sharing" modal and
+   the "Kind Reminder" closing every detail panel. Secondary text, so it never outweighs
+   the project's own content. */
+.fair-sharing {
+    max-width: 65ch;
+    color: var(--ink-2);
+    font-size: var(--text-lg);
+    line-height: 1.6;
+}
+
+/* Two classes to win over `.info-card p` inside the modal. */
+.fair-sharing .fair-sharing-intro {
+    max-width: none;
+    margin-bottom: 0.9rem;
+    color: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+.fair-sharing-list {
+    padding-left: 1.3rem;
+}
+
+.fair-sharing-list li + li {
+    margin-top: 0.5rem;
+}
+
+.fair-sharing-list li::marker {
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+}
+
+.fair-sharing-link {
+    display: inline-block;
+    margin-top: 1.4rem;
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(16, 23, 62, 0.35);
+    text-underline-offset: 0.28em;
+}
+
+.fair-sharing-link:hover {
+    color: var(--spot-deep);
+    text-decoration-color: currentColor;
+}
+
 .info-card-links {
     display: flex;
     flex-wrap: wrap;
